@@ -3,7 +3,7 @@ Contributors: Ipstenu, MarcDK
 Tags: comments, wysiwyg, quicktags, bbpress
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 2.0
+Stable tag: 2.1
 Donate Link: https://www.wepay.com/donations/halfelf-wp
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -56,9 +56,13 @@ Unlikely. BuddyPress is moving to it's own thing.
 
 = My users say they don't see anything on IE8 =
 
-Yeah, that's because IE8 cheerfully ignores the rules of jQuery. Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9.
+Yeah, that's because IE8 cheerfully ignores the rules of jQuery. Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9+.
 
 == Changelog ==
+
+= 2.1 =
+* 2013 Feb 27, by Ipstenu
+* There is a difference between is_single and is_singular.
 
 = 2.0 =
 * 2013 Feb 18, by Ipstenu
