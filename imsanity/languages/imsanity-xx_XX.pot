@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-29 16:07+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: imsanity.php:138
+#, php-format
+msgid ""
+"Oh Snap! Imsanity was unable to resize this image for the following reason: "
+"'%s'\n"
+"\t\t\t\t\t.  If you continue to see this error message, you may need to "
+"either install missing server components or disable the Imsanity plugin.  If "
+"you think you have discovered a bug, please report it on the Imsanity "
+"support forum."
+msgstr ""
+
+#: imsanity.php:192
+msgid ""
+"Oh Snap! Imsanity was Unable to process the BMP file.  If you continue to "
+"see this error you may need to disable the BMP-To-JPG feature in Imsanity "
+"settings."
+msgstr ""
+
+#. create new menu for site configuration
+#: settings.php:29
+msgid "Imsanity Plugin Settings"
+msgstr ""
+
+#: settings.php:175 settings.php:188
+msgid "Imsanity Network Settings"
+msgstr ""
+
+#: settings.php:195
+msgid "Imsanity network settings saved."
+msgstr ""
+
+#: settings.php:209
+msgid "Global Settings Override"
+msgstr ""
+
+#: settings.php:212
+msgid "Allow each site to configure Imsanity settings"
+msgstr ""
+
+#: settings.php:213
+msgid "Use global Imsanity settings (below) for all sites"
+msgstr ""
+
+#: settings.php:219 settings.php:544
+msgid "Max width/height for images uploaded within a Page/Post"
+msgstr ""
+
+#: settings.php:222 settings.php:230 settings.php:238 settings.php:546
+#: settings.php:553 settings.php:560
+msgid " (Enter 0 to disable)"
+msgstr ""
+
+#: settings.php:227 settings.php:551
+msgid "Max width/height for images uploaded directly to the Media Library"
+msgstr ""
+
+#: settings.php:235 settings.php:558
+msgid ""
+"Max width/height for images uploaded elsewhere (Theme headers, backgrounds, "
+"logos, etc)"
+msgstr ""
+
+#: settings.php:243
+msgid "Convert BMP to JPG"
+msgstr ""
+
+#: settings.php:245 settings.php:582
+msgid "Yes"
+msgstr ""
+
+#: settings.php:246 settings.php:583
+msgid "No"
+msgstr ""
+
+#: settings.php:251
+msgid "JPG Quality"
+msgstr ""
+
+#: settings.php:261 settings.php:576
+msgid " (WordPress default is 90)"
+msgstr ""
+
+#: settings.php:266
+msgid "Update Settings"
+msgstr ""
+
+#: settings.php:438
+msgid "Imsanity automatically resizes insanely huge image uploads"
+msgstr ""
+
+#: settings.php:440
+msgid ""
+"<p>Imsanity automaticaly reduces the size of images that are larger than the "
+"specified maximum and replaces the original\n"
+"\t\twith one of a more \"sane\" size.  Site contributors don\\'t need to "
+"concern themselves with manually scaling images\n"
+"\t\tand can upload them directly from their camera or phone.</p>\n"
+"\n"
+"\t\t<p>The resolution of modern cameras is larger than necessary for typical "
+"web display.\n"
+"\t\tThe average computer screen is not big enough to display a 3 megapixel "
+"camera-phone image at full resolution.\n"
+"\t\tWordPress does a good job of creating scaled-down copies which can be "
+"used, however the original images\n"
+"\t\tare permanently stored, taking up disk quota and, if used on a page, "
+"create a poor viewer experience.</p>\n"
+"\n"
+"\t\t<p>This plugin is designed for sites where high-resolution images are "
+"not necessary and/or site contributors\n"
+"\t\tdo not want (or understand how) to deal with scaling images.  This "
+"plugin should not be used on\n"
+"\t\tsites for which original, high-resolution images must be stored.</p>\n"
+"\n"
+"\t\t<p>Be sure to save back-ups of your full-sized images if you wish to "
+"keep them.</p>"
+msgstr ""
+
+#: settings.php:455
+#, php-format
+msgid "<p>Credit: Imsanity Version %s by %s </p>"
+msgstr ""
+
+#: settings.php:472
+msgid "Imsanity Settings"
+msgstr ""
+
+#: settings.php:490
+msgid "Bulk Resize Images"
+msgstr ""
+
+#: settings.php:493
+msgid ""
+"<p>If you have existing images that were uploaded prior to installing "
+"Imsanity, you may resize them\n"
+"\tall in bulk to recover disk space.  To begin, click the \"Search Images\" "
+"button to search all existing\n"
+"\tattachments for images that are larger than the configured limit.</p>\n"
+"\t<p>Limitations: For performance reasons a maximum of 250 images will be "
+"returned at one time.  Bitmap\n"
+"\timage types are not supported and will not appear in the search results.</"
+"p>"
+msgstr ""
+
+#: settings.php:501
+msgid ""
+"WARNING: Bulk Resize is a BETA feature.  It is highly recommended that you "
+"backup your wp-content/uploads\n"
+"\tfolder before proceeding.  You will have a chance to preview and select "
+"the images to convert, so\n"
+"\tit is suggested that you select only 1 or 2 images and then verify that "
+"everything is ok before\n"
+"\tprocessing your entire library.  You have been warned!"
+msgstr ""
+
+#: settings.php:508
+msgid "Search Images..."
+msgstr ""
+
+#: settings.php:525
+msgid ""
+"Imsanity settings have been configured by the server administrator. There "
+"are no site-specific settings available."
+msgstr ""
+
+#: settings.php:566
+msgid "JPG image quality"
+msgstr ""
+
+#: settings.php:580
+msgid "Convert BMP To JPG"
+msgstr ""
+
+#: settings.php:589
+msgid "Save Changes"
+msgstr ""
+
+#: libs/imagecreatefrombmp.php:14
+#, php-format
+msgid "imagecreatefrombmp: Can not open %s!"
+msgstr ""
+
+#: libs/imagecreatefrombmp.php:21
+#, php-format
+msgid "imagecreatefrombmp: %s is not a bitmap!"
+msgstr ""
+
+#: libs/imagecreatefrombmp.php:43
+#, php-format
+msgid "imagecreatefrombmp: Can not obtain filesize of %s !"
+msgstr ""
+
+#: libs/imagecreatefrombmp.php:129
+#, php-format
+msgid "imagecreatefrombmp: %s has %d bits and this is not supported!"
+msgstr ""
+
+#: ajax.php:98
+msgid "Missing ID Parameter"
+msgstr ""
+
+#: ajax.php:170
+#, php-format
+msgid "OK: %s"
+msgstr ""
+
+#: ajax.php:174
+#, php-format
+msgid "ERROR: %s (%s)"
+msgstr ""
+
+#: ajax.php:179
+#, php-format
+msgid "SKIPPED: %s (Resize not required)"
+msgstr ""
+
+#: ajax.php:185
+#, php-format
+msgid "ERROR: (Attachment with ID of %s not found) "
+msgstr ""

@@ -1,0 +1,680 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Portfolio Slideshow Pro 1.5.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-01 11:44-0500\n"
+"PO-Revision-Date: 2011-12-01 11:52-0500\n"
+"Last-Translator: Raygun Design, LLC <contact@madebyraygun.com>\n"
+"Language-Team: Raygun Design, LLC <contact@madebyraygun.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;gettext;gettext_noop;_e;_c\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n>1\n"
+"X-Poedit-Language: ENGLISH\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: admin/portfolio-slideshow-admin.php:10
+msgid "The plugin was not able to create the cache directory required for thumbnail and custom image size generation. Please see the <a href=\"http://madebyraygun.com/support/faq/why-arent-my-thumbnail-and-custom-sized-images-being-generated/\">FAQ</a> for instructions on how to resolve this issue."
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:14
+msgid "Your server does not support the GD function. You may have trouble running some thumbnail related functions in this plugin."
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:19
+msgid "The plugin will not be registered for auto-updates until you enter your email address in the \"Diagnostic\" section below."
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:24
+msgid "Your server is running an out-of-date version of PHP and the plugin cannot auto-update. It is strongly recommended that you update your web server to the current version of PHP."
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:54
+msgid "Slideshow Settings"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:55
+msgid "Documentation"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:61
+msgid "Portfolio Slideshow Pro"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:75
+msgid "Save Changes"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:83
+msgid "General usage"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:87
+msgid ""
+"<p>To use the plugin, upload your photos directly to a post or page using the WordPress media uploader, or use the standalone slideshow panel to add a slideshow anywhere. Use the [portfolio_slideshow] shortcode to display the slideshow in your page or post.</p>\n"
+"\t\t\t\t\t\n"
+"\t\t\t\t<h3>Shortcode Attributes</h3>\n"
+"\t\t\n"
+"\t\t\t\t<p>If you would like to customize your slideshows on a per-slideshow basis, you can add the following attributes to the shortcode, which will temporarily override the defaults.\n"
+"\t\t\n"
+"\t\t\t\t<p>To select a <strong>different page parent ID</strong> for the images:</p>\n"
+"\t\t\t\t<p><code>[portfolio_slideshow id=xxx]</code></p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tTo <strong>add a custom class</strong> to the slideshow wrapper:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow class=alignright]</code>\n"
+"\t\t\t\t</p>\t\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tTo change the <strong>image size</strong> you would use the size attribute in the shortcode like this:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow size=thumbnail], [portfolio_slideshow size=medium], [portfolio_slideshow size=large], [portfolio_slideshow size=full], [portfolio_slideshow size=custom]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>This setting can use any custom image size that you've registered in WordPress. Portfolio Slideshow Pro gives you the ability to create one custom image size, if you need more, take a look at the <a href=\"http://wordpress.org/extend/plugins/additional-image-sizes-zui/screenshots/\">Additional Image Sizes</a> plugin.\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>You can specify a <strong>custom image size</strong> directly in the shortcode with the height and width attributes:</p>\n"
+"\t\t\n"
+"\t\t\t\t<code>[portfolio_slideshow width=600], [portfolio_slideshow height=450], [portfolio_slideshow width=600 height=450]</code> \n"
+"\t\t\n"
+"\t\t\t\t<p>The height and width attributes override the size attribute and will not upscale or crop the images.<p>\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tYou can add a custom <strong>slide container height</strong>: \n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow slideheight=400]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tUseful if you don't want the page height to adjust with the slideshow.\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Image transition FX</strong>: \n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow trans=scrollHorz]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tYou can use this shortcode attribute to supply any transition effect supported by jQuery Cycle, even if they're not in the plugin! List of supported transitions <a href=\"http://jquery.malsup.com/cycle/begin.html\">here</a> Not all transitions will work with all themes, if in doubt, stick with fade or none.\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Transition speed</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow speed=400]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tAdd a <strong>delay</strong> to the beginning of the slideshow:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow delay=1000]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Show titles, captions, or descriptions</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow showtitles=true], [portfolio_slideshow showcaps=true], [portfolio_slideshow showdesc=true]</code>\n"
+"\t\t\t\t(use false to disable)</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Center the slideshow</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow centered=true], [portfolio_slideshow centered=false]</code></p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Time per slide when slideshow is playing (timeout)</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow timeout=4000]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Autoplay</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow autoplay=true]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Duration</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>You can set a time for the entire slideshow, in seconds, which will automatically calculate the per-slide timeout for you. This pairs nicely with the audio player support.</p>\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow duration=300]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Audio</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>You can add audio to the slideshow by specifying any MP3 URL. This feature pairs nicely with the \"Duration\" attribute, you can create a slideshow that lasts exactly as long as the audio file. Be careful with autoplay! If you have multiple posts on a page (the blog homepage, for example), you'll end up with overlapping audio. Autoplay is recommended on single pages only. You must have our free <a href=\"http://madebyraygun.com/lab/haiku/\">Haiku</a> audio player plugin installed and activated for this feature to work.</p>\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow audio=http://madebyraygun.com/uploads/audiofile.mp3]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Randomize slideshow</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow random=true]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Exclude featured image</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow exclude_featured=true]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Disable slideshow wrapping</strong>: \n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow nowrap=true]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tor enable it like this:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow nowrap=false]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Clicking on a slideshow image:</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>Clicking on a slideshow image can advance the slideshow, open a custom URL (set in the media uploader), or open the full-size version of the image in a lightbox:\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow click=advance] or [portfolio_slideshow click=openurl] or [portfolio_slideshow click=lightbox]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Click target:</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t<p>If you've set the click behavior to open a URL, you can specify whether it should open in the current window or a new window:\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow target=current] or [portfolio_slideshow target=new]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Navigation links</strong> can be placed at the top:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow navpos=top]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tor at the bottom:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow navpos=bottom]</code></p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>Use <code>[portfolio_slideshow navpos=disabled]</code> to disable navigation altogether. Slideshow will still advance when clicking on slides, using the pager, or with autoplay.</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p><strong>Navigation link style</strong> can be selected:</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow navstyle=text]</code> or <code>[portfolio_slideshow navstyle=graphical]</code> </p>\n"
+"\t\t\n"
+"\t\t\t\t<p>The <strong>navigation info</strong> can be customized:</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>Hide the play button: </p>\n"
+"\t\t\t\t<p><code>[portfolio_slideshow showplay=false]</code></p>\n"
+"\t\t\n"
+"\t\t\t\t<p>Hide the slidecounter: </p>\n"
+"\t\t\t\t<p><code>[portfolio_slideshow showinfo=false]</code></p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p><strong>Pager style</strong> can be selected:</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow pagerstyle=thumbs]</code> or <code>[portfolio_slideshow pagerstyle=bullets]</code> or <code>[portfolio_slideshow pagerstyle=numbers]</code></p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p><strong>The thumbnail carousel</strong> can be enabled:</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow carousel=true]</code> or disabled\n"
+"\t\t\t\t\n"
+"\t\t\t\t<code>[portfolio_slideshow carousel=false]</code>\n"
+"\t\t\n"
+"\t\t\t\t<p>You can change the number of<strong>thumbnails per row</strong>:</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow carouselsize=8]</code>\n"
+"\t\t\n"
+"\t\t\t\t<p><strong>Pager position</strong> can be selected:\n"
+"\t\t\n"
+"\t\t\t<code>[portfolio_slideshow pagerpos=top]</code> \n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tor at the bottom:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow pagerpos=bottom]</code></p> \n"
+"\t\t\n"
+"\t\t\t\t<p>or disabled :\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow pagerpos=disabled]</code></p>\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p><strong>Toggle thumbnials</strong> can be enabled or disabled:\n"
+"\t\t\n"
+"\t\t\t<code>[portfolio_slideshow togglethumbs=true]</code> or </code> [portfolio_slideshow togglethumbs=false]\n"
+"\t\t\t\t</p>\n"
+"\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Include or exclude slides</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow include=\"1,2,3,4\"]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<code>[portfolio_slideshow exclude=\"1,2,3,4\"]</code>\n"
+"\t\t\t\t</p>\n"
+"\t\t"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:339
+msgid "<p>You need to specify the attachment ID, which you can find in your "
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:339
+msgid ""
+"Media Library</a> by hovering over the thumbnail. You can only include attachments which are attached to the current post. Do not use these attributes simultaneously, they are mutually exclusive.</p>\n"
+"\t\t\n"
+"\t\t\t\t<p>Instead of including or excluding slides, you may want to consider adding a "
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:341
+msgid ""
+"standalone slideshow</a> with just the images you need and inserting that instead.</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\t<strong>Multiple slideshows per post/page</strong>:\n"
+"\t\t\t\t</p>\n"
+"\t\t\t\t\n"
+"\t\t\t\t<p>\n"
+"\t\t\t\tYou can insert as many slideshows as you want in a single post or page by using the include/exclude attributes, or by creating multiple standalone slideshows.</p>\n"
+"\t\t\t\t</p>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:398
+msgid "Slideshow size <span class=\"vtip\" title=\"You can change the default image sizes in the Media Settings control panel, or add a new custom image size of your own. If you change the settings for an existing (WordPress built-in) image size, you will need to regenerate your thumbnails to see the changes reflected in existing images. Search the WordPress plugin repository for the Regenerate Thumbnails plugin for information on how to do this.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:407
+msgid "Custom size: <span class=\"vtip\" title=\"The size in pixels of your new default image size. This can be overridden in the shortcode with the height and width attributes, e.g.: [portfolio_slideshow width=500].\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:415
+msgid "Transition FX <span class=\"vtip\" title=\"You can override these in the shortcode with any option that the jQuery Cycle plugin supports. Note: The scrollHorz transition does not work well with fluid-layout themes such as TwentyEleven.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:423
+msgid "Transition speed <span class=\"vtip\" title=\"How long should the transition last when the slideshow is advanced? Enter in milliseconds, e.g. 400 = 0.4 seconds per transition.\"?\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:431
+msgid "Show titles, captions, & descriptions"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:439
+msgid "Center slideshow <span class=\"vtip\" title=\"Centers slideshow, nav, &amp; pager within the parent content area.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:447
+msgid "Support for fluid layouts <span class=\"vtip\" title=\"If you have a fluid layout (like TwentyEleven) and want your slideshows to resize dynamically, leave this checked. If you have a fixed-width layout and notice the content area shifting before the slideshow loads, you can uncheck this to prevent that.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:456
+msgid "Slideshow timing <span class=\"vtip\" title=\"How long should each slide be displayed during an automatic slideshow? Enter in milliseconds, e.g. 3000 = 3 seconds per slide.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:464
+msgid "Enable autoplay <span class=\"vtip\" title=\"Starts slideshows automatically when the page is loaded.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:472
+msgid "Randomize slideshow <span class=\"vtip\" title=\"Play the slideshow back in a random order.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:480
+msgid "Exclude featured images from slideshow <span class=\"vtip\" title=\"If you use the featured image function to create gallery thumbnails but don't want those images to appear in the slideshow, use this option.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:489
+msgid "Show loading<br />animation <span class=\"vtip\" title=\"If you've got a slow connection or lots of images, sometimes the slideshow can take a little while to load. Selecting this option will include a loading gif to show that something is happening. You can customize the placement of the loading gif with CSS.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:498
+msgid "Disable slideshow wrapping <span class=\"vtip\" title=\"Should the slideshow play through to the beginning after it gets to the end, or simply stop?\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:506
+msgid "Clicking on a<br />slideshow image: <span class=\"vtip\" title=\"URLs for the <em>Opens a custom URL</em> option are set in the image uploader. The lighbox option links to the full-size version of the image, so make sure your full-size images aren't too big.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:514
+msgid "New URL opens in:"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:522
+msgid "Update URL with slide IDs <span class=\"vtip\" title=\"You can enable this feature to udpate the URL of the page with the slide ID number, e.g: http://example.com/slideshow/#3 will link directly to the third slide in the slideshow.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:530
+msgid "Navigation style: <span class=\"vtip\" title=\"What kind of navigation would you like to use?\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:538
+msgid "Navigation display options:"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:546
+msgid "Enhanced navigation:"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:554
+msgid "Navigation position <span class=\"vtip\" title=\"Where should the navigation controls appear?\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:562
+msgid "Pager style <span class=\"vtip\" title=\"Which type of slideshow pager would you like to use?\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:570
+msgid "Thumbnail size <span class=\"vtip\" title=\"You can specify the size of the thumbnails in the pager. (px)\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:578
+msgid "Thumbnail margin <span class=\"vtip\" title=\"How much space between each thumbnail? (px)\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:586
+msgid "Number of thumbs per row <span class=\"vtip\" title=\"Number of thumbnails to display per row, applies to thumbnail view and the carousel.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:594
+msgid "Thumbnail toggle <span class=\"vtip\" title=\"Hides thumbnails by default with an option to show them.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:602
+msgid "Proportional thumbnails <span class=\"vtip\" title=\"Preserve thumbnail aspect ratio.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:610
+msgid "Thumbnail border color <span class=\"vtip\" title=\"Proportional thumbnails require a border to fit properly in the theme. Set this to match the background color of your site in hexidecimal, i.e. 000000 is black, FFFFFF is white.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:620
+msgid "Enable thumbnail carousel <span class=\"vtip\" title=\"Show a limited number of thumbnails at a time with the ability to scroll through and see more.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:628
+msgid "Pager position <span class=\"vtip\" title=\"Where should the slideshow pager appear?\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:637
+msgid "Enable Fancy Grid <span class=\"vtip\" title=\"The fancy grid toggles between a thumbnail view and a slideshow view.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:645
+msgid "Email address <span class=\"vtip\" title=\"The email address you used to purchase the plugin.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:653
+msgid "jQuery version <span class=\"vtip\" title=\"If you're having trouble with the Javascript effects, you can try an older version of jQuery, or disable it altogether. This sometimes helps if you have plugins or themes that rely on their own version of jQuery. For best results, leave this at the default setting.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:661
+msgid "Load Fancybox <span class=\"vtip\" title=\"Should we load the Fancybox library for image zoom, or do you have your own plugin for that?\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:669
+msgid "Load Cycle <span class=\"vtip\" title=\"If another plugin is loading a conflicting Cycle library, you can try disabling ours.\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:677
+msgid "Enable debug mode <span class=\"vtip\" title=\"Don't load minified scripts and possibly output debug info to screen to help troubleshoot issues with the plugin\">?</span>"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:686
+msgid "Version"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:710
+msgid "width (px)"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:710
+msgid "height (px)"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:717
+msgid "fade"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:718
+msgid "horizontal scroll"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:731
+msgid "titles"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:732
+msgid "captions"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:733
+msgid "descriptions"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:796
+msgid "Advances the slideshow"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:797
+msgid "Opens a custom URL"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:798
+msgid "Opens the image in a lightbox"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:806
+msgid "Same window"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:807
+msgid "New window"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:822
+msgid "text"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:823
+msgid "graphical"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:831
+msgid "show play button"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:832
+msgid "show slide numbers"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:840
+msgid "Enable touch/swipe controls"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:841
+msgid "Enable keyboard navigation"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:849
+#: admin/portfolio-slideshow-admin.php:918
+msgid "top"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:850
+#: admin/portfolio-slideshow-admin.php:919
+msgid "bottom"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:851
+#: admin/portfolio-slideshow-admin.php:920
+msgid "disabled"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:859
+msgid "thumbs"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:860
+msgid "numbers"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:861
+msgid "bullets"
+msgstr ""
+
+#: admin/portfolio-slideshow-admin.php:936
+msgid "The email address you used to purchase the plugin is your license key to enable automatic updates."
+msgstr ""
+
+#: inc/custom-post.php:19
+msgid "Upload and manage images"
+msgstr ""
+
+#: inc/custom-post.php:39
+msgid "Drag and drop to re-orde"
+msgstr ""
+
+#: inc/custom-post.php:39
+msgid "<strong>Instructions</strong><br />To add this slideshow to a post, use the shortcode <code>[portfolio_slideshow id="
+msgstr ""
+
+#: inc/custom-post.php:39
+msgid "]</code>. To add it to a widget, use slideshow ID <strong>"
+msgstr ""
+
+#: inc/custom-post.php:39
+msgid "</strong>. To add it directly to your template (header, sidebar, homepage, etc.), add this PHP to your template:<br /><code>&lt;?php echo do_shortcode('[portfolio_slideshow id="
+msgstr ""
+
+#: inc/custom-post.php:39
+msgid "]');?&gt;</code>"
+msgstr ""
+
+#: inc/custom-post.php:40
+msgid "Be sure to save your changes in the gallery uploader, then click \"Save Draft\" to update this page for further instructions."
+msgstr ""
+
+#: inc/custom-post.php:136
+msgid "Tags"
+msgstr ""
+
+#: inc/custom-post.php:155
+msgid "Slideshows"
+msgstr ""
+
+#: inc/custom-post.php:156
+msgid "Slideshow"
+msgstr ""
+
+#: inc/custom-post.php:157
+msgid "Add new slideshow"
+msgstr ""
+
+#: inc/functions.php:75
+msgid "<span style='color:#c43; padding:0'>Portfolio Slideshow<br />slide link URL</span>"
+msgstr ""
+
+#: inc/functions.php:116
+msgid "Excl. from slideshow"
+msgstr ""
+
+#: inc/shortcode.php:138
+msgid "Pause"
+msgstr ""
+
+#: inc/shortcode.php:138
+msgid "Play"
+msgstr ""
+
+#: inc/shortcode.php:141
+msgid "Prev"
+msgstr ""
+
+#: inc/shortcode.php:141
+msgid "|"
+msgstr ""
+
+#: inc/shortcode.php:141
+msgid "Next"
+msgstr ""
+
+#: inc/shortcode.php:149
+msgid "show thumbs"
+msgstr ""
+
+#: inc/shortcode.php:149
+msgid "hide thumbs"
+msgstr ""
+
+#: inc/widget.php:40
+msgid "Add a slideshow to any widgetized area."
+msgstr ""
+
+#: inc/widget.php:46
+msgid "Portfolio Slideshow"
+msgstr ""
+
+#: inc/widget.php:122
+msgid "title"
+msgstr ""
+
+#: inc/widget.php:132
+msgid "Slideshow ID:"
+msgstr ""
+
+#: inc/widget.php:138
+msgid "Image Size:"
+msgstr ""
+

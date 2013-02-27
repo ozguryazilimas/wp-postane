@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Editable Comments en español\n"
+"POT-Creation-Date: 2011-03-04 21:42+0100\n"
+"PO-Revision-Date: 2011-03-04 21:42+0100\n"
+"Last-Translator: Eduardo Larequi <elarequi@gmail.com>\n"
+"Language-Team: Eduardo Larequi <elarequi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c;_x;_n:1,2\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: Spain\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: editable-comments.php:66
+msgid "Editable Comments options"
+msgstr "Opciones de Editable Comments"
+
+#: editable-comments.php:71
+msgid "Informations"
+msgstr "Informaciones"
+
+#: editable-comments.php:73
+msgid "Plugin developed by"
+msgstr "Plugin desarrollado por"
+
+#: editable-comments.php:75
+msgid "independent web developer"
+msgstr "desarrollador web independiente"
+
+#: editable-comments.php:76
+msgid "Follow me on twitter"
+msgstr "Sígueme en Twitter"
+
+#: editable-comments.php:78
+msgid "Does this plugin help you ? Help keep it actively developed by clicking the donate button."
+msgstr "¿Te ha servido este plugin de ayuda? Puedes ayudar a su desarrollo haciendo clic en el botón de donación."
+
+#: editable-comments.php:94
+msgid "Configuration"
+msgstr "Configuración"
+
+#: editable-comments.php:98
+msgid "Time before edit expiration:"
+msgstr "Tiempo de edición de los comentarios:"
+
+#: editable-comments.php:99
+#: editable-comments.php:111
+msgid "minutes"
+msgstr "minutos"
+
+#: editable-comments.php:103
+msgid "Use the javascript dialog box"
+msgstr "Utilizar el cuadro de diálogo en JavaScript"
+
+#: editable-comments.php:107
+msgid "Allow delete for users"
+msgstr "Permitir que los usuarios borren sus comentarios"
+
+#: editable-comments.php:110
+msgid "Time before delete expiration:"
+msgstr "Tiempo de borrado de los comentarios:"
+
+#: editable-comments.php:115
+msgid "Help to promote this plugin by keeping this box checked (show a link in the edit form)"
+msgstr "Si activas esta casilla, ayudarás a difundir el plugin (muestra un enlace en el formulario de edición)"
+
+#: editable-comments.php:118
+msgid "Save the configuration"
+msgstr "Guardar la configuración"
+
+#: editable-comments.php:124
+msgid "Installation"
+msgstr "Instalación"
+
+#: editable-comments.php:126
+msgid "Copy/paste the following codes in the comments loop (into comments.php or functions.php if your template uses <code>wp_list_comments()</code>):"
+msgstr "Copia y pega los siguientes códigos en el bucle de comentarios (bien en el fichero <strong>comments.php</strong>, bien en <strong>functions.php</strong>, siempre que tu plantilla utilize <code>wp_list_comments()</code>):"
+
+#: editable-comments.php:129
+msgid "These two functions accept three parameters:"
+msgstr "Estas dos funciones aceptan tres parámetros:"
+
+#: editable-comments.php:129
+msgid "and"
+msgstr "y"
+
+#: editable-comments.php:219
+msgid "Confirm you want delete this comment ?"
+msgstr "Confirma que quieres borrar este comentario"
+
+#: editable-comments.php:275
+msgid "Your comment has been updated."
+msgstr "Tu comentario ha sido actualizado"
+
+#: editable-form.php:13
+msgid "Edit comment"
+msgstr "Editar comentario"
+
+#: editable-form.php:20
+msgid "Update"
+msgstr "Actualizar"
+
+#: editable-form.php:22
+#: editable-form.php:24
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: editable-form.php:27
+msgid "Editable Comments, by Julien Appert"
+msgstr "Editable Comments, de Julien Appert"
+

@@ -1,0 +1,274 @@
+/**
+ * CubePM Main CSS
+ */
+
+.cubepm {
+	line-height: 1;	
+}
+
+.cubepm a {
+	color: #007C9C;
+}
+
+.cubepm a:hover {
+	color: #00A5CF;
+}
+
+.cubepm input[type=text],.cubepm input[type=button],.cubepm input[type=submit],.cubepm textarea
+	{
+	width: 99%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.cubepm textarea {
+	height: 200px;
+}
+
+.cubepm form{
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.cubepm div.cpm_updated,div.cpm_error {
+	border-width: 1px;
+	border-style: solid;
+	padding: 0.6em;
+	margin: 15px 0;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.cubepm div.cpm_updated p,div.cpm_error p {
+	margin: .5em 0;
+	padding: 2px;
+	color: #333;
+	font-size: 12px;
+	line-height: 14px;
+}
+
+.cubepm div.cpm_error {
+	background-color: #FFEBE8;
+	border-color: #C00;
+}
+
+.cubepm div.cpm_updated {
+	background-color: #FFFFE0;
+	border-color: #E6DB55;
+}
+
+.cubepm .cpm-inbox .cpm-inbox-from {
+	width: 190px;
+}
+
+.cubepm .cpm-inbox .cpm-inbox-received {
+	width: 90px;
+	text-align: center;
+}
+
+.cubepm .cpm-user {
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 20px;
+	display: inline-block;
+	line-height: 25px;
+}
+
+.cubepm table {
+	font-size: 12px;
+	color: #444;
+	width: 100%;
+	background: #fff;
+}
+
+.cubepm table a {
+	text-decoration: none;
+}
+
+.cubepm table p {
+	line-height: 14px;
+	margin: 0;
+}
+
+.cubepm table thead tr th {
+	background: #555;
+	color: #fff !important;
+}
+
+.cubepm table td, .cubepm table th {
+	padding: 7px 10px !important;
+	font-size: 12px;
+}
+
+.cubepm table tbody tr.even td {
+	background-color: #FAFAFA;
+}
+
+.cubepm table tbody tr.odd td {
+	background-color: #F2F7FC;
+}
+
+.cubepm table tbody tr.unopened td {
+	background-color: #D2F0D1 !important;
+}
+
+.cubepm table tbody tr.unopened td.cpm-inbox-subject {
+	font-weight: bold;
+}
+
+.cubepm .cpm-thread-from {
+	text-align: center;
+	width: 100px;
+	line-height: 14px !important;
+}
+
+.cubepm .cpm-thread-from-avatar {
+	margin-bottom: 5px;
+}
+
+.cubepm td.cpm-thread-message,.cubepm td.cpm-thread-from {
+	vertical-align: top;
+}
+
+.cubepm .cpm-thread-from-time {
+	font-size: 11px;
+	margin-top: 3px;
+}
+
+.cubepm .cpm-thread-message p {
+	line-height: 20px !important;
+	margin-top: 2px !important;
+	margin-bottom: 18px !important;
+}
+
+.cubepm .cpm-thread-meta {
+	font-size: 11px;
+	margin-bottom: 10px;
+	background: #FAFAFA;
+	border: 2px solid #FFF;
+	padding: 10px;
+}
+
+.cubepm .cpm-thread-meta-label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.cubepm .cpm-user-separator {
+	margin-right: 2px;
+}
+
+.cubepm .cpm-thread-meta-subscribe label {
+	float: left;
+	margin-top: 3px;
+	margin-left: 5px;
+}
+
+.cubepm .cpm-thread-meta-subscribe input {
+	float: left;
+}
+
+.cubepm .clear {
+	clear: both;
+}
+
+.cubepm form {
+	margin: 0;
+	padding: 0;
+}
+
+.cubepm .cpm-thread-reply,.cubepm .cpm-thread-reply td {
+	background: none !important;
+	padding: 0 !important;
+	border: none !important;
+}
+
+.cubepm textarea {
+	overflow: auto;
+}
+
+.cubepm .cpm-header{
+	margin-bottom:10px;
+}
+
+.cubepm .cpm-button {
+	display: inline-block;
+	font-size:11px;
+	background:#F0FCFF;
+	border: 1px solid #8FBFC9;
+	padding:10px 20px;
+	text-decoration: none;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	margin-right:10px;
+	font-weight:bold;
+}
+
+.cubepm .cpm-button:hover {
+	background:#D3EEF5;
+}
+
+.cubepm .cpm-thread-meta{
+	color: #444;
+}
+
+/* CSS for autocomplete script */
+
+.cpm_recipient_suggest_result {
+	padding: 5px 33px;
+	background-position: left center;
+	background-repeat: no-repeat;
+	text-align: left;
+	color: #555;
+	font-weight: bold;
+}
+
+.ac_results {
+	padding: 0px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	overflow: hidden;
+	z-index: 99999;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	/* 
+	if width will be 100% horizontal scrollbar will apear 
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font: menu;
+	font-size: 12px;
+	/* 
+	it is very important, if line-height not setted or setted 
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+	border-bottom: 1px solid #eee;
+}
+
+.ac_odd {
+	background-color: #eee;
+}
+
+.ac_over {
+	background-color: #ddd;
+	color: #000;
+}

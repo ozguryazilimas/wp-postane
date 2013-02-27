@@ -1,0 +1,4 @@
+.slideshow-content, .showloader .portfolio-slideshow {display: block !important; visibility: visible !important;}
+.showloader {background: none;}
+.psp-active{display: none;}
+.slideshow-nav, .pscarousel {display: none;}

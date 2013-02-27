@@ -1,0 +1,9 @@
+/* @override http://dev.madebyraygun.com/portfolio/wp-content/plugins/portfolio-slideshow-pro/inc/tinymce/includes/css/ps-tinymce.css */
+
+#ps-dialog { }
+#ps-dialog div{ padding: 5px 0; height: 20px;}
+#ps-dialog label { display: block; float: left; margin: 0 8px 0 0; width: 110px; }
+#ps-dialog select, #ps-dialog input { display: block; float: right; width: 100px; padding: 3px 5px;}
+#ps-dialog select { width: 112px; }
+#ps-dialog #insert { display: block; line-height: 24px; text-align: center; margin: 10px 0 0 0; float: right;}
+.hidden {display: none;}

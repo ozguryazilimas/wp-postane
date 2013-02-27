@@ -1,0 +1,23 @@
+div#postdivrich.postarea, a#post-preview {
+	display: none;
+}
+
+#images li {
+	margin: 0 10px 10px 7px;
+	float: left;
+	list-style-type: none;
+}
+
+.instructions {
+	clear: both;
+}
+#ps_custom_post_type_uploads div.inside p {
+font-size: 1.1em;
+line-height: 1.5em;	
+margin: 10px 40px 15px 0;
+}
+
+
+
+
+

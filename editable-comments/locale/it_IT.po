@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Editable Comments\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-28 12:23+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Julien Appert <contact@julienappert.com>\n"
+"Language-Team: Julien Appert <contact@julienappert.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: C:\\UwAmp\\www\\wordpress\\wp-content\\plugins\\editable-comments\\\n"
+"X-Poedit-SearchPath-0: C:\\UwAmp\\www\\wordpress\\wp-content\\plugins\\editable-comments\n"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:21
+msgid "Your comment has been updated."
+msgstr "Il tuo commento è stato modificato."
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:63
+msgid "Editable Comments options"
+msgstr "Opzioni di Editable Comments"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:68
+msgid "Informations"
+msgstr "Informazioni"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:70
+msgid "Plugin developed by"
+msgstr "Plugin sviluppato da"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:72
+msgid "independent web developer"
+msgstr "sviluppatore web indipendente"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:73
+msgid "Follow me on twitter"
+msgstr "Seguimi su Twitter"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:75
+msgid "Does this plugin help you ? Help keep it actively developed by clicking the donate button."
+msgstr "Questo plugin ti ha aiutato? Dacci una mano a tenerlo in continuo sviluppo facendo clic sul pulsante delle donazioni."
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:91
+msgid "Configuration"
+msgstr "Configurazione"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:95
+msgid "Time before edit expiration:"
+msgstr "Tempo per la modifica del commento:"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:96
+msgid "minutes"
+msgstr "minuti"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:100
+msgid "Use the javascript dialog box"
+msgstr "Usa la finestra di dialogo in javascript"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:104
+msgid "Help to promote this plugin by keeping this box checked (show a link in the edit form)"
+msgstr "Aiutaci a promuovere questo plugin tenendo il segno di spunta su questo box (mostra un link nel modulo di modifica)"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-comments.php:107
+msgid "Save the configuration"
+msgstr "Salva la configurazione"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-form.php:13
+msgid "Edit comment"
+msgstr "Modifica il commento"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-form.php:20
+msgid "Update"
+msgstr "Aggiorna"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-form.php:21
+msgid "Cancel"
+msgstr "Annulla"
+
+#: C:\UwAmp\www\wordpress\wp-content\plugins\editable-comments/editable-form.php:23
+msgid "Editable Comments, by Julien Appert"
+msgstr "Editable Comments, di Julien Appert"
+
+#~ msgid ""
+#~ "<p><span style=\"color:green\">Your comment has been modified.</span></p>"
+#~ msgstr ""
+#~ "<p><span style=\"color:green\">Il tuo commento è stato modificato.</"
+#~ "span></p>"
+
+#~ msgid "Editable Comments"
+#~ msgstr "Editable Comments"

@@ -1,0 +1,307 @@
+# French translations for Imsanity package.
+# Copyright (C) 2012 THE Imsanity'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Imsanity package.
+#
+# chryjs <chryjs@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: Imsanity 2.1.5\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/extend/plugins/imsanity\n"
+"POT-Creation-Date: 2012-06-29 14:24+0200\n"
+"PO-Revision-Date: 2012-06-29 16:13+0200\n"
+"Last-Translator: chryjs\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.4\n"
+
+#: imsanity.php:138
+#, php-format
+msgid ""
+"Oh Snap! Imsanity was unable to resize this image for the following reason: "
+"'%s'\n"
+"\t\t\t\t\t.  If you continue to see this error message, you may need to "
+"either install missing server components or disable the Imsanity plugin.  If "
+"you think you have discovered a bug, please report it on the Imsanity "
+"support forum."
+msgstr ""
+"Oh zut !  Imsanity n'était pas en mesure de redimensionner cette image pour "
+"la raison suivante :"
+"'%s'\n"
+"\t\t\t\t\t. Si vous continuez à voir ce message d\\'erreur, vous devrez "
+"peut-être"
+"soit installer les composants manquants sur le serveur ou désactiver le "
+"plugin Imsanity. si"
+"vous pensez que vous avez découvert un bug, s'il vous plaît signalez le sur "
+"le forum d'assistance Imsanity"
+
+#: imsanity.php:192
+msgid ""
+"Oh Snap! Imsanity was Unable to process the BMP file.  If you continue to "
+"see this error you may need to disable the BMP-To-JPG feature in Imsanity "
+"settings."
+msgstr ""
+"Oh zut ! Imsanity n'a pas pu traiter le fichier BMP. Si vous continuez à"
+"voir cette erreur, vous devrez peut-être désactiver la fonction de BMP-To-JPG "
+"dans les paramètres Imsanity."
+
+#. create new menu for site configuration
+#: settings.php:29
+msgid "Imsanity Plugin Settings"
+msgstr "Configuration du plugin Imsanity"
+
+#: settings.php:175 settings.php:188
+msgid "Imsanity Network Settings"
+msgstr "Configuration globale d'Imsanity"
+
+#: settings.php:195
+msgid "Imsanity network settings saved."
+msgstr "Configuration globale d'Imsanity enregistrée."
+
+#: settings.php:209
+msgid "Global Settings Override"
+msgstr "Verrouillage des paramètres globaux"
+
+#: settings.php:212
+msgid "Allow each site to configure Imsanity settings"
+msgstr "Permettre à chaque site de configurer les paramètres d'Imsanity"
+
+#: settings.php:213
+msgid "Use global Imsanity settings (below) for all sites"
+msgstr "Utiliser les paramètres globaux (ci-dessous) pour tous les sites"
+
+#: settings.php:219 settings.php:544
+msgid "Max width/height for images uploaded within a Page/Post"
+msgstr ""
+"Largeur/hauteur max pour les images téléchargées dans une page ou un "
+"commentaire"
+
+#: settings.php:222 settings.php:230 settings.php:238 settings.php:546
+#: settings.php:553 settings.php:560
+msgid " (Enter 0 to disable)"
+msgstr "(Entrez 0 pour désactiver)"
+
+#: settings.php:227 settings.php:551
+msgid "Max width/height for images uploaded directly to the Media Library"
+msgstr ""
+"Largeur/hauteur max pour les images téléchargées directement dans la "
+"bibliothèque"
+
+#: settings.php:235 settings.php:558
+msgid ""
+"Max width/height for images uploaded elsewhere (Theme headers, backgrounds, "
+"logos, etc)"
+msgstr ""
+"Largeur/hauteur max pour les images téléchargées ailleurs (en-têtes des "
+"thèmes, des arrière-plans, logos, etc)"
+
+#: settings.php:243
+msgid "Convert BMP to JPG"
+msgstr "Convertir BMP en JPG"
+
+#: settings.php:245 settings.php:582
+msgid "Yes"
+msgstr "Oui "
+
+#: settings.php:246 settings.php:583
+msgid "No"
+msgstr "Non"
+
+#: settings.php:251
+msgid "JPG Quality"
+msgstr "Qualité JPEG"
+
+#: settings.php:261 settings.php:576
+msgid " (WordPress default is 90)"
+msgstr " (Par défaut dans WordPress : 90)"
+
+#: settings.php:266
+msgid "Update Settings"
+msgstr "Sauvegarder la configuration"
+
+#: settings.php:438
+msgid "Imsanity automatically resizes insanely huge image uploads"
+msgstr "Imsanity redimensionne automatiquement les énormes images téléchargées"
+
+#: settings.php:440
+msgid ""
+"<p>Imsanity automaticaly reduces the size of images that are larger than the "
+"specified maximum and replaces the original\n"
+"\t\twith one of a more \"sane\" size.  Site contributors don\\'t need to "
+"concern themselves with manually scaling images\n"
+"\t\tand can upload them directly from their camera or phone.</p>\n"
+"\n"
+"\t\t<p>The resolution of modern cameras is larger than necessary for typical "
+"web display.\n"
+"\t\tThe average computer screen is not big enough to display a 3 megapixel "
+"camera-phone image at full resolution.\n"
+"\t\tWordPress does a good job of creating scaled-down copies which can be "
+"used, however the original images\n"
+"\t\tare permanently stored, taking up disk quota and, if used on a page, "
+"create a poor viewer experience.</p>\n"
+"\n"
+"\t\t<p>This plugin is designed for sites where high-resolution images are "
+"not necessary and/or site contributors\n"
+"\t\tdo not want (or understand how) to deal with scaling images.  This "
+"plugin should not be used on\n"
+"\t\tsites for which original, high-resolution images must be stored.</p>\n"
+"\n"
+"\t\t<p>Be sure to save back-ups of your full-sized images if you wish to "
+"keep them.</p>"
+msgstr ""
+"<p>Imsanity réduit automatiquement la taille des images qui sont plus grandes "
+"que le maximum spécifié et remplace l'original\n"
+"\t\tavec un de taille plus \"correcte\". Les contributeurs du site n'ont "
+"pas besoin de se préoccuper de la mise à l'échelle manuelle des images\n"
+"\t\tet peuvent les télécharger directement à partir de leur appareil  "
+"photo ou téléphone.</p>\n"
+"\n"
+"\t\t<p>La résolution des appareils photos modernes est plus grande que "
+"nécessaire pour l'affichage web classique.\n"
+"\t\tL'écran d'ordinateur moyen n'est pas assez grand pour afficher une image "
+"de 3 mégapixels d'un appareil photo ou téléphone en pleine résolution.\n"
+"\t\tWordPress fait un bon travail en créant des copies à échelle réduite qui "
+"peuvent être"
+"utilisées, mais les images originales\n"
+"\t\tsont stockées de façon permanente, en prenant de la place disque et, si "
+"elles sont utilisées sur une page, génèrent un affichage inutilisable.</p>\n"
+"\n"
+"\t\t<p>Ce plugin est conçu pour les sites où des images haute résolution ne "
+"sont pas nécessaires et / ou les contributeurs du site\n"
+"\t\tne veulent pas (ou ne comprennent pas comment) mettre à l'échelle des "
+"images. Ce plugin ne doit pas être utilisé sur\n"
+"\t\tles sites pour lesquels les images haute résolution d'origine doivent "
+"être stockées.</p>\n"
+"\n"
+"\t\t<p>N'oubliez pas d'enregistrer des copies de vos images en taille réelle "
+"si vous souhaitez les conserver.</p>"
+
+#: settings.php:455
+#, php-format
+msgid "<p>Credit: Imsanity Version %s by %s </p>"
+msgstr "<p>Crédit : Imsanity Version %s par %s</p>"
+
+#: settings.php:472
+msgid "Imsanity Settings"
+msgstr "Paramètres Imsanity"
+
+#: settings.php:490
+msgid "Bulk Resize Images"
+msgstr "Redimensionner les images en lots"
+
+#: settings.php:493
+msgid ""
+"<p>If you have existing images that were uploaded prior to installing "
+"Imsanity, you may resize them\n"
+"\tall in bulk to recover disk space.  To begin, click the \"Search Images\" "
+"button to search all existing\n"
+"\tattachments for images that are larger than the configured limit.</p>\n"
+"\t<p>Limitations: For performance reasons a maximum of 250 images will be "
+"returned at one time.  Bitmap\n"
+"\timage types are not supported and will not appear in the search results.</"
+"p>"
+msgstr ""
+"<p>Si vous avez déjà des images qui ont été téléchargés avant d'installer"
+"Imsanity, vous pouvez les redimensionner\n"
+"\ttout en vrac pour récupérer l'espace disque. Pour commencer, cliquez sur le "
+"bouton \"Rechercher des images\" pour rechercher toutes les images "
+"existantes\n"
+"\tqui sont plus grandes que la limite configurée.</p>\n"
+"\t<p>Restrictions : Pour des raisons de performances, un maximum de 250 "
+"images sera"
+"traité à la fois. Les images\n"
+"\tde type Bitmap ne sont pas prises en charge et n'apparaissent pas dans les "
+"résultats de recherche.</p>"
+
+#: settings.php:501
+msgid ""
+"WARNING: Bulk Resize is a BETA feature.  It is highly recommended that you "
+"backup your wp-content/uploads\n"
+"\tfolder before proceeding.  You will have a chance to preview and select "
+"the images to convert, so\n"
+"\tit is suggested that you select only 1 or 2 images and then verify that "
+"everything is ok before\n"
+"\tprocessing your entire library.  You have been warned!"
+msgstr ""
+"AVERTISSEMENT : Redimensionner en vrac est une fonctionnalité en cours de "
+"développement. Il est fortement recommandé que vous"
+"sauvegardiez votre réperoire wp-content/uploads \n"
+"\tavant de continuer. Vous aurez une chance de prévisualiser et de "
+"sélectionner "
+"les images à convertir, il \n"
+"\tvous est suggéré de sélectionner seulement 1 ou 2 images, pour vérifier que"
+"tout est ok avant \n"
+"\ttraiter l'intégralité de votre bibliothèque. Vous avez été averti  !"
+
+#: settings.php:508
+msgid "Search Images..."
+msgstr "Recherche d'images..."
+
+#: settings.php:525
+msgid ""
+"Imsanity settings have been configured by the server administrator. There "
+"are no site-specific settings available."
+msgstr ""
+"Les paramètres d'Imsanity ont été configurés par l'administrateur du serveur. "
+"Il n'y a aucun paramètre spécifique disponible pour ce site."
+
+#: settings.php:566
+msgid "JPG image quality"
+msgstr "Qualité d'image JPEG"
+
+#: settings.php:580
+msgid "Convert BMP To JPG"
+msgstr "Convertir BMP en JPG"
+
+#: settings.php:589
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+#: libs/imagecreatefrombmp.php:14
+#, php-format
+msgid "imagecreatefrombmp: Can not open %s!"
+msgstr "imagecreatefrombmp: Ne peut pas ouvrir %s !"
+
+#: libs/imagecreatefrombmp.php:21
+#, php-format
+msgid "imagecreatefrombmp: %s is not a bitmap!"
+msgstr "imagecreatefrombmp: %s n\\'est pas une bitmap !"
+
+#: libs/imagecreatefrombmp.php:43
+#, php-format
+msgid "imagecreatefrombmp: Can not obtain filesize of %s !"
+msgstr "imagecreatefrombmp: Ne peut obtenir la taille de %s !"
+
+#: libs/imagecreatefrombmp.php:129
+#, php-format
+msgid "imagecreatefrombmp: %s has %d bits and this is not supported!"
+msgstr "imagecreatefrombmp: %s a %d bits ceci n\\'est pas supporté !"
+
+#: ajax.php:98
+msgid "Missing ID Parameter"
+msgstr "Paramètre ID Manquant"
+
+#: ajax.php:170
+#, php-format
+msgid "OK: %s"
+msgstr "OK : %s"
+
+#: ajax.php:174
+#, php-format
+msgid "ERROR: %s (%s)"
+msgstr "ERREUR : %s (%s)"
+
+#: ajax.php:179
+#, php-format
+msgid "SKIPPED: %s (Resize not required)"
+msgstr "SAUTÉ : %s (Redimensionnement non requis)"
+
+#: ajax.php:185
+#, php-format
+msgid "ERROR: (Attachment with ID of %s not found) "
+msgstr "ERREUR : (La pièce jointe avec l'ID %s n\\'a pas été trouvé) "
+
+
