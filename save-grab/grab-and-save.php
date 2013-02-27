@@ -60,7 +60,7 @@ class GrabAndSave {
 
 	
 	function build_tab($tabs) {
-		$newtab = array('grabAndSave' => __('Grab & Save', 'grabAndSave'));
+		$newtab = array('grabAndSave' => __('İnternet\'ten Yükle', 'grabAndSave'));
 		return $this->array_insert($tabs, $newtab, 2);
 		//return array_merge($tabs,$newtab);
 	}
@@ -144,11 +144,10 @@ class GrabAndSave {
 		}
 		?>
 		<form action="" method="post" id="image-form" class="media-upload-form type-form">
-		<h3 clas s="media-title">Grab Image from URL</h3>
-		<div class="describe">Image URL: 
+		<h3 class="media-title">İnternet'ten Resim Ekle</h3>
+		<div class="describe">Resim URL: 
 		<input id="src" type="text" name="imageurl"><br/>
-		Save as (optional) <input type="text" name="newfilename" style="width:200px">
-		<input type="submit" class="button" value="Grab">
+		<input type="submit" class="button" value="Ekle">
 		</div>
 		
 		</form>
@@ -157,11 +156,6 @@ class GrabAndSave {
 		if ( $attach_id )  {
 			$this->media_upload_type_form("image", $errors, $attach_id);
 		}
-		?>
-		<div style="padding:10px;"><a href="http://digitalmemo.neobie.net/grab-save/" target="digitalmemo" style="text-decoration:none;font-size:0.8em;">&copy; neobie @ DigitalMemo</a>
-		<br/><a href="http://digitalmemo.neobie.net/donate" target="_blank"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif"></a>
-		</div>
-		<?php
 	}
 	
 	
