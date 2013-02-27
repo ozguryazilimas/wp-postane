@@ -203,7 +203,8 @@ class WPEditableComments{
 		if(!is_admin() ){
 			$editablecomments = get_option('editable-comments');
 			if($editablecomments['dialog'] == 1){
-				wp_enqueue_script('jquery-ui-dialog');
+//				wp_enqueue_script('jquery-ui-dialog');
+				wp_enqueue_script('jquery-ui-dialog',WP_PLUGIN_URL.'/editable-comments/jquery-ui.min.js', array('jquery'));
 				wp_enqueue_script('editableComments',WP_PLUGIN_URL.'/editable-comments/editable-comments.js', array('jquery'));
 			}
 			wp_enqueue_style( 'dialog', WP_PLUGIN_URL.'/editable-comments/dialog/styles.css');
