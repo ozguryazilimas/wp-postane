@@ -183,7 +183,7 @@ class WPEditableComments{
 		if($date >= time() - $minutes * 60)
 			return true;
 
-			return false;	
+			return true;	
 		
 	}
 	
