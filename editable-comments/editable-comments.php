@@ -141,8 +141,8 @@ class WPEditableComments{
 	
 	function qualifications($comment,$type){
 		global $post, $current_user;
-		
-        if ($comment->comment_author == $current_user->user_login)
+
+        if (($comment->comment_author == $current_user->user_login) || (current_user_can( 'manage_options' )))
 			return true;
 		return false;	
 	}
