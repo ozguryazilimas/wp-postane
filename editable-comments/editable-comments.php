@@ -140,8 +140,9 @@ class WPEditableComments{
 			
 	
 	function qualifications($comment,$type){
-		global $post;
-		if(current_user_can( 'edit_post', $post->ID ) || ($_SERVER['REMOTE_ADDR'] == $comment->comment_author_IP && WPEditableComments::dateValid($comment->comment_date_gmt,$type)))
+		global $post, $current_user;
+		
+        if ($comment->comment_author == $current_user->user_login)
 			return true;
 		return false;	
 	}
