@@ -69,7 +69,8 @@ if($can_vote) {
 			$query .= "post_id = '" . $post_id . "', ";
 			$query .= "value = '1', ";
 			$query .= "date_time = '" . date('Y-m-d H:i:s') . "', ";
-			$query .= "ip = '$ip'";
+			$query .= "ip = '$ip', ";
+            $query .= "user_id = '$user_id'";
 		}
 	} else {
 		if($has_already_voted) {
@@ -78,12 +79,14 @@ if($can_vote) {
 			$query .= "date_time = '" . date('Y-m-d H:i:s') . "' ";
 			$query .= "WHERE post_id = '" . $post_id . "' AND ";
 			$query .= "ip = '$ip'";
+            $query .= "user_id = '$user_id'";
 		} else {
 			$query = "INSERT INTO {$wpdb->prefix}wti_like_post SET ";
 			$query .= "post_id = '" . $post_id . "', ";
 			$query .= "value = '-1', ";
 			$query .= "date_time = '" . date('Y-m-d H:i:s') . "', ";
-			$query .= "ip = '$ip'";
+			$query .= "ip = '$ip', ";
+            $query .= "user_id = '$user_id'";
 		}
 	}
 	//echo $query;
