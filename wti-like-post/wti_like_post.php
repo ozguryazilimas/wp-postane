@@ -769,7 +769,7 @@ function GetWtiVotedMessage($post_id, $ip = null) {
      return $wti_voted_message;
 }
 
-function HasWtiAlreadyVoted($post_id, $ip = null) {
+function HasWtiAlreadyVoted($post_id, $user_id = null) {
      global $wpdb;
      
      if(null == $ip)
@@ -777,7 +777,7 @@ function HasWtiAlreadyVoted($post_id, $ip = null) {
 		$ip = $_SERVER['REMOTE_ADDR'];
      }
 	
-     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND ip = '$ip'");
+     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND user_id = '$user_id'");
      
      return $wti_has_voted;
 }

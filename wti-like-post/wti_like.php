@@ -7,6 +7,7 @@ global $wpdb;
 $post_id = (int)$_POST['post_id'];
 $task = $_POST['task'];
 $ip = $_SERVER['REMOTE_ADDR'];
+$cur_user = wp_get_current_user();
 
 //get setting data
 $is_logged_in = is_user_logged_in();
@@ -18,7 +19,7 @@ if($login_required && !$is_logged_in) {
 	$error = 1;
 	$msg = get_option('wti_like_post_login_message');
 } else {
-	$has_already_voted = HasWtiAlreadyVoted($post_id, $ip);
+	$has_already_voted = HasWtiAlreadyVoted($post_id, $cur_user->ID);
 	$voting_period = get_option('wti_like_post_voting_period');
 	$datetime_now = date('Y-m-d H:i:s');
 	
