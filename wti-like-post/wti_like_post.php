@@ -602,6 +602,10 @@ require_once ABSPATH . 'wp-content/plugins/wti-like-post/wti_like_class.php';
 
 #### FRONT-END VIEW ####
 function GetWtiLikePost($arg = null) {
+
+    if ( ! is_user_logged_in())
+        return '';
+
      global $wpdb;
      $post_id = get_the_ID();
      $wti_like_post = "";
