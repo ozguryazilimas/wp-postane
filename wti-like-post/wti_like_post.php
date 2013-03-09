@@ -683,7 +683,8 @@ foreach($liked_users as $liked){
      if(!in_array($post_id, $excluded_posts)) {		
 		$like_count = GetWtiLikeCount($post_id);
 		$unlike_count = GetWtiUnlikeCount($post_id);
-		$msg = GetWtiVotedMessage($post_id);
+        $cur_user = wp_get_current_user();
+		$msg = GetWtiVotedMessage($post_id,$cur_user->ID);
 		$alignment = ("left" == get_option('wti_like_post_alignment')) ? 'left' : 'right';
 		$show_dislike = get_option('wti_like_post_show_dislike');
 		$style = (get_option('wti_like_post_voting_style') == "") ? 'style1' : get_option('wti_like_post_voting_style');
@@ -776,7 +777,7 @@ function GetWtiUnlikeCount($post_id) {
      return $wti_unlike_count;
 }
 
-function GetWtiVotedMessage($post_id, $ip = null) {
+function GetWtiVotedMessage($post_id, $user_id = null) {
      global $wpdb;
 	
      if(null == $ip)
@@ -784,7 +785,7 @@ function GetWtiVotedMessage($post_id, $ip = null) {
 		$ip = $_SERVER['REMOTE_ADDR'];
      }
      
-     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND ip = '$ip'");
+     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND user_id = '$user_id'");
      
      if($wti_has_voted > 0) {
 		$wti_voted_message = get_option('wti_like_post_voted_message');
