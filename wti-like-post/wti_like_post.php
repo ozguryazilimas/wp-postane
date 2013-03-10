@@ -622,12 +622,19 @@ $liked_users = $wpdb->get_results(
     )
 "
 );
-
+$k = 0;
 foreach($liked_users as $liked){
+  $k++;
   $user_infos = get_userdata($liked->user_id);  
   $user_name = str_replace(' ', '-', $user_infos->data->user_login);
   $unserialized = unserialize($liked->meta_value);
-  $likeds .= '<a href="/uye/'.$user_name.'"><img src="'.$unserialized[80].'" /></a>';
+  $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="'.$unserialized[80].'" /></a>';
+
+    if($k==5){
+        $likeds .= '<div style="clear: both;"></div><br />';
+        $k = 0;
+    }
+
 }
     if ( ! is_user_logged_in())
         return $likeds;
