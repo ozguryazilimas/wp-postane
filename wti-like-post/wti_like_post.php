@@ -622,12 +622,19 @@ $liked_users = $wpdb->get_results(
     )
 "
 );
-
+$k = 0;
 foreach($liked_users as $liked){
+  $k++;
   $user_infos = get_userdata($liked->user_id);  
   $user_name = str_replace(' ', '-', $user_infos->data->user_login);
   $unserialized = unserialize($liked->meta_value);
-  $likeds .= '<a href="/uye/'.$user_name.'"><img src="'.$unserialized[80].'" /></a>';
+  $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="'.$unserialized[80].'" /></a>';
+
+    if($k==5){
+        $likeds .= '<div style="clear: both;"></div><br />';
+        $k = 0;
+    }
+
 }
     if ( ! is_user_logged_in())
         return $likeds;
@@ -683,7 +690,8 @@ foreach($liked_users as $liked){
      if(!in_array($post_id, $excluded_posts)) {		
 		$like_count = GetWtiLikeCount($post_id);
 		$unlike_count = GetWtiUnlikeCount($post_id);
-		$msg = GetWtiVotedMessage($post_id);
+        $cur_user = wp_get_current_user();
+		$msg = GetWtiVotedMessage($post_id,$cur_user->ID);
 		$alignment = ("left" == get_option('wti_like_post_alignment')) ? 'left' : 'right';
 		$show_dislike = get_option('wti_like_post_show_dislike');
 		$style = (get_option('wti_like_post_voting_style') == "") ? 'style1' : get_option('wti_like_post_voting_style');
@@ -776,7 +784,7 @@ function GetWtiUnlikeCount($post_id) {
      return $wti_unlike_count;
 }
 
-function GetWtiVotedMessage($post_id, $ip = null) {
+function GetWtiVotedMessage($post_id, $user_id = null) {
      global $wpdb;
 	
      if(null == $ip)
@@ -784,7 +792,7 @@ function GetWtiVotedMessage($post_id, $ip = null) {
 		$ip = $_SERVER['REMOTE_ADDR'];
      }
      
-     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND ip = '$ip'");
+     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND user_id = '$user_id'");
      
      if($wti_has_voted > 0) {
 		$wti_voted_message = get_option('wti_like_post_voted_message');
