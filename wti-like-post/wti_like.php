@@ -22,11 +22,12 @@ if($login_required && !$is_logged_in) {
 	$has_already_voted = HasWtiAlreadyVoted($post_id, $cur_user->ID);
 	$voting_period = get_option('wti_like_post_voting_period');
 	$datetime_now = date('Y-m-d H:i:s');
-	
 	if("once" == $voting_period && $has_already_voted) {
+    $query = 'DELETE FROM wp_wti_like_post WHERE post_id = ' . $post_id . ' AND user_id = ' . $cur_user->ID;
+    $wpdb->query($query);
 		//user can vote only once and has already voted.
 		$error = 1;
-		$msg = get_option('wti_like_post_voted_message');
+		$msg = get_option('wti_like_post_allowed_posts');
 	} elseif(0 == $voting_period) {
 		//user can vote as many times as he want
 		$can_vote = true;
