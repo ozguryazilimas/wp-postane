@@ -700,7 +700,7 @@ foreach($liked_users as $liked){
 //		$like_count = GetWtiLikeCount($post_id);
         $like_count = '';
 //		$unlike_count = GetWtiUnlikeCount($post_id);
-        $unlike_count = ''
+        $unlike_count = '';
         $cur_user = wp_get_current_user();
 		$msg = GetWtiVotedMessage($post_id,$cur_user->ID);
 		$alignment = ("left" == get_option('wti_like_post_alignment')) ? 'left' : 'right';
