@@ -697,8 +697,10 @@ foreach($liked_users as $liked){
 	
 	//checking for excluded posts
      if(!in_array($post_id, $excluded_posts)) {		
-		$like_count = GetWtiLikeCount($post_id);
-		$unlike_count = GetWtiUnlikeCount($post_id);
+//		$like_count = GetWtiLikeCount($post_id);
+        $like_count = '';
+//		$unlike_count = GetWtiUnlikeCount($post_id);
+        $unlike_count = ''
         $cur_user = wp_get_current_user();
 		$msg = GetWtiVotedMessage($post_id,$cur_user->ID);
 		$alignment = ("left" == get_option('wti_like_post_alignment')) ? 'left' : 'right';
@@ -717,7 +719,7 @@ foreach($liked_users as $liked){
 			$wti_like_post .= "<div id='action_unlike' >".
 								"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='unlbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
 								/*"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_down_".$style.".png'></span>".*/
-								"<span id='unlc-".$post_id."' class='unlc'>".$unlike_count."</span>".
+//								"<span id='unlc-".$post_id."' class='unlc'>".$unlike_count."</span>".
 						   "</div> ";
 		}
 		
