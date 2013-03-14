@@ -635,7 +635,7 @@ foreach($liked_users as $liked){
 
     $avatar_info = have_avatar($liked->user_id);
     if( empty($avatar_info))
-        $likeds .= '<a style="float: left;" href="/uye/' . $user_name . '"><img width="50" src="/noavatar.jpeg" /></a>';
+        $likeds .= '<a style="float: left;" href="/uye/' . $user_name . '"><img width="50" src="/wp-content/themes/noavatar.jpeg" /></a>';
     else{
         $unserialized = unserialize($avatar_info[0]->meta_value);
         $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="'.$unserialized[80].'" /></a>';
