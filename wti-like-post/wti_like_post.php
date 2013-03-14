@@ -606,35 +606,44 @@ global $wpdb;
 $post_id = get_the_ID();
 $wti_like_post = "";
 $likeds = "";
-$liked_users = $wpdb->get_results(
-"
-  SELECT user_id, meta_value
-  FROM wp_usermeta
-  WHERE meta_key = 'simple_local_avatar'
-  AND user_id
-    IN
-    (
-	SELECT post.user_id
-	FROM wp_wti_like_post post
-	LEFT JOIN wp_users user
-	ON post.user_id = user.ID
-	WHERE post.post_id =" . $post_id . "
-    )
-"
-);
+function have_avatar($user_id){
+    global $wpdb;
+
+    $results = $wpdb->get_results("
+      SELECT user_id, meta_value
+      FROM wp_usermeta
+      WHERE meta_key = 'simple_local_avatar'
+      AND user_id = " . $user_id
+    );
+
+    return $results;
+
+}
+$liked_users = $wpdb->get_results("
+                      SELECT post.user_id 
+                      FROM wp_wti_like_post post
+                      LEFT JOIN wp_users user
+                        ON post.user_id = user.ID
+                       WHERE post.post_id =" . $post_id
+                      );
+
 $k = 0;
 foreach($liked_users as $liked){
   $k++;
   $user_infos = get_userdata($liked->user_id);  
   $user_name = str_replace(' ', '-', $user_infos->data->user_login);
-  $unserialized = unserialize($liked->meta_value);
-  $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="'.$unserialized[80].'" /></a>';
 
+    $avatar_info = have_avatar($liked->user_id);
+    if( empty($avatar_info))
+        $likeds .= '<a style="float: left;" href="/uye/' . $user_name . '"><img width="50" src="/noavatar.jpeg" /></a>';
+    else{
+        $unserialized = unserialize($avatar_info[0]->meta_value);
+        $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="'.$unserialized[80].'" /></a>';
+    }
     if($k==5){
         $likeds .= '<div style="clear: both;"></div><br />';
         $k = 0;
     }
-
 }
     if ( ! is_user_logged_in())
         return $likeds;
@@ -701,7 +710,7 @@ foreach($liked_users as $liked){
 		$wti_like_post .= "<div id='action_like' >".
 							"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='lbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
 							/*"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_up_".$style.".png'></span>".*/
-							"<span id='lc-".$post_id."' class='lc'>".$like_count."</span>".
+//							"<span id='lc-".$post_id."' class='lc'>".$like_count."</span>".
 					   "</div>";
 		
 		if($show_dislike) {
