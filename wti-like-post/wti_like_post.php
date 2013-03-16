@@ -709,11 +709,17 @@ foreach($liked_users as $liked){
 		
 		$wti_like_post .= "<div id='watch_action'>";
 		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
-		$wti_like_post .= "<div id='action_like' >".
-							"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='lbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
+		$wti_like_post .= "<div id='action_like' >";
+        if(is_null($msg)){
+            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
+        }
+        else {
+            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/dyildiz.png'></span>";
+        }
+            
 							/*"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_up_".$style.".png'></span>".*/
 //							"<span id='lc-".$post_id."' class='lc'>".$like_count."</span>".
-					   "</div>";
+        $wti_like_post .= "</div>";
 		
 		if($show_dislike) {
 			$wti_like_post .= "<div id='action_unlike' >".
