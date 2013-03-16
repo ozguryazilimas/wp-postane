@@ -618,7 +618,7 @@ function GetWtiLikePost($arg = null) {
 global $wpdb;
 $post_id = get_the_ID();
 $wti_like_post = "";
-$likeds = "";
+$likeds = "Bu yazıyı tutanlar<br />";
 $liked_users = $wpdb->get_results("
                       SELECT post.user_id 
                       FROM wp_wti_like_post post
