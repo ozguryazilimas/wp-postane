@@ -600,12 +600,6 @@ function WtiLikePostAdminContent() {
 #### WIDGET ####
 require_once ABSPATH . 'wp-content/plugins/wti-like-post/wti_like_class.php';
 
-#### FRONT-END VIEW ####
-function GetWtiLikePost($arg = null) {
-global $wpdb;
-$post_id = get_the_ID();
-$wti_like_post = "";
-$likeds = "";
 function have_avatar($user_id){
     global $wpdb;
 
@@ -619,6 +613,12 @@ function have_avatar($user_id){
     return $results;
 
 }
+#### FRONT-END VIEW ####
+function GetWtiLikePost($arg = null) {
+global $wpdb;
+$post_id = get_the_ID();
+$wti_like_post = "";
+$likeds = "";
 $liked_users = $wpdb->get_results("
                       SELECT post.user_id 
                       FROM wp_wti_like_post post
