@@ -713,7 +713,7 @@ foreach($liked_users as $liked){
 		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
 		$wti_like_post .= "<div id='action_like' >";
         if(is_null($msg)){
-            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
+            $wti_like_post .="Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız.<br /><span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
         }
         else {
             $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/dyildiz.png'></span>";
