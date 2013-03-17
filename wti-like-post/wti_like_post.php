@@ -634,8 +634,9 @@ foreach($liked_users as $liked){
   $user_name = str_replace(' ', '-', $user_infos->data->user_login);
 
     $avatar_info = have_avatar($liked->user_id);
-    if( empty($avatar_info))
-        $likeds .= '<a style="float: left;" href="/uye/' . $user_name . '"><img width="50" src="images/noavatar.jpeg" /></a>';
+    if( empty($avatar_info)){
+        $likeds .= '<a style="float: left;" href="/uye/' . $user_name . '">' . get_avatar($liked->user_id, 50) . ' </a>';
+    }
     else{
         $unserialized = unserialize($avatar_info[0]->meta_value);
         $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="'.$unserialized[80].'" /></a>';
@@ -645,6 +646,7 @@ foreach($liked_users as $liked){
         $k = 0;
     }
 }
+
     if ( ! is_user_logged_in())
         return $likeds;
 
