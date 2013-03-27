@@ -627,6 +627,7 @@ $liked_users = $wpdb->get_results("
                        WHERE post.post_id =" . $post_id
                       );
 
+
 $k = 0;
 foreach($liked_users as $liked){
   $k++;
@@ -639,7 +640,8 @@ foreach($liked_users as $liked){
     }
     else{
         $unserialized = unserialize($avatar_info[0]->meta_value);
-        $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="'.$unserialized[80].'" /></a>';
+        $avatar = isset($unserialized[80]) ? $unserialized[80]  : $unserialized[96];
+        $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="' . $avatar . '" /></a>';
     }
     if($k==5){
         $likeds .= '<div style="clear: both;"></div><br />';
@@ -713,7 +715,7 @@ foreach($liked_users as $liked){
 		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
 		$wti_like_post .= "<div id='action_like' >";
         if(is_null($msg)){
-            $wti_like_post .="Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız.<br /><span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
+            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
         }
         else {
             $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/dyildiz.png'></span>";
