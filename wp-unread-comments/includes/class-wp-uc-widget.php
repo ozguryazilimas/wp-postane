@@ -4,7 +4,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU GENERAL PUBLIC LICENSE VERSION 3.0 OR LATER
  */
 
-/*
+/**
  * Copied from Wordpress 3.4.2 and modified to add date time functionality
  */
 function wp_unread_comments_get_comments( $args = '' ) {
@@ -12,7 +12,7 @@ function wp_unread_comments_get_comments( $args = '' ) {
 	return $query->query( $args );
 }
 
-/*
+/**
  * Copied from Wordpress 3.4.2 and modified to add date time functionality
  *
  */
@@ -49,6 +49,8 @@ class WP_Unread_Comments_Comment_Query {
 			'type' => '',
 			'user_id' => '',
 			'search' => '',
+			'from_time' => '',
+			'exclude_read_for' => '',
 			'count' => false
 		);
 
@@ -148,6 +150,15 @@ class WP_Unread_Comments_Comment_Query {
 			$where .= $wpdb->prepare( ' AND comment_parent = %d', $parent );
 		if ( '' !== $user_id )
 			$where .= $wpdb->prepare( ' AND user_id = %d', $user_id );
+		if ( '' !== $from_time )
+			$where .= $wpdb->prepare( ' AND comment_date >= ( CURDATE() - INTERVAL %d DAY )', $from_time );
+		if ( '' !== $exclude_read_for)
+			// $where .= $wpdb->prepare( " AND comment_post_ID NOT IN (SELECT SUBSTRING(meta_key, 12) FROM $wpdb->usermeta WHERE user_id=%s AND $wpdb->usermeta.meta_key LIKE 'wuc_post_id%')", $exclude_read_for);
+			$where .= $wpdb->prepare( " AND comment_date >= IFNULL(
+				(SELECT meta_value FROM $wpdb->usermeta
+					WHERE user_id=%s AND $wpdb->usermeta.meta_key=CONCAT('wuc_post_id', comment_post_ID)
+				),0)
+				", $exclude_read_for);
 		if ( '' !== $search )
 			$where .= $this->get_search_sql( $search, array( 'comment_author', 'comment_author_email', 'comment_author_url', 'comment_author_IP', 'comment_content' ) );
 
@@ -233,6 +244,12 @@ class WP_UC_Widget extends WP_Widget
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Unread Comments' ) : $instance['title'], $instance, $this->id_base );
 		
 		$order='asc';
+		$from_time = 10; // ignore comments older than 10 days ago
+		$number = 10; // only get 10 comments for login user
+
+		/*
+			If the user is not a guest, use a modified get_comments to be able to pass time range, optimize queries in db and number limit
+		*/
 		if($user_ID == ''){
 			$title = apply_filters( 'widget_title', empty( $instance['title_recent'] ) ? __( 'Recent Comments' ) : $instance['title_recent'], $instance, $this->id_base );			
 			$number = $instance['number_recent'];
@@ -240,10 +257,11 @@ class WP_UC_Widget extends WP_Widget
 			$show_recent = $instance['show_recent'];			
 			$show_text = $instance['show_text'];
 			$custom_text = $instance['custom_text'];
-			
+			$comments = get_comments( array( 'number' => $number, 'order' => $order, 'status' => 'approve', 'post_status' => 'publish' ) );
+		} else {
+			$comments = wp_unread_comments_get_comments( array( 'number' => $number, 'from_time' => $from_time, 'exclude_read_for' => $user_ID, 'order' => $order, 'status' => 'approve', 'post_status' => 'publish' ) );
 		}
 
-		$comments = wp_unread_comments_get_comments( array( 'number' => $number, 'order' => $order, 'status' => 'approve', 'post_status' => 'publish' ) );
 		$output .= $before_widget;
 		if ( $title )
 			$output .= $before_title . $title . $after_title;
@@ -269,20 +287,22 @@ class WP_UC_Widget extends WP_Widget
 					$post_key = 'wuc_post_id'.$post_id;
 					$ts_a = strtotime(get_user_meta( $user_ID, $post_key, true ));
 
+					/*
 					$ts_nearfuture = strtotime("-10 days");
 					if($ts_nearfuture > $ts_a) {
 						$ts_a = $ts_nearfuture;
 					}
+					 */
 
 					$comment_time = strtotime($comment->comment_date_gmt);
 					if(!in_array($post_id, $postarray))
 					{
-						if ($comment_time > $ts_a)
-						{
+						//if ($comment_time > $ts_a)
+						//{
 							array_push($postarray, $post_id);
 							array_push($commentarray, '<li class="'.$rcclass.'">' . 
 							sprintf(_x('%1$s', 'widgets'),  '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>');											
-						}
+						//}
 					}
 					if($number>0 && count($commentarray) >= $number) break;
 				}
