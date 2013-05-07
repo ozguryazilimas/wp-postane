@@ -32,8 +32,8 @@ $wp_uc = new WP_UC_Widget();
 add_action('widgets_init', 'wp_unread_comments_init'); 
 
 // timestamp functions - comment out these 2 calls if you place the actions in your template
-//add_action('get_header', 'wuc_get_time');
-//add_action('get_footer', 'wuc_set_time');
+add_action('get_header', 'wuc_get_time');
+add_action('get_footer', 'wuc_set_time');
 
 //register the functions
 add_action('wuc_get_time', 'wuc_get_time');
@@ -43,12 +43,12 @@ add_action('wuc_set_time', 'wuc_set_time');
 add_filter('comment_class', 'wuc_unread_class', 10);
 
 //add css
-//add_action( 'init', 'wp_unread_comments_add_css' );
+add_action( 'init', 'wp_unread_comments_add_css' );
 
-//function wp_unread_comments_add_css() {
-//	/* Enqueue the WordPress hook Sniffer CSS file */
-//	wp_enqueue_style( 'wp-unread-comments', get_option('siteurl').'/wp-content/plugins/wp-unread-comments/css/wp-unread-comments.css' );	
-//}
+function wp_unread_comments_add_css() {
+	/* Enqueue the WordPress hook Sniffer CSS file */
+	wp_enqueue_style( 'wp-unread-comments', get_option('siteurl').'/wp-content/plugins/wp-unread-comments/css/wp-unread-comments.css' );	
+}
 // Updates the cookie when an user reads a post
 function wuc_get_time() {
 	global $wp_query, $wpdb,$user_ID;

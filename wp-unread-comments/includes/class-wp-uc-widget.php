@@ -74,8 +74,6 @@ class WP_UC_Widget extends WP_Widget
 					$post_id = $comment->comment_post_ID;
 					$post_key = 'wuc_post_id'.$post_id;
 					$ts_a = strtotime(get_user_meta( $user_ID, $post_key, true ));
-                                        $ts_nearfuture = strtotime("-10 days");
-                                        if($ts_nearfuture > $ts_a) $ts_a = $ts_nearfuture;
 					$comment_time = strtotime($comment->comment_date_gmt);
 					if(!in_array($post_id, $postarray))
 					{
@@ -95,7 +93,7 @@ class WP_UC_Widget extends WP_Widget
 			for ($i = count($commentarray) - 1; $i >=0 ; $i--) { 
 				$output .= $commentarray[$i];
 			}
-			if(count($commentarray)==0) $output.='<li class="recentcomments">Okumadığınız yorum kalmamış ki...</li>';
+			if(count($commentarray)==0) $output.='<li class="recentcomments">You have no unread comments</li>';
 		
 		}
 		$output .= '</ul>';
