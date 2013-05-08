@@ -12,14 +12,14 @@ Eklenti listesi
 
     adminimize
     admin-menu-editor
-    advanced-excerpt
+  S advanced-excerpt
     akismet
     auto-post-thumbnail
     basic-comment-quicktags
-    bwp-google-xml-sitemaps
+  S bwp-google-xml-sitemaps
     bwp-recent-comments
-    comment-images
-    comment-quicktags
+  S comment-images
+  S comment-quicktags
  D  cubepm  (postane için Türkçeleştirildi)
     editable-comments
     feedburner_feedsmith_plugin_2.3
@@ -31,10 +31,10 @@ Eklenti listesi
     json-user-import
     login-logo
     login-logout
-    myRecentPosts.php_
+  S myRecentPosts.php_
     my-twitter-widget
     ob-page-numbers
-    p3-profiler
+  S p3-profiler (performans ölçücü, saklayıp arada kullanmak güzel olabilir)
     permalink-editor
     plugin-update-hider
     regenerate-thumbnails
@@ -44,12 +44,12 @@ Eklenti listesi
     simple-author-highlighter
     simple-local-avatars
     spoiler-block
-    tinymcecomments
+  S tinymcecomments
     twitter-cards
     user-role-editor
-    w3-total-cache
+  S w3-total-cache
     white-label-cms
-    widget-context
+  S widget-context
     wp-missed-schedule
     wp-pending-post-notifier
  D  wp-unread-comments  (ciddi performans sorunları vardı, düzeltildi, Türkçeleştirildi)
