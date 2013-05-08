@@ -20,7 +20,7 @@ Eklenti listesi
     bwp-recent-comments
     comment-images
     comment-quicktags
-    cubepm
+ D  cubepm  (postane için Türkçeleştirildi)
     editable-comments
     feedburner_feedsmith_plugin_2.3
     get-recent-comments
@@ -52,7 +52,7 @@ Eklenti listesi
     widget-context
     wp-missed-schedule
     wp-pending-post-notifier
- D  wp-unread-comments
+ D  wp-unread-comments  (ciddi performans sorunları vardı, düzeltildi, Türkçeleştirildi)
     wti-like-post
 
 
