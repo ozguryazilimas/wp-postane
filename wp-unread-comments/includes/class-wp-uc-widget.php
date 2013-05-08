@@ -267,7 +267,7 @@ class WP_UC_Widget extends WP_Widget
 			$output .= $before_title . $title . $after_title;
 
 		$output .= '<ul id="recentcomments">';
-		$postarray=array();
+		// $postarray=array();
 		$commentarray=array();
 		$number = $instance['number_unread'];
 		
@@ -287,23 +287,13 @@ class WP_UC_Widget extends WP_Widget
 					$post_key = 'wuc_post_id'.$post_id;
 					$ts_a = strtotime(get_user_meta( $user_ID, $post_key, true ));
 
-					/*
-					$ts_nearfuture = strtotime("-10 days");
-					if($ts_nearfuture > $ts_a) {
-						$ts_a = $ts_nearfuture;
-					}
-					 */
-
 					$comment_time = strtotime($comment->comment_date_gmt);
-					if(!in_array($post_id, $postarray))
-					{
-						//if ($comment_time > $ts_a)
-						//{
-							array_push($postarray, $post_id);
-							array_push($commentarray, '<li class="'.$rcclass.'">' . 
-							sprintf(_x('%1$s', 'widgets'),  '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>');											
-						//}
-					}
+					//if(!in_array($post_id, $postarray))
+					//{
+					//	array_push($postarray, $post_id);
+						array_push($commentarray, '<li class="'.$rcclass.'">' . 
+						sprintf(_x('%1$s', 'widgets'),  '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>');											
+					//}
 					if($number>0 && count($commentarray) >= $number) break;
 				}
 			}
@@ -341,10 +331,10 @@ class WP_UC_Widget extends WP_Widget
 		$instance_name = strip_tags($instance['instance']);
 		
 		$title = (isset($instance['title'])) ? strip_tags($instance['title']) : '';
-		$number_unread = empty($instance['number_unread'])?5:(int) $instance['number_unread'];
+		$number_unread = empty($instance['number_unread']) ? 10 : (int) $instance['number_unread'];
 		$highlight = (isset($instance['highlight'])) ? true : false;
 		$title_recent = (isset($instance['title_recent'])) ? strip_tags($instance['title_recent']) : 'Recent Comments' ;
-		$number_recent = empty($instance['number_recent'])?5:(int) $instance['number_recent'];
+		$number_recent = empty($instance['number_recent']) ? 10 : (int) $instance['number_recent'];
 		$show_recent = (isset($instance['show_recent'])) ? true : false;		
 		$show_text = (isset($instance['show_text'])) ? true : false;
 		$custom_text = (isset($instance['custom_text'])) ? strip_tags($instance['custom_text']) : 'You must be logged in to view unread comments';
