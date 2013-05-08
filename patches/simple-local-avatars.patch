@@ -1,0 +1,75 @@
+diff -Nur simple-local-avatars/simple-local-avatars.php simple-local-avatars.now/simple-local-avatars.php
+--- simple-local-avatars/simple-local-avatars.php	2011-12-29 23:37:34.000000000 +0200
++++ simple-local-avatars.now/simple-local-avatars.php	2013-05-08 21:29:39.553000042 +0300
+@@ -51,13 +51,16 @@
+ 	}
+ 	
+ 	public function get_avatar( $avatar = '', $id_or_email, $size = 96, $default = '', $alt = false ) {
+-		
++    	global $wpdb;
++
+ 		if ( is_numeric($id_or_email) )
+ 			$user_id = (int) $id_or_email;
+ 		elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) )
+ 			$user_id = $user->ID;
+ 		elseif ( is_object( $id_or_email ) && ! empty( $id_or_email->user_id ) )
+ 			$user_id = (int) $id_or_email->user_id;
++        else if ( true )
++            $user_id = $wpdb->get_var("SELECT user_id FROM wp_comments WHERE comment_author_email = '" . $id_or_email . "' LIMIT 1");
+ 		
+ 		if ( empty( $user_id ) )
+ 			return $avatar;
+@@ -120,7 +123,7 @@
+ 	
+ 	<table class="form-table">
+ 		<tr>
+-			<th><label for="simple-local-avatar"><?php _e('Upload Avatar','simple-local-avatars'); ?></label></th>
++			<th><label for="simple-local-avatar"><?php _e('Avatar yükleyin','simple-local-avatars'); ?></label></th>
+ 			<td style="width: 50px;" valign="top">
+ 				<?php echo get_avatar( $profileuser->ID ); ?>
+ 			</td>
+@@ -135,17 +138,17 @@
+ 					<input type="file" name="simple-local-avatar" id="simple-local-avatar" /><br />
+ 			<?php
+ 					if ( empty( $profileuser->simple_local_avatar ) )
+-						echo '<span class="description">' . __('No local avatar is set. Use the upload field to add a local avatar.','simple-local-avatars') . '</span>';
++						echo '<span class="description">' . __('Yüklenmiş bir avatarınız yok. Buradan yükleyebilirsiniz.','simple-local-avatars') . '</span>';
+ 					else 
+ 						echo '
+-							<input type="checkbox" name="simple-local-avatar-erase" value="1" /> ' . __('Delete local avatar','simple-local-avatars') . '<br />
+-							<span class="description">' . __('Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.','simple-local-avatars') . '</span>
++							<input type="checkbox" name="simple-local-avatar-erase" value="1" /> ' . __('Yüklü avatarı silin.','simple-local-avatars') . '<br />
++							<span class="description">' . __('Varolan avatarınızı yerine yeni bir imaj göndererek ya da silerek kaldırabilirsiniz (Avatar bulamazsak Gravatar gösteriyoruz.)','simple-local-avatars') . '</span>
+ 						';		
+ 				} else {
+ 					if ( empty( $profileuser->simple_local_avatar ) )
+-						echo '<span class="description">' . __('No local avatar is set. Set up your avatar at Gravatar.com.','simple-local-avatars') . '</span>';
++						echo '<span class="description">' . __('Burada bir avatarınız yok. Gravatar.com\'dan yükleyebilirsiniz.','simple-local-avatars') . '</span>';
+ 					else 
+-						echo '<span class="description">' . __('You do not have media management permissions. To change your local avatar, contact the blog administrator.','simple-local-avatars') . '</span>';
++						echo '<span class="description">' . __('İmaj yükleme hakkınız yok. Avatarınızı değiştirebilmek için bu hakka ihtiyacınız var.','simple-local-avatars') . '</span>';
+ 				}
+ 			?>
+ 			</td>
+@@ -183,11 +186,11 @@
+ 			
+ 			if ( empty($avatar['file']) ) {		// handle failures
+ 				switch ( $avatar['error'] ) {
+-					case 'File type does not meet security guidelines. Try another.' :
+-						add_action( 'user_profile_update_errors', create_function('$a','$a->add("avatar_error",__("Please upload a valid image file for the avatar.","simple-local-avatars"));') );				
++					case 'Bu dosya türü bize uymuyor, lütfen başka bir tür deneyin.' :
++						add_action( 'user_profile_update_errors', create_function('$a','$a->add("avatar_error",__("Lütfen uygun bir imaj gönderin.","simple-local-avatars"));') );				
+ 						break;
+ 					default :
+-						add_action( 'user_profile_update_errors', create_function('$a','$a->add("avatar_error","<strong>".__("There was an error uploading the avatar:","simple-local-avatars")."</strong> ' . esc_attr( $avatar['error'] ) . '");') );
++						add_action( 'user_profile_update_errors', create_function('$a','$a->add("avatar_error","<strong>".__("Yükleme sırasında bir hata oluştu:","simple-local-avatars")."</strong> ' . esc_attr( $avatar['error'] ) . '");') );
+ 				}
+ 				
+ 				return;
+@@ -273,4 +276,4 @@
+ 		$simple_local_avatars->avatar_delete( $user->user_id );
+ 	
+ 	delete_option('simple_local_avatars_caps');
+-}
+\ No newline at end of file
++}

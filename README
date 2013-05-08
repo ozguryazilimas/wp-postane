@@ -1,58 +1,7 @@
 
-Eklenti listesi
-----------------------------
+- Eklentilerin durumu ile ilgili güncel bilgiyi wiki altında bulabilirsiniz
 
- Bu dizinde kullandığımız eklentiler bulunuyor. Yanındaki işaretlerin anlamı
+- patches dizini içerisinde üzerinde değişiklik yapılmış eklentilerin ana geliştiriciden farkları yer almaktadır. Herhangi bir eklentide özelleştirme yaparsanız wiki bilgilerini ve yamaları güncellemeyi unutmayınız
 
- - D : bizim tarafımızdan değiştirildi
- - A : ana geliştiricisinin sunduğu haliyle
- - S : ihtiyacımız yok, silebiliriz (deprecated)
- - Boş : eklentinin incelenmesi gerekiyor
-
-
-    adminimize
-    admin-menu-editor
-  S advanced-excerpt
-    akismet
-    auto-post-thumbnail
-    basic-comment-quicktags
-  S bwp-google-xml-sitemaps
-    bwp-recent-comments
-  S comment-images
-  S comment-quicktags
- D  cubepm  (postane için Türkçeleştirildi)
-    editable-comments
-    feedburner_feedsmith_plugin_2.3
-    get-recent-comments
-    google-analytics-for-wordpress
-    hyperdb
-    imsanity
-    jetpack
-    json-user-import
-    login-logo
-    login-logout
-  S myRecentPosts.php_
-    my-twitter-widget
-    ob-page-numbers
-  S p3-profiler (performans ölçücü, saklayıp arada kullanmak güzel olabilir)
-    permalink-editor
-    plugin-update-hider
-    regenerate-thumbnails
-    save-grab
-    sharing-is-caring
-    simple-301-redirects
-    simple-author-highlighter
-    simple-local-avatars
-    spoiler-block
-  S tinymcecomments
-    twitter-cards
-    user-role-editor
-  S w3-total-cache
-    white-label-cms
-  S widget-context
-    wp-missed-schedule
-    wp-pending-post-notifier
- D  wp-unread-comments  (ciddi performans sorunları vardı, düzeltildi, Türkçeleştirildi)
-    wti-like-post
 
 

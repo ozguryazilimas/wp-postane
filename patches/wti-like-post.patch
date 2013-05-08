@@ -1,0 +1,235 @@
+diff -Nur wti-like-post/wti_like_class.php wti-like-post.now/wti_like_class.php
+--- wti-like-post/wti_like_class.php	2013-01-04 21:28:30.000000000 +0200
++++ wti-like-post.now/wti_like_class.php	2013-05-08 21:29:39.605000042 +0300
+@@ -252,4 +252,4 @@
+ }
+ 
+ $RecentlyLikedPosts = new RecentlyLikedPosts();
+-?>
+\ No newline at end of file
++?>
+diff -Nur wti-like-post/wti_like.php wti-like-post.now/wti_like.php
+--- wti-like-post/wti_like.php	2013-01-04 21:28:30.000000000 +0200
++++ wti-like-post.now/wti_like.php	2013-05-08 21:29:39.605000042 +0300
+@@ -7,6 +7,7 @@
+ $post_id = (int)$_POST['post_id'];
+ $task = $_POST['task'];
+ $ip = $_SERVER['REMOTE_ADDR'];
++$cur_user = wp_get_current_user();
+ 
+ //get setting data
+ $is_logged_in = is_user_logged_in();
+@@ -18,14 +19,15 @@
+ 	$error = 1;
+ 	$msg = get_option('wti_like_post_login_message');
+ } else {
+-	$has_already_voted = HasWtiAlreadyVoted($post_id, $ip);
++	$has_already_voted = HasWtiAlreadyVoted($post_id, $cur_user->ID);
+ 	$voting_period = get_option('wti_like_post_voting_period');
+ 	$datetime_now = date('Y-m-d H:i:s');
+-	
+ 	if("once" == $voting_period && $has_already_voted) {
++    $query = 'DELETE FROM wp_wti_like_post WHERE post_id = ' . $post_id . ' AND user_id = ' . $cur_user->ID;
++    $wpdb->query($query);
+ 		//user can vote only once and has already voted.
+ 		$error = 1;
+-		$msg = get_option('wti_like_post_voted_message');
++		$msg = get_option('wti_like_post_allowed_posts');
+ 	} elseif(0 == $voting_period) {
+ 		//user can vote as many times as he want
+ 		$can_vote = true;
+@@ -69,7 +71,8 @@
+ 			$query .= "post_id = '" . $post_id . "', ";
+ 			$query .= "value = '1', ";
+ 			$query .= "date_time = '" . date('Y-m-d H:i:s') . "', ";
+-			$query .= "ip = '$ip'";
++			$query .= "ip = '$ip', ";
++            $query .= "user_id = '$user_id'";
+ 		}
+ 	} else {
+ 		if($has_already_voted) {
+@@ -78,12 +81,14 @@
+ 			$query .= "date_time = '" . date('Y-m-d H:i:s') . "' ";
+ 			$query .= "WHERE post_id = '" . $post_id . "' AND ";
+ 			$query .= "ip = '$ip'";
++            $query .= "user_id = '$user_id'";
+ 		} else {
+ 			$query = "INSERT INTO {$wpdb->prefix}wti_like_post SET ";
+ 			$query .= "post_id = '" . $post_id . "', ";
+ 			$query .= "value = '-1', ";
+ 			$query .= "date_time = '" . date('Y-m-d H:i:s') . "', ";
+-			$query .= "ip = '$ip'";
++			$query .= "ip = '$ip', ";
++            $query .= "user_id = '$user_id'";
+ 		}
+ 	}
+ 	//echo $query;
+@@ -106,4 +111,4 @@
+ 
+ $result = array("msg" => $msg, "error" => $error, "like" => $wti_like_count, "unlike" => $wti_unlike_count);
+ 
+-echo json_encode($result);
+\ No newline at end of file
++echo json_encode($result);
+diff -Nur wti-like-post/wti_like_post.php wti-like-post.now/wti_like_post.php
+--- wti-like-post/wti_like_post.php	2013-01-04 21:28:30.000000000 +0200
++++ wti-like-post.now/wti_like_post.php	2013-05-08 21:29:39.606000042 +0300
+@@ -600,11 +600,59 @@
+ #### WIDGET ####
+ require_once ABSPATH . 'wp-content/plugins/wti-like-post/wti_like_class.php';
+ 
++function have_avatar($user_id){
++    global $wpdb;
++
++    $results = $wpdb->get_results("
++      SELECT user_id, meta_value
++      FROM wp_usermeta
++      WHERE meta_key = 'simple_local_avatar'
++      AND user_id = " . $user_id
++    );
++
++    return $results;
++
++}
+ #### FRONT-END VIEW ####
+ function GetWtiLikePost($arg = null) {
+-     global $wpdb;
+-     $post_id = get_the_ID();
+-     $wti_like_post = "";
++global $wpdb;
++$post_id = get_the_ID();
++$wti_like_post = "";
++$likeds = "Bu yazıyı tutanlar<br />";
++$liked_users = $wpdb->get_results("
++                      SELECT post.user_id 
++                      FROM wp_wti_like_post post
++                      LEFT JOIN wp_users user
++                        ON post.user_id = user.ID
++                       WHERE post.post_id =" . $post_id
++                      );
++
++
++$k = 0;
++foreach($liked_users as $liked){
++  $k++;
++  $user_infos = get_userdata($liked->user_id);  
++  $user_name = str_replace(' ', '-', $user_infos->data->user_login);
++
++    $avatar_info = have_avatar($liked->user_id);
++    if( empty($avatar_info)){
++        $likeds .= '<a style="float: left;" href="/uye/' . $user_name . '">' . get_avatar($liked->user_id, 50) . ' </a>';
++    }
++    else{
++        $unserialized = unserialize($avatar_info[0]->meta_value);
++        $avatar = isset($unserialized[80]) ? $unserialized[80]  : $unserialized[96];
++        $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="' . $avatar . '" /></a>';
++    }
++    if($k==5){
++        $likeds .= '<div style="clear: both;"></div><br />';
++        $k = 0;
++    }
++}
++
++    if ( ! is_user_logged_in())
++        return $likeds;
++
++     
+ 	
+      //get the posts ids where we do not need to show like functionality
+      $allowed_posts = explode(",", get_option('wti_like_post_allowed_posts'));
+@@ -653,26 +701,35 @@
+ 	
+ 	//checking for excluded posts
+      if(!in_array($post_id, $excluded_posts)) {		
+-		$like_count = GetWtiLikeCount($post_id);
+-		$unlike_count = GetWtiUnlikeCount($post_id);
+-		$msg = GetWtiVotedMessage($post_id);
++//		$like_count = GetWtiLikeCount($post_id);
++        $like_count = '';
++//		$unlike_count = GetWtiUnlikeCount($post_id);
++        $unlike_count = '';
++        $cur_user = wp_get_current_user();
++		$msg = GetWtiVotedMessage($post_id,$cur_user->ID);
+ 		$alignment = ("left" == get_option('wti_like_post_alignment')) ? 'left' : 'right';
+ 		$show_dislike = get_option('wti_like_post_show_dislike');
+ 		$style = (get_option('wti_like_post_voting_style') == "") ? 'style1' : get_option('wti_like_post_voting_style');
+ 		
+ 		$wti_like_post .= "<div id='watch_action'>";
+ 		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
+-		$wti_like_post .= "<div id='action_like' >".
+-							"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='lbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
++		$wti_like_post .= "<div id='action_like' >";
++        if(is_null($msg)){
++            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
++        }
++        else {
++            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/dyildiz.png'></span>";
++        }
++            
+ 							/*"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_up_".$style.".png'></span>".*/
+-							"<span id='lc-".$post_id."' class='lc'>".$like_count."</span>".
+-					   "</div>";
++//							"<span id='lc-".$post_id."' class='lc'>".$like_count."</span>".
++        $wti_like_post .= "</div>";
+ 		
+ 		if($show_dislike) {
+ 			$wti_like_post .= "<div id='action_unlike' >".
+ 								"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='unlbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
+ 								/*"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_down_".$style.".png'></span>".*/
+-								"<span id='unlc-".$post_id."' class='unlc'>".$unlike_count."</span>".
++//								"<span id='unlc-".$post_id."' class='unlc'>".$unlike_count."</span>".
+ 						   "</div> ";
+ 		}
+ 		
+@@ -682,7 +739,7 @@
+      }
+      
+      if ($arg == 'put') {
+-		return $wti_like_post;
++		return $wti_like_post . $likeds;
+      } else {
+ 		echo $wti_like_post;
+      }
+@@ -748,7 +805,7 @@
+      return $wti_unlike_count;
+ }
+ 
+-function GetWtiVotedMessage($post_id, $ip = null) {
++function GetWtiVotedMessage($post_id, $user_id = null) {
+      global $wpdb;
+ 	
+      if(null == $ip)
+@@ -756,7 +813,7 @@
+ 		$ip = $_SERVER['REMOTE_ADDR'];
+      }
+      
+-     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND ip = '$ip'");
++     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND user_id = '$user_id'");
+      
+      if($wti_has_voted > 0) {
+ 		$wti_voted_message = get_option('wti_like_post_voted_message');
+@@ -765,7 +822,7 @@
+      return $wti_voted_message;
+ }
+ 
+-function HasWtiAlreadyVoted($post_id, $ip = null) {
++function HasWtiAlreadyVoted($post_id, $user_id = null) {
+      global $wpdb;
+      
+      if(null == $ip)
+@@ -773,7 +830,7 @@
+ 		$ip = $_SERVER['REMOTE_ADDR'];
+      }
+ 	
+-     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND ip = '$ip'");
++     $wti_has_voted = $wpdb->get_var("SELECT COUNT(id) AS has_voted FROM {$wpdb->prefix}wti_like_post WHERE post_id = '$post_id' AND user_id = '$user_id'");
+      
+      return $wti_has_voted;
+ }
+@@ -1097,4 +1154,4 @@
+ 		}
+ 	}
+ }
+-?>
+\ No newline at end of file
++?>

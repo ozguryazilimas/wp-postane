@@ -1,0 +1,39 @@
+diff -Nur spoiler-block/css/style.css spoiler-block.now/css/style.css
+--- spoiler-block/css/style.css	2012-08-22 21:43:51.000000000 +0300
++++ spoiler-block.now/css/style.css	2013-05-08 21:29:39.566000042 +0300
+@@ -1,17 +1,18 @@
+-/* just code */
+-.spoiler{
+-	background:#FF0000;
+-	border-radius:5px;
+-	padding:5px;
+-	font-weight:bold;
+-	color:#FFFFFF;
+-	cursor:pointer;
+-}
+-.spoiler-open{
+-	background:#FFDEDE;
+-	border-radius:5px;
+-	padding:5px;
+-}
+-.spoiler > .hidden-content{
+-	display: none;
++/* just code */
++.spoiler{
++	background:#000000;
++	border-radius:5px;
++	padding: 4px 5px 3px 5px;
++	margin: 0 5px;
++	font-weight:bold;
++	color:#FFFFFF;
++	cursor:pointer;
++}
++.spoiler-open{
++	background:#FFDEDE;
++	border-radius:5px;
++	padding:5px;
++}
++.spoiler > .hidden-content{
++	display: none;
+ }
+\ No newline at end of file

@@ -1,0 +1,43 @@
+--- my-twitter-widget.now/my-twitter.php	2013-05-08 21:54:45.674000042 +0300
++++ my-twitter-widget/my-twitter.php	2013-05-08 21:57:10.168000041 +0300
+@@ -236,19 +236,19 @@
+ 				
+ 					$the_date .= $diff.' ';
+ 					
+-					$the_date .= ($diff > 1) ?  __('saniye', 'my_tw') :  __('saniye', 'my_tw');
++					$the_date .= ($diff > 1) ?  __('Seconds', 'my_tw') :  __('Second', 'my_tw');
+ 				}
+ 				elseif($diff < 3600 ) {
+ 				
+ 					$the_date .= round($diff/60).' ';
+ 					
+-					$the_date .= (round($diff/60) > 1) ?  __('dakika', 'my_tw') :  __('dakika', 'my_tw');
++					$the_date .= (round($diff/60) > 1) ?  __('Minutes', 'my_tw') :  __('Minute', 'my_tw');
+ 				}
+ 				elseif($diff < 86400 ) {
+ 				
+ 					$the_date .=  round($diff/3600).' ';
+ 					
+-					$the_date .= (round($diff/3600) > 1) ?  __('saat', 'my_tw') :  __('saat', 'my_tw');
++					$the_date .= (round($diff/3600) > 1) ?  __('Hours', 'my_tw') :  __('Hour', 'my_tw');
+ 				}
+ 				else {
+ 				
+@@ -370,8 +370,8 @@
+ 								'.$html_avatar.'
+ 								<span class="my_lt_content">' . $i_title . '</span>
+ 								
+-								<em class="my_twitter_inner">
+-									<a href="'.$i_guid .'" target="_blank">' . $i_creat . '</a> önce
++								<em class="my_twitter_inner">' . __('Time ago', 'my_tw') . '
++									<a href="'.$i_guid .'" target="_blank">' . $i_creat . '</a>
+ 									
+ 									'. $i_source .'
+ 								</em>
+@@ -470,4 +470,4 @@
+ 	add_action('wp_footer', 'my_twitter_footer');
+ }
+ 
+-?>
+\ No newline at end of file
++?>
