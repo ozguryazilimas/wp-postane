@@ -116,7 +116,7 @@ function imsanity_get_default_multisite_settings()
 function imsanity_maybe_created_custom_table()
 {
 	// if not a multi-site no need to do any custom table lookups
-	if (!is_multisite()) return;
+	if ( (!function_exists("is_multisite")) || (!is_multisite()) ) return;
 
 	global $wpdb;
 
@@ -322,7 +322,7 @@ function imsanity_get_multisite_settings()
 
 	if (!$_imsanity_multisite_settings)
 	{
-		if (is_multisite())
+		if (function_exists("is_multisite") && is_multisite())
 		{
 			global $wpdb;
 
@@ -452,7 +452,7 @@ function imsanity_settings_banner()
 
 		<p>Be sure to save back-ups of your full-sized images if you wish to keep them.</p>",'imsanity') .
 
-		sprintf( __("<p>Credit: Imsanity Version %s by %s </p>",'imsanity'),IMSANITY_VERSION ,'<a href="http://verysimple.com/">Jason Hinkle</a>') .
+		sprintf( __("<p>Imsanity Version %s by %s </p>",'imsanity'),IMSANITY_VERSION ,'<a href="http://verysimple.com/">Jason Hinkle</a>') .
 	'</div>
 	<br style="clear:both" />';
 }
@@ -498,10 +498,12 @@ function imsanity_settings_page()
 	</div>
 
 	<div style="border: solid 1px #ff6666; background-color: #ffbbbb; padding: 8px;">
-	<?php _e('WARNING: Bulk Resize is a BETA feature.  It is highly recommended that you backup your wp-content/uploads
-	folder before proceeding.  You will have a chance to preview and select the images to convert, so
-	it is suggested that you select only 1 or 2 images and then verify that everything is ok before
-	processing your entire library.  You have been warned!','imsanity'); ?>
+		<h4><?php _e('WARNING: BULK RESIZE WILL ALTER YOUR ORIGINAL IMAGES AND CANNOT BE UNDONE!','imsanity'); ?></h4>
+		
+		<p><?php _e('It is <strong>HIGHLY</strong> recommended that you backup 
+		your wp-content/uploads folder before proceeding.  You will have a chance to preview and select the images to convert.
+		It is also recommended that you initially select only 1 or 2 images and verify that everything is ok before
+		processing your entire library.  You have been warned!','imsanity'); ?></p>
 	</div>
 
 	<p class="submit" id="imsanity-examine-button">
