@@ -10,9 +10,9 @@
  * Text Domain: adminimize
  * Domain Path: /languages
  * Description: Visually compresses the administratrive meta-boxes so that more admin page content can be initially seen. The plugin that lets you hide 'unnecessary' items from the WordPress administration menu, for alle roles of your install. You can also hide post meta controls on the edit-area to simplify the interface. It is possible to simplify the admin in different for all roles.
- * Author:      Frank B&uuml;ltge
+ * Author:      Frank Bültge
  * Author URI:  http://bueltge.de/
- * Version:     1.8.2
+ * Version:     1.8.3
  * License:     GPLv3
  */
 
@@ -161,6 +161,12 @@ function _mw_adminimize_get_all_user_roles() {
 		}
 	}
 	
+	// exclude the new bbPress roles
+	$user_roles = array_diff(
+		$user_roles,
+		array( 'bbp_keymaster', 'bbp_moderator', 'bbp_participant', 'bbp_spectator', 'bbp_blocked' )
+	);
+	
 	return $user_roles;
 }
 
@@ -184,6 +190,12 @@ function _mw_adminimize_get_all_user_roles_names() {
 		
 		array_push( $user_roles_names, $data );
 	}
+	
+	// exclude the new bbPress roles
+	$user_roles_names = array_diff(
+		$user_roles_names,
+		array( __( 'Keymaster', 'bbpress' ), __( 'Moderator', 'bbpress' ), __( 'Participant', 'bbpress' ), __( 'Spectator', 'bbpress' ), __( 'Blocked', 'bbpress' ) )
+	);
 	
 	return $user_roles_names;
 }
