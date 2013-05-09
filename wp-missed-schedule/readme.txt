@@ -2,32 +2,48 @@
 Contributors: sLaNGjI
 Donate link: http://slangji.wordpress.com/donate/
 Tags: missed,schedule,future,posts,regression,fix,wp,cron,job,publish,WordPress,sLaNGjI
-Stable tag: 2013.0130.2222
+Stable tag: 2013.0131.3333
 Requires at least: 2.6
 Tested up to: 3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-&#9733;&#9733;&#9733; Find Missed Schedule Posts that Match this Problem, Every 1 Minute, and it Republish them Correctly Fixed, 5 Items per Session.
+&#9733;&#9733;&#9733; Find Missed Schedule Posts that Match this Problem, Every 1 Minute, and it Republish them Correctly Fixed, 10 Items per Session.
 == Description ==
-Try fix Missed Schedule Future Posts Cron Job: checking all that match this problem, every 1 minute, during a failed cron job, and it republish them correctly fixed, 5 items per session for not use too many resources. All others failed, will be solved on next sessions, until no longer exist. (5 failed post every minute, 300 failed posts every hour, 1 session every minute, 60 sessions every hour)
+This plugin try to fix <code>Missed Schedule</code> Future Posts Cron Job: checking all that match this problem, every 1 minute, during a failed cron job, and it republish them correctly fixed, 10 items per session for not use too many resources. All others Future Posts failed, will be solved on next sessions, until no longer exist (10 failed future posts every minute, 600 failed future posts every hour, 1 session every minute, 60 sessions every hour). Find More on [sLaNGjI's Developer Page @ SoftPedia.com](http://webscripts.softpedia.com/author/sLa-1869786722.html).
 
 Author Website: [slangji.wordpress.com](http://slangji.wordpress.com/) - Author Repositories: [github.com/sLaNGjI](https://github.com/sLaNGjI)
 
-Find More on [sLaNGjI's Developer Page @ SoftPedia.com](http://webscripts.softpedia.com/author/sLa-1869786722.html) - [Donate](http://slangji.wordpress.com/donate/) - [Contact](http://slangji.wordpress.com/contact/)
+This plugin not decrase server performaces, why it check only [wp_schedule_single_event](http://codex.wordpress.org/Function_Reference/wp_schedule_single_event) and [wp_publish_post](http://codex.wordpress.org/Function_Reference/wp_publish_post) Behavior, to no waste resources, and not phisical Cron Job!
+
+The default 10 Failed Future Posts per session, was introduced for compatibility with default WordPress Items Feed Syndication.
+
+This plugin is designed, on fact, for heavy use of Scheduled Future Posts and RSS Syndication (as FeedWordPress or WP-O-Matic), but also work well with a simple WordPress Blog or for use as a CMS.
 `
-New WP Missed Schedule Features and Updates:
-1. Introducing (a New Idea of sLa ...) Security Key Tag Checksum.
-2. Add Support for WordPress 3.6+ Coming Soon Release.
-3. Preemptive Support WordPress 3.7+ ~ 3.8+ Future Releases.
+New WP Missed Schedule Features and Future Updates:
+1. √ Introducing (a New Idea of sLa ...) Check Key Tag Authenticity.
+2. √ Add Support for WordPress 3.6+ Coming Soon Release.
+3. √ Free of any Interference with others WP Scheduled Cron Jobs.
+4. √ Compatibility of W3 Total Cache and other Caching Plugins.
+5. √ Transparency of JetPack and others Social Publishing Plugins.
+6. Coming Soon Checking Authenticity Plugin Before Activation.
+7. Future Admin Dasboard User Control Panel.
+8. Preemptive Support WordPress 3.7+ ~ 3.8+ Future Releases.
 `
+In the future version 2014 of this plugin, it will be introduced the New Admin Dasboard Control Panel to Optimize all of its Features!
+
 Scheduled Posts Regression <a href="http://core.trac.wordpress.org/ticket/22944" title="WordPress 3.5 Scheduled Posts Regression Ticket #22944">#22944</a> fixed on WP 3.5.1 is not related to this plugin.
 
-This plugin try fix <code>Missed Schedule</code> Future Posts Cron Job: find all missed schedule posts, during a failed cron job, and it republish them correctly. Checking every 1 minute all posts that match the problem, and fixed 5 items per session, (5 failed future post every minute, 300 failed future posts every hour) one session every 1 minute, (60 sessions every hour) for not use too many resources. All others failed, will be solved on next sessions, until no longer exist missed schedule future posts.
-
-This plugin not decrase server performaces why it check only [wp_schedule_single_event](http://codex.wordpress.org/Function_Reference/wp_schedule_single_event) and [wp_publish_post](http://codex.wordpress.org/Function_Reference/wp_publish_post) Function Behavior to no waste resources.
-
-For completely automatization of plugin, and no other action from the administrator, try on put it on `/mu-plugin/` directoy, and no other action will be required for activation and operation, starting from WordPress installation.
-
+The configuration of this plugin is Automattic! and not need other actions from the Administrator except installing, uninstall or delete it, but, for completely automatization, try on put it on `/mu-plugin/` directoy, and also your activation is Automattic! starting from first installation.
+`
+No need to delete anything from hosting space when deactivate!
+No need to delete anything from hosting space when deleted!
+No need to delete anything from the database when deactivate!
+No need to delete anything from the database when deleted!
+No need to delete anything from the wp_option when deactivate!
+No need to delete anything from the wp_option when deleted!
+wp_option table is auto cleaned when deactivate or deleted!
+Not need other actions except installing or uninstall it!
+`
 Full Compatible with WordPress Versions from 2.6+ to 3.5+ add Preemptive Support for Coming Soon 3.6+ and Future 3.7+ ~ 3.8+ Releases. Ready to Single, Network Multisite installations, and old WPMU 2.6+ to 2.9+ (latest is 2.9.2) Multi Users. Also it is possible to work on old versions from 2.1+ to 2.5+ (latest is 2.5.1) and legacy 2.0+ branch, but the result is not guaranted. Run on Shared, Dedicated, Cloud and VPS Hosting, with high and low resources. Work under [GPLv2](http://www.gnu.org/licenses/gpl-2.0.html) or later License. Implement [GNU style](http://www.gnu.org/prep/standards/standards.html) coding standard indentation.
 
 * Tested and Reviewed by:
@@ -55,7 +71,7 @@ to your code. This plugin takes care of it all.
 `
 [Perta Max](http://www.pertamaxxx.com/kontak-pertamaxxx/)
 
-* [Plugins](http://slangji.wordpress.com/plugins/):
+* [Plugins](http://slangji.wordpress.com/plugins/): il you are happy make a small [Free Donation](http://slangji.wordpress.com/donate/) for my work.
  * [WP Overview (lite)](http://wordpress.org/extend/plugins/wp-overview-lite/)
  * [WP Overview (lite) MU](http://wordpress.org/extend/plugins/wp-overview-lite-mu/)
  * [WP Overview (lite) MS](http://wordpress.org/extend/plugins/wp-overview-lite-ms/)
@@ -64,10 +80,11 @@ to your code. This plugin takes care of it all.
  * [WP Admin Bar Node Removal](http://wordpress.org/extend/plugins/wp-admin-bar-node-removal/)
  * [WP Toolbar Removal](http://wordpress.org/extend/plugins/wp-toolbar-removal/) Linked and reviewed at [softpedia.com](http://webscripts.softpedia.com/script/Modules/WordPress-Plugins/ToolBar-Removal-completely-disable-73548.html)
  * [WP Toolbar Node Removal](http://wordpress.org/extend/plugins/wp-toolbar-node-removal/)
- * [Noindex (login) WordPress Deindexing](http://wordpress.org/extend/plugins/wp-login-deindexing/)
- * [Noindex (total) WordPress Deindexing](http://wordpress.org/extend/plugins/wp-total-deindexing/)
+ * [Noindex (login) WordPress Deindexing](http://wordpress.org/extend/plugins/wp-login-deindexing/) (refreshed)
+ * [Noindex (total) WordPress Deindexing](http://wordpress.org/extend/plugins/wp-total-deindexing/) (refreshed)
  * [IE Enhancer and Modernizer](http://wordpress.org/extend/plugins/wp-ie-enhancer-and-modernizer/) Linked and reviewed at [softpedia.com](http://webscripts.softpedia.com/script/Modules/WordPress-Plugins/IE-Enhancer-and-Modernizer-73546.html)
- * [Memory Load Consumption db size Usage Indicator](http://wordpress.org/extend/plugins/wp-memory-db-indicator/)
+ * [Memory Load Consumption db size Usage Indicator](http://wordpress.org/extend/plugins/wp-memory-db-indicator/) (new)
+ * [Header and Footer Log](http://wordpress.org/extend/plugins/wp-header-footer-log/) Only For Developers (and advanced users)
 
 * [Themes](http://slangji.wordpress.com/themes/): for more nfo [Contact Me](http://slangji.wordpress.com/contact/)
  * CLEAN
@@ -81,16 +98,7 @@ to your code. This plugin takes care of it all.
 Follow Me on [LinkedIn](http://www.linkedin.com/in/slangjis) - [Twitter](https://twitter.com/sLanGjIs) - [Gravatar](http://en.gravatar.com/slangji) - [FaceBook](https://www.facebook.com/sLaNGjI) - [Google+](https://plus.google.com/104369105810975562211) - [FeedBurner](http://feeds.feedburner.com/slangji) - [FriendFeed](http://friendfeed.com/slangjis)
 
 Author URL [sLa](http://wordpress.org/extend/plugins/profile/sla) moved to [sLaNGjI](http://wordpress.org/extend/plugins/profile/slangji) update bookmark!
-`
-No need to delete anything from hosting space when deactivate!
-No need to delete anything from hosting space when deleted!
-No need to delete anything from the database when deactivate!
-No need to delete anything from the database when deleted!
-No need to delete anything from the wp_option when deactivate!
-No need to delete anything from the wp_option when deleted!
-wp_option table is auto cleaned when deactivate or deleted!
-Not need other actions except installing or uninstall it!
-`
+
 single, event, array, unix, time, stamp, wordpress_wp_missed_schedule
 == Installation ==
 = For users of single WordPress 2.6+ (via FTP) =
@@ -164,16 +172,24 @@ I hope the fix working fine for you. WordPress should really look into this issu
 == Changelog ==
 = Todo List =
 1. √ Checking: 5 Future Posts for 1 Minute (2013.0130.2222)
-2. √ Realtime Checking: 10 Future Posts for 1 Minute (2013.0131.3333)
-3. √ Tiket #3712701 [TimeZone Issues](http://wordpress.org/support/topic/publishing-ahead-of-schedule-timezone-issues/) (2013.0131.3333)
-4. User Options Interface Optional (2013.0000.2014) No Date Set!
-5. Tiket #3740220 [Change Frequency](http://wordpress.org/support/topic/change-frequency/) (2013.0000.2014) No Date Set!
+2. √ Tiket #3786523 [Strange Messages](http://wordpress.org/support/topic/activate-the-plugin-then-show-strange-messages/) (2013.0130.2222)
+3. √ Transparency of others Publishing Plugins (2013.0131.3333)
+4. √ Default WordPress Items Feed Syndication Support (2013.0131.3333)
+5. √ Realtime Checking: 10 Future Posts for 1 Minute (2013.0131.3333)
+6. √ Tiket #3712701 [TimeZone Issues](http://wordpress.org/support/topic/publishing-ahead-of-schedule-timezone-issues/) (2013.0131.3333)
+7. √ Compatibility of Third Party Caching Plugins (2013.0131.3333)
+8. √ Tiket #4163854 [W3 Total Cache Conflict](http://wordpress.org/support/topic/any-conflicts-with-w3-cache/) (2013.0131.3333)
+9. √ Check Key Tag Authenticity (2013.0131.3333)
+10. Free Interference with others WP Scheduled Cron Jobs at scale (2013.0509.0000)
+11. Checking Authenticity Plugin Before Activation (2013.0509.0000) or later ...
+12. Optional Admin Dasboard User Options Interface (2013.0000.2014) No Date Set!
+13. Tiket #3740220 [Change Frequency](http://wordpress.org/support/topic/change-frequency/) (2013.0000.2014) No Date Set!
 = Development Release =
-[Version 2013 Build 0131-BUGFIX.3333-DEVELOPMENTAL](http://downloads.wordpress.org/plugin/wp-missed-schedule.zip) (new sql way?)
+[Version 2013 Build 0509-BUGFIX.0000-DEVELOPMENTAL](http://downloads.wordpress.org/plugin/wp-missed-schedule.zip) (new mysql way!)
 = Warning Notice =
 `
-WP Missed Schedule 2011.0920.2011 and 2013.0106.1111 Versions
-was silently updated on 2013-01-30.
+WP Missed Schedule 2011.0920.2011 was silently updated on 2013-01-30.
+WP Missed Schedule 2013.0106.1111 was silently updated on 2013-01-30.
 Please: re-download and re-install as soon possible! Enjoy :)
 `
 = Disclaimer =
@@ -181,7 +197,27 @@ Please: re-download and re-install as soon possible! Enjoy :)
 All previous release, prior of latest stable, are on fact 
 deprecated and no longer supported on this project: 
 is very suggested upgrade to the latest build always!
+
+If latest Version 2013.0131.3333 failed please swith to
+previous Version 2013.0130.2222  as soon possible!
 `
+= 2013.0131.3333 =
+* Recommended Update Update [BUGFIX] 
+ * Please update as soon possible!
+ * Full Compatible with WordPress 2.6+ to 3.5+
+ * Preemptive Support for WordPress 3.6+ and 3.7+ ~ 3.8+ Future Releases.
+ * NEW Transparency of others Publishing Plugins.
+ * BUGFIX Fixed Tiket #3712701 [TimeZone Issues](http://wordpress.org/support/topic/publishing-ahead-of-schedule-timezone-issues/)
+ * ENHANCEMENT Compatibility of Third Party Caching Plugins.
+ * BUGFIX Fixed Ticket #4163854 [W3 Total Cache Conflict](http://wordpress.org/support/topic/any-conflicts-with-w3-cache/)
+ * ENHANCEMENT Default WordPress Items Feed Syndication Support.
+ * UPDATE Checking 10 Posts for 1 Minute (previous 5 items) <code>('LIMIT' 10)</code>
+ * SECURITY Introducing (a New Idea of sLa ...) Check Key Tag Authenticity.
+ * UPDATE Key Tag Checking Mechanism.
+ * Work under [GPLv2](http://www.gnu.org/licenses/gpl-2.0.html) or later License.
+ * Implement [GNU style](http://www.gnu.org/prep/standards/standards.html) coding standard indentation.
+ * Meet detailed [Plugin Guidelines](http://wordpress.org/extend/plugins/about/guidelines/) quality requirements.
+ * BUMP Version 2013 Build 0131 Revision 3333
 = 2013.0130.2222 =
 * Recommended Update [BUGFIX] Fixed (unusual/infrequent) Ticket [#3786523](http://wordpress.org/support/topic/activate-the-plugin-then-show-strange-messages/)
  * Please update as soon possible!
@@ -190,7 +226,7 @@ is very suggested upgrade to the latest build always!
  * BUGFIX Fixed Ticket [#3786523](http://wordpress.org/support/topic/activate-the-plugin-then-show-strange-messages/) in Some Circumstances Hosting Configurations.
  * ENHANCEMENT Checking Interval Modified from 5 Minutes to 1 Minute.
  * UPDATE checking interval every 1 minute (previous 5 minutes) <code>('WPMS_DELAY' ,1)</code>
- * SECURITY Introducing (a New Idea of sLa ...) 64Bit Security Tag Key.
+ * SECURITY Introducing (a New Idea of sLa ...) Check Key Tag Authenticity.
  * Work under [GPLv2](http://www.gnu.org/licenses/gpl-2.0.html) or later License.
  * Implement [GNU style](http://www.gnu.org/prep/standards/standards.html) coding standard indentation.
  * Meet detailed [Plugin Guidelines](http://wordpress.org/extend/plugins/about/guidelines/) quality requirements.
@@ -307,8 +343,10 @@ is very suggested upgrade to the latest build always!
  * Reduce Code Bloat
  * Bump Version 2008 Build 1210 Revision 2008
 == Upgrade Notice ==
+= 2013.0131.3333 =
+* Recommended Update Update [BUGFIX] Fixed Tikets: #3712701 TimeZone Issues - #4163854 W3 Total Cache Conflict - Realtime Checking: 10 Future Posts for 1 Minute. More others issues solved!
 = 2013.0130.2222 =
-* Recommended Update [BUGFIX] Fixed (unusual/infrequent) Ticket #3786523 - Introducing (a New Idea of sLa ...) 64Bit Security Tag Key - Checking Interval Modified from 5 Minutes to 1 Minute.
+* Recommended Update [BUGFIX] Fixed (unusual/infrequent) Ticket #3786523 - Introducing (a New Idea of sLa ...) Check Key Tag Authenticity - Checking Interval Modified from 5 Minutes to 1 Minute.
 = 2013.0106.1111 =
 * Silent Update [STABLE] Try WP 3.5 Scheduled Posts Regression Ticket <a href="http://core.trac.wordpress.org/ticket/22944" title="WordPress 3.5 Scheduled Posts Regression Ticket #22944">#22944</a>
 = 2011.0920.2011 =
