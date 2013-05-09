@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Comment Images 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-13 23:21-0500\n"
+"PO-Revision-Date: 2013-04-08 14:38+0100\n"
+"Last-Translator: Rene Souri <souri_comment_images@kaoh.at>\n"
+"Language-Team: KAOH WebServices kaoh.at <kaoh_comment_images@kaoh.at>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../plugin.php:122
+#: ../plugin.php:220
+#: ../plugin.php:440
+msgid "Comment Images"
+msgstr "Kommentarbilder"
+
+#: ../plugin.php:155
+msgid "View Post Comment Images"
+msgstr "Zeige Kommentarbilder"
+
+#: ../plugin.php:180
+msgid "Comment Image"
+msgstr "Kommentarbild"
+
+#: ../plugin.php:283
+msgid "<strong>Comment Images Notice:</strong> Unfortunately, your host does not allow uploads from the comment form. This plugin will not work for your host."
+msgstr "<strong>Comment Images Hinweis</strong> Leider erlaubt diese Webseite den Bilderupload in den Kommentaren nicht. Dieses Plugin funktioniert nicht mit diesem Server."
+
+#: ../plugin.php:331
+msgid "<strong>Heads up!</strong> You are attempting to upload an invalid image. If saved, this image will not display with your comment."
+msgstr "<strong>Achtung!</strong>  Sie versuchen eine ung&uuml;ltige Datei hochzuladen. Wenn Sie auf speichern dr&uuml;cken, wird kein Bild im Kommentar angezeigt."
+
+#: ../plugin.php:334
+msgid "Select an image for your comment (GIF, PNG, JPG, JPEG):"
+msgstr "F&uuml;gen Sie ein Bild dem Kommentar hinzu (GIF, PNG, JPG, JPEG):"
+
+#: ../plugin.php:460
+msgid "Enable comment images for this post."
+msgstr "Erlaube Kommentarbilder f&uuml; diesen Beitrg."
+
+#: ../plugin.php:461
+msgid "Disable comment images for this post."
+msgstr "Unterbinde Kommentarbilder f&uuml; diesen Beitrg."
+
+#: ../plugin.php:502
+msgid "png"
+msgstr "png"
+
+#: ../plugin.php:502
+msgid "gif"
+msgstr "gif"
+
+#: ../plugin.php:502
+msgid "jpg"
+msgstr "jpg"
+
+#: ../plugin.php:502
+msgid "jpeg"
+msgstr "jpeg"
+
