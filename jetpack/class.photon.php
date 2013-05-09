@@ -135,7 +135,7 @@ class Jetpack_Photon {
 		$images = Jetpack_Photon::parse_images_from_html( $content );
 
 		if ( ! empty( $images ) ) {
-			global $content_width;
+			$content_width = Jetpack::get_content_width();
 
 			$image_sizes = self::image_sizes();
 			$upload_dir = wp_upload_dir();
@@ -309,6 +309,10 @@ class Jetpack_Photon {
 						// Replace original tag with modified version
 						$content = str_replace( $tag, $new_tag, $content );
 					}
+				} elseif ( preg_match( '#^http(s)?://i[\d]{1}.wp.com#', $src ) && ! empty( $images['link_url'][ $index ] ) && self::validate_image_url( $images['link_url'][ $index ] ) ) {
+					$new_tag = preg_replace( '#(href=["|\'])' . $images['link_url'][ $index ] . '(["|\'])#i', '\1' . jetpack_photon_url( $images['link_url'][ $index ] ) . '\2', $tag, 1 );
+
+					$content = str_replace( $tag, $new_tag, $content );
 				}
 			}
 		}
