@@ -3,7 +3,7 @@
   Plugin Name: Basic Comment Quicktags
   Plugin URI: http://halfelf.org/plugins/basic-comment-quicktags/
   Description: Displays a bold, italic, add link and quote button on top of the comment form
-  Version: 2.1
+  Version: 2.2
   Author: Mika "Ipstenu" Epstein
   Author URI: http://ipstenu.org
 
@@ -27,8 +27,8 @@
 */
 
 global $wp_version;
-$exit_msg_ver = 'This plugin requires WordPress 3.3';
-if (version_compare($wp_version,"3.3","<")) { exit($exit_msg_ver); }
+$exit_msg_ver = 'This plugin requires WordPress 3.4';
+if (version_compare($wp_version,"3.4","<")) { exit($exit_msg_ver); }
 
 function ippy_bcq_add_scripts() {
 
@@ -43,7 +43,7 @@ $ippy_bcq_bbp_fancy = get_option( '_bbp_use_wp_editor' );
             wp_enqueue_style("bcq_quicktags", plugin_dir_url(__FILE__) . "quicktags.css", false, "2.0");
         }
   }
-  if ( ( $valueco != '0') && !is_null($valueco) && !is_admin() && is_singular() ) {
+  if ( ( $valueco != '0') && !is_null($valueco) && !is_admin() && is_singular() && comments_open() ) {
             wp_enqueue_script("bcq_quicktags", plugin_dir_url(__FILE__) . "quicktags.js", array("quicktags","jquery"), "1.8", 1);
             wp_enqueue_style("bcq_quicktags", plugin_dir_url(__FILE__) . "quicktags.css", false, "2.0");
   }
