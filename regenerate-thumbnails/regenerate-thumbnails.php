@@ -5,7 +5,7 @@
 Plugin Name:  Regenerate Thumbnails
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/regenerate-thumbnails/
 Description:  Allows you to regenerate all thumbnails after changing the thumbnail sizes.
-Version:      2.2.3
+Version:      2.2.4
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -279,6 +279,12 @@ class RegenerateThumbnails {
 					url: ajaxurl,
 					data: { action: "regeneratethumbnail", id: id },
 					success: function( response ) {
+						if ( response !== Object( response ) || ( typeof response.success === "undefined" && typeof response.error === "undefined" ) ) {
+							response = new Object;
+							response.success = false;
+							response.error = "<?php printf( esc_js( __( 'The resize request was abnormally terminated (ID %s). This is likely due to the image exceeding available memory or some other type of fatal error.', 'regenerate-thumbnails' ) ), '" + id + "' ); ?>";
+						}
+
 						if ( response.success ) {
 							RegenThumbsUpdateStatus( id, true, response );
 						}
@@ -298,7 +304,7 @@ class RegenerateThumbnails {
 
 						if ( rt_images.length && rt_continue ) {
 							RegenThumbs( rt_images.shift() );
-						} 
+						}
 						else {
 							RegenThumbsFinishUp();
 						}
