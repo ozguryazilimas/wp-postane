@@ -5,211 +5,6 @@
  */
 
 /**
- * Copied from Wordpress 3.4.2 and modified to add date time functionality
- */
-function wp_unread_comments_get_comments( $args = '' ) {
-	$query = new WP_Unread_Comments_Comment_Query;
-	return $query->query( $args );
-}
-
-/**
- * Copied from Wordpress 3.4.2 and modified to add date time functionality
- *
- */
-class WP_Unread_Comments_Comment_Query {
-
-	/**
-	 * Execute the query
-	 *
-	 * @since 3.1.0
-	 *
-	 * @param string|array $query_vars
-	 * @return int|array
-	 */
-	function query( $query_vars ) {
-		global $wpdb;
-
-		$defaults = array(
-			'author_email' => '',
-			'ID' => '',
-			'karma' => '',
-			'number' => '',
-			'offset' => '',
-			'orderby' => '',
-			'order' => 'DESC',
-			'parent' => '',
-			'post_ID' => '',
-			'post_id' => 0,
-			'post_author' => '',
-			'post_name' => '',
-			'post_parent' => '',
-			'post_status' => '',
-			'post_type' => '',
-			'status' => '',
-			'type' => '',
-			'user_id' => '',
-			'search' => '',
-			'from_time' => '',
-			'exclude_read_for' => '',
-			'count' => false
-		);
-
-		$this->query_vars = wp_parse_args( $query_vars, $defaults );
-		do_action_ref_array( 'pre_wp_unread_comments_get_comments', array( &$this ) );
-		extract( $this->query_vars, EXTR_SKIP );
-
-		// $args can be whatever, only use the args defined in defaults to compute the key
-		$key = md5( serialize( compact(array_keys($defaults)) )  );
-		$last_changed = wp_cache_get('last_changed', 'comment');
-		if ( !$last_changed ) {
-			$last_changed = time();
-			wp_cache_set('last_changed', $last_changed, 'comment');
-		}
-		$cache_key = "wp_unread_comments_get_comments:$key:$last_changed";
-
-		if ( $cache = wp_cache_get( $cache_key, 'comment' ) ) {
-			return $cache;
-		}
-
-		$post_id = absint($post_id);
-
-		if ( 'hold' == $status )
-			$approved = "comment_approved = '0'";
-		elseif ( 'approve' == $status )
-			$approved = "comment_approved = '1'";
-		elseif ( 'spam' == $status )
-			$approved = "comment_approved = 'spam'";
-		elseif ( 'trash' == $status )
-			$approved = "comment_approved = 'trash'";
-		else
-			$approved = "( comment_approved = '0' OR comment_approved = '1' )";
-
-		$order = ( 'ASC' == strtoupper($order) ) ? 'ASC' : 'DESC';
-
-		if ( ! empty( $orderby ) ) {
-			$ordersby = is_array($orderby) ? $orderby : preg_split('/[,\s]/', $orderby);
-			$ordersby = array_intersect(
-				$ordersby,
-				array(
-					'comment_agent',
-					'comment_approved',
-					'comment_author',
-					'comment_author_email',
-					'comment_author_IP',
-					'comment_author_url',
-					'comment_content',
-					'comment_date',
-					'comment_date_gmt',
-					'comment_ID',
-					'comment_karma',
-					'comment_parent',
-					'comment_post_ID',
-					'comment_type',
-					'user_id',
-				)
-			);
-			$orderby = empty( $ordersby ) ? 'comment_date_gmt' : implode(', ', $ordersby);
-		} else {
-			$orderby = 'comment_date_gmt';
-		}
-
-		$number = absint($number);
-		$offset = absint($offset);
-
-		if ( !empty($number) ) {
-			if ( $offset )
-				$limits = 'LIMIT ' . $offset . ',' . $number;
-			else
-				$limits = 'LIMIT ' . $number;
-		} else {
-			$limits = '';
-		}
-
-		if ( $count )
-			$fields = 'COUNT(*)';
-		else
-			$fields = '*';
-
-		$join = '';
-		$where = $approved;
-
-		if ( ! empty($post_id) )
-			$where .= $wpdb->prepare( ' AND comment_post_ID = %d', $post_id );
-		if ( '' !== $author_email )
-			$where .= $wpdb->prepare( ' AND comment_author_email = %s', $author_email );
-		if ( '' !== $karma )
-			$where .= $wpdb->prepare( ' AND comment_karma = %d', $karma );
-		if ( 'comment' == $type ) {
-			$where .= " AND comment_type = ''";
-		} elseif( 'pings' == $type ) {
-			$where .= ' AND comment_type IN ("pingback", "trackback")';
-		} elseif ( ! empty( $type ) ) {
-			$where .= $wpdb->prepare( ' AND comment_type = %s', $type );
-		}
-		if ( '' !== $parent )
-			$where .= $wpdb->prepare( ' AND comment_parent = %d', $parent );
-		if ( '' !== $user_id )
-			$where .= $wpdb->prepare( ' AND user_id = %d', $user_id );
-		if ( '' !== $from_time )
-			$where .= $wpdb->prepare( ' AND comment_date >= ( CURDATE() - INTERVAL %d DAY )', $from_time );
-		if ( '' !== $exclude_read_for)
-			// $where .= $wpdb->prepare( " AND comment_post_ID NOT IN (SELECT SUBSTRING(meta_key, 12) FROM $wpdb->usermeta WHERE user_id=%s AND $wpdb->usermeta.meta_key LIKE 'wuc_post_id%')", $exclude_read_for);
-			$where .= $wpdb->prepare( " AND comment_date >= IFNULL(
-				(SELECT meta_value FROM $wpdb->usermeta
-					WHERE user_id=%s AND $wpdb->usermeta.meta_key=CONCAT('wuc_post_id', comment_post_ID)
-				),0)
-				", $exclude_read_for);
-		if ( '' !== $search )
-			$where .= $this->get_search_sql( $search, array( 'comment_author', 'comment_author_email', 'comment_author_url', 'comment_author_IP', 'comment_content' ) );
-
-		$post_fields = array_filter( compact( array( 'post_author', 'post_name', 'post_parent', 'post_status', 'post_type', ) ) );
-		if ( ! empty( $post_fields ) ) {
-			$join = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
-			foreach( $post_fields as $field_name => $field_value )
-				$where .= $wpdb->prepare( " AND {$wpdb->posts}.{$field_name} = %s", $field_value );
-		}
-
-		$pieces = array( 'fields', 'join', 'where', 'orderby', 'order', 'limits' );
-		$clauses = apply_filters_ref_array( 'comments_clauses', array( compact( $pieces ), &$this ) );
-		foreach ( $pieces as $piece )
-			$$piece = isset( $clauses[ $piece ] ) ? $clauses[ $piece ] : '';
-
-		$query = "SELECT $fields FROM $wpdb->comments $join WHERE $where ORDER BY $orderby $order $limits";
-
-		if ( $count )
-			return $wpdb->get_var( $query );
-
-		$comments = $wpdb->get_results( $query );
-		$comments = apply_filters_ref_array( 'the_comments', array( $comments, &$this ) );
-
-		wp_cache_add( $cache_key, $comments, 'comment' );
-
-		return $comments;
-	}
-
-	/*
-	 * Used internally to generate an SQL string for searching across multiple columns
-	 *
-	 * @access protected
-	 * @since 3.1.0
-	 *
-	 * @param string $string
-	 * @param array $cols
-	 * @return string
-	 */
-	function get_search_sql( $string, $cols ) {
-		$string = esc_sql( like_escape( $string ) );
-
-		$searches = array();
-		foreach ( $cols as $col )
-			$searches[] = "$col LIKE '%$string%'";
-
-		return ' AND (' . implode(' OR ', $searches) . ')';
-	}
-}
-
-
-/**
  * WP Unread Comments Widget Class
  */
 class WP_UC_Widget extends WP_Widget
@@ -244,12 +39,6 @@ class WP_UC_Widget extends WP_Widget
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'Unread Comments' ) : $instance['title'], $instance, $this->id_base );
 		
 		$order='asc';
-		$from_time = 10; // ignore comments older than 10 days ago
-		$number = 10; // only get 10 comments for login user
-
-		/*
-			If the user is not a guest, use a modified get_comments to be able to pass time range, optimize queries in db and number limit
-		*/
 		if($user_ID == ''){
 			$title = apply_filters( 'widget_title', empty( $instance['title_recent'] ) ? __( 'Recent Comments' ) : $instance['title_recent'], $instance, $this->id_base );			
 			$number = $instance['number_recent'];
@@ -257,17 +46,16 @@ class WP_UC_Widget extends WP_Widget
 			$show_recent = $instance['show_recent'];			
 			$show_text = $instance['show_text'];
 			$custom_text = $instance['custom_text'];
-			$comments = get_comments( array( 'number' => $number, 'order' => $order, 'status' => 'approve', 'post_status' => 'publish' ) );
-		} else {
-			$comments = wp_unread_comments_get_comments( array( 'number' => $number, 'from_time' => $from_time, 'exclude_read_for' => $user_ID, 'order' => $order, 'status' => 'approve', 'post_status' => 'publish' ) );
+			
 		}
 
+		$comments = get_comments( array( 'number' => $number, 'order' => $order, 'status' => 'approve', 'post_status' => 'publish' ) );
 		$output .= $before_widget;
 		if ( $title )
 			$output .= $before_title . $title . $after_title;
 
 		$output .= '<ul id="recentcomments">';
-		// $postarray=array();
+		$postarray=array();
 		$commentarray=array();
 		$number = $instance['number_unread'];
 		
@@ -287,13 +75,21 @@ class WP_UC_Widget extends WP_Widget
 					$post_key = 'wuc_post_id'.$post_id;
 					$ts_a = strtotime(get_user_meta( $user_ID, $post_key, true ));
 
+					$ts_nearfuture = strtotime("-10 days");
+					if($ts_nearfuture > $ts_a) {
+						$ts_a = $ts_nearfuture;
+					}
+
 					$comment_time = strtotime($comment->comment_date_gmt);
-					//if(!in_array($post_id, $postarray))
-					//{
-					//	array_push($postarray, $post_id);
-						array_push($commentarray, '<li class="'.$rcclass.'">' . 
-						sprintf(_x('%1$s', 'widgets'),  '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>');											
-					//}
+					if(!in_array($post_id, $postarray))
+					{
+						if ($comment_time > $ts_a)
+						{
+							array_push($postarray, $post_id);
+							array_push($commentarray, '<li class="'.$rcclass.'">' . 
+							sprintf(_x('%1$s', 'widgets'),  '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>');											
+						}
+					}
 					if($number>0 && count($commentarray) >= $number) break;
 				}
 			}
@@ -331,10 +127,10 @@ class WP_UC_Widget extends WP_Widget
 		$instance_name = strip_tags($instance['instance']);
 		
 		$title = (isset($instance['title'])) ? strip_tags($instance['title']) : '';
-		$number_unread = empty($instance['number_unread']) ? 10 : (int) $instance['number_unread'];
+		$number_unread = empty($instance['number_unread'])?5:(int) $instance['number_unread'];
 		$highlight = (isset($instance['highlight'])) ? true : false;
 		$title_recent = (isset($instance['title_recent'])) ? strip_tags($instance['title_recent']) : 'Recent Comments' ;
-		$number_recent = empty($instance['number_recent']) ? 10 : (int) $instance['number_recent'];
+		$number_recent = empty($instance['number_recent'])?5:(int) $instance['number_recent'];
 		$show_recent = (isset($instance['show_recent'])) ? true : false;		
 		$show_text = (isset($instance['show_text'])) ? true : false;
 		$custom_text = (isset($instance['custom_text'])) ? strip_tags($instance['custom_text']) : 'You must be logged in to view unread comments';
