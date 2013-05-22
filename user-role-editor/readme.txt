@@ -57,27 +57,7 @@ To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/
 * [FullThrottle](http://fullthrottledevelopment.com/how-to-hide-the-adminstrator-on-the-wordpress-users-screen) - For the code to hide administrator role at admin backend.
 
 = Translations =
-* Arabic: [Yaser](http://www.englize.com/)
-* Brasilian Portuguese: André Gama, [Onbiz](http://www.onbiz.com.br/), [Rafael Galdencio](http://www.arquiteturailustrada.com.br)
-* Dutch: [Frank Groeneveld](http://ivaldi.nl), [Rémi Bruggeman](http://www.remisan.be)
-* French: [Presse et Multimedia](http://presse-et-multimedia.fr/blog), [Whiler](http://blogs.wittwer.fr/whiler)
-* German: [Peter](http://www.becker-heidmann.de)
-* Hebrew: [Aryo Digital](http://www.aryo.co.il), [Sagive](http://www.sagive.co.il)
-* Hindi: [Outshine Solutions](http://outshinesolutions.com)
-* Italian: [Tristano Ajmone](http://www.zenfactor.org), [Umberto Sartori](http://venezialog.net)
-* Lithuanian: [Vincent G](http://host1free.com)
-* Persian: [Parsa](http://parsa.ws), [Good Life](http://good-life.ir), Amir Khalilnejad
-* Polish: [TagSite](http://www.tagsite.eu), [Bartosz](www.digitalfactory.pl)
-* Russian: [Vladimir Garagulya](http://shinephp.com)
-* Serbian: [Diana](http://wpcouponshop.com)
-* Spanish: [Victor Ricardo Díaz (INFOMED)](http://www.sld.cu)
-* Swedish: [Christer Dahlbacka](www.startlinks.eu), [Andréas Lundgren](http://adevade.com/)
-* Traditional Chinese (Jingxin Lai)
-* Turkish: [Muhammed YILDIRIM](http://ben.muhammed.im)
-* -----------------------------------------------------
-* translations below are included to the package, but all of them are outdated and every file needs to be updated. You are welcome!
-* Finnish, Japanese, Belorussian, Chinese, Hungarian
-
+* All translation files are obsolete and require updates. 
 
 Dear plugin User!
 If you wish to help me with this plugin translation I very appreciate it. Please send your language .po and .mo files to vladimir[at-sign]shinephp.com email. Do not forget include you site link in order I can show it with greetings for the translation help at shinephp.com, plugin settings page and in this readme.txt file.
@@ -86,6 +66,19 @@ Share with me new ideas about plugin further development and link to your site w
 
 
 == Changelog ==
+= 3.14 =
+* 17.05.2013
+* Interface update: role/capability add/remove stuff was removed from the page. Plugin has toolbar at the right side now. Click on the button opens needed dialog window.
+* New role may have different attrubutes "ID" and "Name". While ID is still restricted by latin characters hyphen, underscore and digits only, Name could contain spaces and national languages characters.
+* General code cleanup and security enhancements: all data changes request are processed via POST instead of GET now. So its more difficult to send modified malicious request without special software. Presence of special nonce field is checked for all requests.
+* Setting up the 'administrator' role as default one for new registered users is prohibited at server side. 
+* JavaScript code separated from PHP one whenever it's possible.
+
+* 14.05.2013
+* Update for administrators of multi-site WordPress installations. Single-site WordPress installation administrator could skip this update. 
+* "Apply to All Sites" feature did not work at version 3.12. It is fixed.
+* "Apply to All Sites" feature is available now from main site of the network only
+
 = 3.12 =
 * 01.05.2013
 * Critical update: persistent cross-site scripting vulnerability is fixed.
