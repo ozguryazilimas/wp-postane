@@ -4,7 +4,7 @@
 Plugin Name: Auto Post Thumbnail
 Plugin URI: http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-thumbnail/
 Description: Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post (or any custom post type) only if Post Thumbnail is not set manually.
-Version: 3.3.1
+Version: 3.3.2
 Author: Aditya Mooley <adityamooley@sanisoft.com>, Tarique Sani <tarique@sanisoft.com>
 Author URI: http://www.sanisoft.com/blog/author/adityamooley/
 Modified by Dr. Tarique Sani <tarique@sanisoft.com> to make it work with Wordpress 3.4
@@ -26,7 +26,6 @@ Modified by Dr. Tarique Sani <tarique@sanisoft.com> to make it work with Wordpre
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 
 add_action('publish_post', 'apt_publish_post');
 
@@ -54,98 +53,132 @@ function apt_add_admin_menu() {
 function apt_interface() {
     global $wpdb;
 ?>
-<div id="message" class="updated fade" style="display:none"></div>
+<div>
+    <div style="margin-right:260px;">
+        <div style='float:left; width: 100%'>
+            <div id="message" class="updated fade" style="display:none"></div>
 
-<div class="wrap genpostthumbs">
-    <h2>Generate Post Thumbnails</h2>
+            <div class="wrap genpostthumbs">
+                <h2>Generate Post Thumbnails</h2>
 
 <?php
-    // If the button was clicked
-        if ( !empty($_POST['generate-post-thumbnails']) ) {
-            // Capability check
-            if ( !current_user_can('manage_options') )
-                wp_die('Cheatin&#8217; uh?');
+                // If the button was clicked
+                    if ( !empty($_POST['generate-post-thumbnails']) ) {
+                        // Capability check
+                        if ( !current_user_can('manage_options') )
+                            wp_die('Cheatin&#8217; uh?');
 
-            // Form nonce check
-            check_admin_referer( 'generate-post-thumbnails' );
+                        // Form nonce check
+                        check_admin_referer( 'generate-post-thumbnails' );
 
-            // Get id's of all the published posts for which post thumbnails does not exist.
-            $query = "SELECT * FROM {$wpdb->posts} p where p.post_status = 'publish' AND p.ID NOT IN (
-                        SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_thumbnail_id', 'skip_post_thumb')
-                      )";
-            $posts = $wpdb->get_results($query);
+                        // Get id's of all the published posts for which post thumbnails does not exist.
+                        $query = "SELECT * FROM {$wpdb->posts} p where p.post_status = 'publish' AND p.ID NOT IN (
+                                    SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('         _thumbnail_id', 'skip_post_thumb')
+                                  )";
+                        $posts = $wpdb->get_results($query);
 
-            if (empty($posts)) {
-                echo '<p>Currently there are no published posts available to generate thumbnails.</p>';
-            } else {
-                echo '<p>We are generating post thumbnails. Please be patient!</p>';
+                        if (empty($posts)) {
+                            echo '<p>Currently there are no published posts available to generate thumbnails.</p>';
+                        } else {
+                            echo '<p>We are generating post thumbnails. Please be patient!</p>';
 
-                // Generate the list of IDs
-                $ids = array();
-                foreach ( $posts as $post )
-                    $ids[] = $post->ID;
-                $ids = implode( ',', $ids );
+                            // Generate the list of IDs
+                            $ids = array();
+                            foreach ( $posts as $post )
+                                $ids[] = $post->ID;
+                            $ids = implode( ',', $ids );
 
-                $count = count( $posts );
+                            $count = count( $posts );
 ?>
-    <noscript><p><em>You must enable Javascript in order to proceed!</em></p></noscript>
+                <noscript><p><em>You must enable Javascript in order to proceed!</em></p></noscript>
 
-    <div id="genpostthumbsbar" style="position:relative;height:25px;">
-        <div id="genpostthumbsbar-percent" style="position:absolute;left:50%;top:50%;width:50px;margin-left:-25px;height:25px;margin-top:-9px;font-weight:bold;text-align:center;"></div>
-    </div>
+                <div id="genpostthumbsbar" style="position:relative;height:25px;">
+                    <div id="genpostthumbsbar-percent" style="position:absolute;left:50%;top:50%;width:50px;margin-left:-25px;height:25px;margin-top:-9px;font-weight:bold;text-align:center;"></div>
+                </div>
 
-    <script type="text/javascript">
-    // <![CDATA[
-        jQuery(document).ready(function($){
-            var i;
-            var rt_images = [<?php echo $ids; ?>];
-            var rt_total = rt_images.length;
-            var rt_count = 1;
-            var rt_percent = 0;
+                <script type="text/javascript">
+                    // <![CDATA[
+                    jQuery(document).ready(function($){
+                        var i;
+                        var rt_images = [<?php echo $ids; ?>];
+                        var rt_total = rt_images.length;
+                        var rt_count = 1;
+                        var rt_percent = 0;
 
-            $("#genpostthumbsbar").progressbar();
-            $("#genpostthumbsbar-percent").html( "0%" );
+                        $("#genpostthumbsbar").progressbar();
+                        $("#genpostthumbsbar-percent").html( "0%" );
 
-            function genPostThumb( id ) {
-                $.post( "admin-ajax.php", { action: "generatepostthumbnail", id: id }, function() {
-                    rt_percent = ( rt_count / rt_total ) * 100;
-                    $("#genpostthumbsbar").progressbar( "value", rt_percent );
-                    $("#genpostthumbsbar-percent").html( Math.round(rt_percent) + "%" );
-                    rt_count = rt_count + 1;
+                        function genPostThumb( id ) {
+                            $.post( "admin-ajax.php", { action: "generatepostthumbnail", id: id }, function() {
+                                rt_percent = ( rt_count / rt_total ) * 100;
+                                $("#genpostthumbsbar").progressbar( "value", rt_percent );
+                                $("#genpostthumbsbar-percent").html( Math.round(rt_percent) + "%" );
+                                rt_count = rt_count + 1;
 
-                    if ( rt_images.length ) {
+                                if ( rt_images.length ) {
+                                    genPostThumb( rt_images.shift() );
+                                } else {
+                                    $("#message").html("<p><strong><?php echo js_escape( sprintf('All done! Processed %d posts.', $count ) ); ?></strong></p>");
+                                    $("#message").show();
+                                }
+
+                            });
+                        }
+
                         genPostThumb( rt_images.shift() );
-                    } else {
-                        $("#message").html("<p><strong><?php echo js_escape( sprintf('All done! Processed %d posts.', $count ) ); ?></strong></p>");
-                        $("#message").show();
-                    }
-
-                });
-            }
-
-            genPostThumb( rt_images.shift() );
-        });
-    // ]]>
-    </script>
+                    });
+                // ]]>
+                </script>
 <?php
-            }
-        } else {
+                    }
+                    } else {
 ?>
 
-    <p>Use this tool to generate Post Thumbnail (Featured Thumbnail) for your Published posts.</p>
-    <p>If the script stops executing for any reason, just <strong>Reload</strong> the page and it will continue from where it stopped.</p>
+                <p>Use this tool to generate Post Thumbnail (Featured Thumbnail) for your Published posts.</p>
+                <p>If the script stops executing for any reason, just <strong>Reload</strong> the page and it will continue from where it stopped.</p>
 
-    <form method="post" action="">
-<?php wp_nonce_field('generate-post-thumbnails') ?>
+                <form method="post" action="">
+                <?php wp_nonce_field('generate-post-thumbnails') ?>
 
 
-    <p><input type="submit" class="button hide-if-no-js" name="generate-post-thumbnails" id="generate-post-thumbnails" value="Generate Thumbnails" /></p>
+                    <p><input type="submit" class="button hide-if-no-js" name="generate-post-thumbnails" id="generate-post-thumbnails" value="Generate Thumbnails" /></p>
 
-    <noscript><p><em>You must enable Javascript in order to proceed!</em></p></noscript>
+                    <noscript><p><em>You must enable Javascript in order to proceed!</em></p></noscript>
 
-    </form>
-    <p>Note: Thumbnails won't be generated for posts that already have post thumbnail or <strong><em>skip_post_thumb</em></strong> custom field set.</p>
-<?php } ?>
+                </form>
+                <p>Note: Thumbnails won't be generated for posts that already have post thumbnail or <strong><em>skip_post_thumb</em></strong> custom field set.</p>
+            <?php } ?>
+            </div>
+        </div>
+        <?php if( !is_plugin_active( 'auto-post-thumbnail-pro/index.php' ) ) { ?>
+        <div class="apt_pro_advertisement">
+            <div>
+                <div class="apt_pro_logo">
+                    <img align="middle" src=" <?php echo plugins_url( 'img/apt_logo.jpg' , __FILE__); ?>" />
+                </div>
+                <div class="apt_pro_check_out"><i>Upgrade Now</i></div>
+            </div>
+            <div class="apt_pro_features">
+                <ul>
+                    <li>Auto set first image in post as featured</li>
+                    <li>Auto set first attachment as featured</li>
+                    <li>Featured images from videos</li>
+                    <li>Several video services supported</li>
+                    <li>External images, shortcode ready</li>
+                    <li>Support for Custom Post Type</li>
+                    <li>Ability to delete featured images</li>
+                    <li>Multilingual ready</li>
+                    <li>Free updates, guaranteed support</li>
+                    <li>Works with any theme</li>
+                    <li>Very reasonably priced</li>
+                </ul>
+            </div>
+            <div class="apt_pro_buy_now">
+                <a href="http://codecanyon.net/item/auto-post-thumbnail-pro/4322624?ref=sanisoft" target=" _blank"><input type="button" value="Upgrade" class="button-primary"/></a>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
 </div>
 <?php
 } //End apt_interface()
@@ -168,6 +201,8 @@ function apt_admin_enqueues($hook_suffix) {
 	else {
 		wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/ui.progressbar.js', __FILE__ ), array( 'jquery-ui-core' ), '1.7.2' );
 	}
+
+    wp_enqueue_style( 'style', plugins_url( 'css/style.css', __FILE__ ) );
 
     wp_enqueue_style( 'jquery-ui-genpostthumbs', plugins_url( 'jquery-ui/redmond/jquery-ui-1.7.2.custom.css', __FILE__ ), array(), '1.7.2' );
 } //End apt_admin_enqueues

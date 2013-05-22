@@ -2,12 +2,14 @@
 Contributors: adityamooley
 Tags: Post, thumbnail, automatic, posts, featured image, image, featured, images, admin
 Requires at least: 2.9.1
-Tested up to: 3.5.1
-Stable tag: 3.3.1
+Tested up to: 3.6.x
+Stable tag: 3.3.2
 
 Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post or any custom post type only if Post Thumbnail is not set manually.
 
 == Description ==
+
+Go PRO! A premium version of the plugin has been launched with many more features - [See for details](http://codecanyon.net/item/auto-post-thumbnail-pro/4322624?ref=sanisoft)
 
 Auto post thumbnail is a plugin to generate post thumbnail from first image in post or any custom post type. If the first image doesn't work it will automatically search for the next one and so on until the post thumbnail is inserted.
 
@@ -24,6 +26,10 @@ For more details, see http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-a
 3. Sorry, no more steps :)
 
 == Changelog ==
+
+= 3.3.2 =
+* Tested with WordPress-3.6.x
+* Small tweaks
 
 = 3.3.1 =
 * Tested with WordPress-3.5.1
