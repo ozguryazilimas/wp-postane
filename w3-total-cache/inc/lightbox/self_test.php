@@ -7,30 +7,35 @@ w3_require_once(W3TC_INC_DIR . '/functions/file.php');
 w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
  
 ?>
-<h3><?php _e('Compatibility Test', 'w3-total-cache'); ?></h3>
+<h3>Compatibility Test</h3>
 
 <fieldset>
-    <legend><?php _e('Legend', 'w3-total-cache'); ?></legend>
+    <legend>Legend</legend>
 
     <p>
-        <?php _e('<code>Installed</code>: Functionality will work properly.', 'w3-total-cache'); ?><br />
-        <?php _e('<code>Not detected</code>: May be installed, but cannot be automatically confirmed.', 'w3-total-cache'); ?><br />
-        <?php _e('<code>Ok</code>: Current value is acceptable.', 'w3-total-cache'); ?><br />
-        <?php _e('<code>Yes / No</code>: The value was successful detected.', 'w3-total-cache'); ?>
+        <code>Installed</code>: Functionality will work properly.<br />
+        <code>Not detected</code>: May be installed, but cannot be automatically confirmed.<br />
+        <code>Ok</code>: Current value is acceptable.<br />
+        <code>Yes / No</code>: The value was successful detected.
     </p>
 </fieldset>
 
 <div id="w3tc-self-test">
-    <h4 style="margin-top: 0;"><?php _e('Server Modules &amp; Resources:', 'w3-total-cache'); ?></h4>
+    <h4 style="margin-top: 0;">Server Modules &amp; Resources:</h4>
 
     <ul>
         <li>
-            <?php _e('Plugin Version:', 'w3-total-cache'); ?> <code><?php echo W3TC_VERSION; ?></code>
+            Plugin Version: <code><?php echo W3TC_VERSION; ?></code>
         </li>
 
         <li>
-            <?php _e('PHP Version:', 'w3-total-cache'); ?>
+            PHP Version:
+            <?php if (PHP_VERSION >= 5): ?>
+            <code><?php echo PHP_VERSION; ?></code>
+            <?php else: ?>
             <code><?php echo PHP_VERSION; ?></code>;
+            <?php endif; ?>
+            <span class="w3tc-self-test-hint">(PHP5 required for Minify, Rackspace CloudFiles, Microsoft Azure support)</span>
         </li>
 
         <li>
@@ -57,130 +62,130 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
             <?php else: ?>
             <code>Not installed</code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e('(required for Self-hosted (<acronym title="File Transfer Protocol">FTP</acronym>) <acronym title="Content Delivery Network">CDN</acronym> support)', 'w3-total-cache'); ?></span>
+            <span class="w3tc-self-test-hint">(required for Self-hosted (<acronym title="File Transfer Protocol">FTP</acronym>) <acronym title="Content Delivery Network">CDN</acronym> support)</span>
         </li>
 
         <li>
-            <?php _e('Multibyte String support:', 'w3-total-cache'); ?>
+            Multibyte String support:
             <?php if (function_exists('mb_substr')): ?>
-            <code><?php _e('Installed', 'w3-total-cache'); ?></code>
+            <code>Installed</code>
             <?php else: ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e('(required for Rackspace Cloud Files support)', 'w3-total-cache'); ?></span>
+            <span class="w3tc-self-test-hint">(required for Rackspace Cloud Files support)</span>
         </li>
 
         <li>
-            <?php _e('cURL extension:', 'w3-total-cache'); ?>
+            cURL extension:
             <?php if (function_exists('curl_init')): ?>
-            <code><?php _e('Installed', 'w3-total-cache'); ?></code>
+            <code>Installed</code>
             <?php else: ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e('(required for Amazon S3, Amazon CloudFront, Rackspace CloudFiles support)', 'w3-total-cache'); ?></span>
+            <span class="w3tc-self-test-hint">(required for Amazon S3, Amazon CloudFront, Rackspace CloudFiles support)</span>
         </li>
 
         <li>
             zlib extension:
             <?php if (function_exists('gzencode')): ?>
-            <code><?php _e('Installed', 'w3-total-cache'); ?></code>
+            <code>Installed</code>
             <?php else: ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e('(required for compression support)', 'w3-total-cache'); ?></span>
+            <span class="w3tc-self-test-hint">(required for compression support)</span>
         </li>
 
         <li>
             Opcode cache:
             <?php if (function_exists('apc_store')): ?>
-            <code><?php _e('Installed (APC)', 'w3-total-cache'); ?></code>
+            <code>Installed (APC)</code>
             <?php elseif (function_exists('eaccelerator_put')): ?>
-            <code><?php _e('Installed (eAccelerator)', 'w3-total-cache'); ?></code>
+            <code>Installed (eAccelerator)</code>
             <?php elseif (function_exists('xcache_set')): ?>
-            <code><?php _e('Installed (XCache)', 'w3-total-cache'); ?></code>
+            <code>Installed (XCache)</code>
             <?php elseif (PHP_VERSION >= 6): ?>
-            <code><?php _e('PHP6', 'w3-total-cache'); ?></code>
+            <code>PHP6</code>
             <?php else: ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('Memcache extension:', 'w3-total-cache'); ?>
+            Memcache extension:
             <?php if (class_exists('Memcache')): ?>
-            <code><?php _e('Installed', 'w3-total-cache'); ?></code>
+            <code>Installed</code>
             <?php else: ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('HTML Tidy extension:', 'w3-total-cache'); ?>
+            HTML Tidy extension:
             <?php if (class_exists('tidy')): ?>
-            <code><?php _e('Installed', 'w3-total-cache'); ?></code>
+            <code>Installed</code>
             <?php else: ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e('(required for HTML Tidy minifier suppport)', 'w3-total-cache'); ?></span>
+            <span class="w3tc-self-test-hint">(required for HTML Tidy minifier suppport)</span>
         </li>
 
         <li>
-            <?php _e('Mime type detection:', 'w3-total-cache'); ?>
+            Mime type detection:
             <?php if (function_exists('finfo_open')): ?>
-            <code><?php _e('Installed (Fileinfo)', 'w3-total-cache'); ?></code>
+            <code>Installed (Fileinfo)</code>
             <?php elseif (function_exists('mime_content_type')): ?>
-            <code><?php _e('Installed (mime_content_type)', 'w3-total-cache'); ?></code>
+            <code>Installed (mime_content_type)</code>
             <?php else:  ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e('(required for <acronym title="Content Delivery Network">CDN</acronym> support)', 'w3-total-cache'); ?></span>
+            <span class="w3tc-self-test-hint">(required for <acronym title="Content Delivery Network">CDN</acronym> support)</span>
         </li>
 
         <li>
-            <?php _e('Hash function:', 'w3-total-cache'); ?>
+            Hash function:
             <?php if (function_exists('hash')): ?>
-            <code><?php _e('Installed (hash)', 'w3-total-cache'); ?></code>
+            <code>Installed (hash)</code>
             <?php elseif (function_exists('mhash')): ?>
-            <code><?php _e('Installed (mhash)', 'w3-total-cache'); ?></code>
+            <code>Installed (mhash)</code>
             <?php else: ?>
-            <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+            <code>Not installed</code>
             <?php endif; ?>
-            <span class="w3tc-self-test-hint"><?php _e('(required for NetDNA / MaxCDN <acronym title="Content Delivery Network">CDN</acronym> purge support)', 'w3-total-cache'); ?></span>
+            <span class="w3tc-self-test-hint">(required for NetDNA / MaxCDN <acronym title="Content Delivery Network">CDN</acronym> purge support)</span>
         </li>
 
         <li>
-            <?php _e('Safe mode:', 'w3-total-cache'); ?>
+            Safe mode:
             <?php if (w3_to_boolean(ini_get('safe_mode'))): ?>
-            <code><?php _e('On', 'w3-total-cache'); ?></code>
+            <code>On</code>
             <?php else: ?>
-            <code><?php _e('Off', 'w3-total-cache'); ?></code>
+            <code>Off</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('Open basedir:', 'w3-total-cache'); ?>
+            Open basedir:
             <?php $open_basedir = ini_get('open_basedir'); if ($open_basedir): ?>
-            <code><?php _e('On:', 'w3-total-cache'); ?> <?php echo htmlspecialchars($open_basedir); ?></code>
+            <code>On: <?php echo htmlspecialchars($open_basedir); ?></code>
             <?php else: ?>
-            <code><?php _e('Off', 'w3-total-cache'); ?></code>
+            <code>Off</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('zlib output compression:', 'w3-total-cache'); ?>
+            zlib output compression:
             <?php if (w3_to_boolean(ini_get('zlib.output_compression'))): ?>
-            <code><?php _e('On', 'w3-total-cache'); ?></code>
+            <code>On</code>
             <?php else: ?>
-            <code><?php _e('Off', 'w3-total-cache'); ?></code>
+            <code>Off</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('set_time_limit:', 'w3-total-cache'); ?>
+            set_time_limit:
             <?php if (function_exists('set_time_limit')): ?>
-            <code><?php _e('Available', 'w3-total-cache'); ?></code>
+            <code>Available</code>
             <?php else: ?>
-            <code><?php _e('Not available', 'w3-total-cache'); ?></code>
+            <code>Not available</code>
             <?php endif; ?>
         </li>
 
@@ -203,14 +208,14 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
                     <?php echo $module; ?>:
                     <?php if ($apache_modules): ?>
                         <?php if (in_array($module, $apache_modules)): ?>
-                        <code><?php _e('Installed', 'w3-total-cache'); ?></code>
+                        <code>Installed</code>
                         <?php else: ?>
-                        <code><?php _e('Not installed', 'w3-total-cache'); ?></code>
+                        <code>Not installed</code>
                         <?php endif; ?>
                     <?php else: ?>
-                    <code><?php _e('Not detected', 'w3-total-cache'); ?></code>
+                    <code>Not detected</code>
                     <?php endif; ?>
-                    <span class="w3tc-self-test-hint"><?php _e('(required for disk enhanced Page Cache and Browser Cache)', 'w3-total-cache'); ?></span>
+                    <span class="w3tc-self-test-hint">(required for disk enhanced Page Cache and Browser Cache)</span>
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -228,7 +233,7 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
     endif;
     ?>
 
-    <h4><?php _e('WordPress Resources', 'w3-total-cache'); ?></h4>
+    <h4>WordPress Resources</h4>
 
     <ul>
         <?php
@@ -243,15 +248,15 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
             <?php echo htmlspecialchars($path); ?>:
             <?php if (file_exists($path)): ?>
                 <?php if (w3_is_writable($path)): ?>
-                <code><?php _e('OK', 'w3-total-cache'); ?></code>
+                <code>OK</code>
                 <?php else: ?>
-                <code><?php _e('Not write-able', 'w3-total-cache'); ?></code>
+                <code>Not write-able</code>
                 <?php endif; ?>
             <?php else: ?>
                 <?php if (w3_is_writable_dir(dirname($path))): ?>
-                <code><?php _e('Write-able', 'w3-total-cache'); ?></code>
+                <code>Write-able</code>
                 <?php else: ?>
-                <code><?php _e('Not write-able', 'w3-total-cache'); ?></code>
+                <code>Not write-able</code>
                 <?php endif; ?>
             <?php endif; ?>
         </li>
@@ -260,9 +265,9 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
         <li>
             <?php echo w3_path(WP_CONTENT_DIR); ?>:
             <?php if (w3_is_writable_dir(WP_CONTENT_DIR)): ?>
-            <code><?php _e('OK', 'w3-total-cache'); ?></code>
+            <code>OK</code>
             <?php else: ?>
-            <code><?php _e('Not write-able', 'w3-total-cache'); ?></code>
+            <code>Not write-able</code>
             <?php endif; ?>
         </li>
 
@@ -270,52 +275,52 @@ w3_require_once(W3TC_INC_DIR . '/functions/rule.php');
             <?php $uploads_dir = @wp_upload_dir(); ?>
             <?php echo htmlspecialchars($uploads_dir['path']); ?>:
             <?php if (!empty($uploads_dir['error'])): ?>
-            <code><?php _e('Error:', 'w3-total-cache'); ?> <?php echo htmlspecialchars($uploads_dir['error']); ?></code>
+            <code>Error: <?php echo htmlspecialchars($uploads_dir['error']); ?></code>
             <?php elseif (!w3_is_writable_dir($uploads_dir['path'])): ?>
-            <code><?php _e('Not write-able', 'w3-total-cache'); ?></code>
+            <code>Not write-able</code>
             <?php else: ?>
-            <code><?php _e('OK', 'w3-total-cache'); ?></code>
+            <code>OK</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('Fancy permalinks:', 'w3-total-cache'); ?>
+            Fancy permalinks:
             <?php $permalink_structure = get_option('permalink_structure'); if ($permalink_structure): ?>
             <code><?php echo htmlspecialchars($permalink_structure); ?></code>
             <?php else: ?>
-            <code><?php _e('Disabled', 'w3-total-cache'); ?></code>
+            <code>Disabled</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('WP_CACHE define:', 'w3-total-cache'); ?>
+            WP_CACHE define:
             <?php if (defined('WP_CACHE')): ?>
-            <code><?php _e('Defined', 'w3-total-cache'); ?> (<?php echo (WP_CACHE ? 'true' : 'false'); ?>)</code>
+            <code>Defined (<?php echo (WP_CACHE ? 'true' : 'false'); ?>)</code>
             <?php else: ?>
-            <code><?php _e('Not defined', 'w3-total-cache'); ?></code>
+            <code>Not defined</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('URL rewrite:', 'w3-total-cache'); ?>
+            URL rewrite:
             <?php if (w3_can_check_rules()): ?>
-            <code><?php _e('Enabled', 'w3-total-cache'); ?></code>
+            <code>Enabled</code>
             <?php else: ?>
-            <code><?php _e('Disabled', 'w3-total-cache'); ?></code>
+            <code>Disabled</code>
             <?php endif; ?>
         </li>
 
         <li>
-            <?php _e('Network mode:', 'w3-total-cache'); ?>
+            Network mode:
             <?php if (w3_is_network()): ?>
-            <code><?php _e('Yes', 'w3-total-cache'); ?> (<?php echo (w3_is_subdomain_install() ? 'subdomain' : 'subdir'); ?>)</code>
+            <code>Yes (<?php echo (w3_is_subdomain_install() ? 'subdomain' : 'subdir'); ?>)</code>
             <?php else: ?>
-            <code><?php _e('No', 'w3-total-cache'); ?></code>
+            <code>No</code>
             <?php endif; ?>
         </li>
     </ul>
 </div>
 
 <div id="w3tc-self-test-bottom">
-    <input class="button-primary" type="button" value="<?php _e('Close', 'w3-total-cache'); ?>" />
+    <input class="button-primary" type="button" value="Close" />
 </div>

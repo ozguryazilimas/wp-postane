@@ -1,6 +1,6 @@
 <?php
 
-class W3_SharedPageUrls
+class W3_PageUrls
 {
 
     private $domain_url;

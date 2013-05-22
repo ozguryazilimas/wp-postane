@@ -100,10 +100,7 @@ class W3_VarnishFlush extends W3_Varnish {
                 $taxonomies = get_post_taxonomies($post_id);
                 $terms = wp_get_post_terms($post_id, $taxonomies);
             }
-            /**
-             * @var $purge_urls W3_SharedPageUrls
-             */
-            $purge_urls = w3_instance('W3_SharedPageUrls');
+            $purge_urls = w3_instance('W3_PageUrls');
             switch (true) {
                 case $this->_config->get_boolean('pgcache.purge.author'):
                 case $this->_config->get_boolean('pgcache.purge.archive.daily'):
@@ -169,7 +166,7 @@ class W3_VarnishFlush extends W3_Varnish {
              * Monthly archive URLs
              */
             if ($this->_config->get_boolean('pgcache.purge.archive.monthly') && $post) {
-                $full_urls = array_merge($full_urls, $purge_urls->get_monthly_archive_urls($post, $limit_post_pages));
+                $full_urls = array_merge($full_urls, $purge_urls->get_montly_archive_urls($post, $limit_post_pages));
             }
 
             /**

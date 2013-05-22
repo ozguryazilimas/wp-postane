@@ -53,7 +53,7 @@ class W3_CdnCacheFlush {
      */
     function purge_post($post_id) {
         if (!$post_id) {
-            $post_id = w3_detect_post_id();
+            $post_id = $this->_detect_post_id();
         }
 
         if ($post_id) {
@@ -69,11 +69,7 @@ class W3_CdnCacheFlush {
                 $taxonomies = get_post_taxonomies($post_id);
                 $terms = wp_get_post_terms($post_id, $taxonomies);
             }
-            /**
-             * @var $purge_urls W3_SharedPageUrls
-             */
-            $purge_urls = w3_instance('W3_SharedPageUrls');
-
+            $purge_urls = w3_instance('W3_PageUrls');
             switch (true) {
                 case $this->_config->get_boolean('pgcache.purge.author'):
                 case $this->_config->get_boolean('pgcache.purge.archive.daily'):
@@ -139,7 +135,7 @@ class W3_CdnCacheFlush {
              * Monthly archive URLs
              */
             if ($this->_config->get_boolean('pgcache.purge.archive.monthly') && $post) {
-                $full_urls = array_merge($full_urls, $purge_urls->get_monthly_archive_urls($post, $limit_post_pages));
+                $full_urls = array_merge($full_urls, $purge_urls->get_montly_archive_urls($post, $limit_post_pages));
             }
 
             /**
@@ -207,6 +203,28 @@ class W3_CdnCacheFlush {
         }
 
         return false;
+    }
+
+
+    /**
+     * Detects post ID
+     *
+     * @return integer
+     */
+    function _detect_post_id() {
+        global $posts, $comment_post_ID, $post_ID;
+
+        if ($post_ID) {
+            return $post_ID;
+        } elseif ($comment_post_ID) {
+            return $comment_post_ID;
+        } elseif (is_single() || is_page() && count($posts)) {
+            return $posts[0]->ID;
+        } elseif (isset($_REQUEST['p'])) {
+            return (integer) $_REQUEST['p'];
+        }
+
+        return 0;
     }
 
     /**

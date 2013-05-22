@@ -3,7 +3,7 @@
 
 <form action="admin.php?page=<?php echo $this->_page; ?>" method="post">
     <div class="metabox-holder">
-        <?php echo $this->postbox_header(__('Database Cluster Configuration File', 'w3-total-cache')); ?>
+        <?php echo $this->postbox_header('Database Cluster Configuration File'); ?>
         <table class="form-table">
             <tr>
                 <th>
@@ -12,7 +12,10 @@
                         tabindex="1"><?php echo htmlspecialchars($content); ?></textarea><br />
                     <br />
                     <span class="description">
-                        <?php _e('Note: Changes will have immediate effect on your database configuration. If the application stops working creating the settings file, edit or remove this configuration file manually at <strong>/wp-content/db-cluster-config.php</strong>.', 'w3-total-cache'); ?>
+                        Note: Changes will have immediate effect on your database 
+                        configuration. If the application stops working creating the
+                        settings file, edit or remove this configuration file manually 
+                        at <strong>/wp-content/db-cluster-config.php</strong>.
                     </span>
                 </th>
             </tr>
@@ -20,7 +23,7 @@
 
         <p class="submit">
             <?php echo $this->nonce_field('w3tc'); ?>
-            <input type="submit" name="w3tc_dbcluster_config_save" class="w3tc-button-save button-primary" value="<?php _e('Save configuration file', 'w3-total-cache'); ?>" />
+            <input type="submit" name="w3tc_dbcluster_config_save" class="w3tc-button-save button-primary" value="Save configuration file" />
         </p>
         <?php echo $this->postbox_footer(); ?>
     </div>

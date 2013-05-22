@@ -21,7 +21,6 @@ class W3_Plugin_Cdn extends W3_Plugin {
      * @var string
      */
     var $cdn_reject_reason = '';
-    var $replaced_urls;
 
     /**
      * Run plugin
@@ -75,7 +74,10 @@ class W3_Plugin_Cdn extends W3_Plugin {
          * Start rewrite engine
          */
         if ($this->can_cdn()) {
-            w3tc_add_ob_callback('cdn', array($this,'ob_callback'));
+            ob_start(array(
+                &$this,
+                'ob_callback'
+            ));
         }
     }
 
@@ -95,6 +97,20 @@ class W3_Plugin_Cdn extends W3_Plugin {
      */
     function _get_common() {
         return w3_instance('W3_Plugin_CdnCommon');
+    }
+
+    /**
+     * Activate plugin action (called by W3_Plugins)
+     */
+    function activate() {
+        $this->get_admin()->activate();
+    }
+
+    /**
+     * Deactivate plugin action (called by W3_Plugins)
+     */
+    function deactivate() {
+        return $this->get_admin()->deactivate();
     }
 
     /**
@@ -240,17 +256,10 @@ class W3_Plugin_Cdn extends W3_Plugin {
                     $upload_info = w3_upload_info();
 
                     if ($upload_info) {
-                        $baseurl = $upload_info['baseurl'];
-
-                        if (defined('DOMAIN_MAPPING') && DOMAIN_MAPPING) {
-                            $parsed = @parse_url($upload_info['baseurl']);
-                            $baseurl = home_url() . $parsed['path'];
-                        }
-
-                        if (preg_match('~' . $domain_url_regexp . '~i', $baseurl)) {
+                        if (preg_match('~' . $domain_url_regexp . '~i', $upload_info['baseurl'])) {
                             $regexps[] = '~(["\'(])\s*((' . $domain_url_regexp . ')?(' . w3_preg_quote($upload_info['baseurlpath']) . '([^"\')>]+)))~';
                         } else {
-                            $parsed = @parse_url($baseurl);
+                            $parsed = @parse_url($upload_info['baseurl']);
                             $upload_url_domain_regexp = isset($parsed['host']) ? w3_get_url_regexp($parsed['scheme'].'://'.$parsed['host']) : '';
                             $baseurlpath = isset($parsed['path']) ? rtrim($parsed['path'], '/') : '';
                             if($baseurlpath)
@@ -280,7 +289,6 @@ class W3_Plugin_Cdn extends W3_Plugin {
 
                 if ($this->_config->get_boolean('cdn.custom.enable')) {
                     $masks = $this->_config->get_array('cdn.custom.files');
-                    $masks = array_map(array($this, '_replace_folder_placeholders'), $masks);
                     $masks = array_map('w3_parse_path', $masks);
 
                     if (count($masks)) {
@@ -431,7 +439,7 @@ class W3_Plugin_Cdn extends W3_Plugin {
     function get_files_minify() {
         $files = array();
 
-        if ($this->_config->get_boolean('minify.rewrite') && (!$this->_config->get_boolean('minify.auto') || w3_is_cdn_mirror($this->_config->get_string('cdn.engine')))) {
+        if (W3TC_PHP5 && $this->_config->get_boolean('minify.rewrite') && (!$this->_config->get_boolean('minify.auto') || w3_is_cdn_mirror($this->_config->get_string('cdn.engine')))) {
             w3_require_once(W3TC_INC_DIR . '/functions/http.php');
 
             $minify = w3_instance('W3_Plugin_Minify');
@@ -485,21 +493,17 @@ class W3_Plugin_Cdn extends W3_Plugin {
         $custom_files = array_map('w3_parse_path', $custom_files);
         $site_root = w3_get_site_root();
         $path = w3_get_site_path();
-        $site_root_dir = str_replace($document_root, '', $site_root);
         if (strstr(WP_CONTENT_DIR, w3_get_site_root()) === false) {
             $site_root = w3_get_document_root();
             $path = '';
         }
-
-        $content_path = trim(str_replace(WP_CONTENT_DIR, '', $site_root),'/\\');
-
+        $content_path = trim(substr(WP_CONTENT_DIR, strlen($site_root)),'/\\');
+        $wp_content_folder = basename(WP_CONTENT_DIR);
         foreach ($custom_files as $custom_file) {
             if ($custom_file != '') {
-                $custom_file = $this->_replace_folder_placeholders($custom_file);
                 $custom_file = w3_normalize_file($custom_file);
-
                 if (!w3_is_multisite()) {
-                    $dir = trim(dirname($custom_file), '/\\');
+                    $dir = trim(dirname($path.$custom_file), '/\\');
                     $rel_path = trim(dirname($custom_file), '/\\');
                 } else
                     $rel_path = $dir = trim(dirname($custom_file), '/\\');
@@ -508,9 +512,15 @@ class W3_Plugin_Cdn extends W3_Plugin {
                    $rel_path = $dir = str_replace('<currentblog>', 'blogs.dir/' . w3_get_blog_id(), $dir);
                 }
 
+                if ($content_path && $content_path != $wp_content_folder) {
+                    $dir = str_replace($wp_content_folder, $content_path, $dir);
+                    $rel_path = str_replace($wp_content_folder, $content_path, $rel_path);
+                }
+
                 if ($dir == '.') {
                     $rel_path = $dir = '';
                 }
+
                 $mask = basename($custom_file);
                 $files = array_merge($files, $this->search_files($document_root . '/' . $dir, $rel_path, $mask));
             }
@@ -575,11 +585,8 @@ class W3_Plugin_Cdn extends W3_Plugin {
     /**
      * Link replace callback, basic checks step
      *
-     * @param $match
-     * @param $quote
-     * @param $url
-     * @param $path
-     * @return null|string
+     * @param array $matches
+     * @return string or null
      */
     function _link_replace_callback_checks($match, $quote, $url, $path) {
         global $wpdb;
@@ -601,10 +608,7 @@ class W3_Plugin_Cdn extends W3_Plugin {
 
         foreach ($reject_files as $reject_file) {
             if ($reject_file != '') {
-                $reject_file = $this->_replace_folder_placeholders($reject_file);
-
                 $reject_file = w3_normalize_file($reject_file);
-
                 $reject_file_regexp = '~^(' . $this->get_regexp_by_mask($reject_file) . ')~i';
 
                 if (preg_match($reject_file_regexp, $path)) {
@@ -635,11 +639,8 @@ class W3_Plugin_Cdn extends W3_Plugin {
     /**
      * Link replace callback, url replacement using cdn engine
      *
-     * @param $match
-     * @param $quote
-     * @param $url
-     * @param $path
-     * @return null|string
+     * @param array $matches
+     * @return string or null
      */
     function _link_replace_callback_ask_cdn($match, $quote, $url, $path) {
         /**
@@ -800,7 +801,7 @@ class W3_Plugin_Cdn extends W3_Plugin {
         /**
          * Check request URI
          */
-        if (!$this->_check_request_uri()) {
+        if (!$this->check_request_uri()) {
             $this->cdn_reject_reason = 'request URI is rejected';
 
             return false;
@@ -880,7 +881,18 @@ class W3_Plugin_Cdn extends W3_Plugin {
      *
      * @return boolean
      */
-    function _check_request_uri() {
+    function check_request_uri() {
+        $auto_reject_uri = array(
+            'wp-login',
+            'wp-register'
+        );
+
+        foreach ($auto_reject_uri as $uri) {
+            if (strstr($_SERVER['REQUEST_URI'], $uri) !== false) {
+                return false;
+            }
+        }
+
         $reject_uri = $this->_config->get_array('cdn.reject.uri');
         $reject_uri = array_map('w3_parse_path', $reject_uri);
 
@@ -890,10 +902,6 @@ class W3_Plugin_Cdn extends W3_Plugin {
                 return false;
             }
         }
-
-        w3_require_once(W3TC_LIB_W3_DIR . '/Request.php');
-        if (W3_Request::get_string('wp_customize'))
-            return false;
 
         return true;
     }
@@ -920,29 +928,6 @@ class W3_Plugin_Cdn extends W3_Plugin {
         }
 
         return true;
-    }
-
-    private function _replace_folder_placeholders($file) {
-        static $content_dir, $plugin_dir, $upload_dir;
-        if (empty($content_dir)) {
-            $content_dir = str_replace(w3_get_document_root(), '', WP_CONTENT_DIR);
-            $content_dir = trim($content_dir, '/');
-            if (defined('WP_PLUGIN_DIR')) {
-                $plugin_dir = str_replace(w3_get_document_root(), '', WP_PLUGIN_DIR);
-                $plugin_dir = trim($plugin_dir, '/');
-            } else {
-                $plugin_dir = str_replace(w3_get_document_root(), '', WP_CONTENT_DIR . '/plugins');
-                $plugin_dir = trim($plugin_dir, '/');
-            }
-            $upload_dir = wp_upload_dir();
-            $upload_dir = str_replace(w3_get_document_root(), '', $upload_dir['basedir']);
-            $upload_dir = trim($upload_dir, '/');
-        }
-        $file = str_replace('{wp_content_dir}', $content_dir, $file);
-        $file = str_replace('{plugins_dir}', $plugin_dir, $file);
-        $file = str_replace('{uploads_dir}', $upload_dir, $file);
-
-        return $file;
     }
 }
 

@@ -178,7 +178,7 @@ class W3_ObjectCache {
         }
 
         if (is_object($value)) {
-            $value = clone( $value );
+            $value = wp_clone($value);
         }
 
         $this->cache[$key] = $value;
@@ -229,7 +229,7 @@ class W3_ObjectCache {
         $key = $this->_get_cache_key($id, $group);
 
         if (is_object($data)) {
-            $data = clone( $data );
+            $data = wp_clone($data);
         }
 
         $this->cache[$key] = $data;
@@ -580,10 +580,7 @@ class W3_ObjectCache {
          * Skip if disabled
          */
         if (!$this->_config->get_boolean('objectcache.enabled')) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('Object caching is disabled', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'Object caching is disabled';
+            $this->cache_reject_reason = 'Object caching is disabled';
 
             return false;
         }
@@ -592,10 +589,7 @@ class W3_ObjectCache {
          * Check for DONOTCACHEOBJECT constant
          */
         if (defined('DONOTCACHEOBJECT') && DONOTCACHEOBJECT) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('DONOTCACHEOBJECT constant is defined', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'DONOTCACHEOBJECT constant is defined';
+            $this->cache_reject_reason = 'DONOTCACHEOBJECT constant is defined';
 
             return false;
         }

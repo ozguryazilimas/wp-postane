@@ -104,17 +104,12 @@ class W3_DbCache extends W3_DbProcessor {
         $this->query_total++;
 
         $caching = $this->_can_cache($query, $reason);
-        if (preg_match('~^\s*insert\b|^\s*delete\b|^\s*update\b|^\s*replace\b~is', $query)) {
-            $group = $this->_get_group($query);
-            $this->_flush_cache_group($group);
-        }
 
         if ($caching) {
             $this->manager->timer_start();
             //$cache_key = $this->_get_cache_key($query);
             $cache = $this->_get_cache();
-            $group = $this->_get_group($query);
-            $data = $cache->get(md5($query), $group);
+            $data = $cache->get(md5($query));
             $time_total = $this->manager->timer_stop();
         }
 
@@ -147,8 +142,7 @@ class W3_DbCache extends W3_DbProcessor {
                 );
 
                 $cache = $this->_get_cache();
-                $group = $this->_get_group($query);
-                $cache->set(md5($query), $data, $this->_lifetime, $group);
+                $cache->set(md5($query), $data, $this->_lifetime);
             }
         }
 
@@ -210,8 +204,6 @@ class W3_DbCache extends W3_DbProcessor {
     * @return int|false
     */
     function update($table, $data, $where, $format = null, $where_format = null) {
-        $group = $this->_get_group($table);
-        $this->_flush_cache_group($group);
         return $this->underlying_manager->update($table, $data, $where, $format, $where_format);
     }
 
@@ -224,14 +216,6 @@ class W3_DbCache extends W3_DbProcessor {
         $cache = $this->_get_cache();
 
         return $cache->flush();
-    }
-
-    private function _flush_cache_group($group) {
-        $cache = $this->_get_cache();
-        $flush_groups = $this->_get_flush_groups($group);
-        foreach($flush_groups as $f_group) {
-            $cache->flush($f_group);
-        }
     }
 
     /**
@@ -289,10 +273,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Note - as a result requedt-wide checks are done only once per request
          */
         if (!is_null($this->cache_reject_reason)) {
-            if (function_exists('__'))
-                $cache_reject_reason = __('Request-wide ', 'w3-total-cache') . $this->cache_reject_reason;
-            else
-                $cache_reject_reason = 'Request-wide ' . $this->cache_reject_reason;
+            $cache_reject_reason = 'Request-wide ' . $this->cache_reject_reason;
 
             return false;
         }
@@ -303,10 +284,7 @@ class W3_DbCache extends W3_DbProcessor {
         if (is_null($this->_can_cache_once_per_request_result)) {
             $this->_can_cache_once_per_request_result = $this->_can_cache_once_per_request();
             if (!$this->_can_cache_once_per_request_result) {
-                if (function_exists('__'))
-                    $cache_reject_reason = __('Request-wide ', 'w3-total-cache') . $this->cache_reject_reason;
-                else    
-                    $cache_reject_reason = 'Request-wide ' . $this->cache_reject_reason;
+                $cache_reject_reason = 'Request-wide ' . $this->cache_reject_reason;
                 return false;
             }
         }
@@ -315,10 +293,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Check for DONOTCACHEDB constant
          */
         if (defined('DONOTCACHEDB') && DONOTCACHEDB) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('DONOTCACHEDB constant is defined', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'DONOTCACHEDB constant is defined';
+            $this->cache_reject_reason = 'DONOTCACHEDB constant is defined';
             $cache_reject_reason = $this->cache_reject_reason;
 
             return false;
@@ -328,11 +303,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if doint AJAX
          */
         if (defined('DOING_AJAX')) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('Doing AJAX', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'Doing AJAX';
-            
+            $this->cache_reject_reason = 'Doing AJAX';
             $cache_reject_reason = $this->cache_reject_reason;
 
             return false;
@@ -342,10 +313,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if doing cron
          */
         if (defined('DOING_CRON')) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('Doing cron', 'w3-total-cache');
-            else    
-                $this->cache_reject_reason = 'Doing cron';
+            $this->cache_reject_reason = 'Doing cron';
             $cache_reject_reason = $this->cache_reject_reason;
 
             return false;
@@ -355,10 +323,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if APP request
          */
         if (defined('APP_REQUEST')) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('Application request', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'Application request';
+            $this->cache_reject_reason = 'Application request';
             $cache_reject_reason = $this->cache_reject_reason;
 
             return false;
@@ -368,10 +333,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if XMLRPC request
          */
         if (defined('XMLRPC_REQUEST')) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('XMLRPC request', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'XMLRPC request';
+            $this->cache_reject_reason = 'XMLRPC request';
             $cache_reject_reason = $this->cache_reject_reason;
 
             return false;
@@ -381,10 +343,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if admin
          */
         if (defined('WP_ADMIN')) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('wp-admin', 'w3-total-cache');
-            else    
-                $this->cache_reject_reason = 'wp-admin';
+            $this->cache_reject_reason = 'wp-admin';
             $cache_reject_reason = $this->cache_reject_reason;
 
             return false;
@@ -394,10 +353,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Check for WPMU's and WP's 3.0 short init
          */
         if (defined('SHORTINIT') && SHORTINIT) {
-            if (function_exists('__'))
-                $cache_reject_reason = __('Short init', 'w3-total-cache');
-            else
-                $cache_reject_reason = 'Short init';
+            $cache_reject_reason = 'Short init';
 
             return false;
         }
@@ -406,10 +362,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if SQL is rejected
          */
         if (!$this->_check_sql($sql)) {
-            if (function_exists('__'))
-                $cache_reject_reason = __('Query is rejected', 'w3-total-cache');
-            else    
-                $cache_reject_reason = 'Query is rejected';
+            $cache_reject_reason = 'Query is rejected';
 
             return false;
         }
@@ -418,10 +371,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if user is logged in
          */
         if ($this->_config->get_boolean('dbcache.reject.logged') && !$this->_check_logged_in()) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('User is logged in', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'User is logged in';
+            $this->cache_reject_reason = 'User is logged in';
             $cache_reject_reason = $this->cache_reject_reason;
 
             return false;
@@ -440,10 +390,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if disabled
          */
         if (!$this->_config->get_boolean('dbcache.enabled')) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('Database caching is disabled', 'w3-total-cache');
-            else    
-                $this->cache_reject_reason = 'Database caching is disabled';
+            $this->cache_reject_reason = 'Database caching is disabled';
 
             return false;
         }
@@ -452,10 +399,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if request URI is rejected
          */
         if (!$this->_check_request_uri()) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('Request URI is rejected', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'Request URI is rejected';
+            $this->cache_reject_reason = 'Request URI is rejected';
 
             return false;
         }
@@ -464,10 +408,7 @@ class W3_DbCache extends W3_DbProcessor {
          * Skip if cookie is rejected
          */
         if (!$this->_check_cookies()) {
-            if (function_exists('__'))
-                $this->cache_reject_reason = __('Cookie is rejected', 'w3-total-cache');
-            else
-                $this->cache_reject_reason = 'Cookie is rejected';
+            $this->cache_reject_reason = 'Cookie is rejected';
 
             return false;
         }
@@ -609,36 +550,6 @@ class W3_DbCache extends W3_DbProcessor {
 
         return $debug_info;
     }
-
-    private function _get_group($sql) {
-        $sql = strtolower($sql);
-        $matched = array();
-        $options = false. $comments = false;
-        $prefix = $this->manager->prefix;
-        $options = preg_match('~' . $prefix . 'options~i', $sql);
-        $comments = preg_match('~' . $prefix . '(comments|commentsmeta)~i', $sql);
-
-        if ($options && $comments)
-            return 'options_comments';
-        if ($options)
-            return 'options';
-        if ($comments)
-            return 'comments';
-        return 'all';
-    }
-
-    private function _get_flush_groups($group) {
-        switch($group) {
-            case 'all':
-                return array('all', 'options_comments', 'options', 'comments');
-            case 'options_comments':
-                return array('options_comments', 'options', 'comments');
-            case 'options':
-            case 'comments':
-                return array('options_comments', $group);
-                break;
-            default:
-                return array($group);
-        }
-    }
 }
+
+?>

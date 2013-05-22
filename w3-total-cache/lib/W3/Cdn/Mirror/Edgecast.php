@@ -43,13 +43,13 @@ class W3_Cdn_Mirror_Edgecast extends W3_Cdn_Mirror {
      */
     function purge($files, &$results) {
         if (empty($this->_config['account'])) {
-            $results = $this->_get_results($files, W3TC_CDN_RESULT_HALT, __('Empty account #.', 'w3-total-cache'));
+            $results = $this->_get_results($files, W3TC_CDN_RESULT_HALT, 'Empty account #.');
 
             return false;
         }
 
         if (empty($this->_config['token'])) {
-            $results = $this->_get_results($files, W3TC_CDN_RESULT_HALT, __('Empty token.', 'w3-total-cache'));
+            $results = $this->_get_results($files, W3TC_CDN_RESULT_HALT, 'Empty token.');
 
             return false;
         }
@@ -63,9 +63,9 @@ class W3_Cdn_Mirror_Edgecast extends W3_Cdn_Mirror {
             $error = null;
 
             if ($this->_purge_content($url, W3TC_CDN_EDGECAST_MEDIATYPE_HTTP_SMALL_OBJECT, $error)) {
-                $results[] = $this->_get_result($local_path, $remote_path, W3TC_CDN_RESULT_OK, __('OK', 'w3-total-cache'));
+                $results[] = $this->_get_result($local_path, $remote_path, W3TC_CDN_RESULT_OK, 'OK');
             } else {
-                $results[] = $this->_get_result($local_path, $remote_path, W3TC_CDN_RESULT_ERROR, sprintf(__('Unable to purge (%s).', 'w3-total-cache'), $error));
+                $results[] = $this->_get_result($local_path, $remote_path, W3TC_CDN_RESULT_ERROR, sprintf('Unable to purge (%s).', $error));
             }
         }
 
@@ -118,23 +118,23 @@ class W3_Cdn_Mirror_Edgecast extends W3_Cdn_Mirror {
                 return true;
 
             case 400:
-                $error = __('Invalid Request Parameter', 'w3-total-cache');
+                $error = 'Invalid Request Parameter';
                 return false;
 
             case 403:
-                $error = __('Authentication Failure or Insufficient Access Rights', 'w3-total-cache');
+                $error = 'Authentication Failure or Insufficient Access Rights';
                 return false;
 
             case 404:
-                $error = __('Invalid Request URI', 'w3-total-cache');
+                $error = 'Invalid Request URI';
                 return false;
 
             case 405:
-                $error = __('Invalid Request', 'w3-total-cache');
+                $error = 'Invalid Request';
                 return false;
 
             case 500:
-                $error = __('Server Error', 'w3-total-cache');
+                $error = 'Server Error';
                 return false;
         }
 

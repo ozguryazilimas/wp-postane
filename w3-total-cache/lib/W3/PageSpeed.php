@@ -111,17 +111,15 @@ class W3_PageSpeed {
 
                 if (isset($rule_result->urlBlocks)) {
                     foreach ((array) $rule_result->urlBlocks as $j => $url_block) {
-                        $args = isset( $url_block->header->args ) ? $url_block->header->args : array();
                         $results['rules'][$i]['blocks'][$j] = array(
-                            'header' => $this->_format_string( $url_block->header->format, $args ),
+                            'header' => $this->_format_string($url_block->header->format, $url_block->header->args),
                             'urls' => array()
                         );
 
                         if (isset($url_block->urls)) {
                             foreach ((array) $url_block->urls as $k => $url) {
-                                $args = isset( $url->result->args ) ? $url->result->args : array();
                                 $results['rules'][$i]['blocks'][$j]['urls'][$k] = array(
-                                    'result' => $this->_format_string( $url->result->format, $args )
+                                    'result' => $this->_format_string($url->result->format, $url->result->args)
                                 );
                             }
                         }
@@ -273,17 +271,12 @@ class W3_PageSpeed {
      * @return mixed
      */
     function _format_string($format, $args) {
-        $result = $format;
-        if ( !empty( $args ) ) {
-            $this->_format_string_args = $args;
+        $this->_format_string_args = $args;
 
-            $result = preg_replace_callback( '~\$([0-9]+)~', array(
-                                                                  &$this,
-                                                                  '_format_string_callback'
-                                                             ), $format );
-        }
-
-        return $result;
+        return preg_replace_callback('~\$([0-9]+)~', array(
+            &$this,
+            '_format_string_callback'
+        ), $format);
     }
 
     /**

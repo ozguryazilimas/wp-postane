@@ -3,12 +3,11 @@
 
 /* Generic exception class
  */
-class W3tcOAuthException extends Exception {
+class OAuthException extends Exception {
   // pass
 }
 
-
-class W3tcOAuthConsumer {
+class OAuthConsumer {
   public $key;
   public $secret;
 
@@ -23,7 +22,7 @@ class W3tcOAuthConsumer {
   }
 }
 
-class W3tcOAuthToken {
+class OAuthToken {
   // access tokens and request tokens
   public $key;
   public $secret;
@@ -43,9 +42,9 @@ class W3tcOAuthToken {
    */
   function to_string() {
     return "oauth_token=" .
-           W3tcOAuthUtil::urlencode_rfc3986($this->key) .
+           OAuthUtil::urlencode_rfc3986($this->key) .
            "&oauth_token_secret=" .
-           W3tcOAuthUtil::urlencode_rfc3986($this->secret);
+           OAuthUtil::urlencode_rfc3986($this->secret);
   }
 
   function __toString() {
@@ -57,7 +56,7 @@ class W3tcOAuthToken {
  * A class for implementing a Signature Method
  * See section 9 ("Signing Requests") in the spec
  */
-abstract class W3tcOAuthSignatureMethod {
+abstract class OAuthSignatureMethod {
   /**
    * Needs to return the name of the Signature Method (ie HMAC-SHA1)
    * @return string
@@ -69,18 +68,18 @@ abstract class W3tcOAuthSignatureMethod {
    * NOTE: The output of this function MUST NOT be urlencoded.
    * the encoding is handled in OAuthRequest when the final
    * request is serialized
-   * @param W3tcOAuthRequest $request
-   * @param W3tcOAuthConsumer $consumer
-   * @param W3tcOAuthToken $token
+   * @param OAuthRequest $request
+   * @param OAuthConsumer $consumer
+   * @param OAuthToken $token
    * @return string
    */
   abstract public function build_signature($request, $consumer, $token);
 
   /**
    * Verifies that a given signature is correct
-   * @param W3tcOAuthRequest $request
-   * @param W3tcOAuthConsumer $consumer
-   * @param W3tcOAuthToken $token
+   * @param OAuthRequest $request
+   * @param OAuthConsumer $consumer
+   * @param OAuthToken $token
    * @param string $signature
    * @return bool
    */
@@ -113,7 +112,7 @@ abstract class W3tcOAuthSignatureMethod {
  * character (ASCII code 38) even if empty.
  *   - Chapter 9.2 ("HMAC-SHA1")
  */
-class W3tcOAuthSignatureMethod_HMAC_SHA1 extends W3tcOAuthSignatureMethod {
+class OAuthSignatureMethod_HMAC_SHA1 extends OAuthSignatureMethod {
   function get_name() {
     return "HMAC-SHA1";
   }
@@ -127,7 +126,7 @@ class W3tcOAuthSignatureMethod_HMAC_SHA1 extends W3tcOAuthSignatureMethod {
       ($token) ? $token->secret : ""
     );
 
-    $key_parts = W3tcOAuthUtil::urlencode_rfc3986($key_parts);
+    $key_parts = OAuthUtil::urlencode_rfc3986($key_parts);
     $key = implode('&', $key_parts);
 
     return base64_encode(hash_hmac('sha1', $base_string, $key, true));
@@ -139,7 +138,7 @@ class W3tcOAuthSignatureMethod_HMAC_SHA1 extends W3tcOAuthSignatureMethod {
  * over a secure channel such as HTTPS. It does not use the Signature Base String.
  *   - Chapter 9.4 ("PLAINTEXT")
  */
-class W3tcOAuthSignatureMethod_PLAINTEXT extends W3tcOAuthSignatureMethod {
+class OAuthSignatureMethod_PLAINTEXT extends OAuthSignatureMethod {
   public function get_name() {
     return "PLAINTEXT";
   }
@@ -159,7 +158,7 @@ class W3tcOAuthSignatureMethod_PLAINTEXT extends W3tcOAuthSignatureMethod {
       ($token) ? $token->secret : ""
     );
 
-    $key_parts = W3tcOAuthUtil::urlencode_rfc3986($key_parts);
+    $key_parts = OAuthUtil::urlencode_rfc3986($key_parts);
     $key = implode('&', $key_parts);
     $request->base_string = $key;
 
@@ -175,7 +174,7 @@ class W3tcOAuthSignatureMethod_PLAINTEXT extends W3tcOAuthSignatureMethod {
  * specification.
  *   - Chapter 9.3 ("RSA-SHA1")
  */
-abstract class W3tcOAuthSignatureMethod_RSA_SHA1 extends W3tcOAuthSignatureMethod {
+abstract class OAuthSignatureMethod_RSA_SHA1 extends OAuthSignatureMethod {
   public function get_name() {
     return "RSA-SHA1";
   }
@@ -234,7 +233,7 @@ abstract class W3tcOAuthSignatureMethod_RSA_SHA1 extends W3tcOAuthSignatureMetho
   }
 }
 
-class W3tcOAuthRequest {
+class OAuthRequest {
   protected $parameters;
   protected $http_method;
   protected $http_url;
@@ -245,7 +244,7 @@ class W3tcOAuthRequest {
 
   function __construct($http_method, $http_url, $parameters=NULL) {
     $parameters = ($parameters) ? $parameters : array();
-    $parameters = array_merge( W3tcOAuthUtil::parse_parameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
+    $parameters = array_merge( OAuthUtil::parse_parameters(parse_url($http_url, PHP_URL_QUERY)), $parameters);
     $this->parameters = $parameters;
     $this->http_method = $http_method;
     $this->http_url = $http_url;
@@ -272,10 +271,10 @@ class W3tcOAuthRequest {
     // parsed parameter-list
     if (!$parameters) {
       // Find request headers
-      $request_headers = W3tcOAuthUtil::get_headers();
+      $request_headers = OAuthUtil::get_headers();
 
       // Parse the query-string to find GET parameters
-      $parameters = W3tcOAuthUtil::parse_parameters($_SERVER['QUERY_STRING']);
+      $parameters = OAuthUtil::parse_parameters($_SERVER['QUERY_STRING']);
 
       // It's a POST request of the proper content-type, so parse POST
       // parameters and add those overriding any duplicates from GET
@@ -284,7 +283,7 @@ class W3tcOAuthRequest {
           && strstr($request_headers['Content-Type'],
                      'application/x-www-form-urlencoded')
           ) {
-        $post_data = W3tcOAuthUtil::parse_parameters(
+        $post_data = OAuthUtil::parse_parameters(
           file_get_contents(self::$POST_INPUT)
         );
         $parameters = array_merge($parameters, $post_data);
@@ -293,7 +292,7 @@ class W3tcOAuthRequest {
       // We have a Authorization-header with OAuth data. Parse the header
       // and add those overriding any duplicates from GET or POST
       if (isset($request_headers['Authorization']) && substr($request_headers['Authorization'], 0, 6) == 'OAuth ') {
-        $header_parameters = W3tcOAuthUtil::split_header(
+        $header_parameters = OAuthUtil::split_header(
           $request_headers['Authorization']
         );
         $parameters = array_merge($parameters, $header_parameters);
@@ -301,7 +300,7 @@ class W3tcOAuthRequest {
 
     }
 
-    return new W3tcOAuthRequest($http_method, $http_url, $parameters);
+    return new OAuthRequest($http_method, $http_url, $parameters);
   }
 
   /**
@@ -309,16 +308,16 @@ class W3tcOAuthRequest {
    */
   public static function from_consumer_and_token($consumer, $token, $http_method, $http_url, $parameters=NULL) {
     $parameters = ($parameters) ?  $parameters : array();
-    $defaults = array("oauth_version" => W3tcOAuthRequest::$version,
-                      "oauth_nonce" => W3tcOAuthRequest::generate_nonce(),
-                      "oauth_timestamp" => W3tcOAuthRequest::generate_timestamp(),
+    $defaults = array("oauth_version" => OAuthRequest::$version,
+                      "oauth_nonce" => OAuthRequest::generate_nonce(),
+                      "oauth_timestamp" => OAuthRequest::generate_timestamp(),
                       "oauth_consumer_key" => $consumer->key);
     if ($token)
       $defaults['oauth_token'] = $token->key;
 
     $parameters = array_merge($defaults, $parameters);
 
-    return new W3tcOAuthRequest($http_method, $http_url, $parameters);
+    return new OAuthRequest($http_method, $http_url, $parameters);
   }
 
   public function set_parameter($name, $value, $allow_duplicates = true) {
@@ -362,7 +361,7 @@ class W3tcOAuthRequest {
       unset($params['oauth_signature']);
     }
 
-    return W3tcOAuthUtil::build_http_query($params);
+    return OAuthUtil::build_http_query($params);
   }
 
   /**
@@ -379,7 +378,7 @@ class W3tcOAuthRequest {
       $this->get_signable_parameters()
     );
 
-    $parts = W3tcOAuthUtil::urlencode_rfc3986($parts);
+    $parts = OAuthUtil::urlencode_rfc3986($parts);
 
     return implode('&', $parts);
   }
@@ -426,7 +425,7 @@ class W3tcOAuthRequest {
    * builds the data one would send in a POST request
    */
   public function to_postdata() {
-    return W3tcOAuthUtil::build_http_query($this->parameters);
+    return OAuthUtil::build_http_query($this->parameters);
   }
 
   /**
@@ -435,7 +434,7 @@ class W3tcOAuthRequest {
   public function to_header($realm=null) {
     $first = true;
 	if($realm) {
-      $out = 'Authorization: OAuth realm="' . W3tcOAuthUtil::urlencode_rfc3986($realm) . '"';
+      $out = 'Authorization: OAuth realm="' . OAuthUtil::urlencode_rfc3986($realm) . '"';
       $first = false;
     } else
       $out = 'Authorization: OAuth';
@@ -444,12 +443,12 @@ class W3tcOAuthRequest {
     foreach ($this->parameters as $k => $v) {
       if (substr($k, 0, 5) != "oauth") continue;
       if (is_array($v)) {
-        throw new W3tcOAuthException('Arrays not supported in headers');
+        throw new OAuthException('Arrays not supported in headers');
       }
       $out .= ($first) ? ' ' : ',';
-      $out .= W3tcOAuthUtil::urlencode_rfc3986($k) .
+      $out .= OAuthUtil::urlencode_rfc3986($k) .
               '="' .
-              W3tcOAuthUtil::urlencode_rfc3986($v) .
+              OAuthUtil::urlencode_rfc3986($v) .
               '"';
       $first = false;
     }
@@ -496,10 +495,10 @@ class W3tcOAuthRequest {
 
 
 
-class W3tcOAuthUtil {
+class OAuthUtil {
   public static function urlencode_rfc3986($input) {
   if (is_array($input)) {
-    return array_map(array('W3tcOAuthUtil', 'urlencode_rfc3986'), $input);
+    return array_map(array('OAuthUtil', 'urlencode_rfc3986'), $input);
   } else if (is_scalar($input)) {
     return str_replace(
       '+',
@@ -528,7 +527,7 @@ class W3tcOAuthUtil {
     $params = array();
     if (preg_match_all('/('.($only_allow_oauth_parameters ? 'oauth_' : '').'[a-z_-]*)=(:?"([^"]*)"|([^,]*))/', $header, $matches)) {
       foreach ($matches[1] as $i => $h) {
-        $params[$h] = W3tcOAuthUtil::urldecode_rfc3986(empty($matches[3][$i]) ? $matches[4][$i] : $matches[3][$i]);
+        $params[$h] = OAuthUtil::urldecode_rfc3986(empty($matches[3][$i]) ? $matches[4][$i] : $matches[3][$i]);
       }
       if (isset($params['realm'])) {
         unset($params['realm']);
@@ -594,8 +593,8 @@ class W3tcOAuthUtil {
     $parsed_parameters = array();
     foreach ($pairs as $pair) {
       $split = explode('=', $pair, 2);
-      $parameter = W3tcOAuthUtil::urldecode_rfc3986($split[0]);
-      $value = isset($split[1]) ? W3tcOAuthUtil::urldecode_rfc3986($split[1]) : '';
+      $parameter = OAuthUtil::urldecode_rfc3986($split[0]);
+      $value = isset($split[1]) ? OAuthUtil::urldecode_rfc3986($split[1]) : '';
 
       if (isset($parsed_parameters[$parameter])) {
         // We have already recieved parameter(s) with this name, so add to the list
@@ -619,8 +618,8 @@ class W3tcOAuthUtil {
     if (!$params) return '';
 
     // Urlencode both keys and values
-    $keys = W3tcOAuthUtil::urlencode_rfc3986(array_keys($params));
-    $values = W3tcOAuthUtil::urlencode_rfc3986(array_values($params));
+    $keys = OAuthUtil::urlencode_rfc3986(array_keys($params));
+    $values = OAuthUtil::urlencode_rfc3986(array_values($params));
     $params = array_combine($keys, $values);
 
     // Parameters are sorted by name, using lexicographical byte value ordering.

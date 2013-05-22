@@ -2,13 +2,14 @@
 
 <?php if ($this->_support_reminder): ?>
 <script type="text/javascript">/*<![CDATA[*/
-jQuery(function() {
+jQuery(function($) {
     w3tc_lightbox_support_us('<?php echo wp_create_nonce('w3tc'); ?>');
 });
 /*]]>*/</script>
 <?php endif; ?>
+
 <div class="wrap" id="w3tc">
-    <h2 class="logo"><?php _e('W3 Total Cache <span>by W3 EDGE <sup>&reg;</sup></span>', 'w3-total-cache'); ?></h2>
+    <h2 class="logo">W3 Total Cache <span>by W3 EDGE <sup>&reg;</sup></span></h2>
 
     <?php foreach ($this->_errors as $error): ?>
     <div class="error">
@@ -19,7 +20,7 @@ jQuery(function() {
     <?php if (!$this->_disable_cache_write_notification && $this->_rule_errors_autoinstall != ''): ?>
     <div class="error">
         <p>
-            <?php _e('The following configuration changes are needed to ensure optimal performance:', 'w3-total-cache'); ?><br />
+            The following configuration changes are needed to ensure optimal performance:<br />
         </p>
             <ul style="padding-left: 20px">
                 <?php foreach ($this->_rule_errors as $error): ?>
@@ -28,7 +29,7 @@ jQuery(function() {
             </ul>
 
         <p>
-            <?php _e('If permission allow this can be done automatically, by clicking here:', 'w3-total-cache'); ?>
+            If permission allow this can be done automatically, by clicking here:
             <?php echo $this->_rule_errors_autoinstall ?>.
             <?php echo $this->_rule_errors_hide ?>
         </p>
@@ -38,7 +39,7 @@ jQuery(function() {
     <?php if (!$this->_disable_file_operation_notification && $this->_rule_errors_root): ?>
     <div class="error">
         <p>
-            <?php _e('The following configuration changes are needed to ensure optimal performance:', 'w3-total-cache'); ?><br />
+            The following configuration changes are needed to ensure optimal performance:<br />
         </p>
         <ul style="padding-left: 20px">
             <?php foreach ($this->_rule_errors_root as $error): ?>
@@ -48,7 +49,7 @@ jQuery(function() {
 
     <?php if (isset($this->_ftp_form) && ($this->_use_ftp_form || $this->_rule_errors_root)): ?>
         <p>
-            <?php _e('If permission allow this can be done using the <a href="#ftp_upload_form">FTP form</a> below.', 'w3-total-cache'); ?> <?php echo $this->_rule_errors_root_hide; ?>
+            If permission allow this can be done using the <a href="#ftp_upload_form">FTP form</a> below. <?php echo $this->_rule_errors_root_hide; ?>
         </p>
     <?php endif ?>
     </div>
@@ -73,27 +74,27 @@ jQuery(function() {
             switch ($this->_page){
                 case 'w3tc_general':
         ?>
-                    <?php _e('Jump to: ', 'w3-total-cache'); ?>
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#general"><?php _e('General', 'w3-total-cache'); ?></a> |
-                    <a href="#page_cache"><?php _e('Page Cache', 'w3-total-cache'); ?></a> |
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#general">General</a> |
+                    <a href="#page_cache">Page Cache</a> |
                     <a href="#minify">Minify</a> |
-                    <a href="#database_cache"><?php _e('Database Cache', 'w3-total-cache'); ?></a> |
-                    <a href="#object_cache"><?php _e('Object Cache', 'w3-total-cache'); ?></a> |
+                    <a href="#database_cache">Database Cache</a> |
+                    <a href="#object_cache">Object Cache</a> |
                     <?php if (w3_is_pro() || w3_is_enterprise()): ?>
-                        <a href="#fragment_cache"><?php _e('Fragment Cache', 'w3-total-cache'); ?></a> |
+                        <a href="#fragment_cache">Fragment Cache</a> |
                     <?php endif; ?>
-                    <a href="#browser_cache"><?php _e('Browser Cache', 'w3-total-cache'); ?></a> |
-                    <a href="#cdn"><?php _e('<acronym title="Content Delivery Network">CDN</acronym>', 'w3-total-cache'); ?></a> |
-                    <a href="#varnish"><?php _e('Varnish', 'w3-total-cache'); ?></a> |
+                    <a href="#browser_cache">Browser Cache</a> |
+                    <a href="#cdn"><acronym title="Content Delivery Network">CDN</acronym></a> |
+                    <a href="#varnish">Varnish</a> |
                     <?php if (w3_is_enterprise()): ?>
-                        <a href="#amazon_sns"><?php _e('Amazon <acronym title="Simple Notification Service">SNS</acronym>', 'w3-total-cache'); ?></a> |
+                        <a href="#amazon_sns">Amazon <acronym title="Simple Notification Service">SNS</acronym></a> |
                     <?php endif; ?>
-                    <a href="#cloudflare"><?php _e('Cloudflare', 'w3-total-cache'); ?></a> |
-                    <a href="#monitoring"><?php _e('Monitoring', 'w3-total-cache'); ?></a> |
-                    <a href="#miscellaneous"><?php _e('Miscellaneous', 'w3-total-cache'); ?></a> |
-                    <a href="#debug"><?php _e('Debug', 'w3-total-cache'); ?></a> |
-                    <a href="#settings"><?php _e('Import / Export Settings', 'w3-total-cache'); ?></a>
+                    <a href="#cloudflare">Cloudflare</a> |
+                    <a href="#monitoring">Monitoring</a> |
+                    <a href="#miscellaneous">Miscellaneous</a> |
+                    <a href="#debug">Debug</a> |
+                    <a href="#settings">Import / Export Settings</a>
         <?php
                     break;
         ?>
@@ -101,87 +102,87 @@ jQuery(function() {
                 case 'w3tc_pgcache':
         ?>
                     Jump to: 
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#general"><?php _e('General', 'w3-total-cache'); ?></a> |
-                    <a href="#advanced"><?php _e('Advanced', 'w3-total-cache'); ?></a> |
-                    <a href="#cache_preload"><?php _e('Cache Preload', 'w3-total-cache'); ?></a> |
-                    <a href="#purge_policy"><?php _e('Purge Policy', 'w3-total-cache'); ?></a> |
-                    <a href="#notes"><?php _e('Note(s)', 'w3-total-cache'); ?></a>
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#general">General</a> |
+                    <a href="#advanced">Advanced</a> |
+                    <a href="#cache_preload">Cache Preload</a> |
+                    <a href="#purge_policy">Purge Policy</a> |
+                    <a href="#notes">Note(s)</a>
         <?php
                     break;
         ?>
         <?php
                 case 'w3tc_minify':
         ?>
-                    <?php _e('Jump to: ', 'w3-total-cache'); ?>
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#general"><?php _e('General', 'w3-total-cache'); ?></a> |
-                    <a href="#html_xml"><?php _e('<acronym title="Hypertext Markup Language">HTML</acronym> &amp; <acronym title="eXtensible Markup Language">XML</acronym>', 'w3-total-cache'); ?></a> |
-                    <a href="#js"><?php _e('<acronym title="JavaScript">JS</acronym>', 'w3-total-cache'); ?></a> |
-                    <a href="#css"><?php _e('<acronym title="Cascading Style Sheet">CSS</acronym>', 'w3-total-cache'); ?></a> |
-                    <a href="#advanced"><?php _e('Advanced', 'w3-total-cache'); ?></a> |
-                    <a href="#notes"><?php _e('Note(s)', 'w3-total-cache'); ?></a>
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#general">General</a> |
+                    <a href="#html_xml"><acronym title="Hypertext Markup Language">HTML</acronym> &amp; <acronym title="eXtensible Markup Language">XML</acronym></a> |
+                    <a href="#js"><acronym title="JavaScript">JS</acronym></a> |
+                    <a href="#css"><acronym title="Cascading Style Sheet">CSS</acronym></a> |
+                    <a href="#advanced">Advanced</a> |
+                    <a href="#notes">Note(s)</a>
         <?php
                     break;
         ?>
         <?php
                 case 'w3tc_dbcache':
         ?>
-                    <?php _e('Jump to: ', 'w3-total-cache'); ?>
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#general"><?php _e('General', 'w3-total-cache'); ?></a> |
-                    <a href="#advanced"><?php _e('Advanced', 'w3-total-cache'); ?></a>
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#general">General</a> |
+                    <a href="#advanced">Advanced</a>
         <?php
                     break;
         ?>
         <?php
                 case 'w3tc_objectcache':
         ?>
-                    <?php _e('Jump to: ', 'w3-total-cache'); ?>
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#advanced"><?php _e('Advanced', 'w3-total-cache'); ?></a>
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#advanced">Advanced</a>
         <?php
                     break;
         ?>
         <?php
                 case 'w3tc_browsercache':
         ?>
-                    <?php _e('Jump to: ', 'w3-total-cache'); ?>
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#general"><?php _e('General', 'w3-total-cache'); ?></a> |
-                    <a href="#css_js"><?php _e('<acronym title="Cascading Style Sheet">CSS</acronym> &amp; <acronym title="JavaScript">JS</acronym>', 'w3-total-cache'); ?></a> |
-                    <a href="#html_xml"><?php _e('<acronym title="Hypertext Markup Language">HTML</acronym> &amp; <acronym title="eXtensible Markup Language">XML</acronym>', 'w3-total-cache'); ?></a> |
-                    <a href="#media"><?php _e('Media', 'w3-total-cache'); ?></a>
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#general">General</a> |
+                    <a href="#css_js"><acronym title="Cascading Style Sheet">CSS</acronym> &amp; <acronym title="JavaScript">JS</acronym></a> |
+                    <a href="#html_xml"><acronym title="Hypertext Markup Language">HTML</acronym> &amp; <acronym title="eXtensible Markup Language">XML</acronym></a> |
+                    <a href="#media">Media</a>
         <?php
                     break;
         ?>
         <?php
                 case 'w3tc_mobile':
         ?>
-                    <?php _e('Jump to: ', 'w3-total-cache'); ?>
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#manage"><?php _e('Manage User Agent Groups', 'w3-total-cache'); ?></a>
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#manage">Manage User Agent Groups</a>
         <?php
                     break;
         ?>
         <?php
                 case 'w3tc_referrer':
         ?>
-                    <?php _e('Jump to: ', 'w3-total-cache'); ?>
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#manage"><?php _e('Manage Referrer Groups', 'w3-total-cache'); ?></a>
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#manage">Manage Referrer Groups</a>
         <?php
                     break;
         ?>
         <?php
                 case 'w3tc_cdn':
         ?>
-                    <?php _e('Jump to:', 'w3-total-cache'); ?> 
-                    <a href="#toplevel_page_w3tc_general"><?php _e('Main Menu', 'w3-total-cache'); ?></a> |
-                    <a href="#general"><?php _e('General', 'w3-total-cache'); ?></a> |
-                    <a href="#configuration"><?php _e('Configuration', 'w3-total-cache'); ?></a> |
-                    <a href="#advanced"><?php _e('Advanced', 'w3-total-cache'); ?></a> |
-                    <a href="#notes"><?php _e('Note(s)', 'w3-total-cache'); ?></a>
+                    Jump to: 
+                    <a href="#toplevel_page_w3tc_general">Main Menu</a> |
+                    <a href="#general">General</a> |
+                    <a href="#configuration">Configuration</a> |
+                    <a href="#advanced">Advanced</a> |
+                    <a href="#notes">Note(s)</a>
         <?php
                     break;
         ?>

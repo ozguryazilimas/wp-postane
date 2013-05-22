@@ -111,12 +111,13 @@ class W3_Cache_File extends W3_Cache_Base {
      * @param string $group Used to differentiate between groups of cache values
      * @return boolean
      */
-    function set($key, $var, $expire = 0, $group = '') {
+    function set($key, &$var, $expire = 0, $group = '') {
         $key = $this->get_item_key($key);
 
         $sub_path = $this->_get_path($key);
         $path = $this->_cache_dir . DIRECTORY_SEPARATOR . ($group ? $group . DIRECTORY_SEPARATOR : '') . $sub_path;
 
+        $sub_dir = dirname($sub_path);
         $dir = dirname($path);
 
         if (!@is_dir($dir)) {
@@ -264,8 +265,7 @@ class W3_Cache_File extends W3_Cache_Base {
     function flush($group = '') {
         @set_time_limit($this->_flush_timelimit);
         $flush_dir = $group ? $this->_cache_dir . DIRECTORY_SEPARATOR . $group . DIRECTORY_SEPARATOR : $this->_flush_dir;
-		w3_emptydir($flush_dir, $this->_exclude);
-        return true;
+        return w3_emptydir($flush_dir, $this->_exclude);
     }
 
     /**
@@ -297,7 +297,8 @@ class W3_Cache_File extends W3_Cache_Base {
         else
             $hash = md5($key);
 
-        $path = sprintf('%s/%s/%s.php', substr($hash, 0, 3), substr($hash, 3, 3), $hash);
+        $hash = md5($key);
+        $path = sprintf('%s/%s/%s/%s.php', substr($hash, 0, 3), substr($hash, 3, 3), substr($hash, 6, 3), $hash);
 
         return $path;
     }
