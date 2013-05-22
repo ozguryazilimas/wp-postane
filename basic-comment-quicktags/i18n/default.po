@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Basic Comment Quicktags\n"
+"POT-Creation-Date: 2013-05-14 13:41-0800\n"
+"PO-Revision-Date: 2013-05-14 13:42-0800\n"
+"Last-Translator: Mika Epstein (Ipstenu) <ipstenu@ipstenu.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../quicktags.php:30
+msgid "This plugin requires WordPress 3.5"
+msgstr ""
+
+#: ../quicktags.php:109
+msgid "Quicktags"
+msgstr ""
+
+#: ../quicktags.php:122
+msgid "Activate Quicktags for comments"
+msgstr ""
+
+#: ../quicktags.php:124
+msgid "Activate Quicktags for bbPress"
+msgstr ""
+
+#: ../quicktags.php:153
+msgid "Donate"
+msgstr ""
+
+#: ../quicktags.php:162
+msgid "Settings"
+msgstr ""
