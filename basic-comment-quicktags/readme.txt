@@ -3,7 +3,7 @@ Contributors: Ipstenu, MarcDK
 Tags: comments, wysiwyg, quicktags, bbpress
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 3.1
+Stable tag: 2.2
 Donate Link: https://www.wepay.com/donations/halfelf-wp
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -59,17 +59,6 @@ Unlikely. BuddyPress is moving to it's own thing. If this works on BP, huzzah. B
 Yeah, that's because IE8 cheerfully ignores the rules of jQuery. Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9+.
 
 == Changelog ==
-
-= 3.1 =
-* 2013 May 14, by Ipstenu
-* Left out js dependancy causing buttons not to show.
-
-= 3.0 =
-* 2013 May 14, by Ipstenu
-* Better options handling
-* Internationalization
-* Classification (singletons, basically better code)
-* Better option validation and output
 
 = 2.2 =
 * 2013 May 5, by Ipstenu
