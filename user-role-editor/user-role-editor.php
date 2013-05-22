@@ -3,7 +3,7 @@
 Plugin Name: User Role Editor
 Plugin URI: http://www.shinephp.com/user-role-editor-wordpress-plugin/
 Description: It allows you to change/add/delete any WordPress user role (except administrator) capabilities list with a few clicks.
-Version: 3.14
+Version: 3.12
 Author: Vladimir Garagulya
 Author URI: http://www.shinephp.com
 Text Domain: ure
@@ -84,7 +84,6 @@ function ure_optionsPage() {
 <div class="wrap">
   <div class="icon32" id="icon-options-general"><br/></div>
     <h2><?php _e('User Role Editor', 'ure'); ?></h2>
-		<?php require_once(URE_PLUGIN_DIR .'includes/ure-class-advertisement.php'); ?>
 		<?php require_once(URE_PLUGIN_DIR .'includes/ure-options.php'); ?>
   </div>
 <?php
@@ -114,7 +113,7 @@ function ure_install() {
 // end of ure_install()
 
 
-function ure_exclude_admin_role($roles) {
+function ure_excludeAdminRole($roles) {
 
   if (isset($roles['administrator'])){
 		unset( $roles['administrator'] );
@@ -123,46 +122,16 @@ function ure_exclude_admin_role($roles) {
   return $roles;
 
 }
-// end of exclude_admin_role()
+// end of excludeAdminRole()
 
 
-function ure_admin_load_js($hook_suffix){
-    
-	if ($hook_suffix==='users_page_user-role-editor') {
-    wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core','jquery-ui-button', 'jquery') );
-    wp_register_script( 'ure-js', plugins_url( '/js/ure-js.js', __FILE__ ) );
-    wp_enqueue_script ( 'ure-js' );
-    wp_localize_script( 'ure-js', 'ure_data', array(
-      'wp_nonce' => wp_create_nonce('user-role-editor'),          
-      'page_url' => URE_WP_ADMIN_URL . URE_PARENT .'?page=user-role-editor.php',  
-      'is_multisite' => is_multisite() ? 1 : 0,  
-      'select_all' => __('Select All', 'ure'),
-      'unselect_all' => __('Unselect All', 'ure'),
-      'reverse' => __('Reverse', 'ure'),  
-      'update' => __('Update', 'ure'),
-    	'confirm_submit' => __('Please confirm permissions update', 'ure'),
-      'add_new_role_title' => __('Add New Role', 'ure'),
-      'role_name_required' => __(' Role name (ID) can not be empty!', 'ure'),  
-      'role_name_valid_chars' => __(' Role name (ID) must contain latin characters, digits, hyphens or underscore only!', 'ure'),  
-      'add_role' => __('Add Role', 'ure'),
-      'delete_role' => __('Delete Role', 'ure'),
-      'cancel' =>  __('Cancel', 'ure'),  
-      'add_capability' => __('Add Capability', 'ure'),
-      'delete_capability' => __('Delete Capability', 'ure'),
-      'reset' => __('Reset', 'ure'),  
-      'reset_warning' => __('Reset Roles to WordPress defaults. Be careful, all changes made by you or plugins will be lost. Some plugins, e.g. S2Member, WooCommerce reactivation could be needed. Continue?', 'ure'),  
-      'default_role' => __('Default Role', 'ure'),    
-      'set_new_default_role' => __('Set New Default Role', 'ure'),
-      'delete_capability' => __('Delete Capability', 'ure'),
-      'delete_capability_warning' => __('Warning! Be careful - removing critical capability could crash some plugin or other custom code', 'ure'),
-      'capability_name_required' => __(' Capability name (ID) can not be empty!', 'ure'),    
-      'capability_name_valid_chars' => __(' Capability name (ID) must contain latin characters, digits, hyphens or underscore only!', 'ure'),    
-    ) );
-
+function ure_admin_jquery(){
+	global $pagenow;
+	if (URE_PARENT==$pagenow){
+		wp_enqueue_script('jquery');
 	}
-  
 }
-// end of ure_admin_load_js()
+// end of ure_admin_jquery()
 
 
 // We have two vulnerable queries id users admin interface which should be processed
@@ -260,13 +229,13 @@ function ure_init() {
     $user_id = 0;
   }
   
-  add_action('admin_enqueue_scripts' , 'ure_admin_load_js' );
-    
   // these filters and actions should prevent editing users with administrator role
   // by other users with URE_KEY_CAPABILITY capability
 	if (!ure_is_admin($user_id)) {
     // Exclude administrator role from edit list.
-    add_filter('editable_roles', 'ure_exclude_admin_role');    
+    add_filter('editable_roles', 'ure_excludeAdminRole');
+    // Enqueue jQuery
+    add_action('admin_enqueue_scripts' , 'ure_admin_jquery' );
     // prohibit any actions with user who has Administrator role
     add_filter('user_has_cap', 'ure_not_edit_admin', 10, 3);
     // exclude users with 'Administrator' role from users list
@@ -310,17 +279,16 @@ function ure_settings_menu() {
       }
     }
     $ure_page = add_submenu_page('users.php', __('User Role Editor', 'ure'), __('User Role Editor', 'ure'), $keyCapability, basename(__FILE__), 'ure_optionsPage');
-    add_action("admin_print_styles-$ure_page", 'ure_admin_css_action');
+    add_action("admin_print_styles-$ure_page", 'ure_adminCssAction');
   }
 
 }
 // end of ure_settings_menu()
 
-function ure_admin_css_action() {
+function ure_adminCssAction() {
 
-  wp_enqueue_style ( 'wp-jquery-ui-dialog');
-  wp_enqueue_style('ure_admin_css', URE_PLUGIN_URL .'css' .DIRECTORY_SEPARATOR .'ure-admin.css', array(), false, 'screen');
-  
+  wp_enqueue_style('ure_admin_css', URE_PLUGIN_URL.'css/ure-admin.css', array(), false, 'screen');
+
 }
 // end of ure_adminCssAction()
 
