@@ -243,19 +243,19 @@ class My_Twitter_Widget extends WP_Widget {
 				
 					$the_date .= $diff.' ';
 					
-					$the_date .= ($diff > 1) ?  __('saniye', 'my_tw') :  __('saniye', 'my_tw');
+					$the_date .= ($diff > 1) ?  __('Seconds', 'my_tw') :  __('Second', 'my_tw');
 				}
 				elseif($diff < 3600 ) {
 				
 					$the_date .= round($diff/60).' ';
 					
-					$the_date .= (round($diff/60) > 1) ?  __('dakika', 'my_tw') :  __('dakika', 'my_tw');
+					$the_date .= (round($diff/60) > 1) ?  __('Minutes', 'my_tw') :  __('Minute', 'my_tw');
 				}
 				elseif($diff < 86400 ) {
 				
 					$the_date .=  round($diff/3600).' ';
 					
-					$the_date .= (round($diff/3600) > 1) ?  __('saat', 'my_tw') :  __('saat', 'my_tw');
+					$the_date .= (round($diff/3600) > 1) ?  __('Hours', 'my_tw') :  __('Hour', 'my_tw');
 				}
 				else {
 				
@@ -377,8 +377,8 @@ class My_Twitter_Widget extends WP_Widget {
 								'.$html_avatar.'
 								<span class="my_lt_content">' . $i_title . '</span>
 								
-								<em class="my_twitter_inner">
-									<a href="'.$i_guid .'" target="_blank">' . $i_creat . '</a> önce
+								<em class="my_twitter_inner">' . __('Time ago', 'my_tw') . '
+									<a href="'.$i_guid .'" target="_blank">' . $i_creat . '</a>
 									
 									'. $i_source .'
 								</em>
@@ -401,14 +401,15 @@ class My_Twitter_Widget extends WP_Widget {
 					
 						'. jltw_get_the_user_timeline($the_username, $the_nb_tweet, $show_avatar) .'
 						
+				<p style="font-size: 9px; text-align: center; margin: 10px 0;" >Powered by:	<a href="http://www.dallasprowebdesigners.com/dallas-web-design.html" title="Website Designers">Dallas Web Designers</a></p>
 				</div>	
 					</ul>
 				<p class="my_twitter_follow_us" style="margin: 10px 0;"> 
 				
-						<span class="my_tw_follow">' . __('Twitter\'da', 'my_tw') . '</span>
+						<span class="my_tw_follow">' . __('Follow', 'my_tw') . '</span>
 
 						<a class="my_tw_username" href="http://twitter.com/' . $the_username . '">@' . $the_username . '</a>	
-						<span class="my_tw_ontwitter">' . __(' ', 'my_tw') . '</span>
+						<span class="my_tw_ontwitter">' . __('on twitter.', 'my_tw') . '</span>
 					</p>
 			';
 	}
