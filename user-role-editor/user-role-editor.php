@@ -2,8 +2,8 @@
 /*
 Plugin Name: User Role Editor
 Plugin URI: http://www.shinephp.com/user-role-editor-wordpress-plugin/
-Description: It allows you to change/add/delete any WordPress user role (except administrator) capabilities list with a few clicks.
-Version: 3.14
+Description: It allows you to change/add/delete any WordPress user role or capabilities with a few clicks.
+Version: 3.14.1
 Author: Vladimir Garagulya
 Author URI: http://www.shinephp.com
 Text Domain: ure
@@ -54,7 +54,7 @@ require_once(URE_PLUGIN_DIR. 'includes/ure-lib.php');
  */
 function ure_load_translation() {
 	
-	load_plugin_textdomain( 'ure', '', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR .'lang' );
+	load_plugin_textdomain( 'ure', '', dirname( plugin_basename( __FILE__ ) ) .'/lang' );
 	
 }
 // end of ure_load_translation()
@@ -79,13 +79,16 @@ function ure_optionsPage() {
     }
     die(__('Only','ure').' '.$admin.' '.__('is allowed to use','ure').' '.'User Role Editor');
   }  
+	
+	require_once(URE_PLUGIN_DIR .'includes/ure-class-advertisement.php');	
 ?>
 
 <div class="wrap">
   <div class="icon32" id="icon-options-general"><br/></div>
     <h2><?php _e('User Role Editor', 'ure'); ?></h2>
-		<?php require_once(URE_PLUGIN_DIR .'includes/ure-class-advertisement.php'); ?>
-		<?php require_once(URE_PLUGIN_DIR .'includes/ure-options.php'); ?>
+<?php 	
+	require_once(URE_PLUGIN_DIR .'includes/ure-options.php'); 
+?>
   </div>
 <?php
 
@@ -319,7 +322,7 @@ function ure_settings_menu() {
 function ure_admin_css_action() {
 
   wp_enqueue_style ( 'wp-jquery-ui-dialog');
-  wp_enqueue_style('ure_admin_css', URE_PLUGIN_URL .'css' .DIRECTORY_SEPARATOR .'ure-admin.css', array(), false, 'screen');
+  wp_enqueue_style('ure_admin_css', URE_PLUGIN_URL .'css/ure-admin.css', array(), false, 'screen');
   
 }
 // end of ure_adminCssAction()
@@ -536,7 +539,7 @@ if (is_admin()) {
 	add_action( 'edit_user_profile', 'ure_edit_user_profile');
 	add_filter( 'manage_users_columns', 'ure_user_role_column', 10, 5 );
 	add_filter( 'manage_users_custom_column', 'ure_user_role_row', 10, 3 );
-	add_action('profile_update', 'ure_user_profile_update', 10);
+	add_action( 'profile_update', 'ure_user_profile_update', 10 );
 	
 }
 

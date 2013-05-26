@@ -255,7 +255,7 @@ function ure_reset_user_roles() {
   $wp_roles->role_names = array();
   $wp_roles->use_db = true;
 	
-  require_once(ABSPATH . DIRECTORY_SEPARATOR .'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'schema.php');
+  require_once(ABSPATH . '/wp-admin/includes/schema.php');
   populate_roles();
   $wp_roles->reinit();
 

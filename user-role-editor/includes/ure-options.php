@@ -222,9 +222,10 @@ ure_showMessage($mess);
 	</div>
 
 	<div class="has-sidebar" >
-		<form id="ure_form" method="post" action="<?php echo URE_PARENT; ?>?page=user-role-editor.php" >
-      <div id="ure_form_controls">
+		<form id="ure_form" method="post" action="<?php echo URE_PARENT; ?>?page=user-role-editor.php" >			
+      <div id="ure_form_controls">				
 			<?php
+			wp_nonce_field('user-role-editor', 'ure_nonce');
 			settings_fields('ure-options');
 			?>
 								
@@ -233,8 +234,7 @@ ure_showMessage($mess);
 				require_once(URE_PLUGIN_DIR .'includes/ure-user-edit.php');
 			} else {
 				require_once(URE_PLUGIN_DIR .'includes/ure-role-edit.php');
-			}
-      wp_nonce_field('user-role-editor', 'ure_nonce');
+			}      
 			?>
       </div>      
 		</form>		      

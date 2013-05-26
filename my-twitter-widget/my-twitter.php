@@ -1,28 +1,33 @@
 <?php
+
 /**
- * Plugin Name: My Twitter Widget
+ * Plugin Name: My Twitter Widget 
+ 
  * Plugin URI: http://www.pooks.com/
+ 
  * Description: The absolute best <strong>twitter feed sidebar widget</strong> for Wordpress yet. Easy to use, install, setup and comes with several options to control how it looks on your wordpress website. Download and install this <strong>twitter widget</strong> and see just how great it is and how easy it is to use. Full support and even help installing it are avilable upon request. 
+ 
  * Author: Jack Higgins
- * Version: 1.3.4
+ 
+ * Version: 1.3.8
+ 
  * Author URI: http://pooks.com
+ 
  * License: GPLv2 or later 
+ 
  */
+ 
 /*  Copyright 2010  Jack HIggins (info@pooks.com)
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
-	
     **********************************************************************
-	
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
+    GNU General Public License for more details
     **********************************************************************
-
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -39,7 +44,9 @@ class My_Twitter_Widget extends WP_Widget {
 	function My_Twitter_Widget() {
 	
 		if(function_exists('load_plugin_textdomain')) {
+		
 			load_plugin_textdomain('my_tw', MY_TW_PLUGINPATH . '/languages', MY_PLUGINBASENAME . '/languages');
+			
 		}
 
 		$widget_ops = array(
@@ -394,15 +401,14 @@ class My_Twitter_Widget extends WP_Widget {
 					
 						'. jltw_get_the_user_timeline($the_username, $the_nb_tweet, $show_avatar) .'
 						
-				<p style="font-size: 9px; text-align: center; margin: 10px 0;" >Powered by:	<a href="http://www.dallasprowebdesigners.com/" title="Website Designers">Web Design Company</a></p>
 				</div>	
 					</ul>
 				<p class="my_twitter_follow_us" style="margin: 10px 0;"> 
 				
-						<span class="my_tw_follow">' . __('Follow', 'my_tw') . '</span>
+						<span class="my_tw_follow">' . __('Twitter\'da', 'my_tw') . '</span>
 
 						<a class="my_tw_username" href="http://twitter.com/' . $the_username . '">@' . $the_username . '</a>	
-						<span class="my_tw_ontwitter">' . __('on twitter.', 'my_tw') . '</span>
+						<span class="my_tw_ontwitter">' . __(' ', 'my_tw') . '</span>
 					</p>
 			';
 	}

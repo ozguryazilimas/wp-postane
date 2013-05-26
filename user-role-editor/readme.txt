@@ -3,7 +3,7 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 3.2
-Tested up to: 3.5.1
+Tested up to: 3.6
 Stable tag: trunk
 
 User Role Editor WordPress plugin makes the role capabilities changing easy. You can change any standard WordPress user role.
@@ -56,8 +56,12 @@ To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/
 * Marcin - For the code enhancement. This contribution allows to not lose new custom capability if it is added to other than 'Administrator' role.
 * [FullThrottle](http://fullthrottledevelopment.com/how-to-hide-the-adminstrator-on-the-wordpress-users-screen) - For the code to hide administrator role at admin backend.
 
+
 = Translations =
-* All translation files are obsolete and require updates. 
+* Turkish: [Muhammed YILDIRIM](http://ben.muhammed.im)
+*
+*---------------------------------------------------------------
+* The most of translation files except shown above are obsolete and require updates. 
 
 Dear plugin User!
 If you wish to help me with this plugin translation I very appreciate it. Please send your language .po and .mo files to vladimir[at-sign]shinephp.com email. Do not forget include you site link in order I can show it with greetings for the translation help at shinephp.com, plugin settings page and in this readme.txt file.
@@ -66,6 +70,13 @@ Share with me new ideas about plugin further development and link to your site w
 
 
 == Changelog ==
+= 3.14.1 =
+* 24.05.2013
+* Bug, which prevented the correct use of WordPress nonces on some installations (Windows), is fixed;
+* DIRECTORY_SEPARATOR constant used in path to User Role Editor CSS file was empty on some installations (Windows). Constant DIRECTORY_SEPARATOR is excluded from the plugin code;
+* User capabilities page: roles checkboxes are excluded from 'Select All', 'Unselect All', 'Inverse' operations. Only capabilities checkboxes are processed.
+* Turkish [Muhammed YILDIRIM](http://ben.muhammed.im) translation is updated.
+
 = 3.14 =
 * 17.05.2013
 * Interface update: role/capability add/remove stuff was removed from the page. Plugin has toolbar at the right side now. Click on the button opens needed dialog window.

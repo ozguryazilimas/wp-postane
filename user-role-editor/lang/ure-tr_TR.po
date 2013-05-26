@@ -4,26 +4,26 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-05-17 11:21+0700\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Vladimir Garagulya <vladimir@shinephp.com>\n"
+"Last-Translator: Muhammed YILDIRIM <ben@muhammed.im>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Turkish\n"
-"X-Poedit-Country: TURKEY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../user-role-editor.php:34
-#, fuzzy, php-format
+#, php-format
 msgid "User Role Editor requires PHP %s or newer."
-msgstr "User Role Editor eklentisi PHP 5.0 veya daha yüksek bir sürüme ihtiyaç duymaktadır."
+msgstr ""
+"User Role Editor eklentisi PHP %s veya daha yüksek bir sürüme ihtiyaç "
+"duymaktadır."
 
-#: ../user-role-editor.php:35
-#: ../user-role-editor.php:107
+#: ../user-role-editor.php:35 ../user-role-editor.php:107
 msgid "Please update!"
 msgstr "Lütfen güncelleyin!"
 
@@ -35,56 +35,56 @@ msgstr "Sadece"
 msgid "is allowed to use"
 msgstr "kullanmak için yetkilidir"
 
-#: ../user-role-editor.php:86
-#: ../user-role-editor.php:312
+#: ../user-role-editor.php:86 ../user-role-editor.php:312
 #: ../user-role-editor.php:368
 msgid "User Role Editor"
 msgstr "Kullanıcı Rol Editörü"
 
 #: ../user-role-editor.php:106
-#, fuzzy, php-format
+#, php-format
 msgid "User Role Editor requires WordPress %s or newer."
-msgstr "User Role Editor eklentisi en az WordPress 3.0 sürümüne ihtiyaç duymaktadır."
+msgstr ""
+"User Role Editor eklentisi en az WordPress %s sürümüne ihtiyaç duymaktadır."
 
 #: ../user-role-editor.php:139
 msgid "Select All"
-msgstr ""
+msgstr "Tümünü Seç"
 
 #: ../user-role-editor.php:140
 msgid "Unselect All"
-msgstr ""
+msgstr "Seçimi Kaldır"
 
 #: ../user-role-editor.php:141
 msgid "Reverse"
-msgstr ""
+msgstr "Seçimi Tersine Çevir"
 
 #: ../user-role-editor.php:142
 msgid "Update"
 msgstr "Güncelle"
 
 #: ../user-role-editor.php:143
-#, fuzzy
 msgid "Please confirm permissions update"
-msgstr "Devam etmek için lütfen onaylayın"
+msgstr "İzinleri güncelleştirmek için lütfen onaylayın"
 
 #: ../user-role-editor.php:144
 msgid "Add New Role"
 msgstr "Yeni Rol Ekle"
 
 #: ../user-role-editor.php:145
-#, fuzzy
 msgid " Role name (ID) can not be empty!"
-msgstr "Ad boş bırakılamaz!"
+msgstr "Ad (ID) boş bırakılamaz!"
 
 #: ../user-role-editor.php:146
-#, fuzzy
-msgid " Role name (ID) must contain latin characters, digits, hyphens or underscore only!"
-msgstr "Hata: Rol adı yalnızca latin karakterleri ve sayılardan oluşabilir."
+msgid ""
+" Role name (ID) must contain latin characters, digits, hyphens or underscore "
+"only!"
+msgstr ""
+"Rol adı (ID) yalnızca latin karakterleri, sayılar, tire veya altçizgiden  "
+"oluşabilir."
 
 #: ../user-role-editor.php:147
-#, fuzzy
 msgid "Add Role"
-msgstr "Yeni Rol Ekle"
+msgstr "Rol Ekle"
 
 #: ../user-role-editor.php:148
 msgid "Delete Role"
@@ -95,13 +95,10 @@ msgid "Cancel"
 msgstr "İptal"
 
 #: ../user-role-editor.php:150
-#, fuzzy
 msgid "Add Capability"
-msgstr "Yeni Kabiliyet Ekle"
+msgstr "Kabiliyet Ekle"
 
-#: ../user-role-editor.php:151
-#: ../user-role-editor.php:156
-#, fuzzy
+#: ../user-role-editor.php:151 ../user-role-editor.php:156
 msgid "Delete Capability"
 msgstr "Kabiliyeti kaldır"
 
@@ -110,39 +107,49 @@ msgid "Reset"
 msgstr "Geri al"
 
 #: ../user-role-editor.php:153
-msgid "Reset Roles to WordPress defaults. Be careful, all changes made by you or plugins will be lost. Some plugins, e.g. S2Member, WooCommerce reactivation could be needed. Continue?"
+msgid ""
+"Reset Roles to WordPress defaults. Be careful, all changes made by you or "
+"plugins will be lost. Some plugins, e.g. S2Member, WooCommerce reactivation "
+"could be needed. Continue?"
 msgstr ""
+"Rolleri Wordpress öntanımlılarına ayarla. Dikkatli olun, sizin tarafınızdan "
+"veya eklenti tarafından yapılan tüm değişiklikler kaybolacak. Bazı "
+"eklentiler, örneğin S2Member, WooCommerce için yeniden etkinleştirme "
+"gerekebilir. Devam etmek istiyor musunuz?"
 
 #: ../user-role-editor.php:154
-#, fuzzy
 msgid "Default Role"
-msgstr "Rolü Sil"
+msgstr "Öntanımlı Rol"
 
 #: ../user-role-editor.php:155
-#, fuzzy
 msgid "Set New Default Role"
-msgstr "Varsayılan Kullanıcı Rolü olarak Seç"
+msgstr "Yeni Öntanımlı Rol Seç"
 
 #: ../user-role-editor.php:157
-msgid "Warning! Be careful - removing critical capability could crash some plugin or other custom code"
-msgstr "Uyarı! Dikkatli olun - önemli kabiliyetleri kaldırmak bazı eklentileri veya başka özel kodların bozulmasına sebep olabilir"
+msgid ""
+"Warning! Be careful - removing critical capability could crash some plugin "
+"or other custom code"
+msgstr ""
+"Uyarı! Dikkatli olun - önemli kabiliyetleri kaldırmak bazı eklentileri veya "
+"başka özel kodların bozulmasına sebep olabilir"
 
 #: ../user-role-editor.php:158
-#, fuzzy
 msgid " Capability name (ID) can not be empty!"
-msgstr "Ad boş bırakılamaz!"
+msgstr "Ad (ID) boş bırakılamaz!"
 
 #: ../user-role-editor.php:159
-#, fuzzy
-msgid " Capability name (ID) must contain latin characters, digits, hyphens or underscore only!"
-msgstr "Hata: Kabiliyet adı yalnızca latin karakterleri ve sayılardan oluşabilir."
+msgid ""
+" Capability name (ID) must contain latin characters, digits, hyphens or "
+"underscore only!"
+msgstr ""
+"Kabiliyet adı (ID) yalnızca latin karakterleri, sayılar, tire veya "
+"altçizgiden oluşabilir."
 
 #: ../user-role-editor.php:284
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: ../user-role-editor.php:294
-#: ../includes/ure-options.php:209
+#: ../user-role-editor.php:294 ../includes/ure-options.php:209
 msgid "Changelog"
 msgstr "Changelog"
 
@@ -150,16 +157,13 @@ msgstr "Changelog"
 msgid "Capabilities"
 msgstr "Kabiliyetler"
 
-#: ../user-role-editor.php:371
-#: ../user-role-editor.php:407
-#, fuzzy
+#: ../user-role-editor.php:371 ../user-role-editor.php:407
 msgid "Other Roles"
-msgstr "Rolü Sil"
+msgstr "Diğer Roller"
 
 #: ../user-role-editor.php:381
-#, fuzzy
 msgid "Edit"
-msgstr "Editör"
+msgstr "Düzenle"
 
 #: ../includes/ure-lib.php:35
 msgid "Error is occur. Please check the log file."
@@ -170,9 +174,12 @@ msgid "Backup record is created for the current role capabilities"
 msgstr "Güncel rol yeterlilikleri için yedek kayıt oluşturuldu"
 
 #: ../includes/ure-lib.php:481
-#, fuzzy
-msgid "Error: Role ID must contain latin characters, digits, hyphens or underscore only!"
-msgstr "Hata: Rol adı yalnızca latin karakterleri ve sayılardan oluşabilir."
+msgid ""
+"Error: Role ID must contain latin characters, digits, hyphens or underscore "
+"only!"
+msgstr ""
+"Hata: Rol ID yalnızca latin karakterleri, sayılar, tire veya altçizgiden "
+"oluşabilir."
 
 #: ../includes/ure-lib.php:496
 #, php-format
@@ -472,7 +479,8 @@ msgstr "Dışa aktarmak"
 
 #: ../includes/ure-lib.php:834
 msgid "Error: Capability name must contain latin characters and digits only!"
-msgstr "Hata: Kabiliyet adı yalnızca latin karakterleri ve sayılardan oluşabilir."
+msgstr ""
+"Hata: Kabiliyet adı yalnızca latin karakterleri ve sayılardan oluşabilir."
 
 #: ../includes/ure-lib.php:846
 #, php-format
@@ -506,18 +514,15 @@ msgstr "Hiçbiri"
 msgid "Select Role and change its capabilities list"
 msgstr "Rolü seçin ve rolün yetki listesini değiştirin"
 
-#: ../includes/ure-role-edit.php:69
-#: ../includes/ure-role-edit.php:166
+#: ../includes/ure-role-edit.php:69 ../includes/ure-role-edit.php:166
 msgid "Select Role:"
 msgstr "Rolü Seçin:"
 
-#: ../includes/ure-role-edit.php:79
-#: ../includes/ure-user-edit.php:38
+#: ../includes/ure-role-edit.php:79 ../includes/ure-user-edit.php:38
 msgid "Show capabilities in human readable form"
 msgstr "Yetkileri insan tarafından okunabilir biçimde göster"
 
-#: ../includes/ure-role-edit.php:88
-#: ../includes/ure-user-edit.php:47
+#: ../includes/ure-role-edit.php:88 ../includes/ure-user-edit.php:47
 msgid "Show deprecated capabilities"
 msgstr "Önerilmeyen yetenekleri göster"
 
@@ -529,40 +534,33 @@ msgstr "Eğer seçilirse, bu ağdaki tüm siteler için uygulanır"
 msgid "Apply to All Sites"
 msgstr "Tüm sitelere uygula"
 
-#: ../includes/ure-role-edit.php:109
-#: ../includes/ure-user-edit.php:88
-#, fuzzy
+#: ../includes/ure-role-edit.php:109 ../includes/ure-user-edit.php:88
 msgid "Core capabilities:"
-msgstr "WordPress Kabiliyetler:"
+msgstr "Çekirdek Kabiliyetleri:"
 
-#: ../includes/ure-role-edit.php:124
-#: ../includes/ure-user-edit.php:103
-#, fuzzy
+#: ../includes/ure-role-edit.php:124 ../includes/ure-user-edit.php:103
 msgid "Custom capabilities:"
-msgstr "Kabiliyetler:"
+msgstr "Özel Kabiliyetler:"
 
 #: ../includes/ure-role-edit.php:155
-#, fuzzy
 msgid "Role name (ID): "
-msgstr "Rol:"
+msgstr "Rol adı (ID):"
 
 #: ../includes/ure-role-edit.php:157
-#, fuzzy
 msgid "Display Role Name: "
-msgstr "Rol:"
+msgstr "Görünecek Rol Adı:"
 
 #: ../includes/ure-role-edit.php:159
 msgid "Make copy of: "
 msgstr "Bundan kopyala:"
 
 #: ../includes/ure-role-edit.php:181
-#, fuzzy
 msgid "Delete:"
-msgstr "Sil"
+msgstr "Sil:"
 
 #: ../includes/ure-role-edit.php:188
 msgid "Capability name (ID): "
-msgstr ""
+msgstr "Yetenek adı (ID): "
 
 #: ../includes/ure-user-edit.php:22
 msgid "Change capabilities for user"
@@ -570,28 +568,25 @@ msgstr "Kullanıcının kabiliyetlerini değiştir: "
 
 #: ../includes/ure-user-edit.php:52
 msgid "Primary Role:"
-msgstr ""
+msgstr "Birincil rol:"
 
 #: ../includes/ure-user-edit.php:62
 msgid "bbPress Role:"
-msgstr ""
+msgstr "bbPress rolü: "
 
 #: ../includes/ure-user-edit.php:72
-#, fuzzy
 msgid "Other Roles:"
-msgstr "Rolü Sil"
+msgstr "Diğer Roller:"
 
 #: ../includes/ure-options.php:65
-#, fuzzy
 msgid "User Roles are restored to WordPress default values. "
-msgstr "Rol yetkileri yedek verilerden geri yüklendi."
+msgstr "Rol yetkileri WordPress öntanımlılarına geri yüklendi."
 
 #: ../includes/ure-options.php:136
 msgid "Error: "
 msgstr "Hata:"
 
-#: ../includes/ure-options.php:136
-#: ../includes/ure-options.php:156
+#: ../includes/ure-options.php:136 ../includes/ure-options.php:156
 msgid "Role"
 msgstr "Rol:"
 
@@ -603,11 +598,9 @@ msgstr "bulunmuyor"
 msgid "is updated successfully"
 msgstr "başarıyla güncellendi"
 
-#: ../includes/ure-options.php:161
-#: ../includes/ure-options.php:174
-#, fuzzy
+#: ../includes/ure-options.php:161 ../includes/ure-options.php:174
 msgid "Error occured during role update"
-msgstr "Rol silme işlemi sırasında hata"
+msgstr "Rol güncelleme işlemi sırasında hata oluştu"
 
 #: ../includes/ure-options.php:169
 msgid "User"

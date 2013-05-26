@@ -1,10 +1,17 @@
 === My Twitter Widget ===
 Contributors: skywebdesign
+
 Donate link: http://www.dallasprowebdesigners.com
+
 Tags: twitter, twitter posts, twitter feeds, twitter widget, twitter plugin, twitter sidebar
+
 Requires at least: 3.0.1
+
 Tested up to: 3.3.1
-Stable tag: 1.3.4
+
+Stable tag: 1.3.8
+
+License: GPLv2 or later
 
 The absolute best twitter feed sidebar widget for Wordpress yet. Easy to use, install, setup and comes with 
 several options to control how it looks on your wordpress website. Download this twitter widget and get started 
@@ -61,15 +68,15 @@ You can find a demo for this widget by visiting a live site online at <a href="h
 
 == Frequently Asked Questions ==
 
-= I have tried many widgets found for Wordpress and they all lack something. What makes this one differnet? =
+<h3>I have tried many widgets found for Wordpress and they all lack something. What makes this one differnet?</h3>
 
 * Well we tried to keep the entire widget as simple as possible yet still provide you with options. The number one item most people complain about is how the widget looks on their site compared to the rest of their site. It either looks like a big sore thumb on their site or the way the twitter feeds are formated look horrible and sloopy. Wetried to resolve this problem by providing options for the css of the widget. You have several options you can choose from without any css knowledge and if none of those work you can override the css using the css field to style the widget to look in uniform with your site.
 
-= Sometimes my feeds stop working =
+<h3>Sometimes my feeds stop working</h3>
 
-*Often times twitter is updating their system, and the feeds will dispaer from time to time. If there do not return after several hours then you can contact us and we will look into the problem.
+* Often times twitter is updating their system, and the feeds will dispaer from time to time. If there do not return after several hours then you can contact us and we will look into the problem.
 
-= I have changed twitter usernames, but its still showing my old account feeds =
+<h3>I have changed twitter usernames, but its still showing my old account feeds</h3>
 
 * You need to clean the cache of the browser you are using or your wordpress site. The widget is designed to cashe the feeds to provide a quicker more real time display as you tweet, therefore it will tell your browser to store and use the same data. If after clearing the cache from both your website and brower you still experience problems please contact us.
 
@@ -78,25 +85,37 @@ You can find a demo for this widget by visiting a live site online at <a href="h
 = 1.1 =
 Changed some of the css stucture so that the widget displays better on most themes. Also cleaned up some whitespace and made some other adjustments to insure fast load time.
 
-== 1.2 ==
+= 1.2 
 Updated some of the php to properly refresh the tweets more quickly. Was having a problem with tweets not updated and rendering for a long period of time once new tweets were posted on twitter website.
 
-== 1.3 ==
+= 1.3 =
 Had to change some of the programing to increase the refresh rate on each tweet. Also added some default CSS to allow
 the widget to inherit all the template styles that it was installed on.
 
-== 1.3.1 ==
-Had to change some of the programing to increase the refresh rate on each tweet. Also added some default CSS to allow
+= 1.3.1 =
+Had to change some of the programming to increase the refresh rate on each tweet. Also added some default CSS to allow
 the widget to inherit all the template styles that it was installed on.
 
-== 1.3.2 ==
+= 1.3.2 =
 Made some slight modifications to the twitter API to speed up refresh rate.
 
-== 1.3.3 ==
+= 1.3.3 =
 Cleaned up and made the style sheet more compatible with all themes for Wordpress. The widget has been given the method to use the the style sheet of the theme being used
 
-== 1.3.4 ==
+= 1.3.4 =
 Received an error on the last install version so we made the adjustments, fixed the issues and made sure all versions are working correctly.
+
+= 1.3.5 =
+Had some comments about the tweets not refreshing often enought. Cleaned up some of the code and added a few lines to ask the widget to refresh every 3 minutes.
+
+= 1.3.6 =
+Updated twitter API so that the chache refresh rate is every 1 min. Also changed up some of the css so that the module is more fluent with the theme being used.
+
+= 1.3.7 =
+Again i had some feedback that the cache was not refreshing the tweets quickly enough. Added some json to purge the tweets every 30 seconds. This should elemenate any delay issues.
+
+= 1.3.8 =
+Updated Twitter API. We were getting support tickets stating that the Tweets where disappearing all the time for short periods and then reappearing. So we update the API which should fix the issues, but please let us know if you experience any problems.
 
 
 == Credits ==

@@ -302,7 +302,8 @@ function ure_select_all(selected) {
     if (el.type !== 'checkbox') {
       continue;
     }
-    if (el.name === 'ure_caps_readable' || el.name === 'ure_show_deprecated_caps' || el.disabled ) {
+    if (el.name === 'ure_caps_readable' || el.name === 'ure_show_deprecated_caps' || el.disabled ||
+				el.name.substr(0, 8) === 'wp_role_')  {
       continue;
     }
     if (selected >= 0) {
