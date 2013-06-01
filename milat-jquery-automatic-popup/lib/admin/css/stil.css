@@ -1,0 +1,287 @@
+div.milat_menu {
+    clear: both;
+    color: #616161;
+    float: left;
+    position: relative;
+    width: 100%;
+	margin-bottom: 20px;
+}
+
+div.milat_menu div.milat_tabs_container {
+    height: 40px;
+    margin-bottom: -1px;
+    overflow: hidden;
+    position: relative;
+    width: 100% !important;
+    z-index: 100;
+}
+
+div.milat_menu ul.milat_tabs {
+    height: 40px;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    width: 10000px;
+}
+div.milat_menu ul.milat_tabs li {
+    float: left;
+}
+div.milat_menu ul.milat_tabs li a {
+    background: url("image/h_tab_bg.jpg") repeat-x scroll 0 bottom #FFFFFF;
+    border-bottom: 1px solid #D4D4D4;
+    border-right: 1px solid #D4D4D4;
+    border-top: 1px solid #D4D4D4;
+    color: #6A6A6A;
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    margin: 0;
+    outline: medium none;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+div.milat_menu ul.milat_tabs a:hover {
+    color: #333333;
+}
+div.milat_menu ul.milat_tabs li a.milat_firmilat_tab {
+    border-left: 1px solid #D4D4D4;
+}
+div.milat_menu ul.milat_tabs a.milat_tab_active {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom-color: #FFFFFF;
+    color: #1CA5EC;
+}
+div.milat_menu div.milat_view_container {
+    background-color: #FFFFFF;
+    border: 1px solid #D4D4D4;
+  /*  height: 277px; */
+    overflow: hidden;
+    padding: 20px 20px 23px;
+    position: relative;
+    z-index: 5;
+}
+div.milat_menu div.milat_view {
+    min-height: 248px;
+    overflow: hidden;
+    position: relative;
+}
+div.milat_menu div.milat_tab_view {
+	display:none;
+    width: 100%;
+}
+div.milat_menu div.milat_firmilat_tab_view {
+    display: block;
+}
+div.milat_menu div.milat_view h2 {
+    color: #454545;
+    font-size: 16px;
+    margin: 0 0 16px;
+    padding: 0;
+}
+div.milat_menu div.milat_view p {
+    margin: 14px 0 0;
+    padding: 0;
+}
+
+div.milat_yatay {
+    clear: both;
+    color: #616161;
+    float: left;
+    position: relative;
+	width: 100%;
+}
+
+
+div.milat_yatay div.milat_yatay_tabs_container {
+    border-top: 1px solid #D4D4D4;
+    float: left;
+
+    margin-right: -1px;
+    overflow: hidden;
+    position: relative;
+    width: 169px;
+    z-index: 100;
+}
+div.milat_yatay ul.milat_yatay_tabs {
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    width: 168px;
+}
+div.milat_yatay ul.milat_yatay_tabs li {
+    clear: both;
+    float: left;
+}
+div.milat_yatay ul.milat_yatay_tabs li a {
+    background: url("image/v_tab_bg.jpg") repeat-x scroll 0 0 #FFFFFF;
+    border-bottom: 1px solid #D4D4D4;
+    border-left: 1px solid #D4D4D4;
+    border-right: 1px solid #D4D4D4;
+    color: #5C5C5C;
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    height: 31px;
+    line-height: normal;
+    margin-top: -6px;
+    outline: medium none;
+    padding: 14px 0 14px 20px;
+    text-decoration: none;
+    width: 147px;
+}
+div.milat_yatay ul.milat_yatay_tabs li a span {
+    clear: both;
+    color: #838383;
+    display: block;
+    font-weight: 400;
+    padding-top: 3px;
+}
+div.milat_yatay ul.milat_yatay_tabs a:hover {
+    color: #333333;
+}
+div.milat_yatay ul.milat_yatay_tabs a.milat_yatay_tab_active {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #1CA5EC;
+    padding-right: 1px;
+    position: relative;
+    z-index: 10;
+}
+
+
+div.milat_yatay div.milat_yatay_view_container {
+    background-color: #FFFFFF;
+    border: 1px solid #D4D4D4;
+    height: 193px;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+    z-index: 5;
+}
+div.milat_yatay div.milat_yatay_view {	
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+div.milat_yatay div.milat_yatay_tab_view {
+	display:none;
+    width: 100%;
+}
+
+div.milat_yatay div.milat_yatay_first_tab_view {
+	display:block;
+}
+div.milat_yatay div.milat_yatay_view h2 {
+    color: #454545;
+    font-size: 16px;
+    margin: 0 0 16px;
+    padding: 0;
+}
+div.milat_yatay div.milat_yatay_view p {
+    margin: 14px 0 0;
+    padding: 0;
+}
+
+div.milat_yatay.align_right div.milat_yatay_tabs_container {
+    float: right;
+    margin-left: -1px;
+    margin-right: 0;
+}
+div.milat_yatay.align_right ul.milat_yatay_tabs li a {
+    border-right: 1px solid #D4D4D4;
+}
+div.milat_yatay.align_right ul.milat_yatay_tabs a.milat_yatay_tab_active {
+    border-left-color: #FFFFFF;
+    padding-right: 0;
+}
+.demo{
+	font-size:13px;
+}
+.normal{
+	font-size:13px;
+	color:black;
+}
+.kirmizi{
+	font-size:14px;
+	color:red;
+}
+#milat_yazi{
+	width:99.7%;
+}
+
+.slider {
+    border: 1px solid #333333;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 8px #000000 inset;
+    clear: right;
+    cursor: pointer;
+    float: left;
+    height: 9px;
+    margin-top: 10px;
+    position: relative;
+    width: 100px;
+}
+.progress {
+    background-color: #C5FF00;
+    display: none;
+    height: 9px;
+    opacity: 0.6;
+}
+.handle {
+    background: url("image/h30.png") repeat-x scroll 0 0 #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    box-shadow: 0 0 6px #000000;
+    cursor: move;
+    display: block;
+    height: 21px;
+    margin-top: 1px;
+    position: absolute;
+    top: -8px;
+    width: 8px;
+}
+
+#benimtags #ed_strong, #ed_reply_toolbar #ed_reply_strong {
+    font-weight: bold;
+}
+
+#editorcontainer, #benimtags {
+    border-collapse: separate;
+    border-radius: 6px 6px 0 0;
+    border-style: solid;
+    border-width: 1px;
+	border-color: #ddd;
+}
+#benimtags {
+    background-image: url("image/ed-bg.gif");
+    background-position: left top;
+    background-repeat: repeat-x;
+    border-bottom-width: 3px;
+    margin-bottom: -3px;
+    padding: 0;
+}
+#benimtags #ed_toolbar {
+    padding: 2px 4px 0;
+}
+#ed_reply_toolbar input {
+    margin: 1px 2px 1px 1px;
+}
+#benimtags #ed_link, #ed_reply_toolbar #ed_reply_link {
+    text-decoration: underline;
+}
+#benimtags #ed_del, #ed_reply_toolbar #ed_reply_del {
+    text-decoration: line-through;
+}
+#benimtags #ed_em, #ed_reply_toolbar #ed_reply_em {
+    font-style: italic;
+}
+div.guncel{
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+	background-color: #FFFFE0;
+    border-color: #E6DB55;
+
+}

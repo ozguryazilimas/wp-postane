@@ -1,0 +1,33 @@
+#karartma {
+    background-color: #000000;
+    display: none;
+    left: 0;
+    position: fixed;
+    top: 0;
+    z-index: 99998 !important;
+}
+#kutu .window {
+    border: 20px solid #000;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 20px #000000;
+    display: none;
+    position: fixed;
+    z-index: 99999 !important;
+}
+
+#kutu #pencere {
+    background-color: #FFFFFF;
+}
+#kutu .close {
+    background: url("button_grey_close.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 50px;
+	width: 50px;
+    position: absolute;
+    right: -39px;
+    top: -39px;
+    z-index: 99999 ;
+}
+#baslik { background-color:#dddddd;  margin: -5px -5px 0px -5px; border-bottom: 1px solid #dddddd; border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px; border-top-right-radius: 5px; -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px; }
+#baslik h2 { color: #444; font-size: 2em; font-weight: 700; margin-bottom: 3px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5); text-align: center;}
+

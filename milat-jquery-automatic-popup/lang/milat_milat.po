@@ -1,0 +1,221 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Milat jQuery Automatic Popup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-12 17:43+0200\n"
+"PO-Revision-Date: 2012-05-12 18:36+0200\n"
+"Last-Translator: MiLaT <by_milat@hotmail.com>\n"
+"Language-Team: MiLaT <by_milat@hotmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin.options.php:79
+msgid "Updated"
+msgstr ""
+
+#: milat-ayar.php:24
+msgid "jQuery Popup Settings"
+msgstr ""
+
+#: milat-ayar.php:44
+msgid "Html & Text"
+msgstr ""
+
+#: milat-ayar.php:45
+msgid "Image"
+msgstr ""
+
+#: milat-ayar.php:46
+msgid "Video"
+msgstr ""
+
+#: milat-ayar.php:63
+#: milat-ayar.php:73
+#: milat-ayar.php:96
+#: milat-ayar.php:109
+#: milat-ayar.php:167
+#: milat-ayar.php:197
+#: milat-ayar.php:228
+#: milat-ayar.php:257
+#: milat-ayar.php:301
+#: milat-ayar.php:313
+#: milat-ayar.php:325
+#: milat-ayar.php:341
+#: milat-ayar.php:352
+#: milat-ayar.php:362
+#: milat-ayar.php:373
+#: milat-ayar.php:382
+#: milat-ayar.php:391
+msgid "Click for Help!"
+msgstr ""
+
+#: milat-ayar.php:64
+msgid "Title"
+msgstr ""
+
+#: milat-ayar.php:65
+msgid "Optional"
+msgstr ""
+
+#: milat-ayar.php:73
+msgid "Text"
+msgstr ""
+
+#: milat-ayar.php:74
+msgid "Edit the visual or HTML. (Required)"
+msgstr ""
+
+#: milat-ayar.php:96
+msgid "Upload Image"
+msgstr ""
+
+#: milat-ayar.php:97
+msgid "To any size file you have opened the homepage"
+msgstr ""
+
+#: milat-ayar.php:103
+msgid "Enter an URL or upload an image for the banner."
+msgstr ""
+
+#: milat-ayar.php:109
+msgid "Image go to url"
+msgstr ""
+
+#: milat-ayar.php:110
+msgid "Image clicked goes to the address you want to *Optional"
+msgstr ""
+
+#: milat-ayar.php:154
+msgid "YOUTUBE VIDEOS OPENS A POPUP"
+msgstr ""
+
+#: milat-ayar.php:168
+#: milat-ayar.php:198
+#: milat-ayar.php:229
+msgid "Please only video id"
+msgstr ""
+
+#: milat-ayar.php:183
+msgid "DAILYMOTION VIDEOS OPENS A POPUP"
+msgstr ""
+
+#: milat-ayar.php:215
+msgid "VIMEO VIDEOS OPENS A POPUP"
+msgstr ""
+
+#: milat-ayar.php:244
+msgid "SWF FILES IN THE PUBLICATION EMBED CODE"
+msgstr ""
+
+#: milat-ayar.php:258
+msgid "Please .swf file url"
+msgstr ""
+
+#: milat-ayar.php:295
+msgid "General Settings"
+msgstr ""
+
+#: milat-ayar.php:301
+msgid "Homepage View ?"
+msgstr ""
+
+#: milat-ayar.php:302
+msgid "If you select No Popup will not open the Homepage"
+msgstr ""
+
+#: milat-ayar.php:305
+#: milat-ayar.php:317
+msgid "Yes"
+msgstr ""
+
+#: milat-ayar.php:307
+#: milat-ayar.php:319
+msgid "No"
+msgstr ""
+
+#: milat-ayar.php:313
+msgid "Get all the pages to Active ?"
+msgstr ""
+
+#: milat-ayar.php:314
+msgid "If they yes, Writings, and other Pages Display"
+msgstr ""
+
+#: milat-ayar.php:325
+msgid "Button Style"
+msgstr ""
+
+#: milat-ayar.php:326
+msgid "buton aklama"
+msgstr ""
+
+#: milat-ayar.php:341
+msgid "Cookie Storage Time"
+msgstr ""
+
+#: milat-ayar.php:342
+msgid "How many hours open to visitors Popup."
+msgstr ""
+
+#: milat-ayar.php:346
+msgid "Hours of"
+msgstr ""
+
+#: milat-ayar.php:346
+msgid "0 olursa pasif olacak"
+msgstr ""
+
+#: milat-ayar.php:352
+msgid "Popup Weight"
+msgstr ""
+
+#: milat-ayar.php:353
+msgid "Popup Weight 200px to 900px"
+msgstr ""
+
+#: milat-ayar.php:362
+msgid "Popup Height"
+msgstr ""
+
+#: milat-ayar.php:363
+msgid "Popup Height 100px to 500px"
+msgstr ""
+
+#: milat-ayar.php:373
+msgid "Popup background color"
+msgstr ""
+
+#: milat-ayar.php:374
+msgid "You can change the background color of popup"
+msgstr ""
+
+#: milat-ayar.php:382
+msgid "Border Color"
+msgstr ""
+
+#: milat-ayar.php:383
+msgid "Border Color optional choose"
+msgstr ""
+
+#: milat-ayar.php:391
+msgid "Border Width"
+msgstr ""
+
+#: milat-ayar.php:392
+msgid "Border width 1px to 20px"
+msgstr ""
+
+#: milat-ayar.php:401
+msgid "Save"
+msgstr ""
+
+#: milat-ayar.php:401
+msgid "Live Preview"
+msgstr ""
+

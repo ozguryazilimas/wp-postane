@@ -1,0 +1,244 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Milat jQuery Automatic Popup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-22 17:26+0200\n"
+"PO-Revision-Date: 2012-07-22 17:28+0200\n"
+"Last-Translator: MiLaT <by_milat@hotmail.com>\n"
+"Language-Team: MiLaT <by_milat@hotmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: lib/includes/admin.options.php:80
+msgid "Updated"
+msgstr "Ayarlar Güncellendi"
+
+#: lib/includes/milat-ayar.php:24
+msgid "jQuery Popup Settings"
+msgstr "jQuery Popup Ayarları"
+
+#: lib/includes/milat-ayar.php:44
+msgid "Html & Text"
+msgstr "Html & Yazı"
+
+#: lib/includes/milat-ayar.php:45
+msgid "Image"
+msgstr "Resim"
+
+#: lib/includes/milat-ayar.php:46
+msgid "Video"
+msgstr "Video"
+
+#: lib/includes/milat-ayar.php:63
+#: lib/includes/milat-ayar.php:73
+#: lib/includes/milat-ayar.php:96
+#: lib/includes/milat-ayar.php:109
+#: lib/includes/milat-ayar.php:167
+#: lib/includes/milat-ayar.php:197
+#: lib/includes/milat-ayar.php:228
+#: lib/includes/milat-ayar.php:257
+#: lib/includes/milat-ayar.php:301
+#: lib/includes/milat-ayar.php:313
+#: lib/includes/milat-ayar.php:325
+#: lib/includes/milat-ayar.php:340
+#: lib/includes/milat-ayar.php:350
+#: lib/includes/milat-ayar.php:362
+#: lib/includes/milat-ayar.php:372
+#: lib/includes/milat-ayar.php:383
+#: lib/includes/milat-ayar.php:392
+#: lib/includes/milat-ayar.php:401
+msgid "Click for Help!"
+msgstr "Yardım İçin Tıklayın!"
+
+#: lib/includes/milat-ayar.php:64
+msgid "Title"
+msgstr "Başlık"
+
+#: lib/includes/milat-ayar.php:65
+msgid "Optional"
+msgstr "Başlık Girmek Zorunda Değilsiniz"
+
+#: lib/includes/milat-ayar.php:73
+msgid "Text"
+msgstr "Yazı"
+
+#: lib/includes/milat-ayar.php:74
+msgid "Edit the visual or HTML. (Required)"
+msgstr "Görsel veya Html Olarak Düzenleyebilirsiniz.Girilmesi Zorunludur"
+
+#: lib/includes/milat-ayar.php:96
+msgid "Upload Image"
+msgstr "Resim Yükle"
+
+#: lib/includes/milat-ayar.php:97
+msgid "To any size file you have opened the homepage"
+msgstr "Yükleyeceğiniz resim anasayfada istediğiniz ölçüde açılır"
+
+#: lib/includes/milat-ayar.php:103
+msgid "Enter an URL or upload an image for the banner."
+msgstr "İster Resim yükleyin ister resim urlsi girin"
+
+#: lib/includes/milat-ayar.php:109
+msgid "Image go to url"
+msgstr "Resim Link"
+
+#: lib/includes/milat-ayar.php:110
+msgid "Image clicked goes to the address you want to *Optional"
+msgstr "Resime Tıkladığınızda istediğiniz adrese gider *Zorunlu Değil"
+
+#: lib/includes/milat-ayar.php:154
+msgid "YOUTUBE VIDEOS OPENS A POPUP"
+msgstr "YOUTUBE VİDEOLARINIZI POPUP OLARAK AÇABİLİRSİNİZ"
+
+#: lib/includes/milat-ayar.php:168
+#: lib/includes/milat-ayar.php:198
+#: lib/includes/milat-ayar.php:229
+msgid "Please only video id"
+msgstr "Demo kısmıda görüldüğü gibi sadece video id'i rakamsal olarak yazmalısınız"
+
+#: lib/includes/milat-ayar.php:183
+msgid "DAILYMOTION VIDEOS OPENS A POPUP"
+msgstr "DAILYMOTION VİDEOLARINIZI POPUP OLARAK AÇABİLİRSİNİZ"
+
+#: lib/includes/milat-ayar.php:215
+msgid "VIMEO VIDEOS OPENS A POPUP"
+msgstr "VIMEO VİDEOLARINIZI POPUP OLARAK AÇABİLİRSİNİZ"
+
+#: lib/includes/milat-ayar.php:244
+msgid "SWF FILES IN THE PUBLICATION EMBED CODE"
+msgstr "SWF DOSYALARINIZI EMBED KODU İÇERİSİNDE YAYINLAR"
+
+#: lib/includes/milat-ayar.php:258
+msgid "Please .swf file url"
+msgstr "Swf adresini tam url vererek giriniz."
+
+#: lib/includes/milat-ayar.php:295
+msgid "General Settings"
+msgstr "Genel Ayarlar"
+
+#: lib/includes/milat-ayar.php:301
+msgid "Homepage View ?"
+msgstr "Anasayfada Görünsün Mü ?"
+
+#: lib/includes/milat-ayar.php:302
+msgid "If you select No Popup will not open the Homepage"
+msgstr "Hayırı Seçerseniz Popup AnaSayfada AÇILMAZ"
+
+#: lib/includes/milat-ayar.php:305
+#: lib/includes/milat-ayar.php:317
+msgid "Yes"
+msgstr "Evet"
+
+#: lib/includes/milat-ayar.php:307
+#: lib/includes/milat-ayar.php:319
+msgid "No"
+msgstr "Hayır"
+
+#: lib/includes/milat-ayar.php:313
+msgid "Get all the pages to Active ?"
+msgstr "Bütün Sayfalarda Aktif Olsun mu ?"
+
+#: lib/includes/milat-ayar.php:314
+msgid "If they yes, Writings, and other Pages Display"
+msgstr "Evet Denildiği Taktirde Yazılar ve Diğer Sabit Sayfalarda Gösterim Yapılır"
+
+#: lib/includes/milat-ayar.php:325
+msgid "Button Style"
+msgstr "Buton Stili"
+
+#: lib/includes/milat-ayar.php:326
+msgid "Click on whichever you want to get the shutdown button"
+msgstr "Kapatma butonu hangisi olsun istiyorsanız üstüne tıklamanız yeterli"
+
+#: lib/includes/milat-ayar.php:340
+msgid "Close Type"
+msgstr ""
+
+#: lib/includes/milat-ayar.php:341
+msgid "aciklahuseyin."
+msgstr ""
+
+#: lib/includes/milat-ayar.php:344
+msgid "esc close"
+msgstr ""
+
+#: lib/includes/milat-ayar.php:345
+msgid "arka plan"
+msgstr ""
+
+#: lib/includes/milat-ayar.php:350
+msgid "Cookie Storage Time"
+msgstr "Çerez Saklama Süresi"
+
+#: lib/includes/milat-ayar.php:351
+msgid "How many hours open to visitors Popup."
+msgstr "Popupun ziyaretçilere kaç saatte bir açılması gerektiğini belirtir."
+
+#: lib/includes/milat-ayar.php:355
+msgid "Hours of"
+msgstr "Saat olarak"
+
+#: lib/includes/milat-ayar.php:355
+msgid "Always want to open (0)\n"
+msgstr "her zaman açılması için 0 yapmalısınız"
+
+#: lib/includes/milat-ayar.php:362
+msgid "Popup Weight"
+msgstr "Genişlik"
+
+#: lib/includes/milat-ayar.php:363
+#, fuzzy
+msgid "Popup Weight 200px to 900px."
+msgstr "Popup Genişliği 200 ile 900 arasında"
+
+#: lib/includes/milat-ayar.php:372
+msgid "Popup Height"
+msgstr "Yükseklik"
+
+#: lib/includes/milat-ayar.php:373
+msgid "Popup Height 100px to 500px"
+msgstr "Popup Yüksekliğii 100 ile 500 arasında"
+
+#: lib/includes/milat-ayar.php:383
+msgid "Popup background color"
+msgstr "ArkaPlan Rengi"
+
+#: lib/includes/milat-ayar.php:384
+msgid "You can change the background color of popup"
+msgstr "Popup Arka plan rengini istediğiniz gibi değiştirebilirsiniz"
+
+#: lib/includes/milat-ayar.php:392
+msgid "Border Color"
+msgstr "Kenarlık Rengi"
+
+#: lib/includes/milat-ayar.php:393
+msgid "Border Color optional choose"
+msgstr "Kenarlık Rengi istediğiniz şekilde değişebilirsiniz"
+
+#: lib/includes/milat-ayar.php:401
+msgid "Border Width"
+msgstr "Kenarlık genişliği"
+
+#: lib/includes/milat-ayar.php:402
+msgid "Border width 1px to 20px"
+msgstr "Kenarlık Genişliği 1 ile 20 arasında olmalı"
+
+#: lib/includes/milat-ayar.php:411
+msgid "Save"
+msgstr "Değişiklikleri Kaydet"
+
+#: lib/includes/milat-ayar.php:411
+msgid "Live Preview"
+msgstr "Önizleme"
+
+#~ msgid "buton aklama"
+#~ msgstr "Kapatma butonu hangisi olsun istiyorsanız üstüne tıklamanız yeterli"
+
+#~ msgid "0 olursa pasif olacak"
+#~ msgstr "\"0\" yaparsanız popup sürekli açılacaktır"
