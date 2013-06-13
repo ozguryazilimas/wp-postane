@@ -1,0 +1,348 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: daves-wordpress-live-search\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-21 15:28-0500\n"
+"PO-Revision-Date: 2013-06-05 21:28-0500\n"
+"Last-Translator: Dave Ross <dave@davidmichaelross.com>\n"
+"Language-Team: Catalan\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.net\n"
+"Language: ca_ES\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../daves-wordpress-live-search.php:48
+msgid "Dave's WordPress Live Search requires PHP 5.0 or higher"
+msgstr "Dave's WordPress Live Search requires PHP 5.0 or higher"
+
+#: ../DavesWordPressLiveSearch.php:117
+msgid "View more results"
+msgstr "View more results"
+
+#: ../DavesWordPressLiveSearch.php:118
+msgid "Dave's WordPress Live Search requires jQuery 1.2.6 or higher. WordPress ships with current jQuery versions. But if you are seeing this message, it's likely that another plugin is including an earlier version."
+msgstr "Dave's WordPress Live Search requires jQuery 1.2.6 or higher. WordPress ships with current jQuery versions. But if you are seeing this message, it's likely that another plugin is including an earlier version."
+
+#: ../DavesWordPressLiveSearch.php:148
+msgid "Live Search"
+msgstr "Live Search"
+
+#: ../DavesWordPressLiveSearch.php:200
+#: ../DavesWordPressLiveSearch.php:241
+#: ../DavesWordPressLiveSearch.php:289
+msgid "Options saved."
+msgstr "Opcions desades"
+
+#: ../DavesWordPressLiveSearch.php:276
+msgid "Cache cleared."
+msgstr "Memòria cau esborrada."
+
+#: ../DavesWordPressLiveSearch.php:359
+#, php-format
+msgid "The %sDave's WordPress Live Search%s plugin is configured to use a theme-specific CSS file, but the current theme does not contain a daves-wordpress-live-search.css file."
+msgstr "The %sDave's WordPress Live Search%s plugin is configured to use a theme-specific CSS file, but the current theme does not contain a daves-wordpress-live-search.css file."
+
+#: ../admin/admin_footer.tpl:3
+#, c-format
+msgid "Do you find this plugin useful? Consider a donation to %sCat Guardians%s, a wonderful no-kill shelter where I volunteer."
+msgstr "Do you find this plugin useful? Consider a donation to %sCat Guardians%s, a wonderful no-kill shelter where I volunteer."
+
+#: ../admin/admin_footer.tpl:4
+#, c-format
+msgid "Please help make Dave's WordPress Live Search available to people all over the world. Visit %sour translation tool%s and help translate. Thanks Crowdin for hosting this project's translation efforts!"
+msgstr "Please help make Dave's WordPress Live Search available to people all over the world. Visit %sour translation tool%s and help translate. Thanks Crowdin for hosting this project's translation efforts!"
+
+#: ../admin/admin_header.tpl:5
+msgid "Dave's WordPress Live Search Options"
+msgstr "Dave's WordPress Live Search Opcions"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:3
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:3
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:3
+#: ../admin/daves-wordpress-live-search-admin.tpl:3
+msgid "Settings"
+msgstr "Configuració"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:4
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:4
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:4
+#: ../admin/daves-wordpress-live-search-admin.tpl:4
+msgid "Appearance"
+msgstr "Appearance"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:5
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:5
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:5
+#: ../admin/daves-wordpress-live-search-admin.tpl:5
+msgid "Advanced"
+msgstr "Avançat"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:6
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:6
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:6
+#: ../admin/daves-wordpress-live-search-admin.tpl:6
+msgid "Debug"
+msgstr "Debug"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:19
+msgid "Exceptions"
+msgstr "Exceptions"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:24
+#, c-format
+msgid "Enter the %s of pages which should not have live searching, one per line. The * wildcard can be used at the start or end of a line. For example: %s"
+msgstr "Enter the %s of pages which should not have live searching, one per line. The * wildcard can be used at the start or end of a line. For example: %s"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:26
+msgid "NOTE"
+msgstr "NOTE"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:26
+msgid "These pages will still be returned in search results. This only disables the Live Search feature for the search box on these pages."
+msgstr "These pages will still be returned in search results. This only disables the Live Search feature for the search box on these pages."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:32
+msgid "Search Results box X offset"
+msgstr "Search Results box X offset"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:35
+msgid "Use this setting to move the search results box left or right to align exactly with your theme's search field. Value is in pixels. Negative values move the box to the left, positive values move it to the right."
+msgstr "Use this setting to move the search results box left or right to align exactly with your theme's search field. Value is in pixels. Negative values move the box to the left, positive values move it to the right."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:42
+msgid "Search Results box Y offset"
+msgstr "Search Results box Y offset"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:45
+msgid "Use this setting to move the search results box up or down to align exactly with your theme's search field. Value is in pixels. Negative values move the box up, positive values move it down."
+msgstr "Use this setting to move the search results box up or down to align exactly with your theme's search field. Value is in pixels. Negative values move the box up, positive values move it down."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:52
+msgid "Cache Lifetime"
+msgstr "Cache Lifetime"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:54
+msgid "Enter &quot;0&quot; to disable caching"
+msgstr "Enter &quot;0&quot; to disable caching"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:59
+msgid "Enable content filter"
+msgstr "Enable content filter"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:61
+msgid "Allow other plugins to filter the content before looking for a thumbnail. This will affect Live Search performance, so only enable this if you really need it."
+msgstr "Allow other plugins to filter the content before looking for a thumbnail. This will affect Live Search performance, so only enable this if you really need it."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:66
+msgid "Enable debugger"
+msgstr "Enable debugger"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:68
+msgid "Enable the Debug tab."
+msgstr "Enable the Debug tab."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:73
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:75
+msgid "Clear Cache"
+msgstr "Clear Cache"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:75
+msgid "If you change settings or post/edit content, your cache will be cleared automatically. Use this button to clear the cache manually if needed."
+msgstr "If you change settings or post/edit content, your cache will be cleared automatically. Use this button to clear the cache manually if needed."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:20
+msgid "Display Metadata"
+msgstr "Display Metadata"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:24
+msgid "Display author & date for every search result"
+msgstr "Display author & date for every search result"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:30
+msgid "Display Post Thumbnail"
+msgstr "Display Post Thumbnail"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:34
+msgid "Display thumbnail images for every search result with at least one image"
+msgstr "Display thumbnail images for every search result with at least one image"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:40
+msgid "Display Post Excerpt"
+msgstr "Display Post Excerpt"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:44
+#, c-format
+msgid "Display an excerpt for every search result. If the post doesn't have one, use the first %s characters."
+msgstr "Display an excerpt for every search result. If the post doesn't have one, use the first %s characters."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:50
+msgid "Display &quot;View more results&quot; link"
+msgstr "Display &quot;View more results&quot; link"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:54
+msgid "Display the &quot;View more results&quot; link after the search results."
+msgstr "Display the &quot;View more results&quot; link after the search results."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:60
+msgid "Styles"
+msgstr "Styles"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:66
+msgid "Default Gray"
+msgstr "Default Gray"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:66
+msgid "Default style in gray."
+msgstr "Default style in gray."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:68
+msgid "Default Red"
+msgstr "Default Red"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:68
+msgid "Default style in red"
+msgstr "Default style in red"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:70
+msgid "Default Blue"
+msgstr "Default Blue"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:70
+msgid "Default style in blue"
+msgstr "Default style in blue"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:75
+msgid "Custom"
+msgstr "Custom"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:75
+msgid "Customize the search results display here"
+msgstr "Customize the search results display here"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:80
+msgid "Title"
+msgstr "Title"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:82
+msgid "Excerpt"
+msgstr "Excerpt"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:84
+msgid "Background"
+msgstr "Background"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:86
+msgid "Hover Background"
+msgstr "Hover Background"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:88
+msgid "Divider"
+msgstr "Divider"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:90
+msgid "Footer Background"
+msgstr "Footer Background"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:92
+msgid "Footer Text"
+msgstr "Footer Text"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:94
+msgid "Shadow"
+msgstr "Shadow"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:106
+msgid "Theme-specific"
+msgstr "Theme-specific"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:106
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:108
+msgid "For advanced users"
+msgstr "For advanced users"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:106
+msgid "Theme must include a CSS file named daves-wordpress-live-search.css. If your theme does not have one, copy daves-wordpress-live-search_default_gray.css from this plugin's directory into your theme's directory and modify as desired."
+msgstr "Theme must include a CSS file named daves-wordpress-live-search.css. If your theme does not have one, copy daves-wordpress-live-search_default_gray.css from this plugin's directory into your theme's directory and modify as desired."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:108
+msgid "Theme-specific (theme's own CSS file)"
+msgstr "Theme-specific (theme's own CSS file)"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:108
+msgid "Use the styles contained within your Theme's stylesheet. Don't include a separate stylesheet for Live Search."
+msgstr "Use the styles contained within your Theme's stylesheet. Don't include a separate stylesheet for Live Search."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:114
+#: ../admin/daves-wordpress-live-search-admin.tpl:70
+msgid "Save Changes"
+msgstr "Save Changes"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:20
+msgid "Maximum Results to Display"
+msgstr "Maximum Results to Display"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:22
+msgid "Enter &quot;0&quot; to display all matching results"
+msgstr "Enter &quot;0&quot; to display all matching results"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:26
+msgid "Minimum characters before searching"
+msgstr "Minimum characters before searching"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:30
+msgid "Search right away"
+msgstr "Search right away"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:31
+msgid "Wait for two characters"
+msgstr "Wait for two characters"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:32
+msgid "Wait for three characters"
+msgstr "Wait for three characters"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:33
+msgid "Wait for four characters"
+msgstr "Wait for four characters"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:40
+msgid "Results Direction"
+msgstr "Results Direction"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:42
+msgid "Down"
+msgstr "Down"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:44
+msgid "Up"
+msgstr "Up"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:44
+msgid "When search results are displayed, in which direction should the results box extend from the search box?"
+msgstr "When search results are displayed, in which direction should the results box extend from the search box?"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:50
+msgid "WP E-Commerce"
+msgstr "WP E-Commerce"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:56
+#, c-format
+msgid "When used with the %sWP E-Commerce%s plugin, Dave&apos;s WordPress Live Search can search your product catalog instead of posts & pages."
+msgstr "When used with the %sWP E-Commerce%s plugin, Dave&apos;s WordPress Live Search can search your product catalog instead of posts & pages."
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:58
+msgid "Search posts &amp; pages"
+msgstr "Search posts &amp; pages"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:59
+msgid "Search products"
+msgstr "Search products"
+

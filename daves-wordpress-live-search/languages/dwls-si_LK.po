@@ -1,0 +1,348 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: daves-wordpress-live-search\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-21 15:28-0500\n"
+"PO-Revision-Date: 2013-06-05 21:41-0500\n"
+"Last-Translator: Dave Ross <dave@davidmichaelross.com>\n"
+"Language-Team: Sinhala\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.net\n"
+"Language: si_LK\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../daves-wordpress-live-search.php:48
+msgid "Dave's WordPress Live Search requires PHP 5.0 or higher"
+msgstr "ඩේව්ගේ වර්ඩ්ප්‍රෙස් සජීවී සෙවුම සඳහා PHP 5.0 හෝ ඉහළ වෙළුමක් අවැසියි."
+
+#: ../DavesWordPressLiveSearch.php:117
+msgid "View more results"
+msgstr "තවත් තොරතුරු පෙන්වන්න"
+
+#: ../DavesWordPressLiveSearch.php:118
+msgid "Dave's WordPress Live Search requires jQuery 1.2.6 or higher. WordPress ships with current jQuery versions. But if you are seeing this message, it's likely that another plugin is including an earlier version."
+msgstr "ඩේව්ගේ වර්ඩ්ප්‍රෙස් සජීවී සෙවුමට jQuery 1.2.6 හෝ ඉහළ වෙළුමක් අවැසියි. වර්ඩ්ප්‍රෙස් සමග නවතම  jQuery භාවිතා වුවත්, ඔබ මෙය දකින්නේ වෙනත් ප්ලගීනයක් සතුව පැරැණි වෙළුමක් ඇති නිසා විය හැක."
+
+#: ../DavesWordPressLiveSearch.php:148
+msgid "Live Search"
+msgstr "සජීවී සෙවුම"
+
+#: ../DavesWordPressLiveSearch.php:200
+#: ../DavesWordPressLiveSearch.php:241
+#: ../DavesWordPressLiveSearch.php:289
+msgid "Options saved."
+msgstr "වෙනස්කම් සුරැකිණි."
+
+#: ../DavesWordPressLiveSearch.php:276
+msgid "Cache cleared."
+msgstr "කෑෂය මකාදැමිණි."
+
+#: ../DavesWordPressLiveSearch.php:359
+#, php-format
+msgid "The %sDave's WordPress Live Search%s plugin is configured to use a theme-specific CSS file, but the current theme does not contain a daves-wordpress-live-search.css file."
+msgstr "%sඩේව්ගේ සජීවී සෙවුම%s තේමාමය CSS ගොනුවක් සඳහා සකසා ඇතිමුත්, ඔබේ දැනට ඇති තේමාවේ daves-wordpress-live-search.css නම් ගොනුව අන්තර්ගත නැත."
+
+#: ../admin/admin_footer.tpl:3
+#, c-format
+msgid "Do you find this plugin useful? Consider a donation to %sCat Guardians%s, a wonderful no-kill shelter where I volunteer."
+msgstr "මෙම ප්ලගීනය හොඳයැයි ඔබ සිතයි නම්, මා දායකත්වය දරන %sCat Guardians%s, වෙත පරිත්‍යාගයක් සිදුකරන්න."
+
+#: ../admin/admin_footer.tpl:4
+#, c-format
+msgid "Please help make Dave's WordPress Live Search available to people all over the world. Visit %sour translation tool%s and help translate. Thanks Crowdin for hosting this project's translation efforts!"
+msgstr "මෙම ප්ලගීනය ලොවෙහි පතුරුවන්න. %sඅපගේ පරිවර්තන මෙවලම%s වෙත පිවිස සහාය වන්න. එය ස්ථාපනය කරගැනුම පිළිබඳ Crowdin වෙත ස්තූතියි!"
+
+#: ../admin/admin_header.tpl:5
+msgid "Dave's WordPress Live Search Options"
+msgstr "ඩේව්ගේ වර්ඩ්ප්‍රෙස් සජීවී සෙවුම් අභිරුචි"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:3
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:3
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:3
+#: ../admin/daves-wordpress-live-search-admin.tpl:3
+msgid "Settings"
+msgstr "සැකැසුම්"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:4
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:4
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:4
+#: ../admin/daves-wordpress-live-search-admin.tpl:4
+msgid "Appearance"
+msgstr "පෙනුම"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:5
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:5
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:5
+#: ../admin/daves-wordpress-live-search-admin.tpl:5
+msgid "Advanced"
+msgstr "වැඩිමනත්"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:6
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:6
+#: ../admin/daves-wordpress-live-search-admin-debug.tpl:6
+#: ../admin/daves-wordpress-live-search-admin.tpl:6
+msgid "Debug"
+msgstr "දෝෂහරණය"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:19
+msgid "Exceptions"
+msgstr "ව්‍යහිචාර"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:24
+#, c-format
+msgid "Enter the %s of pages which should not have live searching, one per line. The * wildcard can be used at the start or end of a line. For example: %s"
+msgstr "සෙවුමේ ඇතුලත් නොවිය යුතු %s පිටු පෙළන් පෙළ ඇතුලත් කරන්න. පෙළක ඇරැඹුමේ හෝ අවසන * යෙදිය හැක. උදා: %s"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:26
+msgid "NOTE"
+msgstr "සටහන"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:26
+msgid "These pages will still be returned in search results. This only disables the Live Search feature for the search box on these pages."
+msgstr "මෙම පිටු තවමත් සෙවුමේ අන්තර්ගත වනු ඇත. මෙය එම පිටුවලදී සජීවී සෙවුම අක්‍රීය කැරැලනු ඇත."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:32
+msgid "Search Results box X offset"
+msgstr "සෙවුම් ප්‍රතිඵල කොටුවේ X අනුලම්බය"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:35
+msgid "Use this setting to move the search results box left or right to align exactly with your theme's search field. Value is in pixels. Negative values move the box to the left, positive values move it to the right."
+msgstr "තේමානුකූලව සෙවුම ස්ථානගත කිරීමට මෙය භාවිතා කරන්න. පික්සල් වලින් අගයන් ඇතුළු කරන්න. ඍණ ලකුණු මගින් ප්‍රතිවිරුඬ පැති සලකුණු වේ."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:42
+msgid "Search Results box Y offset"
+msgstr "සෙවුම් ප්‍රතිඵල කොටුවේ X අනුලම්බය"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:45
+msgid "Use this setting to move the search results box up or down to align exactly with your theme's search field. Value is in pixels. Negative values move the box up, positive values move it down."
+msgstr "තේමානුකූලව සෙවුම ස්ථානගත කිරීමට මෙය භාවිතා කරන්න. පික්සල් වලින් අගයන් ඇතුළු කරන්න. ඍණ ලකුණු මගින් ප්‍රතිවිරුඬ පැති සලකුණු වේ."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:52
+msgid "Cache Lifetime"
+msgstr "කෑෂයේ කාලප්‍රමාණය"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:54
+msgid "Enter &quot;0&quot; to disable caching"
+msgstr "කෑෂය අවලංගු කිරීමට &quot;0&quot; ඇතුලත් කරන්න."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:59
+msgid "Enable content filter"
+msgstr "අන්තර්ගත පෙරණය සක්‍රීය කරන්න."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:61
+msgid "Allow other plugins to filter the content before looking for a thumbnail. This will affect Live Search performance, so only enable this if you really need it."
+msgstr "මහපටැඟිලිරූප භාවිතයට ඉඩදීමෙන් කාර්යඵලයේ විචල්‍යතා ඇතිවිය හැකිමුත් ඔබට එය අවශ්‍යම නම් සක්‍රීය කරන්න."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:66
+msgid "Enable debugger"
+msgstr "දෝෂහරණය සක්‍රීය කරන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:68
+msgid "Enable the Debug tab."
+msgstr "දෝෂහරණ ටැබය සක්‍රීය කරන්න."
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:73
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:75
+msgid "Clear Cache"
+msgstr "කෑෂය මකාලන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-advanced.tpl:75
+msgid "If you change settings or post/edit content, your cache will be cleared automatically. Use this button to clear the cache manually if needed."
+msgstr "ඔබ පිටු/සංස්කරණ අන්තර්ගත හෝ සැකසුම් වෙනස් කළහොත් කෑෂය ස‍්වයංක්‍රීයවම මකාලනු ඇත.මෙම බොත්තමින් හස්තීයව කෑෂ මකාලුම කළ හැක."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:20
+msgid "Display Metadata"
+msgstr "මෙටාදත්ත පෙන්වන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:24
+msgid "Display author & date for every search result"
+msgstr "කතෘ හා දිනය සෑම ලිපියකම පෙන්වන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:30
+msgid "Display Post Thumbnail"
+msgstr "ලිපියේ මහපටැඟිලිරුව පෙන්වන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:34
+msgid "Display thumbnail images for every search result with at least one image"
+msgstr "සෑම ප්‍රතිඵලයක් සඳහා අවමයෙන් එක් මහපටැඟිලිරුවක්වත් පෙන්වන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:40
+msgid "Display Post Excerpt"
+msgstr "ලිපිදත්ත පෙන්වන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:44
+#, c-format
+msgid "Display an excerpt for every search result. If the post doesn't have one, use the first %s characters."
+msgstr "ලිපි තොරතුරු සෑම ප්‍රතිඵලයකම පෙන්වන්න. නැතහොත් %s අකුරු ගණන පෙන්වාලන්න."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:50
+msgid "Display &quot;View more results&quot; link"
+msgstr "&quot;තවත් ප්‍රතිඵල පෙන්වන්න&quot; සබැඳුම පෙන්වන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:54
+msgid "Display the &quot;View more results&quot; link after the search results."
+msgstr "&quot;තවත් ප්‍රතිඵල පෙන්වන්න&quot; සබැඳුම ප්‍රතිඵලාග්‍රයේ පෙන්වන්න."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:60
+msgid "Styles"
+msgstr "විලාස"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:66
+msgid "Default Gray"
+msgstr "මූලික අළු"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:66
+msgid "Default style in gray."
+msgstr "මූලික විලාසය අළු පැහැයයි."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:68
+msgid "Default Red"
+msgstr "මූලික රතු"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:68
+msgid "Default style in red"
+msgstr "මූලික විලාසය රතු පැහැයයි"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:70
+msgid "Default Blue"
+msgstr "මූලික නිල්"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:70
+msgid "Default style in blue"
+msgstr "මූලික විලාසය නිල් පැහැයයි"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:75
+msgid "Custom"
+msgstr "සිතැඟි"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:75
+msgid "Customize the search results display here"
+msgstr "සෙවුම් ප්‍රතිඵල සිතැඟිකරණය කරන්න"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:80
+msgid "Title"
+msgstr "මාතෘකාව"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:82
+msgid "Excerpt"
+msgstr "උපුටාගත් පද"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:84
+msgid "Background"
+msgstr "පසුබිම"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:86
+msgid "Hover Background"
+msgstr "පසුබිම මත මවුසය තැබූවිට"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:88
+msgid "Divider"
+msgstr "භේදකය"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:90
+msgid "Footer Background"
+msgstr "පාදීය පසුබිම"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:92
+msgid "Footer Text"
+msgstr "පාදස්ථ පෙළ"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:94
+msgid "Shadow"
+msgstr "සෙවනැල්ල"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:106
+msgid "Theme-specific"
+msgstr "තේමාමය"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:106
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:108
+msgid "For advanced users"
+msgstr "උසස් පරිශීලකයන්ට"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:106
+msgid "Theme must include a CSS file named daves-wordpress-live-search.css. If your theme does not have one, copy daves-wordpress-live-search_default_gray.css from this plugin's directory into your theme's directory and modify as desired."
+msgstr "ඔබේ තේමාවේ අනිවාර්යයෙන්ම daves-wordpress-live-search.css නම් ගොනුව තිබිය යුතුයි. නොමැත්තේවී නම්, daves-wordpress-live-search_default_gray.css යන්න මෙම ප්ලගීනයේ ස්ථාපන ගොනුවෙන් ඒ වෙත උපුටාලන්න."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:108
+msgid "Theme-specific (theme's own CSS file)"
+msgstr "තේමාමය (තේමාවේ CSS ගොනුව)"
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:108
+msgid "Use the styles contained within your Theme's stylesheet. Don't include a separate stylesheet for Live Search."
+msgstr "තේමාමය විලාස භාවිතා කරන්න. මින් වෙන ම CSS ගොනුවක් අවැසි නොවේ."
+
+#: ../admin/daves-wordpress-live-search-admin-appearance.tpl:114
+#: ../admin/daves-wordpress-live-search-admin.tpl:70
+msgid "Save Changes"
+msgstr "සැකැසුම් සුරකින්න"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:20
+msgid "Maximum Results to Display"
+msgstr "දැක්වියයුතු උපරිම ප්‍රතිඵල"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:22
+msgid "Enter &quot;0&quot; to display all matching results"
+msgstr "සියළු ප්‍රතිඵල පෙන්වීමට &quot;0&quot; යොදන්න"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:26
+msgid "Minimum characters before searching"
+msgstr "සෙවීමට පෙර ඇතුලත් කළයුතු අවම අක්‍ෂර ගණන"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:30
+msgid "Search right away"
+msgstr "සැණින් සොයන්න"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:31
+msgid "Wait for two characters"
+msgstr "දෙඅකුරු සඳහා ඉවසන්න"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:32
+msgid "Wait for three characters"
+msgstr "තෙඅකුරු සඳහා ඉවසන්න"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:33
+msgid "Wait for four characters"
+msgstr "සිව්අකුරු සඳහා ඉවසන්න"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:40
+msgid "Results Direction"
+msgstr "ප්‍රතිඵල දිශානති"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:42
+msgid "Down"
+msgstr "පහළ"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:44
+msgid "Up"
+msgstr "ඉහළ"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:44
+msgid "When search results are displayed, in which direction should the results box extend from the search box?"
+msgstr "සෙවුම් ප්‍රතිඵල කොටුව කොතැන දිස්විය යුතුද?"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:50
+msgid "WP E-Commerce"
+msgstr "WP ඊ-වානිජ"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:56
+#, c-format
+msgid "When used with the %sWP E-Commerce%s plugin, Dave&apos;s WordPress Live Search can search your product catalog instead of posts & pages."
+msgstr "%sWP E-Commerce%s ප්ලගීනය ස්ථාපනයෙන්, ඩේව්&apos;ගේ වර්ඩ්ප්‍රෙස් සජීවී සෙවුමට ලිපි වෙනුවට ඔබේ නිශ්පාදන ලැයිස්තුගත කළ හැක."
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:58
+msgid "Search posts &amp; pages"
+msgstr "පිටු හා ලිපි සොයන්න"
+
+#: ../admin/daves-wordpress-live-search-admin.tpl:59
+msgid "Search products"
+msgstr "නිශ්පාදන සොයන්න"
+

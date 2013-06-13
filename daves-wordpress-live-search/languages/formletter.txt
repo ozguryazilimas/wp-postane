@@ -1,0 +1,29 @@
+Thank you for offering to translate Dave’s WordPress Live Search to a new language. Generous contributors like you are the lifeblood of open source.
+
+If you’ve never translated an open source project, you will need a special piece of software called a PO editor. The most popular PO editor is Poedit, and there are versions available for Windows, Mac OSX, and Linux. You can download Poedit at http://www.poedit.net/download.php
+
+You will also need the attached .pot file. This is a PO Template used to create your new translation. Download the attachment to your computer.
+
+Once you’ve installed Poedit, run it and select “New catalog from POT file…” from the “File” menu. Locate the dwls.pot file and open it.
+
+NOTE: These directions were written based on the current Mac version of Poedit. Your version may be a little different. Please direct Poedit questions to the program’s authors.
+
+Once you open the .pot file, Poedit will ask you for some information about the translation you’re providing. Give yourself credit for the generous service you’re about to provide by entering your information in the “Team” and “Team’s email address” fields. Then, choose the language and country for the translation you’re providing.
+
+Click OK.
+
+Poedit will prompt you to save a .po file with your translation. Please name your file “dwls-xx_YY.po”, where xx is an two-letter ISO 639-1 language code (or three-letter ISO 639-2 code if no two-letter code is available) and YY is a two-letter ISO 3166-1 regional designation. For example, I made a dwls-en_US.po file for US English.
+
+For a list of ISO 639-1 and ISO 639-2 codes, see http://www.loc.gov/standards/iso639-2/php/English_list.php
+
+For a list of ISO 3166-1 codes, see http://en.wikipedia.org/wiki/ISO_3166-1
+
+After creating your file, you will be able to translate the 60 or so strings used in Dave’s WordPress Live Search and its admin interface. Some strings contain HTML character entities like &quot; and some have replaceable values like %s — please make sure these codes appear in your translated version.
+
+When you’ve translated all the strings and you’re happy with your work, choose “Save” from the “File” menu. This will create two files: your original .po and a smaller .mo file which is what WordPress actually uses.
+
+Email your new .po and .mo to dave@davidmichaelross.com for inclusion in the next release.
+
+Thank you in advance for helping to make WordPress accessible to more people around the world!
+
+Dave
