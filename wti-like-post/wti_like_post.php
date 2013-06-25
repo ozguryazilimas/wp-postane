@@ -360,6 +360,7 @@ function WtiLikePostAdminContent() {
 							<td>	
 								<input type="radio" name="wti_like_post_position" id="position_top" value="top" <?php if(('top' == get_option('wti_like_post_position')) || ('' == get_option('wti_like_post_position'))) { echo 'checked'; } ?> /> <?php echo __('Top of Content', 'wti-like-post'); ?>
 								<input type="radio" name="wti_like_post_position" id="position_bottom" value="bottom" <?php if('bottom' == get_option('wti_like_post_position')) { echo 'checked'; } ?> /> <?php echo __('Bottom of Content', 'wti-like-post'); ?>
+								<input type="radio" name="wti_like_post_position" id="position_none" value="none" <?php if('none' == get_option('wti_like_post_position')) { echo 'checked'; } ?> /> <?php echo __('None', 'wti-like-post'); ?>
 								<span class="description"><?php _e('Select the position where you want to show the like options.', 'wti-like-post')?></span>
 							</td>
 						</tr>			
@@ -614,11 +615,107 @@ function have_avatar($user_id){
 
 }
 #### FRONT-END VIEW ####
-function GetWtiLikePost($arg = null) {
+function GetWtiLikePostButton($arg = null){
 global $wpdb;
 $post_id = get_the_ID();
 $wti_like_post = "";
-$likeds = "Bu yazıyı tutanlar<br />";
+
+
+  
+	
+     //get the posts ids where we do not need to show like functionality
+     $allowed_posts = explode(",", get_option('wti_like_post_allowed_posts'));
+     $excluded_posts = explode(",", get_option('wti_like_post_excluded_posts'));
+	$excluded_categories = get_option('wti_like_post_excluded_categories');
+	$excluded_sections = get_option('wti_like_post_excluded_sections');
+	
+	if(empty($excluded_categories)) {
+		$excluded_categories = array();
+	}
+	
+	if(empty($excluded_sections)) {
+		$excluded_sections = array();
+	}
+     
+	$title_text = get_option('wti_like_post_title_text');
+	$category = get_the_category();
+	$excluded = false;
+	
+	//checking for excluded section. if yes, then dont show the like/dislike option
+	if((in_array('home', $excluded_sections) && is_home()) || (in_array('archive', $excluded_sections) && is_archive())) {
+		return;
+	}
+	
+	//checking for excluded categories
+	foreach($category as $cat) {
+		if(in_array($cat->cat_ID, $excluded_categories) && !in_array($post_id, $allowed_posts)) {
+			$excluded = true;
+		}
+	}
+	
+	//if excluded category, then dont show the like/dislike option
+	if($excluded) {
+			return;
+	}
+	
+	//check for title text. if empty then have the default value
+     if(empty($title_text)) {
+		$title_text_like = __('Like', 'wti-like-post');
+		$title_text_unlike = __('Unlike', 'wti-like-post');
+     } else {
+		$title_text = explode('/', get_option('wti_like_post_title_text'));
+		$title_text_like = $title_text[0];
+		$title_text_unlike = $title_text[1];
+     }
+	
+	//checking for excluded posts
+     if(!in_array($post_id, $excluded_posts)) {		
+//		$like_count = GetWtiLikeCount($post_id);
+        $like_count = '';
+//		$unlike_count = GetWtiUnlikeCount($post_id);
+        $unlike_count = '';
+        $cur_user = wp_get_current_user();
+		$msg = GetWtiVotedMessage($post_id,$cur_user->ID);
+		$alignment = ("left" == get_option('wti_like_post_alignment')) ? 'left' : 'right';
+		$show_dislike = get_option('wti_like_post_show_dislike');
+		$style = (get_option('wti_like_post_voting_style') == "") ? 'style1' : get_option('wti_like_post_voting_style');
+		
+		$wti_like_post .= "<div id='watch_action'>";
+		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
+		$wti_like_post .= "<div id='action_like' >";
+       if(is_null($msg)){
+            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/web22dakika/byildiz.png'></span>";
+        }
+       else {
+            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/web22dakika/dyildiz.png'></span>";
+        }
+            
+							/*"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_up_".$style.".png'></span>".*/
+//							"<span id='lc-".$post_id."' class='lc'>".$like_count."</span>".
+        $wti_like_post .= "</div>";
+		
+		if($show_dislike) {
+			$wti_like_post .= "<div id='action_unlike' >".
+								"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='unlbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
+								/*"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_down_".$style.".png'></span>".*/
+//								"<span id='unlc-".$post_id."' class='unlc'>".$unlike_count."</span>".
+						   "</div> ";
+		}
+		
+		$wti_like_post .= "</div> ";
+          $wti_like_post .= "<div id='status-".$post_id."' class='status' style='float:".$alignment."; '>&nbsp;&nbsp;" . $msg . "</div>";
+		$wti_like_post .= "</div><div id='clear'></div>"; 
+
+     } 
+     
+    
+		return $wti_like_post;
+     
+}
+function GetWtiLikePost($arg = null){
+global $wpdb;
+$post_id = get_the_ID();
+$likeds = '';
 $liked_users = $wpdb->get_results("
                       SELECT post.user_id 
                       FROM wp_wti_like_post post
@@ -626,9 +723,9 @@ $liked_users = $wpdb->get_results("
                         ON post.user_id = user.ID
                        WHERE post.post_id =" . $post_id
                       );
-
-
 $k = 0;
+$i = 0;
+$count=count($liked_users);
 foreach($liked_users as $liked){
   $k++;
   $user_infos = get_userdata($liked->user_id);  
@@ -636,13 +733,14 @@ foreach($liked_users as $liked){
 
     $avatar_info = have_avatar($liked->user_id);
     if( empty($avatar_info)){
-        $likeds .= '<a style="float: left;" href="/uye/' . $user_name . '">' . get_avatar($liked->user_id, 50) . ' </a>';
+    	$likeds .= '<a style="float: left;" href="/uye/' . $user_name . '">' . get_avatar($liked->user_id, 50) . ' </a>';
     }
     else{
         $unserialized = unserialize($avatar_info[0]->meta_value);
         $avatar = isset($unserialized[80]) ? $unserialized[80]  : $unserialized[96];
-        $likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="' . $avatar . '" /></a>';
-    }
+
+     	$likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="' . $avatar . '" /></a>';
+       } 
     if($k==5){
         $likeds .= '<div style="clear: both;"></div><br />';
         $k = 0;
@@ -686,7 +784,7 @@ foreach($liked_users as $liked){
 	
 	//if excluded category, then dont show the like/dislike option
 	if($excluded) {
-		return;
+			return;
 	}
 	
 	//check for title text. if empty then have the default value
@@ -707,41 +805,14 @@ foreach($liked_users as $liked){
         $unlike_count = '';
         $cur_user = wp_get_current_user();
 		$msg = GetWtiVotedMessage($post_id,$cur_user->ID);
-		$alignment = ("left" == get_option('wti_like_post_alignment')) ? 'left' : 'right';
-		$show_dislike = get_option('wti_like_post_show_dislike');
-		$style = (get_option('wti_like_post_voting_style') == "") ? 'style1' : get_option('wti_like_post_voting_style');
-		
-		$wti_like_post .= "<div id='watch_action'>";
-		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
-		$wti_like_post .= "<div id='action_like' >";
-        if(is_null($msg)){
-            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
-        }
-        else {
-            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/dyildiz.png'></span>";
-        }
-            
-							/*"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_up_".$style.".png'></span>".*/
-//							"<span id='lc-".$post_id."' class='lc'>".$like_count."</span>".
-        $wti_like_post .= "</div>";
-		
-		if($show_dislike) {
-			$wti_like_post .= "<div id='action_unlike' >".
-								"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='unlbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
-								/*"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_down_".$style.".png'></span>".*/
-//								"<span id='unlc-".$post_id."' class='unlc'>".$unlike_count."</span>".
-						   "</div> ";
-		}
-		
-		$wti_like_post .= "</div> ";
-          $wti_like_post .= "<div id='status-".$post_id."' class='status' style='float:".$alignment."; '>&nbsp;&nbsp;" . $msg . "</div>";
-		$wti_like_post .= "</div><div id='clear'></div>";
-     }
+
+     } 
      
      if ($arg == 'put') {
 		return $wti_like_post . $likeds;
+		//return $likeds;
      } else {
-		echo $wti_like_post;
+		return $wti_like_post;
      }
 }
 
@@ -760,6 +831,8 @@ function PutWtiLikePost($content) {
 			$content = $wti_like_post_content . $content;
 		} elseif ($wti_like_post_position == 'bottom') {
 			$content = $content . $wti_like_post_content;
+		} elseif ($wti_like_post_position == 'none') {
+			$content = $content;
 		} else {
 			$content = $wti_like_post_content . $content . $wti_like_post_content;
 		}
@@ -768,7 +841,7 @@ function PutWtiLikePost($content) {
      return $content;
 }
 
-add_filter('the_content', 'PutWtiLikePost');
+add_filter('the_content',"PutWtiLikePost");
 
 function GetWtiLikeCount($post_id) {
      global $wpdb;
