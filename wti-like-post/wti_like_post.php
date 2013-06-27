@@ -684,10 +684,10 @@ $wti_like_post = "";
 		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
 		$wti_like_post .= "<div id='action_like' >";
        if(is_null($msg)){
-            $wti_like_post .=" <span class='wti_like_message'>Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız</span><span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/web22dakika/byildiz.png'></span>";
+            $wti_like_post .=" <span class='wti_like_message'>Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız</span><span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
         }
        else {
-            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/web22dakika/dyildiz.png'></span>";
+            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/dyildiz.png'></span>";
         }
             
 							/*"<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_up_".$style.".png'></span>".*/
