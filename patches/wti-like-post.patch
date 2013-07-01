@@ -1,80 +1,13 @@
-diff --git a/wti-like-post/css/wti_like_post.css b/wti-like-post/css/wti_like_post.css
-index 7cce199..a1e707a 100644
---- a/wti-like-post/css/wti_like_post.css
-+++ b/wti-like-post/css/wti_like_post.css
-@@ -2,6 +2,7 @@
- 	float: left;
- 	width: 100%;
- 	height: 100%;
-+	position: relative;
- }
- 
- #watch_action img {
-@@ -44,12 +45,28 @@
- .unlc {
- 	color: red;		
- }
-+.wti_like_h3{
-+	margin-bottom: 30px;
-+	border-bottom: 1px dotted #d2d2d2;
-+	font: normal 24px/1.2em museo, 
-+	helvetica,Arial;margin-top: 10px;
-+}
-+.wti_like_message{
-+	color: gray;
-+	padding: 0 7px 0 7px;
-+	font-size: 16px;
-+	line-height: 30px;
-+	position: absolute;
-+	top: 15px;
-+	left: 8.3%
-+}
- 
- .status {
- 	color: gray;
- 	padding: 0 7px 0 7px;
- 	font-size: 14px;
--	line-height: 18px;	
-+	line-height: 18px;
-+	/*margin: -20px 50px;*/
- }
- .status .status_msg {
- 	width: auto;
 diff --git a/wti-like-post/wti_like_post.php b/wti-like-post/wti_like_post.php
-index 0963d94..5d2e4ac 100755
+index 30c6c9f..85a400e 100755
 --- a/wti-like-post/wti_like_post.php
 +++ b/wti-like-post/wti_like_post.php
 @@ -684,7 +684,7 @@ $wti_like_post = "";
  		$wti_like_post .= "<div id='watch_position' style='float:".$alignment."; '>";
  		$wti_like_post .= "<div id='action_like' >";
         if(is_null($msg)){
--            $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/web22dakika/byildiz.png'></span>";
-+            $wti_like_post .=" <span class='wti_like_message'>Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız</span><span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/web22dakika/byildiz.png'></span>";
+-            $wti_like_post .=" <span class='wti_like_message'>Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız</span><span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
++            $wti_like_post .=" <span class='wti_like_message'>Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız.</span><span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/byildiz.png'></span>";
          }
         else {
-             $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/web22dakika/dyildiz.png'></span>";
-@@ -696,7 +696,7 @@ $wti_like_post = "";
- 		
- 		if($show_dislike) {
- 			$wti_like_post .= "<div id='action_unlike' >".
--								"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='unlbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
-+								"Bu bildiri işinize yaradıysa, tutmaya ne dersiniz? Yazıyı tutmak için yıldıza tıklayınız <span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='unlbg-$style jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/pixel.gif'></span>".
- 								/*"<span class='unlike-".$post_id." unlike'><img title='".__($title_text_unlike, 'wti-like-post')."' id='unlike-".$post_id."' rel='unlike' class='jlk' src='".WP_PLUGIN_URL."/wti-like-post/images/thumb_down_".$style.".png'></span>".*/
- //								"<span id='unlc-".$post_id."' class='unlc'>".$unlike_count."</span>".
- 						   "</div> ";
-@@ -739,12 +739,12 @@ foreach($liked_users as $liked){
-         $unserialized = unserialize($avatar_info[0]->meta_value);
-         $avatar = isset($unserialized[80]) ? $unserialized[80]  : $unserialized[96];
- 
--     	$likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" src="' . $avatar . '" /></a>';
-+     	$likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" style="margin:0 10px;" src="' . $avatar . '" /></a>';
-        } 
--    if($k==5){
-+    /*if($k==5){
-         $likeds .= '<div style="clear: both;"></div><br />';
-         $k = 0;
--    }
-+    }*/
- }
- 
-     if ( ! is_user_logged_in())
+             $wti_like_post .="<span class='like-".$post_id." like'><img title='".__($title_text_like, 'wti-like-post')."' id='like-".$post_id."' rel='like' class='xlbg-$style jlk' width='50' src='/wp-content/themes/dyildiz.png'></span>";
