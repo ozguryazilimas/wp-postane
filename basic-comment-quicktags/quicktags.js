@@ -16,6 +16,6 @@
       id: "posttext",
       buttons: "link,em,strong"
     });
-    QTags.addButton('image','resim','[img]','[/img]','I','');
+    QTags.addButton('image','resim','[resim]','[/resim]','I','');
 //   });
 // })(jQuery);
