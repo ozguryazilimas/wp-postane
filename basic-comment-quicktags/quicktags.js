@@ -16,6 +16,7 @@
       id: "posttext",
       buttons: "link,em,strong"
     });
-    QTags.addButton('quote','quote','<blockquote>','</blockquote>','quote');
+    QTags.addButton('quote','quote','<blockquote>','</blockquote>','quote','');
+    QTags.addButton('image','img','[img]','[/img]','I','');
 //   });
 // })(jQuery);

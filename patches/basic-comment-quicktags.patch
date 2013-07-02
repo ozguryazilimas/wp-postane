@@ -1,0 +1,14 @@
+diff --git a/basic-comment-quicktags/quicktags.js b/basic-comment-quicktags/quicktags.js
+index bf15aae..e3e3f6a 100644
+--- a/basic-comment-quicktags/quicktags.js
++++ b/basic-comment-quicktags/quicktags.js
+@@ -16,6 +16,7 @@
+       id: "posttext",
+       buttons: "link,em,strong"
+     });
+-    QTags.addButton('quote','quote','<blockquote>','</blockquote>','quote');
++    QTags.addButton('quote','quote','<blockquote>','</blockquote>','quote','');
++    QTags.addButton('image','img','[img]','[/img]','I','');
+ //   });
+ // })(jQuery);
+\ No newline at end of file
