@@ -25,5 +25,14 @@
         this.tagStart = rtrn;
         QTags.TagButton.prototype.callback.call(this, e, c, ed);
     }
+      /* QTags.addButton( 'tag', 'resim', prompt_image );
+    function prompt_image(e, c, ed) {
+        prmt = prompt('Resim adresini girin:');
+        if ( prmt === null ) return;
+        rtrn = '[resim]' + prmt + '[/resim]';
+        this.tagStart = rtrn;
+        QTags.TagButton.prototype.callback.call(this, e, c, ed);
+    }*/
+    QTags.addButton("ispiyon","ispiyon","[ispiyon]","[/ispiyon]","ispiyon","");
 //   });
 // })(jQuery);
