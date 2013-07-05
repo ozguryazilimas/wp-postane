@@ -1,21 +1,20 @@
 diff --git a/basic-comment-quicktags/quicktags.js b/basic-comment-quicktags/quicktags.js
-index 9d52044..9f10987 100644
+index 5aa4359..56b300b 100644
 --- a/basic-comment-quicktags/quicktags.js
 +++ b/basic-comment-quicktags/quicktags.js
-@@ -16,6 +16,14 @@
-       id: "posttext",
-       buttons: "link,em,strong"
-     });
--    QTags.addButton('image','resim','[resim]','[/resim]','I','');
-+   // QTags.addButton('image','resim','[resim]','[/resim]','I','');
-+        QTags.addButton( 'tag', 'resim', prompt_image );
-+    function prompt_image(e, c, ed) {
-+        prmt = prompt('Resim adresini girin:');
-+        if ( prmt === null ) return;
-+        rtrn = '[resim]' + prmt + '[/resim]';
-+        this.tagStart = rtrn;
-+        QTags.TagButton.prototype.callback.call(this, e, c, ed);
-+    }
+@@ -25,14 +25,6 @@
+         this.tagStart = rtrn;
+         QTags.TagButton.prototype.callback.call(this, e, c, ed);
+     }
+-      /* QTags.addButton( 'tag', 'resim', prompt_image );
+-    function prompt_image(e, c, ed) {
+-        prmt = prompt('Resim adresini girin:');
+-        if ( prmt === null ) return;
+-        rtrn = '[resim]' + prmt + '[/resim]';
+-        this.tagStart = rtrn;
+-        QTags.TagButton.prototype.callback.call(this, e, c, ed);
+-    }*/
+     QTags.addButton("ispiyon","ispiyon","[ispiyon]","[/ispiyon]","ispiyon","");
  //   });
  // })(jQuery);
 \ No newline at end of file
