@@ -733,13 +733,13 @@ foreach($liked_users as $liked){
 
     $avatar_info = have_avatar($liked->user_id);
     if( empty($avatar_info)){
-    	$likeds .= '<a style="float: left;" href="/uye/' . $user_name . '">' . get_avatar($liked->user_id, 50) . ' </a>';
+    	$likeds .= '<a style="float: left;" class="wti_avatar" href="/uye/' . $user_name . '">' . get_avatar($liked->user_id, 50) . ' </a>';
     }
     else{
         $unserialized = unserialize($avatar_info[0]->meta_value);
         $avatar = isset($unserialized[80]) ? $unserialized[80]  : $unserialized[96];
 
-     	$likeds .= '<a style="float: left;" href="/uye/'.$user_name.'"><img width="50" style="margin:0 10px;" src="' . $avatar . '" /></a>';
+     	$likeds .= '<a style="float: left;" class="wti_avatar" href="/uye/'.$user_name.'"><img width="50" style="margin:0 10px;" src="' . $avatar . '" /></a>';
        } 
     /*if($k==5){
         $likeds .= '<div style="clear: both;"></div><br />';
