@@ -733,7 +733,7 @@ foreach($liked_users as $liked){
 
     $avatar_info = have_avatar($liked->user_id);
     if( empty($avatar_info)){
-    	$likeds .= '<a style="float: left;" class="wti_avatar" href="/uye/' . $user_name . '">' . get_avatar($liked->user_id, 50) . ' </a>';
+    	$likeds .= '<a style="float: left;" class="wti_avatar" href="/uye/' . $user_name . '">'.get_avatar($liked->user_id, 50).'</a>';
     }
     else{
         $unserialized = unserialize($avatar_info[0]->meta_value);
