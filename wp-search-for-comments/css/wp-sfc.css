@@ -1,51 +1,15 @@
-span.s-titles {
-    color: #000000;
-    font-size: 22px;
+.commentSearch .comment{
+	border-bottom: 1px dashed #CCCCCC;
+	font: 14px/24px museo,Helvetica,Arial;
+	margin: 5px 0;
+	padding: 0 10px 10px 10px;
+	letter-spacing: 0;
 }
-
-.fixtitle1 {
-    display: block;
-    margin-bottom: 20px;
+.commentSearch .comment a{
+	width: auto;
+	float: left;
+	text-decoration: underline;
 }
-
-.output-post {
-    height: 65px;
-    margin-bottom: 20px;
+#wp_page_numbers ul li a{
+	width: auto;	
 }
-
-.postcounter {
-    color: #656565;
-    float: left;
-    font-weight: bold;
-    height: 65px;
-    width: 30px;
-}
-
-.s-p-wrap {
-    float: left;
-    width: 520px;
-}
-
-.s-p-w-top {
-    margin-bottom: 5px;
-}
-
-.author-name {
-    color: #000000;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.highlight-class{
-background: gold;
-}
-
-.comment-date {
-    color: #656565;
-    float: right;
-    font-size: 12px;
-    text-align: right;
-    width: 100px;
-}
-
-

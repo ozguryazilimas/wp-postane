@@ -7,7 +7,7 @@
 	Version: 1.2.2
 	Author URI: http://www.desadent.com 
 	*/  
-
+	error_reporting(0);
 	add_action('wp_head', 'wp_sfc_print_styles');
 	add_action('admin_menu', 'wp_sfc_admin_actions');
 	add_action('admin_print_styles', 'wp_sfc_print_admin_styles');
@@ -66,7 +66,7 @@
 		$count = get_option('wp_sfc_limit');
 
 		$commenters = array();
-		
+
 		$results = $wpdb->get_results("SELECT comment_content, comment_date, comment_ID, user_id, comment_author, comment_author_url, comment_post_ID FROM $wpdb->comments WHERE comment_approved = '1'");
 
 		foreach($results as $result){
@@ -74,61 +74,129 @@
 				$commenters[] = (array) $result;
 			}
 		}
-		
+
 		$thetimearr = array();
 		foreach ($commenters as $key => $row){
 			$thetimearr[$key] = $row['comment_date'];
 		}
-		
+		$search = get_search_query();
 		array_multisort($thetimearr, SORT_DESC, $commenters);
-		
-		$paged = 1;
-
+		$paged = (isset($_GET['cpage']) && is_numeric($_GET['cpage']) && !($_GET['cpage'] > ceil(count($commenters) / $count))) ? $_GET['cpage'] : 1;
+		$cpage = $_GET['cpage'];
 		$current_page = $paged;
-		$total_pages = ceil(count($commenters) / $count);
-		
+		$total_pages = ceil(count($commenters) / $count); // sayfa sayısı
 		$start = ($paged - 1) * $count;
 		$end = $paged * $count;
 		if ($end > count($commenters)) $end = count($commenters);
-		
-		
-		
-
-		
-		$output = '<div class="searc-output-comments">';
-		if(count($commenters) != 0) {
-			$output .= '<span class="s-titles fixtitle1">Comments results for: '.get_search_query().'</span>';
-		}else{
-			$output .= '<span class="s-titles fixtitle1">No comment results!</span>';
+		if(!(isset($_GET['cpage'])) || !(is_numeric($_GET['cpage'])))
+			$cpage=1;
+		else{
+			if($_GET['cpage'] >= $total_pages){
+				$cpage=$total_pages;
 		}
-		$cc = 1;
-		if ($paged > 1) $cc = ($count * $paged) - ($count -1);
+	}
+function ispik($content){
+	$content = preg_replace('@\[ispiyon\](.*?)\[\/ispiyon\]@', '<div class="ispiyon"><span class="spoiler">$1</span></div>', $content);
+	return $content;
+}		
+function ispikclear($content){
+	if(strstr('[/ispiyon]', $content) && !(strstr('[ispiyon]',$content)))
+		$content = str_replace('[/ispiyon]', '', $content);
+	return $content;
+}
+		
+	//	$output = '<div class="searc-output-comments">';
 
+	function asd($content){
+		$countSearchWord = strlen(get_search_query());
+		$text = substr($content,0,$countSearchWord);
+		if($text == get_search_query())
+			$content = false;
+		else
+			$content = true;
+		return $content;
+	}
+	if(count($commenters) != 0) {
+		$output .= '<h1 class="page-title"><span class="s-titles fixtitle1">İçinde "'.get_search_query().'" geçen '.count($commenters).' yorum bulundu.</span></h1>';
+	}
+	else{
+		$output .= '<span class="s-titles fixtitle1">Herhangi Bir Yorum Bulunamadı !</span>';
+	}
+	$cc = 1;
+	if ($paged > 1) $cc = ($count * $paged) - ($count -1);
+		$output .=	'<div class="commentSearch">';
+	if(!($cpage > $total_pages)){
 		for ($i = $start; $i < $end; $i++){
-			
-					$comment = $commenters[$i];
-					$permalink = get_permalink( $comment['comment_post_ID'] );
-					$output .= '<div class="output-post">';
-					$output .= '	<div class="postcounter">'.$cc.'</div>';
-					$output .= '	<div class="s-p-wrap">';
-					$output .= '		<div class="s-p-w-top">';
-					$output .= '			<span class="author-name"><a href="'.$permalink.'#comment-'.$comment['comment_ID'].'">'.$comment['comment_author'].'</a></span>';
-					$output .= '			<div class="comment-date">'.time_ago($comment['comment_date']).'</div>';
-					$output .= '		</div>';
-					$output .= '	<div class="s-p-w-bottom">';					
-					$output .= '			<p><a href="'.$permalink.'#comment-'.$comment['comment_ID'].'">'.$comment['comment_content'].'</a></p>';
-					$output .= '		</div>';
-					$output .= '	</div>';
-					$output .= '</div>';
-					$cc++;
-				
-			
+
+			$comment = $commenters[$i];
+			$permalink = get_permalink( $comment['comment_post_ID'] );
+			$commentFunction = $comment['comment_content'];
+			$commentFunction = preg_replace('/\[img=?\]*(.*?)(\[\/img)?\]/e', '"<img src=\"$1\" alt=\"" . basename("$1") . "\" />"', $commentFunction);
+			$commentFunction = preg_replace('/\[resim=?\]*(.*?)(\[\/resim)?\]/e', '"<img src=\"$1\" alt=\"" . basename("$1") . "\" />"', $commentFunction);
+			$commentFunction = strip_tags($commentFunction);
+			$commentBool = asd($commentFunction);
+			$commentFunction = stristr($commentFunction,$search);
+			$commentFunction = substr($commentFunction,0,85);
+			$commentFunction = mb_convert_encoding($commentFunction, "UTF-8");
+			$commentFunction = ispik($commentFunction);
+			$commentFunction = ispikclear($commentFunction);
+			if($commentBool == true)
+				$commentFunction = "...".$commentFunction."...";
+			else
+				$commentFunction = $commentFunction."...";
+			if(stristr($commentFunction,$search)){
+				$output .=		'<div class="comment"><a href="'.$permalink.'#comment-'.$comment['comment_ID'].'">'.$comment['comment_author'].'</a>: '.$commentFunction.' - '.time_ago($comment['comment_date']).'</div>';
+				$cc++;
+			}
+
 		}
-		$output .= '</div>';
+	}	
+	$output .=	'</div>'; 
+	//		$output .= '</div>';
 	
 		echo $output;
+		?>
+		<div class="navigation clearfix">
+			<span style="letter-spacing:0">Toplam Sayfa Sayısı: <?php echo $total_pages; ?></span>
+			<code>
+				<div id="wp_page_numbers">
+					<ul>
+						<?php
+						if($total_pages == 0)
+							true;
+						else{
+							for ($i=1; $i < 6; $i++) { 
+								if($i==1){
+									$getcpage = $cpage-2;
+									if(!($getcpage==-1 || $getcpage == 0))
+										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
+								}
+								if($i==2){
+									$getcpage = $cpage-1;
+									if(!($getcpage == 0))
+										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
+								}
+								if($i == 3)
+									echo '<li class="active_page"><a>'.$cpage.'</a></li>';
+								if($i == 4){
+									$getcpage = $cpage+1;
+									if(!($getcpage > $total_pages))
+										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
+								}
+								if($i == 5){
+									$getcpage = $cpage+2;
+									if(!($getcpage > $total_pages))
+										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
+								}
+							}
+						}
+						?>
+					</ul>
+				</div>
+			</code>
+		</div>
 
-		return array(
+<?php		return array(
 			'current_page' => $current_page,
 			'total_pages' => $total_pages
 		);
@@ -136,13 +204,13 @@
 
 	function time_ago($date) {
 		$chunks = array(
-			array( 60 * 60 * 24 * 365 , __( 'year' ), __( 'years' ) ),
-			array( 60 * 60 * 24 * 30 , __( 'month' ), __( 'months' ) ),
-			array( 60 * 60 * 24 * 7, __( 'week' ), __( 'weeks' ) ),
-			array( 60 * 60 * 24 , __( 'day' ), __( 'days' ) ),
-			array( 60 * 60 , __( 'hour' ), __( 'Hours' ) ),
-			array( 60 , __( 'minute' ), __( 'minutes' ) ),
-			array( 1, __( 'second' ), __( 'seconds' ) )
+			array( 60 * 60 * 24 * 365 , __( 'yıl' ), __( 'yıl' ) ),
+			array( 60 * 60 * 24 * 30 , __( 'ay' ), __( 'ay' ) ),
+			array( 60 * 60 * 24 * 7, __( 'hafta' ), __( 'hafta' ) ),
+			array( 60 * 60 * 24 , __( 'gün' ), __( 'gün' ) ),
+			array( 60 * 60 , __( 'saat' ), __( 'saat' ) ),
+			array( 60 , __( 'dakika	' ), __( 'dakika' ) ),
+			array( 1, __( 'saniye' ), __( 'saniye' ) )
 		);
 	 
 		if ( !is_numeric( $date ) ) {
@@ -167,10 +235,10 @@
 		$output = ( 1 == $count ) ? '1 '. $chunks[$i][1] : $count . ' ' . $chunks[$i][2];
 
 		if ( !(int)trim($output) ){
-			$output = '0 ' . __( 'seconds' );
+			$output = '0 ' . __( 'Saniye' );
 		}
 
-		$output .= __(' ago');
+		$output .= __(' önce');
 		return $output;
 	}
 
