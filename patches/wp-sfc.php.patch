@@ -223,4 +223,40 @@ index 5c28d6e..591c94d 100644
 +		$output .= __(' önce');
  		return $output;
  	}
+diff --git a/wp-search-for-comments/wp-sfc.php b/wp-search-for-comments/wp-sfc.php
+index 591c94d..d209ad2 100644
+--- a/wp-search-for-comments/wp-sfc.php
++++ b/wp-search-for-comments/wp-sfc.php
+@@ -79,7 +79,7 @@
+ 		foreach ($commenters as $key => $row){
+ 			$thetimearr[$key] = $row['comment_date'];
+ 		}
+-		$search = get_search_query();
++		$search = mb_strtolower(get_search_query());
+ 		array_multisort($thetimearr, SORT_DESC, $commenters);
+ 		$paged = (isset($_GET['cpage']) && is_numeric($_GET['cpage']) && !($_GET['cpage'] > ceil(count($commenters) / $count))) ? $_GET['cpage'] : 1;
+ 		$cpage = $_GET['cpage'];
+@@ -107,7 +107,7 @@ function ispikclear($content){
+ 		
+ 	//	$output = '<div class="searc-output-comments">';
  
+-	function asd($content){
++	function wordDot($content){
+ 		$countSearchWord = strlen(get_search_query());
+ 		$text = substr($content,0,$countSearchWord);
+ 		if($text == get_search_query())
+@@ -134,12 +134,13 @@ function ispikclear($content){
+ 			$commentFunction = preg_replace('/\[img=?\]*(.*?)(\[\/img)?\]/e', '"<img src=\"$1\" alt=\"" . basename("$1") . "\" />"', $commentFunction);
+ 			$commentFunction = preg_replace('/\[resim=?\]*(.*?)(\[\/resim)?\]/e', '"<img src=\"$1\" alt=\"" . basename("$1") . "\" />"', $commentFunction);
+ 			$commentFunction = strip_tags($commentFunction);
+-			$commentBool = asd($commentFunction);
++			$commentBool = wordDot($commentFunction);
+ 			$commentFunction = stristr($commentFunction,$search);
+ 			$commentFunction = substr($commentFunction,0,85);
+ 			$commentFunction = mb_convert_encoding($commentFunction, "UTF-8");
+ 			$commentFunction = ispik($commentFunction);
+ 			$commentFunction = ispikclear($commentFunction);
++			$commentFunction = str_replace($search, '<mark>'.$search.'</mark>', mb_strtolower($commentFunction));
+ 			if($commentBool == true)
+ 				$commentFunction = "...".$commentFunction."...";
+ 			else
