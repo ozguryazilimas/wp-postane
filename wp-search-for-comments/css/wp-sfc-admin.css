@@ -1,0 +1,57 @@
+/* ADMIN OPTIONS */
+.cat{
+width: 51px;
+}
+
+.stylecat{
+width: 100px;
+}
+
+.mainwrap{
+background: none repeat scroll 0 0 #F1F1F1;
+border: 1px solid #999999;
+margin: 20px 0;
+padding: 0 20px;
+width: 650px;
+border-radius: 5px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-khtm-border-radius: 5px;
+-o-border-radius: 5px;
+-ms-border-radius: 5px;
+}
+
+code{
+background: #FFFFFF;
+border: 1px dotted yellow;
+padding: 2px 4px;
+}
+
+.Simple{
+background: url(i/preview-simple.jpg);
+width: 585px;
+height: 156px;
+margin-bottom: 30px;
+margin-left: 30px;
+}
+.Light{
+background: url(i/preview-light.jpg);
+width: 585px;
+height: 156px;
+margin-bottom: 30px;
+margin-left: 30px;
+}
+.Dark{
+background: url(i/preview-dark.jpg);
+width: 585px;
+height: 156px;
+margin-bottom: 30px;
+margin-left: 30px;
+}
+.Safari{
+background: url(i/preview-safari.jpg);
+width: 585px;
+height: 156px;
+margin-bottom: 30px;
+margin-left: 30px;
+}

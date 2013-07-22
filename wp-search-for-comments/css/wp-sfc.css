@@ -1,0 +1,51 @@
+span.s-titles {
+    color: #000000;
+    font-size: 22px;
+}
+
+.fixtitle1 {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.output-post {
+    height: 65px;
+    margin-bottom: 20px;
+}
+
+.postcounter {
+    color: #656565;
+    float: left;
+    font-weight: bold;
+    height: 65px;
+    width: 30px;
+}
+
+.s-p-wrap {
+    float: left;
+    width: 520px;
+}
+
+.s-p-w-top {
+    margin-bottom: 5px;
+}
+
+.author-name {
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.highlight-class{
+background: gold;
+}
+
+.comment-date {
+    color: #656565;
+    float: right;
+    font-size: 12px;
+    text-align: right;
+    width: 100px;
+}
+
+
