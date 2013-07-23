@@ -117,6 +117,7 @@ function ispikclear($content){
 		return $content;
 	}
 	if(count($commenters) != 0) { ?>
+		<h4>Belli bir kullanıcının yazdığı yorumlarda arama yapmak isterseniz, alttaki kutuları kullanabilirsiniz.</h4>
 		<form class="userSearchForm" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
 			<p><label class="search">Aranan Kelime<input style="width: 200px;" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /></label></p>
 			<p><label class="searchUser">Aradığınız Kullanıcı<input style="width: 200px;" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /></label></p>
@@ -129,6 +130,7 @@ function ispikclear($content){
 		$output .= '<h1 class="page-title"><span class="s-titles fixtitle1">İçinde "'.get_search_query().'" geçen '.count($commenters).' yorum bulundu.</span></h1>';		
 	}
 	else{ ?>
+		<h4>Belli bir kullanıcının yazdığı yorumlarda arama yapmak isterseniz, alttaki kutuları kullanabilirsiniz.</h4>
 		<form class="userSearchForm" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
 			<p><label class="search">Aranan Kelime<input style="width: 200px;" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /></label></p>
 			<p><label class="searchUser">Aradığınız Kullanıcı<input style="width: 200px;" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /></label></p>
