@@ -117,7 +117,7 @@ function ispikclear($content){
 		return $content;
 	}
 	if(count($commenters) != 0) { ?>
-		<form style="width: 470px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
+		<form style="width: 480px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
 			<input style="width: 200px" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /> 
 			<input style="width: 200px" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /> 
 			<input type="submit" class="form-sub fr" value="ara!">
@@ -129,7 +129,7 @@ function ispikclear($content){
 		$output .= '<h1 class="page-title"><span class="s-titles fixtitle1">İçinde "'.get_search_query().'" geçen '.count($commenters).' yorum bulundu.</span></h1>';		
 	}
 	else{ ?>
-		<form style="width: 470px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
+		<form style="width: 480px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
 			<input style="width: 200px" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /> 
 			<input style="width: 200px" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /> 
 			<input type="submit" class="form-sub fr" value="ara!">
