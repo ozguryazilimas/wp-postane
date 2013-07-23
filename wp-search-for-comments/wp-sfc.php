@@ -59,16 +59,16 @@
 	function wp_sfc_check(){
 		if(is_search()) wp_sfc();
 	}
-
 	function wp_sfc(){
 		global $wpdb;
 		$length = 0;
 		$count = get_option('wp_sfc_limit');
-
+		$user = mysql_real_escape_string($_GET['user']);
 		$commenters = array();
-
-		$results = $wpdb->get_results("SELECT comment_content, comment_date, comment_ID, user_id, comment_author, comment_author_url, comment_post_ID FROM $wpdb->comments WHERE comment_approved = '1'");
-
+		if(isset($_GET['user']) and !empty($_GET['user']))
+			$results = $wpdb->get_results("SELECT comment_content, comment_date, comment_ID, user_id, comment_author, comment_author_url, comment_post_ID FROM $wpdb->comments WHERE comment_approved = '1' and comment_author = '$user'");	
+		else
+			$results = $wpdb->get_results("SELECT comment_content, comment_date, comment_ID, user_id, comment_author, comment_author_url, comment_post_ID FROM $wpdb->comments WHERE comment_approved = '1'");
 		foreach($results as $result){
 			if(strpos(strtolower($result->comment_content), strtolower(get_search_query())) !== false){
 				$commenters[] = (array) $result;
@@ -116,11 +116,25 @@ function ispikclear($content){
 			$content = true;
 		return $content;
 	}
-	if(count($commenters) != 0) {
-		$output .= '<h1 class="page-title"><span class="s-titles fixtitle1">İçinde "'.get_search_query().'" geçen '.count($commenters).' yorum bulundu.</span></h1>';
+	if(count($commenters) != 0) { ?>
+		<form style="width: 470px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
+			<input style="width: 200px" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /> 
+			<input style="width: 200px" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /> 
+			<input type="submit" class="form-sub fr" value="ara!">
+		</form>
+	<?php	
+	if(isset($_GET['user']) and !empty($_GET['user']))
+		$output .= '<h1 class="page-title"><span class="s-titles fixtitle1" style="font-size: 78.3%;">'.$user.' kullanıcısının yorumlarında "'.get_search_query().'" geçen '.count($commenters).' yorum bulundu.</span></h1>';
+	else
+		$output .= '<h1 class="page-title"><span class="s-titles fixtitle1">İçinde "'.get_search_query().'" geçen '.count($commenters).' yorum bulundu.</span></h1>';		
 	}
-	else{
-		$output .= '<span class="s-titles fixtitle1">Herhangi Bir Yorum Bulunamadı !</span>';
+	else{ ?>
+		<form style="width: 470px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
+			<input style="width: 200px" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /> 
+			<input style="width: 200px" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /> 
+			<input type="submit" class="form-sub fr" value="ara!">
+		</form>
+<?php	$output .= '<span class="s-titles fixtitle1">Herhangi Bir Yorum Bulunamadı !</span>';
 	}
 	$cc = 1;
 	if ($paged > 1) $cc = ($count * $paged) - ($count -1);
@@ -166,30 +180,60 @@ function ispikclear($content){
 						if($total_pages == 0)
 							true;
 						else{
-							for ($i=1; $i < 6; $i++) { 
-								if($i==1){
-									$getcpage = $cpage-2;
+							if(isset($_GET['user']) and !empty($_GET['user'])){
+								for ($i=1; $i < 6; $i++) { 
+									if($i==1){
+										$getcpage = $cpage-2;
 									if(!($getcpage==-1 || $getcpage == 0))
-										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
+										echo '<li><a href="?s='.get_search_query().'&user='.$_GET['user'].'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
+									}
+									if($i==2){
+										$getcpage = $cpage-1;
+										if(!($getcpage == 0))
+											echo '<li><a href="?s='.get_search_query().'&user='.$_GET['user'].'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
+									}
+									if($i == 3)
+										echo '<li class="active_page"><a>'.$cpage.'</a></li>';
+									if($i == 4){
+										$getcpage = $cpage+1;
+										if(!($getcpage > $total_pages))
+											echo '<li><a href="?s='.get_search_query().'&user='.$_GET['user'].'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
+									}
+									if($i == 5){
+										$getcpage = $cpage+2;
+										if(!($getcpage > $total_pages))
+											echo '<li><a href="?s='.get_search_query().'&user='.$_GET['user'].'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
+									}
 								}
-								if($i==2){
-									$getcpage = $cpage-1;
-									if(!($getcpage == 0))
-										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
-								}
-								if($i == 3)
-									echo '<li class="active_page"><a>'.$cpage.'</a></li>';
-								if($i == 4){
-									$getcpage = $cpage+1;
-									if(!($getcpage > $total_pages))
-										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
-								}
-								if($i == 5){
-									$getcpage = $cpage+2;
-									if(!($getcpage > $total_pages))
-										echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
+
+							}
+							else{
+								for ($i=1; $i < 6; $i++) { 
+									if($i==1){
+										$getcpage = $cpage-2;
+										if(!($getcpage==-1 || $getcpage == 0))
+											echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
+									}
+									if($i==2){
+										$getcpage = $cpage-1;
+										if(!($getcpage == 0))
+											echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>'; 
+									}
+									if($i == 3)
+										echo '<li class="active_page"><a>'.$cpage.'</a></li>';
+									if($i == 4){
+										$getcpage = $cpage+1;
+										if(!($getcpage > $total_pages))
+											echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
+									}
+									if($i == 5){
+										$getcpage = $cpage+2;
+										if(!($getcpage > $total_pages))
+											echo '<li><a href="?s='.get_search_query().'&cpage='.$getcpage.'">'.$getcpage.'</a></li>';
+									}
 								}
 							}
+
 						}
 						?>
 					</ul>
