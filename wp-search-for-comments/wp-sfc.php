@@ -117,9 +117,9 @@ function ispikclear($content){
 		return $content;
 	}
 	if(count($commenters) != 0) { ?>
-		<form style="width: 480px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
-			<input style="width: 200px" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /> 
-			<input style="width: 200px" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /> 
+		<form class="userSearchForm" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
+			<p><label class="search">Aranan Kelime<input style="width: 200px;" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /></label></p>
+			<p><label class="searchUser">Aradığınız Kullanıcı<input style="width: 200px;" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /></label></p>
 			<input type="submit" class="form-sub fr" value="ara!">
 		</form>
 	<?php	
@@ -129,9 +129,9 @@ function ispikclear($content){
 		$output .= '<h1 class="page-title"><span class="s-titles fixtitle1">İçinde "'.get_search_query().'" geçen '.count($commenters).' yorum bulundu.</span></h1>';		
 	}
 	else{ ?>
-		<form style="width: 480px;" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
-			<input style="width: 200px" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /> 
-			<input style="width: 200px" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /> 
+		<form class="userSearchForm" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
+			<p><label class="search">Aranan Kelime<input style="width: 200px;" type="text" class="form-text searchinput" name="s"  placeholder="Aranan.." value="<?php echo $_GET['s'] ?>" /></label></p>
+			<p><label class="searchUser">Aradığınız Kullanıcı<input style="width: 200px;" type="text" class="form-text searchinput" name="user"  placeholder="Kullanıcının adı.." value="<?php echo $_GET['user'] ?>" /></label></p>
 			<input type="submit" class="form-sub fr" value="ara!">
 		</form>
 <?php	$output .= '<span class="s-titles fixtitle1">Herhangi Bir Yorum Bulunamadı !</span>';
