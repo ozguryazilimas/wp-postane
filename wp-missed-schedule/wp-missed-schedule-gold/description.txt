@@ -1,0 +1,25 @@
+WP Missed Schedule - Special Gold Edition - (2013.1231.2013)
+
+DISCLAIMER: This Special Gold Edition is for expert and "Advenced Users", and was installed only on manual mode.
+
+INFO: Clarifications about manual installation of the "Special Gold Edition".
+
+Here's everything you need to know:
+
+    1 - Download manually, locally, the gold version from the repository.
+    2 - Extract the contents locally.
+    3 - Identify the version with a time of checking desired.
+    4 - Rename the file locally in wp-missed-schedule.php
+    5 - Overwrite, via ftp, the local file with the file that is installed on WordPress.
+
+That's it!
+
+There are various versions with the time of checking variable from 1 minute to 24 hours!
+
+Foe example, you will want to install the version with a time of "checking 1 hour", perform the following:
+
+rename wp-missed-schedule-60.php to wp-missed-schedule.php
+
+Simple!
+
+For any other question, about it, please post @ at wordpress.org/support/plugin/wp-missed-schedule

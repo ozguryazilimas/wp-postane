@@ -1,8 +1,8 @@
 <?php 
 /*
-Plugin Name: WP Missed Schedule
+Plugin Name: WP Missed Schedule Gold
 Plugin URI: http://slangji.wordpress.com/wp-missed-schedule/
-Description: WP Missed Schedule Fix Future Posts Virtual Cron Job: find only Scheduled that match this problem, no others or not Missed posts, and it Republish them Correctly 10 items per session, every 5 minutes. All others will be solved on next sessions, to no waste resources, until no longer exist: 10 failed future posts (items) every 5 minutes, 120 failed future posts every hour, 1 session every 5 minutes, 12 sessions every hour. The default 10 items per session was introduced for compatibility with default WordPress Feed Syndication. Designed for heavy use of Scheduled Future Posts and RSS Grabbing, as FeedWordPress or WP-O-Matic, also work well with a Blog or CMS. Configuration is Automattic! Not need other actions except installing, uninstall, delete it! HyperDB Table Query Formatting Compatible.
+Description: WP Missed Schedule Gold Fix Future Posts Virtual Cron Job: find only Scheduled that match this problem, no others or not Missed posts, and it Republish them Correctly 10 items per session, every 1 minute. All others will be solved on next sessions, to no waste resources, until no longer exist; 10 failed future posts every minute, 600 failed future posts every hour, 1 session every minute, 60 sessions every hour. The default 10 Failed Future Posts per session, was introduced for compatibility with default WordPress Items Feed Syndication. This plugin is designed, on fact, for heavy use of Scheduled Future Posts and RSS Grabbing (as FeedWordPress or WP-O-Matic), but also work well with a simple WordPress Blog or for use as a CMS. The configuration of this plugin is Automattic! and not need other actions except installing, uninstall or delete it! Compatible with HyperDB Table Query Formatting.
 Version: 2013.1231.2013
 Author: sLa NGjI's
 Author URI: http://slangji.wordpress.com/
@@ -15,11 +15,9 @@ Indentation URI: http://www.gnu.org/prep/standards/standards.html
  *
  * DEVELOPMENT release: Version 2013 Build 1228 Revision 1833
  *
- * GOLD release: Version 2013 Build 1231 Revision 2013
- *
  * PRO release: Version 2014 Build 0101 Revision 2014
  *
- * [WP Missed Schedule](http://wordpress.org/plugins/wp-missed-schedule/) Fix Missed Scheduled Future Posts Virtual Cron Job
+ * [WP Missed Schedule Gold](http://wordpress.org/plugins/wp-missed-schedule/) Fix Missed Scheduled Future Posts Virtual Cron Job
  *
  * This plugin patched an important unfixed problem since WordPress 2.5+ to 3.9+
  *
@@ -155,7 +153,7 @@ Indentation URI: http://www.gnu.org/prep/standards/standards.html
 		{
 			$last = get_option( WPMS_OPTION, false );
 
-			if ( ( $last !== false ) && ( $last > ( time() - ( 5 * 60 ) ) ) )
+			if ( ( $last !== false ) && ( $last > ( time() - ( 1 * 60 ) ) ) )
 				return;
 
 			update_option( WPMS_OPTION, time() );
@@ -190,9 +188,9 @@ SQL;
 		{
 			if ( $file == plugin_basename( __FILE__ ) )
 				{
-					$links[] = '<a href="http://slangji.wordpress.com/donate/">Donate</a>';
-					$links[] = '<a href="http://slangji.wordpress.com/contact/">Contact</a>';
-					$links[] = '<a href="http://slangji.wordpress.com/plugins/">Other plugin</a>';
+					$links[] = '<a href="http://slangji.wordpress.com/donate/">' . __( 'Donate', 'wpms' ) . '</a>';
+					$links[] = '<a href="http://slangji.wordpress.com/contact/">' . __( 'Contact', 'wpms' ) . '</a>';
+					$links[] = '<a href="http://slangji.wordpress.com/plugins/">' . __( 'Others plugins', 'wpms' ) . '</a>';
 				}
 			return $links;
 		}
@@ -200,7 +198,7 @@ SQL;
 
 	function wpms_shfl()
 		{
-			echo "\n<!--Plugin WP Missed Schedule 2013.1231.2013 Active - Tag ".md5(md5("m78BbFMtb3g46FsK338kT29FPANa8zFXj3lC62b79H8651411574J4YQCeLCQM540"."6C33486E8694ECB50857E8283BC532D9"))."-->\n";
+			echo "\n<!--Plugin WP Missed Schedule Gold 2013.1231.2013 Active - Tag ".md5(md5("m78BbFMtb3g46FsK338kT29FPANa8zFXj3lC62b79H8651411574J4YQCeLCQM540"."6C33486E8694ECB50857E8283BC532D9"))."-->\n";
 			echo "\n<!-- This site is patched which an important unfixed problem since WordPress 2.5+ to 3.9+ -->\n\n";
 		}
 	add_action( 'wp_head', 'wpms_shfl' );
