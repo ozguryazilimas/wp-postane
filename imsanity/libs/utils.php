@@ -33,4 +33,45 @@ function imsanity_fatal($message, $title = "", $die = false)
 	if ($die) die();
 }
 
+/**
+ * Replacement for deprecated image_resize function
+ * @param string $file Image file path.
+ * @param int $max_w Maximum width to resize to.
+ * @param int $max_h Maximum height to resize to.
+ * @param bool $crop Optional. Whether to crop image or resize.
+ * @param string $suffix Optional. File suffix.
+ * @param string $dest_path Optional. New image file path.
+ * @param int $jpeg_quality Optional, default is 90. Image quality percentage.
+ * @return mixed WP_Error on failure. String with new destination path.
+ */
+function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $dest_path = null, $jpeg_quality = 90 ) {
+
+	if (function_exists('wp_get_image_editor'))
+	{
+		// WP 3.5 and up use the image editor
+		
+		$editor = wp_get_image_editor( $file );
+		if ( is_wp_error( $editor ) )
+			return $editor;
+		$editor->set_quality( $jpeg_quality );
+	
+		$resized = $editor->resize( $max_w, $max_h, $crop );
+		if ( is_wp_error( $resized ) )
+			return $resized;
+	
+		$dest_file = $editor->generate_filename( $suffix, $dest_path );
+		$saved = $editor->save( $dest_file );
+	
+		if ( is_wp_error( $saved ) )
+			return $saved;
+	
+		return $dest_file;
+	}
+	else
+	{
+		// wordpress prior to 3.5 uses the old image_resize function
+		return image_resize( $file, $max_w, $max_h, $crop, $suffix, $dest_path, $jpeg_quality);
+	}
+}
+
 ?>

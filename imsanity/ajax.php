@@ -43,7 +43,7 @@ function imsanity_get_images()
 			inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s
 			where $wpdb->posts.post_type = %s
 			and $wpdb->posts.post_mime_type like %s
-			and $wpdb->posts.post_mime_type != 'image/bmp'",
+			and $wpdb->posts.post_mime_type != %s",
 		array('_wp_attachment_metadata', 'attachment', 'image%','image/bmp')
 	);
 
@@ -139,7 +139,7 @@ function imsanity_resize_image()
 
 			list($newW, $newH) = wp_constrain_dimensions($oldW, $oldH, $maxW, $maxH);
 
-			$resizeResult = image_resize( $oldPath, $newW, $newH, false, null, null, $quality);
+			$resizeResult = imsanity_image_resize( $oldPath, $newW, $newH, false, null, null, $quality);
 			// $resizeResult = new WP_Error('invalid_image', __('Could not read image size'), $oldPath);  // uncommend to debug fail condition
 
 			if (!is_wp_error($resizeResult))
@@ -195,8 +195,7 @@ function imsanity_resize_image()
  */
 function imsanity_admin_javascript()
 {
-	echo "<script type=\"text/javascript\">var imsanity_plugin_url = '".plugins_url()."/imsanity';</script>\n";
-	echo "<script type=\"text/javascript\" src=\"".plugins_url()."/imsanity/scripts/imsanity.js\" ></script>\n";
+	// javascript is queued in settings.php imsanity_settings_banner()
 }
 
 ?>

@@ -4,11 +4,11 @@ Plugin Name: Imsanity
 Plugin URI: http://verysimple.com/products/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Jason Hinkle
-Version: 2.1.7
+Version: 2.2.4
 Author URI: http://verysimple.com/
 */
 
-define('IMSANITY_VERSION','2.1.7');
+define('IMSANITY_VERSION','2.2.4');
 define('IMSANITY_SCHEMA_VERSION','1.1');
 
 define('IMSANITY_DEFAULT_MAX_WIDTH',1024);
@@ -102,6 +102,20 @@ function imsanity_handle_upload($params)
 		list($maxW,$maxH) = imsanity_get_max_width_height($source);
 
 		list($oldW, $oldH) = getimagesize( $oldPath );
+		
+		/* HACK: if getimagesize returns an incorrect value (sometimes due to bad EXIF data..?)
+		$img = imagecreatefromjpeg ($oldPath);
+		$oldW = imagesx ($img);
+		$oldH = imagesy ($img);
+		imagedestroy ($img);
+		//*/
+		
+		/* HACK: an animated gif may have different frame sizes.  to get the "screen" size
+		$data = ''; // TODO: convert file to binary
+		$header = unpack('@6/vwidth/vheight', $data ); 
+		$oldW = $header['width'];
+		$oldH = $header['width']; 
+		//*/
 
 		if (($oldW > $maxW && $maxW > 0) || ($oldH > $maxH && $maxH > 0))
 		{
@@ -109,7 +123,8 @@ function imsanity_handle_upload($params)
 
 			list($newW, $newH) = wp_constrain_dimensions($oldW, $oldH, $maxW, $maxH);
 
-			$resizeResult = image_resize( $oldPath, $newW, $newH, false, null, null, $quality);
+			// this is wordpress prior to 3.5 (image_resize deprecated as of 3.5)
+			$resizeResult = imsanity_image_resize( $oldPath, $newW, $newH, false, null, null, $quality);
 
 			/* uncomment to debug error handling code: */
 			// $resizeResult = new WP_Error('invalid_image', __(print_r($_REQUEST)), $oldPath);

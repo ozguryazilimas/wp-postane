@@ -3,15 +3,15 @@ Contributors: verysimple
 Donate link: http://verysimple.com/products/imsanity/
 Tags: imsanity, image, images, automatic scale, automatic resize, image resizer, image scaler, automatic image resizer, auto image resize, auto image resizer, space saver, image shrinker, image skruncher, image cruncher
 Requires at least: 2.9
-Tested up to: 3.6
+Tested up to: 3.9
 Stable tag: trunk
 
 Imsanity automatically resizes huge image uploads.  Are contributors uploading
-huge photos?  Tired of manually scaling?  Imsanity to the rescue.
+huge photos?  Tired of manually scaling?  Imsanity to the rescue!
 
 == Description ==
 
-Imsanity automatically resizes  huge image uploads down to a size that is
+Imsanity automatically resizes huge image uploads down to a size that is
 more reasonable for display in browser, yet still more than large enough for typical website use.
 The plugin is configurable with a max width, height and quality.  When a contributor uploads an
 image that is larger than the configured size, Imsanity will automatically scale it down to the
@@ -65,13 +65,19 @@ Activating Imsanity will not alter any existing images.  Imsanity resizes images
 it does not affect existing images unless you specifically use the "Bulk Image Resize" feature on
 the Imsanity settings page.  The "Bulk Image Resize" feature allows you to selectively resize existing images.
 
-= 2. Why am I getting an error saying that my "File is not an image" ? =
+= 2. Why aren't all of my images detected when I try to use the bulk resize feature? =
+
+Imsanity doesn't search your file system to find large files, instead it looks at the "metadata"
+in the WordPress media library database.  When you upload files, WordPress stores all of the information 
+about the image.
+
+= 3. Why am I getting an error saying that my "File is not an image" ? =
 
 WordPress uses the GD library to handle the image manipulation.  GD can be installed and configured to support
 various types of images.  If GD is not configured to handle a particular image type then you will get
 this message when you try to upload it.  For more info see http://php.net/manual/en/image.installation.php
 
-= 3. Why would I need this plugin? =
+= 4. Why would I need this plugin? =
 
 Photos taken on any modern camera and even most cellphones are too large for display full-size in a browser.
 In the case of modern DSLR cameras, the image sizes are intended for high-quality printing and are ridiculously
@@ -87,37 +93,58 @@ The size limit that imsanity uses is configurable.  The default value is large e
 the average vistors entire screen without scaling so it is still more than large enough for
 typical usage.
 
-= 4. Why would I NOT want to use this plugin?
+= 5. Why would I NOT want to use this plugin? =
 
 You might not want to use Imsanity if you use WordPress as a stock art download
 site, provide high-res images for print or use WordPress as a high-res photo
 storage archive.  If you are doing any of these things then most likely
 you already have a good understanding of image resolution.
 
-= 5. Doesn't WordPress already automatically scale images? =
+= 6. Doesn't WordPress already automatically scale images? =
 
 When an image is uploaded WordPress keeps the original and, depending on the size of the original,
 will create up to 3 smaller sized copies of the file (Large, Medium, Thumbnail) which are intended
 for embedding on your pages.  Unless you have special photographic needs, the original usually sits
 there unused, but taking up disk quota.
 
-= 6. Why did you spell Insanity wrong and why does Imsanity girl want to cut me? =
+= 7. Why did you spell Insanity wrong and why does Imsanity girl want to cut me? =
 
 Imsanity is short for "Image Sanity Limit"  A sanity limit is a term for limiting something down to
 a size or value that is reasonable.  Imsanity girl cuts because you drive her insane by uploading
 unecessarily large images for no good reason.
 
-= 7. Where do I go for support? =
+= 8. Where do I go for support? =
 
 Documentation is available on the plugin homepage at http://wordpress.org/tags/imsanity and questions may
 be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.1.7 =
-* fixed call to is_multisite() on < wordpress < 3.0
+= 2.2.4 =
+* load js properly to avoid warnings with certain security plugins
+* update settings text to be more clear about max w/h
+* updated language translation .pot file
+* updated FAQ
 
 == Changelog ==
+
+= 2.2.4 =
+* load js properly to avoid warnings with certain security plugins
+* update settings text to be more clear about max w/h
+* updated language translation .pot file
+* updated FAQ
+
+= 2.2.3 =
+* improved error reporting in bulk resize
+
+= 2.2.2 =
+* replaced image_resize() call for wordpress prior to 3.5
+
+= 2.2.1 =
+* removed deprecated call to image_resize() in bulk resize
+
+= 2.2.0 =
+* removed deprecated call to image_resize() on < wordpress > 3.5
 
 = 2.1.7 =
 * fixed call to is_multisite() on < wordpress < 3.0

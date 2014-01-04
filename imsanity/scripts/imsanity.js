@@ -2,6 +2,10 @@
  * imsanity admin javascript functions
  */
 
+// this must run inline so that the script is detected correctly
+var imsanity_scripts = document.getElementsByTagName("script");
+var imsanity_script_url = imsanity_scripts[imsanity_scripts.length-1].src;
+
 /**
  * Begin the process of re-sizing all of the checked images
  */
@@ -21,6 +25,16 @@ function imsanity_resize_images()
 	imsanity_resize_next(images,0);
 }
 
+/**
+ * Detect the base url for the imsanity plugin folder
+ * @returns
+ */
+function imsanity_get_base_url()
+{
+	return imsanity_script_url.substring(0,imsanity_script_url.indexOf('scripts/imsanity.js'));
+}
+
+
 /** 
  * recursive function for resizing images
  */
@@ -33,10 +47,18 @@ function imsanity_resize_next(images,next_index)
 		{action: 'imsanity_resize_image', id: images[next_index]}, 
 		function(response) 
 		{
-			var result = JSON.parse(response);
-
+			var result;
 			var target = jQuery('#resize_results'); 
-			target.append('<div>'+ result['message'] +'</div>');
+			
+			try {
+				result = JSON.parse(response);
+				target.append('<div>'+ result['message'] +'</div>');
+			}
+			catch(e) {
+				target.append('<div>Error parsing server response for POST ' + images[next_index] + ': '+ e.message +'.  Check the console for details.</div>');
+				if (console) console.warn('Invalid JSON Response: ' + response);
+		    }
+
 			target.animate({scrollTop: target.height()}, 500);
 
 			// recurse
@@ -66,7 +88,7 @@ function imsanity_load_images(container_id)
 
 	var target = jQuery('#imsanity_target');
 
-	target.html('<div><image src="'+ imsanity_plugin_url  +'/images/ajax-loader.gif" style="margin-bottom: .25em; vertical-align:middle;" /> Examining existing attachments.  This may take a few moments...</div>');
+	target.html('<div><image src="'+ imsanity_get_base_url()  +'images/ajax-loader.gif" style="margin-bottom: .25em; vertical-align:middle;" /> Examining existing attachments.  This may take a few moments...</div>');
 
 	target.animate({height: [250,'swing']},500, function()
 	{
@@ -85,7 +107,7 @@ function imsanity_load_images(container_id)
 						
 						for (var i = 0; i < images.length; i++)
 						{
-							target.append('<div><input class="imsanity_image_cb" name="imsanity_images" value="' + images[i].id + '" type="checkbox" checked="checked" /> '+ images[i].file +' ('+images[i].width+' x '+images[i].height+')</div>');
+							target.append('<div><input class="imsanity_image_cb" name="imsanity_images" value="' + images[i].id + '" type="checkbox" checked="checked" /> POST ' + images[i].id + ': ' + images[i].file +' ('+images[i].width+' x '+images[i].height+')</div>');
 						}
 
 						container.append('<p class="submit"><button class="button-primary" onclick="imsanity_resize_images();">Resize Checked Images...</button></p>');
