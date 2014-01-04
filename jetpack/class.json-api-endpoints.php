@@ -37,12 +37,13 @@ abstract class WPCOM_JSON_API_Endpoint {
 		),
 		'http_envelope' => array(
 			'false' => '',
-			'true'  => 'Some enviroments (like in-browser Javascript or Flash) block or divert responses with a non-200 HTTP status code.  Setting this parameter will force the HTTP status code to always be 200.  The JSON response is wrapped in an "envelope" containing the "real" HTTP status code and headers.',
+			'true'  => 'Some environments (like in-browser Javascript or Flash) block or divert responses with a non-200 HTTP status code.  Setting this parameter will force the HTTP status code to always be 200.  The JSON response is wrapped in an "envelope" containing the "real" HTTP status code and headers.',
 		),
 		'pretty' => array(
 			'false' => '',
 			'true'  => 'Output pretty JSON',
 		),
+		'meta' => "(string) Optional. Loads data from the endpoints found in the 'meta' part of the response. Comma separated list. Example: meta=site,likes",
 		// Parameter name => description (default value is empty)
 		'callback' => '(string) An optional JSONP callback function.',
 	);
@@ -161,7 +162,6 @@ abstract class WPCOM_JSON_API_Endpoint {
 	// Get POST body data
 	function input( $return_default_values = true, $cast_and_filter = true ) {
 		$input = trim( $this->api->post_body );
-
 		switch ( $this->api->content_type ) {
 		case 'application/json; charset=utf-8' :
 		case 'application/json' :
@@ -170,7 +170,8 @@ abstract class WPCOM_JSON_API_Endpoint {
 		case 'text/x-javascript' :
 		case 'text/x-json' :
 		case 'text/json' :
-			$return = json_decode( $input );
+			$return = json_decode( $input, true );
+
 			if ( function_exists( 'json_last_error' ) ) {
 				if ( JSON_ERROR_NONE !== json_last_error() ) {
 					return null;
@@ -181,12 +182,19 @@ abstract class WPCOM_JSON_API_Endpoint {
 				}
 			}
 
-			if ( is_object( $return ) ) {
-				$return = (array) $return;
-			}
 			break;
 		case 'multipart/form-data' :
 			$return = array_merge( stripslashes_deep( $_POST ), $_FILES );
+			break;
+		case 'application/x-www-form-urlencoded' :
+		case 'application/x-www-form-urlencoded; charset=UTF-8' :
+			//attempt JSON first, since probably a curl command
+			$return = json_decode( $input, true );
+
+			if ( is_null( $return ) ) {
+				wp_parse_str( $input, $return );
+			}
+
 			break;
 		default :
 			wp_parse_str( $input, $return );
@@ -203,6 +211,7 @@ abstract class WPCOM_JSON_API_Endpoint {
 	function cast_and_filter( $data, $documentation, $return_default_values = false, $for_output = false ) {
 		$return_as_object = false;
 		if ( is_object( $data ) ) {
+			// @todo this should probably be a deep copy if $data can ever have nested objects
 			$data = (array) $data;
 			$return_as_object = true;
 		} elseif ( !is_array( $data ) ) {
@@ -575,25 +584,22 @@ abstract class WPCOM_JSON_API_Endpoint {
 
 			// Examples for endpoint documentation response
 			$response_key = 'dev_response_' . $this->version . '_' . $this->method . '_' . sanitize_title( $this->path );
-			$response     = get_option( $response_key );
+			$response     = wp_cache_get( $response_key );
 
 			// Response doesn't exist, so run the request
-			if ( empty( $response ) ) {
+			if ( false === $response ) {
 
 				// Only trust GET request
 				if ( 'GET' === $this->method ) {
-					$response = wp_remote_get( $this->example_request );
-				}
+					$response      = wp_remote_get( $this->example_request );
+					$response_body = wp_remote_retrieve_body( $response );
 
-				// Set as false if it's an error
-				if ( is_wp_error( $response ) ) {
-					$response = false;
-				}
-
-				// Only update the option if there's a result
-				if ( !empty( $response ) ) {
-					$response = $response['body'];
-					update_option( $response_key, $response );
+					// Only cache if there's a result
+					if ( strlen( $response_body ) ) {
+						wp_cache_set( $response_key, $response );
+					} else {
+						wp_cache_delete( $response_key );
+					}
 				}
 			}
 
@@ -885,8 +891,12 @@ EOPHP;
 			$name        = $author->comment_author;
 			$URL         = $author->comment_author_url;
 			$profile_URL = 'http://en.gravatar.com/' . md5( strtolower( trim( $email ) ) );
+			$nice        = '';
 		} else {
 			if ( isset( $author->post_author ) ) {
+				if ( 0 == $author->post_author )
+					return null;
+
 				$author = $author->post_author;
 			} elseif ( isset( $author->user_id ) && $author->user_id ) {
 				$author = $author->user_id;
@@ -904,6 +914,7 @@ EOPHP;
 			$email = $user->user_email;
 			$name  = $user->display_name;
 			$URL   = $user->user_url;
+			$nice  = $user->user_nicename;
 			if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 				$profile_URL = "http://en.gravatar.com/{$user->user_login}";
 			} else {
@@ -919,6 +930,7 @@ EOPHP;
 			'ID'          => (int) $ID,
 			'email'       => $email, // (string|bool)
 			'name'        => (string) $name,
+			'nice_name'   => (string) $nice,
 			'URL'         => (string) esc_url_raw( $URL ),
 			'avatar_URL'  => (string) esc_url_raw( $avatar_URL ),
 			'profile_URL' => (string) esc_url_raw( $profile_URL ),
@@ -1110,6 +1122,7 @@ abstract class WPCOM_JSON_API_Post_Endpoint extends WPCOM_JSON_API_Endpoint {
 		'i_like'         => '(bool) Does the current user like this post?',
 		'is_reblogged'   => '(bool) Did the current user reblog this post?',
 		'is_following'   => '(bool) Is the current user following this blog?',
+		'global_ID'      => '(string) A unique WordPress.com-wide representation of a post.',
 		'featured_image' => '(URL) The URL to the featured image for this post if it has one.',
 		'format'         => array(), // see constructor
 		'geo'            => '(object>geo|false)',
@@ -1150,7 +1163,7 @@ abstract class WPCOM_JSON_API_Post_Endpoint extends WPCOM_JSON_API_Endpoint {
 		if ( empty( $key ) )
 			return false;
 
-		// whitelist of post types that can be accessed
+		// whitelist of metadata that can be accessed
  		if ( in_array( $key, apply_filters( 'rest_api_allowed_public_metadata', array() ) ) )
 			return true;
 
@@ -1333,6 +1346,9 @@ abstract class WPCOM_JSON_API_Post_Endpoint extends WPCOM_JSON_API_Endpoint {
 			case 'is_following':
 				$response[$key] = (int) $this->api->is_following( $blog_id );
 				break;
+			case 'global_ID':
+				$response[$key] = (string) $this->api->add_global_ID( $blog_id, $post->ID );
+				break;
 			case 'featured_image' :
 				$image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
 				if ( is_array( $image_attributes ) && isset( $image_attributes[0] ) )
@@ -1439,7 +1455,7 @@ abstract class WPCOM_JSON_API_Post_Endpoint extends WPCOM_JSON_API_Endpoint {
 					$metadata[] = array(
 						'id'    => $meta['meta_id'],
 						'key'   => $meta['meta_key'],
-						'value' => $meta['meta_value']
+						'value' => maybe_unserialize( $meta['meta_value'] ),
 					);
 				}
 
@@ -2007,6 +2023,8 @@ class WPCOM_JSON_API_Update_Post_Endpoint extends WPCOM_JSON_API_Post_Endpoint {
 		if ( ! empty( $metadata ) ) {
 			foreach ( (array) $metadata as $meta ) {
 
+				$meta = (object) $meta;
+
 				$existing_meta_item = new stdClass;
 
 				if ( empty( $meta->operation ) )
@@ -2052,7 +2070,7 @@ class WPCOM_JSON_API_Update_Post_Endpoint extends WPCOM_JSON_API_Post_Endpoint {
 						break;
 					case 'update':
 
-						if ( empty( $meta->value ) ) {
+						if ( ! isset( $meta->value ) ) {
 							continue;
 						} elseif ( ! empty( $meta->id ) && ! empty( $existing_meta_item->meta_key ) && current_user_can( 'edit_post_meta', $post_id, $unslashed_existing_meta_key ) ) {
 							update_metadata_by_mid( 'post', $meta->id, $meta->value );
@@ -2067,6 +2085,8 @@ class WPCOM_JSON_API_Update_Post_Endpoint extends WPCOM_JSON_API_Post_Endpoint {
 
 			}
 		}
+
+		do_action( 'rest_api_inserted_post', $post_id, $insert, $new );
 
 		$return = $this->get_post_by( 'ID', $post_id, $args['context'] );
 		if ( !$return || is_wp_error( $return ) ) {
@@ -2228,7 +2248,11 @@ class WPCOM_JSON_API_Update_Taxonomy_Endpoint extends WPCOM_JSON_API_Taxonomy_En
 			)
 		);
 
+		if ( is_wp_error( $data ) )
+			return $data;
+
 		$taxonomy = get_term_by( 'id', $data['term_id'], $taxonomy_type );
+
 		$return   = $this->get_taxonomy( $taxonomy->slug, $taxonomy_type, $args['context'] );
 		if ( !$return || is_wp_error( $return ) ) {
 			return $return;
@@ -2735,7 +2759,10 @@ class WPCOM_JSON_API_Update_Comment_Endpoint extends WPCOM_JSON_API_Comment_Endp
 	// /sites/%s/comments/%d             -> $blog_id, $comment_id
 	// /sites/%s/comments/%d/delete      -> $blog_id, $comment_id
 	function callback( $path = '', $blog_id = 0, $object_id = 0 ) {
-		$blog_id = $this->api->switch_to_blog_and_validate_user( $this->api->get_blog_id( $blog_id ) );
+		if ( $this->api->ends_with( $path, '/new' ) )
+			$blog_id = $this->api->switch_to_blog_and_validate_user( $this->api->get_blog_id( $blog_id ), false );
+		else
+			$blog_id = $this->api->switch_to_blog_and_validate_user( $this->api->get_blog_id( $blog_id ) );
 		if ( is_wp_error( $blog_id ) ) {
 			return $blog_id;
 		}
@@ -2873,6 +2900,10 @@ class WPCOM_JSON_API_Update_Comment_Endpoint extends WPCOM_JSON_API_Comment_Endp
 		}
 
 		if ( isset( $update['comment_status'] ) ) {
+			if ( count( $update ) === 1 ) {
+				// We are only here to update the comment status so let's respond ASAP
+				add_action( 'wp_set_comment_status', array( $this, 'output_comment' ), 0, 1 );
+			}
 			switch ( $update['comment_status'] ) {
 				case 'approved' :
 					if ( 'approve' !== $comment_status ) {
@@ -2957,6 +2988,12 @@ class WPCOM_JSON_API_Update_Comment_Endpoint extends WPCOM_JSON_API_Comment_Endp
 
 		return $this->get_comment( $comment->comment_ID, $args['context'] );
 	}
+
+	function output_comment( $comment_id ) {
+		$args  = $this->query_args();
+		$output = $this->get_comment( $comment_id, $args['context'] );
+		$this->api->output_early( 200, $output );
+	}
 }
 
 class WPCOM_JSON_API_GET_Site_Endpoint extends WPCOM_JSON_API_Endpoint {
@@ -2995,8 +3032,18 @@ class WPCOM_JSON_API_GET_Site_Endpoint extends WPCOM_JSON_API_Endpoint {
 				$response[$key] = (string) home_url();
 				break;
 			case 'jetpack' :
-				if ( $is_user_logged_in )
+				$response[$key] = false; // magic
+				break;
+			case 'is_private' :
+				if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+					$public_setting = get_option( 'blog_public' );
+					if ( -1 == $public_setting )
+						$response[$key] = true;
+					else
+						$response[$key] = false;
+				} else {
 					$response[$key] = false; // magic
+				}
 				break;
 			case 'post_count' :
 				if ( $is_user_logged_in )
@@ -3006,6 +3053,18 @@ class WPCOM_JSON_API_GET_Site_Endpoint extends WPCOM_JSON_API_Endpoint {
 				if ( $is_user_logged_in )
 					$response[$key] = (string) get_bloginfo( 'language' );
 				break;
+            case 'subscribers_count' :
+				if ( function_exists( 'wpcom_subs_total_wpcom_subscribers' ) ) {
+					$total_wpcom_subs = wpcom_subs_total_wpcom_subscribers(
+						array(
+							'blog_id' => $blog_id,
+						)
+					);
+					$response[$key] = $total_wpcom_subs;
+				} else {
+					$response[$key] = 0; // magic
+				}
+                break;
 			case 'meta' :
 				$response[$key] = (object) array(
 					'links' => (object) array(
@@ -3025,9 +3084,13 @@ class WPCOM_JSON_API_GET_Site_Endpoint extends WPCOM_JSON_API_Endpoint {
 	}
 }
 
+
+
 /*
  * Set up endpoints
  */
+
+
 
 /*
  * Site endpoints
@@ -3054,8 +3117,10 @@ new WPCOM_JSON_API_GET_Site_Endpoint( array(
  		'URL'         => '(string) Full URL to the blog',
  		'jetpack'     => '(bool)  Whether the blog is a Jetpack blog or not',
  		'post_count'  => '(int) The number of posts the blog has',
+        'subscribers_count'  => '(int) The number of subscribers the blog has',
 		'lang'        => '(string) Primary language code of the blog',
 		'meta'        => '(object) Meta data',
+		'is_private'  => '(bool) If the blog is a private blog or not',
 	),
 
 	'example_request' => 'https://public-api.wordpress.com/rest/v1/sites/en.blog.wordpress.com/?pretty=1',
@@ -3108,7 +3173,7 @@ new WPCOM_JSON_API_List_Posts_Endpoint( array(
 		'author'   => "(int) Author's user ID",
 		'search'   => '(string) Search query',
 		'meta_key'   => '(string) Metadata key that the post should contain',
-		'meta_value'   => '(int|string) Metadata value that the post should contain. Will only be applied if a `meta_key` is also given',
+		'meta_value'   => '(string) Metadata value that the post should contain. Will only be applied if a `meta_key` is also given',
 	),
 
 	'example_request' => 'https://public-api.wordpress.com/rest/v1/sites/en.blog.wordpress.com/posts/?number=5&pretty=1'

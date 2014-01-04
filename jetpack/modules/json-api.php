@@ -5,6 +5,8 @@
  * Sort Order: 100
  * First Introduced: 1.9
  * Requires Connection: Yes
+ * Auto Activate: Public
+ * Module Tags: Writing, Developers
  */
 
 function jetpack_json_api_toggle() {

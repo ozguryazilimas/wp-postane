@@ -6,6 +6,8 @@
  * First Introduced: 1.4
  * Sort Order: 2
  * Requires Connection: Yes
+ * Auto Activate: No
+ * Module Tags: Social
  */
 
 require dirname( __FILE__ ) . '/comments/comments.php';

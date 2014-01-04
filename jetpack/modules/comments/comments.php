@@ -184,7 +184,7 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 
 		// If users are required to be logged in, and they're not, then we don't need to do anything else
 		if ( get_option( 'comment_registration' ) && !is_user_logged_in() ) {
-			echo '<p id="must-log-in-to-comment">' . sprintf( apply_filters( 'jetpack_must_log_in_to_comment', __( 'You must <a href="%s">log in</a> to post a comment.', 'jetpack' ) ), wp_login_url( get_permalink() . '#respond' ) ) . '</p>';
+			echo '<p class="must-log-in">' . sprintf( apply_filters( 'jetpack_must_log_in_to_comment', __( 'You must <a href="%s">log in</a> to post a comment.', 'jetpack' ) ), wp_login_url( get_permalink() . '#respond' ) ) . '</p>';
 			return;
 		}
 
@@ -200,7 +200,7 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 		}
 
 		$params  = array(
-			'blogid'               => Jetpack::get_option( 'id' ),
+			'blogid'               => Jetpack_Options::get_option( 'id' ),
 			'postid'               => get_the_ID(),
 			'comment_registration' => ( get_option( 'comment_registration' ) ? '1' : '0' ), // Need to explicitly send a '1' or a '0' for these
 			'require_name_email'   => ( get_option( 'require_name_email' )   ? '1' : '0' ),
@@ -209,6 +209,7 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 			'show_avatars'         => ( get_option( 'show_avatars' )         ? '1' : '0' ),
 			'avatar_default'       => get_option( 'avatar_default' ),
 			'greeting'             => get_option( 'highlander_comment_form_prompt', __( 'Leave a Reply', 'jetpack' ) ),
+			'greeting_reply'       => apply_filters( 'jetpack_comment_form_prompt_reply', __( 'Leave a Reply to %s' , 'jetpack' ) ),
 			'color_scheme'         => get_option( 'jetpack_comment_form_color_scheme', $this->default_color_scheme ),
 			'lang'                 => get_bloginfo( 'language' ),
 			'jetpack_version'      => JETPACK__VERSION,
@@ -226,7 +227,7 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 				$params['_wp_unfiltered_html_comment'] = wp_create_nonce( 'unfiltered-html-comment_' . get_the_ID() );
 		}
 
-		$signature = Jetpack_Comments::sign_remote_comment_parameters( $params, Jetpack::get_option( 'blog_token' ) );
+		$signature = Jetpack_Comments::sign_remote_comment_parameters( $params, Jetpack_Options::get_option( 'blog_token' ) );
 		if ( is_wp_error( $signature ) ) {
 			$signature = 'error';
 		}
@@ -246,9 +247,9 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 		// The actual iframe (loads comment form from Jetpack server)
 		?>
 
-		<div id="respond">
-			<h3 id="reply-title"><?php comment_form_title( __( 'Leave a Reply' ), __( 'Leave a Reply to %s' ) ); ?> <small><?php cancel_comment_reply_link( __( 'Cancel reply' ) ); ?></small></h3>
-			<div id="commentform">
+		<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title"><?php comment_form_title( esc_html( $params['greeting'] ), esc_html( $params['greeting_reply'] ) ); ?> <small><?php cancel_comment_reply_link( esc_html__( 'Cancel reply' , 'jetpack') ); ?></small></h3>
+			<div id="commentform" class="comment-form">
 				<iframe src="<?php echo esc_url( $url ); ?>" allowtransparency="<?php echo $transparent; ?>" style="width:100%; height: <?php echo $height; ?>px;border:0px;" frameBorder="0" scrolling="no" name="jetpack_remote_comment" id="jetpack_remote_comment"></iframe>
 			</div>
 		</div>
@@ -376,7 +377,7 @@ class Jetpack_Comments extends Highlander_Comments_Base {
 		if ( FALSE !== strpos( $post_array['hc_avatar'], '.gravatar.com' ) )
 			$post_array['hc_avatar'] = htmlentities( $post_array['hc_avatar'] );
 
-		$check = Jetpack_Comments::sign_remote_comment_parameters( $post_array, Jetpack::get_option( 'blog_token' ) );
+		$check = Jetpack_Comments::sign_remote_comment_parameters( $post_array, Jetpack_Options::get_option( 'blog_token' ) );
 		if ( is_wp_error( $check ) ) {
 			wp_die( $check );
 		}

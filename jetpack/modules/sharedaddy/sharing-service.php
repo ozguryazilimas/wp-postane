@@ -417,7 +417,9 @@ function sharing_add_footer() {
 			endif;
 		endif;
 
-		wp_print_scripts( 'sharing-js' );
+		wp_enqueue_script( 'sharing-js' );
+		$recaptcha__options = array( 'lang' => get_base_recaptcha_lang_code() );
+		wp_localize_script('sharing-js', 'recaptcha_options', $recaptcha__options);
 	}
 
 	$sharer = new Sharing_Service();
@@ -457,6 +459,9 @@ add_action( 'template_redirect', 'sharing_process_requests', 9 );
 
 function sharing_display( $text = '', $echo = false ) {
 	global $post, $wp_current_filter;
+
+	if ( empty( $post ) )
+		return $text;
 
 	if ( is_preview() ) {
 		return $text;
@@ -601,3 +606,27 @@ function sharing_display( $text = '', $echo = false ) {
 
 add_filter( 'the_content', 'sharing_display', 19 );
 add_filter( 'the_excerpt', 'sharing_display', 19 );
+function get_base_recaptcha_lang_code() {
+
+	$base_recaptcha_lang_code_mapping = array(
+		'en'    => 'en',
+		'nl'    => 'nl',
+		'fr'    => 'fr',
+		'fr-be' => 'fr',
+		'fr-ca' => 'fr',
+		'fr-ch' => 'fr',
+		'de'    => 'de',
+		'pt'    => 'pt',
+		'pt-br' => 'pt',
+		'ru'    => 'ru',
+		'es'    => 'es',
+		'tr'    => 'tr'
+	);
+
+	$blog_lang_code = function_exists( 'get_blog_lang_code' ) ? get_blog_lang_code() : get_bloginfo( 'language' );
+	if( isset( $base_recaptcha_lang_code_mapping[ $blog_lang_code ] ) )
+		return $base_recaptcha_lang_code_mapping[ $blog_lang_code ];
+
+	// if no base mapping is found return default 'en'
+	return 'en';
+}

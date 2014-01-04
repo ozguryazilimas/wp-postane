@@ -197,7 +197,7 @@ class Share_Email extends Sharing_Source {
 	}
 
 	public function get_name() {
-		return __( 'Email', 'jetpack' );
+		return _x( 'Email', 'as sharing source', 'jetpack' );
 	}
 
 	// Default does nothing
@@ -317,6 +317,9 @@ class Share_Email extends Sharing_Source {
 
 class Share_Twitter extends Sharing_Source {
 	var $shortname = 'twitter';
+	// 'https://dev.twitter.com/docs/api/1.1/get/help/configuration' ( 2013/06/24 ) short_url_length is 22
+	var $short_url_length = 24;
+
 	public function __construct( $id, array $settings ) {
 		parent::__construct( $id, $settings );
 
@@ -402,8 +405,8 @@ class Share_Twitter extends Sharing_Source {
 			$sig     = '';
 		}
 
-		$suffix_length = $strlen( " {$post_link}{$sig}" );
 
+		$suffix_length = $this->short_url_length + $strlen( " {$sig}" );
 		// $sig is handled by twitter in their 'via' argument.
 		// $post_link is handled by twitter in their 'url' argument.
 		if ( 140 < $strlen( $post_title ) + $suffix_length ) {
@@ -600,28 +603,14 @@ class Share_LinkedIn extends Sharing_Source {
 
 	public function process_request( $post, array $post_data ) {
 
-		setup_postdata( $post );
-
 		$post_link = $this->get_share_url( $post->ID );
 
-		// http://www.linkedin.com/shareArticle?mini=true&url={articleUrl}&title={articleTitle}&summary={articleSummary}&source={articleSource}
-
-		$encoded_title = rawurlencode( $post->post_title );
-		if( strlen( $encoded_title ) > 200 )
-			$encoded_title = substr( $encoded_title, 0, 197 ) . '...';
-
-		$encoded_summary = rawurlencode( strip_tags( get_the_excerpt() ) );
-		if( strlen( $encoded_summary ) > 256 )
-			$encoded_summary = substr( $encoded_summary, 0, 253 ) . '...';
-
-		$source = get_bloginfo( 'name' );
+		// Using the same URL as the official button, which is *not* LinkedIn's documented sharing link
+		// http://www.linkedin.com/cws/share?url={url}&token=&isFramed=false
 
 		$linkedin_url = add_query_arg( array(
-			'title' => $encoded_title,
 			'url' => rawurlencode( $post_link ),
-			'source' => rawurlencode( $source ),
-			'summary' => $encoded_summary,
-		), 'http://www.linkedin.com/shareArticle?mini=true' );
+		), 'http://www.linkedin.com/cws/share?token=&isFramed=false' );
 
 		// Record stats
 		parent::process_request( $post, $post_data );
@@ -720,7 +709,9 @@ class Share_Facebook extends Sharing_Source {
 				'fi_FI' => 100,
 				'it_IT' => 100,
 				'ja_JP' => 100,
+				'pl_PL' => 100,
 				'nl_NL' => 130,
+				'ro_RO' => 100,
 				'ru_RU' => 128,
 			);
 
@@ -838,7 +829,7 @@ class Share_GooglePlus1 extends Sharing_Source {
 	}
 
 	public function get_name() {
-		return __( 'Google +1', 'jetpack' );
+		return __( 'Google', 'jetpack' );
 	}
 
 	public function has_custom_button_style() {
@@ -849,11 +840,9 @@ class Share_GooglePlus1 extends Sharing_Source {
 		$share_url = $this->get_share_url( $post->ID );
 
 		if ( $this->smart ) {
-			return '<div class="googleplus1_button"><div class="g-plusone" data-size="medium" data-callback="sharing_plusone" data-href="' . esc_url( $share_url ) . '"></div></div>';
+			return '<div class="googleplus1_button"><div class="g-plus" data-action="share" data-annotation="bubble" data-href="' . esc_url( $share_url ) . '"></div></div>';
 		} else {
-			//if ( 'icon-text' == $this->button_style || 'text' == $this->button_style )
-				//sharing_register_post_for_share_counts( $post->ID );
-			return $this->get_link( get_permalink( $post->ID ), _x( 'Google +1', 'share to', 'jetpack' ), __( 'Click to share on Google+', 'jetpack' ), 'share=google-plus-1', 'sharing-google-' . $post->ID );
+			return $this->get_link( get_permalink( $post->ID ), _x( 'Google', 'share to', 'jetpack' ), __( 'Click to share on Google+', 'jetpack' ), 'share=google-plus-1', 'sharing-google-' . $post->ID );
 		}
 	}
 
@@ -880,20 +869,15 @@ class Share_GooglePlus1 extends Sharing_Source {
 
 		if ( $this->smart ) { ?>
 			<script type="text/javascript">
-				function sharing_plusone( obj ) {
-					jQuery.ajax( {
-						url: '<?php echo get_permalink( $post->ID ) . '?share=google-plus-1'; ?>',
-						type: 'POST',
-						data: obj
-					} );
-				}
-				jQuery( document.body ).on( 'post-load', function() {
-					gapi.plusone.go();
-				});
+			  (function() {
+			    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+			    po.src = 'https://apis.google.com/js/plusone.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+			  })();
 			</script>
-			<script type="text/javascript" src="//apis.google.com/js/plusone.js"></script> <?php
+			<?php
 		} else {
-			$this->js_dialog( 'google-plus-1', array( 'width' => 600, 'height' => 600 ) );
+			$this->js_dialog( 'google-plus-1', array( 'width' => 480, 'height' => 550 ) );
 		}
 	}
 
@@ -1214,6 +1198,8 @@ class Share_Pinterest extends Sharing_Source {
 				s.src = window.location.protocol + "//assets.pinterest.com/js/pinit.js";
 				var x = document.getElementsByTagName("script")[0];
 				x.parentNode.insertBefore(s, x);
+				// if 'Pin it' button has 'counts' make container wider
+				jQuery(window).load( function(){ jQuery( 'li.share-pinterest a span:visible' ).closest( '.share-pinterest' ).width( '80px' ); } );
 			</script>
 		<?php else : ?>
 			<script type="text/javascript">
@@ -1301,3 +1287,4 @@ class Share_Pocket extends Sharing_Source {
 	}
 
 }
+

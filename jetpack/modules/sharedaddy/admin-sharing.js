@@ -163,6 +163,14 @@
 			return true;
 		}
 
+		function showExtraOptions( service ) {
+			jQuery( '.' + service + '-extra-options' ).css( { backgroundColor: '#ffffcc' } ).fadeIn();
+		}
+
+		function hideExtraOptions( service ) {
+			jQuery( '.' + service + '-extra-options' ).fadeOut( 'slow' );
+		}
+
 		function save_services() {
 			$( '#enabled-services h3 img' ).show();
 
@@ -188,6 +196,13 @@
 				if ( $( this ).hasClass( 'service' ) ) {
 					// Ready for saving
 					visible[visible.length] = $( this ).attr( 'id' );
+					showExtraOptions( $( this ).attr( 'id' ) );
+				}
+			} );
+
+			$( 'ul.services-available li' ).each( function() {
+				if ( $( this ).hasClass( 'service' ) ) {
+					hideExtraOptions( $( this ).attr( 'id' ) );
 				}
 			} );
 
@@ -195,6 +210,7 @@
 				if ( $( this ).hasClass( 'service' ) ) {
 					// Ready for saving
 					hidden[hidden.length] = $( this ).attr( 'id' );
+					showExtraOptions( $( this ).attr( 'id' ) );
 				}
 			} );
 
@@ -319,7 +335,7 @@
 		} ).change();
 
 		$( 'input[name=sharing_label]' ).blur( function() {
-			$('#live-preview h3.sd-title').html( $( '<div/>' ).text( $( this ).val() ).html() );
+			$('#live-preview h3.sd-title').text( $( '<div/>' ).text( $( this ).val() ).html() );
 		} );
 
 		init_handlers();

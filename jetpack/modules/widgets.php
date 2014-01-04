@@ -5,6 +5,8 @@
  * Sort Order: 13
  * First Introduced: 1.2
  * Requires Connection: No
+ * Auto Activate: Yes
+ * Module Tags: Social, Appearance
  */
 
 function jetpack_load_widgets() {

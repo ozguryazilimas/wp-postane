@@ -51,14 +51,12 @@ class Jetpack_Photon {
 		if ( ! function_exists( 'jetpack_photon_url' ) )
 			return;
 
-		// Images in post content
+		// Images in post content and galleries
 		add_filter( 'the_content', array( __CLASS__, 'filter_the_content' ), 999999 );
+		add_filter( 'get_post_gallery', array( __CLASS__, 'filter_the_content' ), 999999 );
 
 		// Core image retrieval
 		add_filter( 'image_downsize', array( $this, 'filter_image_downsize' ), 10, 3 );
-
-		// og:image URL
-		add_filter( 'jetpack_open_graph_tags', array( $this, 'filter_open_graph_tags' ), 10, 2 );
 
 		// Helpers for maniuplated images
 		add_action( 'wp_enqueue_scripts', array( $this, 'action_wp_enqueue_scripts' ), 9 );
@@ -358,13 +356,14 @@ class Jetpack_Photon {
 				// To ensure filter receives consistent data regardless of requested size, `$image_args` is overridden with dimensions of original image.
 				if ( 'full' == $size ) {
 					$image_meta = wp_get_attachment_metadata( $attachment_id );
-
-					// 'crop' is true so Photon's `resize` method is used
-					$image_args = array(
-						'width'  => $image_meta['width'],
-						'height' => $image_meta['height'],
-						'crop'   => true
-					);
+					if ( isset( $image_meta['width'], $image_meta['height'] ) ) {
+						// 'crop' is true so Photon's `resize` method is used
+						$image_args = array(
+							'width'  => $image_meta['width'],
+							'height' => $image_meta['height'],
+							'crop'   => true
+						);
+					}
 				}
 
 				// Expose determined arguments to a filter before passing to Photon
@@ -443,7 +442,7 @@ class Jetpack_Photon {
 		) );
 
 		// Bail if scheme isn't http or port is set that isn't port 80
-		if ( 'http' != $url_info['scheme'] || ! in_array( $url_info['port'], array( 80, null ) ) )
+		if ( ( 'http' != $url_info['scheme'] || ! in_array( $url_info['port'], array( 80, null ) ) ) && apply_filters( 'jetpack_photon_reject_https', true ) )
 			return false;
 
 		// Bail if no host is found

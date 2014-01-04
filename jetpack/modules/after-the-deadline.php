@@ -5,6 +5,8 @@
  * Sort Order: 6
  * First Introduced: 1.1
  * Requires Connection: Yes
+ * Auto Activate: Yes
+ * Module Tags: Writing
  */
 
 add_action( 'jetpack_modules_loaded', 'AtD_load' );
