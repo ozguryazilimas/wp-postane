@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Login Logout\n"
+"POT-Creation-Date: 2013-10-15 17:03+0200\n"
+"PO-Revision-Date: 2013-10-15 17:03+0200\n"
+"Last-Translator: webvitaly <webvitaly@gmail.com>\n"
+"Language-Team:  <web.vitaly@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: ./\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../login-logout.php:18
+msgid "Login-Logout widget"
+msgstr ""
+
+#: ../login-logout.php:19 ../login-logout.php:242
+msgid "Login-Logout"
+msgstr ""
+
+#: ../login-logout.php:26
+msgid "Log in"
+msgstr ""
+
+#: ../login-logout.php:27
+msgid "Log out"
+msgstr ""
+
+#: ../login-logout.php:29
+msgid "Welcome [username]"
+msgstr ""
+
+#: ../login-logout.php:31
+msgid "Register"
+msgstr ""
+
+#: ../login-logout.php:33
+msgid "Admin section"
+msgstr ""
+
+#: ../login-logout.php:175
+msgid "Title"
+msgstr ""
+
+#: ../login-logout.php:178
+msgid "Login text"
+msgstr ""
+
+#: ../login-logout.php:181
+msgid "Logout text"
+msgstr ""
+
+#: ../login-logout.php:184
+msgid "Show welcome text if user is logged in"
+msgstr ""
+
+#: ../login-logout.php:187
+msgid "Welcome text (use [username] for showing the name of the logged user)"
+msgstr ""
+
+#: ../login-logout.php:190
+msgid "Show register link (if user is logged out and if users can register)"
+msgstr ""
+
+#: ../login-logout.php:193
+msgid "Register text"
+msgstr ""
+
+#: ../login-logout.php:196
+msgid "Show admin link (if user is logged in)"
+msgstr ""
+
+#: ../login-logout.php:199
+msgid "Admin text"
+msgstr ""
+
+#: ../login-logout.php:202
+msgid "Redirect to this page after login"
+msgstr ""
+
+#: ../login-logout.php:205
+msgid "Redirect to this page after logout"
+msgstr ""
+
+#: ../login-logout.php:208
+msgid "Inline (list or line of links)"
+msgstr ""
+
+#: ../login-logout.php:211
+msgid "Extra item when user is logged in"
+msgstr ""
+
+#: ../login-logout.php:215
+msgid "Extra item when user is logged out"
+msgstr ""
+
+#: ../login-logout.php:243
+msgid "Donate"
+msgstr ""

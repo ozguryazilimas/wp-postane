@@ -1,0 +1,107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Login Logout\n"
+"POT-Creation-Date: 2013-10-15 17:03+0200\n"
+"PO-Revision-Date: 2013-11-05 17:20+0100\n"
+"Last-Translator: jelena kovacevic <jecajeca260@gmail.com>\n"
+"Language-Team:  <web.vitaly@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: ./\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../login-logout.php:18
+msgid "Login-Logout widget"
+msgstr "Widget de autenticación-desconexión"
+
+#: ../login-logout.php:19 ../login-logout.php:242
+msgid "Login-Logout"
+msgstr "Autenticación-desconexión"
+
+#: ../login-logout.php:26
+msgid "Log in"
+msgstr "Autenticación"
+
+#: ../login-logout.php:27
+msgid "Log out"
+msgstr "Desconexión"
+
+#: ../login-logout.php:29
+msgid "Welcome [username]"
+msgstr "Bienvenido [username]"
+
+#: ../login-logout.php:31
+msgid "Register"
+msgstr "Registrarse"
+
+#: ../login-logout.php:33
+msgid "Admin section"
+msgstr "Sección de Administración"
+
+#: ../login-logout.php:175
+msgid "Title"
+msgstr "Título"
+
+#: ../login-logout.php:178
+msgid "Login text"
+msgstr "Texto de autenticación"
+
+#: ../login-logout.php:181
+msgid "Logout text"
+msgstr "Texto de Desconexión"
+
+#: ../login-logout.php:184
+msgid "Show welcome text if user is logged in"
+msgstr "Mostrar texto de bienvenida si el usuario está logueado"
+
+#: ../login-logout.php:187
+msgid "Welcome text (use [username] for showing the name of the logged user)"
+msgstr ""
+"Texto de Bienvenida (utilice [username] para mostrar el nombre del usuario "
+"autenticado)"
+
+#: ../login-logout.php:190
+msgid "Show register link (if user is logged out and if users can register)"
+msgstr ""
+"Mostrar el enlace de registro (si el usuario está desconectado y si los "
+"usuarios se pueden registrar)"
+
+#: ../login-logout.php:193
+msgid "Register text"
+msgstr "Texto de Registro"
+
+#: ../login-logout.php:196
+msgid "Show admin link (if user is logged in)"
+msgstr "Mostrar enlace de administración (si los usuarios están autenticados)"
+
+#: ../login-logout.php:199
+msgid "Admin text"
+msgstr "Texto de la administración"
+
+#: ../login-logout.php:202
+msgid "Redirect to this page after login"
+msgstr "Redireccionar a esta página después de autenticarse"
+
+#: ../login-logout.php:205
+msgid "Redirect to this page after logout"
+msgstr "Redireccionar a esta página después de desconectarse"
+
+#: ../login-logout.php:208
+msgid "Inline (list or line of links)"
+msgstr "En línea (lista o línea de enlaces)"
+
+#: ../login-logout.php:211
+msgid "Extra item when user is logged in"
+msgstr "Elemento extra cuando el usuario está autenticado"
+
+#: ../login-logout.php:215
+msgid "Extra item when user is logged out"
+msgstr "Elemento extra cuando el usuario está desconectado"
+
+#: ../login-logout.php:243
+msgid "Donate"
+msgstr "Donar"

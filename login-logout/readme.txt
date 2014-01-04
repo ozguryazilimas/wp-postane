@@ -4,14 +4,17 @@ Donate link: http://web-profile.com.ua/donate/
 Tags: login, log-in, logout, log-out, widget, meta, sidebar, admin, register
 Author URI: http://web-profile.com.ua/wordpress/
 Requires at least: 3.0
-Tested up to: 3.5
-Stable tag: 2.4
+Tested up to: 3.7.1
+Stable tag: 2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Replacement of the default Meta widget
+Widget with login, logout, admin and register links. Replacement of the default Meta widget
 
 == Description ==
+
+[Login-Logout](http://web-profile.com.ua/wordpress/plugins/login-logout/ "Plugin page") |
+[Donate](http://web-profile.com.ua/donate/ "Support the development")
 
 "Login Logout" plugin adds widget with login or logout link. Also can be shown register or site-admin link. It is the replacement of the default Meta widget.
 
@@ -24,13 +27,12 @@ Replacement of the default Meta widget
 * logout (after logout action user will return to previous page);
 * site admin (if checkbox is active);
 
-**[Login-Logout support page](http://web-profile.com.ua/wordpress/plugins/login-logout/)**
 
 = Useful plugins: =
-* ["Page-list" - show list of pages with shortcodes](http://wordpress.org/extend/plugins/page-list/ "list of pages with shortcodes")
-* ["Iframe" - embed iframe with shortcode](http://wordpress.org/extend/plugins/iframe/ "embed iframe")
-* ["Anti-spam" - block spam in comments](http://wordpress.org/extend/plugins/anti-spam/ "no spam, no captcha")
-* ["Filenames to latin" - sanitize filenames to latin during upload](http://wordpress.org/extend/plugins/filenames-to-latin/ "sanitize filenames to latin")
+* ["activetab" - responsive clean theme](http://wordpress.org/themes/activetab "responsive clean theme")
+* ["Page-list" - show list of pages with shortcodes](http://wordpress.org/plugins/page-list/ "list of pages with shortcodes")
+* ["Filenames to latin" - sanitize filenames to latin during upload](http://wordpress.org/plugins/filenames-to-latin/ "sanitize filenames to latin")
+
 
 == Screenshots ==
 
@@ -40,6 +42,15 @@ Replacement of the default Meta widget
 4. Widget output when user is logged in and inline option is on
 
 == Changelog ==
+
+= 2.7 - 2013-11-07 =
+* Spanish translation made by Maria Ramos from WebHostingHub
+
+= 2.6 - 2013-10-17 =
+* Serbian translation made by Borisa Djuraskovic from WebHostingHub
+
+= 2.5 - 2013-10-15 =
+* minor changes
 
 = 2.4 - 2012-10-31 =
 * minor changes
