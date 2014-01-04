@@ -3,7 +3,7 @@ Contributors: adityamooley
 Tags: Post, thumbnail, automatic, posts, featured image, image, featured, images, admin
 Requires at least: 2.9.1
 Tested up to: 3.6.x
-Stable tag: 3.3.2
+Stable tag: 3.3.3
 
 Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post or any custom post type only if Post Thumbnail is not set manually.
 
@@ -26,6 +26,9 @@ For more details, see http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-a
 3. Sorry, no more steps :)
 
 == Changelog ==
+
+= 3.3.3 =
+* Fix for SQL error begin caused due to no ID
 
 = 3.3.2 =
 * Tested with WordPress-3.6.x

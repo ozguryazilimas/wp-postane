@@ -4,7 +4,7 @@
 Plugin Name: Auto Post Thumbnail
 Plugin URI: http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-thumbnail/
 Description: Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post (or any custom post type) only if Post Thumbnail is not set manually.
-Version: 3.3.2
+Version: 3.3.3
 Author: Aditya Mooley <adityamooley@sanisoft.com>, Tarique Sani <tarique@sanisoft.com>
 Author URI: http://www.sanisoft.com/blog/author/adityamooley/
 Modified by Dr. Tarique Sani <tarique@sanisoft.com> to make it work with Wordpress 3.4
@@ -30,7 +30,7 @@ Modified by Dr. Tarique Sani <tarique@sanisoft.com> to make it work with Wordpre
 add_action('publish_post', 'apt_publish_post');
 
 // This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
-add_action('transition_post_status', 'apt_check_required_transition');
+add_action('transition_post_status', 'apt_check_required_transition', 10, 3);
 
 add_action('admin_notices', 'apt_check_perms');
 add_action('admin_menu', 'apt_add_admin_menu'); // Add batch process capability
@@ -73,7 +73,7 @@ function apt_interface() {
 
                         // Get id's of all the published posts for which post thumbnails does not exist.
                         $query = "SELECT * FROM {$wpdb->posts} p where p.post_status = 'publish' AND p.ID NOT IN (
-                                    SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('         _thumbnail_id', 'skip_post_thumb')
+                                    SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_thumbnail_id', 'skip_post_thumb')
                                   )";
                         $posts = $wpdb->get_results($query);
 
@@ -261,10 +261,9 @@ function apt_check_perms() {
  * @return void
  */
 function apt_check_required_transition($new_status='', $old_status='', $post='') {
-    global $post_ID; // Using the post id from global reference since it is not available in $post object. Strange!
 
     if ('publish' == $new_status) {
-        apt_publish_post($post_ID);
+        apt_publish_post($post->ID);
     }
 }
 
