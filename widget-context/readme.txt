@@ -3,8 +3,8 @@ Contributors: kasparsd
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kaspars%40konstruktors%2ecom&item_name=Widget%20Context%20Plugin%20for%20WordPress&no_shipping=1&no_note=1&tax=0&currency_code=USD&lc=LV&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: widget, widget context, context, logic, widget logic, cms
 Requires at least: 3.0
-Tested up to: 3.5.1
-Stable tag: 0.8.1
+Tested up to: 3.6.1
+Stable tag: 0.8.3
 License: GPLv2 or later
 
 Show or hide widgets on specific posts, pages or sections of your site.
@@ -29,6 +29,16 @@ Widget Context allows you to show or hide widgets on certain sections of your si
 
 
 == Changelog ==
+
+**0.8.3**
+
+* Fix PHP warning that occurred on PHP 5.2.x.
+
+**0.8.2**
+
+* Improved SSL/HTTPS detection.
+* Fix: Ensure that is_active_sidebar() & is_dynamic_sidebar() don't return true when there are no widgets displayed on a page.
+* Two new filters so that other plugins can override widget context display/visibility logic.
 
 **0.8.1**
 

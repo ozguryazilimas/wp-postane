@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Widget Context
-Plugin URI: http://wordpress.org/extend/plugins/widget-context/
+Plugin URI: http://wordpress.org/plugins/widget-context/
 Description: Display widgets in context.
-Version: 0.8.1
+Version: 0.8.3
 Author: Kaspars Dambis
 Author URI: http://konstruktors.com/
 
@@ -40,8 +40,9 @@ class widget_context {
 		add_action( 'init', array( $this, 'load_plugin_settings' ) );
 		// Amend widget controls with Widget Context controls
 		add_action( 'sidebar_admin_setup', array( $this, 'attach_widget_context_controls' ) );
-		// Hide the widget if necessary
-		add_filter( 'widget_display_callback', array( $this, 'maybe_hide_widget' ), 10, 3 );
+		// Remove widget from widetized area (sidebar) on front end only
+		if ( !is_admin() )
+			add_filter( 'sidebars_widgets', array( $this, 'maybe_unset_widget' ), 10 );
 		// Add admin menu for config
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		// Save widget context settings, when in admin area
@@ -60,7 +61,7 @@ class widget_context {
 		
 	
 	function admin_scripts() {
-		wp_enqueue_style( 'widget-context-admin', WP_CONTENT_URL . '/plugins/'. basename(__DIR__) . '/admin-style.css' );
+		wp_enqueue_style( 'widget-context-admin', plugins_url( 'admin-style.css', __FILE__ ) );
 	}
 
 	
@@ -92,11 +93,17 @@ class widget_context {
 	}
 
 
-	function maybe_hide_widget( $instance, $widget_object, $args ) {
-		if ( ! $this->check_widget_visibility( $args['widget_id'] ) )
-			return false;
-
-		return $instance;
+	function maybe_unset_widget( $sidebars_widgets ) {	
+			foreach( $sidebars_widgets as $widget_area => $widget_list ) {
+			if ( $widget_area == 'wp_inactive_widgets' || empty( $widget_list )) 
+				continue;
+				
+			foreach( $widget_list as $pos => $widget_id ) {
+				if ( ! $this->check_widget_visibility( $widget_id ) )
+					unset( $sidebars_widgets[$widget_area][$pos] );
+			}
+		}
+		return $sidebars_widgets;
 	}
 
 	
@@ -128,7 +135,7 @@ class widget_context {
 		else 
 			$uri = $_SERVER['REQUEST_URI'];
 		
-		return (!empty($_SERVER['HTTPS'])) 
+		return (is_ssl())
 			? "https://".$_SERVER['SERVER_NAME'].$uri 
 			: "http://".$_SERVER['SERVER_NAME'].$uri;
 	}
@@ -203,6 +210,9 @@ class widget_context {
 			if ( is_search() ) $currently['is_search'] = true;
 			if ( is_404() ) $currently['is_404'] = true;
 			if ( is_attachment() ) $currently['is_attachment'] = true;
+
+			// Allow other plugins to override the above checks
+			$currently = apply_filters( 'widget_context_currently', $currently, $widget_id, $vis_settings );
 			
 			// Check for selected pages/sections
 			if ( array_intersect_key( $currently, $vis_settings['location'] ) )
@@ -240,6 +250,9 @@ class widget_context {
 		} else {
 			$do_show = true;
 		}
+
+		// Allow other plugins to override any of the above logic
+		$do_show = apply_filters( 'widget_context_visibility', $do_show, $widget_id, $vis_settings );
 		
 		return $do_show;
 	}
