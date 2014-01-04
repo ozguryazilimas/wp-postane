@@ -3,12 +3,14 @@
   Plugin Name: Basic Comment Quicktags
   Plugin URI: http://halfelf.org/plugins/basic-comment-quicktags/
   Description: Displays a bold, italic, add link and quote button on top of the comment form
-  Version: 3.1
+  Version: 3.2.1
   Author: Mika "Ipstenu" Epstein
   Author URI: http://ipstenu.org
+  Text Domain: basic-comment-quicktags
+  Domain Path: /i18n
 
   Original author: Marc Tönsing -- http://www.marctv.de/blog/2010/08/25/marctv-wordpress-plugins/
-  Copyright 2012 Mika Epstein
+  Copyright 2012-2013 Mika Epstein
 
     This file is part of Basic Comment Quicktags, a plugin for WordPress.
 
@@ -27,7 +29,7 @@
 */
 
 global $wp_version;
-	if (version_compare($wp_version,"3.5","<")) { exit( __('This plugin requires WordPress 3.5', 'ippy-bcq') ); }
+	if (version_compare($wp_version,"3.7","<")) { exit( __('This plugin requires WordPress 3.7', 'basic-comment-quicktags') ); }
 
 
 if (!class_exists('BasicCommentsQuicktagsHELF')) {
@@ -52,7 +54,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 	
 	    public function init() {
 	
-		    if( !is_admin() ) {
+		    if( !is_admin() && !in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' )) ) {
     			add_action('wp_print_scripts', array( $this,'add_scripts_frontend'));
     			add_action('wp_print_styles', array( $this,'add_styles_frontend') );
 			}
@@ -75,7 +77,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
     		$options = wp_parse_args(get_option( 'ippy_bcq_options'), $this->bcq_defaults );
     		
     		if ( function_exists('is_bbpress') ) {
-                if ( is_bbpress()  && ( $options['bbpress'] != '0') && !is_null($options['bbpress']) && ($this->bcq_bbp_fancy == '0') ) {
+                if ( is_bbpress()  && ( $options['bbpress'] != '0') && !is_null($options['bbpress']) && ($this->bcq_bbp_fancy == false) ) {
                     $this->add_styles();
                 }
               }
@@ -87,7 +89,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
     		$options = wp_parse_args(get_option( 'ippy_bcq_options'), $this->bcq_defaults );
     		
     		if ( function_exists('is_bbpress') ) {
-                if ( is_bbpress()  && ( $options['bbpress'] != '0') && !is_null($options['bbpress']) && ($this->bcq_bbp_fancy == '0') ) {
+                if ( is_bbpress()  && ( $options['bbpress'] != '0') && !is_null($options['bbpress']) && ($this->bcq_bbp_fancy == false) ) {
                     $this->add_scripts();
                 }
               }
@@ -106,7 +108,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 			
 			add_settings_field(
 				'ippy_bcq_bbpress',                 // id
-				__('Quicktags', 'ippy-bcq'),        // setting title
+				__('Quicktags', 'basic-comment-quicktags'),        // setting title
 				array( $this, 'setting_input' ),    // display callback
 				'discussion',                       // settings page
 				'default'                           // settings section
@@ -119,9 +121,9 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 			
 			// echo the field
 			?>
-		    <a name="bcq" value="bcq"></a><input id='comments' name='ippy_bcq_options[comments]' type='checkbox' value='1' <?php checked( $options['comments'], 1 ); ?> /> <?php _e('Activate Quicktags for comments', 'ippy-bcq');
-		    if ( function_exists('is_bbpress') && ( $this->bcq_bbp_fancy == '0') ) { ?>
-		      <br /><input id='bbpress' name='ippy_bcq_options[bbpress]' type='checkbox' value='1' <?php checked( $options['bbpress'], 1 ); ?> /> <?php _e('Activate Quicktags for bbPress', 'ippy-bcq'); } 
+		    <a name="bcq" value="bcq"></a><input id='comments' name='ippy_bcq_options[comments]' type='checkbox' value='1' <?php checked( $options['comments'], 1 ); ?> /> <?php _e('Activate Quicktags for comments', 'basic-comment-quicktags');
+		    if ( function_exists('is_bbpress') && ( $this->bcq_bbp_fancy == false) ) { ?>
+		      <br /><input id='bbpress' name='ippy_bcq_options[bbpress]' type='checkbox' value='1' <?php checked( $options['bbpress'], 1 ); ?> /> <?php _e('Activate Quicktags for bbPress', 'basic-comment-quicktags'); } 
 		}
 		
 		// Validate user input
@@ -143,13 +145,13 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 
 		// Internationalization
 		function internationalization() {
-			load_plugin_textdomain('ippy-bcq', false, dirname(plugin_basename(__FILE__)) . '/i18n' );
+			load_plugin_textdomain('basic-comment-quicktags', false, dirname(plugin_basename(__FILE__)) . '/i18n/' );
 		}
 		
 		// donate link on manage plugin page
 		function donate_link($links, $file) {
     		if ($file == plugin_basename(__FILE__)) {
-        		$donate_link = '<a href="https://www.wepay.com/donations/halfelf-wp">' . __( 'Donate', 'ippy-bcq' ) . '</a>';
+        		$donate_link = '<a href="https://www.wepay.com/donations/halfelf-wp">' . __( 'Donate', 'basic-comment-quicktags' ) . '</a>';
         		$links[] = $donate_link;
             }
             return $links;
@@ -158,7 +160,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 		// add settings to manage plugin page
 		function add_settings_link( $links, $file ) {
 			if ( plugin_basename( __FILE__ ) == $file ) {
-				$settings_link = '<a href="' . admin_url( 'options-discussion.php' ) . '#bcq">' . __( 'Settings', 'ippy-bcq' ) . '</a>';
+				$settings_link = '<a href="' . admin_url( 'options-discussion.php' ) . '#bcq">' . __( 'Settings', 'basic-comment-quicktags' ) . '</a>';
 				array_unshift( $links, $settings_link );
 			}
 			return $links;

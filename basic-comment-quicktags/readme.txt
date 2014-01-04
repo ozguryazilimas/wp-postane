@@ -1,9 +1,9 @@
 === Basic Comment Quicktags ===
 Contributors: Ipstenu, MarcDK
 Tags: comments, wysiwyg, quicktags, bbpress
-Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 3.1
+Requires at least: 3.7
+Tested up to: 3.8
+Stable tag: 3.2.1
 Donate Link: https://www.wepay.com/donations/halfelf-wp
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,11 +40,15 @@ No. I don't have a need for it, and I don't want to include code I'm not going t
 
 = Can I use this on older versions of WordPress? =
 
-No. This plugin uses the <a href="http://codex.wordpress.org/Quicktags_API">Quicktags API</a> built in to WordPress 3.3.
+No. This plugin uses the <a href="http://codex.wordpress.org/Quicktags_API">Quicktags API</a> built in to WordPress 3.3. I only support the current version of WP and one back, so keep that in mind.
 
 = Does this work on Multisite? =
 
 Yes. It can be network activated or per-site, works fine.
+
+= What version of bbPress does this work on? =
+
+It's been tested up to 2.5.1 as of December 7, 2013.
 
 = This isn't showing up on bbPress! =
 
@@ -56,9 +60,19 @@ Unlikely. BuddyPress is moving to it's own thing. If this works on BP, huzzah. B
 
 = My users say they don't see anything on IE8 =
 
-Yeah, that's because IE8 cheerfully ignores the rules of jQuery. Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9+.
+IE8 cheerfully ignores the rules of jQuery. 
+
+Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9+, so I strongly suggest for consistant Internet behavior, upgrade IE.
 
 == Changelog ==
+
+= 3.2.1 =
+* 2013 Dec 9, by Ipstenu
+* Force prevent any code from running on login pages.
+
+= 3.2 =
+* 2013 Dec 7, by Ipstenu
+* Tweak to bbPress call because JJJ hates me (not really)
 
 = 3.1 =
 * 2013 May 14, by Ipstenu
