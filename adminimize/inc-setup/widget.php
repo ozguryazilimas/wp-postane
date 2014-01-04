@@ -43,7 +43,7 @@ function _mw_adminimize_get_registered_sidebars() {
  * 
  * @return  void 
  */
-add_action( 'plugins_loaded', '_mw_adminimize_on_widgets_init' );
+add_action( 'after_setup_theme', '_mw_adminimize_on_widgets_init' );
 function _mw_adminimize_on_widgets_init() {
 	
 	if ( is_admin() && 'widgets.php' === $GLOBALS[ 'pagenow' ] ) {
@@ -96,6 +96,7 @@ function _mw_adminimize_unregister_widgets() {
 			if ( current_user_can( $role ) && is_array( $disabled_widget_option_[$role] ) ) {
 				foreach( $disabled_widget_option_[$role] as $widgets ) {
 					unregister_widget( $widgets );
+					$GLOBALS['wp_widget_factory']->unregister( $widgets );
 					//unregister_sidebar_widget( 'Monster_Widget' );
 				}
 			}

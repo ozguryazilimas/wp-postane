@@ -57,7 +57,7 @@ if ( ! function_exists( 'add_action' ) ) {
 								array_push( $widget_options_names, $value[ 'name' ] );
 							}
 							
-							// get registeres widgets
+							// get registered widgets
 							$registered_widgets = _mw_adminimize_get_all_widgets();
 							foreach ( $registered_widgets as $key => $value ) {
 								
