@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: White Label CMS
-Plugin URI: http://www.videousermanuals.com/white-label-cms/
+Plugin URI: http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Description:  A plugin that allows you to brand wordpress CMS as your own
-Version: 1.5.1
+Version: 1.5.2
 Author: www.videousermanuals.com
-Author URI: http://www.videousermanuals.com
+Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 */
 
-define('WLCMS','1.5.1');
+define('WLCMS','1.5.2');
 
 if ( ! defined('ABSPATH') ) {
         die('Please do not load this file directly.');
@@ -62,49 +62,54 @@ function wlcms_check_for_login()
 
 function wlcms_dashboard_mod()
 {
-    global $current_screen;
-
+    global $current_screen, $wp_version;
     if( isset($current_screen) && ($current_screen->id == 'dashboard' ) ):
 
         if( get_option('wlcms_o_dashboard_override') || get_option('wlcms_o_dashboard_override') == '' ) :
 
-			if ( get_option('wlcms_o_dashboard_override') != __('Dashboard') ) :
+            if ( get_option('wlcms_o_dashboard_override') != __('Dashboard') ) :
 
-				$val = (get_option('wlcms_o_dashboard_override') == '' ? '&nbsp;' : get_option('wlcms_o_dashboard_override') );
-				echo '<style type="text/css">#wpbody-content .wrap h2 { visibility: hidden; }</style>
-						<script type="text/javascript">
-								jQuery(document).ready(function($) {
-										$("#wpbody-content .wrap h2:eq(0)").html("'.$val.'");
-										$("#wpbody-content .wrap h2").css("visibility","visible");
-								});
-						</script>';
-						
-				endif;
-						
+                $val = (get_option('wlcms_o_dashboard_override') == '' ? '&nbsp;' : get_option('wlcms_o_dashboard_override') );
+                echo '<style type="text/css">#wpbody-content .wrap h2 { visibility: hidden; }</style>
+                        <script type="text/javascript">
+                                jQuery(document).ready(function($) {
+                                        $("#wpbody-content .wrap h2:eq(0)").html("'.$val.'");
+                                        $("#wpbody-content .wrap h2").css("visibility","visible");
+                                });
+                        </script>';
+                        
+                endif;
+                        
         endif;
 
-    	if( get_option('wlcms_o_header_custom_logo') ):
+        if( get_option('wlcms_o_header_custom_logo') ):
 
             $background =  get_option('wlcms_o_header_custom_logo');
 
             if(!preg_match("@^https?://@", $background)){
-		$background = get_bloginfo('stylesheet_directory').'/images/'.$background;
+       			 $background = get_bloginfo('stylesheet_directory').'/images/'.$background;
             }
-		
+        
             echo '<style type="text/css">
                             #icon-index {background:transparent;height:auto;width:auto;visibility: hidden;}
                             #dashboard-widgets-wrap {clear:both}
                     </style>';
             echo '<script type="text/javascript">
-                            jQuery(document).ready(function($) {
-                                    $("#icon-index").html("<img src=\"'.$background.'\" alt=\"\" />");
-                                    $("#icon-index").css("visibility","visible");                                    
-                            });
+                            jQuery(document).ready(function($) {';
+			if ( version_compare( $wp_version, '3.8-beta', '>=' ) )
+                {
+					echo '$(".index-php #wpbody-content .wrap h2:eq(0)").prepend("<span id=\"wlcms_dashboard_logo\"><img src=\"'.$background.'\" alt=\"\" /></span>");
+						  $("#wlcms_dashboard_logo").css({"visibility":"visible", "display": "block", "float" : "left", "margin": "-2px 8px 0px 0px"});';
+				}else{
+					echo '$("#icon-index").html("<img src=\"'.$background.'\" alt=\"\" />");
+							$("#icon-index").css({"visibility":"visible", "display": "block", "float" : "left", "margin": "7px 8px 0px 0px"});';
+				}
+				echo'});
                     </script>';
-    	endif;
+        endif;
     
     endif;
-	
+    
 }
 
 // set admin screen
@@ -179,7 +184,7 @@ function wlcms_output()
 
         foreach($all_caps as $capability)
         {
-            $checked = isset($WP_Roles->roles[$role_id]['capabilities'][$capability])&&$WP_Roles->roles[$role_id]['capabilities']			[$capability]==1?'checked="checked"':'';
+            $checked = isset($WP_Roles->roles[$role_id]['capabilities'][$capability])&&$WP_Roles->roles[$role_id]['capabilities']           [$capability]==1?'checked="checked"':'';
             $output .= "<li><input type=\"checkbox\" $checked name=\"ROLES[$role_id][$capability]\" value=1 />&nbsp;".ucfirst(str_replace("_"," ",$capability))."</li>&nbsp; ";
         }
 
@@ -225,7 +230,7 @@ function wlcms_adminbar()
     echo '<style type="text/css"> .postbox-container .meta-box-sortables.empty-container, #side-sortables.empty-container{border:0;} </style>';
     endif;
     if( get_option('wlcms_o_hide_wp_adminbar') ):
-        echo " \n\n <style type=\"text/css\">#wp-admin-bar-wp-logo { display:none; }</style> \n\n";
+        echo " \n\n <style type=\"text/css\">#wp-admin-bar-wp-logo { display:none; } #wpadminbar #wp-admin-bar-site-name > .ab-item:before { content: normal;}</style> \n\n";
     endif;
 
     if( get_option('wlcms_o_adminbar_custom_logo') ):
@@ -234,7 +239,8 @@ function wlcms_adminbar()
             $background = get_bloginfo('stylesheet_directory').'/images/'.$background;
 
         echo '<script type="text/javascript"> jQuery(document).ready(function(){ ';
-        echo  'jQuery("#wp-admin-bar-root-default").prepend(" <li id=\"wlcms_admin_logo\"> <span style=\"float:left;height:28px;line-height:28px;vertical-align:middle;text-align:center;width:28px\"><img src=\"'.$background.'\" width=\"16\" height=\"16\" alt=\"Login\" style=\"height:16px;width:16px;vertical-align:middle\" /> </span> </li> ");  }); ';
+        echo  'jQuery("#wp-admin-bar-root-default").prepend(" <li id=\"wlcms_admin_logo\"> <span style=\"float:left;height:28px;line-height:28px;vertical-align:middle;text-align:center;width:28px\"><img src=\"'.$background.'\" width=\"16\" height=\"16\" alt=\"Login\" style=\"height:16px;width:16px;vertical-align:middle\" /> </span> </li> "); ';
+		echo '  }); ';
         echo '</script> ';
 
     endif;
@@ -277,7 +283,7 @@ function wlcms_adminbar()
         }
 
         if (( version_compare( $wp_version, '3.2', '<' ) ) && (empty($customHFHeight))) {
-               $style .= '#wlcms-footer-container { 	padding-top: 10px; 	line-height: 30px; }';
+               $style .= '#wlcms-footer-container {     padding-top: 10px;  line-height: 30px; }';
         }
 
         if (get_option('wlcms_o_header_logo_link') == 1) {
@@ -303,35 +309,35 @@ function wlcms_remove_footer_admin() {
         if(!preg_match("@^https?://@", $footer_logo))
                 $footer_logo = get_bloginfo('stylesheet_directory').'/images/'.$footer_logo;
 
-        echo '<div id="wlcms-footer-container">';
+        echo '<span id="footer-thankyou">';
         if (get_option('wlcms_o_developer_url')) {
 
                 echo '<a target="_blank" href="' . get_option('wlcms_o_developer_url') . '">';
 
                 if (get_option('wlcms_o_footer_custom_logo_width')) {
-        	 	echo '<img style="width:' . get_option('wlcms_o_footer_custom_logo_width') . 'px;" ';
-        	} else {
-        		echo '<img ';
-        	}
+                echo '<img style="width:' . get_option('wlcms_o_footer_custom_logo_width') . 'px;" ';
+            } else {
+                echo '<img ';
+            }
            echo ' src="'.$footer_logo. '" id="wlcms-footer-logo"> </a> <span> <a target="_blank" href="' . get_option('wlcms_o_developer_url') . '">' . stripslashes(get_option('wlcms_o_developer_name')) . '</a> </span>';
         } else {
-        	if (get_option('wlcms_o_footer_custom_logo_width')) {
-        	 	echo '<img style="width:' . get_option('wlcms_o_footer_custom_logo_width') . 'px;" ';
-        	} else {
-        		echo '<img ';
-        	}        
+            if (get_option('wlcms_o_footer_custom_logo_width')) {
+                echo '<img style="width:' . get_option('wlcms_o_footer_custom_logo_width') . 'px;" ';
+            } else {
+                echo '<img ';
+            }        
             echo ' src="'.$footer_logo . '" id="wlcms-footer-logo"> <span>' . stripslashes(get_option('wlcms_o_developer_name')).'</span>';
         }
-        echo '</div><p id="safari-fix"';
+        echo '</span>';
 }
 
 function wlcms_developer_link()
 {
-    echo '<div id="wlcms-footer-container">';
+    echo '<span id="footer-thankyou">';
     echo ( get_option('wlcms_o_developer_url') ? '<a target="_blank" href="' . get_option('wlcms_o_developer_url') . '">' : '' );
     echo stripslashes(get_option('wlcms_o_developer_name'));
     echo ( get_option('wlcms_o_developer_url') ? '</a>' : '' );
-    echo '</div>';
+    echo '</span>';
 }
 
 
@@ -354,8 +360,9 @@ function wlcms_custom_login_logo()
         if(get_option('wlcms_o_loginbg_white') ):
                 echo ' body.login {background: #fff } ';
         endif;
-
+		echo '.login h1 a { width :auto!important;} ';
         echo '</style> ';
+			;
 
         echo '<script type="text/javascript">
                 jQuery(document).ready(function()
@@ -376,7 +383,7 @@ function wlcms_custom_login_logo()
     if(get_option('wlcms_o_login_bg_css')):
         echo '<script type="text/javascript"> jQuery(document).ready(function(){ jQuery("#login").wrap("<div id=\'wlcms-login-wrapper\'></div>"); }); </script> ';
     endif;
-	
+    
 }
  
 function wlcms_custom_dashboard_help()
@@ -460,7 +467,7 @@ function wlcms_hide_wp_version()
 {
     echo '<style type="text/css">#wp-version-message { display: none;}</style>';
 }
-	
+    
 function wlcms_get_current_user_role() {
     global $wp_roles;
     $current_user = wp_get_current_user();
@@ -569,7 +576,7 @@ function wlcms_remove_admin_menus () {
         endif;
     endif;
 
-}	
+}   
  
 function wlcms_custom_pages_columns($defaults) 
 {
@@ -648,7 +655,7 @@ function wlcms_remove_default_post_metaboxes()
 
 function wlcms_add_admin() 
 {
-	
+    
     global $wlcmsThemeName, $wlcmsShortName, $menu, $submenu;
 
     if ( isset($_GET['page']) && $_GET['page'] == 'wlcms-plugin.php')

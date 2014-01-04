@@ -2,21 +2,21 @@
 
 Contributors: VideoUserManuals
 Plugin Name: White Label CMS
-Plugin URI: http://www.videousermanuals.com/white-label-cms/
+Plugin URI: http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Tags: cms, custom, admin, branding, dashboard, administration, plugin, login, client, menu, navigation, appearance, menus, widgets
-Author URI: http://www.videousermanuals.com
+Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Author:  Video User Manuals
 Requires at least: 3.3 
-Tested up to: 3.4.2
-Stable tag: 1.5.1
-Version: 1.5.1
+Tested up to: 3.8
+Stable tag: 1.5.2
+Version:1.5.2
 
 Allows complete customization of dashboard panels and logos, removal of menus, giving editors access to widgets and menus plus lots more. Import/export your settings and include an RSS panel on the dashboard to feed your clients the latest posts from your blog to keep you top of mind whenever they login to their dashboard.
 
 == Description ==
 The White Label CMS plugin is for developers who want to give their clients a more personalised and less confusing content management system
 
-For a video overview of the changes in 1.5 and how this affects WordPress 3.4 please visit the [White Label CMS](http://www.videousermanuals.com/white-label-cms/?utm_source=wlcmsplugin&amp;utm_medium=wpplugin&amp;utm_campaign=wlcmswordpressplugin "White Label CMS") home hosted on the [WordPress Manual Plugin](http://www.videousermanuals.com/ "WordPress Manual Plugin") website.
+For a video overview of the changes in 1.5 and how this affects WordPress 3.4 please visit the [White Label CMS](http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=description "White Label CMS") home hosted on the [WordPress Manual Plugin](http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=description "WordPress Manual Plugin") website.
 
 WordPress 3.3's new admin bar has restricted the type of branding you can have for clients, which is why we have introduced the ability to brand the dashboard.
 
@@ -58,6 +58,15 @@ You can now brand the dashboard as well as the admin bar.
 5. Customize the homepage
 
 == Changelog ==
+
+= 1.5.2 =
+Login Logo width fixed for version wordpress 3.8
+fixed 16px logo in admin bar on front end
+Fixed advert on wlcms advert on the settings page
+Fixed Dashboard logo not appear on dashboard for WP 3.8
+Fixed Footer logo does not line up properly WP 3.8
+Fixed Hide WordPress Logos from admin bar
+
 
 = 1.5.1 =
 Security patch - added nonce to admin form for better security. Props PC SJJ. 
@@ -169,5 +178,3 @@ I installed the plugin and the logos disappear?: You need to upload your logos t
 The menus have not changes?: Make sure you are logged in as the editor
 
 Lost Password CSS not working?: Make sure you use the example format. The color must be the last css style and it must not have a closing ; as !important is appended to the end of the style to overwrite and existing style.
-
-== Donations ==
