@@ -3,37 +3,21 @@ Contributors: OddOneOut
 Donate link: http://betterwp.net/wordpress-plugins/bwp-recent-comments/#contributions
 Tags: comments, recent comments, recent comments widgets, wordpress recent comments
 Requires at least: 2.8
-Tested up to: 3.2.1
-Stable tag: 1.2.0
+Tested up to: 3.7
+Stable tag: 1.2.2
 
 This plugin displays recent comment lists at assigned locations, with comprehensive support for widgets.
 
 == Description ==
 
-**Support for this plugin has been moved to [the BWP Community](http://betterwp.net/community/)!**
-
 This plugin displays recent comment lists at assigned locations. It does not add any significant load to your website. The comment list is updated on the fly when a visitor adds a comment or when you moderate one. No additional queries are needed for end-users.
 
 A recent comment list, in my opinion, can help stimulate discussion and exploration of your blog tremendously. Now for the past few months I have been using a plugin called Get Recent Comments; though this plugin is configurable and indeed popular, the code is somehow messy and no support for custom post type is found. The worst thing is Get Recent Comment doesn't seem to be updated anymore, so I decide to write another recent comment plugin which is more lightweight and makes use of some nice features provided by WordPress 3.0.
 
-**BWP Recent Comments 1.2.0 RC1 - Your recent comment lists just got better!**
+**Powerup your recent comment list today!**
 
-* You can now group comments by post (inspired by the classic Get Recent Comments plugin).
-* You can now have AJAX navigation for any recent comment list you want! Comment list on a separate page also supports AJAX.
-* Templates are available for both grouped comment lists and the AJAX navigation.
-* Added a shortcode (`[bwp-rc]`) to show recent comment lists on a separate page.
-* More template tags for you to use:
-	* `%author_archive%`: link to a comment author's archive page if found.
-	* `%comment_count%`: the number of comments for the current post.
-	* `%comment_number%`: a comment's number in the list, e.g. 1, 2, 3, etc. Useful when showing comments on a separate page.
-* Added a new CSS file that will be used when you disable avatar.
-* Now uses `date_i18n` function for comment date so that it can be localized by default.
-* A lot of bug fixes and other improvements which make the plugin much faster and more stable!
-
-**Note:** Due to the complexity of this new release, feedbacks are greatly appreciated! If you have any problem, even the smallest, please [contact me](http://betterwp.net/contact/). Thanks!
-
-**Other Features**
-
+* Group comments by post (inspired by the classic Get Recent Comments plugin).
+* AJAX navigation for any recent comment list you want!
 * Has the options to show comment only, trackback only, or show both (separately or all together)
 * Get comments from a specific post, using either ID or post name (slug).
 * Possibility to add different comment lists with different settings on one page
@@ -59,9 +43,12 @@ A recent comment list, in my opinion, can help stimulate discussion and explorat
 **Languages**
 
 * English (default)
-* French 1.1.0 (fr_FR) - Thanks to [Maître Mô](http://maitremo.fr)!
+* French 1.1.0 (fr_FR) - Thanks to [Maï¿½tre Mï¿½](http://maitremo.fr)!
 * Russian 1.1.0 (ru_RU) - Thanks to Konstantin (kg69design)!
 * Ukrainian 1.1.0 (ua_UA) - Thanks to Konstantin (kg69design)!
+* Portuguese 1.2.1 (pt_PT) - Thanks to Marcus (http://www.maniadecelular.com.br)!
+* Spanish 1.2.1 (es_ES) - Thanks to Jordi!
+* Polish 1.2.1 (pl_PL) - Thanks to Jarek!
 
 Please [help translate](http://betterwp.net/wordpress-tips/create-pot-file-using-poedit/) this plugin!
 
@@ -89,6 +76,35 @@ Visit [Plugin's Official Page](http://betterwp.net/wordpress-plugins/bwp-recent-
 5. The configuration page
 
 == Changelog ==
+
+= 1.2.2 =
+* Marked as WordPress 3.7 compatible.
+* Updated BWP Framework to fix a possible bug that causes BWP setting pages to go blank.
+* **Good news**: ManageWP.com has become the official sponsor for BWP Recent Comments - [Read more](http://betterwp.net/319-better-wordpress-plugins-updates-2013/).
+
+**Note**: other bugs such as wrong number of comments displayed or RTL WordPress version display issues will be fixed in 1.2.3 (scheduled for November).
+
+= 1.2.1 =
+* **Fixes:**
+	* Fixed some Notices produced when WP_DEBUG is set to true.
+	* Fixed a bug in admin area that could corrupt recent comment list instances.
+	* Fixed a bug that breaks an ajax recent comment list.
+	* Fixed a bug that breaks the paged recent comment list on a page.
+	* Fixed a bug that can breaks RTL WordPress.
+	* Comment text should now be shown in full if trim setting is set to 0.
+	* Comments from password-protected posts and private posts should not be shown.
+	* Trackbacks/pingbacks in spam folder should not be shown.
+* **Improvements:**
+	* (**hot**) For recent comments grouped by posts: new comments on old posts should now be shown correctly.
+	* Comment numbering (`%comment_number%`) has been added to all recent comment lists. As per requested: [http://wordpress.org/support/topic/id-like-to-remove-the]
+	* Long words chunk splitting has been improved to support multi-byte characters.
+	* Comments from attachment pages should now be shown too.
+	* Added a new filter (`bwp_rc_dotdotdot`) to allow customization of the `...` after trimmed comments.
+	* Updated Ajax recent comment list to use jQuery's new `.on()` method.
+* **Misc:**
+	* Added Portuguese transation - thanks to Marcus!
+	* Added Spanish translation - thanks to Jordi!
+	* Added Polish translation - thanks to Jarek!
 
 = 1.2.0 RC1 =
 * You can now group comments by post, this is inspired by the classic Get Recent Comment plugin.

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2011 Khang Minh <betterwp.net>
+ * Copyright (c) 2013 Khang Minh <betterwp.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,7 +116,7 @@ class BWP_RC extends BWP_FRAMEWORK {
 	/**
 	 * Constructor
 	 */	
-	function __construct($version = '1.2.0 RC1')
+	function __construct($version = '1.2.2')
 	{
 		// Plugin's title
 		$this->plugin_title = 'BetterWP Recent Comments';
@@ -181,11 +181,13 @@ class BWP_RC extends BWP_FRAMEWORK {
 			'paged_limit' => 5, // number of comments per page
 			'paged_template' => false,
 			'grouped' => 0, // set this to the number of comments per post, 0 to disable. The total number of comments will not exceed the 'limit' argument
-			'ajax'	=> false // whether or not add ajax navigation
+			'ajax'	=> false, // whether or not add ajax navigation
+			'prev_str'	=> '&laquo;',
+			'next_str'	=> '&raquo;'
 		);
 
 		// initialize instances
-		$db_instances = get_option(BWP_RC_INSTANCES);
+		$db_instances = get_option('bwp_rc_instances');
 		if (!$db_instances || !is_array($db_instances))
 			$this->reset_instances();
 		else
@@ -219,7 +221,8 @@ class BWP_RC extends BWP_FRAMEWORK {
 		// Handle AJAX navigation request - @since 1.2.0
 		if ($this->is_ajax_nav_enabled() && isset($_GET['bwp_doing_ajax']))
 		{
-			define('DOING_AJAX', true);
+			if (!defined('DOING_AJAX'))
+				define('DOING_AJAX', true);
 			define('BWP_RC_DOING_AJAX', true);
 			add_action('init', array($this, 'handle_ajax_request'));
 		}
@@ -254,11 +257,6 @@ class BWP_RC extends BWP_FRAMEWORK {
 		}
 	}
 
-	function enqueue_script()
-	{
-		wp_enqueue_script('bwp-rc', BWP_RC_JS . '/bwp-rc-ajax.js', array('jquery'), $this->plugin_ver);
-	}
-
 	function enqueue_media()
 	{		
 		if (!is_admin())
@@ -268,7 +266,7 @@ class BWP_RC extends BWP_FRAMEWORK {
 				wp_enqueue_style('bwp-rc', BWP_RC_CSS . '/' . $css_file, array(), $this->plugin_ver);
 			if ($this->is_ajax_nav_enabled())
 			{
-				add_action('init', array($this, 'enqueue_script'));
+				wp_enqueue_script('bwp-rc', BWP_RC_JS . '/bwp-rc-ajax.js', array('jquery'), $this->plugin_ver);
 				add_action('wp_head', array($this, 'front_print_js'));
 			}
 		}
@@ -292,11 +290,21 @@ class BWP_RC extends BWP_FRAMEWORK {
 	 */
 	function build_menus()
 	{
-		add_menu_page(__('Better WordPress Recent Comments', 'bwp-rc'), 'BWP RC', BWP_RC_CAPABILITY, BWP_RC_OPTION_GENERAL, array($this, 'build_option_pages'), BWP_RC_IMAGES . '/icon_menu.png');
+		// Give BWP RC its own menus - create plugin's own menu if allowed
+		if (!empty(self::$_menu_under_settings))
+		{
+			add_options_page(__('BWP Recent Comments General Options', 'bwp-rc'), __('RC General Options', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_OPTION_GENERAL, array($this, 'build_option_pages'));
+			add_options_page(__('BWP Recent Comments Template Options', 'bwp-rc'), __('RC Template Options', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_OPTION_TEMPLATE, array($this, 'build_option_pages'));
+			add_options_page(__('BWP Recent Comments Instance List', 'bwp-rc'), __('RC Instances', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_INSTANCES, array($this, 'build_option_pages'));
+		}
+		else
+		{
+			add_menu_page(__('Better WordPress Recent Comments', 'bwp-rc'), 'BWP RC', BWP_RC_CAPABILITY, BWP_RC_OPTION_GENERAL, array($this, 'build_option_pages'), BWP_RC_IMAGES . '/icon_menu.png');
 		// Sub menus
-		add_submenu_page(BWP_RC_OPTION_GENERAL, __('BWP Recent Comments General Options', 'bwp-rc'), __('General Options', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_OPTION_GENERAL, array($this, 'build_option_pages'));
-		add_submenu_page(BWP_RC_OPTION_GENERAL, __('BWP Recent Comments Template Options', 'bwp-rc'), __('Template Options', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_OPTION_TEMPLATE, array($this, 'build_option_pages'));
-		add_submenu_page(BWP_RC_OPTION_GENERAL, __('BWP Recent Comments Instance List', 'bwp-rc'), __('Instances', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_INSTANCES, array($this, 'build_option_pages'));
+			add_submenu_page(BWP_RC_OPTION_GENERAL, __('BWP Recent Comments General Options', 'bwp-rc'), __('General Options', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_OPTION_GENERAL, array($this, 'build_option_pages'));
+			add_submenu_page(BWP_RC_OPTION_GENERAL, __('BWP Recent Comments Template Options', 'bwp-rc'), __('Template Options', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_OPTION_TEMPLATE, array($this, 'build_option_pages'));
+			add_submenu_page(BWP_RC_OPTION_GENERAL, __('BWP Recent Comments Instance List', 'bwp-rc'), __('Instances', 'bwp-rc'), BWP_RC_CAPABILITY, BWP_RC_INSTANCES, array($this, 'build_option_pages'));
+		}
 	}
 
 	/**
@@ -378,13 +386,13 @@ if (!empty($page))
 				'select_long_method' => array(
 					__('Let the style handle the overflow', 'bwp-rc') => 'long_overflow',
 					__('Split the words into smaller chunks', 'bwp-rc') => 'long_break'					
-		 		),
+		 		)
 			),
 			'input'			=> array
 			(				
 				'input_comments' 	=> array('size' => 5, 'label' => __('recent comments.', 'bwp-rc')),
 				'input_tbs' 		=> array('size' => 5, 'label' => __('recent trackbacks/pingbacks (used when choose "separate" as output method.)', 'bwp-rc')),
-				'input_group_comments' 	=> array('size' => 5, 'label' => __('comments for each post (0 to disable).', 'bwp-rc')),
+				'input_group_comments' 	=> array('size' => 5, 'label' => __('comments for each post (0 to disable)', 'bwp-rc')),
 				'input_date' 		=> array('size' => 10, 'label' => __('To choose an appropriate format, please consult <a href="http://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">WordPress Codex</a>.', 'bwp-rc')),
 				'input_gravatar_width' => array('size' => 5, 'label' => __('pxs wide.', 'bwp-rc')),
 				'input_title_trim' => array('size' => 5, 'label' => __('words. If you specify <code>0</code>, no trim will occur.', 'bwp-rc')),
@@ -415,6 +423,8 @@ if (!empty($page))
 	else if ($page == BWP_RC_OPTION_TEMPLATE)
 	{
 		$bwp_option_page->set_current_tab(2);
+
+		//add_filter('bwp_ad_showable', function() { return false;});
 
 		// Option Structures - Form
 		$form = array(
@@ -474,10 +484,8 @@ if (!empty($page))
 	<code>%post_title_attr%</code> - <em>' .__('Title of the post that has been properly escaped for title attribute', 'bwp-rc') . '</em><br />
 	<code>%post_link%</code> - <em>' . 		__('The post\'s permalink', 'bwp-rc') . '</em><br />
 	<code>%comment_count%</code> - <em>' . 	__('The post\'s comment count', 'bwp-rc') . '</em><br />
-	<code>%home%</code> - <em>' . 			__('The URL to your homepage', 'bwp-rc') . '</em>',
-			'template_owner' => '
-	<code>%comment_number%</code> - <em>' . __('A comment\'s number, to be used with a paged comment list on a page', 'bwp-rc') . '</em>'
-			)
+	<code>%home%</code> - <em>' . 			__('The URL to your homepage', 'bwp-rc') . '</em><br />
+	<code>%comment_number%</code> - <em>' . __('A comment\'s ordinal number (#1, #2, #3, etc.)', 'bwp-rc') . '</em>')
 		);
 
 		// Get the default options
@@ -579,6 +587,8 @@ if (!empty($page))
 					$option = '';
 			}
 			update_option($page, $options);
+			// Update options successfully
+			$this->add_notice(__('All options have been saved.', 'bwp-rc'));
 			// Do this for this plugin only
 			$this->options = array_merge($this->options, $options);
 		}
@@ -651,23 +661,40 @@ if (!empty($page))
 		if (empty($text))
 			return '';
 		// ensure that no comment has double spaces
+		$text = trim($text);
 		$text = preg_replace('/\s+/iu', ' ', $text);
 		$actual_length = count(explode(' ', $text));
-		$dotdotdot = ($actual_length > $length) ? '...' : '';
+		$dotdotdot = ($actual_length > $length) ? apply_filters('bwp_rc_dotdotdot', '...') : '';
 		$words = explode(' ', $text, $length + 1);
 
 		if (count($words) > $length)
-		{
 			array_pop($words);
-			$text = implode(' ', $words);
-		}
 
 		if (!empty($chunk))
 		{
-			$text = utf8_decode($text);
-			$text = preg_replace('#(\S{' . $chunk . ',})#eiu', "chunk_split('$1', $chunk, ' ')", $text);
-			//$text = wordwrap($text, $chunk);
+			$text = '';
+			foreach ($words as $word)
+			{
+				$tmp = preg_split("//u", $word, -1, PREG_SPLIT_NO_EMPTY);
+				if (0 < sizeof($tmp))
+				{
+					$wl = sizeof($tmp);
+					if ($chunk < $wl)
+					{
+						$text_chunked = array_chunk($tmp, $chunk);
+						foreach ($text_chunked as $chunked)
+						{
+							$text .= implode('', $chunked) . ' ';
+						}
+					}
+					else
+						$text .= $word . ' ';
+				}
+			}
+			//$text = preg_replace('#(\S{' . $chunk . ',})#eiu', "chunk_split('$1', $chunk, ' ')", $text);
 		}
+		else
+			$text = implode(' ', $words);
 
 		$text .= $dotdotdot;
 
@@ -777,7 +804,7 @@ if (!empty($page))
 		// Format the comment excerpt, let's start by stripping html, shortcodes		
 		$comment['excerpt'] = strip_tags(strip_shortcodes($commentdata['comment_content']));
 		$chunk = ($this->options['select_long_method'] == 'long_break' && !empty($this->options['input_chunk'])) ? $this->options['input_chunk'] : 0;
-		$trimmed_to = (!empty($this->options['input_trim'])) ? $this->options['input_trim'] : $this->options_default['input_trim'];
+		$trimmed_to = (!empty($this->options['input_trim'])) ? $this->options['input_trim'] : 4000;
 		$comment['excerpt']	= $this->trim_comment_excerpt($comment['excerpt'], $trimmed_to, $chunk);
 		$comment['excerpt']	= ($this->options['enable_smilies'] == 'yes') ? convert_smilies($comment['excerpt']) : $comment['excerpt'];
 		// If exerpt is empty after these, add something to it
@@ -861,6 +888,9 @@ if (!empty($page))
 
 	function parse_rc_shortcode($atts)
 	{
+		if (!is_singular())
+			return '';
+
 		extract(shortcode_atts(array(
 			'instance'		=> '',
 			'ajax'			=> '',
@@ -869,7 +899,7 @@ if (!empty($page))
 			'next'			=> '&raquo;&raquo;'
 		), $atts));
 
-		$ajax = (!empty($ajax)) ? true : false;
+		$ajax = ('yes' == $ajax) ? true : false;
 		$output = '<ul class="bwp-rc-ulist">' . "\n";
 		$output .= bwp_rc_paged_list(array('instance' => $instance, 'ajax' => $ajax), $limit, $prev, $next, false) . "\n";
 		$output .= '</ul>' . "\n";
@@ -1100,22 +1130,29 @@ if (!empty($page))
 			$order 		= (!empty($order)) ? $order : $instance_data['order'];
 			$order 		= (!empty($order)) ? $order : $this->options['select_order'];
 			$post_type 	= (!empty($instance_data['post_type'])) ? $instance_data['post_type'] : NULL;
-			// @since 1.1.0
 			$post_id 	= (!empty($instance_data['post_id'])) ? $instance_data['post_id'] : NULL;
+			if (empty($the_instance)) {
+				$comment_type = $instance_data['comment_type'];
+			} else {
+				$comment_type = isset($paged) ? $instance_data['comment_type'] : $comment_type;
+				$ajax = (!$paged_template) ? $instance_data['ajax'] : $ajax;
+			}
+			
 			$separate 	= (empty($instance_data['separate'])) ? false : $instance_data['separate'];
-			$separate 	= (!empty($tb_limit) && ($separate == true || ($instance == BWP_RC_LIST && $this->options['select_output_method'] == 'all_sep_comments'))) ? true : false;
+			$separate 	= (!empty($tb_limit) && ($separate == true || ($instance_name == BWP_RC_LIST && $this->options['select_output_method'] == 'all_sep_comments'))) ? true : false;
 			// @since 1.2.0
 			$grouped 	= (!empty($instance_data['grouped'])) ? $instance_data['grouped'] : 0;
 			$grouped 	= (empty($post_id_sql)) ? $grouped : 0;
 			$grouped 	= (empty($grouped) && BWP_RC_LIST == $instance_name) ? (int) $this->options['input_group_comments'] : $grouped;
-			$ajax		= (BWP_RC_LIST == $instance_name && 'yes' == $this->options['enable_ajax_nav']) ? true : $ajax;
-			$limit		= (true == $ajax && !isset($paged)) ? $limit + 1 : $limit;
+			$ajax		= (!$paged_template && BWP_RC_LIST == $instance_name && 'yes' == $this->options['enable_ajax_nav']) ? true : $ajax;
+			$ajax_paged	= ($ajax && !isset($paged)) ? 1 : $paged;
 
 			$output = '';
 			$saved_output = array();
 
 			// build the query
 			// if we are separating, we will have to do another query, the first one will have to be comment type only
+			$comment_type_sql 	= '';
 			if ($separate == true)
 				$comment_type_sql = " AND wpcoms.comment_type = '' ";
 			else
@@ -1129,16 +1166,15 @@ if (!empty($page))
 				}
 				else
 				{
-					$comment_type_sql 	= '';
 					$comment_type_sql 	= ($comment_type == 'comment') ? " AND wpcoms.comment_type = '' " : $comment_type_sql;
-					$comment_type_sql 	= ($comment_type == 'tb') ? " AND wpcoms.comment_type = 'trackback' OR wpcoms.comment_type = 'pingback' " : $comment_type_sql;				
+					$comment_type_sql 	= ($comment_type == 'tb') ? " AND (wpcoms.comment_type = 'trackback' OR wpcoms.comment_type = 'pingback') " : $comment_type_sql;				
 				}
 			}
 
 			// Paged recent comment lists? - @since 1.1.0
 			$paged_start		= (isset($paged)) ? ((int) $paged - 1)  * $paged_limit : NULL;
 			$paged_limit_sql	= (isset($paged_start)) ? $paged_start . ', ' . ($paged_limit + 1) : '';
-			$limit_sql			= (!empty($paged_limit_sql)) ? $paged_limit_sql : $limit;
+			$limit_sql			= (!empty($paged_limit_sql)) ? $paged_limit_sql : $limit + 1;
 
 			$post_type_sql		= (!empty($post_type)) ? $wpdb->prepare(' AND wpposts.post_type = %s ', $post_type) : '';
 			// Get comments from a specific post? - @since 1.1.0
@@ -1158,10 +1194,14 @@ if (!empty($page))
 			{
 				$grouped_sql_inner_join = (!empty($post_type_sql)) ? 'INNER JOIN ' . $wpdb->posts . ' wpposts
 								ON (wpcoms.comment_post_ID = wpposts.ID' . "
-									AND wpposts.post_status = 'publish'"
+									AND (wpposts.post_status = 'publish' OR wpposts.post_status = 'inherit') 
+									AND wpposts.post_password = ''"
 								. $post_type_sql . ')' : '';
 				$grouped_sql_select_part = (!empty($post_type_sql)) ? ', wpposts.ID, wpposts.comment_count, wpposts.post_title' : '';
-				$sub_limit = (empty($grouped_sql_inner_join) && !defined('BWP_RC_DOING_AJAX')) ? ' LIMIT ' . (int) $limit * 50 : '';
+				$sub_limit = '';
+				//(empty($grouped_sql_inner_join) && !defined('BWP_RC_DOING_AJAX')) ? ' LIMIT ' . (int) $limit * 500 : '';
+
+				$grouped_sql_orderby = ' ORDER BY comment_post_ID DESC, comment_ID DESC ';
 
 				$wpdb->query('SET @num = 0, @post_id = 0;');
 				$grouped_sql = '
@@ -1170,16 +1210,17 @@ if (!empty($page))
 						SELECT *,
 							@num := if(@post_id = comment_post_ID, @num + 1, 1) as row_number,
 							@post_id := comment_post_ID as cpID
-						FROM ' . $wpdb->comments . '
-							ORDER BY comment_post_ID DESC, comment_ID DESC'
+						FROM ' . $wpdb->comments . str_replace('wpcoms.', '', $grouped_sql_inner_join) . '
+							WHERE comment_approved = 1'
+							. str_replace('wpcoms.', '', $comment_type_sql)
+							. str_replace('wpcoms.', '', $owner_sql)
+							. $grouped_sql_orderby
 							. $sub_limit . '
-					) as wpcoms ' . $grouped_sql_inner_join . '
-						WHERE wpcoms.row_number <= ' . (int) $grouped . ' 
-							AND wpcoms.comment_approved = 1'
-						 	. $comment_type_sql
-							. $owner_sql . '
-						ORDER BY wpcoms.comment_date DESC
+					) as wpcoms
+						WHERE wpcoms.row_number <= ' . (int) $grouped . '
+							ORDER BY wpcoms.comment_date DESC
 						LIMIT ' . $limit_sql;
+
 				// Fetch comment IDs
 				$grouped_comments = $wpdb->get_results($grouped_sql, ARRAY_A);
 				$comments = self::sort_grouped_comments($grouped_comments);
@@ -1196,7 +1237,7 @@ if (!empty($page))
 					}
 					$grouped_post_ids = implode(',', $grouped_post_ids);
 					// Get posts
-					$grouped_posts = $wpdb->get_results('SELECT ID, comment_count, post_title FROM ' . $wpdb->posts . ' WHERE ID IN (' . $grouped_post_ids . ") AND post_status = 'publish'", ARRAY_A);
+					$grouped_posts = $wpdb->get_results('SELECT ID, comment_count, post_title FROM ' . $wpdb->posts . ' WHERE ID IN (' . $grouped_post_ids . ')', ARRAY_A);
 					$grouped_posts = self::build_grouped_post_keys($grouped_posts);
 				}
 			}
@@ -1206,7 +1247,8 @@ if (!empty($page))
 						FROM ' . $wpdb->comments . ' wpcoms
 							INNER JOIN ' . $wpdb->posts . ' wpposts
 								ON (wpcoms.comment_post_ID = wpposts.ID' . "
-									AND wpposts.post_status = 'publish'"
+									AND (wpposts.post_status = 'publish' OR wpposts.post_status = 'inherit')
+									AND wpposts.post_password = ''"
 								. $post_type_sql
 								. $post_id_sql . ')
 						WHERE wpcoms.comment_approved = 1'
@@ -1220,13 +1262,14 @@ if (!empty($page))
 				// If we are separating, do the second query here
 				if ($separate == true)
 				{
-					$comment_type_sql = " AND wpcoms.comment_type = 'trackback' OR wpcoms.comment_type = 'pingback' ";
+					$comment_type_sql = " AND (wpcoms.comment_type = 'trackback' OR wpcoms.comment_type = 'pingback') ";
 					$disable_own_tb_sql = ($this->options['disable_own_tb'] == 'yes') ? " AND wpcoms.comment_author_url NOT LIKE '" . get_option('home') . "%' " : '';				
 					$bwp_query 	= 'SELECT wpcoms.*, wpposts.ID, wpposts.comment_count, wpposts.post_title
 						FROM ' . $wpdb->comments . ' wpcoms
 							INNER JOIN ' . $wpdb->posts . ' wpposts
 								ON (wpcoms.comment_post_ID = wpposts.ID' . "
-									AND wpposts.post_status <> 'trash'"
+									AND (wpposts.post_status = 'publish' OR wpposts.post_status = 'inherit')
+									AND wpposts.post_password = ''"
 								. $post_type_sql
 								. $post_id_sql . ')
 						WHERE comment_approved = 1 '
@@ -1249,8 +1292,12 @@ if (!empty($page))
 
 			foreach ($comments as $key => $commentdata)
 			{
-				if (isset($paged))
+				if (isset($paged)) {
 					$commentdata['comment_number'] = ($paged - 1) * $paged_limit + $bwp_rc_left + 1;
+				} else if ($ajax) {
+					$commentdata['comment_number'] = ($ajax_paged - 1) * $limit + $bwp_rc_left + 1;
+				}
+
 				// Grouped comments by post - @since 1.2.0
 				if (!empty($grouped))
 				{
@@ -1267,8 +1314,7 @@ if (!empty($page))
 
 					// Paginated comment list - @since 1.1.0
 					$bwp_rc_left++;
-					if (isset($paged) && $paged_limit < $bwp_rc_left)
-					{
+					if ((isset($paged) && $paged_limit < $bwp_rc_left) || ($ajax && $limit < $bwp_rc_left)) {
 						$output .= $this->generate_a_group($comment, 'footer');
 						break;
 					}
@@ -1298,8 +1344,9 @@ if (!empty($page))
 						continue;
 					// Paginated comment list - @since 1.1.0
 					$bwp_rc_left++;
-					if (isset($paged) && $paged_limit < $bwp_rc_left)
+					if ((isset($paged) && $paged_limit < $bwp_rc_left) || ($ajax && $limit < $bwp_rc_left)) {
 						break;
+					}
 
 					$output .= ($paged_template) ? $this->generate_a_comment($comment, 'paged') : $this->generate_a_comment($comment);
 				}
