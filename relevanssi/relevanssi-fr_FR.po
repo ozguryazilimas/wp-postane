@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Relevanssi v1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-18 10:05+0100\n"
-"PO-Revision-Date: 2012-12-18 10:07+0100\n"
+"POT-Creation-Date: 2013-12-10 18:14+0100\n"
+"PO-Revision-Date: 2013-12-10 18:19+0100\n"
 "Last-Translator: Li-An <lian00@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -15,16 +15,16 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
 "X-Textdomain-Support: yes\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.2\n"
 "X-Poedit-SearchPath-0: .\n"
 
 # @ relevanssi
-#: relevanssi.php:267
+#: relevanssi.php:297
 msgid "Tag weight:"
 msgstr "Poids des mots-clef:"
 
 # @ relevanssi
-#: relevanssi.php:282
+#: relevanssi.php:312
 msgid "Category weight:"
 msgstr "Poids des catégories:"
 
@@ -34,12 +34,12 @@ msgid "There is no excerpt because this is a protected post."
 msgstr "Il n'y a aucun extrait car ce billet est protégé."
 
 # @ relevanssi
-#: lib/indexing.php:83
+#: lib/indexing.php:109
 msgid "Indexing complete!"
 msgstr "Indexation complète !"
 
 # @ default
-#: lib/init.php:41
+#: lib/init.php:40
 #, php-format
 msgid ""
 "Relevanssi needs attention: Remember to build the index (you can do it at <a "
@@ -51,7 +51,7 @@ msgstr ""
 "\t\t\t  page de réglages</a>), sinon la recherche ne fonctionnera pas."
 
 # @ relevanssi
-#: lib/init.php:85 lib/init.php:86
+#: lib/init.php:84 lib/init.php:85
 msgid "User searches"
 msgstr "Recherches par les utilisateurs"
 
@@ -76,7 +76,7 @@ msgid "Relevanssi User Searches"
 msgstr "Recherches Relevanssi par les utilisateurs"
 
 # @ relevanssi
-#: lib/interface.php:333
+#: lib/interface.php:335
 #, php-format
 msgid ""
 "<div id='message' class='updated fade'><p>Successfully added %d/%d terms to "
@@ -86,7 +86,7 @@ msgstr ""
 "stopwords!</p></div>"
 
 # @ relevanssi
-#: lib/interface.php:340
+#: lib/interface.php:342
 #, php-format
 msgid ""
 "<div id='message' class='updated fade'><p>Term '%s' added to stopwords!</p></"
@@ -96,7 +96,7 @@ msgstr ""
 "p></div>"
 
 # @ relevanssi
-#: lib/interface.php:343
+#: lib/interface.php:345
 #, php-format
 msgid ""
 "<div id='message' class='updated fade'><p>Couldn't add term '%s' to "
@@ -106,7 +106,7 @@ msgstr ""
 "stopwords!</p></div>"
 
 # @ relevanssi
-#: lib/interface.php:372
+#: lib/interface.php:374
 msgid ""
 "<div id='message' class='updated fade'><p>Stopwords removed! Remember to re-"
 "index.</p></div>"
@@ -115,7 +115,7 @@ msgstr ""
 "de réindexer.</p></div>"
 
 # @ relevanssi
-#: lib/interface.php:382
+#: lib/interface.php:384
 #, php-format
 msgid ""
 "<div id='message' class='updated fade'><p>Term '%s' removed from stopwords! "
@@ -125,7 +125,7 @@ msgstr ""
 "Réindexer pour le récupérer dans l'index.</p></div>"
 
 # @ relevanssi
-#: lib/interface.php:385
+#: lib/interface.php:387
 #, php-format
 msgid ""
 "<div id='message' class='updated fade'><p>Couldn't remove term '%s' from "
@@ -135,12 +135,12 @@ msgstr ""
 "stopwords !</p></div>"
 
 # @ relevanssi
-#: lib/interface.php:396
+#: lib/interface.php:398
 msgid "25 most common words in the index"
 msgstr "Les 25 mots des plus fréquents de l'index"
 
 # @ relevanssi
-#: lib/interface.php:398
+#: lib/interface.php:400
 msgid ""
 "These words are excellent stopword material. A word that appears in most of "
 "the posts in the database is quite pointless when searching. This is also an "
@@ -157,24 +157,24 @@ msgstr ""
 "retiré de l'index aussi est-il inutile de reconstruire l'index."
 
 # @ relevanssi
-#: lib/interface.php:424
+#: lib/interface.php:426
 msgid "Add to stopwords"
 msgstr "Ajouter aux stopwords."
 
-#: lib/interface.php:435
+#: lib/interface.php:437
 msgid "Total Searches"
 msgstr "Nombre de recherches total"
 
-#: lib/interface.php:438
+#: lib/interface.php:440
 msgid "Totals"
 msgstr "Totaux"
 
-#: lib/interface.php:443
+#: lib/interface.php:445
 msgid "Common Queries"
 msgstr "Requêtes en commun"
 
 # @ relevanssi
-#: lib/interface.php:445
+#: lib/interface.php:447
 msgid ""
 "Here you can see the 20 most common user search queries, how many times "
 "those \n"
@@ -186,145 +186,130 @@ msgstr ""
 "pour ces requêtes."
 
 # @ relevanssi
-#: lib/interface.php:451 lib/interface.php:467 lib/interface.php:499
+#: lib/interface.php:453 lib/interface.php:469 lib/interface.php:501
 msgid "Today and yesterday"
 msgstr "Aujourd'hui et hier"
 
 # @ relevanssi
-#: lib/interface.php:455 lib/interface.php:471 lib/interface.php:500
+#: lib/interface.php:457 lib/interface.php:473 lib/interface.php:502
 msgid "Last 7 days"
 msgstr "Sept derniers jours"
 
 # @ relevanssi
-#: lib/interface.php:459 lib/interface.php:475 lib/interface.php:501
+#: lib/interface.php:461 lib/interface.php:477 lib/interface.php:503
 msgid "Last 30 days"
 msgstr "Trente derniers jours"
 
 # @ relevanssi
-#: lib/interface.php:464
+#: lib/interface.php:466
 msgid "Unsuccessful Queries"
 msgstr "Requêtes sans résultat"
 
-#: lib/interface.php:482
+#: lib/interface.php:484
 msgid "Reset Logs"
 msgstr "Remettre à zéro les logs"
 
-#: lib/interface.php:485
+#: lib/interface.php:487
 #, php-format
 msgid "To reset the logs, type \"reset\" into the box here %s and click %s"
 msgstr ""
 "Pour remettre à zéro les logs, tapez  \"reset\" dans le champ ici %s et "
 "cliquez %s"
 
-#: lib/interface.php:502
+#: lib/interface.php:504
 msgid "Forever"
 msgstr "Pour toujours"
 
-#: lib/interface.php:504
+#: lib/interface.php:506
 msgid "When"
 msgstr "Quand"
 
 # @ relevanssi
-#: lib/interface.php:504
+#: lib/interface.php:506
 msgid "Searches"
 msgstr "Recherches"
 
-#: lib/interface.php:534
+#: lib/interface.php:536
 msgid "Query"
 msgstr "Requête"
 
-#: lib/interface.php:534
+#: lib/interface.php:536
 msgid "Hits"
 msgstr "Hits"
 
 # @ relevanssi
-#: lib/interface.php:842 lib/interface.php:887
+#: lib/interface.php:846 lib/interface.php:887
 msgid "Basic options"
 msgstr "Options basiques"
 
-#: lib/interface.php:843 lib/interface.php:953
+#: lib/interface.php:847 lib/interface.php:953
 msgid "Weights"
 msgstr "Poids"
 
 # @ relevanssi
-#: lib/interface.php:844 lib/interface.php:1008
+#: lib/interface.php:848 lib/interface.php:1008
 msgid "Logs"
 msgstr "Logs"
 
 # @ relevanssi
-#: lib/interface.php:845 lib/interface.php:1037
+#: lib/interface.php:849 lib/interface.php:1037
 msgid "Exclusions and restrictions"
 msgstr "Exclusions et restrictions"
 
 # @ relevanssi
-#: lib/interface.php:846
+#: lib/interface.php:850
 msgid "Custom excerpts"
 msgstr "Extraits personnalisés"
 
 # @ relevanssi
-#: lib/interface.php:847
+#: lib/interface.php:851
 msgid "Highlighting search results"
 msgstr "Mise en évidence des résultats de recherche"
 
 # @ relevanssi
-#: lib/interface.php:848 lib/interface.php:1183
+#: lib/interface.php:852 lib/interface.php:1183
 msgid "Indexing options"
 msgstr "Options d'indexation"
 
 # @ relevanssi
-#: lib/interface.php:849 lib/interface.php:1301
+#: lib/interface.php:853 lib/interface.php:1331
 msgid "Caching"
 msgstr "Mise en cache"
 
 # @ relevanssi
-#: lib/interface.php:850 lib/interface.php:1324
+#: lib/interface.php:854 lib/interface.php:1354
 msgid "Synonyms"
 msgstr "Synonymes"
 
 # @ relevanssi
-#: lib/interface.php:851 lib/interface.php:1332
+#: lib/interface.php:855 lib/interface.php:1362
 msgid "Stopwords"
 msgstr "Stopwords"
 
-#: lib/interface.php:854
+#: lib/interface.php:858
 msgid "Import/export options"
 msgstr "Import/export des options"
 
-#: lib/interface.php:857
+#: lib/interface.php:861
 msgid "Buy Relevanssi Premium"
 msgstr "Achetez Relevanssi Premium"
 
 # @ relevanssi
-#: lib/interface.php:862
+#: lib/interface.php:866
 msgid "Quick tools"
 msgstr "Outils rapides"
 
 # @ relevanssi
-#: lib/interface.php:864
-msgid "Save options"
-msgstr "Sauvegarder les options"
-
-# @ relevanssi
-#: lib/interface.php:865
-msgid "Build the index"
-msgstr "Construire l'index"
-
-# @ relevanssi
-#: lib/interface.php:866 lib/interface.php:1299
-msgid "Continue indexing"
-msgstr "Continuer l'indexation"
-
-# @ relevanssi
-#: lib/interface.php:866
+#: lib/interface.php:870
 msgid "add"
 msgstr "ajouter"
 
 # @ relevanssi
-#: lib/interface.php:866
+#: lib/interface.php:870
 msgid "documents."
 msgstr "documents."
 
-#: lib/interface.php:870
+#: lib/interface.php:874
 msgid ""
 "WARNING: You've chosen no post types to index. Nothing will be indexed. <a "
 "href='#indexing'>Choose some post types to index</a>."
@@ -333,7 +318,7 @@ msgstr ""
 "indexé.<a href='#indexing'>Choisissez les types de billet à indexer</a>."
 
 # @ relevanssi
-#: lib/interface.php:874
+#: lib/interface.php:878
 msgid ""
 "Use 'Build the index' to build the index with current <a "
 "href='#indexing'>indexing options</a>. If you can't finish indexing with one "
@@ -349,20 +334,6 @@ msgstr ""
 "jusqu'à ce que vous trouviez le maximum que vous pouvez ajouter en une "
 "passe. Regardez 'État de l'indexation' ci-dessous pour déterminer le nombre "
 "de documents actuellement pris en compte dans l'indexation."
-
-#: lib/interface.php:876
-msgid ""
-"If Relevanssi doesn't index anything and you have upgraded from a 2.x "
-"version, it's likely the changes in\n"
-"\tthe database structure haven't gone through in the upgrade. In that case "
-"all you need to do is to deactivate the\n"
-"\tplugin and then activate it again."
-msgstr ""
-"Si Relevanssi n'indexe plus rien et que vous avez upgradé à partir d'une "
-"version 2.x, c'est probablement parce que les changements dans \n"
-"\tla structure de table de données n'ont pas été pris en compte lors de la "
-"mise à jour. Dans ce cas là, vous n'avez qu'à désactiver le \n"
-"\tplugin et le réactiver ensuite."
 
 # @ relevanssi
 #: lib/interface.php:880
@@ -566,8 +537,8 @@ msgstr "Text de commentaire"
 
 # @ relevanssi
 #: lib/interface.php:1000
-msgid "WPML compatibility"
-msgstr "Compatibilité WPML"
+msgid "WPML/Polylang compatibility"
+msgstr "Compatibilité WPML/Polylang"
 
 # @ relevanssi
 #: lib/interface.php:1002
@@ -972,11 +943,6 @@ msgstr ""
 "avec cette classe"
 
 # @ relevanssi
-#: lib/interface.php:1181 lib/interface.php:1330
-msgid "Save the options"
-msgstr "Sauvegarder les options"
-
-# @ relevanssi
 #: lib/interface.php:1185
 msgid "Choose post types to index:"
 msgstr "Veuillez choisir les types de billets personnalisés à indexer:"
@@ -985,45 +951,65 @@ msgstr "Veuillez choisir les types de billets personnalisés à indexer:"
 msgid "Type"
 msgstr "Type"
 
-#: lib/interface.php:1191
+#: lib/interface.php:1191 lib/interface.php:1237
 msgid "Index"
 msgstr "Index"
 
-#: lib/interface.php:1192
+#: lib/interface.php:1192 lib/interface.php:1238
 msgid "Public?"
 msgstr "Publique ?"
 
-#: lib/interface.php:1209
+#: lib/interface.php:1209 lib/interface.php:1252
 #, php-format
 msgid "%s"
 msgstr "%s"
 
-#: lib/interface.php:1210
+#: lib/interface.php:1210 lib/interface.php:1253
 msgid "yes"
 msgstr "oui"
 
 # @ relevanssi
-#: lib/interface.php:1210
+#: lib/interface.php:1210 lib/interface.php:1253
 msgid "no"
 msgstr "non"
 
 # @ relevanssi
 #: lib/interface.php:1231
+msgid "Choose taxonomies to index:"
+msgstr "Veuillez choisir les taxonomie  à indexer:"
+
+#: lib/interface.php:1236
+msgid "Taxonomy"
+msgstr "Taxonomie"
+
+#: lib/interface.php:1273
+msgid ""
+"If you check a taxonomy here, the terms for that taxonomy are indexed with "
+"the posts. If you for example choose \"post_tag\", searching for tags will "
+"find all posts that have the tag."
+msgstr ""
+"Si vous cochez une taxonomie ici, les termes de cette taxonomie seront "
+"indexées avec les billets. Si par exemple vous choisissez \"post_tag\", la "
+"recherche pour les mots-clef affichera tous les billets qui sont associés au "
+"mot-clef."
+
+# @ relevanssi
+#: lib/interface.php:1277
 msgid "Minimum word length to index"
 msgstr "Longueur minimum des mots à indexer"
 
 # @ relevanssi
-#: lib/interface.php:1233
+#: lib/interface.php:1279
 msgid "Words shorter than this number will not be indexed."
 msgstr "Les mots plus courts que ce nombre ne seront pas indexés."
 
 # @ relevanssi
-#: lib/interface.php:1239
+#: lib/interface.php:1285
 msgid "Expand shortcodes in post content:"
 msgstr "Traduire les shortcodes dans le contenu des billets:"
 
 # @ relevanssi
-#: lib/interface.php:1241
+#: lib/interface.php:1287
 msgid ""
 "If checked, Relevanssi will expand shortcodes in post content before "
 "indexing. Otherwise shortcodes will be stripped. If you use shortcodes to "
@@ -1038,43 +1024,12 @@ msgstr ""
 "shortcode au moment de l'indexation."
 
 # @ relevanssi
-#: lib/interface.php:1245
-msgid "Index and search your posts' tags:"
-msgstr "Indexer et rechercher les tags de vos billets:"
-
-# @ relevanssi
-#: lib/interface.php:1247
-msgid ""
-"If checked, Relevanssi will also index and search the tags of your posts. "
-"Remember to rebuild the index if you change this option!"
-msgstr ""
-"Si coché, Relevanssi indexera aussi et cherchera dans les mots-clef de vos "
-"billets. N'oubliez pas de reconstruire l'index si vous modifiez cette "
-"option !"
-
-# @ relevanssi
-#: lib/interface.php:1251
-msgid "Index and search your posts' categories:"
-msgstr "Indexer et rechercher vos catégories de billets:"
-
-# @ relevanssi
-#: lib/interface.php:1253
-msgid ""
-"If checked, Relevanssi will also index and search the categories of your "
-"posts. Category titles will pass through 'single_cat_title' filter. Remember "
-"to rebuild the index if you change this option!"
-msgstr ""
-"Si coché, Relevanssi indexera aussi les catégories de vos billets. Les "
-"titres de catégories passeront à travers le filtre 'single_cat_title. "
-"N'oubliez pas de reconstruire l'index si vous changez cette option !"
-
-# @ relevanssi
-#: lib/interface.php:1257
+#: lib/interface.php:1293
 msgid "Index and search your posts' authors:"
 msgstr "Indexer et rechercher les auteurs des billets:"
 
 # @ relevanssi
-#: lib/interface.php:1259
+#: lib/interface.php:1295
 msgid ""
 "If checked, Relevanssi will also index and search the authors of your posts. "
 "Author display name will be indexed. Remember to rebuild the index if you "
@@ -1085,12 +1040,12 @@ msgstr ""
 "reconstruire l'index si vous modifiez cette option !"
 
 # @ relevanssi
-#: lib/interface.php:1263
+#: lib/interface.php:1299
 msgid "Index and search post excerpts:"
 msgstr "Indexer et rechercher dans les extraits de billets:"
 
 # @ relevanssi
-#: lib/interface.php:1265
+#: lib/interface.php:1301
 msgid ""
 "If checked, Relevanssi will also index and search the excerpts of your posts."
 "Remember to rebuild the index if you change this option!"
@@ -1099,27 +1054,27 @@ msgstr ""
 "N'oubliez pas de reconstruire l'index si vous modifiez cette option !"
 
 # @ relevanssi
-#: lib/interface.php:1269
+#: lib/interface.php:1305
 msgid "Index and search these comments:"
 msgstr "Indexer et rechercher ces commentaires:"
 
 # @ relevanssi
-#: lib/interface.php:1271
+#: lib/interface.php:1307
 msgid "none"
 msgstr "aucun"
 
 # @ relevanssi
-#: lib/interface.php:1272
+#: lib/interface.php:1308
 msgid "normal"
 msgstr "normal"
 
 # @ relevanssi
-#: lib/interface.php:1273
+#: lib/interface.php:1309
 msgid "all"
 msgstr "tout"
 
 # @ relevanssi
-#: lib/interface.php:1275
+#: lib/interface.php:1311
 msgid ""
 "Relevanssi will index and search ALL (all comments including track- &amp; "
 "pingbacks and custom comment types), NONE (no comments) or NORMAL (manually "
@@ -1132,11 +1087,11 @@ msgstr ""
 "<br />N'oubliez pas de reconstruire l'index si vous modifiez cette option !"
 
 # @ relevanssi
-#: lib/interface.php:1279
+#: lib/interface.php:1315
 msgid "Custom fields to index:"
 msgstr "Champs personnalisés à indexer:"
 
-#: lib/interface.php:1281
+#: lib/interface.php:1317
 msgid ""
 "A comma-separated list of custom fields to include in the index. Set to "
 "'visible' to index all visible custom fields and to 'all' to index all "
@@ -1148,25 +1103,7 @@ msgstr ""
 "commençant par le caractère '_' ."
 
 # @ relevanssi
-#: lib/interface.php:1285
-msgid "Custom taxonomies to index:"
-msgstr "Taxonomie personnalisée à indexer:"
-
-# @ relevanssi
-#: lib/interface.php:1287
-msgid ""
-"A comma-separated list of custom taxonomy names to include in the index."
-msgstr ""
-"Une liste de noms de taxonomies personnalisées à inclure dans l'index, "
-"séparés par une virgule."
-
-# @ relevanssi
-#: lib/interface.php:1297
-msgid "Save indexing options and build the index"
-msgstr "Sauvegarder les options d'indexation et construire l'index"
-
-# @ relevanssi
-#: lib/interface.php:1303
+#: lib/interface.php:1333
 msgid ""
 "Warning: In many cases caching is not useful, and in some cases can be even "
 "harmful. Do not\n"
@@ -1178,38 +1115,33 @@ msgstr ""
 "\\\tactiver le cache à moins que vous n'ayez une bonne raison."
 
 # @ relevanssi
-#: lib/interface.php:1306
+#: lib/interface.php:1336
 msgid "Enable result and excerpt caching:"
 msgstr "Autoriser la mise en cache des résultats et d'extraits:"
 
 # @ relevanssi
-#: lib/interface.php:1308
+#: lib/interface.php:1338
 msgid "If checked, Relevanssi will cache search results and post excerpts."
 msgstr ""
 "Si coché, Relevanssi mettra en cache les résultats et extraits de billets."
 
 # @ relevanssi
-#: lib/interface.php:1312
+#: lib/interface.php:1342
 msgid "Cache expire (in seconds):"
 msgstr "Expiration du coche (en secondes):"
 
 # @ relevanssi
-#: lib/interface.php:1314
+#: lib/interface.php:1344
 msgid "86400 = day"
 msgstr "86400 = jour"
 
 # @ relevanssi
-#: lib/interface.php:1318
+#: lib/interface.php:1348
 msgid "Entries in the cache"
 msgstr "Entrées dans le cache"
 
 # @ relevanssi
-#: lib/interface.php:1322
-msgid "Clear all caches"
-msgstr "Nettoyer tous les caches"
-
-# @ relevanssi
-#: lib/interface.php:1328
+#: lib/interface.php:1358
 msgid ""
 "Add synonyms here in 'key = value' format. When searching with the OR "
 "operator, any search of 'key' will be expanded to include 'value' as well. "
@@ -1223,7 +1155,7 @@ msgstr ""
 "répéter la même clef à l'envers."
 
 # @ relevanssi
-#: lib/interface.php:1351
+#: lib/interface.php:1381
 msgid ""
 "<p>Enter a word here to add it to the list of stopwords. The word will "
 "automatically be removed from the index, so re-indexing is not necessary. "
@@ -1235,17 +1167,12 @@ msgstr ""
 "une virgule.</p>"
 
 # @ relevanssi
-#: lib/interface.php:1353
+#: lib/interface.php:1383
 msgid "Stopword(s) to add: "
 msgstr "Stopword(s) à ajouter: "
 
 # @ relevanssi
-#: lib/interface.php:1354
-msgid "Add"
-msgstr "Ajouter"
-
-# @ relevanssi
-#: lib/interface.php:1357
+#: lib/interface.php:1387
 msgid ""
 "<p>Here's a list of stopwords in the database. Click a word to remove it "
 "from stopwords. Removing stopwords won't automatically return them to index, "
@@ -1258,12 +1185,7 @@ msgstr ""
 "les billet après retrait de stopwords pour les réinjecter dans l'index."
 
 # @ relevanssi
-#: lib/interface.php:1383
-msgid "Remove all stopwords"
-msgstr "Retirer tous les stopwords"
-
-# @ relevanssi
-#: lib/interface.php:1389
+#: lib/interface.php:1419
 msgid ""
 "Here's a list of stopwords you can use to export the stopwords to another "
 "blog."
@@ -1274,12 +1196,6 @@ msgstr ""
 "les billet après retrait de stopwords pour les réinjecter dans l'index."
 
 # @ relevanssi
-#: lib/uninstall.php:39
+#: lib/uninstall.php:41
 msgid "Data wiped clean, you can now delete the plugin."
 msgstr "Données effacées, vous pouvez maintenant supprimer le plugin."
-
-#~ msgid "Privacy policy"
-#~ msgstr "Règles de confidentialité"
-
-#~ msgid "Hide these messages"
-#~ msgstr "Cacher ces messages"
