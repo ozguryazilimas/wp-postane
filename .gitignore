@@ -4,3 +4,8 @@
 *.kate-swp
 *.swp
 
+
+# plugin junk
+/social/debug_log.txt
+
+
