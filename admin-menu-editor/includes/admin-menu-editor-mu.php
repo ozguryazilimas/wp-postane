@@ -1,4 +1,11 @@
 <?php
+/*
+Plugin Name: Admin Menu Editor Pro (Multisite module)
+Plugin URI: http://w-shadow.com/admin-menu-editor-pro/
+Description: Lets you edit the WordPress admin menu. To access the editor, go to the Dashboard of one of your network sites and open the Settings -&gt; Menu Editor page.
+Author: Janis Elsts
+Author URI: http://w-shadow.com/
+*/
 
 /**
 To install Admin Menu Editor as a global plugin in WPMU :
@@ -29,7 +36,7 @@ if ( file_exists($ws_menu_editor_filename) ) {
 }
 
 function ws_ame_installation_error(){
-	if ( !is_site_admin() ) return;
+	if ( !is_super_admin() ) return;
 ?>
 <div class="error fade"><p>
 		<strong>Admin Menu Editor is installed incorrectly!</strong>
@@ -42,5 +49,3 @@ function ws_ame_installation_error(){
 </div>
 <?php
 }
-
-?>

@@ -1,4 +1,8 @@
-/* Admin Menu Editor CSS file */  
+/* Admin Menu Editor CSS file */
+
+#ws_menu_editor {
+	min-width: 780px;
+}
 
 .ws_main_container {
 	margin:  2px;
@@ -17,13 +21,72 @@
 	width: 100%;
 	margin: 0;
 	padding-top: 2px;
-	padding-bottom: 4px;
+	padding-bottom: 2px;
+}
+
+.ws_basic_container {
+	float: left;
+	display:block;
 }
 
 #ws_menu_box {
 }
 
 #ws_submenu_box {
+}
+
+.ws_dropzone {
+	margin: 0 5px 2px 5px;
+	border: none;
+	height: 25px;
+}
+
+.ws_dropzone_hover {
+	border: 1px dotted silver;
+	background: yellow;
+	height: 30px;
+}
+
+/*************************************************
+                     Actor UI
+ *************************************************/
+#ws_actor_selector li:after {
+    content: ' | ';
+}
+
+#ws_actor_selector li:last-child:after {
+    content: '';
+}
+
+/**
+ * The checkbox that lets the user show/hide a menu for the currently selected actor.
+ */
+#ws_menu_editor .ws_actor_access_checkbox,
+#ws_menu_editor input[type="checkbox"].ws_actor_access_checkbox /* Ensure we override WP defaults. */
+{
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-top: 1px;
+    vertical-align: text-top;
+}
+
+/* The checkbox is only visible when viewing the menu configuration for a specific actor. */
+#ws_menu_editor .ws_actor_access_checkbox {
+    display: none;
+}
+
+#ws_menu_editor.ws_is_actor_view .ws_actor_access_checkbox {
+    display: inline-block;
+}
+
+/* Gray-out items inaccessible to the currently selected actor */
+
+.ws_is_actor_view .ws_container.ws_is_hidden_for_actor {
+    background-color: #F9F9F9;
+}
+
+.ws_is_actor_view .ws_is_hidden_for_actor .ws_item_title {
+    color: #777;
 }
 
 /*
@@ -35,18 +98,18 @@
 	padding: 2px;
 }
 
-#ws_editor_sidebar .ws_main_button {
+#ws_menu_editor .ws_main_button {
 	clear: both;
 	display: block;
 	margin: 4px;
-	width: 120px;
+	width: 130px;
 }
 
-#ws_editor_sidebar #ws_save_menu {
+#ws_menu_editor #ws_save_menu {
 	margin-bottom: 20px;
 }
 
-#ws_editor_sidebar #ws_export_menu {
+#ws_menu_editor #ws_export_menu {
 	margin-top: 12px;
 }
 
@@ -59,28 +122,15 @@
 	width: 290px;
 	
 	padding : 3px;
-	margin: 2px;
-	margin-left: auto;
-	margin-right: auto;
-	
-	border: 1px solid #a9badb;
-	background-color: #bdd3ff;
+	margin: 2px auto;
 }
 
-.ws_active {
-	background-color : #8eb0f1 !important; /* make sure this overrides ws_menu_separator */
-}
+.ws_active { }
 
 .ws_menu { }
 .ws_item { }
 
-.ws_menu_separator {
-	background-image: url("../images/menu-arrows.png");
-	background-repeat: no-repeat;
-	background-position : 4px 8px;
-	background-color: #F9F9F9;
-	border-color: #d9d9d9;
-}
+.ws_menu_separator { }
 
 .ws_submenu {
 	min-height: 2em;
@@ -92,56 +142,25 @@
 }
 
 .ws_item_title {
-	display: block;
+	display: inline-block;
 	padding: 2px;
 	cursor: default;
 }
 
 .ws_edit_link {
 	float: right;
-	margin-right: 0px;
+	margin-right: 0;
 	cursor: pointer;
 	display:block;
 	width: 40px;
 	height: 22px; 
-	
-	background-image: url('../images/bullet_arrow_down2.png'); 
-	background-repeat: no-repeat;
-	background-position: center;
 	
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
 
-a.ws_edit_link:hover {
-	background-color: #ffffd0;
-	background-image: url('../images/bullet_arrow_down2.png');
-}
-
-.ws_edit_link:active {
-	background-repeat: no-repeat;
-	background-position: center;
-}
-
-.ws_edit_link_expanded {
-	background-color: #ffffd0;
-	border-bottom: none;
-	border-color: #ffffd0;
-	
-	background-image: url('../images/bullet_arrow_down2.png');
-	padding-bottom: 1px;
-	background-position: center 3px;
-	
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-	
-	-moz-border-radius-bottomright: 0;
-	-moz-border-radius-bottomleft: 0;
-	
-	-webkit-border-bottom-right-radius: 0;
-	-webkit-border-bottom-left-radius: 0;
-}
+.ws_edit_link_expanded { }
 
 
 .ws_menu_drop_hover {
@@ -152,23 +171,51 @@ a.ws_edit_link:hover {
 	cursor: move !important;
 }
 
+/*
+  If you ever want to apply a right-arrow style to the currently selected menu item,
+  you can do it like this. Commented out for now since it doesn't look all that great,
+  but might be useful in the future.
+*/
+/*
+.ws_container {
+	position: relative;
+}
+
+.ws_menu.ws_active::after {
+	content: "";
+	display: block;
+	z-index: 1002;
+
+	border-left: 14px solid #8EB0F1;
+	border-top: 14px solid transparent;
+	border-bottom: 14px solid transparent;
+	background: #8EB0F1;
+
+	position: absolute;
+	right: -14px;
+	top: -1px;
+
+	width: 0;
+	height: 0;
+}
+*/
+
 /****************************************
     Per-menu settings fields & panels
 *****************************************/
 
 .ws_editbox {
 	display: block;
-	background-color: #ffffd0;  
 	padding: 4px;
-	
+
 	border-radius: 2px;
-	border-top-right-radius: 0px;
+	border-top-right-radius: 0;
 
 	-moz-border-radius: 2px;	
-	-moz-border-radius-topright: 0px;
+	-moz-border-radius-topright: 0;
 
 	-webkit-border-radius: 2px;
-	-webkit-border-top-right-radius: 0px;
+	-webkit-border-top-right-radius: 0;
 }
 
 .ws_edit_panel {
@@ -199,10 +246,8 @@ a.ws_edit_link:hover {
 	width: 16px;
 	height: 16px;
 	vertical-align: top;
-		
-	background-image: url("../images/pencil_delete_gray.png");
-	background-repeat: no-repeat;
-	background-position: center;
+
+	background: url("../images/pencil_delete_gray.png") no-repeat center;
 }
 
 .ws_reset_button:hover {
@@ -213,8 +258,9 @@ a.ws_edit_link:hover {
 	color: gray;
 }
 
-/* No reset button for fields set to the default value */ 
-.ws_input_default .ws_reset_button {
+/* No reset button for fields set to the default value and fields without a default value */
+.ws_input_default  .ws_reset_button,
+.ws_has_no_default .ws_reset_button {
 	visibility: hidden;
 }
 
@@ -235,16 +281,15 @@ a.ws_edit_link:hover {
 }
 
 #ws_menu_editor .ws_edit_field-custom input[type="checkbox"] {
-	margin-top: 0px;
+	margin-top: 0;
 }
 
 /* Dropdown button for combo-box fields */
-#ws_menu_editor .ws_dropdown_button {
-	display : block;
-	float: left;
-	
+#ws_menu_editor .ws_dropdown_button,
+#ws_menu_access_editor .ws_dropdown_button
+{
 	width: 20px;
-	height: 22px;
+	height: 23px;
 	
 	margin: 1px 1px 1px 0;
 	padding: 0;
@@ -257,37 +302,57 @@ a.ws_edit_link:hover {
 	
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 	
 	-moz-border-radius-topright: 3px;
 	-moz-border-radius-bottomright: 3px;
-	-moz-border-radius-topleft: 0px;
-	-moz-border-radius-bottomleft: 0px;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-bottomleft: 0;
 	
 	-webkit-border-top-right-radius: 3px;
 	-webkit-border-bottom-right-radius: 3px;
-	-webkit-border-top-left-radius: 0px;
-	-webkit-border-bottom-left-radius: 0px;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+}
+
+#ws_menu_access_editor .ws_dropdown_button {
+	display: inline-block;
+	height: 22px;
+	margin-bottom: 2px;
+}
+
+#ws_menu_editor .ws_dropdown_button {
+	display: block;
+	float: left;
 }
 
 /* 
-The appearance and size of combobox fields need to be changed 
-to accomodate the dropdown button.
+The appearance and size of combo-box fields need to be changed
+to accommodate the drop-down button.
 */
-#ws_menu_editor .ws_has_dropdown input.ws_field_value {
-	width: 230px;
+#ws_menu_editor .ws_has_dropdown input.ws_field_value,
+#ws_menu_access_editor input.ws_has_dropdown
+{
 	margin-right: 0;
 	border-right: 0;
 	
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
 
-	-moz-border-radius-topright: 0px;
-	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-topright: 0;
+	-moz-border-radius-bottomright: 0;
 
-	-webkit-border-top-right-radius: 0px;
-	-webkit-border-bottom-right-radius: 0px;
+	-webkit-border-top-right-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+}
+
+#ws_menu_access_editor input.ws_has_dropdown {
+	width: 90%;
+}
+
+#ws_menu_editor .ws_has_dropdown input.ws_field_value {
+	width: 230px;
 }
 
 /* Unlike others, this field is just a single checkbox, so it has a smaller height */
@@ -338,13 +403,8 @@ to accomodate the dropdown button.
 }
 
 /* user-created items */
-.ws_custom_item_flag {
-	background-image: url('../images/page_white_add.png');
-}
-
-/* items not present in the default menu */
-.ws_missing_flag {
-	background-image: url('../images/plugin_error.png');
+.ws_custom_flag {
+	background-image: url('../images/page-add.png');
 }
 
 /* unused items - those that are in the default menu but not in the custom one */
@@ -354,12 +414,11 @@ to accomodate the dropdown button.
 
 /* hidden items */
 .ws_hidden_flag {
-	background-image: url('../images/plugin_disabled.png');
+	background-image: url('../images/icon-extension-grey.png');
 }
 
 /* These classes could be used to apply different styles to items depending on their flags */
-.ws_missing { } 
-.ws_custom_item { }
+.ws_custom { }
 .ws_hidden { }
 .ws_unused { }
 
@@ -383,11 +442,10 @@ to accomodate the dropdown button.
 	display: block;
 	margin-right: 3px;
 	padding: 4px;
-	border: 1px solid #c0c0e0;
 	float: left;
 
-    width: 16px;
-    height: 16px;
+	width: 16px;
+	height: 16px;
 	
 	border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -408,7 +466,7 @@ a.ws_button:hover {
        Capability selector
 *************************************/
 
-#wpbody select.ws_dropdown {
+select.ws_dropdown {
 	width: 252px;
 	height: 20em;
 	
@@ -420,13 +478,13 @@ a.ws_button:hover {
 	font-size: 12px;
 }
 
-#wpbody select.ws_dropdown option {
+select.ws_dropdown option {
 	font-family : "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
 	font-size: 12px;
 	padding: 3px;
 }
 
-#wpbody select.ws_dropdown optgroup option {
+select.ws_dropdown optgroup option {
 	padding-left: 10px;
 }
 
@@ -503,6 +561,9 @@ a.ws_button:hover {
 	margin: 0;
 	padding: 0;
 	position: relative;
+
+    box-sizing: border-box;
+    height: 25px;
 }
 
 /* Current icon node (CSS class version, for the built-in WP icon sprites) */
@@ -531,12 +592,12 @@ a.ws_button:hover {
 
 /* MP6 admin style compatibility */
 #ws_icon_selector .ws_icon_option .icon16::before {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 .ws_select_icon .icon16::before {
-    padding: 0;
-    margin: 1px 0 0 2px;
+	padding: 0;
+	margin: 1px 0 0 2px;
 }
 
 #ws_choose_icon_from_media {
@@ -553,12 +614,19 @@ a.ws_button:hover {
 
 .ui-widget-overlay {
 	background-color: black;
-	position: absolute;
-	left: 0px;
-	top: 0px;
+	position: fixed;
+	left: 0;
+	top: 0;
 	opacity: 0.70;
 	-moz-opacity: 0.70;
-	filter: alpha(opacity=70); 
+	filter: alpha(opacity=70);
+
+    width: 100%;
+    height: 100%;
+}
+
+.ui-front {
+    z-index: 100;
 }
 
 .ui-dialog {
@@ -593,11 +661,7 @@ a.ws_button:hover {
 }
 
 .ui-dialog-titlebar-close {
-	background-image: url(../images/x.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	background-color: #86A7E3;
-	
+	background: #86A7E3 url(../images/x.png) no-repeat center;
 	width: 22px;
 	height: 22px;
 	display: block;
@@ -623,37 +687,37 @@ a.ws_button:hover {
 	font-size: 1.1em;
 }
 
-.ws_dialog_panel {
-	height: 84px;
+#export_dialog .ws_dialog_panel {
+	height: 50px;
 }
 
-#export_dialog .ws_dialog_panel {
-	height: 70px;
+#import_dialog .ws_dialog_panel {
+	height: 64px;
 }
 
 .ws_dialog_buttons {
 	height: 23px;
 	text-align: right;
+	margin-top: 20px;
+    margin-bottom: 1px;
+    clear: both;
 }
 
 .ws_dialog_buttons .button-primary {
 	display: block;
 	float: left;
-	margin-top: 0px;
+	margin-top: 0;
 }
 
 .ws_dialog_buttons .button {
-	margin-top: 0px;
+	margin-top: 0;
 }
 
 #import_file_selector {
 	display: block;
 	width: 286px;
-	
-	margin-top: 6px;
-	margin-bottom: 12px;
-	margin-left: auto;
-	margin-right: auto;
+
+	margin: 6px auto 12px;
 }
 
 #ws_start_import {
@@ -664,6 +728,122 @@ a.ws_button:hover {
 	text-align: center;
 	font-size: large;
 	padding-top: 25px;
+}
+
+.ws_dont_show_again {
+    display: inline-block;
+    margin-top: 1em;
+}
+
+/************************************
+        Menu access editor
+*************************************/
+
+/* The launch button */
+#ws_menu_editor .ws_edit_field-access_level input.ws_field_value
+{
+	width: 190px;
+	margin-right: 5px;
+}
+
+.ws_launch_access_editor {
+	min-width: 40px;
+}
+
+#ws_menu_access_editor {
+	width: 400px;
+	display: none;
+}
+
+.ws_dialog_subpanel {
+	margin-bottom: 1em;
+}
+
+#ws_menu_access_editor .ws_column_access {
+	text-align: center;
+	width: 5em;
+}
+
+#ws_role_table_body_container {
+	max-height: 400px;
+	overflow: auto;
+}
+
+.ws_role_table_body {
+	margin-top: 2px;
+}
+
+.ws_has_separate_header .ws_role_table_header {
+	border-bottom: none;
+
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-bottomright: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.ws_has_separate_header .ws_role_table_body {
+	border-top: none;
+	margin-top: 0;
+
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.ws_role_id {
+	display: none;
+}
+
+#ws_extra_capability {
+	width: 100%;
+}
+
+#ws_role_access_container {
+	position: relative;
+}
+
+#ws_role_access_overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+
+	line-height: 100%;
+
+	background: white;
+	filter: alpha(opacity=60);
+	opacity: 0.6;
+	-moz-opacity:0.6;
+    -khtml-opacity: 0.6;
+}
+
+#ws_role_access_overlay_content {
+	position: absolute;
+	width: 50%;
+	left: 22%;
+	top: 30%;
+
+	background: white;
+	padding: 8px;
+
+	border: 2px solid silver;
+	border-radius: 5px;
+	color: #555;
+}
+
+#ws_menu_access_editor div.error {
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 5px;
+}
+
+#ws_hardcoded_role_error {
+	display: none;
 }
 
 /************************************
@@ -702,8 +882,8 @@ a.ws_button:hover {
 	border-radius: 3px;
 
 	position: absolute;
-	right: 0px;
-	top: 0px;
+	right: 0;
+	top: 0;
 }
 
 .ws_hint_close:hover {
@@ -723,6 +903,8 @@ a.ws_button:hover {
 }
 
 #ws_sidebar_pro_ad {
+    min-width: 225px;
+
 	margin-top: 5px;
 	margin-left: 3px;
 
@@ -730,58 +912,4 @@ a.ws_button:hover {
 	right: 20px;
 	bottom: 40px;
 	z-index: 100;
-}
-
-/************************************
-        Screen meta buttons
-*************************************/
-
-/* All buttons */
-#ws-pro-version-notice {
-	float: right;
-	height: 22px;
-	padding: 0;
-	margin: 0 0 0 6px;
-	font-family: sans-serif;
-
-	-moz-border-radius-bottomleft: 3px;
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-
-	background: #e3e3e3;
-
-	border-right: 1px solid transparent;
-	border-left: 1px solid transparent;
-	border-bottom: 1px solid transparent;
-	background-image: -ms-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* IE10 */
-	background-image: -moz-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* Firefox */
-	background-image: -o-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* Opera */
-	background-image: -webkit-gradient(linear, left bottom, left top, from(#dfdfdf), to(#f1f1f1)); /* old Webkit */
-	background-image: -webkit-linear-gradient(bottom, #dfdfdf, #f1f1f1); /* new Webkit */
-	background-image: linear-gradient(bottom, #dfdfdf, #f1f1f1); /* proposed W3C Markup */
-}
-
-#ws-pro-version-notice a.show-settings {
-	background-image: none;
-	padding:0 6px 0 6px;
-}
-
-/* "Upgrade to Pro" */
-#ws-pro-version-notice {
-	background-color: #00C31F;
-	background-image: none;
-}
-
-
-#ws-pro-version-notice a.show-settings {
-	font-weight: bold;
-	color: #DEFFD8;
-	text-shadow: none;
-}
-
-#ws-pro-version-notice a.show-settings:hover {
-	color: white;
 }

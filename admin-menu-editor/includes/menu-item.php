@@ -9,6 +9,22 @@
  */
 abstract class ameMenuItem {
 	/**
+	 * @var array A partial list of files in /wp-admin/. Correct as of WP 3.8-RC1, 2013.12.04.
+	 * When trying to determine if a menu links to one of the default WP admin pages, it's faster
+	 * to check this list than to hit the disk.
+	 */
+	private static $known_wp_admin_files = array(
+		'customize.php' => true, 'edit-comments.php' => true, 'edit-tags.php' => true, 'edit.php' => true,
+		'export.php' => true, 'import.php' => true, 'index.php' => true, 'link-add.php' => true,
+		'link-manager.php' => true, 'media-new.php' => true, 'nav-menus.php' => true, 'options-discussion.php' => true,
+		'options-general.php' => true, 'options-media.php' => true, 'options-permalink.php' => true,
+		'options-reading.php' => true, 'options-writing.php' => true, 'plugin-editor.php' => true,
+		'plugin-install.php' => true, 'plugins.php' => true, 'post-new.php' => true, 'profile.php' => true,
+		'theme-editor.php' => true, 'themes.php' => true, 'tools.php' => true, 'update-core.php' => true,
+		'upload.php' => true, 'user-new.php' => true, 'users.php' => true, 'widgets.php' => true,
+	);
+
+	/**
 	 * Convert a WP menu structure to an associative array.
 	 *
 	 * @param array $item An menu item.
@@ -193,6 +209,10 @@ abstract class ameMenuItem {
 			}
 		}
 
+		if ($parent_file === 'profile.php') {
+			$parent_file = 'users.php';
+		}
+
 		return $parent_file . '>' . $item_file;
 	}
 
@@ -218,10 +238,7 @@ abstract class ameMenuItem {
   /**
    * Apply custom menu filters to an item of the custom menu.
    *
-   * Calls two types of filters :
-   * 	'custom_admin_$item_type' with the entire $item passed as the argument.
-   * 	'custom_admin_$item_type-$field' with the value of a single field of $item as the argument.
-   *
+   * Calls a 'custom_admin_$item_type' filter with the entire $item passed as the argument.
    * Used when converting the current custom menu to a WP-format menu.
    *
    * @param array $item Associative array representing one menu item (either top-level or submenu).
@@ -230,12 +247,7 @@ abstract class ameMenuItem {
    * @return array Filtered menu item.
    */
 	public static function apply_filters($item, $item_type, $extra = null){
-		$item = apply_filters("custom_admin_{$item_type}", $item, $extra);
-		foreach($item as $field => $value){
-			$item[$field] = apply_filters("custom_admin_{$item_type}-$field", $value, $extra);
-		}
-
-		return $item;
+		return apply_filters("custom_admin_{$item_type}", $item, $extra);
 	}
 
 	/**
@@ -376,11 +388,28 @@ abstract class ameMenuItem {
 		}
 		$pageFile = self::remove_query_from($page_url);
 
-		$hasHook = (get_plugin_page_hook($page_url, $parent_page_url) !== null);
+		//Check our hard-coded list of admin pages first. It's measurably faster than
+		//hitting the disk with is_file().
+		if ( isset(self::$known_wp_admin_files[$pageFile]) ) {
+			return false;
+		}
+		//Now actually check the filesystem.
 		$adminFileExists = is_file(ABSPATH . '/wp-admin/' . $pageFile);
-		$pluginFileExists = ($page_url != 'index.php') && is_file(WP_PLUGIN_DIR . '/' . $pageFile);
+		if ( $adminFileExists ) {
+			return false;
+		}
 
-		return !$adminFileExists && ($hasHook || $pluginFileExists);
+		$hasHook = (get_plugin_page_hook($page_url, $parent_page_url) !== null);
+		if ( $hasHook ) {
+			return true;
+		}
+
+		$pluginFileExists = ($page_url != 'index.php') && is_file(WP_PLUGIN_DIR . '/' . $pageFile);
+		if ( $pluginFileExists ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
