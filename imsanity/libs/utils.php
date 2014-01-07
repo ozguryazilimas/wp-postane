@@ -60,6 +60,14 @@ function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = 
 			return $resized;
 	
 		$dest_file = $editor->generate_filename( $suffix, $dest_path );
+		
+		// FIX: make sure that the destination file does not exist.  this fixes
+		// an issue during bulk resize where one of the optimized media filenames may get 
+		// used as the temporary file, which causes it to be deleted.
+		while (file_exists($dest_file)) {
+			$dest_file = $editor->generate_filename('TMP', $dest_path );
+		}
+		
 		$saved = $editor->save( $dest_file );
 	
 		if ( is_wp_error( $saved ) )

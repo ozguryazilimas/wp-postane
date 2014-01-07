@@ -229,24 +229,24 @@ function imsanity_network_settings()
 	<tr valign="top">
 	<th scope="row"><?php _e("Images uploaded within a Page/Post",'imsanity');?></th>
 	<td>
-		Fit within <input name="imsanity_max_height" value="<?php echo $settings->imsanity_max_height ?>" style="width: 45px;" />
-		x <input name="imsanity_max_width" value="<?php echo $settings->imsanity_max_width ?>" style="width: 45px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		Fit within <input name="imsanity_max_height" value="<?php echo $settings->imsanity_max_height ?>" style="width: 50px;" />
+		x <input name="imsanity_max_width" value="<?php echo $settings->imsanity_max_width ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 	</td>
 	</tr>
 
 	<tr valign="top">
 	<th scope="row"><?php _e("Images uploaded directly to the Media Library",'imsanity'); ?></th>
 	<td>
-		Fit within <input name="imsanity_max_height_library" value="<?php echo $settings->imsanity_max_height_library ?>" style="width: 45px;" />
-		x <input name="imsanity_max_width_library" value="<?php echo $settings->imsanity_max_width_library ?>" style="width: 45px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		Fit within <input name="imsanity_max_height_library" value="<?php echo $settings->imsanity_max_height_library ?>" style="width: 50px;" />
+		x <input name="imsanity_max_width_library" value="<?php echo $settings->imsanity_max_width_library ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 	</td>
 	</tr>
 
 	<tr valign="top">
 	<th scope="row"><?php _e("Images uploaded elsewhere (Theme headers, backgrounds, logos, etc)",'imsanity'); ?></th>
 	<td>
-		Fit within <input name="imsanity_max_height_other" value="<?php echo $settings->imsanity_max_height_other ?>" style="width: 45px;" />
-		x <input name="imsanity_max_width_other" value="<?php echo $settings->imsanity_max_width_other ?>" style="width: 45px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		Fit within <input name="imsanity_max_height_other" value="<?php echo $settings->imsanity_max_height_other ?>" style="width: 50px;" />
+		x <input name="imsanity_max_width_other" value="<?php echo $settings->imsanity_max_width_other ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 	</td>
 	</tr>
 
@@ -559,22 +559,22 @@ function imsanity_settings_page_form()
 
 		<tr valign="middle">
 		<th scope="row"><?php _e("Images uploaded within a Page/Post",'imsanity'); ?></th>
-		<td>Fit within <input type="text" style="width:40px;" name="imsanity_max_width" value="<?php echo get_option('imsanity_max_width',IMSANITY_DEFAULT_MAX_WIDTH); ?>" />
-		x <input type="text" style="width:40px;" name="imsanity_max_height" value="<?php echo get_option('imsanity_max_height',IMSANITY_DEFAULT_MAX_HEIGHT); ?>" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		<td>Fit within <input type="text" style="width: 50px;" name="imsanity_max_width" value="<?php echo get_option('imsanity_max_width',IMSANITY_DEFAULT_MAX_WIDTH); ?>" />
+		x <input type="text" style="width: 50px;" name="imsanity_max_height" value="<?php echo get_option('imsanity_max_height',IMSANITY_DEFAULT_MAX_HEIGHT); ?>" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 		</td>
 		</tr>
 
 		<tr valign="middle">
 		<th scope="row"><?php _e("Images uploaded directly to the Media Library",'imsanity'); ?></th>
-		<td>Fit within <input type="text" style="width:40px;" name="imsanity_max_width_library" value="<?php echo get_option('imsanity_max_width_library',IMSANITY_DEFAULT_MAX_WIDTH); ?>" />
-		x <input type="text" style="width:40px;" name="imsanity_max_height_library" value="<?php echo get_option('imsanity_max_height_library',IMSANITY_DEFAULT_MAX_HEIGHT); ?>" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		<td>Fit within <input type="text" style="width: 50px;" name="imsanity_max_width_library" value="<?php echo get_option('imsanity_max_width_library',IMSANITY_DEFAULT_MAX_WIDTH); ?>" />
+		x <input type="text" style="width: 50px;" name="imsanity_max_height_library" value="<?php echo get_option('imsanity_max_height_library',IMSANITY_DEFAULT_MAX_HEIGHT); ?>" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 		</td>
 		</tr>
 
 		<tr valign="middle">
 		<th scope="row"><?php _e("Images uploaded elsewhere (Theme headers, backgrounds, logos, etc)",'imsanity'); ?></th>
-		<td>Fit within <input type="text" style="width:40px;" name="imsanity_max_width_other" value="<?php echo get_option('imsanity_max_width_other',IMSANITY_DEFAULT_MAX_WIDTH); ?>" />
-		x <input type="text" style="width:40px;" name="imsanity_max_height_other" value="<?php echo get_option('imsanity_max_height_other',IMSANITY_DEFAULT_MAX_HEIGHT); ?>" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		<td>Fit within <input type="text" style="width: 50px;" name="imsanity_max_width_other" value="<?php echo get_option('imsanity_max_width_other',IMSANITY_DEFAULT_MAX_WIDTH); ?>" />
+		x <input type="text" style="width: 50px;" name="imsanity_max_height_other" value="<?php echo get_option('imsanity_max_height_other',IMSANITY_DEFAULT_MAX_HEIGHT); ?>" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 		</td>
 		</tr>
 
