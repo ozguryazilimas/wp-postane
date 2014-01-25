@@ -1,0 +1,580 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: jsl3-fwf\n"
+"POT-Creation-Date: 2013-07-28 18:52-0800\n"
+"PO-Revision-Date: 2013-09-19 13:40+0100\n"
+"Last-Translator: Takanudo <fwf@takanudo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;__;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: php\n"
+
+#: jsl3-facebook-wall-feed.php:102 jsl3-facebook-wall-feed.php:103
+#: php/class-jsl3-fwf-widget.php:69 php/class-jsl3-facebook-wall-feed.php:733
+#: php/class-jsl3-facebook-wall-feed.php:999
+msgid "JSL3 Facebook Wall Feed"
+msgstr "JSL3 Facebook Wall Feed"
+
+#: jsl3-facebook-wall-feed.php:135 jsl3-facebook-wall-feed.php:305
+#: jsl3-facebook-wall-feed.php:350
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: jsl3-facebook-wall-feed.php:137 jsl3-facebook-wall-feed.php:311
+#: jsl3-facebook-wall-feed.php:355
+msgid "Widget Usage"
+msgstr "Verwendung des Widget"
+
+#: jsl3-facebook-wall-feed.php:139 jsl3-facebook-wall-feed.php:317
+#: jsl3-facebook-wall-feed.php:360
+msgid "Shortcode Usage"
+msgstr "Kürzel verwenden"
+
+#: jsl3-facebook-wall-feed.php:161
+msgid "Create your Facebook App"
+msgstr "Erstellen sie ihre Facebook Anwendung"
+
+#: jsl3-facebook-wall-feed.php:163
+msgid ""
+"NOTE: You cannot use a Facebook Page to create a Facebook App.  You must use "
+"your personal Facebook profile.  However, once you create your Facebook App, "
+"you can use its App ID and App Secret along with the Facebook ID of the "
+"Facebook Page you want to get the feed from on the settings page for the "
+"plugin."
+msgstr ""
+"ACHTUNG: Sie könne keine Facebook Seite verwenden um eine Facebook App zu "
+"erstellen. Sie müssen dazu Ihr Facebook Profil verwenden. Mit der dort "
+"generierten App ID und App Secret können Sie jedoch die ID der Facebook "
+"Seite konfigurieren und somit den Feed lesen."
+
+#: jsl3-facebook-wall-feed.php:166
+msgid ""
+"If you get a Request for Permission prompt, then <strong>Allow</strong> "
+"Developer to access your basic information."
+msgstr ""
+"Wenn Sie Facbeook nach der Berechtigung für den Zugriff der Anwendung fragt, "
+"dann <strong>lassen Sie diese zu</strong>!"
+
+#: jsl3-facebook-wall-feed.php:167
+msgid "Allow Developer to access your basic information."
+msgstr "Lassen Sie den Zugriff zu Ihren Basisdaten für den Entwickler zu."
+
+#: jsl3-facebook-wall-feed.php:170
+msgid "Click <strong>Create New App</strong>."
+msgstr "Klicken Sie auf <strong>Neue Anwendung erstellen</strong>."
+
+#: jsl3-facebook-wall-feed.php:171
+msgid "Click Create New App."
+msgstr "Klicken Sie auf Neue Anwendung erstellen."
+
+#: jsl3-facebook-wall-feed.php:174
+msgid ""
+"Enter an <strong>App Name</strong>. I suggest using the name of your blog. "
+"All the other entries are optional. Click <strong>Continue</strong>. You "
+"will be prompted with a security check."
+msgstr ""
+"Geben Sie einen <strong>Anwendungsname</strong> ein. Wir empfehlen den Namen "
+"des Blogs. Alle anderen Einträge sind optional. Klicken Sie auf "
+"<strong>Weiter</strong>. Sie werden zur Eingabe einer Sicherheitskontrolle "
+"aufgefordert."
+
+#: jsl3-facebook-wall-feed.php:175
+msgid "Enter an App Name."
+msgstr "Geben Sie einen Anwendungsnamen ein."
+
+#: jsl3-facebook-wall-feed.php:178
+msgid ""
+"On your App page, enter your <strong>App Domain</strong>. Set "
+"<strong>Sandbox Mode</strong> to <strong>Disabled</strong>. Under "
+"<strong>Select how your app integrates with Facebook</strong> click "
+"<strong>Website with Facebook Login</strong> and enter your <strong>Site "
+"URL</strong>. Do not use <strong>www.</strong> in your App Domain or Site "
+"URL. Then save your changes."
+msgstr ""
+"In den Einstellungen ihrer Anwendung geben Sie die <strong>App Domain</"
+"strong> ihrer Seite ein. Setzen Sie den <strong>Sandkasten-Modus</strong> "
+"auf <strong>Deaktiviert</strong>. Unter <strong>Wähle, wie deine Anwendung "
+"in Facebook integriert wird</strong> geben Sie bitte unter <strong>Webseite "
+"mit Facebook-Anmeldung</strong> die Adresse ihrer Seite ein. Bitte verwenden "
+"Sie kein <strong>www.</strong> in ihrer App Domain oder Adresse. Speichern "
+"sie jetzt  ihre Einstellungen."
+
+#: jsl3-facebook-wall-feed.php:179
+msgid ""
+"On your App page, enter your App Domain. Set Sandbox Mode to Disabled. Under "
+"Select how your app integrates with Facebook click Website with Facebook "
+"Login and enter your Site URL."
+msgstr ""
+"In den Einstellungen ihrer Anwendung geben Sie die App Domain ihrer Seite "
+"ein. Setzen Sie den Sandkasten-Modus auf Deaktiviert. Unter Wähle, wie deine "
+"Anwendung in Facebook integriert wird geben Sie bitte unterWebseite mit "
+"Facebook-Anmeldung die Adresse ihrer Seite ein."
+
+#: jsl3-facebook-wall-feed.php:182
+msgid ""
+"Record your <strong>App ID</strong> and <strong>App Secret</strong>. You "
+"will need these later."
+msgstr ""
+"Kopieren Sie sich <strong>App ID</strong> und <strong>App Secret</strong>. "
+"Sie benötigen diese Informationen für die Konfiguration."
+
+#: jsl3-facebook-wall-feed.php:185
+msgid ""
+"Go to <strong>JSL3 Facebook Wall Feed</strong> under <strong>Settings</"
+"strong> on the Dashboard menu."
+msgstr ""
+"In der Administration ihrer Seite wählen Sie <strong>JSL3 Facebook Wall "
+"Feed</strong> unter <strong>Einstellungen</strong>."
+
+#: jsl3-facebook-wall-feed.php:186
+msgid "Go to JSL3 Facebook Wall Feed under Settings on the Dashboard menu."
+msgstr ""
+"In der Administration ihrer Seite wählen Sie JSL3 Facebook Wall Feed unter "
+"Einstellungen."
+
+#: jsl3-facebook-wall-feed.php:189
+msgid ""
+"Enter your <strong>Facebook ID</strong>. If you do not know your Facebook "
+"ID, then use the"
+msgstr ""
+"Geben Sie ihre <strong>Facebook ID</strong> ein. Wenn Sie ihre "
+"<strong>Facebook ID</strong> nicht kennen, dann benutzen Sie bitte"
+
+#: jsl3-facebook-wall-feed.php:191
+msgid "Graph API Explorer"
+msgstr "Graph API Explorer"
+
+#: jsl3-facebook-wall-feed.php:193
+msgid ""
+"Click <strong>Get Access Token</strong>.  You may be prompted to log in.  If "
+"you are prompted to <stong>Select permissions</strong>, click <strong>Get "
+"Access Token</strong>.  In the text box next to the Submit button, enter the "
+"<strong>Facebook Username</strong> used in your Facebook URL (for example, "
+"my Facebook URL is http://www.facebook.com/takanudo so my Facebook Username "
+"is takanudo) followed by <strong>?fields=id</strong>.  Click <strong>Submit</"
+"strong>.  Your Facebook ID will be in the results."
+msgstr ""
+"Klicken Sie auf <strong>Zugriffsschlüssel erhalten</strong>. Möglicherweise "
+"werden Sie aufgefordert sich an zu melden. Es erscheint ein Dialog "
+"<strong>Select Permissions</strong> in welchem Sie auf <strong>Get Access "
+"Token</strong> klicken. In der Text-Box links neben dem Button "
+"<strong>Absenden</strong> geben Sie den <strong>Facbook Benutzernamen</"
+"strong> ein, welchen Sie in der Facebook URL finden (z.B. meine Facebook URL "
+"ist http://www.facebook.com/takanudo, somit ist mein <strong>Facebook "
+"Benutzername</strong> takanudo), gefolgt von <strong>?fields=id</strong>. "
+"Klicken Sie auf <strong>Absenden</strong> um Ihre ID im Ergebnis zu sehen."
+
+#: jsl3-facebook-wall-feed.php:194
+msgid "Enter your Facebook ID, App ID, and App Secret."
+msgstr ""
+"Geben Sie die App ID und das App Secret ein, welche Sie zuvor kopiert haben. "
+"Klicken Sie auf Änderungen speichern."
+
+#: jsl3-facebook-wall-feed.php:195
+msgid ""
+"Enter the <strong>App ID</strong> and <strong>App Secret</strong> you "
+"recorded earlier. Click <strong>Save Changes</strong>."
+msgstr ""
+"Geben Sie die <strong>App ID</strong> und <strong>App Secret</strong> ein, "
+"welche Sie zuvor kopiert haben. Klicken Sie auf <strong>Speichern</strong>."
+
+#: jsl3-facebook-wall-feed.php:198
+msgid ""
+"You will be redirected to Facebook. You may be prompted to <strong>Log In</"
+"strong> a couple of times."
+msgstr ""
+"Sie werden zu Facebook weiter geleitet. Möglicherweise werden Sie mehrfach "
+"aufgefordert sich anzumelden."
+
+#: jsl3-facebook-wall-feed.php:201
+msgid ""
+"Click <strong>Okay</strong> to give your App permission to acess your public "
+"profile, friends list, News Feed and status updates."
+msgstr ""
+"Klicken Sie auf <strong>Okay</strong> um der App den Zugriff auf Ihr Profil, "
+"Freundesliste, News Feed und Status Updates zu ermöglichen."
+
+#: jsl3-facebook-wall-feed.php:202
+msgid ""
+"Click Okay to give your App permission to acess your public profile, friends "
+"list, News Feed and status updates."
+msgstr ""
+"Klicken Sie auf Okay um der App den Zugriff auf Ihr Profil, Freundesliste, "
+"News Feed und Status Updates zu ermöglichen."
+
+#: jsl3-facebook-wall-feed.php:205
+msgid ""
+"Click <strong>Okay</strong> to give your App permission to manage your Pages."
+msgstr ""
+"Klicken Sie auf <strong>Okay</strong> um ihrer App das Management ihrer "
+"Seite zu ermöglichen."
+
+#: jsl3-facebook-wall-feed.php:206
+msgid "Click Okay to give your App permission to manage your Pages."
+msgstr ""
+"Klicken Sie auf Okay um ihrer App das Management ihrer Seite zu ermöglichen."
+
+#: jsl3-facebook-wall-feed.php:209
+msgid ""
+"You will be returned to the JSL3 Facebook Wall Feed settings page with your "
+"<strong>Access Token</strong> and its expiration date."
+msgstr ""
+"Sie kommen nun wieder zurück auf die JSL3 Facebook Wall Feed Einstellungs "
+"Seite, welche nun den <strong>Access Token</strong> und sein Ablaufdatum "
+"enthält."
+
+#: jsl3-facebook-wall-feed.php:210
+msgid ""
+"You will be returned to the JSL3 Facebook Wall Feed settings page with your "
+"Access Token and its expiration date."
+msgstr ""
+"Sie kommen nun wieder zurück auf die JSL3 Facebook Wall Feed Einstellungs "
+"Seite, welche nun den Access Token und sein Ablaufdatum enthält."
+
+#: jsl3-facebook-wall-feed.php:210
+msgid ""
+"You will be returned to the JSL3 Facebook Wall Feed settings page with your "
+"Access Token its expiration date."
+msgstr ""
+"Sie kommen nun wieder zurück auf die JSL3 Facebook Wall Feed Einstellungs "
+"Seite, welche nun den Access Token und sein Ablaufdatum enthält."
+
+#: jsl3-facebook-wall-feed.php:233
+msgid ""
+"Go to <strong>Widgets</strong> under <strong>Appearance</strong> on the "
+"Dashboard menu."
+msgstr ""
+"Wählen Sie <strong>Widgets</strong> unter <strong>Design</strong> im "
+"Dashboard Menü."
+
+#: jsl3-facebook-wall-feed.php:236
+msgid ""
+"Drag the <strong>JSL3 Facebook Wall Feed</strong> widget to the sidebar of "
+"your choice."
+msgstr ""
+"Klicken und ziehen sie <strong>JSL3 Facebook Wall Feed</strong> in einen "
+"Widgetbereich ihrer Wahl."
+
+#: jsl3-facebook-wall-feed.php:237
+msgid "Drag the JSL3 Facebook Wall Feed widget to the sidebar of your choice."
+msgstr ""
+"Klicken und ziehen sie JSL3 Facebook Wall Feed in einen Widgetbereich ihrer "
+"Wahl."
+
+#: jsl3-facebook-wall-feed.php:240
+msgid ""
+"Give the widget a title (or leave it blank) and enter how many posts you "
+"want to get from your wall. Then click <strong>Save</strong>."
+msgstr ""
+"Geben Sie für das Widget einen Titel ein (optional) und bestimmen Sie wie "
+"viele Einträge von Ihrer Seite angezeigt werden sollen, dann klicken Sie auf "
+"<strong>Änderungen speichern</strong>"
+
+#: jsl3-facebook-wall-feed.php:241
+msgid ""
+"Give the widget a title (or leave it blank) and enter how many posts you "
+"want to get from your wall."
+msgstr ""
+"Geben Sie für das Widget einen Titel ein (optional) und bestimmen Sie wie "
+"viele Einträge von Ihrer Seite angezeigt werden sollen, dann klicken Sie auf "
+"Änderungen speichern"
+
+#: jsl3-facebook-wall-feed.php:244 jsl3-facebook-wall-feed.php:245
+msgid "Go check out your Facebook Wall Feed on your WordPress site."
+msgstr "Überprüfen Sie ihren Facebook Wall Feed auf ihrer WordPress Seite."
+
+#: jsl3-facebook-wall-feed.php:268
+msgid ""
+"Add the shortcode <strong>[jsl3_fwf]</strong> or <strong>[jsl3_fwf limit="
+"\"1\"]</strong> to the <strong>HTML</strong> view of a post or page."
+msgstr ""
+"Fügen Sie das Kürzel <strong>[jsl3_fwf]</strong> oder <strong>[jsl3_fwf "
+"limit=\"1\"]</strong> in den Text ihrer Seite oder ihres Beitrags ein."
+
+#: jsl3-facebook-wall-feed.php:269
+msgid ""
+"Add the shortcode [jsl3_fwf] or [jsl3_fwf limit=\"1\"] to the HTML view of a "
+"post or page."
+msgstr ""
+"Fügen Sie das Kürzel [jsl3_fwf] oder [jsl3_fwf limit=\"1\"] in den Text "
+"ihrer Seite oder ihres Beitrags ein."
+
+#: jsl3-facebook-wall-feed.php:272 jsl3-facebook-wall-feed.php:273
+msgid "View your Facebook Wall Feed on your WordPress post or page."
+msgstr "Überprüfen Sie ihren Facebook Wall Feed auf ihrer WordPress Seite."
+
+#: jsl3-facebook-wall-feed.php:308 jsl3-facebook-wall-feed.php:314
+#: jsl3-facebook-wall-feed.php:320
+msgid "Back to top"
+msgstr "Zurück zum Anfang"
+
+#: jsl3-facebook-wall-feed.php:397
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: php/class-jsl3-fwf-widget.php:71
+msgid "Display your facebook wall"
+msgstr "Facebook Wall anzeigen"
+
+#: php/class-jsl3-fwf-widget.php:188
+msgid "Title"
+msgstr "Titel"
+
+#: php/class-jsl3-fwf-widget.php:192
+msgid "Number of wall posts to get"
+msgstr "Anzahl Einträge"
+
+#: php/class-jsl3-facebook-wall-feed.php:336
+msgid "Tick this box if you wish to reset the style to default."
+msgstr "Das Stylesheet beim Speichern auf den Standard zurückstellen."
+
+#: php/class-jsl3-facebook-wall-feed.php:442
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: php/class-jsl3-facebook-wall-feed.php:690
+msgid "Show all wall posts"
+msgstr "Zeige alle Wall Posts"
+
+#: php/class-jsl3-facebook-wall-feed.php:691
+msgid "Show only wall posts labeled public"
+msgstr "Zeige nur Wall Posts, die öffentlich sind"
+
+#: php/class-jsl3-facebook-wall-feed.php:734
+msgid ""
+"For configuration and usage assistance click \"Help\" in the upper right "
+"hand corner of this page or go to the <a href=\"http://takanudo.com/jsl3-"
+"facebook-wall-feed\">JSL3 Facebook Wall Feed</a> page."
+msgstr ""
+"Für Unterstützung bei der Konfiguration klicken Sie auf <strong>Hilfe</"
+"strong> rechts oben auf dieser Seite oder besuchen Sie die Seite <a href="
+"\"http://takanudo.com/jsl3-facebook-wall-feed\">JSL3 Facebook Wall Feed</a>."
+
+#: php/class-jsl3-facebook-wall-feed.php:739
+msgid "Facebook ID"
+msgstr "Facebook ID"
+
+#: php/class-jsl3-facebook-wall-feed.php:740
+msgid "App ID"
+msgstr "App ID"
+
+#: php/class-jsl3-facebook-wall-feed.php:741
+msgid "App Secret"
+msgstr "App Secret"
+
+#: php/class-jsl3-facebook-wall-feed.php:742
+msgid "Access Token"
+msgstr "Access Token"
+
+#: php/class-jsl3-facebook-wall-feed.php:743
+msgid "Token Expiration"
+msgstr "Token Ablaufdatum"
+
+#: php/class-jsl3-facebook-wall-feed.php:745
+msgid "Only show posts made by this Facebook ID."
+msgstr "Zeige nur Einträge von dieser Facebook ID"
+
+#: php/class-jsl3-facebook-wall-feed.php:745
+msgid "Facebook ID Only"
+msgstr "Einträge"
+
+#: php/class-jsl3-facebook-wall-feed.php:746
+msgid "Privacy"
+msgstr "Privatsphäre"
+
+#: php/class-jsl3-facebook-wall-feed.php:747
+msgid "Show all status messages."
+msgstr "Zeige alle Status Nachrichten."
+
+#: php/class-jsl3-facebook-wall-feed.php:747
+msgid "Recent Activity"
+msgstr "Neue Einträge"
+
+#: php/class-jsl3-facebook-wall-feed.php:748
+msgid "Show all post comments."
+msgstr "Zeige alle Kommentare."
+
+#: php/class-jsl3-facebook-wall-feed.php:748
+msgid "Comments"
+msgstr "Kommentare"
+
+#: php/class-jsl3-facebook-wall-feed.php:749
+msgid "Open links in a new window or tab."
+msgstr "Öffne Links in einem neuen Tab oder in einer neuen Seite."
+
+#: php/class-jsl3-facebook-wall-feed.php:749
+msgid "Links"
+msgstr "Links"
+
+#: php/class-jsl3-facebook-wall-feed.php:750
+msgid "Covert plain text URI to HTML links."
+msgstr "Konvertiere Text-Links zu HTML-Links."
+
+#: php/class-jsl3-facebook-wall-feed.php:750
+msgid "Make URI Clickable"
+msgstr "Link Erkennung"
+
+#: php/class-jsl3-facebook-wall-feed.php:751
+msgid "Show Facebook icons."
+msgstr "Zeige Facebook Icons."
+
+#: php/class-jsl3-facebook-wall-feed.php:751
+msgid "Icons"
+msgstr "Icons"
+
+#: php/class-jsl3-facebook-wall-feed.php:752
+msgid ""
+"Perform thorough wall grab.  (Check this if your facebook wall feed is "
+"empty. NOTE: This will slow down the feed.)"
+msgstr ""
+"Vollständige Synchronisation. (Aktivieren Sie dies, wenn ihre Facebook Wall "
+"leer ist. ACHTUNG: Das wird den Feed verlangsamen!)"
+
+#: php/class-jsl3-facebook-wall-feed.php:752
+msgid "Thoroughness"
+msgstr "Vollständigkeit"
+
+#: php/class-jsl3-facebook-wall-feed.php:753
+msgid ""
+"Verify SSL certificates on Facebook server.  (Uncheck this if you are "
+"getting SSL certificate errors. NOTE: Unchecking this option makes the feed "
+"less secure.)"
+msgstr ""
+"Das SSL-Zertifikat vom Facebook Server prüfen. (Deaktivieren Sie dies, wenn "
+"Sie SSL-Zertifikat Fehler erhalten. ACHTUNG: Das verringert die Sicherheit "
+"der Datenübertragung!)"
+
+#: php/class-jsl3-facebook-wall-feed.php:753
+msgid "Verify SSL Peer"
+msgstr "SSL-Zertifikate"
+
+#: php/class-jsl3-facebook-wall-feed.php:754
+msgid ""
+"Get profile picture from Facebook page with demographic restrictions.  "
+"(Check this if your profile picture is not displaying. NOTE: Checking this "
+"options will reveal your access token to the public.)"
+msgstr ""
+"Das Profilbild vom Facebook Server mit demografischen Einschränkungen "
+"übertragen. (Aktivieren Sie dies wenn ihr Profilbild NICHT angezeigt wird. "
+"ACHTUNG: Dadurch wird ihr Access Token öffentlich sichtbar!)"
+
+#: php/class-jsl3-facebook-wall-feed.php:754
+msgid "Profile Picture"
+msgstr "Profilbild"
+
+#: php/class-jsl3-facebook-wall-feed.php:756
+msgid "Modify the style sheet for the Facebook wall feed."
+msgstr "Stylesheet für den Facebook Wall Feed anpassen."
+
+#: php/class-jsl3-facebook-wall-feed.php:756
+msgid "Style"
+msgstr "Style"
+
+#: php/class-jsl3-facebook-wall-feed.php:760
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: php/class-jsl3-facebook-wall-feed.php:765
+msgid "Donate to Tak"
+msgstr "Tak unterstützen"
+
+#: php/class-jsl3-facebook-wall-feed.php:769
+#: php/class-jsl3-facebook-wall-feed.php:778
+msgid "PayPal - The safer, easier way to pay online!"
+msgstr "PayPal - Der sichere, einfache Weg online zu zahlen!"
+
+#: php/class-jsl3-facebook-wall-feed.php:774
+msgid "Donate to Fedil Grogan"
+msgstr "Fedil Grogan unterstützen"
+
+#: php/class-jsl3-facebook-wall-feed.php:906
+#: php/class-uki-facebook-wall-feed.php:435
+msgid "file_get_contents failed to open URL."
+msgstr "file_get_contents konnte die URL nicht öffnen."
+
+#: php/class-jsl3-facebook-wall-feed.php:921
+#: php/class-uki-facebook-wall-feed.php:351
+msgid ""
+"Server Configuration Error: allow_url_fopen is off and cURL is not loaded."
+msgstr ""
+"Server Konfigurationsfehler. Fehler: allow_url_fopen ist deaktiviert und "
+"cURL ist nicht geladen."
+
+#: php/class-jsl3-facebook-wall-feed.php:944
+msgid ""
+"No access token returned.  Please double check you have the correct Facebook "
+"ID, App ID, and App Secret."
+msgstr ""
+"Fehler beim Anfordern des Access Token. Bitte prüfen Sie ihre Facebook ID, "
+"App ID und das App Secret."
+
+#: php/class-jsl3-facebook-wall-feed.php:950
+msgid "The state does not match. You may be a victim of CSRF."
+msgstr "Der Status stimmt nicht überein. Eventuell sind sie Opfer von CSRF."
+
+#: php/class-jsl3-facebook-wall-feed.php:983
+msgid "JSL3 Facebook Wall Feed Token Expiration"
+msgstr "JSL3 Facebook Wall Feed Token Ablaufdatum"
+
+#: php/class-jsl3-facebook-wall-feed.php:987
+msgid ""
+"The Facebook Access Token for the JSL3 Facebook Wall Feed plugin on your "
+"WordPress site will expire on the following date:"
+msgstr ""
+"Der Facebook Access Token für das JSL3 Facebook Wall Feed Plugin ihrer "
+"WordPress Seite wird an folgendem Datum ablaufen:"
+
+#: php/class-jsl3-facebook-wall-feed.php:992
+msgid "Please go to the settings page for the plugin at "
+msgstr "Bitte öffnen Sie die Einstellungen für das Plugin unter"
+
+#: php/class-jsl3-facebook-wall-feed.php:996
+msgid ""
+" and click \"Save Changes\" at the bottom of the page to renew your token."
+msgstr "und klicken Sie \"Änderungen speichern\" am Fuß der Seite."
+
+#: php/class-jsl3-facebook-wall-feed.php:998
+msgid "Thank you,"
+msgstr "Vielen Dank,"
+
+#: php/class-uki-facebook-wall-feed.php:289
+msgid "Facebook Status"
+msgstr "Facebook Status"
+
+#: php/class-uki-facebook-wall-feed.php:357
+msgid ""
+"No feed returned. Please double check you have the correct Facebook ID, App "
+"ID, and App Secret."
+msgstr ""
+"Keine Daten erhalten. Bitte prüfen Sie ihre Facebook ID, App ID und das App "
+"Secret."
+
+#: php/class-uki-facebook-wall-feed.php:571
+#: php/class-uki-facebook-wall-feed.php:714
+msgid "Facebook Profile Pic"
+msgstr "Facebook Profilbild"
+
+#: php/class-uki-facebook-wall-feed.php:581
+msgid "Facebook Icon"
+msgstr "Facebook Icon"
+
+#: php/class-uki-facebook-wall-feed.php:643
+msgid "people like this"
+msgstr "Personen gefällt das"
+
+#: php/class-uki-facebook-wall-feed.php:647
+msgid "Comment"
+msgstr "Kommentare"
+
+#: php/class-uki-facebook-wall-feed.php:814
+msgid "at"
+msgstr "auf"
+
+#: php/class-uki-facebook-wall-feed.php:839
+msgid "Facebook Picture"
+msgstr "Facebook Bild"
