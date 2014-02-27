@@ -55,11 +55,6 @@ function relevanssi_init() {
 			add_action('admin_notices', 'relevanssi_mb_warning');
 	}
 
-	if (!wp_next_scheduled('relevanssi_truncate_cache')) {
-		wp_schedule_event(time(), 'daily', 'relevanssi_truncate_cache');
-		add_action('relevanssi_truncate_cache', 'relevanssi_truncate_cache');
-	}
-
 	if (get_option('relevanssi_highlight_docs', 'off') != 'off') {
 		add_filter('the_content', 'relevanssi_highlight_in_docs', 11);
 	}
@@ -122,8 +117,6 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 	$relevanssi_table = $wpdb->prefix . "relevanssi";	
 	$relevanssi_stopword_table = $wpdb->prefix . "relevanssi_stopwords";
 	$relevanssi_log_table = $wpdb->prefix . "relevanssi_log";
-	$relevanssi_cache = $wpdb->prefix . 'relevanssi_cache';
-	$relevanssi_excerpt_cache = $wpdb->prefix . 'relevanssi_excerpt_cache';
 
 	if(get_option('relevanssi_db_version') != $relevanssi_db_version) {
 		if ($relevanssi_db_version == 1) {
@@ -206,20 +199,6 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 
 		dbDelta($sql);
 	
-		$sql = "CREATE TABLE " . $relevanssi_cache . " (param varchar(32) $charset_collate_bin_column NOT NULL,
-		hits text NOT NULL,
-		tstamp timestamp NOT NULL,
-	    UNIQUE KEY param (param)) $charset_collate;";
-
-		dbDelta($sql);
-
-		$sql = "CREATE TABLE " . $relevanssi_excerpt_cache . " (query varchar(100) $charset_collate_bin_column NOT NULL, 
-		post mediumint(9) NOT NULL, 
-		excerpt text NOT NULL, 
-	    UNIQUE (query, post)) $charset_collate;";
-
-		dbDelta($sql);
-
 		if (RELEVANSSI_PREMIUM && get_option('relevanssi_db_version') < 12) {
 			$charset_collate_bin_column = '';
 			$charset_collate = '';
@@ -242,10 +221,6 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 			$sql = "ALTER TABLE $relevanssi_log_table ADD COLUMN user_id bigint(20) NOT NULL DEFAULT '0'";
 			$wpdb->query($sql);
 			$sql = "ALTER TABLE $relevanssi_log_table ADD COLUMN ip varchar(40) NOT NULL DEFAULT ''";
-			$wpdb->query($sql);
-			$sql = "ALTER TABLE $relevanssi_cache MODIFY COLUMN param varchar(32) $charset_collate_bin_column NOT NULL";
-			$wpdb->query($sql);
-			$sql = "ALTER TABLE $relevanssi_excerpt_cache MODIFY COLUMN query(100) $charset_collate_bin_column NOT NULL";
 			$wpdb->query($sql);
 		}
 		

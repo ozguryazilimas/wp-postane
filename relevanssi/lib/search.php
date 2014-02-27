@@ -46,51 +46,14 @@ function relevanssi_query($posts, $query = false) {
 }
 
 // This is my own magic working.
-function relevanssi_search($q, $tax_query = NULL, $relation = NULL, $post_query = array(), $meta_query = array(), $expost = NULL, $post_type = NULL, $operator = "AND", $search_blogs = NULL, $author = NULL, $orderby = NULL, $order = NULL) {
+function relevanssi_search($args) {
 	global $wpdb, $relevanssi_variables;
 	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
-
-	$values_to_filter = array(
-		'q' => $q,
-		'tax_query' => $tax_query,
-		'relation' => $relation,
-		'post_query' => $post_query,
-		'meta_query' => $meta_query,
-		'expost' => $expost,
-		'post_type' => $post_type,
-		'operator' => $operator,
-		'search_blogs' => $search_blogs,
-		'author' => $author,
-		'orderby' => $orderby,
-		'order' => $order,
-		);
-	$filtered_values = apply_filters( 'relevanssi_search_filters', $values_to_filter );
-	$q               = $filtered_values['q'];
-	$tax_query		 = $filtered_values['tax_query'];
-	$post_query		 = $filtered_values['post_query'];
-	$meta_query		 = $filtered_values['meta_query'];
-	$relation		 = $filtered_values['relation'];
-	$expost          = $filtered_values['expost'];
-	$post_type       = $filtered_values['post_type'];
-	$operator        = $filtered_values['operator'];
-	$search_blogs    = $filtered_values['search_blogs'];
-	$author	  	     = $filtered_values['author'];
-	$orderby  	     = $filtered_values['orderby'];
-	$order  	     = $filtered_values['order'];
-
+	
+	$filtered_args = apply_filters( 'relevanssi_search_filters', $args );
+	extract($filtered_args);
+	
 	$hits = array();
-
-	$o_tax_query = $tax_query;
-	$o_relation = $relation;
-	$o_post_query = $post_query;
-	$o_meta_query = $meta_query;
-	$o_expost = $expost;
-	$o_post_type = $post_type;
-	$o_author = $author;
-	$o_operator = $operator;
-	$o_search_blogs = $search_blogs;
-	$o_orderby = $orderby;
-	$o_order = $order;
 
 	$query_restrictions = "";
 	if (!isset($relation)) $relation = "or";
@@ -99,40 +62,64 @@ function relevanssi_search($q, $tax_query = NULL, $relation = NULL, $post_query 
 	$term_tax_ids = array();	
 	$not_term_tax_ids = array();	
 	$and_term_tax_ids = array();
+	
 	if (is_array($tax_query)) {
 		foreach ($tax_query as $row) {
-			if ($row['field'] == 'id' || $row['field'] == 'term_id') {
-				$id = $row['terms'];
-				$term_id = $id;
-				if (is_array($id)) {
-					$id = implode(',', $id);
-				}
-				$term_tax_id = $wpdb->get_col(
-					"SELECT tt.term_taxonomy_id
-					FROM $wpdb->terms AS t, $wpdb->term_taxonomy AS tt
-					WHERE tt.term_id = t.term_id AND tt.taxonomy = '" . $row['taxonomy'] . "' AND t.term_id IN ($id)");
-			}
 			if ($row['field'] == 'slug') {
 				$slug = $row['terms'];
+				$numeric_slugs = array();
+				$slug_in = null;
 				if (is_array($slug)) {
 					$slugs = array();
 					$term_id = array();
 					foreach ($slug as $t_slug) {
 						$term = get_term_by('slug', $t_slug, $row['taxonomy']);
-						$term_id[] = $term->term_id;
-						$slugs[] = "'$t_slug'";
+						if (!$term && is_numeric($t_slug)) {
+							$numeric_slugs[] = $t_slug;
+						}
+						else {
+							$term_id[] = $term->term_id;
+							$slugs[] = "'$t_slug'";
+						}
 					}
-					$slug = implode(',', $slugs);
+					if (!empty($slugs)) $slug_in = implode(',', $slugs);
 				}
 				else {
 					$term = get_term_by('slug', $slug, $row['taxonomy']);
-					$term_id = $term->term_id;
-					$slug = "'$slug'";
+					if (!$term && is_numeric($slug)) {
+						$numeric_slugs[] = $slug;
+					}
+					else {
+						$term_id = $term->term_id;
+						$slug_in = "'$slug'";
+					}
 				}
-				$term_tax_id = $wpdb->get_col(
-					"SELECT tt.term_taxonomy_id
+				if (!empty($slug_in)) {
+					$term_tax_id = $wpdb->get_col($wpdb->prepare("SELECT tt.term_taxonomy_id
+						FROM $wpdb->terms AS t, $wpdb->term_taxonomy AS tt
+						WHERE tt.term_id = t.term_id AND tt.taxonomy = %s AND t.slug IN (%s)", $row['taxonomy'], $slug_in));
+				}
+				if (!empty($numeric_slugs)) $row['field'] = 'id';
+			}
+			if ($row['field'] == 'id' || $row['field'] == 'term_id') {
+				$id = $row['terms'];
+				$term_id = $id;
+				if (is_array($id)) {
+					$numeric_values = array();
+					foreach ($id as $t_id) {
+						if (is_numeric($t_id)) $numeric_values[] = $t_id;
+					}
+					$id = implode(',', $numeric_values);
+				}
+				$id_term_tax_id = $wpdb->get_col($wpdb->prepare("SELECT tt.term_taxonomy_id
 					FROM $wpdb->terms AS t, $wpdb->term_taxonomy AS tt
-					WHERE tt.term_id = t.term_id AND tt.taxonomy = '" . $row['taxonomy'] . "' AND t.slug IN ($slug)");
+					WHERE tt.term_id = t.term_id AND tt.taxonomy = %s AND t.term_id IN (%s)", $row['taxonomy'], $id));
+				if (!empty($term_tax_id)) {
+					$term_tax_id = array_unique(array_merge($term_tax_id, $id_term_tax_id));
+				}
+				else {
+					$term_tax_id = $id_term_tax_id;
+				}
 			}
 			
 			if (!isset($row['include_children']) || $row['include_children'] == true) {
@@ -212,11 +199,19 @@ function relevanssi_search($q, $tax_query = NULL, $relation = NULL, $post_query 
 	
 	if (is_array($post_query)) {
 		if (!empty($post_query['in'])) {
-			$posts = implode(',', $post_query['in']);
+			$valid_values = array();
+			foreach($post_query['in'] as $post_in_id) {
+				if (is_integer($post_in_id)) $valid_values[] = $post_in_id;
+			}
+			$posts = implode(',', $valid_values);
 			$query_restrictions .= " AND relevanssi.doc IN ($posts)";
 		}
 		if (!empty($post_query['not in'])) {
-			$posts = implode(',', $post_query['not in']);
+			$valid_values = array();
+			foreach($post_query['not in'] as $post_not_in_id) {
+				if (is_integer($post_not_in_id)) $valid_values[] = $post_not_in_id;
+			}
+			$posts = implode(',', $valid_values);
 			$query_restrictions .= " AND relevanssi.doc NOT IN ($posts)";
 		}
 	}
@@ -296,6 +291,15 @@ function relevanssi_search($q, $tax_query = NULL, $relation = NULL, $post_query 
 		$query_restrictions .= $meta_query_restrictions;
 	}
 
+	if (!empty($date_query)) {
+		if (is_object($date_query) && method_exists($date_query, 'get_sql')) {
+			$sql = $date_query->get_sql();
+			$sql = str_replace(' AND ( (', '', $sql); 	// this is not needed
+			$sql = substr($sql, 0, strlen($sql) - 2);	// to remove the final ")"
+			$query_restrictions .= " AND relevanssi.doc IN ( SELECT DISTINCT(ID) FROM $wpdb->posts WHERE $sql";
+		}
+	}
+
 	if (!$post_type && get_option('relevanssi_respect_exclude') == 'on') {
 		if (function_exists('get_post_types')) {
 			$pt_1 = get_post_types(array('exclude_from_search' => '0'));
@@ -312,14 +316,24 @@ function relevanssi_search($q, $tax_query = NULL, $relation = NULL, $post_query 
 		else {
 			$post_types = $post_type;
 		}
+		$post_type = count($post_types) ? "'" . implode( "', '", $post_types) . "'" : 'NULL';
+	}
 
-		$post_type = count($post_types) ? implode( ',', array_fill(1, count($post_types), "'%s'")) : 'NULL';
+	if ($post_status) {
+		if (!is_array($post_status)) {
+			$post_statuses = explode(',', $post_status);
+		}
+		else {
+			$post_statuses = $post_status;
+		}
+
+		$post_status = count($post_statuses) ? "'" . implode( "', '", $post_statuses) . "'" : 'NULL';
 	}
 
 	//Added by OdditY:
 	//Exclude Post_IDs (Pages) for non-admin search ->
 	$postex = '';
-	if ($expost) {
+	if (!empty($expost)) {
 		if ($expost != "") {
 			$aexpids = explode(",",$expost);
 			foreach ($aexpids as $exid){
@@ -412,6 +426,14 @@ function relevanssi_search($q, $tax_query = NULL, $relation = NULL, $post_query 
 		$query_restrictions .= $wpdb->prepare(" AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
 			WHERE posts.post_type IN ($post_type))) OR (doc = -1))",
 			$post_types);
+	}
+
+	if ($post_status) {
+		$query_restrictions .= $wpdb->prepare(" AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
+			WHERE posts.post_status IN ($post_status))))",
+			$post_types);
+			
+			var_dump($query_restrictions);
 	}
 	
 	if ($phrases) {
@@ -665,10 +687,9 @@ function relevanssi_search($q, $tax_query = NULL, $relation = NULL, $post_query 
 
 	if (count($hits) < 1) {
 		if ($operator == "AND" AND get_option('relevanssi_disable_or_fallback') != 'on') {
-			$return = relevanssi_search($q, $o_tax_query, $o_relation,
-				$o_post_query, $o_meta_query,
-				$o_expost, $o_post_type,
-				"OR", $o_search_blogs, $o_author);
+			$or_args = $args;
+			$or_args['operator'] = "OR";
+			$return = relevanssi_search($or_args);
 			extract($return);
 		}
 	}
@@ -705,9 +726,6 @@ function relevanssi_do_query(&$query) {
 		$q = trim(stripslashes(mb_strtolower($query->query_vars["s"])));
 	else
 		$q = trim(stripslashes(strtolower($query->query_vars["s"])));
-
-	$cache = get_option('relevanssi_enable_cache');
-	$cache == 'on' ? $cache = true : $cache = false;
 
 	if (isset($query->query_vars['searchblogs'])) {
 		$search_blogs = $query->query_vars['searchblogs'];
@@ -853,6 +871,12 @@ function relevanssi_do_query(&$query) {
 		}
 		
 		$post_query = array();
+		if (!empty($query->query_vars['p'])) {
+			$post_query = array('in' => array($query->query_vars['p']));
+		}
+		if (!empty($query->query_vars['page_id'])) {
+			$post_query = array('in' => array($query->query_vars['page_id']));
+		}
 		if (!empty($query->query_vars['post__in'])) {
 			$post_query = array('in' => $query->query_vars['post__in']);
 		}
@@ -880,7 +904,11 @@ function relevanssi_do_query(&$query) {
 			$meta_query[] = array('key' => $query->query_vars["meta_key"], 'value' => $value, 'compare' => $compare);
 		}
 
-	
+		$date_query = false;
+		if (!empty($query->date_query)) {
+			$date_query = new WP_Date_Query($query->date_query);
+		}
+			
 		$search_blogs = false;
 		if (isset($query->query_vars["search_blogs"])) {
 			$search_blogs = $query->query_vars["search_blogs"];
@@ -895,13 +923,18 @@ function relevanssi_do_query(&$query) {
 		}
 	
 		if ($post_type == -1) $post_type = false;
-		
-		$expids = get_option("relevanssi_exclude_posts");
+
+		$post_status = false;	
+		if (isset($query->query_vars["post_status"]) && $query->query_vars["post_status"] != 'any') {
+			$post_status = $query->query_vars["post_status"];
+		}
+
+		$expost = get_option("relevanssi_exclude_posts");
 	
 		if (is_admin()) {
 			// in admin search, search everything
 			$excat = null;
-			$expids = null;
+			$expost = null;
 		}
 
 		$operator = "";
@@ -921,29 +954,23 @@ function relevanssi_do_query(&$query) {
 			$q = relevanssi_add_synonyms($q);
 		}
 	
-		if ($cache) {
-			$params = md5(serialize(array($q, $tax_query, $tax_query_relation, $post_query, $meta_query, $expids, $post_type, $operator, $search_blogs, $author, $orderby, $order)));
-			$return = relevanssi_fetch_hits($params);
-			if (!$return) {
-				$return = relevanssi_search($q, $tax_query, $tax_query_relation, $post_query, $meta_query, $expids, $post_type, $operator, $search_blogs, $author, $orderby, $order);
-				$return_ser = serialize($return);
-				relevanssi_store_hits($params, $return_ser);
-			}
-		}
-		else {
-			$return = relevanssi_search($q,
-										$tax_query,
-										$tax_query_relation, 
-										$post_query,
-										$meta_query, 
-										$expids,
-										$post_type,
-										$operator,
-										$search_blogs,
-										$author,
-										$orderby,
-										$order);
-		}
+		$search_params = array(
+			'q' => $q,
+			'tax_query' => $tax_query,
+			'tax_query_relation' => $tax_query_relation, 
+			'post_query' => $post_query,
+			'meta_query' => $meta_query, 
+			'date_query' => $date_query,
+			'expost' => $expost,
+			'post_type' => $post_type,
+			'post_status' => $post_status,
+			'operator' => $operator,
+			'search_blogs' => $search_blogs,
+			'author' => $author,
+			'orderby' => $orderby,
+			'order' => $order);
+	
+		$return = relevanssi_search($search_params);
 	}
 
 	isset($return['hits']) ? $hits = $return['hits'] : $hits = array();
@@ -1010,35 +1037,27 @@ function relevanssi_do_query(&$query) {
 		//Added by OdditY - Highlight Result Title too -> 
 		if("on" == get_option('relevanssi_hilite_title')){
 			if (function_exists('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage')) {
-				$post->post_title = strip_tags(qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($post->post_title));
+				$post->post_highlighted_title = strip_tags(qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($post->post_title));
 			}
 			else {
-				$post->post_title = strip_tags($post->post_title);
+				$post->post_highlighted_title = strip_tags($post->post_title);
 			}
 			$highlight = get_option('relevanssi_highlight');
 			if ("none" != $highlight) {
 				if (!is_admin()) {
-					$post->post_title = relevanssi_highlight_terms($post->post_title, $q);
+					$post->post_highlighted_title = relevanssi_highlight_terms($post->post_highlighted_title, $q);
 				}
 			}
 		}
-		// OdditY end <-			
+		// OdditY end <-
 		
 		if ('on' == $make_excerpts) {			
-			if ($cache) {
-				$post->post_excerpt = relevanssi_fetch_excerpt($post->ID, $q);
-				if ($post->post_excerpt == null) {
-					$post->post_excerpt = relevanssi_do_excerpt($post, $q);
-					relevanssi_store_excerpt($post->ID, $q, $post->post_excerpt);
-				}
-			}
-			else {
-				$post->post_excerpt = relevanssi_do_excerpt($post, $q);
-			}
+			$post->original_excerpt = $post->post_excerpt;
+			$post->post_excerpt = relevanssi_do_excerpt($post, $q);
+		}
 			
-			if ('on' == get_option('relevanssi_show_matches')) {
-				$post->post_excerpt .= relevanssi_show_matches($return, $post->ID);
-			}
+		if ('on' == get_option('relevanssi_show_matches')) {
+			$post->post_excerpt .= relevanssi_show_matches($return, $post->ID);
 		}
 		
 		if (isset($return['scores'][$post->ID])) $post->relevance_score = round($return['scores'][$post->ID], 2);

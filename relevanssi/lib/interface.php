@@ -63,12 +63,6 @@ function relevanssi_options() {
 			check_admin_referer(plugin_basename($relevanssi_variables['file']), 'relevanssi_options');
 			relevanssi_remove_all_stopwords();
 		}
-
-		if (isset($_REQUEST['truncate'])) {
-			check_admin_referer(plugin_basename($relevanssi_variables['file']), 'relevanssi_options');
-			$clear_all = true;
-			relevanssi_truncate_cache($clear_all);
-		}
 	}
 	relevanssi_options_form();
 	
@@ -148,12 +142,6 @@ function update_relevanssi_options() {
 		update_option('relevanssi_min_word_length', $value);
 	}
 
-	if (isset($_REQUEST['relevanssi_cache_seconds'])) {
-		$value = intval($_REQUEST['relevanssi_cache_seconds']);
-		if ($value == 0) $value = 86400;
-		update_option('relevanssi_cache_seconds', $value);
-	}
-	
 	if (!isset($_REQUEST['relevanssi_admin_search'])) {
 		$_REQUEST['relevanssi_admin_search'] = "off";
 	}
@@ -204,10 +192,6 @@ function update_relevanssi_options() {
 
 	if (!isset($_REQUEST['relevanssi_expand_shortcodes'])) {
 		$_REQUEST['relevanssi_expand_shortcodes'] = "off";
-	}
-
-	if (!isset($_REQUEST['relevanssi_enable_cache'])) {
-		$_REQUEST['relevanssi_enable_cache'] = "off";
 	}
 
 	if (!isset($_REQUEST['relevanssi_respect_exclude'])) {
@@ -305,7 +289,6 @@ function update_relevanssi_options() {
 	if (isset($_REQUEST['relevanssi_index_limit'])) update_option('relevanssi_index_limit', $_REQUEST['relevanssi_index_limit']);
 	if (isset($_REQUEST['relevanssi_disable_or_fallback'])) update_option('relevanssi_disable_or_fallback', $_REQUEST['relevanssi_disable_or_fallback']);
 	if (isset($_REQUEST['relevanssi_respect_exclude'])) update_option('relevanssi_respect_exclude', $_REQUEST['relevanssi_respect_exclude']);
-	if (isset($_REQUEST['relevanssi_enable_cache'])) update_option('relevanssi_enable_cache', $_REQUEST['relevanssi_enable_cache']);
 	if (isset($_REQUEST['relevanssi_throttle'])) update_option('relevanssi_throttle', $_REQUEST['relevanssi_throttle']);
 	if (isset($_REQUEST['relevanssi_throttle_limit'])) update_option('relevanssi_throttle_limit', $_REQUEST['relevanssi_throttle_limit']);
 	if (isset($_REQUEST['relevanssi_wpml_only_current'])) update_option('relevanssi_wpml_only_current', $_REQUEST['relevanssi_wpml_only_current']);
@@ -368,8 +351,7 @@ function relevanssi_add_single_stopword($term) {
 function relevanssi_remove_all_stopwords() {
 	global $wpdb, $relevanssi_variables;
 	
-	$q = $wpdb->prepare("TRUNCATE " . $relevanssi_variables['stopword_table']);
-	$success = $wpdb->query($q);
+	$success = $wpdb->query("TRUNCATE " . $relevanssi_variables['stopword_table']);
 	
 	printf(__("<div id='message' class='updated fade'><p>Stopwords removed! Remember to re-index.</p></div>", "relevanssi"), $term);
 }
@@ -554,7 +536,6 @@ function relevanssi_options_form() {
 	$docs_count = $wpdb->get_var("SELECT COUNT(DISTINCT doc) FROM " . $relevanssi_variables['relevanssi_table']);
 	$terms_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $relevanssi_variables['relevanssi_table']);
 	$biggest_doc = $wpdb->get_var("SELECT doc FROM " . $relevanssi_variables['relevanssi_table'] . " ORDER BY doc DESC LIMIT 1");
-	$cache_count = $wpdb->get_var("SELECT COUNT(tstamp) FROM " . $relevanssi_variables['relevanssi_cache']);
 	
 	$serialize_options = array();
 	
@@ -739,11 +720,6 @@ function relevanssi_options_form() {
 
 	$respect_exclude = ('on' == get_option('relevanssi_respect_exclude') ? 'checked="checked"' : ''); 
 	$serialize_options['relevanssi_respect_exclude'] = get_option('relevanssi_respect_exclude');
-
-	$enable_cache = ('on' == get_option('relevanssi_enable_cache') ? 'checked="checked"' : ''); 
-	$serialize_options['relevanssi_enable_cache'] = get_option('relevanssi_enable_cache');
-	$cache_seconds = get_option('relevanssi_cache_seconds');
-	$serialize_options['relevanssi_cache_seconds'] = $cache_seconds;
 
 	$min_word_length = get_option('relevanssi_min_word_length');
 	$serialize_options['relevanssi_min_word_length'] = $min_word_length;
@@ -1324,32 +1300,9 @@ EOH;
 
 <?php if (function_exists('relevanssi_form_index_taxonomies')) relevanssi_form_index_taxonomies($index_taxonomies, $index_terms); ?>
 
-	<input type='submit' name='index' value='<?php _e(esc_attr("Save indexing options and build the index"), 'relevanssi'); ?>' class='button button-primary' />
+	<input type='submit' name='index' value='<?php _e(esc_attr("Save indexing options, erase index and rebuild the index"), 'relevanssi'); ?>' class='button button-primary' />
 
 	<input type='submit' name='index_extend' value='<?php _e(esc_attr("Continue indexing"), 'relevanssi'); ?>' class='button' />
-
-	<h3 id="caching"><?php _e("Caching", "relevanssi"); ?></h3>
-
-	<p><?php _e("Warning: In many cases caching is not useful, and in some cases can be even harmful. Do not
-	activate cache unless you have a good reason to do so.", 'relevanssi'); ?></p>
-	
-	<label for='relevanssi_enable_cache'><?php _e('Enable result and excerpt caching:', 'relevanssi'); ?>
-	<input type='checkbox' name='relevanssi_enable_cache' id='relevanssi_enable_cache' <?php echo $enable_cache ?> /></label><br />
-	<small><?php _e("If checked, Relevanssi will cache search results and post excerpts.", 'relevanssi'); ?></small>
-
-	<br /><br />
-	
-	<label for='relevanssi_cache_seconds'><?php _e("Cache expire (in seconds):", "relevanssi"); ?>
-	<input type='text' name='relevanssi_cache_seconds' id='relevanssi_cache_seconds' size='30' value='<?php echo esc_attr($cache_seconds); ?>' /></label><br />
-	<small><?php _e("86400 = day", "relevanssi"); ?></small>
-
-	<br /><br />
-	
-	<?php _e("Entries in the cache", 'relevanssi'); ?>: <?php echo $cache_count; ?>
-
-	<br /><br />
-	
-	<input type='submit' name='truncate' id='truncate' value='<?php _e(esc_attr('Clear all caches'), 'relevanssi'); ?>' class='button' />
 
 	<h3 id="synonyms"><?php _e("Synonyms", "relevanssi"); ?></h3>
 	

@@ -3,12 +3,12 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.2
+Version: 3.3.3
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
 
-/*  Copyright 2013 Mikko Saari  (email: mikko@mikkosaari.fi)
+/*  Copyright 2014 Mikko Saari  (email: mikko@mikkosaari.fi)
 
     This file is part of Relevanssi, a search plugin for WordPress.
 
@@ -40,8 +40,6 @@ global $relevanssi_variables;
 $relevanssi_variables['relevanssi_table'] = $wpdb->prefix . "relevanssi";
 $relevanssi_variables['stopword_table'] = $wpdb->prefix . "relevanssi_stopwords";
 $relevanssi_variables['log_table'] = $wpdb->prefix . "relevanssi_log";
-$relevanssi_variables['relevanssi_cache'] = $wpdb->prefix . "relevanssi_cache";
-$relevanssi_variables['relevanssi_excerpt_cache'] = $wpdb->prefix . "relevanssi_excerpt_cache";
 $relevanssi_variables['title_boost_default'] = 5;
 $relevanssi_variables['comment_boost_default'] = 0.75;
 $relevanssi_variables['post_type_weight_defaults']['post_tag'] = 0.75;
@@ -53,7 +51,6 @@ $relevanssi_variables['plugin_dir'] = plugin_dir_path(__FILE__);
 
 require_once('lib/init.php');
 require_once('lib/interface.php');
-require_once('lib/cache.php');
 require_once('lib/indexing.php');
 require_once('lib/stopwords.php');
 require_once('lib/search.php');
@@ -105,6 +102,21 @@ function relevanssi_didyoumean($query, $pre, $post, $n = 5) {
 
 function relevanssi_check_old_data() {
 	if (is_admin()) {
+		// Version 3.3 removes the cache feature
+		$cache = get_option('relevanssi_enable_cache', 'nothing');
+		if ($cache != 'nothing') {
+			global $wpdb;
+			$relevanssi_cache = $wpdb->prefix . "relevanssi_cache";
+			$relevanssi_excerpt_cache = $wpdb->prefix . "relevanssi_excerpt_cache";
+
+			$wpdb->query("DROP TABLE $relevanssi_cache");
+			$wpdb->query("DROP TABLE $relevanssi_excerpt_cache");
+
+			delete_option('relevanssi_enable_cache');
+			delete_option('relevanssi_cache_seconds');
+			wp_clear_scheduled_hook('relevanssi_truncate_cache');
+		}	
+	
 		// Version 3.1.4 combined taxonomy indexing options
 		$inctags = get_option('relevanssi_include_tags', 'nothing');
 		if ($inctags == 'on') {
@@ -249,8 +261,6 @@ function _relevanssi_install() {
 	add_option('relevanssi_index_limit', '500');
 	add_option('relevanssi_disable_or_fallback', 'off');
 	add_option('relevanssi_respect_exclude', 'on');
-	add_option('relevanssi_cache_seconds', '172800');
-	add_option('relevanssi_enable_cache', 'off');
 	add_option('relevanssi_min_word_length', 3);
 	add_option('relevanssi_wpml_only_current', 'on');
 	add_option('relevanssi_word_boundaries', 'on');

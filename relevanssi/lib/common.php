@@ -2,8 +2,8 @@
 
 // thanks to rvencu
 function relevanssi_wpml_filter($data) {
-	$use_filter = get_option('relevanssi_wpml_only_current');
-	if ('on' == $use_filter) {
+    $use_filter = get_option('relevanssi_wpml_only_current');
+    if ('on' == $use_filter) {
 		//save current blog language
 		$lang = get_bloginfo('language');
 		$filtered_hits = array();
@@ -12,14 +12,39 @@ function relevanssi_wpml_filter($data) {
 				switch_to_blog($hit->blog_id);
 			}
 			global $sitepress;
+
 			if (function_exists('icl_object_id') && $sitepress->is_translated_post_type($hit->post_type)) {
-			    if ($hit->ID == icl_object_id($hit->ID, $hit->post_type,false,ICL_LANGUAGE_CODE))
+			    if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE))
 			        $filtered_hits[] = $hit;
 			}
 			elseif (function_exists('icl_object_id') && function_exists('pll_is_translated_post_type')) {
 				if (pll_is_translated_post_type($hit->post_type)) {
-				    if ($hit->ID == icl_object_id($hit->ID, $hit->post_type,false,ICL_LANGUAGE_CODE))
+				    if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE))
 				        $filtered_hits[] = $hit;
+				}
+			}
+
+
+			if (function_exists('icl_object_id') && !function_exists('pll_is_translated_post_type')) {
+				if ($sitepress->is_translated_post_type($hit->post_type)) {
+					if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE)) $filtered_hits[] = $hit;
+				}
+				else {
+					$filtered_hits[] = $hit;
+				}
+			}
+			elseif (function_exists('icl_object_id') && function_exists('pll_is_translated_post_type')) {
+				if (pll_is_translated_post_type($hit->post_type)) {
+					global $polylang;
+					if ($polylang->model->get_post_language($hit->ID)->slug == ICL_LANGUAGE_CODE) {
+						$filtered_hits[] = $hit;
+					}
+					else if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE)) {
+						$filtered_hits[] = $hit;
+					}
+				}
+				else {
+					$filtered_hits[] = $hit;
 				}
 			}
 
@@ -422,6 +447,8 @@ function relevanssi_remove_punct($a) {
 		$a = strip_tags($a);
 		$a = stripslashes($a);
 
+		$a = str_replace('ß', 'ss', $a);
+
 		$a = str_replace("·", '', $a);
 		$a = str_replace("…", '', $a);
 		$a = str_replace("€", '', $a);
@@ -648,4 +675,60 @@ function relevanssi_add_synonyms($q) {
 	}
 	return $q;
 }
+
+/* Helper function that does mb_stripos, falls back to mb_strpos and mb_strtoupper
+ * if that cannot be found, and falls back to just strpos if even that is not possible.
+ */
+function relevanssi_stripos($content, $term, $offset) {
+	if (function_exists('mb_stripos')) {
+		$pos = ("" == $content) ? false : mb_stripos($content, $term, $offset);
+	}
+	else if (function_exists('mb_strpos') && function_exists('mb_strtoupper') && function_exists('mb_substr')) {
+		$pos = mb_strpos(mb_strtoupper($content), mb_strtoupper($term), $offset);
+	}
+	else {
+		$pos = strpos(strtoupper($content), strtoupper($term), $offset);
+	}
+	return $pos;
+}
+
+/* Function to close tags in a bit of HTML code. Used to make sure no tags are left open
+ * in excerpts. This method is not foolproof, but it's good enough for now.
+ */
+function relevanssi_close_tags($html) {
+    preg_match_all('#<(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
+    $openedtags = $result[1];
+    preg_match_all('#</([a-z]+)>#iU', $html, $result);
+    $closedtags = $result[1];
+    $len_opened = count($openedtags);
+    if (count($closedtags) == $len_opened) {
+        return $html;
+    }
+    $openedtags = array_reverse($openedtags);
+    for ($i=0; $i < $len_opened; $i++) {
+        if (!in_array($openedtags[$i], $closedtags)) {
+            $html .= '</'.$openedtags[$i].'>';
+        } else {
+            unset($closedtags[array_search($openedtags[$i], $closedtags)]);
+        }
+    }
+    return $html;
+} 
+
+/* Prints out post title with highlighting.
+ */
+function relevanssi_the_title() {
+	global $post;
+	if (empty($post->post_highlighted_title)) $post->post_highlighted_title = $post->post_title;
+	echo $post->post_highlighted_title;
+}
+
+/* Returns the post title with highlighting.
+ */
+function relevanssi_get_the_title($post_id) {
+	$post = get_post($post_id);
+	if (empty($post->post_highlighted_title)) $post->post_highlighted_title = $post->post_title;
+	return $post->post_highlighted_title;
+}
+
 ?>

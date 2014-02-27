@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
-Tested up to: 3.8-alpha
-Stable tag: 3.2
+Tested up to: 3.8.1
+Stable tag: 3.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -233,12 +233,6 @@ or no results at all, depending on case.
 
 Thanks to Charles St-Pierre for the idea.
 
-= Caching =
-Relevanssi has an included cache feature that'll store search results and
-post excerpts in the database for reuse. It's something of an experimental 
-feature right now, but should work and if there are lots of repeat queries,
-it'll give some actual boost in performance.
-
 = Displaying the relevance score =
 Relevanssi stores the relevance score it uses to sort results in the $post variable. Just add
 something like
@@ -389,6 +383,37 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.3.3 =
+* OR fallback had problems.
+* Indexing sub pages didn't work.
+* Relevanssi now automatically treats 'ß' as 'ss'. If your site has 'ß' in text, reindexing the database is a good idea.
+* Query variable `post_status` is now supported.
+
+= 3.3.2 =
+* Fixed a warning on search results page.
+
+= 3.3.1 =
+* Fixed bugs related to the removal of the cache feature.
+
+= 3.3 =
+* Improvements to excerpts: excerpts with phrases work much better now, and the excerpt creation logic has been improved: the excerpts are now better. The process takes a bit more time, though.
+* Allowing HTML tags in excerpts could lead to those tags being left open. Relevanssi will now try to close open HTML tags in excerpts.
+* Allowed tags were not controlled in comments. They are now.
+* Highlighting in documents didn't always work; it should be more reliable now.
+* Non-integer values are removed from `post__in` and `post__not_in` before processing them.
+* Query variables `p` and `page_id` are now supported.
+* Relevanssi now understands `date_query` variables as well.
+* The original post excerpt is stored in $post->original_excerpt.
+* Taxonomy search works better with term id parameters (for example from `wp_category_dropdown`).
+* Errors about $wpdb->prepare() missing an argument removed.
+* New functions: `relevanssi_the_title()` and `relevanssi_get_the_title()` can be used to display highlighted titles in search results.
+* The old title highlighting method has been disabled, because it caused highlights in wrong places. Now the highlighted title is stored in $post->highlighted_post_title, take it from there or use the Relevanssi title functions to display it.
+* Polylang and WPML support was adjusted to perform better in edge cases.
+* Indexing is faster, thanks to some improved code from Tom Novelli.
+* MySQL injection attack vulnerability removed.
+* The cache feature is now removed. Relevanssi should automatically drop the cache tables.
+* New filter: `relevanssi_indexing_data` lets you modify the data before it's indexed.
 
 = 3.2 =
 * Fixed a bug in the TablePress support.
@@ -988,6 +1013,18 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.3.3 =
+* OR fallback and indexing sub pages fixed.
+
+= 3.3.2 =
+* Fixes a warning on search page.
+
+= 3.3.1 =
+* Removing the cache feature wasn't complete, which caused problems. Those should be fixed now.
+
+= 3.3 =
+* Critical MySQL injection vulnerability fixed, better excerpts and highlights, bug fixes. This version removes the cache feature.
 
 = 3.2 =
 * New filters, better search efficiency, new features, small bug fixes.

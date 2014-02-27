@@ -54,20 +54,21 @@ function relevanssi_build_index($extend = false) {
 				relevanssi_index_users();
 			}
 		}
-		
-        $q = "SELECT DISTINCT(post.ID)
-		FROM $wpdb->posts parent, $wpdb->posts post WHERE
-        (parent.post_status IN ($valid_status))
-        AND (
-            (post.post_status='inherit'
-            AND post.post_parent=parent.ID)
-            OR
-            (parent.ID=post.ID)
-            OR
+
+        $q = "SELECT post.ID
+		FROM $wpdb->posts post
+		LEFT JOIN $wpdb->posts parent ON (post.post_parent=parent.ID)
+		WHERE
+			(post.post_status IN ($valid_status)
+			OR
 			(post.post_status='inherit'
-            AND post.post_parent=0)
-        )
+				AND(
+					(parent.ID is not null AND (parent.post_status IN ($valid_status)))
+					OR (post.post_parent=0)
+				)
+			))
 		$restriction";
+
 		update_option('relevanssi_index', '');
 	}
 	else {
@@ -77,19 +78,23 @@ function relevanssi_build_index($extend = false) {
 			$size = $limit;
 			$limit = " LIMIT $limit";
 		}
-        $q = "SELECT DISTINCT(post.ID)
-		FROM $wpdb->posts parent, $wpdb->posts post WHERE
-        (parent.post_status IN ($valid_status))
-        AND (
-            (post.post_status='inherit'
-            AND post.post_parent=parent.ID)
-            OR
-            (parent.ID=post.ID)
-            OR
+        $q = "SELECT post.ID
+		FROM $wpdb->posts post
+		LEFT JOIN $wpdb->posts parent ON (post.post_parent=parent.ID)
+		LEFT JOIN $relevanssi_table r ON (post.ID=r.doc)
+		WHERE
+		r.doc is null
+		AND(
+			(post.post_status IN ($valid_status)
+			OR
 			(post.post_status='inherit'
-            AND post.post_parent=0)
-        )
-		AND post.ID NOT IN (SELECT DISTINCT(doc) FROM $relevanssi_table) $restriction $limit";
+				AND(
+					(parent.ID is not null AND (parent.post_status IN ($valid_status)))
+					OR (post.post_parent=0)
+				)
+			)
+		)
+		$restriction $limit";
 	}
 
 	$custom_fields = relevanssi_get_custom_fields();
@@ -207,7 +212,6 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 		if (function_exists('relevanssi_remove_item')) {
 			relevanssi_remove_item($post->ID, 'post');
 		}
-		relevanssi_purge_excerpt_cache($post->ID);
 	}
 
 	// This needs to be here, after the call to relevanssi_remove_doc(), because otherwise
@@ -391,6 +395,8 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	$type = 'post';
 	if ($post->post_type == 'attachment') $type = 'attachment';
 	
+	$insert_data = apply_filters('relevanssi_indexing_data', $insert_data, $post);
+
 	$values = array();
 	foreach ($insert_data as $term => $data) {
 		$content = 0;
@@ -552,7 +558,6 @@ function relevanssi_edit($post) {
 
 function relevanssi_delete($post) {
 	relevanssi_remove_doc($post);
-	relevanssi_purge_excerpt_cache($post);
 }
 
 function relevanssi_publish($post, $bypassglobalpost = false) {
@@ -675,6 +680,7 @@ function relevanssi_get_comments($postID) {
 		}
 		$from += $to;
 	}
+	
 	return $comment_string;
 }
 
