@@ -432,8 +432,6 @@ function relevanssi_search($args) {
 		$query_restrictions .= $wpdb->prepare(" AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
 			WHERE posts.post_status IN ($post_status))))",
 			$post_types);
-			
-			var_dump($query_restrictions);
 	}
 	
 	if ($phrases) {

@@ -4,7 +4,7 @@ Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
 Tested up to: 3.8.1
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -383,6 +383,9 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.3.4 =
+* Couple of bug fixes.
 
 = 3.3.3 =
 * OR fallback had problems.
@@ -1013,6 +1016,9 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.3.4 =
+* Bug fixes.
 
 = 3.3.3 =
 * OR fallback and indexing sub pages fixed.

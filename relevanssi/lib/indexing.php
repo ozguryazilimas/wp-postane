@@ -84,7 +84,7 @@ function relevanssi_build_index($extend = false) {
 		LEFT JOIN $relevanssi_table r ON (post.ID=r.doc)
 		WHERE
 		r.doc is null
-		AND(
+		AND
 			(post.post_status IN ($valid_status)
 			OR
 			(post.post_status='inherit'

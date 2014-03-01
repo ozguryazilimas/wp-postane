@@ -142,7 +142,7 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 		$best_position = 0;
 		$best_position_hits = 0;
 		$quarter = floor($excerpt_length/4); // adjustment, so the excerpt doesn't start with the search term
-		for ($i = 0; $i <= count($positions); $i++) {
+		for ($i = 0; $i < count($positions); $i++) {
 			$key = $positions[$i];
 			$key = $key - $quarter;
 			if ($key < 0) $key = 0;
