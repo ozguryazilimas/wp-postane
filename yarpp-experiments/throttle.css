@@ -1,0 +1,50 @@
+#wrapper {
+	background:#666;
+	padding:10px 20px;
+	width:510px; 
+	height:130px;
+}
+
+.slider { 
+	background:#333;
+	height:6px; 
+	position:relative; 
+	cursor:pointer;  
+	border:1px inset #333;
+	width:190px;
+	margin:10px 0;
+	float:left; 	
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+.progress {
+	height:12px; 
+	background-color:#234;
+	display:none;
+}
+
+.handle { 
+	background: grey;
+	height:15px;
+	width:15px;
+	top:-5px;
+	position:absolute; 
+	display:block;
+	cursor:move;
+	-moz-border-radius:8px;
+	-moz-box-shadow:#000 0 0 3px;
+	border:1px solid rgba(240, 240, 240, 0.5);
+}
+
+.range {
+	display: none;
+}
+
+.handle:hover {
+	background-image:none;			
+}
+
+a.handle:active {
+	background-color:#3CB2FB;
+}

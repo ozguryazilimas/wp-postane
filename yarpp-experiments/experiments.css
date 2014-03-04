@@ -1,0 +1,12 @@
+.experiment-label {
+	font-family: monospace;
+	border-radius: 3px 3px 3px 3px;
+	vertical-align: middle;
+	font-size: 10px;
+	padding: 2px;
+	background-color: rgb(210, 0, 0);
+	color: rgba(255, 255, 255, 0.9);
+	text-shadow: 0px 0px 8px white;
+	box-shadow: 0pt 0pt 1px rgb(210, 0, 0);
+	margin-left: 2px;
+}
