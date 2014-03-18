@@ -1,0 +1,48 @@
+# Copyright (C) 2014,
+# This file is distributed under the same license as Comment Chero package.
+#
+# Onur Küçük <onur@ozguryazilim.com.tr>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-18 02:57+0200\n"
+"PO-Revision-Date: 2014-03-18 02:59+0200\n"
+"Last-Translator: Onur Küçük <onur@ozguryazilim.com.tr>\n"
+"Language-Team: \n"
+"Language: Turkish \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Vim 7.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: includes/class-wp-fp-widget.php:12
+msgid "Fetches data from external URL and shows as a nice list"
+msgstr "Harici URL adresinden veri çekip hoş bir liste ile gösterir"
+
+#: includes/class-wp-fp-widget.php:84
+msgid "Title:"
+msgstr "Başlık:"
+
+#: includes/class-wp-fp-widget.php:88
+msgid "Source URL:"
+msgstr "Kaynak URL"
+
+#: includes/class-wp-fp-widget.php:92
+msgid "Picture URL:"
+msgstr "Görsel URL"
+
+#: includes/class-wp-fp-widget.php:96
+msgid "Account Name:"
+msgstr "Hesap Adı:"
+
+#: includes/class-wp-fp-widget.php:100
+msgid "Account Link:"
+msgstr "Hesap Bağlantısı:"
+
+#: includes/class-wp-fp-widget.php:104
+msgid "Number of entries to show (default 10):"
+msgstr "Gösterilecek girdi adedi (öntanımlı 10):"
+

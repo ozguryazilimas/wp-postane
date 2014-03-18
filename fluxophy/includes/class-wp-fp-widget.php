@@ -9,9 +9,9 @@
  */
 class WP_Fluxophy_Widget extends WP_Widget {
     function WP_Fluxophy_Widget() {
-        $widget_ops = array('classname' => 'wp-fp-widget', 'description' => __('Show a list of data fetched from external URL.', 'fluxophy'));
+        $widget_ops = array('classname' => 'wp-fp-widget', 'description' => __('Fetches data from external URL and shows as a nice list', 'fluxophy'));
         $control_ops = array('width' => 350);
-        $this->WP_Widget('fluxophy', __('Fluxophy', 'fluxophy'), $widget_ops, $control_ops);
+        $this->WP_Widget('fluxophy', 'Fluxophy', $widget_ops, $control_ops);
     }
 
 
@@ -112,16 +112,19 @@ class WP_Fluxophy_Widget extends WP_Widget {
 function fluxophy_display_data($source_url, $display_count, $picture_url, $account_name, $account_link) {
     $output = '';
     $output .= '<ul id="fluxophy_widget">';
-    $output .= '<li><a href="'. $account_link . '" class="sc-btn sc--facebook facebook_button">';
-    $output .= '<span class="sc-icon">';
-    $output .= '<svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 17.996,32L 12,32 L 12,16 l-4,0 l0-5.514 l 4-0.002l-0.006-3.248C 11.993,2.737, 13.213,0, 18.512,0l 4.412,0 l0,5.515 l-2.757,0 c-2.063,0-2.163,0.77-2.163,2.209l-0.008,2.76l 4.959,0 l-0.585,5.514L 18,16L 17.996,32z"></path></g></svg>';
-    $output .= '</span>';
-    $output .= '<span class="sc-text">';
-    $output .= $account_name;
-    $output .= '</span>';
-    $output .= '</a></li>';
     $output .= fluxophy_fetch_data_fb($source_url, $display_count, $picture_url);
     $output .= '</ul>';
+
+    $output .= '<div>';
+    $output .= '<a href="'. $account_link . '" class="fluxophy_button_home">';
+    $output .= '<span class="fluxophy_button_home_icon">';
+    $output .= '<svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 17.996,32L 12,32 L 12,16 l-4,0 l0-5.514 l 4-0.002l-0.006-3.248C 11.993,2.737, 13.213,0, 18.512,0l 4.412,0 l0,5.515 l-2.757,0 c-2.063,0-2.163,0.77-2.163,2.209l-0.008,2.76l 4.959,0 l-0.585,5.514L 18,16L 17.996,32z"></path></g></svg>';
+    $output .= '</span>';
+    $output .= '<span class="fluxophy_button_home_text">';
+    $output .= $account_name;
+    $output .= '</span>';
+    $output .= '</a>';
+    $output .= '</div>';
 
     return $output;
 }
@@ -141,9 +144,8 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
                 $output .= '<img src="' . $picture_url . '"></img>';
             }
 
-            $output .= '<a href="' . $received->entries[$i]->alternate . '" title="' . date('g:i A F j, Y', strtotime($received->entries[$i]->published)) . '">';
-            // $output .= date('g:i A F j, Y', strtotime($received->entries[$i]->published));
-            $output .= date('d F', strtotime($received->entries[$i]->published));
+            $output .= '<a href="' . $received->entries[$i]->alternate . '" title="' . date_i18n('G:i - d F Y', strtotime($received->entries[$i]->published)) . '">';
+            $output .= date_i18n('d M', strtotime($received->entries[$i]->published));
             $output .= '</a>';
 
             $output .= '</div>';
