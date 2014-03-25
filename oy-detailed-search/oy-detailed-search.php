@@ -41,6 +41,10 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $a
 	global $ara_tutma ;
 	$ara_tutma_gelen != NULL ? $ara_tutma = $ara_tutma_gelen : $ara_tutma = 0 ;
 
+	// tarihlerin database aramasına uygun formda kalması gerek
+	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk);
+	$ara_tarih_son = str_replace("-", "", $ara_tarih_son);
+
 	// Gelen yazıları string -> array explode yapmamız gerek, foreach ile döndürebilmek için.
 	if($ara_kelime_gecen != NULL){
 		$ara_kelime_gecen = explode(" ",$ara_kelime_gecen);
@@ -88,7 +92,9 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $a
 	}else{
 		$ara_sql .= "order by post_date desc";
 	}
+	var_dump($ara_sql);
 	return $ara_sql;
+
 }
 
 function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala){
