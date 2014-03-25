@@ -92,7 +92,6 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $a
 	}else{
 		$ara_sql .= "order by post_date desc";
 	}
-	var_dump($ara_sql);
 	return $ara_sql;
 
 }
