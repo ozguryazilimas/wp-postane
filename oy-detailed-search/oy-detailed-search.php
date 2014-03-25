@@ -37,13 +37,13 @@ function yazar_id_return_et($yolla){
 // $ara_sql_ekleme yi döngü başına +1 yapacak şekilde ilerlet, en az 3 olmazsa ara sql i false döndür.
 // döndüğü yerde kontrol ettir, false geldiyse işlem yapmadan ekrana 3 naz 3 deger gir hatası bassın.
 
-function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali,  $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutma_gelen){
+function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, $ara_kelime_gecen, $ara_kelime_sirali,  $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutma_gelen, $ara_yazar_isim){
 	global $ara_tutma ;
 	$ara_tutma_gelen != NULL ? $ara_tutma = $ara_tutma_gelen : $ara_tutma = 0 ;
 
 	// tarihlerin database aramasına uygun formda kalması gerek
-	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk);
-	$ara_tarih_son = str_replace("-", "", $ara_tarih_son);
+	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk1);
+	$ara_tarih_son = str_replace("-", "", $ara_tarih_son1);
 
 	// Gelen yazıları string -> array explode yapmamız gerek, foreach ile döndürebilmek için.
 	if($ara_kelime_gecen != NULL){
@@ -56,47 +56,60 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $a
 		$ara_kelime_gecmeyen = explode(" ",$ara_kelime_gecmeyen);
 	}
 
+	$ara_onyazi = " <br> Sonuçlar ";
 	$ara_sql = "SELECT * FROM wp_posts WHERE 1=1 ";
 	if($ara_yazar_id != NULL){
 		$ara_sql .= " AND post_author = $ara_yazar_id ";
+		$ara_onyazi .= "'" . $ara_yazar_isim . "' üyesine ait olan ";
 	}
 
 	if($ara_tarih_ilk != NULL && $ara_tarih_son != NULL){
 		$ara_sql .= " AND post_date >= $ara_tarih_ilk AND post_date <= $ara_tarih_son ";
+		$ara_onyazi .= "'" . $ara_tarih_ilk1 . "' ile '" . $ara_tarih_son1 . "' arasında ";
 	}
 
 	if($ara_kelime_gecen != NULL){
 		foreach ($ara_kelime_gecen as $key ){
 			$ara_sql .= " AND post_excerpt LIKE '%$key%' ";
+			$ara_onyazi .= "'" . $key . "' kelimesi olan ";
 		}
 	}
 
 	if($ara_kelime_daginik != NULL){
 		foreach ($ara_kelime_daginik as $key ){
 			$ara_sql .= " OR post_excerpt LIKE '%$key%' ";
+			$ara_onyazi .= $key . ", ";
 		}
+		$ara_onyazi .= " kelime grubuna sahip";
 	}
 
 	if($ara_kelime_sirali != NULL){
 		$ara_sql .= " AND post_excerpt LIKE '%$ara_kelime_sirali%' ";
+		$ara_onyazi .= "'" . $ara_kelime_sirali . "' kelimeleri sıralı olan ";
 	}
 
 	if($ara_kelime_gecmeyen != NULL){
 		foreach ($ara_kelime_gecmeyen as $key ){
 			$ara_sql .= "AND post_excerpt NOT LIKE '%$key%' ";
+			$ara_onyazi .= "'" . $key ."' ,";
 		}
 	}
-
 	if($ara_tarih_sirala == "artan"){
 		$ara_sql .= "order by post_date asc";
 	}else{
 		$ara_sql .= "order by post_date desc";
 	}
-	return $ara_sql;
+	$ara_onyazi .= " yazilara göre getirilmiştir. <br>";
 
+	echo $ara_onyazi;
+	return $ara_sql;
 }
 
-function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala){
+function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son1, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala){
+
+	// tarihlerin database aramasına uygun formda kalması gerek
+	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk1);
+	$ara_tarih_son = str_replace("-", "", $ara_tarih_son1);
 
 	// Gelen yazıları string -> array explode yapmamız gerek, foreach ile döndürebilmek için.
 	if($ara_kelime_gecen != NULL){
@@ -110,37 +123,43 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk, $ara_tarih_son,
 	}
 	$ara_sql = "SELECT * FROM wp_comments WHERE 1=1 ";
 
-
+	$ara_onyazi = "<br> Sonuçlar ";
 	if($ara_yazar_isim != NULL){
 		$ara_sql .= " AND comment_author = '$ara_yazar_isim' ";
-
+		$ara_onyazi .= "'" . $ara_yazar_isim . "' üyesine ait olan ";
 	}
 
 	if($ara_tarih_ilk != NULL && $ara_tarih_son != NULL){
-
 		$ara_sql .= " AND comment_date >= $ara_tarih_ilk AND comment_date <= $ara_tarih_son ";
+		$ara_onyazi .= "'" . $ara_tarih_ilk1 . "' ile '" . $ara_tarih_son1 . "' arasında ";
 	}
 
 	if($ara_kelime_gecen != NULL){
 		foreach ($ara_kelime_gecen as $key ){
 			$ara_sql .= " AND comment_content LIKE '%$key%' ";
+			$ara_onyazi .= "'" . $key . "' kelimesi olan ";
 		}
 	}
 
 	if($ara_kelime_daginik != NULL){
 		foreach ($ara_kelime_daginik as $key ){
 			$ara_sql .= " OR comment_content LIKE '%$key%' ";
+			$ara_onyazi .= $key . ", ";
 		}
+		$ara_onyazi .= " kelime grubuna sahip";
 	}
 
 	if($ara_kelime_sirali != NULL){
 		$ara_sql .= " AND comment_content LIKE '%$ara_kelime_sirali%' ";
+		$ara_onyazi .= "'" . $ara_kelime_sirali . "' kelimeleri sıralı olan ";
 	}
 
 	if($ara_kelime_gecmeyen != NULL){
 		foreach ($ara_kelime_gecmeyen as $key ){
 			$ara_sql .= "AND comment_content NOT LIKE '%$key%' ";
+			$ara_onyazi .= "'" . $key ."' ,";
 		}
+		$ara_onyazi .= " kelimeleri içinde olmayan ";
 	}
 
 	if($ara_tarih_sirala == "artan"){
@@ -148,7 +167,10 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk, $ara_tarih_son,
 	}else{
 		$ara_sql .= " order by comment_date desc";
 	}
-	return $ara_sql;	
+	$ara_onyazi .= " yorumlara göre getirilmiştir. <br>";
+
+	echo $ara_onyazi;
+	return $ara_sql;
 }
 
 function sql_sonuc_getir($sql_sorgu){

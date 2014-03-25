@@ -7,7 +7,7 @@ get_header();
 	echo "<div class='leftpane person-page'>";
 	echo " <h1> Ayrıntılı Arama </h1> ";
 
-	echo "<form name='input' action='/ayrintili-ara/' method='post'>";
+	echo "<form name='input' id='input' action='/ayrintili-ara/' method='post' onsubmit='return validateSearch()'>";
 
 	echo " Hangi yazar :  <input type='username' name='yazar_isim' /><br /> <br />";
 	echo 'Tarihleri arasında yazılan : <input type="text" class="custom_date" name="tarih_ilk" value=""/>
@@ -26,7 +26,7 @@ get_header();
 	echo "</form>";
 
 // POST Verileri değişkenlere atandı.
-	$ara_yazar_isim = $_POST["username"];
+	$ara_yazar_isim = $_POST["yazar_isim"];
 	$ara_tarih_ilk = $_POST["tarih_ilk"];
 	$ara_tarih_son = $_POST["tarih_son"];
 	$ara_kelime_gecen = $_POST["kelime_gecen"];
@@ -47,19 +47,18 @@ get_header();
 
 	if($ara_ozellik == "arama_yazi"){
 		//sql e sorgu gönderildi.
-		$sql_sorgu = sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutmalar);
-
+		$sql_sorgu = sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutmalar, $ara_yazar_isim);
+		
 		$sonuc = sql_sonuc_getir($sql_sorgu);
-	
-		echo "<br>";
 
+		echo "<br>";
 		
 		echo sonucu_ekrana_bas_yazi($sonuc);
 
 	}
 
 	if($ara_ozellik == "arama_yorum"){
-
+		// Yorumlarda tutma özelliği yok.
 		$sql_sorgu = sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala);
 
 		$sonuc = sql_sonuc_getir($sql_sorgu);
