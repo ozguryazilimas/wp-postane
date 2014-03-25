@@ -18,8 +18,8 @@ get_header();
 	echo " İçinde geçmesin kelimeleri: <input type='text' name='kelime_gecmeyen' /> <br> <br>";
 	echo " En az şu kadar kişi tutmuş olsun : <input type='text' name='tutma' pattern='\d*' /> <br> <br>";
 	echo " Tarihe göre sıralama : <br> <input type='radio' name='tarih_sirala' value='artan'> Artan <br>
-			<input type='radio' name='tarih_sirala' value='azalan'> Azalan <br> <br>";
-	echo " Neye göre arayayım : <br> <input type='radio' name='arama_turu' value='arama_yazi'> Yazıya göre <br>
+			<input type='radio' name='tarih_sirala' value='azalan' checked> Azalan <br> <br>";
+	echo " Neye göre arayayım : <br> <input type='radio' name='arama_turu' value='arama_yazi' checked> Yazıya göre <br>
 			<input type='radio' name='arama_turu' value='arama_yorum'> Yoruma göre <br> <br>";
 	echo "<input type='submit' value='Ara'>";
 
@@ -53,6 +53,7 @@ get_header();
 	
 		echo "<br>";
 
+		
 		echo sonucu_ekrana_bas_yazi($sonuc);
 
 	}
