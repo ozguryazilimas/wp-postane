@@ -39,8 +39,7 @@ function yazar_id_return_et($yolla){
 
 function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, $ara_kelime_gecen, $ara_kelime_sirali,  $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutma_gelen, $ara_yazar_isim){
 
-	//tutmalar tanısız gelirse döngü saçmalıyor. Böylesi daha iyi.
-	global $ara_tutma ;
+	global $ara_onyazi;
 	$ara_tutma_gelen != NULL ? $ara_tutma = $ara_tutma_gelen : $ara_tutma = 0 ;
 
 	// tarihlerin database aramasına uygun formda kalması gerek
@@ -75,8 +74,8 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 		$ara_kelime_gecmeyen = explode(" ",$ara_kelime_gecmeyen);
 	}
 
-	$ara_onyazi = " <br> Sonuçlar ";
-	$ara_sql = "SELECT * FROM wp_posts WHERE 1=1 ";
+	$ara_onyazi = " <br> Arama sonucu ";
+	$ara_sql = "SELECT * FROM wp_posts WHERE post_status = 'publish' ";
 	if($ara_yazar_id != NULL){
 		$ara_sql .= " AND post_author = $ara_yazar_id ";
 		$ara_onyazi .= "'" . $ara_yazar_isim . "' üyesine ait olan ";
@@ -84,22 +83,27 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 
 	if($ara_tarih_ilk != NULL && $ara_tarih_son != NULL){
 		$ara_sql .= " AND post_date >= $ara_tarih_ilk AND post_date <= $ara_tarih_son ";
-		$ara_onyazi .= "'" . $ara_tarih_ilk1 . "' ile '" . $ara_tarih_son1 . "' arasında ";
+		$ara_onyazi .= "'" . $ara_tarih_ilk1 . "' ile '" . $ara_tarih_son1 . "' tarihleri arasında yazılmış ";
 	}
 
 	if($ara_kelime_gecen != NULL){
+		$ara_onyazi .= "' ";
 		foreach ($ara_kelime_gecen as $key ){
 			$ara_sql .= " AND post_content LIKE '%$key%' ";
-			$ara_onyazi .= "'" . $key . "' kelimesi olan ";
+			$ara_onyazi .= $key . " ";
 		}
+			$ara_onyazi .= "' ifadesi gecen";
 	}
 
 	if($ara_kelime_daginik != NULL){
+		$ara_sql .= "AND ( 1=0";
+		$ara_onyazi .= "' ";
 		foreach ($ara_kelime_daginik as $key ){
 			$ara_sql .= " OR post_content LIKE '%$key%' ";
-			$ara_onyazi .= $key . ", ";
+			$ara_onyazi .= $key . " ";
 		}
-		$ara_onyazi .= " kelime grubuna sahip";
+		$ara_sql .= ")";
+		$ara_onyazi .= "' kelimelerine sahip olan ";
 	}
 
 	if($ara_kelime_sirali != NULL){
@@ -112,23 +116,42 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 			$ara_sql .= "AND post_content NOT LIKE '%$key%' ";
 			$ara_onyazi .= "'" . $key ."' ,";
 		}
+			$ara_onyazi .= " kelime grubunu bulundurmayan";
 	}
 	if($ara_tarih_sirala == "artan"){
 		$ara_sql .= "order by post_date asc";
 	}else{
 		$ara_sql .= "order by post_date desc";
 	}
-	$ara_onyazi .= " yazilara göre getirilmiştir. <br>";
 
-	echo $ara_onyazi;
+//	döndürülen yazı ile stringin komutu aynı olduğundan, içinden / karakterlerini silmek caizdir.
+	$ara_onyazi = str_replace("\\","",$ara_onyazi);
 	return $ara_sql;
 }
 
 function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son1, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala){
 
+	global $ara_onyazi;
+
 	// tarihlerin database aramasına uygun formda kalması gerek
 	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk1);
 	$ara_tarih_son = str_replace("-", "", $ara_tarih_son1);
+
+	// site üzerinde ‘ karakteri var, escape stringten kurtuluyor. mysql e de ' karakteri olarak kayıtlı.
+	// O sebepten bu dönüşümü yapıp escape string ile doğruluyorum.
+	$ara_kelime_sirali = str_replace("‘", "'", $ara_kelime_sirali);
+	$ara_kelime_gecmeyen = str_replace("‘", "'", $ara_kelime_gecmeyen);
+	$ara_kelime_gecen = str_replace("‘", "'", $ara_kelime_gecen);
+	$ara_kelime_daginik = str_replace("‘", "'", $ara_kelime_daginik);
+	$ara_kelime_sirali = str_replace("’", "'", $ara_kelime_sirali);
+	$ara_kelime_gecmeyen = str_replace("’", "'", $ara_kelime_gecmeyen);
+	$ara_kelime_gecen = str_replace("’", "'", $ara_kelime_gecen);
+	$ara_kelime_daginik = str_replace("’", "'", $ara_kelime_daginik);
+
+	$ara_kelime_sirali = mysql_escape_string($ara_kelime_sirali);
+	$ara_kelime_gecmeyen = mysql_escape_string($ara_kelime_gecmeyen);
+	$ara_kelime_gecen = mysql_escape_string($ara_kelime_gecen);
+	$ara_kelime_daginik = mysql_escape_string($ara_kelime_daginik);
 
 	// Gelen yazıları string -> array explode yapmamız gerek, foreach ile döndürebilmek için.
 	if($ara_kelime_gecen != NULL){
@@ -142,7 +165,7 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 	}
 	$ara_sql = "SELECT * FROM wp_comments WHERE 1=1 ";
 
-	$ara_onyazi = "<br> Sonuçlar ";
+	$ara_onyazi = "<br> Arama sonucu ";
 	if($ara_yazar_isim != NULL){
 		$ara_sql .= " AND comment_author = '$ara_yazar_isim' ";
 		$ara_onyazi .= "'" . $ara_yazar_isim . "' üyesine ait olan ";
@@ -150,14 +173,16 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 
 	if($ara_tarih_ilk != NULL && $ara_tarih_son != NULL){
 		$ara_sql .= " AND comment_date >= $ara_tarih_ilk AND comment_date <= $ara_tarih_son ";
-		$ara_onyazi .= "'" . $ara_tarih_ilk1 . "' ile '" . $ara_tarih_son1 . "' arasında ";
+		$ara_onyazi .= "'" . $ara_tarih_ilk1 . "' ile '" . $ara_tarih_son1 . "' tarihleri arasında ";
 	}
 
 	if($ara_kelime_gecen != NULL){
+			$ara_onyazi .= "' ";
 		foreach ($ara_kelime_gecen as $key ){
 			$ara_sql .= " AND comment_content LIKE '%$key%' ";
-			$ara_onyazi .= "'" . $key . "' kelimesi olan ";
+			$ara_onyazi .= " " . $key ;
 		}
+			$ara_onyazi .= "' ifadesi geçen";
 	}
 
 	if($ara_kelime_daginik != NULL){
@@ -165,7 +190,7 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 			$ara_sql .= " OR comment_content LIKE '%$key%' ";
 			$ara_onyazi .= $key . ", ";
 		}
-		$ara_onyazi .= " kelime grubuna sahip";
+		$ara_onyazi .= " kelime grubuna sahip olan";
 	}
 
 	if($ara_kelime_sirali != NULL){
@@ -186,9 +211,10 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 	}else{
 		$ara_sql .= " order by comment_date desc";
 	}
-	$ara_onyazi .= " yorumlara göre getirilmiştir. <br>";
 
-	echo $ara_onyazi;
+//	döndürülen yazı ile stringin komutu aynı olduğundan, içinden / karakterlerini silmek caizdir.
+	$ara_onyazi = str_replace("\\","",$ara_onyazi);
+
 	return $ara_sql;
 }
 
@@ -208,10 +234,6 @@ function sonucu_ekrana_bas_yazi($sonuc){
 
 		if($tutma_sayisi >= $ara_tutma){
 			$page_data = get_page($page);
-			$bas_status = $page_data->post_status;
-			if($bas_status != "publish"){
-				continue;
-			}
 			$bas_title = $page_data->post_title;
 			$bas_time = $page_data->post_date;
 			$bas_link = get_post_permalink( $page );

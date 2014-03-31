@@ -1,6 +1,6 @@
  <?php
 get_header();
-
+	global $ara_onyazi;
 	// Sayfa, fonksiyonlarını plugins/oy-detailed-search/oy-detailed-search.php  sayfasından çekiyor.  
 	// Plugini aktif tutmak farz.
 
@@ -51,8 +51,8 @@ get_header();
 		
 		$sonuc = sql_sonuc_getir($sql_sorgu);
 
-		echo "<br>";
 		
+		echo $ara_onyazi ." " . count($sonuc) . " adet yazı bulunmuştur. <br><br> " ;
 		echo sonucu_ekrana_bas_yazi($sonuc);
 
 	}
@@ -62,9 +62,8 @@ get_header();
 		$sql_sorgu = sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala);
 
 		$sonuc = sql_sonuc_getir($sql_sorgu);
-	
-		echo "<br>";
 
+		echo $ara_onyazi ." " . count($sonuc) . " adet yorum bulunmuştur. <br><br> " ;
 		echo sonucu_ekrana_bas_yorum($sonuc);
 
 	}
