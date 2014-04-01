@@ -9,18 +9,18 @@ get_header();
 
 	echo "<form name='input' id='input' action='/ayrintili-ara/' method='post' onsubmit='return validateSearch()'>";
 
-	echo " Hangi yazar :  <input type='username' name='yazar_isim' /><br /> <br />";
-	echo 'Tarihleri arasında yazılan : <input type="text" class="custom_date" name="tarih_ilk" value=""/>
-			<input type="text" class="custom_date" name="tarih_son" value=""/> <br> <br>';
-	echo " İçinde mutlaka olsun kelimeleri : <input type='text' name='kelime_gecen' /> <br> <br>";
-	echo " İçinde mutlaka olsun, yanyana olsun kelimeleri : <input type='text' name='kelime_sirali' /> <br> <br>";
-	echo " Dağınık olarak içinde bulunsun kelimeleri : <input type='text' name='kelime_daginik' /> <br> <br>";
-	echo " İçinde geçmesin kelimeleri: <input type='text' name='kelime_gecmeyen' /> <br> <br>";
-	echo " En az şu kadar kişi tutmuş olsun : <input type='text' name='tutma' pattern='\d*' /> <br> <br>";
-	echo " Tarihe göre sıralama : <br> <input type='radio' name='tarih_sirala' value='artan'> Artan <br>
-			<input type='radio' name='tarih_sirala' value='azalan' checked> Azalan <br> <br>";
-	echo " Neye göre arayayım : <br> <input type='radio' name='arama_turu' value='arama_yazi' checked> Yazıya göre <br>
-			<input type='radio' name='arama_turu' value='arama_yorum'> Yoruma göre <br> <br>";
+	echo " <input type='username' name='yazar_isim' /> İsimli yazara ait olan <br /> <br />";
+	echo ' <input type="text" class="custom_date" name="tarih_ilk" value=""/> ile 
+			<input type="text" class="custom_date" name="tarih_son" value=""/> tarihleri arasında yazılan<br> <br>';
+	echo " İçinde <input type='text' name='kelime_gecen' /> kelimelerinin tümünün geçtiği (yanyana olması şart değil)<br> <br>";
+	echo " İçinde <input type='text' name='kelime_sirali' /> kelimeleri yanyana geçen<br> <br>";
+	echo " İçinde <input type='text' name='kelime_daginik' /> kelimelerindan en az birinin geçtiği<br> <br>";
+	echo " İçinde <input type='text' name='kelime_gecmeyen' /> kelimeleri geçmeyen<br> <br>";
+	echo " En az <input type='text' name='tutma' pattern='\d*' /> sayıda kişinin tuttuğu <br> <br> yazıları ara.<br><br>";
+	echo " Bu arama <br><br> <input type='radio' style='margin-left:40px;' name='arama_turu' value='arama_yazi' checked> yazılarda <br>
+			<input type='radio' name='arama_turu'  style='margin-left:40px;'value='arama_yorum'> yorumlarda <br><br>yapılsın. <br><br> ";
+	echo " Sonuçlar tarihe göre <br><br> <input type='radio' style='margin-left:40px;'name='tarih_sirala' value='azalan' checked> yeniden eskiye  <br>
+			 <input type='radio' name='tarih_sirala' style='margin-left:40px;'value='artan'> eskiden yeniye<br><br>sırala.<br><br>";
 	echo "<input type='submit' value='Ara'>";
 
 	echo "</form>";
