@@ -75,7 +75,7 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 	}
 
 	$ara_onyazi = " <br> Arama sonucu ";
-	$ara_sql = "SELECT * FROM wp_posts WHERE post_status = 'publish' ";
+	$ara_sql = "SELECT * FROM wp_posts WHERE post_status = 'publish' AND post_type = 'post' ";
 	if($ara_yazar_id != NULL){
 		$ara_sql .= " AND post_author = $ara_yazar_id ";
 		$ara_onyazi .= "'" . $ara_yazar_isim . "' üyesine ait olan ";
@@ -126,6 +126,7 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 
 //	döndürülen yazı ile stringin komutu aynı olduğundan, içinden / karakterlerini silmek caizdir.
 	$ara_onyazi = str_replace("\\","",$ara_onyazi);
+	var_dump($ara_sql);
 	return $ara_sql;
 }
 
