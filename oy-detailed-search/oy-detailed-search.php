@@ -126,7 +126,6 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 
 //	döndürülen yazı ile stringin komutu aynı olduğundan, içinden / karakterlerini silmek caizdir.
 	$ara_onyazi = str_replace("\\","",$ara_onyazi);
-	var_dump($ara_sql);
 	return $ara_sql;
 }
 
