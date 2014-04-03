@@ -116,7 +116,7 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 			$ara_sql .= "AND post_content NOT LIKE '%$key%' ";
 			$ara_onyazi .= "'" . $key ."' ,";
 		}
-			$ara_onyazi .= " kelime grubunu bulundurmayan";
+			$ara_onyazi .= " kelimelerini bulundurmayan";
 	}
 	if($ara_tarih_sirala == "artan"){
 		$ara_sql .= "order by post_date asc";
@@ -203,7 +203,7 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 			$ara_sql .= "AND comment_content NOT LIKE '%$key%' ";
 			$ara_onyazi .= "'" . $key ."' ,";
 		}
-		$ara_onyazi .= " kelimeleri içinde olmayan ";
+		$ara_onyazi .= " kelimelerini bulundurmayan";
 	}
 
 	if($ara_tarih_sirala == "artan"){
