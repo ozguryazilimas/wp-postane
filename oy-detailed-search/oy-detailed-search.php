@@ -163,7 +163,7 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 	if($ara_kelime_gecmeyen != NULL){
 		$ara_kelime_gecmeyen = explode(" ",$ara_kelime_gecmeyen);
 	}
-	$ara_sql = "SELECT * FROM wp_comments WHERE 1=1 ";
+	$ara_sql = "SELECT * FROM wp_comments WHERE comment_approved=1 ";
 
 	$ara_onyazi = "<br> Arama sonucu ";
 	if($ara_yazar_isim != NULL){
@@ -214,7 +214,6 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 
 //	döndürülen yazı ile stringin komutu aynı olduğundan, içinden / karakterlerini silmek caizdir.
 	$ara_onyazi = str_replace("\\","",$ara_onyazi);
-
 	return $ara_sql;
 }
 
@@ -227,7 +226,7 @@ function sql_sonuc_getir($sql_sorgu){
 function sonucu_ekrana_bas_yazi($sonuc){
 	global $wpdb;
 	global $ara_tutma;
-	foreach ($sonuc as $key ) {
+	foreach ($sonuc as $key ){
 		$page = $key->ID;
 		$tutma_sql = "SELECT COUNT(value) FROM wp_wti_like_post WHERE post_id = $page";
 		$tutma_sayisi = $wpdb->get_var($tutma_sql);
@@ -248,13 +247,14 @@ function sonucu_ekrana_bas_yorum($sonuc){
 	global $wpdb;
 	foreach ($sonuc as $key ) {
 		$page = $key->comment_post_ID;
+		$comment_date = $key->comment_date;
 		$page_data = get_page($page);
 		$bas_title = $page_data->post_title;
-		$bas_time = $page_data->post_date;
 		$bas_link = get_post_permalink( $page );
+		$comment_id = $key->comment_ID;
 
-		echo "<a href='" . $bas_link . "' > <h2>" . $bas_title . "</h2> </a>";
-		echo $bas_time;
+		echo "<a href='" . $bas_link . "#comment-" . $comment_id . "'> <h2>" . $bas_title . "</h2> </a>";
+		echo $comment_date;
 		echo "<br><br>";
 		
 	}
