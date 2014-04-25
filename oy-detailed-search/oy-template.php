@@ -51,7 +51,6 @@ get_header();
 		
 		$sonuc = sql_sonuc_getir($sql_sorgu);
 
-		
 		echo $ara_onyazi ." " . count($sonuc) . " adet yazı bulunmuştur. <br><br> " ;
 		echo sonucu_ekrana_bas_yazi($sonuc);
 
