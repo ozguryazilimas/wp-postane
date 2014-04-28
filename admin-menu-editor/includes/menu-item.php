@@ -87,6 +87,7 @@ abstract class ameMenuItem {
 			'access_level' => 'read',
 			'extra_capability' => '',
 			'file' => '',
+			'page_heading' => '',
 	        'position' => 0,
 	        'parent' => '',
 
@@ -95,6 +96,7 @@ abstract class ameMenuItem {
 	        'hookname' => '',
 	        'icon_url' => 'images/generic.png',
 	        'separator' => false,
+			'colors' => false,
 
 	        //Internal fields that may not map directly to WP menu structures.
 			'open_in' => 'same_window', //'new_window', 'iframe' or 'same_window' (the default)
@@ -119,6 +121,7 @@ abstract class ameMenuItem {
 			'items' => array(), //List of sub-menu items.
 			'grant_access' => array(), //Per-role and per-user access. Supersedes role_access.
 			'role_access' => array(), //Per-role access settings.
+			'colors' => null,
 
 			'custom' => false,  //True if item is made-from-scratch and has no template.
 			'missing' => false, //True if our template is no longer present in the default admin menu. Note: Stored values will be ignored. Set upon merging.
@@ -140,6 +143,8 @@ abstract class ameMenuItem {
 			'icon_url' => 'images/generic.png',
 			'open_in' => 'same_window',
 			'is_plugin_page' => false,
+			'page_heading' => '',
+			'colors' => false,
 		);
 	}
 

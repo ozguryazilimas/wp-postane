@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Admin Menu Editor Pro (Multisite module)
-Plugin URI: http://w-shadow.com/admin-menu-editor-pro/
+Plugin Name: Admin Menu Editor [Multisite module]
+Plugin URI: http://adminmenueditor.com/
 Description: Lets you edit the WordPress admin menu. To access the editor, go to the Dashboard of one of your network sites and open the Settings -&gt; Menu Editor page.
 Author: Janis Elsts
 Author URI: http://w-shadow.com/
@@ -49,3 +49,13 @@ function ws_ame_installation_error(){
 </div>
 <?php
 }
+
+//Add the license management link(s) to our must-use module.
+function ws_ame_add_mu_license_link($actions) {
+	global $ameLicensingUi;
+	if ( isset($ameLicensingUi) && is_callable(array($ameLicensingUi, 'addLicenseActionLink')) ) {
+		$actions = $ameLicensingUi->addLicenseActionLink($actions);
+	}
+	return $actions;
+}
+add_filter('network_admin_plugin_action_links_' . basename(__FILE__), 'ws_ame_add_mu_license_link');

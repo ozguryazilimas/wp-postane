@@ -85,6 +85,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 		$this->defaults = array(
 			'hide_advanced_settings' => true,
+			'show_extra_icons' => false,
 			'custom_menu' => null,
 			'first_install_time' => null,
 			'display_survey_notice' => true,
@@ -166,7 +167,15 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		if ( $should_save_options ) {
-			$this->save_options();
+			//Skip saving options if the plugin hasn't been fully activated yet.
+			if ( $this->is_plugin_active($this->plugin_basename) ) {
+				$this->save_options();
+			} else {
+				//Yes, this method can actually run before WP updates the list of active plugins. That means functions
+				//like is_plugin_active_for_network() will return false. As as result, we can't determine whether
+				//the plugin has been network-activated yet, so lets skip setting up the default config until
+				//the next page load.
+			}
 		}
 
 		//This is here and not in init() because it relies on $options being initialized.
@@ -439,6 +448,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		wp_register_auto_versioned_script('jquery-qtip', plugins_url('js/jquery.qtip.min.js', $this->plugin_file), array('jquery'));
 		//jQuery Form plugin. This is a more recent version than the one included with WP.
 		wp_register_auto_versioned_script('ame-jquery-form', plugins_url('js/jquery.form.js', $this->plugin_file), array('jquery'));
+		//jQuery cookie plugin
+		wp_register_auto_versioned_script('jquery-cookie', plugins_url('js/jquery.cookie.js', $this->plugin_file), array('jquery'));
 
 		//Editor's scripts
 		wp_register_auto_versioned_script(
@@ -447,7 +458,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			array(
 				'jquery', 'jquery-ui-sortable', 'jquery-ui-dialog',
 				'ame-jquery-form', 'jquery-ui-droppable', 'jquery-qtip',
-				'jquery-sort', 'jquery-json'
+				'jquery-sort', 'jquery-json', 'jquery-cookie',
+				'wp-color-picker'
 			)
 		);
 
@@ -501,6 +513,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//Note: Users do NOT get added to the actor list because that feature
 		//is not fully implemented.
 
+		$showExtraIcons = (boolean)$this->options['show_extra_icons'];
+		if ( isset($_COOKIE['ame-show-extra-icons']) && is_numeric($_COOKIE['ame-show-extra-icons']) ) {
+			$showExtraIcons = intval($_COOKIE['ame-show-extra-icons']) > 0;
+		}
+
 		//The editor will need access to some of the plugin data and WP data.
 		wp_localize_script(
 			'menu-editor',
@@ -509,7 +526,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				'imagesUrl' => plugins_url('images', $this->plugin_file),
 				'adminAjaxUrl' => admin_url('admin-ajax.php'),
 				'hideAdvancedSettings' => (boolean)$this->options['hide_advanced_settings'],
+				'showExtraIcons' => $showExtraIcons,
 				'hideAdvancedSettingsNonce' => wp_create_nonce('ws_ame_save_screen_options'),
+				'dashiconsAvailable' => wp_style_is('dashicons', 'registered'),
 				'captionShowAdvanced' => 'Show advanced options',
 				'captionHideAdvanced' => 'Hide advanced options',
 				'wsMenuEditorPro' => false, //Will be overwritten if extras are loaded
@@ -607,6 +626,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		wp_enqueue_style('menu-editor-colours-classic');
+		wp_enqueue_style('wp-color-picker');
 	}
 
 	/**
@@ -615,6 +635,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * @param array|null $custom_menu
 	 */
 	function set_custom_menu($custom_menu) {
+		$custom_menu = apply_filters('ame_pre_set_custom_menu', $custom_menu);
+
 		$previous_custom_menu = $this->load_custom_menu();
 		$this->update_wpml_strings($previous_custom_menu, $custom_menu);
 
@@ -1313,6 +1335,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$sub_section = isset($this->get['sub_section']) ? $this->get['sub_section'] : null;
 		if ( $sub_section === 'settings' ) {
 			$this->display_plugin_settings_ui();
+		} else if ($sub_section == 'generate-menu-dashicons') {
+			require dirname(__FILE__) . '/generate-menu-dashicons.php';
 		} else {
 			$this->display_editor_ui();
 		}
@@ -1416,8 +1440,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'message' => isset($this->get['message']) ? intval($this->get['message']) : null,
 			'images_url' => plugins_url('images', $this->plugin_file),
 			'hide_advanced_settings' => $this->options['hide_advanced_settings'],
+			'show_extra_icons' => $this->options['show_extra_icons'],
 			'settings_page_url' => $this->get_settings_page_url(),
 			'show_deprecated_hide_button' => $this->options['show_deprecated_hide_button'],
+			'dashicons_available' => wp_style_is('dashicons', 'done'),
 		);
 
 		//Build a tree struct. for the default menu
@@ -1431,6 +1457,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//Start out with the default menu if there is no user-created one
 			$custom_menu = $default_menu;
 		}
+
+		//The editor doesn't use the color CSS. Including it would just make the page bigger and waste bandwidth.
+		unset($custom_menu['color_css']);
+		unset($custom_menu['color_css_modified']);
 
 		//Encode both menus as JSON
 		$editor_data['default_menu_js'] = ameMenu::to_json($default_menu);
@@ -1612,6 +1642,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 		
 		$this->options['hide_advanced_settings'] = !empty($this->post['hide_advanced_settings']);
+		$this->options['show_extra_icons'] = !empty($this->post['show_extra_icons']);
 		$this->save_options();
 		die('1');
 	}
@@ -1775,6 +1806,15 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		$current_url = $this->parse_url($current_url);
 
+		//Hook-based submenu pages can be accessed via both "parent-page.php?page=foo" and "admin.php?page=foo".
+		//WP has a private API function for determining the canonical parent page for the current request.
+		if ( $this->endsWith($current_url['path'], '/admin.php') && is_callable('get_admin_page_parent') ) {
+			$real_parent = get_admin_page_parent('admin.php');
+			if ( !empty($real_parent) && ($real_parent !== 'admin.php') ) {
+				$current_url['alt_path'] = str_replace('/admin.php', '/' . $real_parent, $current_url['path']);
+			}
+		}
+
 		foreach($this->reverse_item_lookup as $url => $item) {
 			$item_url = $url;
 			//Convert to absolute URL. Caution: directory traversal (../, etc) is not handled.
@@ -1791,9 +1831,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			}
 			$item_url = $this->parse_url($item_url);
 
-			//Must match scheme, host, port, user, pass and path.
+			//Must match scheme, host, port, user, pass and path or alt_path.
 			$components = array('scheme', 'host', 'port', 'user', 'pass');
 			$is_close_match = $this->urlPathsMatch($current_url['path'], $item_url['path']);
+			if ( !$is_close_match && isset($current_url['alt_path']) ) {
+				$is_close_match = $this->urlPathsMatch($current_url['alt_path'], $item_url['path']);
+				//Technically, we should also compare current[path] vs item[alt_path],
+				//but generating the alt_path for each menu item would be complicated.
+			}
 			foreach($components as $component) {
 				$is_close_match = $is_close_match && ($current_url[$component] == $item_url[$component]);
 				if ( !$is_close_match ) {
@@ -1967,8 +2012,20 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'ame-helper-script',
 			plugins_url('js/admin-helpers.js', $this->plugin_file),
 			array('jquery'),
-			'20121121'
+			'20140312'
 		);
+
+		//The helper script needs to know the custom page heading (if any) to apply it.
+		$currentItem = $this->get_current_menu_item();
+		if ( $currentItem && !empty($currentItem['page_heading']) ) {
+			wp_localize_script(
+				'ame-helper-script',
+				'wsAmeCurrentMenuItem',
+				array(
+					'customPageHeading' => $currentItem['page_heading']
+				)
+			);
+		}
 	}
 
 	public function enqueue_helper_styles() {
@@ -1976,7 +2033,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'ame-helper-style',
 			plugins_url('css/admin.css', $this->plugin_file),
 			array(),
-			'20130211'
+			'20140220-2'
 		);
 	}
 

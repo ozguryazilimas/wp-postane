@@ -623,14 +623,22 @@ var knownMenuFields = {
 			var cssIcon = selectButton.find('.icon16');
 			var imageIcon = selectButton.find('img');
 
-			var matches = cssClass.match(/\bmenu-icon-([^\s]+)\b/);
+			var matches = cssClass.match(/\b(ame-)?menu-icon-([^\s]+)\b/);
+			var dashiconMatches = iconUrl && iconUrl.match('^\s*(dashicons-[a-z0-9\-]+)');
+
 			//Icon URL take precedence over icon class.
-			if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' ) {
+			if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' && !dashiconMatches ) {
 				cssIcon.hide();
 				imageIcon.prop('src', iconUrl).show();
-			} else if ( matches ) {
+			} else if ( dashiconMatches ) {
+				//Dashicon.
 				imageIcon.hide();
-				cssIcon.removeClass().addClass('icon16 icon-' + matches[1]).show();
+				cssIcon.removeClass().addClass('icon16 dashicons ' + dashiconMatches[1]).show();
+			} else if ( matches ) {
+				//Other CSS-based icon.
+				imageIcon.hide();
+				var iconClass = (matches[1] ? matches[1] : '') + 'icon-' + matches[2];
+				cssIcon.removeClass().addClass('icon16 ' + iconClass).show();
 			} else {
 				//This menu has no icon at all. This is actually a valid state
 				//and WordPress will display a menu like that correctly.
@@ -640,6 +648,51 @@ var knownMenuFields = {
 
 			return displayValue;
 		}
+	}),
+
+	'colors' : $.extend({}, baseField, {
+		caption: 'Color scheme',
+		defaultValue: 'Default',
+		type: 'color_scheme_editor',
+		onlyForTopMenus: true,
+		visible: false,
+		advanced : true,
+
+		display: function(menuItem, displayValue, input, containerNode) {
+			var colors = getFieldValue(menuItem, 'colors', {});
+			var colorList = containerNode.find('.ws_color_scheme_display');
+
+			colorList.empty();
+			var count = 0, maxColorsToShow = 7;
+
+			$.each(colors, function(name, value) {
+				if ( !value || (count >= maxColorsToShow) ) {
+					return;
+				}
+
+				colorList.append(
+					$('<span></span>').addClass('ws_color_display_item').css('background-color', value)
+				);
+				count++;
+			});
+
+			if (count === 0) {
+				colorList.append('Default');
+			}
+
+			return 'Placeholder. You should never see this.';
+		},
+
+		write: function(menuItem) {
+			//Menu colors can't be directly edited.
+		}
+	}),
+
+	'page_heading' : $.extend({}, baseField, {
+		caption: 'Page heading',
+		advanced : true,
+		onlyForTopMenus: false,
+		visible: false
 	}),
 
 	'hookname' : $.extend({}, baseField, {
@@ -732,6 +785,11 @@ function buildEditboxField(entry, field_name, field_settings){
 		case 'icon_selector':
 			inputBox = $(basicTextField)
                 .add('<button class="button ws_select_icon" title="Select icon"><div class="icon16 icon-settings"></div><img src="" style="display:none;"></button>');
+			break;
+
+		case 'color_scheme_editor':
+			inputBox = $('<span class="ws_color_scheme_display">Placeholder</span>')
+				.add('<input type="button" class="button ws_open_color_editor" value="Edit...">');
 			break;
 
 		case 'text': //Intentional fall-through.
@@ -874,21 +932,6 @@ function updateItemEditor(containerNode) {
 		var displayValue = isDefault ? defaultValue : menuItem[fieldName];
 		if (knownMenuFields[fieldName].display !== null) {
 			displayValue = knownMenuFields[fieldName].display(menuItem, displayValue, input, containerNode);
-		}
-
-		if (fieldName == 'access_level') {
-			//Permissions display is a little complicated and could use improvement.
-			var requiredCap = getFieldValue(menuItem, 'access_level', '');
-			var extraCap = getFieldValue(menuItem, 'extra_capability', '');
-
-			displayValue = (menuItem.template_id === '') ? '< Custom >' : requiredCap;
-			if (extraCap !== '') {
-				if (menuItem.template_id === '') {
-					displayValue = extraCap;
-				} else {
-					displayValue = displayValue + '+' + extraCap;
-				}
-			}
 		}
 
         setInputValue(input, displayValue);
@@ -1202,6 +1245,8 @@ $(document).ready(function(){
 	if (wsEditorData.wsMenuEditorPro) {
 		knownMenuFields['open_in'].visible = true;
 		knownMenuFields['access_level'].visible = true;
+		knownMenuFields['page_heading'].visible = true;
+		knownMenuFields['colors'].visible = true;
 		knownMenuFields['extra_capability'].visible = false; //Superseded by the "access_level" field.
 		$('.ws_hide_if_pro').hide();
 	}
@@ -1264,10 +1309,8 @@ $(document).ready(function(){
         //Find the field div (it holds the field name)
         var field = $(this).parents('.ws_edit_field');
 	    var fieldName = field.data('field_name');
-    	//Find the related input field
-		var input = field.find('.ws_field_value');
 
-		if ( (input.length > 0) && (field.length > 0) && fieldName ) {
+		if ( (field.length > 0) && fieldName ) {
 			//Extract the default value from the menu item.
             var containerNode = field.closest('.ws_container');
 			var menuItem = containerNode.data('menu_item');
@@ -1722,7 +1765,7 @@ $(document).ready(function(){
 
 			//Remove the existing icon class, if any.
 			var cssClass = getFieldValue(item, 'css_class', '');
-			cssClass = jsTrim( cssClass.replace(/\bmenu-icon-[^\s]+\b/, '') );
+			cssClass = jsTrim( cssClass.replace(/\b(ame-)?menu-icon-[^\s]+\b/, '') );
 
 			if (selectedIcon.data('icon-class')) {
 				//Add the new class.
@@ -1761,8 +1804,13 @@ $(document).ready(function(){
 
 		//Highlight the currently selected icon.
 		iconSelector.find('.ws_selected_icon').removeClass('ws_selected_icon');
-		var matches = cssClass.match(/\bmenu-icon-([^\s]+)\b/);
-		if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' ) {
+
+		var expandSelector = false;
+		var classMatches = cssClass.match(/\b(ame-)?menu-icon-([^\s]+)\b/);
+		//Dashicons are set via the icon URL field, but they are actually CSS-based.
+		var dashiconMatches = iconUrl && iconUrl.match('^\s*(dashicons-[a-z0-9\-]+)\s*$');
+
+		if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' && !dashiconMatches ) {
 			var currentIcon = iconSelector.find('.ws_icon_option img[src="' + iconUrl + '"]').first().closest('.ws_icon_option');
 			if ( currentIcon.length > 0 ) {
 				currentIcon.addClass('ws_selected_icon').show();
@@ -1771,15 +1819,24 @@ $(document).ready(function(){
 				customImageOption.find('img').prop('src', iconUrl);
 				customImageOption.addClass('ws_selected_icon').show().data('icon-url', iconUrl);
 			}
-		} else if ( matches ) {
-			//Highlight the icon that corresponds to the current CSS class.
-			iconSelector.find('.icon-' + matches[1]).closest('.ws_icon_option').addClass('ws_selected_icon');
+		} else if ( classMatches || dashiconMatches ) {
+			//Highlight the icon that corresponds to the current CSS class or Dashicon name.
+			var iconClass = dashiconMatches ? dashiconMatches[1] : ((classMatches[1] ? classMatches[1] : '') + 'icon-' + classMatches[2]);
+			var selectedIcon = iconSelector.find('.' + iconClass).closest('.ws_icon_option').addClass('ws_selected_icon');
+			//If the icon is one of those hidden by default, automatically expand the selector so it becomes visible.
+			if (selectedIcon.hasClass('ws_icon_extra')) {
+				expandSelector = true;
+			}
 		}
+
+		expandSelector = expandSelector || (!!wsEditorData.showExtraIcons); //Second argument to toggleClass() must be a boolean, not just truthy/falsy.
+		iconSelector.toggleClass('ws_with_more_icons', expandSelector);
+		$('#ws_show_more_icons').val(expandSelector ? 'Less \u25B2' : 'More \u25BC');
 
 		iconSelector.show();
 		iconSelector.position({ //Requires jQuery UI.
-			my: 'right top',
-			at: 'right bottom',
+			my: 'left top',
+			at: 'left bottom',
 			of: button
 		});
 	});
@@ -1832,7 +1889,7 @@ $(document).ready(function(){
 
                 //Remove the existing icon class, if any.
                 var cssClass = getFieldValue(item, 'css_class', '');
-	            item.css_class = jsTrim( cssClass.replace(/\bmenu-icon-[^\s]+\b/, '') );
+	            item.css_class = jsTrim( cssClass.replace(/\b(ame-)?menu-icon-[^\s]+\b/, '') );
 
 	            //Set the new icon URL.
 	            item.icon_url = attachment.attributes.url;
@@ -1852,6 +1909,16 @@ $(document).ready(function(){
 		iconSelector.hide();
 	});
 
+	//Show/hide additional icons.
+	$('#ws_show_more_icons').click(function() {
+		iconSelector.toggleClass('ws_with_more_icons');
+		wsEditorData.showExtraIcons = iconSelector.hasClass('ws_with_more_icons');
+		$(this).val(wsEditorData.showExtraIcons ? 'Less \u25B2' : 'More \u25BC');
+
+		//Remember the user's choice.
+		$.cookie('ame-show-extra-icons', wsEditorData.showExtraIcons ? '1' : '0', {expires: 90});
+	});
+
 	//Hide the icon selector if the user clicks outside of it.
 	//Exception: Clicks on "Select icon" buttons are handled above.
 	$(document).on('mouseup', function(event) {
@@ -1869,6 +1936,129 @@ $(document).ready(function(){
 		}
 	});
 
+
+	/*************************************************************************
+	                             Color picker
+	 *************************************************************************/
+
+	var menuColorDialog = $('#ws-ame-menu-color-settings');
+	if (menuColorDialog.length > 0) {
+		menuColorDialog.dialog({
+			autoOpen: false,
+			closeText: ' ',
+			draggable: false,
+			modal: true,
+			minHeight: 400,
+			minWidth: 520
+		});
+	}
+
+	var colorDialogState = {
+		menuItem: null
+	};
+
+	var menuColorVariables = [
+		'base-color',
+		'text-color',
+		'highlight-color',
+		'icon-color',
+
+		'menu-highlight-text',
+		'menu-highlight-icon',
+		'menu-highlight-background',
+
+		'menu-current-text',
+		'menu-current-icon',
+		'menu-current-background',
+
+		'menu-submenu-text',
+		'menu-submenu-background',
+		'menu-submenu-focus-text',
+		'menu-submenu-current-text',
+
+		'menu-bubble-text',
+		'menu-bubble-background',
+		'menu-bubble-current-text',
+		'menu-bubble-current-background'
+	];
+
+	//Show only the primary color settings by default.
+	var showAdvancedColors = false;
+	$('#ws-ame-show-advanced-colors').click(function() {
+		showAdvancedColors = !showAdvancedColors;
+		$('#ws-ame-menu-color-settings').find('.ame-advanced-menu-color').toggle(showAdvancedColors);
+		$(this).text(showAdvancedColors ? 'Hide advanced options' : 'Show advanced options');
+	});
+
+	//"Edit.." color schemes.
+	var colorPickersInitialized = false;
+	menuEditorNode.on('click', '.ws_open_color_editor, .ws_color_scheme_display', function() {
+		//Initializing the color pickers takes a while, so we only do it when needed instead of on document ready.
+		if ( !colorPickersInitialized ) {
+			menuColorDialog.find('.ame-color-picker').wpColorPicker();
+			colorPickersInitialized = true;
+		}
+
+		var containerNode = $(this).parents('.ws_container').first();
+		var menuItem = containerNode.data('menu_item');
+
+		colorDialogState.containerNode = containerNode;
+		colorDialogState.menuItem = menuItem;
+
+		var colors = getFieldValue(menuItem, 'colors', {});
+		var customColorCount = 0;
+		for (var i = 0; i < menuColorVariables.length; i++) {
+			var name = menuColorVariables[i];
+			var value = colors.hasOwnProperty(name) ? colors[name] : false;
+
+			if ( value ) {
+				$('#ame-color-' + name).wpColorPicker('color', value);
+				customColorCount++;
+			} else {
+				$('#ame-color-' + name).closest('.wp-picker-container').find('.wp-picker-clear').click();
+			}
+		}
+
+		if ( customColorCount > 0 ) {
+			menuItem.colors = colors;
+		} else {
+			menuItem.colors = null;
+		}
+
+		//Add menu title to the dialog caption.
+		var title = getFieldValue(menuItem, 'menu_title', null);
+		menuColorDialog.dialog(
+			'option',
+			'title',
+			title ? ('Colors: ' + title.substring(0, 30)) : 'Colors'
+		);
+		menuColorDialog.dialog('open');
+	});
+
+	//The "Save Changes" button in the color dialog.
+	$('#ws-ame-save-menu-colors').click(function() {
+		menuColorDialog.dialog('close');
+		if ( !colorDialogState.menuItem ) {
+			return;
+		}
+		var menuItem = colorDialogState.menuItem;
+		var colors = {}, colorCount = 0;
+
+		for (var i = 0; i < menuColorVariables.length; i++) {
+			var name = menuColorVariables[i];
+			var value = $('#ame-color-' + name).val();
+			if (value) {
+				colors[name] = value;
+				colorCount++;
+			}
+		}
+
+		menuItem.colors = colorCount > 0 ? colors : null;
+		updateItemEditor(colorDialogState.containerNode);
+
+		colorDialogState.containerNode = null;
+		colorDialogState.menuItem = null;
+	});
 
     /*************************************************************************
 	                           Menu toolbar buttons
@@ -2267,6 +2457,8 @@ $(document).ready(function(){
             }
         }
 
+		console.log(tree);
+		//return;
 		var data = encodeMenuAsJSON(tree);
 		$('#ws_data').val(data);
 		$('#ws_data_length').val(data.length);
@@ -2542,24 +2734,27 @@ $(document).ready(function(){
 
 jQuery(function($){
 	var screenOptions = $('#ws-ame-screen-meta-contents');
-	var checkbox = screenOptions.find('#ws-hide-advanced-settings');
+	var hideSettingsCheckbox = screenOptions.find('#ws-hide-advanced-settings');
+	var extraIconsCheckbox = screenOptions.find('#ws-show-extra-icons');
 
-	if ( wsEditorData.hideAdvancedSettings ){
-		checkbox.attr('checked', 'checked');
-	} else {
-		checkbox.removeAttr('checked');
-	}
+	hideSettingsCheckbox.prop('checked', wsEditorData.hideAdvancedSettings);
+	extraIconsCheckbox.prop('checked', wsEditorData.showExtraIcons);
 
 	//Update editor state when settings change
-	checkbox.click(function(){
-		wsEditorData.hideAdvancedSettings = $(this).attr('checked'); //Using '$(this)' instead of 'checkbox' due to jQuery bugs
-		var menuEditorNode = $('#ws_menu_editor');
-		if ( wsEditorData.hideAdvancedSettings ){
-			menuEditorNode.find('div.ws_advanced').hide();
-			menuEditorNode.find('a.ws_toggle_advanced_fields').text(wsEditorData.captionShowAdvanced).show();
-		} else {
-			menuEditorNode.find('div.ws_advanced').show();
-			menuEditorNode.find('a.ws_toggle_advanced_fields').text(wsEditorData.captionHideAdvanced).hide();
+	$('#ws-hide-advanced-settings, #ws-show-extra-icons').click(function(){
+		wsEditorData.hideAdvancedSettings = hideSettingsCheckbox.prop('checked');
+		wsEditorData.showExtraIcons = extraIconsCheckbox.prop('checked');
+
+		//Show/hide advanced settings dynamically as the user changes the setting.
+		if ($(this).is(hideSettingsCheckbox)) {
+			var menuEditorNode = $('#ws_menu_editor');
+			if ( wsEditorData.hideAdvancedSettings ){
+				menuEditorNode.find('div.ws_advanced').hide();
+				menuEditorNode.find('a.ws_toggle_advanced_fields').text(wsEditorData.captionShowAdvanced).show();
+			} else {
+				menuEditorNode.find('div.ws_advanced').show();
+				menuEditorNode.find('a.ws_toggle_advanced_fields').text(wsEditorData.captionHideAdvanced).hide();
+			}
 		}
 
 		$.post(
@@ -2567,9 +2762,13 @@ jQuery(function($){
 			{
 				'action' : 'ws_ame_save_screen_options',
 				'hide_advanced_settings' : wsEditorData.hideAdvancedSettings ? 1 : 0,
+				'show_extra_icons' : wsEditorData.showExtraIcons ? 1 : 0,
 				'_ajax_nonce' : wsEditorData.hideAdvancedSettingsNonce
 			}
 		);
+
+		//We also have a cookie for the current user.
+		$.cookie('ame-show-extra-icons', wsEditorData.showExtraIcons ? '1' : '0', {expires: 90});
 	});
 
 	//Move our options into the screen meta panel

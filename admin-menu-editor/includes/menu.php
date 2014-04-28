@@ -1,7 +1,7 @@
 <?php
 abstract class ameMenu {
 	const format_name = 'Admin Menu Editor menu';
-	const format_version = '5.1';
+	const format_version = '5.41';
 
 	/**
 	 * Load an admin menu from a JSON string.
@@ -10,7 +10,7 @@ abstract class ameMenu {
 	 *
 	 * @param string $json A JSON-encoded menu structure.
 	 * @param bool $assume_correct_format Skip the format header check and assume everything is fine. Defaults to false.
-	 * @param bool $always_normalize Always normalize the menu structure, even if format.is_normalized is true.
+	 * @param bool $always_normalize Always normalize the menu structure, even if format[is_normalized] is true.
 	 * @throws InvalidMenuException
 	 * @return array
 	 */
@@ -39,7 +39,11 @@ abstract class ameMenu {
 			if ( isset($arr['format']) && ($arr['format']['name'] == self::format_name) ) {
 				$compared = version_compare($arr['format']['version'], self::format_version);
 				if ( $compared > 0 ) {
-					throw new InvalidMenuException("Can't load a menu created by a newer version of the plugin.");
+					throw new InvalidMenuException(sprintf(
+						"Can't load a menu created by a newer version of the plugin. Menu format: '%s', newest supported format: '%s'.",
+						$arr['format']['version'],
+						self::format_version
+					));
 				}
 				//We can skip normalization if the version number matches exactly and the menu is already normalized.
 				if ( ($compared === 0) && isset($arr['format']['is_normalized']) ) {
@@ -64,6 +68,11 @@ abstract class ameMenu {
 				$menu['tree'][$file] = ameMenuItem::normalize($item);
 			}
 			$menu['format']['is_normalized'] = true;
+		}
+
+		if ( isset($arr['color_css']) && is_string($arr['color_css']) ) {
+			$menu['color_css'] = $arr['color_css'];
+			$menu['color_css_modified'] = isset($arr['color_css_modified']) ? intval($arr['color_css_modified']) : 0;
 		}
 
 		return $menu;
