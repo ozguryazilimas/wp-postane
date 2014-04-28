@@ -11,14 +11,9 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 		public function __construct($filename) {
 			global $wmsc_options;
 			
-			$wmsc_options = get_option('wmsimplecaptcha');
-			
 			$this->define_constant($filename);
-			
-			$defaults 		= $this->default_values();
-			
-			$wmsc_options 	= array_merge($defaults, $wmsc_options);
-			
+			//delete_option('wmsimplecaptcha');
+			$wmsc_options 	= $this->default_values();			
 			$_SESSION['wmsc_options'] = $wmsc_options;
 			
 			if (is_admin()) {	
@@ -276,9 +271,6 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 			}
 		}// End Function print_array()
 		
-		// Türkçeleştirme yapıldı. @Kıvılcım Eray
-
-
 		function default_values(){
 				$default = array();	
 				$default["captcha_enable_registration"] 	= "0";
@@ -307,7 +299,15 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
 				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
 				$default["captcha_custom_css"] 				= "";
-				return $default;
+				
+				$wmsc_options = get_option('wmsimplecaptcha');
+				
+				if(!$wmsc_options){
+					$default = $this->activate();
+					add_option('wmsimplecaptcha', $default);
+				}				
+				$wmsc_options 	= array_merge((array)$default, (array)$wmsc_options);				
+				return $wmsc_options;
 		}// End Function define_constant()
 		
 		function activate() {
@@ -338,7 +338,8 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
 				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
 				$default["captcha_custom_css"] 				= "";			
-				add_option( 'wmsimplecaptcha', $default );	
+				//add_option( 'wmsimplecaptcha', $default );
+				return $default;
 		
 		}
 		

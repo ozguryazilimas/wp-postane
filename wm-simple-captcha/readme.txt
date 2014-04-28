@@ -2,8 +2,8 @@
 Contributors: http://plugins.web-mumbai.com/
 Tags: simple captcha, registration captcha, custom captcha image, register captcha image, theme my captcha
 Requires at least: 3.6
-Tested up to: 3.8.1
-Stable tag: 1.1
+Tested up to: 3.9
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Captcha image for registration page, customize according to your theme.
 
 == Description ==
 
-"WM Simple Captcha" for registration page, customize captcha image according to your theme. Change image width, height, background color, set possible characters, add space between two characters, adjust font size, change form label, add your custom css, enable/disable refresh button, change refresh button. Many think more on customization.
+WM Simple Captcha for registration page, customize captcha image according to your theme. Change image width, height, background color, set possible characters, add space between two characters, adjust font size, change form label, add your custom css, enable/disable refresh button, change refresh button. Many think more on customization.
 
 = Features =
 
@@ -86,6 +86,12 @@ Yes, see the plugin settings page.
 
 
 == Upgrade Notice ==
+= 1.1.1 =
+* Bugfix : We fixed error on activation.
+* Tested : Wordpress 3.8.1
+* Tested : Wordpress 3.8.2
+* Tested : Wordpress 3.8.3
+* Tested : Wordpress 3.9
 = 1.1 =
 * Added : added 'uninstall.php' in 'wm-simple-captcha' root folder. When using 'uninstall.php' the plugin should always check for the WP_UNINSTALL_PLUGIN constant, before executing. The WP_UNINSTALL_PLUGIN constant is defined by WordPress at runtime during a plugin uninstall, it will not be present if 'uninstall.php' is requested directly.
 * Removed : register_uninstall_hook().
@@ -95,6 +101,13 @@ Yes, see the plugin settings page.
 * Added: First working release of the Plugin
 
 == Changelog ==
+= 1.1.1 =
+* Bugfix : We fixed error on activation.
+* Tested : Wordpress 3.8.1
+* Tested : Wordpress 3.8.2
+* Tested : Wordpress 3.8.3
+* Tested : Wordpress 3.9
+
 = 1.1 =
 * Bugfix : We fixed error on activation.
 
