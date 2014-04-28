@@ -82,7 +82,8 @@ class W3_UI_SupportAdminView extends W3_UI_PluginView {
         include W3TC_INC_DIR . '/options/support.php';
     }
 
-/**
+
+    /**
      * Support select action
      *
      * @return void

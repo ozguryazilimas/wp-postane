@@ -6,11 +6,13 @@ w3_require_once(W3TC_INC_DIR . '/functions/activation.php');
  * Class W3_Environment
  */
 class W3_GenericAdminEnvironment {
-    /*
+
+    /**
      * Fixes environment
-     * @param $config
+     * @param W3_Config $config
+     * @param bool $force_all_checks
      * @throws SelfTestExceptions
-     **/
+     */
     function fix_on_wpadmin_request($config, $force_all_checks) {
         $exs = new SelfTestExceptions();
         // create add-ins
@@ -78,12 +80,10 @@ class W3_GenericAdminEnvironment {
 
     /**
      * Checks if addins in wp-content is available and correct version.
-     * @throws SelfTestExceptions
+     * @param $config
+     * @param SelfTestExceptions $exs
      */
     private function create_required_files($config, $exs) {
-	    w3_require_once(W3TC_INC_FUNCTIONS_DIR . '/other.php');
-		w3_require_once(W3TC_INC_FUNCTIONS_DIR . '/ui.php');
-
         $src = W3TC_INSTALL_FILE_ADVANCED_CACHE;
         $dst = W3TC_ADDIN_FILE_ADVANCED_CACHE;
 
@@ -114,7 +114,7 @@ class W3_GenericAdminEnvironment {
 
     /**
      * Checks if addins in wp-content are available and deletes them.
-     * @throws SelfTestExceptions
+     * @param SelfTestExceptions $exs
      */
     private function delete_required_files($exs) {
         try {
@@ -127,7 +127,7 @@ class W3_GenericAdminEnvironment {
 
     /**
      * Checks if addins in wp-content is available and correct version.
-     * @throws SelfTestExceptions
+     * @param SelfTestExceptions $exs
      */
     private function create_required_folders($exs) {
         // folders that we create if not exists
@@ -180,6 +180,8 @@ class W3_GenericAdminEnvironment {
 
     /**
      * Check config file
+     * @param W3_Config $config
+     * @param SelfTestExceptions $exs
      */
     private function notify_no_config_present($config, $exs) {
         if ($config->own_config_exists() 
@@ -201,13 +203,15 @@ class W3_GenericAdminEnvironment {
 
     /**
      * Check config cache is in sync with config
+     * @param W3_Config $config
+     * @param SelfTestExceptions $exs
      **/
     private function notify_config_cache_not_writeable($config, $exs) {
         try {
             $config->validate_cache_actual();
         } catch (Exception $ex) {
             // we could just create cache folder, so try again
-            $config->load();
+            $config->load(true);
             try {
                 $config->validate_cache_actual();
             } catch (Exception $ex) {
