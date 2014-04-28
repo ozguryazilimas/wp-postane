@@ -1,0 +1,7 @@
+.wmcaptcha_box .wmcaptcha_fieldbox{ }
+.wmcaptcha_box .wmcaptcha_fieldbox_clearfix, .wmcaptcha_clearfix{ clear:both; display:block;}
+.wmcaptcha_box .wmcaptcha_fieldbox_img, .wmcaptcha_fieldbox_a{ /*float:left;*/}
+.wmcaptcha_box .wmcaptcha_fieldbox_a{margin-left:10px; margin-top:10px;}
+.wmcaptcha_box .wmcaptcha_fieldbox_img{ display:block;}
+.wmcaptcha_box .wmcaptcha_fieldbox_a.refresh_button, 
+.wmcaptcha_box .wmcaptcha_fieldbox_img.refresh_image{ cursor:pointer;}
