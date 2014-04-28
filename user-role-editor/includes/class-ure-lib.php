@@ -2340,7 +2340,7 @@ class Ure_Lib extends Garvs_WP_Lib {
     // end of user_primary_role_dropdown_list()
     
     
-    // returns true if $user has $capability assigned through the roles or directly
+    // returns true if user opened to edit has $capability assigned through the roles or directly
     // returns true if user has role with name equal $capability
     protected function user_can($capability) {
         
@@ -2361,12 +2361,16 @@ class Ure_Lib extends Garvs_WP_Lib {
     // end of user_can()           
     
     
-    // returns true if current user has $capability assigned through the roles or directly
-    // returns true if current user has role with name equal $capability
+    // returns true if user $user has $capability assigned through the roles or directly
+    // returns true if user $user has role with name equal $capability
     public function user_has_capability($user, $cap) {
 
         global $wp_roles;
 
+        if (empty($user) || !is_object($user)) {
+            return false;
+        }
+                
         if (is_multisite() && is_super_admin($user->ID)) {
             return true;
         }
@@ -2406,6 +2410,51 @@ class Ure_Lib extends Garvs_WP_Lib {
            
     }
     // end of show_other_default_roles()
+
+    
+    public function create_no_rights_role() {
+        global $wp_roles;
+        
+        $role_id = 'no_rights';
+        $role_name = 'No rights';
+        
+        if (!isset($wp_roles)) {
+            $wp_roles = new WP_Roles();
+        }
+        if (isset($wp_roles->roles[$role_name])) {
+            return;
+        }
+        add_role($role_id, $role_name, array());
+        
+    }
+    // end of create_no_rights_role()
+    
+    
+    public function get_users_without_role() {
+        
+        global $wpdb;
+        
+        $id = get_current_blog_id();
+        $blog_prefix = $wpdb->get_blog_prefix($id);
+        $query = "select ID from {$wpdb->users} users
+                    where not exists (select user_id from {$wpdb->usermeta}
+                                          where user_id=users.ID and meta_key='{$blog_prefix}capabilities') or
+                          exists (select user_id from wp_usermeta 
+                                    where user_id=users.ID and meta_key='{$blog_prefix}capabilities' and meta_value='a:0:{}')                ;";
+        $users = $wpdb->get_col($query);
+        
+        return $users;
+        
+    }
+    // end of get_users_without_role()
+    
+    
+    public function get_current_role() {
+        
+        return $this->current_role;
+        
+    }
+    // end of get_current_role()
     
 }
 // end of URE_Lib class

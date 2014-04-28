@@ -3,7 +3,7 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 3.5
-Tested up to: 3.8.1
+Tested up to: 3.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -28,6 +28,7 @@ Do you need more functionality with quality support in real time? Do you wish re
 Buy [Pro version](htpp://role-editor.com). 
 Pro version includes extra modules:
 <ul>
+<li>Block selected admin menu items for role.</li>
 <li>"Export/Import" module. You can export user roles to the local file and import them then to any WordPress site or other sites of the multi-site WordPress network.</li> 
 <li>Roles and Users permissions management via Network Admin  for multisite configuration. One click Synchronization to the whole network.</li>
 <li>Per posts/pages users access management to post/page editing functionality.</li>
@@ -60,14 +61,17 @@ To read full FAQ section visit [this page](http://www.shinephp.com/user-role-edi
 2. screenshot-2.png Add/Remove roles or capabilities
 3. screenshot-3.png User Capabilities link
 4. screenshot-4.png User Capabilities Editor
+5. screenshot-5.png Bulk change role for users without roles
 
 To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/user-role-editor-wordpress-plugin/) at [shinephp.com](shinephp.com).
 
 = Translations =
 * Catalan: [Efraim Bayarri](http://replicantsfactory.com/);
+* Hebrew: [atar4u](http://atar4u.com)
+* Korean: [Taek Yoon](http://www.ajinsys.com)
 * Spanish: [Dario Ferrer](http://darioferrer.com/);
 * Turkish: [Muhammed YILDIRIM](http://ben.muhammed.im);
-* Hebrew: [atar4u](http://atar4u.com)
+
 
 Information for translators: All translations are outdated a little and need update.
 
@@ -78,6 +82,26 @@ Share with me new ideas about plugin further development and link to your site w
 
 
 == Changelog ==
+= 4.12 =
+* 22.04.2014
+* Bug was fixed. It had prevented bulk move users without role (--No role for this site--) to the selected role in case such users were shown more than at one WordPress Users page.
+* Korean translation was added. Thanks to [Taek Yoon](http://www.ajinsys.com).
+* Pro version update notes:
+* Use new "Admin Menu" button to block selected admin menu items for role. You need to activate this module at the "Additional Modules". This feature is useful when some of submenu items are restricted by the same user capability,
+e.g. "Settings" submenu, but you wish allow to user work just with part of it. You may use "Admin Menu" dialog as the reference for your work with roles and capabilities as "Admin Menu" shows 
+what user capability restrict access to what admin menu item.
+* Posts/Pages edit restriction feature does not prohibit to add new post/page now. Now it should be managed via 'create_posts' or 'create_pages' user capabilities.
+* If you use Posts/Pages edit restriction by author IDs, there is no need to add user ID to allow him edit his own posts or page. Current user is added to the allowed authors list automatically.
+* New tab "Additional Modules" was added to the User Role Editor options page. As per name all options related to additional modules were moved there.
+
+= 4.11 =
+* 06.04.2014
+* Single-site: It is possible to bulk move users without role (--No role for this site--) to the selected role or automatically created role "No rights" without any capabilities. Get more details at http://role-editor.com/no-role-for-this-site/
+* Plugin uses for dialogs jQuery UI CSS included into WordPress package.
+* Pro version: It is possible to restrict editing posts/pages by its authors user ID (targeted user should have edit_others_posts or edit_others_pages capability).
+* Pro version, multi-site: Superadmin can setup individual lists of themes available for activation to selected sites administrators.
+* Pro version, Gravity Forms access restriction module was tested and compatible with Gravity Forms version 1.8.5
+
 = 4.10 =
 * 15.02.2014
 * Security enhancement: WordPress text translation functions were replaced with more secure esc_html__() and esc_html_e() variants.
