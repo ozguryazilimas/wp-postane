@@ -1,10 +1,10 @@
 === Basic Comment Quicktags ===
 Contributors: Ipstenu, MarcDK
 Tags: comments, wysiwyg, quicktags, bbpress
-Requires at least: 3.7
-Tested up to: 3.8
-Stable tag: 3.2.1
-Donate Link: https://www.wepay.com/donations/halfelf-wp
+Requires at least: 3.8
+Tested up to: 3.9
+Stable tag: 3.2.3
+Donate Link: https://store.halfelf.org/donate/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ You can turn these on and off for bbPress or comments on the discussions page (s
 
 * [Plugin Site](http://halfelf.org/plugins/basic-comment-quicktags/)
 * [Basic Support](http://wordpress.org/support/plugin/basic-comment-quicktags)
-* [Donate](https://www.wepay.com/donations/halfelf-wp)
+* [Donate](https://store.halfelf.org/donate/)
 
 == Frequently Asked Questions ==
 
@@ -32,7 +32,7 @@ I forked it so I could extend it to bbPress, put in more checks and ifs/thens, a
 
 = Why only those tags? =
 
-After careful consideration, and a long review of my users, those are the only ones they ever use! If you have a reasonable argument why I should add in others, I'll listen.
+After careful consideration, and a long review of my users, those are the only ones they ever use! If you have a reasonable argument why I should add in others, I'll listen. Thus far, the only suggestion interesting was 'code' and I determined people won't use that unless they know about it, and thus are capable to entering it manually.
 
 = Will you add in options to pick and chose our tags? =
 
@@ -56,7 +56,7 @@ If you're using the bbPress Fancy Editor, it won't work. Really, the fancy edito
 
 = Will you expand this to BuddyPress? =
 
-Unlikely. BuddyPress is moving to it's own thing. If this works on BP, huzzah. But I didn't write it for it, nor have I tested, so don't expect it to work if you have a BP theme running.
+Not at this time.
 
 = My users say they don't see anything on IE8 =
 
@@ -65,6 +65,15 @@ IE8 cheerfully ignores the rules of jQuery.
 Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9+, so I strongly suggest for consistant Internet behavior, upgrade IE.
 
 == Changelog ==
+
+= 3.2.3 =
+* 2014 Apr 11, by Ipstenu
+* Omitted a line in the last updated like a doofus (<a href="https://wordpress.org/support/topic/php-error-77">props KTS915</a>)
+
+= 3.2.2 =
+* 2014 Apr 7, by Ipstenu
+* Switch order of comments open check to correct non-reproducable error (it doesn't break anything on my end)
+* Fixed actual default to on for comments *sigh*
 
 = 3.2.1 =
 * 2013 Dec 9, by Ipstenu
@@ -134,9 +143,6 @@ Sometimes it works, sometimes it doesn't. I got it to work, and then came back a
 * Added failure if not WordPress 3.3 or greater
 
 == Upgrade Notice ==
-
-= 1.1 =
-Please visit your <em>Discussion Settings</em> page and check the box to turn on the plugin.
 
 == Installation ==
 

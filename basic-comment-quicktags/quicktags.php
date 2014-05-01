@@ -3,7 +3,7 @@
   Plugin Name: Basic Comment Quicktags
   Plugin URI: http://halfelf.org/plugins/basic-comment-quicktags/
   Description: Displays a bold, italic, add link and quote button on top of the comment form
-  Version: 3.2.1
+  Version: 3.2.3
   Author: Mika "Ipstenu" Epstein
   Author URI: http://ipstenu.org
   Text Domain: basic-comment-quicktags
@@ -43,13 +43,15 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 	        
 	    	// Setting plugin defaults here:
 			$this->bcq_defaults = array(
-		        'comments'      => '0',
+		        'comments'      => '1',
 		        'bbpress'       => '0',
-		        'buddypress'    => '0',
 		    );
 		
 		    //global $bcq_bbp_fancy;
 		    $this->bcq_bbp_fancy = get_option('_bbp_use_wp_editor');
+		    
+		    add_option( 'ippy_bcq_options', $this->bcq_defaults );
+		    
 	    }
 	
 	    public function init() {
@@ -75,25 +77,23 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 		
 		function add_styles_frontend() {
     		$options = wp_parse_args(get_option( 'ippy_bcq_options'), $this->bcq_defaults );
-    		
     		if ( function_exists('is_bbpress') ) {
                 if ( is_bbpress()  && ( $options['bbpress'] != '0') && !is_null($options['bbpress']) && ($this->bcq_bbp_fancy == false) ) {
                     $this->add_styles();
                 }
               }
-            if ( comments_open() && is_singular() && ( $options['comments'] != '0') && !is_null($options['comments']) ) {
+            if ( is_singular() && comments_open() && ( $options['comments'] != '0') && !is_null($options['comments']) ) {
                 $this->add_styles();
             }
         }
 		function add_scripts_frontend() {
     		$options = wp_parse_args(get_option( 'ippy_bcq_options'), $this->bcq_defaults );
-    		
     		if ( function_exists('is_bbpress') ) {
                 if ( is_bbpress()  && ( $options['bbpress'] != '0') && !is_null($options['bbpress']) && ($this->bcq_bbp_fancy == false) ) {
                     $this->add_scripts();
                 }
               }
-            if ( comments_open() && is_singular() && ( $options['comments'] != '0') && !is_null($options['comments']) ) {
+            if ( is_singular() && comments_open() && ( $options['comments'] != '0') && !is_null($options['comments']) ) {
                 $this->add_scripts();
             }
         }
@@ -128,11 +128,11 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 		
 		// Validate user input
     	function validate_options( $input ) {
-    	    $options = wp_parse_args(get_option( 'ippy_bcq_options'), $this->bcq_defaults );
+    	    $options = get_option( 'ippy_bcq_options');
     		$valid = array();
 
     	    foreach ($options as $key=>$value) {
-        	    if (!isset($input[$key])) $input[$key]=$this->bcq_defaults[$key];
+        	    if (!isset($input[$key])) $input[$key]='0';
             }
     	    
     	    foreach ($options as $key=>$value) {
@@ -151,7 +151,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 		// donate link on manage plugin page
 		function donate_link($links, $file) {
     		if ($file == plugin_basename(__FILE__)) {
-        		$donate_link = '<a href="https://www.wepay.com/donations/halfelf-wp">' . __( 'Donate', 'basic-comment-quicktags' ) . '</a>';
+        		$donate_link = '<a href="https://store.halfelf.org/donate/">' . __( 'Donate', 'basic-comment-quicktags' ) . '</a>';
         		$links[] = $donate_link;
             }
             return $links;
