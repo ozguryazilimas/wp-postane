@@ -192,7 +192,7 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 		$sql = "CREATE TABLE " . $relevanssi_log_table . " (id bigint(9) NOT NULL AUTO_INCREMENT, 
 		query varchar(200) NOT NULL,
 		hits mediumint(9) NOT NULL DEFAULT '0',
-		time timestamp NOT NULL,
+		time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 		user_id bigint(20) NOT NULL DEFAULT '0',
 		ip varchar(40) NOT NULL DEFAULT '',
 	    UNIQUE KEY id (id)) $charset_collate;";

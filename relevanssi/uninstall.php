@@ -25,6 +25,7 @@ function relevanssi_uninstall() {
 	delete_option('relevanssi_excerpt_allowable_tags');
 	delete_option('relevanssi_log_queries');
 	delete_option('relevanssi_excat');
+	delete_option('relevanssi_extag');
 	delete_option('relevanssi_cat');
 	delete_option('relevanssi_index_fields');
 	delete_option('relevanssi_exclude_posts'); 	//added by OdditY

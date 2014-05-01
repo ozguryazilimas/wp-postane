@@ -13,18 +13,6 @@ function relevanssi_wpml_filter($data) {
 			}
 			global $sitepress;
 
-			if (function_exists('icl_object_id') && $sitepress->is_translated_post_type($hit->post_type)) {
-			    if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE))
-			        $filtered_hits[] = $hit;
-			}
-			elseif (function_exists('icl_object_id') && function_exists('pll_is_translated_post_type')) {
-				if (pll_is_translated_post_type($hit->post_type)) {
-				    if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE))
-				        $filtered_hits[] = $hit;
-				}
-			}
-
-
 			if (function_exists('icl_object_id') && !function_exists('pll_is_translated_post_type')) {
 				if ($sitepress->is_translated_post_type($hit->post_type)) {
 					if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE)) $filtered_hits[] = $hit;
@@ -150,11 +138,8 @@ function relevanssi_update_log($query, $hits) {
 	    }
 	}	
 	
-	if (get_option('relevanssi_log_queries_with_ip') == "on") {
-		$q = $wpdb->prepare("INSERT INTO " . $relevanssi_variables['log_table'] . " (query, hits, user_id, ip) VALUES (%s, %d, %d, %s)", $query, intval($hits), $user->ID, $_SERVER['REMOTE_ADDR']);
-	} else {
-		$q = $wpdb->prepare("INSERT INTO " . $relevanssi_variables['log_table'] . " (query, hits, user_id, ip) VALUES (%s, %d, %d, '')", $query, intval($hits), $user->ID, $_SERVER['REMOTE_ADDR']);
-	}		
+	get_option('relevanssi_log_queries_with_ip') == "on" ? $ip = $_SERVER['REMOTE_ADDR'] : $ip = '';
+	$q = $wpdb->prepare("INSERT INTO " . $relevanssi_variables['log_table'] . " (query, hits, user_id, ip, time) VALUES (%s, %d, %d, %s, NOW())", $query, intval($hits), $user->ID, $ip);
 	$wpdb->query($q);
 }
 
@@ -187,6 +172,7 @@ function relevanssi_default_post_ok($post_ok, $doc) {
 			// Basic WordPress version
 			$type = relevanssi_get_post_type($doc);
 			$cap = 'read_private_' . $type . 's';
+			$cap = apply_filters('relevanssi_private_cap', $cap);
 			if (current_user_can($cap)) {
 				$post_ok = true;
 			}
@@ -311,11 +297,12 @@ function relevanssi_recognize_phrases($q) {
 	if (count($phrases) > 0) {
 		$phrase_matches = array();
 		foreach ($phrases as $phrase) {
-			$phrase = esc_sql($phrase);
+			$phrase = like_escape(esc_sql($phrase));
 			"on" == get_option("relevanssi_index_excerpt") ? $excerpt = " OR post_excerpt LIKE '%$phrase%'" : $excerpt = "";
 			$query = "SELECT ID FROM $wpdb->posts 
 				WHERE (post_content LIKE '%$phrase%' OR post_title LIKE '%$phrase%' $excerpt)
 				AND post_status IN ('publish', 'draft', 'private', 'pending', 'future', 'inherit')";
+			// Clean: $phrase is escaped
 			
 			$docs = $wpdb->get_results($query);
 
@@ -331,6 +318,7 @@ function relevanssi_recognize_phrases($q) {
 			$query = "SELECT ID FROM $wpdb->posts as p, $wpdb->term_relationships as r, $wpdb->term_taxonomy as s, $wpdb->terms as t
 				WHERE r.term_taxonomy_id = s.term_taxonomy_id AND s.term_id = t.term_id AND p.ID = r.object_id
 				AND t.name LIKE '%$phrase%' AND p.post_status IN ('publish', 'draft', 'private', 'pending', 'future', 'inherit')";
+			// Clean: $phrase is escaped
 
 			$docs = $wpdb->get_results($query);
 			if (is_array($docs)) {
@@ -347,6 +335,7 @@ function relevanssi_recognize_phrases($q) {
               WHERE p.ID = m.post_id
               AND m.meta_value LIKE '%$phrase%'
               AND p.post_status IN ('publish', 'draft', 'private', 'pending', 'future', 'inherit')";
+			// Clean: $phrase is escaped
 
 			$docs = $wpdb->get_results($query);
 			if (is_array($docs)) {
@@ -496,7 +485,11 @@ function relevanssi_prevent_default_request( $request, $query ) {
 		}		
 		$admin_search_ok = true;
 		$admin_search_ok = apply_filters('relevanssi_admin_search_ok', $admin_search_ok, $query );
-		if (!is_admin())
+		
+		$prevent = true;
+		$prevent = apply_filters('relevanssi_prevent_default_request', $prevent, $query );
+		
+		if (!is_admin() && $prevent )
 			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";		
 		else if ('on' == get_option('relevanssi_admin_search') && $admin_search_ok )
 			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";

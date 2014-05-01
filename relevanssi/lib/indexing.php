@@ -74,9 +74,12 @@ function relevanssi_build_index($extend = false) {
 	else {
 		// extending, so no truncate and skip the posts already in the index
 		$limit = get_option('relevanssi_index_limit', 200);
-		if ($limit > 0) {
+		if (is_numeric($limit) && $limit > 0) {
 			$size = $limit;
 			$limit = " LIMIT $limit";
+		}
+		else {
+			$limit = "";
 		}
         $q = "SELECT post.ID
 		FROM $wpdb->posts post
@@ -676,7 +679,7 @@ function relevanssi_get_comments($postID) {
 		$comments = $wpdb->get_results($sql);
 		if (sizeof($comments) == 0) break;
 		foreach($comments as $comment) {
-			$comment_string .= apply_filters('relevanssi_comment_content_to_index', $comment->comment_author . ' ' . $comment->comment_content . ' ', $comment_ID);
+			$comment_string .= apply_filters('relevanssi_comment_content_to_index', $comment->comment_author . ' ' . $comment->comment_content . ' ', $comment->comment_ID);
 		}
 		$from += $to;
 	}

@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
-Tested up to: 3.8.1
-Stable tag: 3.3.4
+Tested up to: 3.9-beta
+Stable tag: 3.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,8 +16,9 @@ Relevanssi replaces the standard WordPress search with a better search engine, w
 and configurable options. You'll get better results, better presentation of results - your users
 will thank you.
 
-This is the free version of Relevanssi. There's also Relevanssi Premium, which has added features.
-For more information about Premium, see [Relevanssi.com](http://www.relevanssi.com/).
+This is the free version of Relevanssi. There's also Relevanssi Premium, which has added features,
+including Multisite support. This free version does not work properly on Multisite. For more
+information about Premium, see [Relevanssi.com](http://www.relevanssi.com/).
 
 = Key features =
 * Search results sorted in the order of relevance, not by date.
@@ -92,6 +93,10 @@ without a deactivation, for some reason.
 None necessary! Relevanssi uses the standard search form and doesn't usually need any changes in
 the search results template.
 
+If the search does not bring any results, your theme probably has a query_posts() call in the
+search results template. That throws Relevanssi off. For more information, see [The most
+important Relevanssi debugging trick](http://www.relevanssi.com/knowledge-base/query_posts/).
+
 = How to index =
 Check the options to make sure they're to your liking, then click "Save indexing options and
 build the index". If everything's fine, you'll see the Relevanssi options screen again with a 
@@ -140,9 +145,6 @@ Relevanssi doesn't work with plugins that rely on standard WP search. Those plug
 access the MySQL queries, for example. That won't do with Relevanssi. [Search Light](http://wordpress.org/extend/plugins/search-light/),
 for example, won't work with Relevanssi.
 
-[ThreeWP Ajax Search](http://wordpress.org/extend/plugins/threewp-ajax-search/) is
-an AJAX instant search plugin that works with Relevanssi.
-
 Some plugins cause problems when indexing documents. These are generally plugins that use shortcodes
 to do something somewhat complicated. One such plugin is [MapPress Easy Google Maps](http://wordpress.org/extend/plugins/mappress-google-maps-for-wordpress/).
 When indexing, you'll get a white screen. To fix the problem, disable either the offending plugin 
@@ -158,6 +160,10 @@ You can find solutions and answers at the [Relevanssi Knowledge Base](http://www
 If you the results don't change after installing and activating Relevanssi, the most likely 
 reason is that you have a call to `query_posts()` on your search results template. This confuses
 Relevanssi. Try removing the query_posts call and see what happens.
+
+= Searching for words with ampersands or hyphens doesn't work =
+Please read [Words with punctuation can't be found](http://www.relevanssi.com/knowledge-base/words-ampersands-cant-found/).
+This is a Relevanssi feature, but you can circumvent it with a simple filter function.
 
 = Where are the user search logs? =
 See the top of the admin menu. There's 'User searches'. There. If the logs are empty, please note
@@ -371,10 +377,6 @@ removing those words helps to make the index smaller and searching faster.
 == Known issues and To-do's ==
 * Known issue: In general, multiple Loops on the search page may cause surprising results. Please make sure the actual search results are the first loop.
 * Known issue: Relevanssi doesn't necessarily play nice with plugins that modify the excerpt. If you're having problems, try using relevanssi_the_excerpt() instead of the_excerpt().
-* Known issue: Custom post types and private posts is problematic - I'm using default 'read_private_*s' capability, which might not always work.
-* Known issue: There are reported problems with custom posts combined with custom taxonomies, the taxonomy restriction doesn't necessarily work.
-* Known issue: Phrase matching is only done to post content; phrases don't match to category titles and other content.
-* Known issue: User searches page requires MySQL 5.
 
 == Thanks ==
 * Cristian Damm for tag indexing, comment indexing, post/page exclusion and general helpfulness.
@@ -383,6 +385,16 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.3.5 =
+* Fixed a bug where excluding posts would cause the search to fail.
+* Fixed a bug causing duplicate search results in WPML searches.
+* Increased plugin safety against hackers.
+* There was a bug in `relevanssi_comment_content_to_index` filter.
+* Some people had problems with the log entry timestamps. Fixed that.
+* New filter: `relevanssi_prevent_default_request` gives you more control over where Relevanssi prevents the default query from running.
+* New filter: `relevanssi_private_cap` lets you set the correct capability for finding private posts in custom post types.
+* The option to exclude categories and tags from search only worked for categories, not tags. Tags have been separated to a different option.
 
 = 3.3.4 =
 * Couple of bug fixes.
@@ -1016,6 +1028,9 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.3.5 =
+* Bug fixes and security updates.
 
 = 3.3.4 =
 * Bug fixes.

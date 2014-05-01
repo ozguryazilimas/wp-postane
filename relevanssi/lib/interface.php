@@ -276,6 +276,7 @@ function update_relevanssi_options() {
 	if (isset($_REQUEST['relevanssi_class'])) update_option('relevanssi_class', $_REQUEST['relevanssi_class']);
 	if (isset($_REQUEST['relevanssi_cat'])) update_option('relevanssi_cat', $_REQUEST['relevanssi_cat']);
 	if (isset($_REQUEST['relevanssi_excat'])) update_option('relevanssi_excat', $_REQUEST['relevanssi_excat']);
+	if (isset($_REQUEST['relevanssi_extag'])) update_option('relevanssi_extag', $_REQUEST['relevanssi_extag']);
 	if (isset($_REQUEST['relevanssi_index_fields'])) update_option('relevanssi_index_fields', $_REQUEST['relevanssi_index_fields']);
 	if (isset($_REQUEST['relevanssi_expst'])) update_option('relevanssi_exclude_posts', $_REQUEST['relevanssi_expst']); 			//added by OdditY
 	if (isset($_REQUEST['relevanssi_hilite_title'])) update_option('relevanssi_hilite_title', $_REQUEST['relevanssi_hilite_title']); 	//added by OdditY	
@@ -661,6 +662,8 @@ function relevanssi_options_form() {
 	$serialize_options['relevanssi_cat'] = $cat;
 	$excat = get_option('relevanssi_excat');
 	$serialize_options['relevanssi_excat'] = $excat;
+	$extag = get_option('relevanssi_extag');
+	$serialize_options['relevanssi_extag'] = $extag;
 	
 	$fuzzy = get_option('relevanssi_fuzzy');
 	$serialize_options['relevanssi_fuzzy'] = $fuzzy;
@@ -826,7 +829,6 @@ function relevanssi_options_form() {
     <a href="#excerpts"><?php _e("Custom excerpts", "relevanssi"); ?></a> |
     <a href="#highlighting"><?php _e("Highlighting search results", "relevanssi"); ?></a> |
     <a href="#indexing"><?php _e("Indexing options", "relevanssi"); ?></a> |
-    <a href="#caching"><?php _e("Caching", "relevanssi"); ?></a> |
     <a href="#synonyms"><?php _e("Synonyms", "relevanssi"); ?></a> |
     <a href="#stopwords"><?php _e("Stopwords", "relevanssi"); ?></a> |
 <?php
@@ -841,9 +843,9 @@ function relevanssi_options_form() {
 
 	<h3><?php _e('Quick tools', 'relevanssi') ?></h3>
 	<p>
-	<input type='submit' name='submit' value='<?php _e(esc_attr('Save options'), 'relevanssi'); ?>' style="background-color:#007f00; border-color:#5fbf00; border-style:solid; border-width:thick; padding: 5px; color: #fff;" />
-	<input type="submit" name="index" value="<?php _e(esc_attr('Build the index'), 'relevanssi') ?>" style="background-color:#007f00; border-color:#5fbf00; border-style:solid; border-width:thick; padding: 5px; color: #fff;" />
-	<input type="submit" name="index_extend" value="<?php _e(esc_attr('Continue indexing'), 'relevanssi') ?>"  style="background-color:#e87000; border-color:#ffbb00; border-style:solid; border-width:thick; padding: 5px; color: #fff;" />, <?php _e('add', 'relevanssi'); ?> <input type="text" size="4" name="relevanssi_index_limit" value="<?php echo $index_limit ?>" /> <?php _e('documents.', 'relevanssi'); ?></p>
+	<input type='submit' name='submit' value='<?php _e(esc_attr('Save options'), 'relevanssi'); ?>' class='button-primary' />
+	<input type="submit" name="index" value="<?php _e(esc_attr('Build the index'), 'relevanssi') ?>" class='button-primary' />
+	<input type="submit" name="index_extend" value="<?php _e(esc_attr('Continue indexing'), 'relevanssi') ?>" class='button-secondary' />, <?php _e('add', 'relevanssi'); ?> <input type="text" size="4" name="relevanssi_index_limit" value="<?php echo $index_limit ?>" /> <?php _e('documents.', 'relevanssi'); ?></p>
 
 <?php
 	if (empty($index_post_types)) {
@@ -1018,9 +1020,15 @@ function relevanssi_options_form() {
 
 	<br /><br />
 
-	<label for='relevanssi_excat'><?php _e('Exclude these categories and tags from search:', 'relevanssi'); ?>
+	<label for='relevanssi_excat'><?php _e('Exclude these categories from search:', 'relevanssi'); ?>
 	<input type='text' name='relevanssi_excat' id='relevanssi_excat' size='20' value='<?php echo esc_attr($excat); ?>' /></label><br />
-	<small><?php _e("Enter a comma-separated list of category and tag IDs that are excluded from search results. You can exclude categories with the 'cat' input field by using negative values.", 'relevanssi'); ?></small>
+	<small><?php _e("Enter a comma-separated list of category IDs that are excluded from search results.", 'relevanssi'); ?></small>
+
+	<br /><br />
+
+	<label for='relevanssi_extag'><?php _e('Exclude these tags from search:', 'relevanssi'); ?>
+	<input type='text' name='relevanssi_extag' id='relevanssi_extag' size='20' value='<?php echo esc_attr($extag); ?>' /></label><br />
+	<small><?php _e("Enter a comma-separated list of tag IDs that are excluded from search results.", 'relevanssi'); ?></small>
 
 	<br /><br />
 

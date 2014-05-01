@@ -3,7 +3,7 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.3.4
+Version: 3.3.5
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
@@ -45,7 +45,7 @@ $relevanssi_variables['comment_boost_default'] = 0.75;
 $relevanssi_variables['post_type_weight_defaults']['post_tag'] = 0.75;
 $relevanssi_variables['post_type_weight_defaults']['category'] = 0.75;
 $relevanssi_variables['post_type_index_defaults'] = array('post', 'page');
-$relevanssi_variables['database_version'] = 4;
+$relevanssi_variables['database_version'] = 5;
 $relevanssi_variables['file'] = __FILE__;
 $relevanssi_variables['plugin_dir'] = plugin_dir_path(__FILE__);
 
@@ -241,6 +241,7 @@ function _relevanssi_install() {
 	add_option('relevanssi_log_queries', 'off');
 	add_option('relevanssi_cat', '0');
 	add_option('relevanssi_excat', '0');
+	add_option('relevanssi_extag', '0');
 	add_option('relevanssi_index_fields', '');
 	add_option('relevanssi_exclude_posts', ''); 		//added by OdditY
 	add_option('relevanssi_hilite_title', ''); 			//added by OdditY	
@@ -363,6 +364,8 @@ better search experience for your users?</p>
 
 <p><strong>Go Premium!</strong> Buy Relevanssi Premium. See <a href="http://www.relevanssi.com/features/?utm_source=plugin&utm_medium=link&utm_campaign=features">feature
 comparison</a> and <a href="http://www.relevanssi.com/buy-premium/?utm_source=plugin&utm_medium=link&utm_campaign=license">license prices</a>.</p>
+
+<p><strong><a href="http://sites.fastspring.com/painavasana/product/relevanssipremium?source=p">Buy Premium here &raquo;</a></strong></p>
 			</div>
 		</div>
 	</div>
