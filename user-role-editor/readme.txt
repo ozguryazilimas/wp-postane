@@ -3,7 +3,7 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 3.5
-Tested up to: 3.9
+Tested up to: 3.9.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -69,6 +69,7 @@ To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/
 * Catalan: [Efraim Bayarri](http://replicantsfactory.com/);
 * Hebrew: [atar4u](http://atar4u.com)
 * Korean: [Taek Yoon](http://www.ajinsys.com)
+* Persian: Morteza
 * Spanish: [Dario Ferrer](http://darioferrer.com/);
 * Turkish: [Muhammed YILDIRIM](http://ben.muhammed.im);
 
@@ -82,6 +83,10 @@ Share with me new ideas about plugin further development and link to your site w
 
 
 == Changelog ==
+= 4.14 =
+* 16.05.2014
+* Persian translation was added. Thanks to Morteza.
+
 = 4.12 =
 * 22.04.2014
 * Bug was fixed. It had prevented bulk move users without role (--No role for this site--) to the selected role in case such users were shown more than at one WordPress Users page.
