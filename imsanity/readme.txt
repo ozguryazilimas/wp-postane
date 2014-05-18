@@ -120,11 +120,17 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
+= 2.2.6 =
+* fixed bug in network settings where width/height input fields are in the same place
+
+== Changelog ==
+
+= 2.2.6 =
+* fixed bug in network settings where width/height input fields are in the same place
+
 = 2.2.5 =
 * fixed bug with bulk upload deleting the "large" image size in certain situations
 * style settings page input boxes a little wider
-
-== Changelog ==
 
 = 2.2.4 =
 * load js properly to avoid warnings with certain security plugins

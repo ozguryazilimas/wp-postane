@@ -229,24 +229,24 @@ function imsanity_network_settings()
 	<tr valign="top">
 	<th scope="row"><?php _e("Images uploaded within a Page/Post",'imsanity');?></th>
 	<td>
-		Fit within <input name="imsanity_max_height" value="<?php echo $settings->imsanity_max_height ?>" style="width: 50px;" />
-		x <input name="imsanity_max_width" value="<?php echo $settings->imsanity_max_width ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		Fit within <input name="imsanity_max_width" value="<?php echo $settings->imsanity_max_width ?>" style="width: 50px;" />
+		x <input name="imsanity_max_height" value="<?php echo $settings->imsanity_max_height ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 	</td>
 	</tr>
 
 	<tr valign="top">
 	<th scope="row"><?php _e("Images uploaded directly to the Media Library",'imsanity'); ?></th>
 	<td>
-		Fit within <input name="imsanity_max_height_library" value="<?php echo $settings->imsanity_max_height_library ?>" style="width: 50px;" />
-		x <input name="imsanity_max_width_library" value="<?php echo $settings->imsanity_max_width_library ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		Fit within <input name="imsanity_max_width_library" value="<?php echo $settings->imsanity_max_width_library ?>" style="width: 50px;" />
+		x <input name="imsanity_max_height_library" value="<?php echo $settings->imsanity_max_height_library ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 	</td>
 	</tr>
 
 	<tr valign="top">
 	<th scope="row"><?php _e("Images uploaded elsewhere (Theme headers, backgrounds, logos, etc)",'imsanity'); ?></th>
 	<td>
-		Fit within <input name="imsanity_max_height_other" value="<?php echo $settings->imsanity_max_height_other ?>" style="width: 50px;" />
-		x <input name="imsanity_max_width_other" value="<?php echo $settings->imsanity_max_width_other ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
+		Fit within <input name="imsanity_max_width_other" value="<?php echo $settings->imsanity_max_width_other ?>" style="width: 50px;" />
+		x <input name="imsanity_max_height_other" value="<?php echo $settings->imsanity_max_height_other ?>" style="width: 50px;" /> pixels width/height <?php _e(" (or enter 0 to disable)",'imsanity'); ?>
 	</td>
 	</tr>
 
