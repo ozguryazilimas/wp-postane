@@ -39,12 +39,20 @@ function yazar_id_return_et($yolla){
 
 function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, $ara_kelime_gecen, $ara_kelime_sirali,  $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutma_gelen, $ara_yazar_isim){
 
+
+
 	global $ara_onyazi;
 	$ara_tutma_gelen != NULL ? $ara_tutma = $ara_tutma_gelen : $ara_tutma = 0 ;
 
 	// tarihlerin database aramasına uygun formda kalması gerek
-	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk1);
-	$ara_tarih_son = str_replace("-", "", $ara_tarih_son1);
+	$ara_tarih_ilk = $ara_tarih_ilk1;
+	$ara_tarih_son = $ara_tarih_son1;
+	
+	$ara_tarih_son = date('Y-m-d',strtotime($ara_tarih_son . "+1 days"));
+
+	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk);
+	$ara_tarih_son = str_replace("-", "", $ara_tarih_son);
+
 
 	// site üzerinde ‘ karakteri var, escape stringten kurtuluyor. mysql e de ' karakteri olarak kayıtlı.
 	// O sebepten bu dönüşümü yapıp escape string ile doğruluyorum.
@@ -144,8 +152,13 @@ function sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk1, $ara_tarih_son
 	global $ara_onyazi;
 
 	// tarihlerin database aramasına uygun formda kalması gerek
-	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk1);
-	$ara_tarih_son = str_replace("-", "", $ara_tarih_son1);
+	$ara_tarih_ilk = $ara_tarih_ilk1;
+	$ara_tarih_son = $ara_tarih_son1;
+
+	$ara_tarih_son = date('Y-m-d',strtotime($ara_tarih_son . "+1 days"));
+
+	$ara_tarih_ilk = str_replace("-", "", $ara_tarih_ilk);
+	$ara_tarih_son = str_replace("-", "", $ara_tarih_son);
 
 	// site üzerinde ‘ karakteri var, escape stringten kurtuluyor. mysql e de ' karakteri olarak kayıtlı.
 	// O sebepten bu dönüşümü yapıp escape string ile doğruluyorum.
