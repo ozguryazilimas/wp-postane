@@ -1,5 +1,4 @@
- <?php
-get_header();
+<?php get_header();
 	global $ara_onyazi;
 	// Sayfa, fonksiyonlarını plugins/oy-detailed-search/oy-detailed-search.php  sayfasından çekiyor.  
 	// Plugini aktif tutmak farz.
@@ -71,5 +70,4 @@ get_header();
 
 get_sidebar();
 get_footer();
-
 ?>

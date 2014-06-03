@@ -277,7 +277,6 @@ function sonucu_ekrana_bas_yorum($sonuc){
 	}
 }
 
-
 // Bu hook, tarayıcımızdan 22dakika.org/ayrintili-ara dedigimizde, fonksiyonun calismasını saglıyor.
     add_action('template_redirect', 'oy_custom_page_template_redirect');
     function oy_custom_page_template_redirect() {
@@ -298,4 +297,3 @@ function sonucu_ekrana_bas_yorum($sonuc){
     	wp_enqueue_script('date-picker',get_template_directory_uri() .'/js/date-picker.js');
     }
 ?>
-
