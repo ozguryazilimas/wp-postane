@@ -10,8 +10,8 @@ get_header();
 	echo "<form name='input' id='input' action='/ayrintili-ara/' method='post' onsubmit='return validateSearch()'>";
 
 	echo " <input type='username' name='yazar_isim' /> İsimli yazara ait olan <br /> <br />";
-	echo ' <input type="text" class="custom_date" name="tarih_ilk" value=""/> ile 
-			<input type="text" class="custom_date" name="tarih_son" value=""/> tarihleri arasında yazılan<br> <br>';
+	echo ' <input type="text" class="custom_date" id="txtFromDate" name="tarih_ilk" value=""/> ile 
+			<input type="text" class="custom_date" id="txtToDate" name="tarih_son" value=""/> tarihleri arasında yazılan<br> <br>';
 	echo " İçinde <input type='text' name='kelime_gecen' /> kelimelerinin tümünün geçtiği (yanyana olması şart değil)<br> <br>";
 	echo " İçinde <input type='text' name='kelime_sirali' /> kelimeleri yanyana geçen<br> <br>";
 	echo " İçinde <input type='text' name='kelime_daginik' /> kelimelerindan en az birinin geçtiği<br> <br>";
