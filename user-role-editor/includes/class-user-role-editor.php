@@ -795,22 +795,22 @@ class User_Role_Editor {
 		
 	}
 
-	/**
-	 *  execute on plugin activation
-	 */
-	function setup() {
-		
-		$this->convert_option('ure_caps_readable');				
-		$this->convert_option('ure_show_deprecated_caps');
-		$this->convert_option('ure_hide_pro_banner');		
-		$this->lib->flush_options();
-		
-		$this->lib->make_roles_backup();
-  
-	}
-	// end of setup()
+/**
+ *  execute on plugin activation
+ */
+function setup() {
 
- 
+    $this->convert_option('ure_caps_readable');
+    $this->convert_option('ure_show_deprecated_caps');
+    $this->convert_option('ure_hide_pro_banner');
+    $this->lib->flush_options();
+
+    $this->lib->make_roles_backup();
+
+    do_action('ure_activation');
+}
+// end of setup()
+
  /**
   * Load plugin javascript stuff
   * 

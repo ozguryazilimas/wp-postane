@@ -70,11 +70,11 @@ To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/
 * Hebrew: [atar4u](http://atar4u.com)
 * Korean: [Taek Yoon](http://www.ajinsys.com)
 * Persian: Morteza
+* Russian: [Vladimir Garagulya](http://role-editor.com)
 * Spanish: [Dario Ferrer](http://darioferrer.com/);
 * Turkish: [Muhammed YILDIRIM](http://ben.muhammed.im);
 
-
-Information for translators: All translations are outdated a little and need update.
+Information for translators: All translations (except Russian) are outdated and need update for new added text.
 
 Dear plugin User!
 If you wish to help me with this plugin translation I very appreciate it. Please send your language .po and .mo files to vladimir[at-sign]shinephp.com email. Do not forget include you site link in order I can show it with greetings for the translation help at shinephp.com, plugin settings page and in this readme.txt file.
@@ -83,6 +83,13 @@ Share with me new ideas about plugin further development and link to your site w
 
 
 == Changelog ==
+= 4.14.1 =
+* 11.06.2014
+* MySQL query optimizing to reduce memory consumption. Thanks to [SebastiaanO](http://wordpress.org/support/topic/allowed-memory-size-exhausted-fixed).
+* Extra WordPress nonce field was removed from the post at main role editor page to exclude nonce duplication.
+* Minor code enhancements.
+* Fixes for some missed translations.
+
 = 4.14 =
 * 16.05.2014
 * Persian translation was added. Thanks to Morteza.
