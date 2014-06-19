@@ -3,8 +3,8 @@ Contributors: deconf
 Donate link: http://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
-Tested up to: 3.9
-Stable tag: 4.2.19
+Tested up to: 3.9.1
+Stable tag: 4.2.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,8 +94,15 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 
 == Changelog ==
 
+= 31.05.2014 - v4.2.20 =
+- bugfix: russian country map is not working
+- bugfix: only administrator can see stats while using a cache plugin
+- bugfix: division by zero on frontend widget
+- added german translation
+- added spanish translation
+
 = 28.04.2014 - v4.2.19 =
-- added Portuguese translation
+- added portuguese translation
 - frontend widget CSS fix
 - added remarketing, demographics and interests tracking support
 - universal analytics is now the default tracking method
