@@ -40,7 +40,6 @@ if (! class_exists ( 'GADASH_Tools' )) {
 		}
 		function ga_dash_clear_cache() {
 			global $wpdb;
-			update_option ( 'gadash_lasterror', 'N/A' );
 			$sqlquery = $wpdb->query ( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_gadash%%'" );
 			$sqlquery = $wpdb->query ( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_gadash%%'" );
 			$sqlquery = $wpdb->query ( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_timeout_ga_dash%%'" );
@@ -87,11 +86,10 @@ if (! class_exists ( 'GADASH_Tools' )) {
 			if (is_user_logged_in () && isset ( $access_level )) {
 				global $current_user;
 				$roles = $current_user->roles;
-
 				if ((current_user_can ( 'manage_options' )) and ! $tracking) {
 					return true;
 				}
-				if (in_array ( $roles[0], $access_level )) {
+				if (isset($roles[0]) && in_array ( $roles[0], $access_level )) {
 					return true;
 				} else {
 					return false;
