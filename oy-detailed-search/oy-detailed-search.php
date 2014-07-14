@@ -103,8 +103,8 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 	if($ara_kelime_gecen != NULL){
 		$ara_onyazi .= "' ";
 		foreach ($ara_kelime_gecen as $key ){
-			$ara_sql["query"] .= " AND post_content LIKE '%%s%' ";
-			array_push($ara_sql["variables"],$key);
+			$ara_sql["query"] .= " AND post_content LIKE '%s' ";
+			array_push($ara_sql["variables"], '%' . $key . '%');
 			$ara_onyazi .= $key . " ";
 		}
 			$ara_onyazi .= "' ifadesi gecen";
@@ -114,8 +114,8 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 		$ara_sql["query"] .= "AND ( 1=0";
 		$ara_onyazi .= "' ";
 		foreach ($ara_kelime_daginik as $key ){
-			$ara_sql["query"].= " OR post_content LIKE '%%s%' ";
-			array_push($ara_sql["variables"],$key);
+			$ara_sql["query"].= " OR post_content LIKE '%s' ";
+			array_push($ara_sql["variables"], '%' . $key . '%');
 			$ara_onyazi .= $key . " ";
 		}
 		$ara_sql["query"].= ")";
@@ -123,15 +123,15 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 	}
 
 	if($ara_kelime_sirali != NULL){
-		$ara_sql["query"].= " AND post_content LIKE '%%s%' ";
-		array_push($ara_sql["variables"],$ara_kelime_sirali);
+		$ara_sql["query"].= " AND post_content LIKE '%s' ";
+		array_push($ara_sql["variables"], '%' . $ara_kelime_sirali . '%');
 		$ara_onyazi .= "'" . $ara_kelime_sirali . "' kelimeleri sıralı olan ";
 	}
 
 	if($ara_kelime_gecmeyen != NULL){
 		foreach ($ara_kelime_gecmeyen as $key ){
-			$ara_sql["query"].= "AND post_content NOT LIKE '%%s%' ";
-			array_push($ara_sql["variables"],$key);
+			$ara_sql["query"].= "AND post_content NOT LIKE '%s' ";
+			array_push($ara_sql["variables"], '%' . $key . '%');
 			$ara_onyazi .= "'" . $key ."' ,";
 		}
 			$ara_onyazi .= " kelimelerini bulundurmayan";
