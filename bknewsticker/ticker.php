@@ -63,7 +63,7 @@ function insert_bknewsticker(){
 		jQuery('#bknewsticker').cycle({ 
 			speed: <?php echo $tickerspeed; ?>000,
 			timeout: <?php echo $tickertimeout; ?>000,
-			height: 40,
+			height: 30,
 			fx: '<?php echo $tickeranimation; ?>',
 			pause: 1,
 			containerResize: 1

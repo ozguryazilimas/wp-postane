@@ -16,7 +16,7 @@
 	background: #5A5A5A;
 	color: #ccc;
 	font-size: 10px;
-	line-height: 39px;
+	line-height: 29px;
 	margin-left: 3px;
 }
 .tickerLink a, .tickermore a{
@@ -27,14 +27,14 @@
 }
 .tickerText{
 	color: #5A5A5A;
-	line-height: 40px;
+	line-height: 30px;
 	font-size: 12px;
 
 }
 #bknews-title{
 	float: left;
 	width: auto;
-	height: 40px;
+	height: 30px;
 	background: transparent;
 	
 }
@@ -43,11 +43,11 @@
 	font-size: 14px;
 	margin: 0px;
 	text-align: center;
-	text-transform: uppercase;
+	//text-transform: uppercase;
 	text-decoration: none;
     border-right: 20px solid transparent;
     height: 0;
-    line-height: 40px;
+    line-height: 30px;
     padding-left: 5px;
 }
 

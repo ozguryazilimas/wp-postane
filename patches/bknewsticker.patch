@@ -1,0 +1,91 @@
+diff --git a/bknewsticker/ticker-color.php b/bknewsticker/ticker-color.php
+index ad552ce..2475462 100644
+--- a/bknewsticker/ticker-color.php
++++ b/bknewsticker/ticker-color.php
+@@ -20,7 +20,7 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
+ }
+ #bknews-title h3{
+ 	 color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+-	 border-bottom: 40px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
++	 border-bottom: 30px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
+ 	 font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px;
+ }
+ #allticker{
+@@ -30,4 +30,4 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
+ 	color: <?php $color_exerpt = get_option('ticker_color_link'); echo $color_exerpt;?>;
+ 	font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px;
+ }
+-</style>	
+\ No newline at end of file
++</style>	
+diff --git a/bknewsticker/ticker.css b/bknewsticker/ticker.css
+index 21440da..cd93bc9 100644
+--- a/bknewsticker/ticker.css
++++ b/bknewsticker/ticker.css
+@@ -16,7 +16,7 @@
+ 	background: #5A5A5A;
+ 	color: #ccc;
+ 	font-size: 10px;
+-	line-height: 39px;
++	line-height: 29px;
+ 	margin-left: 3px;
+ }
+ .tickerLink a, .tickermore a{
+@@ -27,14 +27,14 @@
+ }
+ .tickerText{
+ 	color: #5A5A5A;
+-	line-height: 40px;
++	line-height: 30px;
+ 	font-size: 12px;
+ 
+ }
+ #bknews-title{
+ 	float: left;
+ 	width: auto;
+-	height: 40px;
++	height: 30px;
+ 	background: transparent;
+ 	
+ }
+@@ -43,11 +43,11 @@
+ 	font-size: 14px;
+ 	margin: 0px;
+ 	text-align: center;
+-	text-transform: uppercase;
++	//text-transform: uppercase;
+ 	text-decoration: none;
+     border-right: 20px solid transparent;
+     height: 0;
+-    line-height: 40px;
++    line-height: 30px;
+     padding-left: 5px;
+ }
+ 
+@@ -56,4 +56,4 @@
+ 	}
+ @media only screen and (max-width: 320px) {
+ 	#bknews-title{ display: none!important;
+-	}
+\ No newline at end of file
++	}
+diff --git a/bknewsticker/ticker.php b/bknewsticker/ticker.php
+index 139c966..393a9e7 100644
+--- a/bknewsticker/ticker.php
++++ b/bknewsticker/ticker.php
+@@ -63,7 +63,7 @@ function insert_bknewsticker(){
+ 		jQuery('#bknewsticker').cycle({ 
+ 			speed: <?php echo $tickerspeed; ?>000,
+ 			timeout: <?php echo $tickertimeout; ?>000,
+-			height: 40,
++			height: 30,
+ 			fx: '<?php echo $tickeranimation; ?>',
+ 			pause: 1,
+ 			containerResize: 1
+@@ -861,4 +861,4 @@ function ticker_plugin_action_links( $links, $file ) {
+ 	}
+ 	return $links;
+ }
+-?>
+\ No newline at end of file
++?>
