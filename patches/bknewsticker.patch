@@ -1,5 +1,5 @@
 diff --git a/bknewsticker/ticker-color.php b/bknewsticker/ticker-color.php
-index ad552ce..e056ebd 100644
+index ad552ce..0b1ca1b 100644
 --- a/bknewsticker/ticker-color.php
 +++ b/bknewsticker/ticker-color.php
 @@ -20,7 +20,7 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
@@ -7,7 +7,7 @@ index ad552ce..e056ebd 100644
  #bknews-title h3{
  	 color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
 -	 border-bottom: 40px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
-+	 border-bottom: 20px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
++	 border-bottom: 25px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
  	 font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px;
  }
  #allticker{
@@ -19,24 +19,35 @@ index ad552ce..e056ebd 100644
 \ No newline at end of file
 +</style>	
 diff --git a/bknewsticker/ticker.css b/bknewsticker/ticker.css
-index 21440da..ce6cdfe 100644
+index 21440da..1f144c7 100644
 --- a/bknewsticker/ticker.css
 +++ b/bknewsticker/ticker.css
-@@ -16,7 +16,7 @@
+@@ -5,6 +5,10 @@
+ 	border-bottom: 0px solid #ccc;
+ }
+ 
++#allticker > ul > li {
++    padding-top: 2px;
++}
++
+ #bknewsticker{
+ 	background: #F3F3F3;
+ 	margin: 0px;
+@@ -16,7 +20,7 @@
  	background: #5A5A5A;
  	color: #ccc;
  	font-size: 10px;
 -	line-height: 39px;
-+	line-height: 19px;
++	line-height: 24px;
  	margin-left: 3px;
  }
  .tickerLink a, .tickermore a{
-@@ -27,14 +27,14 @@
+@@ -27,14 +31,14 @@
  }
  .tickerText{
  	color: #5A5A5A;
 -	line-height: 40px;
-+	line-height: 20px;
++	line-height: 25px;
  	font-size: 12px;
  
  }
@@ -44,25 +55,26 @@ index 21440da..ce6cdfe 100644
  	float: left;
  	width: auto;
 -	height: 40px;
-+	height: 20px;
++	height: 25px;
  	background: transparent;
  	
  }
-@@ -43,11 +43,11 @@
+@@ -43,11 +47,11 @@
  	font-size: 14px;
  	margin: 0px;
  	text-align: center;
 -	text-transform: uppercase;
 +	//text-transform: uppercase;
  	text-decoration: none;
-     border-right: 20px solid transparent;
+-    border-right: 20px solid transparent;
++    border-right: 25px solid transparent;
      height: 0;
 -    line-height: 40px;
-+    line-height: 20px;
++    line-height: 25px;
      padding-left: 5px;
  }
  
-@@ -56,4 +56,4 @@
+@@ -56,4 +60,4 @@
  	}
  @media only screen and (max-width: 320px) {
  	#bknews-title{ display: none!important;
@@ -70,7 +82,7 @@ index 21440da..ce6cdfe 100644
 \ No newline at end of file
 +	}
 diff --git a/bknewsticker/ticker.php b/bknewsticker/ticker.php
-index 139c966..785466a 100644
+index 139c966..d7759da 100644
 --- a/bknewsticker/ticker.php
 +++ b/bknewsticker/ticker.php
 @@ -63,7 +63,7 @@ function insert_bknewsticker(){
@@ -78,7 +90,7 @@ index 139c966..785466a 100644
  			speed: <?php echo $tickerspeed; ?>000,
  			timeout: <?php echo $tickertimeout; ?>000,
 -			height: 40,
-+			height: 20,
++			height: 25,
  			fx: '<?php echo $tickeranimation; ?>',
  			pause: 1,
  			containerResize: 1

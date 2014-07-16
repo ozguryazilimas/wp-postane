@@ -5,6 +5,10 @@
 	border-bottom: 0px solid #ccc;
 }
 
+#allticker > ul > li {
+    padding-top: 2px;
+}
+
 #bknewsticker{
 	background: #F3F3F3;
 	margin: 0px;
@@ -16,7 +20,7 @@
 	background: #5A5A5A;
 	color: #ccc;
 	font-size: 10px;
-	line-height: 19px;
+	line-height: 24px;
 	margin-left: 3px;
 }
 .tickerLink a, .tickermore a{
@@ -27,14 +31,14 @@
 }
 .tickerText{
 	color: #5A5A5A;
-	line-height: 20px;
+	line-height: 25px;
 	font-size: 12px;
 
 }
 #bknews-title{
 	float: left;
 	width: auto;
-	height: 20px;
+	height: 25px;
 	background: transparent;
 	
 }
@@ -45,9 +49,9 @@
 	text-align: center;
 	//text-transform: uppercase;
 	text-decoration: none;
-    border-right: 20px solid transparent;
+    border-right: 25px solid transparent;
     height: 0;
-    line-height: 20px;
+    line-height: 25px;
     padding-left: 5px;
 }
 
