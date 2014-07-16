@@ -20,7 +20,7 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
 }
 #bknews-title h3{
 	 color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
-	 border-bottom: 30px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
+	 border-bottom: 20px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
 	 font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px;
 }
 #allticker{
