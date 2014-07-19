@@ -8,7 +8,8 @@ Author URI: http://www.bekero.com
 Version: 1.0.3
 */
 define('TICKER_VERSION', '1.0.3');
-define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
+// define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
+define('TICKER_MAX_INT', 100);
 define('PHPREQ',5);
 $phpver=phpversion();$phpmaj=$phpver[0];
 function ticker_add_pages() {
@@ -183,6 +184,9 @@ function ticker_recent_comments($src_count, $src_length) {
 }
 
 function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+	// We do not want to fetch 2147483647 posts
+	$get_posts_category_param = count($cat_filter) > 0 ? $cat_filter[0] : '';
+
 	switch($type){
 		case 'popular':
 		$days = get_option('ticker_popular_days');
@@ -199,7 +203,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'recent':
 		$posts = get_posts(
 			array(
-				'numberposts' => TICKER_MAX_INT, 
+				'numberposts' => $n ? $n : TICKER_MAX_INT,
+				'category' => $get_posts_category_param,
 				'orderby' => 'post_date',
 				'suppress_filters' => 0,
 				)
@@ -208,7 +213,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'commented':
 		$posts = get_posts(
 			array(
-				'numberposts' => TICKER_MAX_INT,
+				'numberposts' => $n ? $n : TICKER_MAX_INT,
+				'category' => $get_posts_category_param,
 				'orderby' => 'comment_count',
 				'suppress_filters' => 0,
 				)
@@ -217,7 +223,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'userspecified':
 		$posts_tmp = get_posts(
 			array(
-				'numberposts' => TICKER_MAX_INT,
+				'numberposts' => $n ? $n : TICKER_MAX_INT,
+				'category' => $get_posts_category_param,
 				'include' => $post_list,
 				'suppress_filters' => 0,
 				)
