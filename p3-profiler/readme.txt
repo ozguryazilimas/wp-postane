@@ -1,9 +1,9 @@
 ﻿=== P3 (Plugin Performance Profiler) ===
-Contributors: Godaddy, StarfieldTech
+Contributors: Godaddy, StarfieldTech, kurtpayne
 Tags: debug, debugging, developer, development, performance, plugin, profiler, speed
 Requires at least: 3.3
 Tested up to: 3.9
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ Manual installation:
 4. Then activate the Plugin from Plugins page.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Fix a bug which broke debug mode and caused scanning to not work properly for some users.
 
 = 1.5.0 =
 Avoid a race condition on NFS systems.  Also fix PHP strict notices and stylesheet conflict with MP6/3.8 admin theme.
@@ -139,6 +142,9 @@ add_filter( 'p3_automatic_scan_urls', 'my_p3_auto_scan_pages' );
 </code>
 
 == Changelog ==
+
+= 1.5.1 =
+ * Fix a bug which broke debug mode and caused scanning to not work properly for some users.
 
 = 1.5.0 =
  * Fixed a CSS compatibility issue between WordPress 3.8 / MP6 and jQuery UI (props mintfactory)
