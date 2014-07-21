@@ -62,3 +62,7 @@ msgstr "Sonraki"
 msgid "Previous"
 msgstr "Önceki"
 
+#: ugurcum_main.php:74
+msgid "_TOTAL_ total"
+msgstr "Toplam _TOTAL_"
+

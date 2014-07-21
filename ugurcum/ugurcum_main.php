@@ -71,6 +71,7 @@ jQuery(document).ready(function() {
           last: "' . __('Last', 'ugurcum') . '",
           next: "' . __('Next', 'ugurcum') . '",
           previous: "' . __('Previous', 'ugurcum') . '",
+          info: "' . __('_TOTAL_ total', 'ugurcum') . '"
         };'
 ?>
 
@@ -83,6 +84,9 @@ jQuery(document).ready(function() {
       "lengthMenu": "_MENU_",
       "emptyTable": dt_str['empty_table'],
       "zeroRecords": dt_str['empty_table'],
+      "info": dt_str['info'],
+      "infoEmpty": '',
+      "infoFiltered": '',
       "paginate": {
         "first": dt_str['first'],
         "last": dt_str['last'],
