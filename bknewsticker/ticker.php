@@ -71,7 +71,9 @@ function insert_bknewsticker(){
 		});
 	});
 </script><div id="allticker"> 
-<div id="bknews-title"><h3><?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i></h3></div>
+<div id="bknews-title"><h3><a href="<?php $title_cat_ids = get_option('ticker_category_filter'); echo get_category_link($title_cat_ids[0]); ?>">
+	<?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i>
+</a></h3></div>
 <ul id="bknewsticker" style="overflow:hidden;"><?php  ticker_content(); ?></ul>
 </div>
 <?php

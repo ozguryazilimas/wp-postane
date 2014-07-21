@@ -30,4 +30,21 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
 	color: <?php $color_exerpt = get_option('ticker_color_link'); echo $color_exerpt;?>;
 	font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px;
 }
+
+#bknews-title h3 a:link {
+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+}
+
+#bknews-title h3 a:visited {
+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+}
+
+#bknews-title h3 a:hover {
+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+}
+
+#bknews-title h3 a:active {
+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+}
+
 </style>	
