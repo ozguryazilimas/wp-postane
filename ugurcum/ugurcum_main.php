@@ -35,9 +35,9 @@ $output .='
           <thead>
             <tr>
               <th>' . __('Series', 'ugurcum') . '</th>
-              <th>' . __('Video', 'ugurcum') . '</th>
+              <th>' . __('About Video', 'ugurcum') . '</th>
               <th>' . __('Author', 'ugurcum') . '</th>
-              <th>' . __('Addition time', 'ugurcum') . '</th>
+              <th>' . __('Date', 'ugurcum') . '</th>
             </tr>
           </thead>
           <tbody>

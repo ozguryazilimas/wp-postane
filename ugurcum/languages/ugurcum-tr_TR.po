@@ -1,0 +1,64 @@
+# Copyright (C) 2014,
+# This file is distributed under the same license as Ugurcum package.
+#
+# Onur Küçük <onur@ozguryazilim.com.tr>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-21 22:00+0300\n"
+"PO-Revision-Date: 2014-07-21 22:05+0300\n"
+"Last-Translator: Onur Küçük <onur@ozguryazilim.com.tr>\n"
+"Language-Team: \n"
+"Language: Turkish \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Vim 7.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ugurcum_main.php:19
+msgid "Videos"
+msgstr "Videolar"
+
+#: ugurcum_main.php:37
+msgid "Series"
+msgstr "Dizi"
+
+#: ugurcum_main.php:38
+msgid "About Video"
+msgstr "Video Hakkında"
+
+#: ugurcum_main.php:39
+msgid "Author"
+msgstr "Yazar"
+
+#: ugurcum_main.php:40
+msgid "Date"
+msgstr "Tarih"
+
+#: ugurcum_main.php:68
+msgid "No results found"
+msgstr "Sonuç bulunamadı"
+
+#: ugurcum_main.php:69
+msgid "Search"
+msgstr "Ara"
+
+#: ugurcum_main.php:70
+msgid "First"
+msgstr "İlk"
+
+#: ugurcum_main.php:71
+msgid "Last"
+msgstr "Son"
+
+#: ugurcum_main.php:72
+msgid "Next"
+msgstr "Sonraki"
+
+#: ugurcum_main.php:73
+msgid "Previous"
+msgstr "Önceki"
+

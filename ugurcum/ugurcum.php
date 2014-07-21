@@ -42,6 +42,8 @@ add_action('init', 'ugurcum_add_assets');
 register_activation_hook(__FILE__, 'ugurcum_init_db');
 add_action('plugins_loaded', 'ugurcum_update_db_check');
 
+ugurcum_init();
+
 
 function ugurcum_init_db() {
   global $ugurcum_db_version, $ugurcum_db_user_reads, $ugurcum_db_main, $installed_version, $wpdb;
