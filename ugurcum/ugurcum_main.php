@@ -7,8 +7,8 @@ $user_logged_in = $current_user->ID != '';
 get_header();
 get_sidebar();
 
-$hede = $_POST["add_video"];
-print_r($_POST);
+// $hede = $_POST["add_video"];
+// print_r($_POST);
 
 $output .='
   <div class="leftpane article-page content">
@@ -16,11 +16,11 @@ $output .='
       <div class="article-body">
         <hgroup>
           <div class="ucm_title">
-            <h3 class="ugurcum_page_title">' . __('Videos', 'ugurcum') . ' - ' . $hede . ' - ' . '</h3>
+            <h3 class="ugurcum_page_title">' . __('Videos', 'ugurcum') . '</h3>
           </div>
         </hgroup>';
 
-if ($user_logged_in) {
+if (false && $user_logged_in) {
   $output .= '
     <form name="ugurcum_add_video">
       <input type="hidden" name="add_video" value="Y" />
@@ -75,7 +75,7 @@ jQuery(document).ready(function() {
 ?>
 
   jQuery('table#ugurcum_media_link_list').dataTable({
-    "iDisplayLength": 50,
+    "iDisplayLength": 25,
     "bPaginate": true,
     "bSearchable": true,
     "language": {

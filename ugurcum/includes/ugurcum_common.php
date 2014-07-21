@@ -3,17 +3,19 @@
 function ugurcum_display_media_links() {
   $ret = '';
 
-  $ret .= '
-    <tr>
-      <td>' . 'diziler' . '</td>
-      <td>
-        <a href="' . 'http://www.youtube.com/watch?v=EAzYZ-E4l30' . '">'
-          . 'diziye neler oldu neler' .
-        '</a>
-      </td>
-      <td>' . 'yazar ne yazar' . '</td>
-      <td>' . 'gece' . '</td>
-    </tr>';
+  for ($i = 0; $i <= 100; $i++) {
+    $ret .= '
+      <tr>
+        <td>' . 'Walking Dead' . '</td>
+        <td>
+          <a href="' . 'http://www.youtube.com/watch?v=TRBLmogRL4c' . '">'
+            . $i . ' - Walking Dead yeni sezonu için çok eğlenceli ve bir o kadar da eğitici bir ve de zihinlerinizi okşayan fragman yayınlandı' .
+          '</a>
+        </td>
+        <td>' . 'yazar ne yazar' . '</td>
+        <td>' . date("h:i d-m-Y") . '</td>
+      </tr>';
+  }
 
 
   return $ret;
