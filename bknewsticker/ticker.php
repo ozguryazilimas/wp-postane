@@ -61,6 +61,7 @@ function insert_bknewsticker(){
 	?>
 	<script type="text/javascript" language="javascript">
 	jQuery(document).ready(function(){
+		jQuery('#bknewsticker').show();
 		jQuery('#bknewsticker').cycle({ 
 			speed: <?php echo $tickerspeed; ?>000,
 			timeout: <?php echo $tickertimeout; ?>000,
@@ -74,7 +75,7 @@ function insert_bknewsticker(){
 <div id="bknews-title"><h3><a href="<?php $title_cat_ids = get_option('ticker_category_filter'); echo get_category_link($title_cat_ids[0]); ?>">
 	<?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i>
 </a></h3></div>
-<ul id="bknewsticker" style="overflow:hidden;"><?php  ticker_content(); ?></ul>
+<ul id="bknewsticker" style="overflow:hidden;display:none;"><?php  ticker_content(); ?></ul>
 </div>
 <?php
 }
