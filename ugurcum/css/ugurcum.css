@@ -1,26 +1,30 @@
 
 .dataTables_filter input[type="search"] {
-//    background: url("search-white.png") no-repeat scroll 10px 4px #444444;
-    border: 0 none;
-    border-radius: 20px 20px 20px 20px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    // color: #D7D7D7;
-    // font: bold 12px Arial,Helvetica,Sans-serif;
-    height: 21px;
-    margin-bottom: 1px;
-    padding: 3px 0 3px 35px;
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-    transition: all 0.7s ease 0s;
-    width: 120px;
+//  background: url("search-white.png") no-repeat scroll 10px 4px #444444;
+  border: 0 none;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  // color: #D7D7D7;
+  // font: bold 12px Arial,Helvetica,Sans-serif;
+  height: 21px;
+  margin-bottom: 1px;
+  padding: 3px 0 3px 35px;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.7s ease 0s;
+  width: 120px;
 }
 
 .dataTables_filter input[type="search"]:focus {
-//    background: url("search-dark.png") no-repeat scroll 10px 4px #DFE3E3;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
-    color: #6A6F75;
-    margin-bottom: 1px;
-    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-    width: 320px;
+//  background: url("search-dark.png") no-repeat scroll 10px 4px #DFE3E3;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+  color: #6A6F75;
+  margin-bottom: 1px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  width: 320px;
 }
 
+table#ugurcum_media_link_list {
+  font-size: 12px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+}
 
