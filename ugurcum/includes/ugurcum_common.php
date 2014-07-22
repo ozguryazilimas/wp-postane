@@ -44,7 +44,11 @@ function ugurcum_display_media_links() {
 
     $ret .= '
       <tr' . $trclass . '>
-        <td>' . $medialink->title . '</td>
+        <td>
+          <a href="' . $medialink->medialink . '">'
+            . $medialink->title .
+          '</a>
+        </td>
         <td>
           <a href="' . $medialink->medialink . '">'
             . $medialink->description .
