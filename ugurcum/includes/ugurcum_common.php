@@ -25,6 +25,7 @@ function ugurcum_get_media_links() {
 }
 
 function ugurcum_display_media_links() {
+  global $user_ID;
   $ret = '';
 
   $medialinks = ugurcum_get_media_links();
@@ -34,7 +35,7 @@ function ugurcum_display_media_links() {
   foreach($medialinks as $medialink) {
     $updated_at = strtotime($medialink->updated_at);
 
-    if ($current_time > $last_read_time) {
+    if (($user_ID != '') && ($current_time > $last_read_time)) {
       $trclass = ' class="unread"';
     } else {
       $trclass = '';
