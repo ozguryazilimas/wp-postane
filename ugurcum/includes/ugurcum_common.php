@@ -19,7 +19,7 @@ function ugurcum_get_media_links() {
                                          JOIN
                                            $wpdb->users as wpu
                                          ON um.user_id = wpu.ID
-                                         ORDER BY um.updated_at");
+                                         ORDER BY um.updated_at desc");
 
   return $wpdb->get_results($get_media_links_sql);
 }

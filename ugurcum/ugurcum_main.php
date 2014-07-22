@@ -127,6 +127,7 @@ jQuery(document).ready(function() {
     "iDisplayLength": 25,
     "bPaginate": true,
     "bSearchable": true,
+    "aaSorting": [],
     "language": {
       "search": '',
       "lengthMenu": "_MENU_",
