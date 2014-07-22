@@ -35,7 +35,7 @@ function ugurcum_display_media_links() {
   foreach($medialinks as $medialink) {
     $updated_at = strtotime($medialink->updated_at);
 
-    if (($user_ID != '') && ($current_time > $last_read_time)) {
+    if (($user_ID != '') && ($updated_at > $last_read_time)) {
       $trclass = ' class="unread"';
     } else {
       $trclass = '';
