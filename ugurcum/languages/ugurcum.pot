@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-21 23:16+0300\n"
+"POT-Creation-Date: 2014-07-22 02:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,62 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ugurcum_main.php:19
+#: ugurcum_main.php:27
 msgid "Videos"
 msgstr ""
 
-#: ugurcum_main.php:37
+#: ugurcum_main.php:33
+msgid "Add New Video"
+msgstr ""
+
+#: ugurcum_main.php:44 ugurcum_main.php:81
 msgid "Series"
 msgstr ""
 
-#: ugurcum_main.php:38
+#: ugurcum_main.php:52 ugurcum_main.php:82
 msgid "About Video"
 msgstr ""
 
-#: ugurcum_main.php:39
-msgid "Author"
-msgstr ""
-
-#: ugurcum_main.php:40
-msgid "Date"
-msgstr ""
-
-#: ugurcum_main.php:68
-msgid "No results found"
-msgstr ""
-
-#: ugurcum_main.php:69
-msgid "Search"
+#: ugurcum_main.php:60
+msgid "Link"
 msgstr ""
 
 #: ugurcum_main.php:70
+msgid "Add"
+msgstr ""
+
+#: ugurcum_main.php:83
+msgid "Author"
+msgstr ""
+
+#: ugurcum_main.php:84
+msgid "Date"
+msgstr ""
+
+#: ugurcum_main.php:112
+msgid "No results found"
+msgstr ""
+
+#: ugurcum_main.php:113
+msgid "Search"
+msgstr ""
+
+#: ugurcum_main.php:114
 msgid "First"
 msgstr ""
 
-#: ugurcum_main.php:71
+#: ugurcum_main.php:115
 msgid "Last"
 msgstr ""
 
-#: ugurcum_main.php:72
+#: ugurcum_main.php:116
 msgid "Next"
 msgstr ""
 
-#: ugurcum_main.php:73
+#: ugurcum_main.php:117
 msgid "Previous"
 msgstr ""
 
-#: ugurcum_main.php:74
+#: ugurcum_main.php:118
 msgid "_TOTAL_ total"
 msgstr ""

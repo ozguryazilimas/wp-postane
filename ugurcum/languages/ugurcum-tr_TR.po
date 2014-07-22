@@ -18,51 +18,64 @@ msgstr ""
 "X-Generator: Vim 7.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+
 #: ugurcum_main.php:19
 msgid "Videos"
 msgstr "Videolar"
 
-#: ugurcum_main.php:37
+#: ugurcum_main.php:33
+msgid "Add New Video"
+msgstr "Yeni Video Ekle"
+
+#: ugurcum_main.php:27 ugurcum_main.php:41
 msgid "Series"
 msgstr "Dizi"
 
-#: ugurcum_main.php:38
+#: ugurcum_main.php:29 ugurcum_main.php:42
 msgid "About Video"
 msgstr "Video Hakkında"
 
-#: ugurcum_main.php:39
+#: ugurcum_main.php:31
+msgid "Link"
+msgstr "Bağlantı"
+
+#: ugurcum_main.php:60
+msgid "Add"
+msgstr "Ekle"
+
+#: ugurcum_main.php:43
 msgid "Author"
 msgstr "Yazar"
 
-#: ugurcum_main.php:40
+#: ugurcum_main.php:44
 msgid "Date"
 msgstr "Tarih"
 
-#: ugurcum_main.php:68
+#: ugurcum_main.php:72
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
-#: ugurcum_main.php:69
+#: ugurcum_main.php:73
 msgid "Search"
 msgstr "Ara"
 
-#: ugurcum_main.php:70
+#: ugurcum_main.php:74
 msgid "First"
 msgstr "İlk"
 
-#: ugurcum_main.php:71
+#: ugurcum_main.php:75
 msgid "Last"
 msgstr "Son"
 
-#: ugurcum_main.php:72
+#: ugurcum_main.php:76
 msgid "Next"
 msgstr "Sonraki"
 
-#: ugurcum_main.php:73
+#: ugurcum_main.php:77
 msgid "Previous"
 msgstr "Önceki"
 
-#: ugurcum_main.php:74
+#: ugurcum_main.php:78
 msgid "_TOTAL_ total"
 msgstr "Toplam _TOTAL_"
 
