@@ -314,3 +314,27 @@ select[name=ugurcum_media_link_list_length] {
   padding: 5px 7px;
 }
 
+#ugurcum_widget_wrapper a {
+  display: inline-block;
+  font-size: 14px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration: none;
+  line-height: 40px;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #00B1DE) );
+  background:-moz-linear-gradient( center top, #004455 5%, #00B1DE 100% );
+  background-color:#004455;
+  color: #ffffff;
+  // text-shadow: 2px 2px 0px #158ECD;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #00B1DE;
+  // text-align: center;
+  padding: 0 15px;
+  // width: 150px;
+  // height: 50px;
+}
+

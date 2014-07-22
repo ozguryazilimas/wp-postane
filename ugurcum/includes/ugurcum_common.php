@@ -1,5 +1,70 @@
 <?php
 
+
+class WP_Ugurcum_Widget extends WP_Widget {
+  function WP_Ugurcum_Widget() {
+    $widget_ops = array('classname' => 'wp_uw_widget', 'description' => __('Play it Sam', 'ugurcum'));
+    $control_ops = array('width' => 350);
+    $this->WP_Widget('ugurcum', __('Ugurcum', 'ugurcum'), $widget_ops, $control_ops);
+  }
+
+  function widget($args, $instance) {
+    global $wpdb, $user_ID;
+
+    $cache = wp_cache_get('widget_ugurcum', 'widget');
+
+    if (!is_array($cache)) {
+      $cache = array();
+    }
+
+    if (!isset($args['widget_id'])) {
+      $args['widget_id'] = $this->id;
+    }
+
+    if (isset($cache[$args['widget_id']])) {
+      echo $cache[$args['widget_id']];
+      return;
+    }
+
+    extract($args, EXTR_SKIP);
+
+    $output = '';
+    $title = apply_filters('widget_title', empty($instance['title']) ?  '' : $instance['title'], $instance, $this->id_base);
+
+    $output .= $before_widget;
+
+    if ($title) {
+      $output .= $before_title . $title . $after_title;
+    }
+
+    $output .= display_new_video_count();
+    $output .= $after_widget;
+
+    echo $output;
+  }
+
+  function update($new_instance, $old_instance) {
+    $instance = $old_instance;
+    $instance['title'] = strip_tags($new_instance['title']);
+    return $instance;
+  }
+
+  function form($instance) {
+    global $wp_uw;
+
+    $instance_name = strip_tags($instance['instance']);
+    $title = (isset($instance['title'])) ? strip_tags($instance['title']) : __('Play it Sam', 'ugurcum');
+
+?>
+    <p>
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'ugurcum'); ?></label>
+      <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+    </p>
+<?php
+  }
+}
+
+
 function ugurcum_get_time() {
   global $wp_query, $wpdb, $user_ID;
   return current_time('mysql', 1);
@@ -107,6 +172,27 @@ function ugurcum_set_time() {
 
     $success = $wpdb->query($update_read_time_sql);
   }
+}
+
+function display_new_video_count() {
+  global $wpdb, $user_ID, $ugurcum_db_user_reads, $ugurcum_db_main;
+
+  $ret = '';
+  $video_count_sql = "SELECT count(*) FROM $ugurcum_db_main ";
+
+  if ($user_ID != '') {
+    $last_read_time = ugurcum_get_last_read_time();
+    $video_count_sql .= "WHERE updated_at > '$last_read_time'";
+  }
+
+  $new_video_count = $wpdb->get_var($video_count_sql);
+  $video_count_str = sprintf(__("There are %s new videos you have not watched", 'ugurcum'), $new_video_count);
+
+  $ret .= '<div id="ugurcum_widget_wrapper"><a href="/ugurcum">';
+  $ret .=  $video_count_str;
+  $ret .= '</a></div>';
+
+  return $ret;
 }
 
 ?>

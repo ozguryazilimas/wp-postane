@@ -19,63 +19,80 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
-#: ugurcum_main.php:19
+#: ugurcum_main.php:27
 msgid "Videos"
 msgstr "Videolar"
 
-#: ugurcum_main.php:33
+#: ugurcum_main.php:34
 msgid "Add New Video"
 msgstr "Yeni Video Ekle"
 
-#: ugurcum_main.php:27 ugurcum_main.php:41
+#: ugurcum_main.php:47 ugurcum_main.php:85
 msgid "Series"
 msgstr "Dizi"
 
-#: ugurcum_main.php:29 ugurcum_main.php:42
+#: ugurcum_main.php:55 ugurcum_main.php:86
 msgid "About Video"
 msgstr "Video Hakkında"
 
-#: ugurcum_main.php:31
+#: ugurcum_main.php:63
 msgid "Link"
 msgstr "Bağlantı"
 
-#: ugurcum_main.php:60
+#: ugurcum_main.php:73
 msgid "Add"
 msgstr "Ekle"
 
-#: ugurcum_main.php:43
+#: ugurcum_main.php:87
 msgid "Author"
 msgstr "Yazar"
 
-#: ugurcum_main.php:44
+#: ugurcum_main.php:88
 msgid "Date"
 msgstr "Tarih"
 
-#: ugurcum_main.php:72
+#: ugurcum_main.php:116
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
-#: ugurcum_main.php:73
+#: ugurcum_main.php:117
 msgid "Search"
 msgstr "Ara"
 
-#: ugurcum_main.php:74
+#: ugurcum_main.php:118
 msgid "First"
 msgstr "İlk"
 
-#: ugurcum_main.php:75
+#: ugurcum_main.php:119
 msgid "Last"
 msgstr "Son"
 
-#: ugurcum_main.php:76
+#: ugurcum_main.php:120
 msgid "Next"
 msgstr "Sonraki"
 
-#: ugurcum_main.php:77
+#: ugurcum_main.php:121
 msgid "Previous"
 msgstr "Önceki"
 
-#: ugurcum_main.php:78
+#: ugurcum_main.php:122
 msgid "_TOTAL_ total"
 msgstr "Toplam _TOTAL_"
+
+#: includes/ugurcum_common.php:6 includes/ugurcum_common.php:32
+msgid "Play it Sam"
+msgstr "Oynat Uğurcum"
+
+#: includes/ugurcum_common.php:8
+msgid "Ugurcum"
+msgstr "Ugurcum"
+
+#: includes/ugurcum_common.php:60
+msgid "Title:"
+msgstr "Başlık:"
+
+#: includes/ugurcum_common.php:189
+#, php-format
+msgid "There are %s new videos you have not watched"
+msgstr "İzlemediğiniz %s yeni video var"
 

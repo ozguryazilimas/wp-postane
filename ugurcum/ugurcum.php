@@ -26,6 +26,8 @@ License: GPL2
 */
 
 require_once(dirname(__FILE__) . '/includes/ugurcum_common.php');
+$wp_uw = new WP_Ugurcum_Widget();
+
 $ugurcum_db_version = "1.0";
 global $ugurcum_db_version;
 
@@ -36,13 +38,14 @@ $ugurcum_db_user_reads = $wpdb->prefix . "ugurcum_user_reads";
 $installed_version = get_option('ugurcum_db_version');
 global $installed_version;
 
+//widget
+add_action('widgets_init', 'ugurcum_init');
+
 // add css
 add_action('init', 'ugurcum_add_assets');
 
 register_activation_hook(__FILE__, 'ugurcum_init_db');
 add_action('plugins_loaded', 'ugurcum_update_db_check');
-
-ugurcum_init();
 
 
 function ugurcum_init_db() {
@@ -97,6 +100,7 @@ function ugurcum_add_assets() {
 
 function ugurcum_init() {
   load_plugin_textdomain('ugurcum', false, basename(dirname(__FILE__)) . '/languages' );
+  register_widget('WP_Ugurcum_Widget');
 }
 
 add_action('template_redirect', 'ugurcum_custom_page_template_redirect');
