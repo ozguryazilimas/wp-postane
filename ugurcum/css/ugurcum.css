@@ -243,7 +243,8 @@ table#ugurcum_media_link_list tbody tr.unread {
   // background-color: #004455;
   // background-color: #D197FE;
   // background-color: #A1A1A1;
-  background-color: #004455;
+  // background-color: #004455;
+  background-color: #007E9E;
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
 }
 
