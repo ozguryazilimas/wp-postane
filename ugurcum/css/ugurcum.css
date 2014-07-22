@@ -244,7 +244,10 @@ table#ugurcum_media_link_list tbody tr.unread {
   // background-color: #D197FE;
   // background-color: #A1A1A1;
   // background-color: #004455;
-  background-color: #007E9E;
+  // background-color: #007E9E;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #BED7DE) );
+  background:-moz-linear-gradient( center top, #004455 5%, #BED7DE 100% );
+  background-color:#004455;
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
 }
 

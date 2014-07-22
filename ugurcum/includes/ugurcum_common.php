@@ -31,11 +31,12 @@ function ugurcum_display_media_links() {
   $medialinks = ugurcum_get_media_links();
   $last_read_time = ugurcum_get_last_read_time();
   $current_time = ugurcum_get_time();
+  $timeobj_last_read_time = strtotime($last_read_time);
 
   foreach($medialinks as $medialink) {
     $updated_at = strtotime($medialink->updated_at);
 
-    if (($user_ID != '') && ($updated_at > $last_read_time)) {
+    if (($user_ID != '') && ($updated_at > $timeobj_last_read_time)) {
       $trclass = ' class="unread"';
     } else {
       $trclass = '';
@@ -53,7 +54,6 @@ function ugurcum_display_media_links() {
         <td>' . date('H:i Y-m-d', $updated_at) . '</td>
       </tr>';
   }
-
 
   return $ret;
 }
@@ -80,7 +80,8 @@ function ugurcum_get_last_read_time() {
                                             user_id = $user_ID
                                             LIMIT 1;");
 
-    $read_time = $wpdb->get_row($user_last_read_sql);
+    $result = $wpdb->get_row($user_last_read_sql);
+    $read_time = $result->read_time;
   } else {
     $read_time = date();
   }
