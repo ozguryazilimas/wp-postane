@@ -28,10 +28,20 @@ function ugurcum_display_media_links() {
   $ret = '';
 
   $medialinks = ugurcum_get_media_links();
+  $last_read_time = ugurcum_get_last_read_time();
+  $current_time = ugurcum_get_time();
 
   foreach($medialinks as $medialink) {
+    $updated_at = strtotime($medialink->updated_at);
+
+    if ($current_time > $last_read_time) {
+      $trclass = ' class="unread"';
+    } else {
+      $trclass = '';
+    }
+
     $ret .= '
-      <tr>
+      <tr' . $trclass . '>
         <td>' . $medialink->title . '</td>
         <td>
           <a href="' . $medialink->medialink . '">'
@@ -39,7 +49,7 @@ function ugurcum_display_media_links() {
           '</a>
         </td>
         <td>' . $medialink->user_login . '</td>
-        <td>' . date('H:i Y-m-d', strtotime($medialink->updated_at)) . '</td>
+        <td>' . date('H:i Y-m-d', $updated_at) . '</td>
       </tr>';
   }
 
@@ -57,6 +67,24 @@ function ugurcum_insert_media_link($series, $description, $media_link) {
     VALUES ('$series', '$description', '$media_link', $user_ID, true, '$current_time', '$current_time');";
 
   $success = $wpdb->query($add_media_link_sql);
+}
+
+function ugurcum_get_last_read_time() {
+  global $wpdb, $user_ID, $ugurcum_db_user_reads;
+
+  if ($user_ID != '') {
+    $user_last_read_sql = $wpdb->prepare("SELECT read_time
+                                          FROM $ugurcum_db_user_reads
+                                          WHERE
+                                            user_id = $user_ID
+                                            LIMIT 1;");
+
+    $read_time = $wpdb->get_row($user_last_read_sql);
+  } else {
+    $read_time = date();
+  }
+
+  return $read_time;
 }
 
 // Record user read time
