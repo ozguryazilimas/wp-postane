@@ -310,3 +310,7 @@ table#ugurcum_media_link_list tbody td a:active {
   color: white;
 }
 
+select[name=ugurcum_media_link_list_length] {
+  padding: 5px 7px;
+}
+
