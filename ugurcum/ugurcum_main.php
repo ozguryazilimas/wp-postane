@@ -26,9 +26,10 @@ $output .='
           <div class="ucm_title">
             <div id="ugurcum_logo">
               <img src="' . get_option('siteurl') . '/wp-content/plugins/ugurcum/images/ugurcum.png"
-                width="80" height="80" title="' . __('Play it Sam', 'ugurcum') . '">
+                width="120" height="120" title="' . __('Play it Sam', 'ugurcum') . '">
             </div>
             <h3 class="ugurcum_page_title">' . __('Videos', 'ugurcum') . '</h3>
+            <h3 class="ugurcum_page_title">' . __('Play it Sam', 'ugurcum') . '</h3>
           </div>
         </hgroup>';
 
