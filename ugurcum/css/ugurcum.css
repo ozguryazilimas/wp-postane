@@ -49,7 +49,7 @@ a#ugurcum_toggle_medialink_form {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #00B1DE), color-stop(1, #004455));
   background: -webkit-linear-gradient(center top, #00B1DE 5%, #004455 100%);
   background:    -moz-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:     -ms-linear-gradient(center top, #00B1DE 5%, #004455 100%);
+  background:     -ms-linear-gradient(top, #00B1DE 5%, #004455 100%);
   background:      -o-linear-gradient(center top, #00B1DE 5%, #004455 100%);
   background:         linear-gradient(center top, #00B1DE 5%, #004455 100%);
   background-color: #00B1DE;
@@ -97,7 +97,7 @@ a#ugurcum_toggle_medialink_form:hover {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #00B1DE));
   background: -webkit-linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background:    -moz-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:     -ms-linear-gradient(center top, #004455 5%, #00B1DE 100%);
+  background:     -ms-linear-gradient(top, #004455 5%, #00B1DE 100%);
   background:      -o-linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background:         linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background-color: #004455;
@@ -132,7 +132,7 @@ table#ugurcum_submit {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #00B1DE), color-stop(1, #004455));
   background: -webkit-linear-gradient(center top, #00B1DE 5%, #004455 100%);
   background:    -moz-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:     -ms-linear-gradient(center top, #00B1DE 5%, #004455 100%);
+  background:     -ms-linear-gradient(top, #00B1DE 5%, #004455 100%);
   background:      -o-linear-gradient(center top, #00B1DE 5%, #004455 100%);
   background:         linear-gradient(center top, #00B1DE 5%, #004455 100%);
   background-color: #00B1DE;
@@ -244,7 +244,7 @@ table#ugurcum_media_link_list tbody tr:not(.unread) {
   background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #00B1DE) );
   background: -webkit-linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background:    -moz-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:     -ms-linear-gradient(center top, #004455 5%, #00B1DE 100%);
+  background:     -ms-linear-gradient(top, #004455 5%, #00B1DE 100%);
   background:      -o-linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background:         linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background-color: #004455;
@@ -264,7 +264,7 @@ table#ugurcum_media_link_list tbody tr.unread {
   background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #BED7DE) );
   background: -webkit-linear-gradient(center top, #004455 5%, #BED7DE 100%);
   background:    -moz-linear-gradient(center top, #004455 5%, #BED7DE 100%);
-  background:     -ms-linear-gradient(center top, #004455 5%, #BED7DE 100%);
+  background:     -ms-linear-gradient(top, #004455 5%, #BED7DE 100%);
   background:      -o-linear-gradient(center top, #004455 5%, #BED7DE 100%);
   background:         linear-gradient(center top, #004455 5%, #BED7DE 100%);
   background-color: #004455;
@@ -345,7 +345,7 @@ select[name=ugurcum_media_link_list_length] {
   background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #00B1DE) );
   background: -webkit-linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background:    -moz-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:     -ms-linear-gradient(center top, #004455 5%, #00B1DE 100%);
+  background:     -ms-linear-gradient(top, #004455 5%, #00B1DE 100%);
   background:      -o-linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background:         linear-gradient(center top, #004455 5%, #00B1DE 100%);
   background-color: #004455;
