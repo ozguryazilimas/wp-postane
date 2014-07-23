@@ -350,6 +350,14 @@ select[name=ugurcum_media_link_list_length] {
 
 .ugurcum_page_title {
   font-size: 24px;
+}
+
+.ugurcum_page_title_secondary {
+  font-size: 20px;
+}
+
+.ugurcum_page_title_secondary,
+.ugurcum_page_title {
   font-family: Helvetica Neue, Helvetica, Arial;
   font-weight: bold;
   // text-shadow: 2px 2px 0px #158ECD;
