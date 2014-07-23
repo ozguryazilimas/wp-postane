@@ -348,12 +348,16 @@ select[name=ugurcum_media_link_list_length] {
   margin: 0;
 }
 
+#ugurcum_page_title_wrapper {
+  padding: 20px 130px;
+}
+
 .ugurcum_page_title {
   font-size: 24px;
 }
 
 .ugurcum_page_title_secondary {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .ugurcum_page_title_secondary,
@@ -363,6 +367,5 @@ select[name=ugurcum_media_link_list_length] {
   // text-shadow: 2px 2px 0px #158ECD;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   color: #004455;
-  padding: 10px 100px;
 }
 

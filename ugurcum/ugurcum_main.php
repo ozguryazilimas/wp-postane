@@ -28,8 +28,10 @@ $output .='
               <img src="' . get_option('siteurl') . '/wp-content/plugins/ugurcum/images/ugurcum.png"
                 width="120" height="120" title="' . __('Play it Sam', 'ugurcum') . '">
             </div>
-            <h3 class="ugurcum_page_title">' . __('Videos', 'ugurcum') . '</h3>
-            <h3 class="ugurcum_page_title_secondary">' . __('Play it Sam', 'ugurcum') . '</h3>
+            <div id="ugurcum_page_title_wrapper">
+              <h3 class="ugurcum_page_title">' . __('Videos', 'ugurcum') . '</h3>
+              <h3 class="ugurcum_page_title_secondary">' . __('Play it Sam', 'ugurcum') . '</h3>
+            </div>
           </div>
         </hgroup>';
 
