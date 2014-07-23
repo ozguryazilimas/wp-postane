@@ -120,7 +120,7 @@ function ugurcum_display_media_links() {
           '</a>
         </td>
         <td>' . $medialink->user_login . '</td>
-        <td>' . date('H:i Y-m-d', $updated_at) . '</td>
+        <td>' . date('H:i Y/m/d', $updated_at) . '</td>
       </tr>';
   }
 
