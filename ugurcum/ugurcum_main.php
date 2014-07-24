@@ -174,6 +174,10 @@ jQuery(document).ready(function() {
     return false;
   });
 
+  jQuery('table#ugurcum_media_link_list tbody').on('click', 'a', function () {
+    jQuery(this).closest('tr').removeClass('unread');
+  });
+
 });
 
 //]]>
