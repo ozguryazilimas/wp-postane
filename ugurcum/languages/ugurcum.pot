@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-23 02:18+0300\n"
+"POT-Creation-Date: 2014-07-26 23:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,67 +18,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ugurcum_main.php:27
+msgid "Please enter valid series"
+msgstr ""
+
+#: ugurcum_main.php:29
+msgid "Please enter valid video link"
+msgstr ""
+
+#: ugurcum_main.php:31
+msgid "Please enter valid description"
+msgstr ""
+
+#: ugurcum_main.php:36
+msgid "This link was already added"
+msgstr ""
+
+#: ugurcum_main.php:54 ugurcum_main.php:58 includes/ugurcum_common.php:6
+#: includes/ugurcum_common.php:56
+msgid "Play it Sam"
+msgstr ""
+
+#: ugurcum_main.php:57
 msgid "Videos"
 msgstr ""
 
-#: ugurcum_main.php:34
+#: ugurcum_main.php:66
 msgid "Add New Video"
 msgstr ""
 
-#: ugurcum_main.php:47 ugurcum_main.php:85
+#: ugurcum_main.php:92 ugurcum_main.php:130
 msgid "Series"
 msgstr ""
 
-#: ugurcum_main.php:55 ugurcum_main.php:86
+#: ugurcum_main.php:100 ugurcum_main.php:131
 msgid "About Video"
 msgstr ""
 
-#: ugurcum_main.php:63
+#: ugurcum_main.php:108
 msgid "Link"
 msgstr ""
 
-#: ugurcum_main.php:73
+#: ugurcum_main.php:118
 msgid "Add"
 msgstr ""
 
-#: ugurcum_main.php:87
+#: ugurcum_main.php:132
 msgid "Author"
 msgstr ""
 
-#: ugurcum_main.php:88
+#: ugurcum_main.php:133
 msgid "Date"
 msgstr ""
 
-#: ugurcum_main.php:116
+#: ugurcum_main.php:161
 msgid "No results found"
 msgstr ""
 
-#: ugurcum_main.php:117
+#: ugurcum_main.php:162
 msgid "Search"
 msgstr ""
 
-#: ugurcum_main.php:118
+#: ugurcum_main.php:163
 msgid "First"
 msgstr ""
 
-#: ugurcum_main.php:119
+#: ugurcum_main.php:164
 msgid "Last"
 msgstr ""
 
-#: ugurcum_main.php:120
+#: ugurcum_main.php:165
 msgid "Next"
 msgstr ""
 
-#: ugurcum_main.php:121
+#: ugurcum_main.php:166
 msgid "Previous"
 msgstr ""
 
-#: ugurcum_main.php:122
+#: ugurcum_main.php:167
 msgid "_TOTAL_ total"
-msgstr ""
-
-#: includes/ugurcum_common.php:6 includes/ugurcum_common.php:32
-msgid "Play it Sam"
 msgstr ""
 
 #: includes/ugurcum_common.php:8
@@ -91,5 +108,5 @@ msgstr ""
 
 #: includes/ugurcum_common.php:189
 #, php-format
-msgid "There are %s new videos you have not watched yet"
+msgid "There are %s new videos you have not watched"
 msgstr ""

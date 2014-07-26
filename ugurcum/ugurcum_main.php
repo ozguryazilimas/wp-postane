@@ -7,6 +7,11 @@ $user_logged_in = $current_user->ID != '';
 get_header();
 get_sidebar();
 
+$error_msg = '';
+$submit_series = '';
+$submit_description = '';
+$submit_media_link = '';
+
 // $hede = $_POST["add_media"];
 // print_r($_POST);
 if (isset($_POST['ugurcum_submit'])) {
@@ -14,7 +19,27 @@ if (isset($_POST['ugurcum_submit'])) {
   $submit_description = $_POST['description'];
   $submit_media_link = $_POST['media_link'];
 
-  ugurcum_insert_media_link($submit_series, $submit_description, $submit_media_link);
+  $submit_series = trim($submit_series);
+  $submit_description = trim($submit_description);
+  $submit_media_link = trim($submit_media_link);
+
+  if ($submit_series == '') {
+    $error_msg = __('Please enter valid series', 'ugurcum');
+  } else if ($submit_media_link == '') {
+    $error_msg = __('Please enter valid video link', 'ugurcum');
+  } else if ($submit_description == '') {
+    $error_msg = __('Please enter valid description', 'ugurcum');
+  } else {
+    $similar_record = ugurcum_find_similar_links($submit_media_link);
+
+    if ($similar_record) {
+      $error_msg = __("This link was already added", 'ugurcum');
+    }
+  }
+
+  if ($error_msg == '') {
+    ugurcum_insert_media_link($submit_series, $submit_description, $submit_media_link);
+  }
 }
 
 
@@ -49,12 +74,25 @@ if ($user_logged_in) {
               <input type="hidden" name="add_media" value="Y" />
             </td>
           </tr>
+  ';
+
+  if ($error_msg != '') {
+    $output .= '
+      <tr>
+        <td>&nbsp;</td>
+        <td id="ugurcum_medialink_form_error">'
+          . $error_msg .
+        '</td>
+      </tr>';
+  }
+
+  $output .= '
           <tr>
             <td>
               <label for="series">' .  __('Series', 'ugurcum') . '</label>
             </td>
             <td>
-              <input type="text" name="series" size="50" required="true" />
+              <input type="text" name="series" size="50" required="true" value="' . ($error_msg == '' ? '' : $submit_series) . '" />
             </td>
           </tr>
           <tr>
@@ -62,7 +100,7 @@ if ($user_logged_in) {
               <label for="description">' .  __('About Video', 'ugurcum') . '</label>
             </td>
             <td>
-              <input type="text" name="description" size="50" required="true" />
+              <input type="text" name="description" size="50" required="true" value="' . ($error_msg == '' ? '' : $submit_description) . '"/>
             </td>
           </tr>
           <tr>
@@ -70,7 +108,7 @@ if ($user_logged_in) {
               <label for="media_link">' .  __('Link', 'ugurcum') . '</label>
             </td>
             <td>
-              <input type="text" name="media_link" size="50" required="true" />
+              <input type="text" name="media_link" size="50" required="true" value="' . ($error_msg == '' ? '' : $submit_media_link) . '" />
             </td>
           </tr>
           <tr>
@@ -177,6 +215,10 @@ jQuery(document).ready(function() {
   jQuery('table#ugurcum_media_link_list tbody').on('click', 'a', function () {
     jQuery(this).closest('tr').removeClass('unread');
   });
+
+<?php if ($error_msg != '') { ?>
+  jQuery('a#ugurcum_toggle_medialink_form').click();
+<?php } ?>
 
 });
 

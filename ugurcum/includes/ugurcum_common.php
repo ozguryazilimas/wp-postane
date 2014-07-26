@@ -195,4 +195,73 @@ function display_new_video_count() {
   return $ret;
 }
 
+function ugurcum_get_youtube_video_id($youtube_url) {
+  $video_pattern = '~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@#?&%=+\/\$_.-]*~i';
+
+  $video_id = preg_replace($video_pattern, '$1', $youtube_url);
+
+  return $video_id;
+}
+
+function ugurcum_get_youtube_playlist_id($youtube_url) {
+  $playlist_pattern = '~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{12,})[a-z0-9;:@#?&%=+\/\$_.-]*~i';
+
+  $playlist_id = preg_replace($playlist_pattern, '$1', $youtube_url);
+
+  return $playlist_id;
+}
+
+function ugurcum_get_dailymotion_video_id($dailymotion_url) {
+  $video_id = strtok(basename($dailymotion_url), '_');
+
+  return $video_id;
+}
+
+function ugurcum_get_vimeo_video_id($vimeo_url) {
+  $video_id = strtok(basename($vimeo_url), '_');
+
+  return $video_id;
+}
+
+function ugurcum_similar_youtube_sql($target_url) {
+  $video_id = ugurcum_get_youtube_video_id($target_url);
+  $ret = "medialink LIKE '%youtube.com/watch%v=$video_id%' OR medialink LIKE '%youtu.be/$video_id%'";
+
+  return $ret;
+}
+
+function ugurcum_similar_dailymotion_sql($target_url) {
+  $video_id = ugurcum_get_dailymotion_video_id($target_url);
+  $ret = "medialink LIKE '%dailymotion.com/embed/video/$video_id%' OR medialink LIKE '%dailymotion.com/video/$video_id%'";
+
+  return $ret;
+}
+
+function ugurcum_similar_vimeo_sql($target_url) {
+  $video_id = ugurcum_get_vimeo_video_id($target_url);
+  $ret = "medialink LIKE '%vimeo.com/video/$video_id%' OR medialink LIKE '%vimeo.com/$video_id%'";
+
+  return $ret;
+}
+
+function ugurcum_find_similar_links($target_url) {
+  global $wpdb, $ugurcum_db_main;
+
+  if (strstr($target_url, 'youtube.com/watch') || strstr($target_url, 'youtu.be/')) {
+    $where_clause = ugurcum_similar_youtube_sql($target_url);
+  } else if (strstr($target_url, 'dailymotion.com/')) {
+    $where_clause = ugurcum_similar_dailymotion_sql($target_url);
+  } else if (strstr($target_url, 'vimeo.com/')) {
+    $where_clause = ugurcum_similar_vimeo_sql($target_url);
+  } else {
+    $where_clause = "medialink LIKE '%" . $target_url . "%'";
+  }
+
+  $similar_sql = "SELECT * from $ugurcum_db_main WHERE $where_clause LIMIT 1";
+  $ret = $wpdb->get_row($similar_sql);
+
+  return $ret;
+}
+
+
 ?>

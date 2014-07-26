@@ -20,6 +20,22 @@ msgstr ""
 
 
 #: ugurcum_main.php:27
+msgid "Please enter valid series"
+msgstr "Lütfen geçerli dizi girin"
+
+#: ugurcum_main.php:29
+msgid "Please enter valid video link"
+msgstr "Lütfen geçerli bağlantı girin"
+
+#: ugurcum_main.php:31
+msgid "Please enter valid description"
+msgstr "Lütfen geçerli video hakkında bilgisi girin"
+
+#: ugurcum_main.php:36
+msgid "This link was already added"
+msgstr "Bu bağlantı daha önce eklenmiş"
+
+#: ugurcum_main.php:27
 msgid "Videos"
 msgstr "Videolar"
 
