@@ -67,7 +67,13 @@ class WP_Ugurcum_Widget extends WP_Widget {
 
 function ugurcum_get_time() {
   global $wp_query, $wpdb, $user_ID;
-  return current_time('mysql', 1);
+
+  // date_default_timezone_set('Europe/Istanbul');
+  // $now = current_time('mysql', 1);
+
+  $date = new DateTime("now", new DateTimeZone('Europe/Istanbul') );
+  $now = $date->format('Y-m-d H:i:s');
+  return $now;
 }
 
 function ugurcum_get_media_links() {
