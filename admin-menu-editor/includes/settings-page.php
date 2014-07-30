@@ -149,6 +149,62 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 			</tr>
 
 			<tr>
+				<th scope="row">Editor colour scheme</th>
+				<td>
+					<fieldset>
+						<p>
+							<label>
+								<input type="radio" name="ui_colour_scheme" value="classic"
+									<?php checked('classic', $settings['ui_colour_scheme']); ?>>
+								Blue and yellow
+							</label>
+						</p>
+
+						<p>
+							<label>
+								<input type="radio" name="ui_colour_scheme" value="wp-grey"
+									<?php checked('wp-grey', $settings['ui_colour_scheme']); ?>>
+								Grey
+							</label>
+						</p>
+					</fieldset>
+				</td>
+			</tr>
+
+			<?php if ($isProVersion): ?>
+			<tr>
+				<th scope="row">Show submenu icons</th>
+				<td>
+					<fieldset id="ame-submenu-icons-settings">
+						<p>
+							<label>
+								<input type="radio" name="submenu_icons_enabled" value="always"
+									<?php checked('always', $settings['submenu_icons_enabled']); ?>>
+								Always
+							</label>
+						</p>
+
+						<p>
+							<label>
+								<input type="radio" name="submenu_icons_enabled" value="if_custom"
+									<?php checked('if_custom', $settings['submenu_icons_enabled']); ?>>
+								Only when manually selected
+							</label>
+						</p>
+
+						<p>
+							<label>
+								<input type="radio" name="submenu_icons_enabled" value="never"
+									<?php checked('never', $settings['submenu_icons_enabled']); ?>>
+								Never
+							</label>
+						</p>
+					</fieldset>
+				</td>
+			</tr>
+			<?php endif; ?>
+
+			<tr>
 				<th scope="row">Debugging</th>
 				<td>
 					<label>

@@ -9,8 +9,10 @@
 	width: 310px;
 	float: left;
 	display:block;
+
 	border: 1px solid #cdd5d5;
-	
+	background-color: #FFFFFF;
+
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -42,7 +44,7 @@
 }
 
 .ws_dropzone_hover {
-	border: 1px dotted silver;
+	border: 1px dashed silver;
 	background: yellow;
 	height: 30px;
 }
@@ -286,18 +288,22 @@
 	margin-top: 0;
 }
 
+#ws_menu_editor input[type="text"].ws_field_value {
+	min-height: 25px;
+}
+
 /* Dropdown button for combo-box fields */
 #ws_menu_editor .ws_dropdown_button,
 #ws_menu_access_editor .ws_dropdown_button
 {
+	box-sizing: border-box;
 	width: 20px;
-	height: 23px;
+	height: 25px;
 	
 	margin: 1px 1px 1px 0;
 	padding: 0;
 	
 	text-align: center;
-	vertical-align: middle;
 	font-size: 9px !important;
 	
 	border-color: #dfdfdf;
@@ -320,8 +326,7 @@
 
 #ws_menu_access_editor .ws_dropdown_button {
 	display: inline-block;
-	height: 22px;
-	margin-bottom: 2px;
+	height: 27px;
 }
 
 #ws_menu_editor .ws_dropdown_button {
@@ -351,6 +356,8 @@ to accommodate the drop-down button.
 
 #ws_menu_access_editor input.ws_has_dropdown {
 	width: 90%;
+	box-sizing: border-box;
+	height: 27px;
 }
 
 #ws_menu_editor .ws_has_dropdown input.ws_field_value {
@@ -417,6 +424,19 @@ to accommodate the drop-down button.
 /* hidden items */
 .ws_hidden_flag {
 	background-image: url('../images/icon-extension-grey.png');
+}
+
+/* items with custom permissions for the selected actor */
+.ws_custom_actor_permissions_flag {
+	font: 16px/1 'dashicons';
+}
+.ws_custom_actor_permissions_flag::before {
+	/*content: "\f160";*/ /* padlock */
+	content: "\f110"; /* human silhouette */
+	color: black;
+
+	filter: alpha(opacity=25); /*IE 5-7*/
+	opacity: 0.25;
 }
 
 /* These classes could be used to apply different styles to items depending on their flags */
@@ -555,6 +575,12 @@ select.ws_dropdown optgroup option {
 #ws_icon_selector .icon16 {
 	float: none;
 	margin: 0;
+}
+
+#ws_icon_selector .ws_icon_option .ws_icon_image.dashicons {
+    width: 20px;
+    height: 20px;
+    padding: 5px;
 }
 
 #ws_icon_selector .ws_icon_option img {
@@ -715,18 +741,18 @@ select.ws_dropdown optgroup option {
 }
 
 .ui-front {
-    z-index: 100;
+    z-index: 10000;
 }
 
 .ui-dialog {
 	background: white;
 	border: 1px solid #c0c0c0;
+
+	padding: 0;
 	
-	padding: 2px;
-	
-	border-radius: 5px;
 	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .ui-dialog-titlebar {
@@ -738,10 +764,17 @@ select.ws_dropdown optgroup option {
 	background-color: #86A7E3;
 	font-size: 1.0em;
 	line-height: 22px;
-	
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
+    border-bottom: 1px solid #809fd9;
 }
 
 .ui-dialog-title {
@@ -772,7 +805,7 @@ select.ws_dropdown optgroup option {
 }
 
 .ui-dialog-content {
-	padding: 6px;
+	padding: 8px 8px 8px 8px;
 	font-size: 1.1em;
 }
 
@@ -800,6 +833,24 @@ select.ws_dropdown optgroup option {
 
 .ws_dialog_buttons .button {
 	margin-top: 0;
+}
+
+.ws_dialog_buttons.ame-vertical-button-list {
+    text-align: left;
+}
+
+.ws_dialog_buttons.ame-vertical-button-list .button-primary {
+    float: none;
+}
+
+.ws_dialog_buttons.ame-vertical-button-list .button {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.ws_dialog_buttons.ame-vertical-button-list .button:last-child {
+    margin-bottom: 0;
 }
 
 #import_file_selector {
@@ -935,6 +986,18 @@ select.ws_dropdown optgroup option {
 	display: none;
 }
 
+
+/************************************
+        Menu deletion error
+*************************************/
+
+#ws-ame-menu-deletion-error {
+    max-width: 400px;
+}
+
+
+
+
 /************************************
         Tooltips and hints
 *************************************/
@@ -1001,4 +1064,33 @@ select.ws_dropdown optgroup option {
 	right: 20px;
 	bottom: 40px;
 	z-index: 100;
+}
+
+
+.test-wrap {
+    background-color: #444444;
+    padding: 30px;
+}
+
+.test-container {
+    width: 400px;
+    height: 200px;
+    background-color: white;
+
+    border: 1px solid black;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.test-header {
+    background-color: #67d6ff;
+    padding: 6px;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.test-content {
+    padding: 8px;
 }
