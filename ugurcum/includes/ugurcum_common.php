@@ -169,7 +169,7 @@ function ugurcum_set_time() {
   global $wpdb, $user_ID, $ugurcum_db_user_reads;
 
   if ($user_ID != '') {
-    $read_time = current_time('mysql', 1);
+    $read_time = ugurcum_get_time();
 
     $update_read_time_sql = "INSERT INTO $ugurcum_db_user_reads
       (user_id, read_time)
