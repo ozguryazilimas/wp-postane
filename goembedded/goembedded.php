@@ -36,20 +36,6 @@ class GE_OEmbed_Comments {
     }
   }
 
-  /*
-   * filter for oEmbed in comments
-   */
-  function add_oembed_comment_filter() {
-    // make_clickable breaks oEmbed regex, try to activate before that
-    $has_clickable = has_filter('get_comment_text', 'make_clickable');
-    $priority = $has_clickable ? ($has_clickable - 1) : 8;
-
-    add_filter('get_comment_text', array($this, 'oembed_filter'), $priority);
-  }
-
-  /*
-   * add the comment filter
-   */
   function oembed_filter($comment_text) {
     global $wp_embed;
 
@@ -62,6 +48,15 @@ class GE_OEmbed_Comments {
 
     return $comment_text;
   }
+
+  function add_oembed_comment_filter() {
+    // make_clickable breaks oEmbed regex, try to activate before that
+    $has_clickable = has_filter('get_comment_text', 'make_clickable');
+    $priority = $has_clickable ? ($has_clickable - 1) : 8;
+
+    add_filter('get_comment_text', array($this, 'oembed_filter'), $priority);
+  }
+
 }
 
 new GE_OEmbed_Comments;
