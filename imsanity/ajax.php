@@ -185,7 +185,9 @@ function imsanity_resize_image()
 		$results = array('success'=>false,'id'=> $id, 'message' => sprintf(__('ERROR: (Attachment with ID of %s not found) ','imsanity') , htmlentities($id) ) );
 	}
 
-
+	// if there is a quota we need to reset the directory size cache so it will re-calculate
+	delete_transient('dirsize_cache');
+	
 	echo json_encode($results);
 	die(); // required by wordpress
 }

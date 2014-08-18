@@ -49,16 +49,33 @@ function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = 
 	if (function_exists('wp_get_image_editor'))
 	{
 		// WP 3.5 and up use the image editor
-		
+				
 		$editor = wp_get_image_editor( $file );
 		if ( is_wp_error( $editor ) )
 			return $editor;
 		$editor->set_quality( $jpeg_quality );
 	
+		// try to correct for auto-rotation if the info is available
+		if (function_exists(exif_read_data)) {
+			$exif = exif_read_data($file);
+			$orientation = is_array($exif) && array_key_exists('Orientation', $exif) ? $exif['Orientation'] : 0;
+			switch($orientation) {
+				case 3:
+					$editor->rotate(180);
+					break;
+				case 6:
+					$editor->rotate(-90);
+					break;
+				case 8:
+					$editor->rotate(90);
+					break;
+			}
+		}
+		
 		$resized = $editor->resize( $max_w, $max_h, $crop );
 		if ( is_wp_error( $resized ) )
 			return $resized;
-	
+
 		$dest_file = $editor->generate_filename( $suffix, $dest_path );
 		
 		// FIX: make sure that the destination file does not exist.  this fixes

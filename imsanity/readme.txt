@@ -118,10 +118,15 @@ unecessarily large images for no good reason.
 Documentation is available on the plugin homepage at http://wordpress.org/tags/imsanity and questions may
 be posted on the support forum at http://wordpress.org/tags/imsanity
 
+= TODO =
+
+* Add a network settings to override the individual plugin settings text
+
 == Upgrade Notice ==
 
-= 2.2.6 =
-* fixed bug in network settings where width/height input fields are in the same place
+= 2.2.7 =
+* Automatically rotate images according to EXIF rotation data if available
+* 
 
 == Changelog ==
 

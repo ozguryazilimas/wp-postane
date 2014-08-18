@@ -1,0 +1,798 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: imsanity\n"
+"POT-Creation-Date: 2013-11-19 13:52+0400\n"
+"PO-Revision-Date: 2013-11-19 13:56+0400\n"
+"Last-Translator: Vadim Bogaiskov <vadim.bogaiskov@gmail.com>\n"
+"Language-Team: Vadim Bogaiskov <vadim.bogaiskov@gmail.com>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)"
+">=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../ajax.php:98
+msgid "Missing ID Parameter"
+msgstr "Пропущенный параметр ID"
+
+#: ../ajax.php:170
+#, php-format
+msgid "OK: %s"
+msgstr "OK: %s"
+
+#: ../ajax.php:174
+#, php-format
+msgid "ERROR: %s (%s)"
+msgstr "ОШИБКА: %s (%s)"
+
+#: ../ajax.php:179
+#, php-format
+msgid "SKIPPED: %s (Resize not required)"
+msgstr "ПРОПУЩЕНО: %s (изменение размеров не требуется)"
+
+#: ../ajax.php:185
+#, php-format
+msgid "ERROR: (Attachment with ID of %s not found) "
+msgstr "ОШИБКА: (Вложение с ID  %s не найдено) "
+
+#: ../imsanity.php:146
+#, php-format
+msgid ""
+"Oh Snap! Imsanity was unable to resize this image for the following reason: "
+"'%s'\n"
+"\t\t\t\t\t.  If you continue to see this error message, you may need to "
+"either install missing server components or disable the Imsanity plugin.  If "
+"you think you have discovered a bug, please report it on the Imsanity "
+"support forum."
+msgstr ""
+"Хм! Imsanity не смог изменить размер изображения по следующей причине:'%s'\n"
+"\t\t\t\t\t. Если Вы будете продолжать видеть это сообщение об ошибке, "
+"возможно, потребуется либо установить недостающие компоненты на сервер или "
+"отключить плагин Imsanity. Если Вы думаете, что Вы обнаружили ошибку, "
+"сообщите об этом на форуме поддержки Imsanity."
+
+#: ../imsanity.php:200
+msgid ""
+"Oh Snap! Imsanity was Unable to process the BMP file.  If you continue to "
+"see this error you may need to disable the BMP-To-JPG feature in Imsanity "
+"settings."
+msgstr ""
+"Хм! Imsanity не смог обработать файл BMP. Если Вы будете продолжать видеть "
+"эту ошибку Вам может понадобиться отключить функцию BMP-в-JPG  в настройках "
+"Imsanity."
+
+#: ../settings.php:29
+msgid "Imsanity Plugin Settings"
+msgstr "Настройки плагина Imsanity "
+
+#: ../settings.php:175 ../settings.php:188
+msgid "Imsanity Network Settings"
+msgstr "Настройки сети Imsanity "
+
+#: ../settings.php:195
+msgid "Imsanity network settings saved."
+msgstr "Настройки сети Imsanity сохранены."
+
+#: ../settings.php:209
+msgid "Global Settings Override"
+msgstr "Переопределение глобальных настроек "
+
+#: ../settings.php:212
+msgid "Allow each site to configure Imsanity settings"
+msgstr "Разрешить каждому сайту настраивать параметры Imsanity"
+
+#: ../settings.php:213
+msgid "Use global Imsanity settings (below) for all sites"
+msgstr "Использовать глобальные параметры Imsanity (ниже) для всех сайтов"
+
+#: ../settings.php:219 ../settings.php:550
+msgid "Images uploaded within a Page/Post"
+msgstr "Изображения загружены на страницы/записи"
+
+#: ../settings.php:221 ../settings.php:229 ../settings.php:237
+#: ../settings.php:551 ../settings.php:558 ../settings.php:565
+msgid "Fit within"
+msgstr "Подогнать до "
+
+#: ../settings.php:222 ../settings.php:230 ../settings.php:238
+msgid " pixels width/height  (or enter 0 to disable)"
+msgstr " пикселей ширина/высота (или введите 0 для отключения)"
+
+#: ../settings.php:227 ../settings.php:557
+msgid "Images uploaded directly to the Media Library"
+msgstr "Изображения загружены непосредственно в библиотеку мультимедиа"
+
+#: ../settings.php:235 ../settings.php:564
+msgid "Images uploaded elsewhere (Theme headers, backgrounds, logos, etc)"
+msgstr ""
+"Изображения загружены в другое место (заголовки тем, фон, логотипы и т.д.)"
+
+#: ../settings.php:243
+msgid "Convert BMP to JPG"
+msgstr "Преобразовать BMP в  JPG"
+
+#: ../settings.php:245 ../settings.php:588
+msgid "Yes"
+msgstr "Да"
+
+#: ../settings.php:246 ../settings.php:589
+msgid "No"
+msgstr "Нет"
+
+#: ../settings.php:251
+msgid "JPG Quality"
+msgstr "Качество JPG"
+
+#: ../settings.php:261 ../settings.php:582
+msgid " (WordPress default is 90)"
+msgstr "(для WordPress по умолчанию 90)"
+
+#: ../settings.php:266
+msgid "Update Settings"
+msgstr "Настройки обновления"
+
+#: ../settings.php:442
+msgid "Imsanity automatically resizes insanely huge image uploads"
+msgstr ""
+"Imsanity автоматически изменяет размер загружаемых безумно огромных "
+"изображений"
+
+#: ../settings.php:444
+msgid ""
+"<p>Imsanity automaticaly reduces the size of images that are larger than the "
+"specified maximum and replaces the original\n"
+"\t\twith one of a more \"sane\" size.  Site contributors don\\'t need to "
+"concern themselves with manually scaling images\n"
+"\t\tand can upload them directly from their camera or phone.</p>\n"
+"\n"
+"\t\t<p>The resolution of modern cameras is larger than necessary for typical "
+"web display.\n"
+"\t\tThe average computer screen is not big enough to display a 3 megapixel "
+"camera-phone image at full resolution.\n"
+"\t\tWordPress does a good job of creating scaled-down copies which can be "
+"used, however the original images\n"
+"\t\tare permanently stored, taking up disk quota and, if used on a page, "
+"create a poor viewer experience.</p>\n"
+"\n"
+"\t\t<p>This plugin is designed for sites where high-resolution images are "
+"not necessary and/or site contributors\n"
+"\t\tdo not want (or understand how) to deal with scaling images.  This "
+"plugin should not be used on\n"
+"\t\tsites for which original, high-resolution images must be stored.</p>\n"
+"\n"
+"\t\t<p>Be sure to save back-ups of your full-sized images if you wish to "
+"keep them.</p>"
+msgstr ""
+"<p> Imsanity автоматически уменьшает размер изображения, размер которых "
+"превышает заданный максимум и заменяет оригинальный\n"
+"\t\tна более \"нормальный\" размер.  Авторы сайта не должны заботиться о "
+"масштабировании изображений вручную\n"
+"\t\tи могут загружать их непосредственно из камеры или телефона.</p>\n"
+"\n"
+"\t\t<p>Разрешение современных камер больше, чем это необходимо для обычного "
+"веб-дисплея.\n"
+"\t\tОбычный экран компьютера не настолько большой, чтобы отобразить "
+"изображение  3-мегапиксельной камеры телефона с полным разрешением.\n"
+"\t\tWordPress хорошо создает уменьшенные копии, которые затем используются, "
+"однако исходные изображения\n"
+"\t\tпостоянно хранятся, занимая дисковое пространство, а, если используется "
+"на странице, создают негативный зрительный эффект.</p>\n"
+"\n"
+"\t\t<p>Этот плагин предназначен для сайтов, где высокое разрешение "
+"изображений не является необходимым и/или сайтов, авторы\n"
+"\t\tкоторых не хотят (или не понимают, как), иметь дело с масштабированием "
+"изображения. Этот плагин не должны использоваться на\n"
+"\t\tсайтах, на которых оригинальные, с высоким разрешением изображения "
+"должны быть сохранены.</p>\n"
+"\n"
+"\t\t<p>Не забудьте сохранить резервные копии Ваших полноразмерных "
+"изображений, если Вы хотите хранить их. </p>"
+
+#: ../settings.php:459
+#, php-format
+msgid "<p>Imsanity Version %s by %s </p>"
+msgstr "<p>Версия Imsanity %s от  %s </p>"
+
+#: ../settings.php:476
+msgid "Imsanity Settings"
+msgstr "Настройки Imsanity "
+
+#: ../settings.php:494
+msgid "Bulk Resize Images"
+msgstr "Массовое изменение размера изображений"
+
+#: ../settings.php:497
+msgid ""
+"<p>If you have existing images that were uploaded prior to installing "
+"Imsanity, you may resize them\n"
+"\tall in bulk to recover disk space.  To begin, click the \"Search Images\" "
+"button to search all existing\n"
+"\tattachments for images that are larger than the configured limit.</p>\n"
+"\t<p>Limitations: For performance reasons a maximum of 250 images will be "
+"returned at one time.  Bitmap\n"
+"\timage types are not supported and will not appear in the search results.</"
+"p>"
+msgstr ""
+"<p>Если у Вас уже есть изображения, которые были загружены перед установкой "
+"Imsanity, Вы можете изменять их размер\n"
+"\tвсе вместе, чтобы освободить место на диске.   Чтобы начать, нажмите "
+"кнопку \"Поиск изображений\", для поиска всех существующих\n"
+"\tвложений изображений, размер которых превышает установленный предел.</p>\n"
+"\t<p>Ограничения: Для повышения производительности одновременно могут быть "
+"обработаны до 250 изображений. \n"
+"\tТип  Bitmap не поддерживается и эти файлы не будут отображаться в "
+"результатах поиска.</p>"
+
+#: ../settings.php:505
+msgid ""
+"WARNING: BULK RESIZE WILL ALTER YOUR ORIGINAL IMAGES AND CANNOT BE UNDONE!"
+msgstr ""
+"ВНИМАНИЕ: При массовой обработке изменяется размер оригинальных изображений, "
+"операция не может быть отменена!"
+
+#: ../settings.php:507
+msgid ""
+"It is <strong>HIGHLY</strong> recommended that you backup \n"
+"\t\tyour wp-content/uploads folder before proceeding.  You will have a "
+"chance to preview and select the images to convert.\n"
+"\t\tIt is also recommended that you initially select only 1 or 2 images and "
+"verify that everything is ok before\n"
+"\t\tprocessing your entire library.  You have been warned!"
+msgstr ""
+"<strong>НАСТОЯТЕЛЬНО</strong> рекомендуется сделать архивную копию \n"
+"\t\tпапок wp-content/uploads прежде чем продолжить.  Вы будете иметь "
+"возможность предварительного просмотра и выбора изображений для "
+"конвертирования.\n"
+"\t\tКроме того, рекомендуется изначально выбрать только 1 или 2 изображения "
+"и убедиться, что все в порядке, прежде чем\n"
+"\t\tначать обработку всей Вашей библиотеки. Вы были предупреждены!"
+
+#: ../settings.php:514
+msgid "Search Images..."
+msgstr "Поиск изображений..."
+
+#: ../settings.php:531
+msgid ""
+"Imsanity settings have been configured by the server administrator. There "
+"are no site-specific settings available."
+msgstr ""
+"Параметры Imsanity настроены администратором сервера. Нет доступных "
+"специфических для сайта настроек."
+
+#: ../settings.php:552 ../settings.php:559 ../settings.php:566
+msgid "pixels width/height (or enter 0 to disable)"
+msgstr "пикселей ширина/высота (или введите 0 для отключения)"
+
+#: ../settings.php:572
+msgid "JPG image quality"
+msgstr "Качество изображения JPG "
+
+#: ../settings.php:586
+msgid "Convert BMP To JPG"
+msgstr "Преобразовать  BMP в JPG"
+
+#: ../settings.php:595
+msgid "Save Changes"
+msgstr "Сохранить изменения"
+
+#: ../libs/imagecreatefrombmp.php:14
+#, php-format
+msgid "imagecreatefrombmp: Can not open %s!"
+msgstr "imagecreatefrombmp: Не возможно открыть%s!"
+
+#: ../libs/imagecreatefrombmp.php:21
+#, php-format
+msgid "imagecreatefrombmp: %s is not a bitmap!"
+msgstr "imagecreatefrombmp: %s - не bitmap!"
+
+#: ../libs/imagecreatefrombmp.php:43
+#, php-format
+msgid "imagecreatefrombmp: Can not obtain filesize of %s !"
+msgstr "imagecreatefrombmp: Не удалось получить размер файла %s !"
+
+#: ../libs/imagecreatefrombmp.php:129
+#, php-format
+msgid "imagecreatefrombmp: %s has %d bits and this is not supported!"
+msgstr "imagecreatefrombmp: %s имеет %d бит и не поддерживается!"
+
+#~ msgid " (or enter 0 to disable)"
+#~ msgstr "(или введите 0 для отключения)"
+
+#~ msgid "Add Video"
+#~ msgstr "Добавить видео"
+
+#~ msgid "example for stage color : 0xdddddd "
+#~ msgstr "пример для цвета этапа : 0xdddddd"
+
+#~ msgid "Standard upload folder : "
+#~ msgstr "Стандартная папка загрузки:"
+
+#~ msgid "Store uploads in this folder : "
+#~ msgstr "Папка для хранения загрузок:"
+
+#~ msgid "Manage Video Files"
+#~ msgstr "Управление видео-файлами"
+
+#~ msgid "Search Video"
+#~ msgstr "Поиск видео"
+
+#~ msgid "Filter"
+#~ msgstr "Фильтр"
+
+#~ msgid "Sort"
+#~ msgstr "Сортировка"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Title"
+#~ msgstr "Заголовок"
+
+#~ msgid "Feature"
+#~ msgstr "Особенность"
+
+#~ msgid "Path"
+#~ msgstr "Путь"
+
+#~ msgid "Sort Order"
+#~ msgstr "Порядок сортировки"
+
+#~ msgid "Playlist"
+#~ msgstr "Плейлист"
+
+#~ msgid "Add or Edit"
+#~ msgstr "Добавить или Изменить"
+
+#~ msgid "Edit Video File"
+#~ msgstr "Изменить видео-файл"
+
+#~ msgid "Create New"
+#~ msgstr "Создать новый"
+
+#~ msgid "Name"
+#~ msgstr "Имя"
+
+#~ msgid "Add"
+#~ msgstr "Добавить"
+
+#~ msgid "Update"
+#~ msgstr "Обновить"
+
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
+
+#~ msgid "Tags"
+#~ msgstr "Метки"
+
+#~ msgid "Video Title"
+#~ msgstr "Название видео"
+
+#~ msgid "Video Description"
+#~ msgstr "Описание видео"
+
+#~ msgid "Video URL"
+#~ msgstr "URL видео"
+
+#~ msgid ""
+#~ "Here you need to enter the URL to the file ( MP4, M4V, M4A, MOV, Mp4v or "
+#~ "F4V)"
+#~ msgstr ""
+#~ "Здесь Вы должны ввести URL к файлу (MP4, M4V, M4A, MOV, Mp4v или F4V)"
+
+#~ msgid ""
+#~ "It also accept Youtube links. Example: http://www.youtube.com/watch?"
+#~ "v=tTGHCRUdlBs"
+#~ msgstr ""
+#~ "Также допускаются ссылки на Youtube. Например: http://www.youtube.com/"
+#~ "watch?v=tTGHCRUdlBs"
+
+#~ msgid "HD video URL"
+#~ msgstr "URL видео в HD"
+
+#~ msgid "Enter the URL to HD video file"
+#~ msgstr "Введите URL видео-файла в HD"
+
+#~ msgid "Thumbnail URL"
+#~ msgstr "URL миниатюры"
+
+#~ msgid "Enter the URL to show a thumbnail of the video file"
+#~ msgstr "Введите URL, чтобы показать эскиз видеофайла"
+
+#~ msgid "Preview Image URL"
+#~ msgstr "URL изображения предварительного просмотра"
+
+#~ msgid "Enter the URL to show a preview of the video file"
+#~ msgstr "Введите URL, чтобы показать предварительный просмотр видео файлов"
+
+#~ msgid "Link URL"
+#~ msgstr "URL cсылки"
+
+#~ msgid ""
+#~ "Enter the URL to the page/file, if you click on the player.for example "
+#~ "http://www.google.com "
+#~ msgstr ""
+#~ "Введите URL на страницу/файл для перехода при нажатии на плеер. Например: "
+#~ "http://www.google.com "
+
+#~ msgid "Download"
+#~ msgstr "Загрузить"
+
+#~ msgid "Note:Not supported for YouTube videos"
+#~ msgstr "Примечание: Не поддерживается для видео YouTube"
+
+#~ msgid "Preroll ads"
+#~ msgstr "Реклама перед началом"
+
+#~ msgid "Postroll ads"
+#~ msgstr "Реклама в конце"
+
+#~ msgid "Add a new video file"
+#~ msgstr "Добавить новый видеофайл"
+
+#~ msgid "URL to video file"
+#~ msgstr "URL видеофайла"
+
+#~ msgid "Generate details"
+#~ msgstr "Детализитовать"
+
+#~ msgid "Here you need to enter the URL to the video file"
+#~ msgstr "Здесь Вы должны ввести URL на видео-файл"
+
+#~ msgid ""
+#~ "It accept also a Youtube link: http://www.youtube.com/watch?v=tTGHCRUdlBs"
+#~ msgstr ""
+#~ "Допускаются также ссылки на Youtube: http://www.youtube.com/watch?"
+#~ "v=tTGHCRUdlBs"
+
+#~ msgid "URL to HD video file(optional)"
+#~ msgstr "URL на видео-файл в HD (необязательно)"
+
+#~ msgid "Here you need to enter the URL to the HD video file"
+#~ msgstr "Здесь вы должны ввести URL в видео-файл в HD"
+
+#~ msgid "URL to Thumb image file"
+#~ msgstr "URL миниатюры"
+
+#~ msgid "Here you need to enter the URL to the image file"
+#~ msgstr "Здесь вы должны ввести URL на файл изображения"
+
+#~ msgid "URL to Thumb Preview image file(Optional)"
+#~ msgstr "URL на файл изображения миниатюры (необязательно)"
+
+#~ msgid "Here you need to enter the URL to the Preview image file"
+#~ msgstr ""
+#~ "Здесь вы должны ввести URL на файл изображения предварительного просмотра"
+
+#~ msgid "<b>Supported video formats:</b>( MP4, M4V, M4A, MOV, Mp4v or F4V)"
+#~ msgstr ""
+#~ "<b>Поддерживаемые видео-форматы:</b>( MP4, M4V, M4A, MOV, Mp4v или F4V)"
+
+#~ msgid "TAGS"
+#~ msgstr "Метки"
+
+#~ msgid "Enter Title / Name"
+#~ msgstr "Введите Название / Имя"
+
+#~ msgid "Title / Name"
+#~ msgstr "Название / Имя"
+
+#~ msgid "Description"
+#~ msgstr "Описание"
+
+#~ msgid "Featured video"
+#~ msgstr "Лучшее видео"
+
+#~ msgid "Select Ads"
+#~ msgstr "Выбрать рекламу"
+
+#~ msgid "Add video file"
+#~ msgstr "Добавить видеофайл"
+
+#~ msgid "Manage Playlist"
+#~ msgstr "Управление списком воспроизведения"
+
+#~ msgid "Action"
+#~ msgstr "Действие"
+
+#~ msgid "Add Playlist"
+#~ msgstr "Добавить список воспроизведения"
+
+#~ msgid "Update Playlist"
+#~ msgstr "Обновить список воспроизведения"
+
+#~ msgid "Name:"
+#~ msgstr "Имя:"
+
+#~ msgid "--Playlist--"
+#~ msgstr "--Плейлист--"
+
+#~ msgid "No playlist"
+#~ msgstr "Нет списка воспроизведения"
+
+#~ msgid "Manage Ads"
+#~ msgstr "Управление рекламой"
+
+#~ msgid "Search Video ADs"
+#~ msgstr "Поиск видео рекламы"
+
+#~ msgid "Add Video Ad"
+#~ msgstr "Добавить видео-рекламу"
+
+#~ msgid "Edit video file"
+#~ msgstr "Редактировать видео файл"
+
+#~ msgid "Ads title"
+#~ msgstr "Название рекламы"
+
+#~ msgid "Ads URL"
+#~ msgstr "URL рекламы"
+
+#~ msgid "Add a new ads"
+#~ msgstr "Добавить новую рекламу"
+
+#~ msgid "Here you need to enter the URL to the ads video file"
+#~ msgstr "Здесь вы должны ввести URL на видео-файл рекламы"
+
+#~ msgid "This post ID is not currently excluded."
+#~ msgstr "Этот ID записи в данный момент не исключен."
+
+#~ msgid "This post ID is not currently included."
+#~ msgstr "Этот ID записи в данный момент не включен"
+
+#~ msgid "All options reset! You can either "
+#~ msgstr "Все настройки сброшены! Вы можете"
+
+#~ msgid "deactivate Shutter Reloaded,"
+#~ msgstr "деактивировать Shutter Reloaded,"
+
+#~ msgid "or return to the settings page."
+#~ msgstr "или возвратиться на страницу настроек."
+
+#~ msgid "Options saved!"
+#~ msgstr "Настройки сохранены!"
+
+#~ msgid "Shutter Reloaded Options"
+#~ msgstr "Настройки Shutter Reloaded"
+
+#~ msgid "Setup and Usage"
+#~ msgstr "Установка и использование"
+
+#~ msgid ""
+#~ "Shutter is activated by <strong>the link</strong> pointing to the image "
+#~ "you want to display, with or without a thumbnail (text links work too). "
+#~ "The activation class and the title have to be set on that link."
+#~ msgstr ""
+#~ "Shutter активирован <strong>ссылкой</strong> ведущей к изображению, "
+#~ "которое вы хотите показать, с или без миниатюрой (текстовая ссылка так же "
+#~ "работает. Активированные class и title указаны в этой ссылке."
+
+#~ msgid ""
+#~ "To take full control of Shutter's activation and to make multiple image "
+#~ "sets on the same page, you will need to add the <strong>class=&quot;"
+#~ "shutter&quot;</strong> or <strong>&quot;shutterset&quot;</strong> or "
+#~ "<strong>&quot;shutterset_setname&quot;</strong> to your links in &quot;"
+#~ "Code&quot; view on the Write/Edit Post page."
+#~ msgstr ""
+#~ "Чтобы иметь полный контроль над активацией Shutter'а и создавать "
+#~ "множественные наборы изображений на одной странице, вы должны добавить "
+#~ "<strong>class=&quot;shutter&quot;</strong> или <strong>&quot;"
+#~ "shutterset&quot;</strong> или <strong>&quot;shutterset_setname&quot;</"
+#~ "strong> к вашим ссылкам в режиме редактирования &quot;кода&quot; на "
+#~ "странице Создания/Редактирования записи."
+
+#~ msgid ""
+#~ "To add caption to the images, set the <strong>title=&quot;...&quot;</"
+#~ "strong> attribute of the <strong>links</strong> pointing to them."
+#~ msgstr ""
+#~ "Для добавления заголовка к изображению, установите атрибут "
+#~ "<strong>title=&quot;...&quot;</strong> <strong>ссылки</strong> ведущей к "
+#~ "нему."
+
+#~ msgid ""
+#~ "If you want to use image sets, you will need to add <strong>class=&quot;"
+#~ "shutterset&quot;</strong> to all <strong>links</strong> that point to the "
+#~ "images for that set. If you want to apply css style to the links, you can "
+#~ "add second class, like this: class=&quot;shutterset myClass&quot;, but "
+#~ "&quot;shutterset&quot; should be first."
+#~ msgstr ""
+#~ "Если вы хотите использовать наборы изображений, вы должны добавить "
+#~ "<strong>class=&quot;shutterset&quot;</strong> во все <strong>ссылки</"
+#~ "strong>, которые ведут на изображения для этого набора. Если вы ходите "
+#~ "добавить стили css к ссылкам, вы можете добавить второй class, как этот: "
+#~ "class=&quot;shutterset myClass&quot;, но &quot;shutterset&quot; должен "
+#~ "быть первым."
+
+#~ msgid ""
+#~ "Adding class=&quot;shutterset&quot; will also trigger activation (for the "
+#~ "first activation option). There is no need to add both &quot;"
+#~ "shutter&quot; and &quot;shutterset&quot;."
+#~ msgstr ""
+#~ "Добавление class=&quot;shutterset&quot; будет так же инициировать "
+#~ "активацию (для первой настройки активации). Сдесь не нужно добавлять оба "
+#~ "&quot;shutter&quot; и &quot;shutterset&quot;."
+
+#~ msgid ""
+#~ "To make more than one set per page, use <strong>class=&quot;"
+#~ "shutterset_setname&quot;.</strong> The underscore is required and setname "
+#~ "can be any short ASCII word and/or number (different for each set)."
+#~ msgstr ""
+#~ "Для того, чтобы создать более одного набора на странице, используйте "
+#~ "<strong>class=&quot;shutterset_setname&quot;.</strong> Подчеркивание "
+#~ "необходимо и setname может быть любым словом и/или числом ASCII (разным "
+#~ "для каждого набора)"
+
+#~ msgid ""
+#~ "You can use the &quot;Activate shutter on all image links&quot; and also "
+#~ "make sets by adding class=&quot;shutterset&quot; or class=&quot;"
+#~ "shutterset_setname&quot; or rel=&quot;lightbox[...]&quot; to some of the "
+#~ "image links."
+#~ msgstr ""
+#~ "Вы можете использовать &quot;Активировать shutter на все ссылки "
+#~ "изображений&quot; и также создать наборы добавив class=&quot;"
+#~ "shutterset&quot; или class=&quot;shutterset_setname&quot; или rel=&quot;"
+#~ "lightbox[...]&quot; к некоторым ссылкам изображений."
+
+#~ msgid "You can add Shutter Reloaded to your site in five different ways:"
+#~ msgstr "Вы можете добавить Shutter на ваш сайт пятью разными способами:"
+
+#~ msgid "Shutter is activated for all links pointing to an image."
+#~ msgstr "Shutter активирован для всех ссылок ведущих к изображениям."
+
+#~ msgid ""
+#~ "Shutter is activated for all links pointing to an image and will create "
+#~ "different image set for each Post/Page."
+#~ msgstr ""
+#~ "Shutter активирован для всех ссылок ведущих к изображениям и будет "
+#~ "создавать разные наборы изображений для каждой Записи/Страницы."
+
+#~ msgid ""
+#~ "This option is most suitable if you display several Posts on your home "
+#~ "page and want to have different image set for each Post. It adds "
+#~ "shutter's activation class at runtime and doesn't modify the html."
+#~ msgstr ""
+#~ "Этот вариант является наиболее подходящим, если Вы показываете несколько "
+#~ "записей на главной странице и хотите иметь другой набор изображений для "
+#~ "каждой записи. Он добавляет активацию Shutter'а во время выполнения и не "
+#~ "изменяет HTML."
+
+#~ msgid "Excluded Posts or Pages (by ID):"
+#~ msgstr "Исключить Записи или Страницы (по ID)"
+
+#~ msgid "[none]"
+#~ msgstr "[нет]"
+
+#~ msgid "Add Excluded ID"
+#~ msgstr "Добавить исключаемый ID"
+
+#~ msgid "Remove Excluded ID"
+#~ msgstr "Убрать исключенный ID"
+
+#~ msgid ""
+#~ "Please enter the ID for the post/page you want to exclude. You can see it "
+#~ "in your browser's status bar(at the bottom of the window) when hovering "
+#~ "over the name at the <a href=\"edit.php?post_type=page\">Edit Pages</a> "
+#~ "or the <a href=\"edit.php\">Edit Posts</a> page."
+#~ msgstr ""
+#~ "Пожалуйста, введите ID Страниц/Записей, которые вы хотите исключить. Вы "
+#~ "можете увидеть их в строке состояния  браузера (внизу окна), когда "
+#~ "проводите мышкой через их названия на страницах <a href=\"edit-pages.php"
+#~ "\">Изменить Страницы</a> или <a href=\"edit.php\">Изменить Записи</a>."
+
+#~ msgid ""
+#~ "Shutter is activated for all links pointing to an image that have class = "
+#~ "&quot;shutter&quot;, &quot;shutterset&quot; or &quot;"
+#~ "shutterset_setname&quot;"
+#~ msgstr ""
+#~ "Shutter активирован для всех ссылок ведущих на изображения, которые имеют "
+#~ "class = &quot;shutter&quot;, &quot;shutterset&quot; или &quot;"
+#~ "shutterset_setname&quot;"
+
+#~ msgid ""
+#~ "Class = &quot;shutter&quot; will display a single image, class = &quot;"
+#~ "shutterset&quot; will create a single set for all images and class=&quot;"
+#~ "shutterset_setname&quot;, where setname is a short ASCII word and/or "
+#~ "number, will create multiple sets on the same page."
+#~ msgstr ""
+#~ "Class = &quot;shutter&quot; будет отображать одиночное изображение, class "
+#~ "= &quot;shutterset&quot; создаст одиночный набор для всех изображений и "
+#~ "class=&quot;shutterset_setname&quot; создаст множество наборов на одной "
+#~ "странице, где setname это короткое ASCII слово и/или число."
+
+#~ msgid "Shutter is activated for the following Posts and Pages (by ID):"
+#~ msgstr "Shutter активирован для следующих Записей и Страниц (по ID):"
+
+#~ msgid "Add ID"
+#~ msgstr "Добавить ID"
+
+#~ msgid "Remove ID"
+#~ msgstr "Удалить ID"
+
+#~ msgid ""
+#~ "Please enter the ID for the post/page you want to exclude. You can see it "
+#~ "in your browser's status bar(at the bottom of the window) when hovering "
+#~ "over the name at the <a href=\"edit-pages.php\">Manage Pages</a> or the "
+#~ "<a href=\"edit.php\">Manage Posts</a> page."
+#~ msgstr ""
+#~ "Пожалуйста, введите ID Страниц/Записей, которые вы хотите исключить. Вы "
+#~ "можете увидеть их в статусной строке браузера (внизу окна), когда "
+#~ "проводите мышкой через их названия на страницах <a href=\"edit-pages.php"
+#~ "\">Изменить Страницы</a> или <a href=\"edit.php\">Изменить Записи</a>."
+
+#~ msgid "Shutter uses Lightbox style activation."
+#~ msgstr "Shutter использует стиль Lightbox"
+
+#~ msgid ""
+#~ "Shutter is activated for all links pointing to an image, that have "
+#~ "rel=&quot;lightbox&quot; or rel=&quot;lightbox[...]&quot;. To make sets "
+#~ "of images, you will have to add rel=&quot;lightbox[abc]&quot;, where "
+#~ "&quot;abc&quot; can be any short ASCII word and/or number."
+#~ msgstr ""
+#~ "Shutter активирован для всех ссылок указывающих на изображения, которые "
+#~ "имеют rel=&quot;lightbox&quot; или rel=&quot;lightbox[...]&quot;. Для "
+#~ "создания наборов изображений, вы должны будете добавить rel=&quot;lightbox"
+#~ "[abc]&quot;, где &quot;abc&quot; могут быть любыми короткими ASCII "
+#~ "словами  и/или цифрами."
+
+#~ msgid "Customization"
+#~ msgstr "Внешний вид"
+
+#~ msgid ""
+#~ "Make one set for all image links on the page that are not part of another "
+#~ "set."
+#~ msgstr ""
+#~ "Создать один набор для всех ссылок изображений на странице, которая не "
+#~ "является частью другого набора."
+
+#~ msgid "Shutter color (default 000000):"
+#~ msgstr "Цвет Shutter'а (по-умолчанию 000000):"
+
+#~ msgid "Please enter valid HTML color codes, from 000000 to FFFFFF."
+#~ msgstr ""
+#~ "Пожалуйста, введите допустимые  HTML коды цветов, от 000000 к FFFFFF."
+
+#~ msgid "Shutter opacity (default 80):"
+#~ msgstr "Прозрачность Shutter'а (по-умолчанию 80):"
+
+#~ msgid "Enter a number between 1 (see-through) and 99 (solid color)."
+#~ msgstr "Введите числа между 1 (прозрачный) и 99 (сплошной цвет)"
+
+#~ msgid "Caption text color (default FFFFFF):"
+#~ msgstr "Цвет текста заголовка (по-умолчанию FFFFFF)"
+
+#~ msgid "Menubar color (default 3E3E3E):"
+#~ msgstr "Цвет панели (по-умолчанию 3E3E3E):"
+
+#~ msgid "Show images count for sets (Image 1 of ...):"
+#~ msgstr "Показывать счетчик изображений (Изображение 1 из ...):"
+
+#~ msgid "Images count color (default 999999):"
+#~ msgstr "Цвет счетчика изображений (по-умолчанию 999999)"
+
+#~ msgid "Text buttons (instead of images):"
+#~ msgstr "Текстовые кнопки (взамен рисованных)"
+
+#~ msgid "Text buttons color (default CCCCCC):"
+#~ msgstr "Цвет текста кнопок (по-умолчанию CCCCCC)"
+
+#~ msgid "Open the images in full size:"
+#~ msgstr "Загружать изображения в полный размер:"
+
+#~ msgid "Alternate loading (select if Shutter does not start):"
+#~ msgstr "Альтернативная загрузка (выбрать, если Shutter не запускается):"
+
+#~ msgid ""
+#~ "To restore the defaults, delete the current value(s) and submit the form."
+#~ msgstr "Что бы сбросить настройки, удалите текущие значения и нажмит SUBMIT"
+
+#~ msgid "Reset all options"
+#~ msgstr "Сбросить все настройки"
+
+#~ msgid "Save Options"
+#~ msgstr "Сохранить настройки"
