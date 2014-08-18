@@ -7,7 +7,7 @@ Version: 0.5.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
-*/
+ */
 
 /*  Copyright (C) 2014, Onur Küçük
 
@@ -23,25 +23,25 @@ License: GPL2
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ */
 
-    define('FLUXOPHY_DISPLAY_COUNT', 10);
-    require_once(dirname(__FILE__) . '/includes/class-wp-fp-widget.php');
-    $wp_fp = new WP_Fluxophy_Widget();
+define('FLUXOPHY_DISPLAY_COUNT', 10);
+require_once(dirname(__FILE__) . '/includes/class-wp-fp-widget.php');
+$wp_fp = new WP_Fluxophy_Widget();
 
-    global $wpdb;
+global $wpdb;
 
-    add_action('widgets_init', 'fluxophy_init');
-    add_action('init', 'fluxophy_add_css');
+add_action('widgets_init', 'fluxophy_init');
+add_action('init', 'fluxophy_add_css');
 
 
-    function fluxophy_add_css() {
-        wp_enqueue_style('fluxophy', get_option('siteurl') . '/wp-content/plugins/fluxophy/css/fluxophy.css');
-    }
+function fluxophy_add_css() {
+  wp_enqueue_style('fluxophy', get_option('siteurl') . '/wp-content/plugins/fluxophy/css/fluxophy.css');
+}
 
-    function fluxophy_init() {
-        load_plugin_textdomain('fluxophy', false, basename(dirname(__FILE__)) . '/languages' );
-        register_widget('WP_Fluxophy_Widget');
-    }
+function fluxophy_init() {
+  load_plugin_textdomain('fluxophy', false, basename(dirname(__FILE__)) . '/languages' );
+  register_widget('WP_Fluxophy_Widget');
+}
 
 ?>
