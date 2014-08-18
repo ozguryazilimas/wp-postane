@@ -161,29 +161,42 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
 
 // initiate a fake curl session to mimmick browser
 function fluxophy_get_contents_for_browser($url) {
-    $curl = curl_init();
+  $header = array(
+    'Content-Type: application/json',
+    'Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5',
+    'Cache-Control: max-age=0',
+    'Connection: keep-alive',
+    'Keep-Alive: 300',
+    'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7',
+    'Accept-Language: en-us,en;q=0.5',
+    'Pragma: ' // keep this blank
+  );
 
-    $header[] = "Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
-    $header[] = "Cache-Control: max-age=0";
-    $header[] = "Connection: keep-alive";
-    $header[] = "Keep-Alive: 300";
-    $header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
-    $header[] = "Accept-Language: en-us,en;q=0.5";
-    $header[] = "Pragma: "; // keep this blank.
+  $options = array(
+    CURLOPT_URL => $url,
+    CURLOPT_HTTPHEADER => $header,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_USERAGENT => "Mozilla",
+    CURLOPT_AUTOREFERER => true,
+    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+    // CURLOPT_TIMEOUT => 120, // timeout on response
+    CURLOPT_TIMEOUT => 20,
+    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_SSL_VERIFYHOST => 0,
+    // CURLOPT_REFERER => '',
+    CURLOPT_ENCODING => 'gzip,deflate'
+  );
 
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla');
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-    curl_setopt($curl, CURLOPT_REFERER, '');
-    curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
-    curl_setopt($curl, CURLOPT_AUTOREFERER, true);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+  $ch = curl_init();
+  curl_setopt_array( $ch, $options );
 
-    $resp = curl_exec($curl);
-    curl_close($curl);
+  $result = curl_exec($ch);
+  $response_header = curl_getinfo($ch);
+  curl_close($ch);
 
-    return $resp;
+  return $result;
 }
 
 ?>
