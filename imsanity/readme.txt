@@ -124,11 +124,14 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.2.7 =
-* Automatically rotate images according to EXIF rotation data if available
-* 
+= 2.2.8 =
+* hotfix for bux exif_read_data constant
 
 == Changelog ==
+
+= 2.2.7 =
+* Automatically rotate images according to EXIF rotation data if available
+* Reset the quota cache after bulk resizing images
 
 = 2.2.6 =
 * fixed bug in network settings where width/height input fields are in the same place

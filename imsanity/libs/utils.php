@@ -56,7 +56,7 @@ function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = 
 		$editor->set_quality( $jpeg_quality );
 	
 		// try to correct for auto-rotation if the info is available
-		if (function_exists(exif_read_data)) {
+		if (function_exists('exif_read_data')) {
 			$exif = exif_read_data($file);
 			$orientation = is_array($exif) && array_key_exists('Orientation', $exif) ? $exif['Orientation'] : 0;
 			switch($orientation) {
