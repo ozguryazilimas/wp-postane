@@ -1,7 +1,7 @@
 <?php
 /**
  * Author: Alin Marcu
- * Author URI: http://deconf.com
+ * Author URI: https://deconf.com
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -29,7 +29,7 @@ class GADASH_Install {
 			$options ['ga_dash_anonim'] = 0;
 			$options ['ga_dash_userapi'] = 0;
 			$options ['ga_event_tracking'] = 0;
-			$options ['ga_event_downloads'] = 'zip|ra*|mp*|avi|flv|mpeg|pdf|doc*|ppt*|xls*|jp*|png|gif|tiff|bmp|txt';
+			$options ['ga_event_downloads'] = 'zip|mp3*|mpe*g|pdf|docx*|pptx*|xlsx*|jpe*g|png|gif|tiff|rar*';
 			$options ['ga_track_exclude'] = array ();
 			$options ['ga_target_geomap'] = '';
 			$options ['ga_target_number'] = 10;
@@ -46,6 +46,9 @@ class GADASH_Install {
 			$options ['ga_dash_default_dimension'] = '30daysAgo';
 			$options ['ga_dash_frontend_stats'] = 0;
 			$options ['ga_dash_network'] = 0;
+			$options['ga_dash_adsense'] = 0;
+			$options['ga_speed_samplerate'] = 1;
+			$options['ga_event_bouncerate'] = 1;
 		} else {
 			$options = array ();
 			$options ['ga_dash_apikey'] = get_option ( 'ga_dash_apikey' );
@@ -91,6 +94,7 @@ class GADASH_Install {
 			$options ['ga_dash_default_metric'] = 'visits';
 			$options ['ga_dash_default_dimension'] = '30daysAgo';
 			$options ['ga_dash_network'] = 0;
+			$options['ga_event_bouncerate'] = 1;
 			
 			delete_option ( 'ga_dash_apikey' );
 			delete_option ( 'ga_dash_clientid' );

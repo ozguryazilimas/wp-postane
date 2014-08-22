@@ -1,7 +1,7 @@
 <?php
 /**
  * Author: Alin Marcu
- * Author URI: http://deconf.com
+ * Author URI: https://deconf.com
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -17,8 +17,8 @@ if (! class_exists ( 'GADASH_GAPI' )) {
 				update_option ( 'gadash_lasterror', date ( 'Y-m-d H:i:s' ) . ': CURL disabled. Please enable CURL!' );
 				return;
 			}
-			// If at least PHP 5.3.0 use the autoloader, if not try to edit the include_path
-			if (version_compare ( PHP_VERSION, '5.3.0' ) >= 0) {
+			// If at least PHP 5.3.2 use the autoloader, if not try to edit the include_path
+			if (version_compare ( PHP_VERSION, '5.3.2' ) >= 0) {
 				require 'vendor/autoload.php';
 			} else {
 				set_include_path ( $GADASH_Config->plugin_path . '/tools/src/' . PATH_SEPARATOR . get_include_path () );
@@ -794,6 +794,7 @@ if (! class_exists ( 'GADASH_GAPI' )) {
 		
 		// Frontend searches
 		function frontend_afterpost_searches($projectId, $page_url, $post_id) {
+			global $GADASH_Config;
 			$content = '';
 			$from = '30daysAgo';
 			$to = 'yesterday';

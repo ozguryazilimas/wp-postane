@@ -1,17 +1,17 @@
 === Google Analytics Dashboard for WP ===
 Contributors: deconf
-Donate link: http://deconf.com/donate/
+Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
-Tested up to: 3.9.1
-Stable tag: 4.3.1
+Tested up to: 3.9.2
+Stable tag: 4.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
 
 == Description ==
-Using a widget, [Google Analytics Dashboard](http://deconf.com/google-analytics-dashboard-wordpress/) displays detailed analytics info and statistics about: number of visits, number of visitors, bounce rates, organic searches, pages per visit directly on your Administration Dashboard.
+Using a widget, [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) displays detailed analytics info and statistics about: number of visits, number of visitors, bounce rates, organic searches, pages per visit directly on your Administration Dashboard.
 
 Authorized users can also view statistics like Views, UniqueViews and top searches, on frontend, at the end of each article.
 
@@ -42,8 +42,11 @@ Using this plugin, your analytics data is collected in a fast and secure manner 
 - IP address anonymization feature
 - enhanced link attribution feature
 - remarketing, demographics and interests tracking
+- Google AdSense account linking
+- page speed sampling rate customization
 - track events feature: track downloads, emails and outbound links (supported for both tracking methods: classic tracking and universal tracking)
 - exclude traffic based on user level access
+- option to exclude event tracking from bounce-rate calculation
 
 = WPMU features =
 
@@ -63,9 +66,9 @@ Google Analytics Dashboard for WP has been translated into the following languag
 
 = Further reading and info =
 
-* My [Google Analytics Dashboard](http://deconf.com/google-analytics-dashboard-wordpress/) homepage
-* Other [WordPress Plugins](http://deconf.com/wordpress/) by same author
-* [Google Analytics Dashboard](http://deconf.com/ask/) translations and support 
+* My [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) homepage
+* Other [WordPress Plugins](https://deconf.com/wordpress/) by same author
+* [Google Analytics Dashboard](https://deconf.com/ask/) translations and support 
 
 == Installation ==
 
@@ -76,7 +79,7 @@ Google Analytics Dashboard for WP has been translated into the following languag
 5. Go back to the plugin configuration page, which is located under "Google Analytics" menu to update/set your settings.
 6. Use Google Analytics Tracking options to configure/enable/disable tracking
 
-A tutorial and a short demo is available here: [Google Analytics Dashboard video tutorial](http://deconf.com/google-analytics-dashboard-wordpress/)
+A tutorial and a short demo is available here: [Google Analytics Dashboard video tutorial](https://deconf.com/google-analytics-dashboard-wordpress/)
 
 == Frequently Asked Questions == 
 
@@ -90,7 +93,7 @@ We are constantly improving our plugin, sometimes the video tutorial may be a li
 
 = More Questions? =
 
-A dedicated section for Wordpress Plugins is available here: [Wordpress Plugins Support](http://deconf.com/ask/)
+A dedicated section for Wordpress Plugins is available here: [Wordpress Plugins Support](https://deconf.com/ask/)
 
 == Screenshots ==
 
@@ -110,12 +113,24 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 
 == Changelog ==
 
+= v4.3.2 =
+- bugfix: fixes for multisite with a single Google Account
+- bugfix: notice while displaying searches report
+- bugfix: downloads regex update
+- bugfix: always exclude outbound links from bounce-rate calculation 
+- feature: Adsense account linking
+- feature: adjust page speed sample rate
+- feature: exclude event tracking from bounce-rate calculation for downloads and mailto
+- tweak: reset downloads filters to default when empty
+- deprecate: classic analytics
+- added a plugin logo
+
 = v4.3.1 =
 - bugfix: link on top referrers list not working
-- bugfix: profiles refresh issue
-- bugfix: multiple fixes for network mode
-- tweak: remove table borders on frontend widget
 - allowing today as default stats
+- bugfix: profiles refresh issue
+- tweak: remove table borders on frontend widget
+- bugfix: multiple fixes for network mode
 - updated GAPI libarry
 - using autloader for PHP 5.3.0 and greater
 - security improvements

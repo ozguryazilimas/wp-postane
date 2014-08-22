@@ -1,7 +1,7 @@
 <?php
 /**
  * Author: Alin Marcu
- * Author URI: http://deconf.com
+ * Author URI: https://deconf.com
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -14,13 +14,17 @@ $rootdomain = $tools->get_root_domain ( $profile [3] );
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   
-  ga('create', '<?php echo esc_html($profile[2]); ?>', 'auto');
+  ga('create', '<?php echo esc_html($profile[2]); ?>', 'auto'<?php	if ($GADASH_Config->options ['ga_speed_samplerate']<>1) {?>, {'siteSpeedSampleRate': <?php echo (int)$GADASH_Config->options ['ga_speed_samplerate']; ?>} <?php }?>);
 <?php	if ($GADASH_Config->options ['ga_dash_remarketing']) {?>
   ga('require', 'displayfeatures');
 <?php }?>
 <?php	if ($GADASH_Config->options ['ga_enhanced_links']) {?>
   ga('require', 'linkid', 'linkid.js');
 <?php }?>
-<?php if ($GADASH_Config->options ['ga_dash_anonim']) {?>  ga('send', 'pageview', {'anonymizeIp': true});<?php } else {?>  ga('send', 'pageview');<?php }?>
+<?php if ($GADASH_Config->options ['ga_dash_anonim']) {?>  ga('send', 'pageview', {'anonymizeIp': true});<?php } else {?>  ga('send', 'pageview');
+<?php }?>
 
+<?php if ($GADASH_Config->options ['ga_dash_adsense']) {?>
+  window.google_analytics_uacct = "<?php echo esc_html($profile[2]); ?>";
+<?php }?>  
 </script>
