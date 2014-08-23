@@ -3,8 +3,8 @@ Contributors: deconf
 Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
-Tested up to: 3.9.2
-Stable tag: 4.3.2
+Tested up to: 4.0
+Stable tag: 4.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,8 +61,9 @@ Google Analytics Dashboard for WP has been translated into the following languag
 2. German
 3. Hungarian
 4. Italian
-5. Portuguese
-6. Spanish
+5. Polish
+6. Portuguese
+7. Spanish
 
 = Further reading and info =
 
@@ -113,6 +114,12 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 
 == Changelog ==
 
+= 4.3.3 =
+- feature: added Polish translation
+- bugfix: missing icon and wrong link in GADWP settings
+- tweak: moving Page Speed SR to top, to avoid some confusions
+- tweak: added plugin version to debugging data
+
 = v4.3.2 =
 - bugfix: fixes for multisite with a single Google Account
 - bugfix: notice while displaying searches report
@@ -123,7 +130,6 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 - feature: exclude event tracking from bounce-rate calculation for downloads and mailto
 - tweak: reset downloads filters to default when empty
 - deprecate: classic analytics
-- added a plugin logo
 
 = v4.3.1 =
 - bugfix: link on top referrers list not working

@@ -514,6 +514,13 @@ class GADASH_Settings {
 								</select></td>
 							</tr>
 							<tr>
+								<td class="title"><label for="ga_speed_samplerate"><?php _e("Page Speed SR:", 'ga-dash'); ?></label></td>
+								<td><input type="number" id="ga_speed_samplerate"
+									name="options[ga_speed_samplerate]"
+									value="<?php echo (int)($options['ga_speed_samplerate']); ?>"
+									 max="100" min="1"> %</td>
+							</tr>							
+							<tr>
 								<td colspan="2" class="title">
 
 									<div class="onoffswitch">
@@ -579,13 +586,6 @@ class GADASH_Settings {
 
 								</td>
 							</tr>
-							<tr>
-								<td class="title"><label for="ga_speed_samplerate"><?php _e("Page Speed SR:", 'ga-dash'); ?></label></td>
-								<td><input type="number" id="ga_speed_samplerate"
-									name="options[ga_speed_samplerate]"
-									value="<?php echo (int)($options['ga_speed_samplerate']); ?>"
-									 max="100" min="1"> %</td>
-							</tr>																													
 							<?php
 			}
 			?>							
@@ -967,6 +967,7 @@ class GADASH_Settings {
 				echo '<pre class="log_data">************************************* Start Log *************************************<br/><br/>';
 				$anonim = $GADASH_Config->options;
 				$anonim ['wp_version'] = $wp_version;
+				$anonim ['gadwp_version'] = GADWP_CURRENT_VERSION;
 				if ($anonim ['ga_dash_token']) {
 					$anonim ['ga_dash_token'] = 'HIDDEN';
 				}
@@ -1029,6 +1030,7 @@ class GADASH_Settings {
 				echo '<pre class="log_data">************************************* Start Log *************************************<br/><br/>';
 				$anonim = $GADASH_Config->options;
 				$anonim ['wp_version'] = $wp_version;
+				$anonim ['gadwp_version'] = GADWP_CURRENT_VERSION;
 				if ($anonim ['ga_dash_token']) {
 					$anonim ['ga_dash_token'] = 'HIDDEN';
 				}
@@ -1355,6 +1357,7 @@ class GADASH_Settings {
 					echo '<pre class="log_data">************************************* Start Log *************************************<br/><br/>';
 					$anonim = $GADASH_Config->options;
 					$anonim ['wp_version'] = $wp_version;
+					$anonim ['gadwp_version'] = GADWP_CURRENT_VERSION;
 					if ($anonim ['ga_dash_token']) {
 						$anonim ['ga_dash_token'] = 'HIDDEN';
 					}
@@ -1419,6 +1422,7 @@ class GADASH_Settings {
 					echo '<pre class="log_data">************************************* Start Log *************************************<br/><br/>';
 					$anonim = $GADASH_Config->options;
 					$anonim ['wp_version'] = $wp_version;
+					$anonim ['gadwp_version'] = GADWP_CURRENT_VERSION;
 					if ($anonim ['ga_dash_token']) {
 						$anonim ['ga_dash_token'] = 'HIDDEN';
 					}
@@ -1508,7 +1512,7 @@ class GADASH_Settings {
 										</h3>
 										<div class="inside">
 											<div class="gadash-title">
-												<a href="https://deconf.com/clicky-web-analytics-review/"><img
+												<a href="https://deconf.com/move-website-https-ssl/"><img
 													src="<?php echo plugins_url( 'images/ssl.png' , __FILE__ ); ?>" /></a>
 											</div>
 											<div class="gadash-desc"><?php echo  '<a href="https://deconf.com/move-website-https-ssl/">'.__('Improve search rankings', 'ga-dash').'</a> '.__('by moving your website to HTTPS/SSL.', 'ga-dash'); ?></div>
