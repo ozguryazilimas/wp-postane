@@ -36,11 +36,11 @@ index ad552ce..b64da01 100644
 +
 +</style>	
 diff --git a/bknewsticker/ticker.css b/bknewsticker/ticker.css
-index 21440da..1f144c7 100644
+index 2de6538..544ae79 100644
 --- a/bknewsticker/ticker.css
 +++ b/bknewsticker/ticker.css
-@@ -5,6 +5,10 @@
- 	border-bottom: 0px solid #ccc;
+@@ -6,6 +6,10 @@
+ 	max-height: 40px!important;
  }
  
 +#allticker > ul > li {
@@ -50,7 +50,7 @@ index 21440da..1f144c7 100644
  #bknewsticker{
  	background: #F3F3F3;
  	margin: 0px;
-@@ -16,7 +20,7 @@
+@@ -17,7 +21,7 @@
  	background: #5A5A5A;
  	color: #ccc;
  	font-size: 10px;
@@ -59,7 +59,7 @@ index 21440da..1f144c7 100644
  	margin-left: 3px;
  }
  .tickerLink a, .tickermore a{
-@@ -27,14 +31,14 @@
+@@ -28,14 +32,14 @@
  }
  .tickerText{
  	color: #5A5A5A;
@@ -76,7 +76,7 @@ index 21440da..1f144c7 100644
  	background: transparent;
  	
  }
-@@ -43,11 +47,11 @@
+@@ -44,11 +48,11 @@
  	font-size: 14px;
  	margin: 0px;
  	text-align: center;
@@ -91,7 +91,7 @@ index 21440da..1f144c7 100644
      padding-left: 5px;
  }
  
-@@ -56,4 +60,4 @@
+@@ -57,4 +61,4 @@
  	}
  @media only screen and (max-width: 320px) {
  	#bknews-title{ display: none!important;
@@ -99,20 +99,20 @@ index 21440da..1f144c7 100644
 \ No newline at end of file
 +	}
 diff --git a/bknewsticker/ticker.php b/bknewsticker/ticker.php
-index 139c966..f4daf85 100644
+index 3e206f4..061d38a 100644
 --- a/bknewsticker/ticker.php
 +++ b/bknewsticker/ticker.php
 @@ -8,7 +8,8 @@ Author URI: http://www.bekero.com
- Version: 1.0.3
+ Version: 1.0.4
  */
- define('TICKER_VERSION', '1.0.3');
+ define('TICKER_VERSION', '1.0.4');
 -define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
 +// define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
 +define('TICKER_MAX_INT', 100);
  define('PHPREQ',5);
  $phpver=phpversion();$phpmaj=$phpver[0];
  function ticker_add_pages() {
-@@ -60,18 +61,21 @@ function insert_bknewsticker(){
+@@ -74,18 +75,21 @@ function insert_bknewsticker(){
  	?>
  	<script type="text/javascript" language="javascript">
  	jQuery(document).ready(function(){
@@ -137,7 +137,7 @@ index 139c966..f4daf85 100644
  </div>
  <?php
  }
-@@ -183,6 +187,9 @@ function ticker_recent_comments($src_count, $src_length) {
+@@ -197,6 +201,9 @@ function ticker_recent_comments($src_count, $src_length) {
  }
  
  function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
@@ -147,7 +147,7 @@ index 139c966..f4daf85 100644
  	switch($type){
  		case 'popular':
  		$days = get_option('ticker_popular_days');
-@@ -199,7 +206,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+@@ -213,7 +220,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
  		case 'recent':
  		$posts = get_posts(
  			array(
@@ -157,7 +157,7 @@ index 139c966..f4daf85 100644
  				'orderby' => 'post_date',
  				'suppress_filters' => 0,
  				)
-@@ -208,7 +216,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+@@ -222,7 +230,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
  		case 'commented':
  		$posts = get_posts(
  			array(
@@ -167,7 +167,7 @@ index 139c966..f4daf85 100644
  				'orderby' => 'comment_count',
  				'suppress_filters' => 0,
  				)
-@@ -217,7 +226,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+@@ -231,7 +240,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
  		case 'userspecified':
  		$posts_tmp = get_posts(
  			array(
@@ -177,10 +177,201 @@ index 139c966..f4daf85 100644
  				'include' => $post_list,
  				'suppress_filters' => 0,
  				)
-@@ -861,4 +871,4 @@ function ticker_plugin_action_links( $links, $file ) {
+@@ -875,4 +885,4 @@ function ticker_plugin_action_links( $links, $file ) {
  	}
  	return $links;
  }
 -?>
 \ No newline at end of file
 +?>
+diff --git a/patches/bknewsticker.patch b/patches/bknewsticker.patch
+index 506dee2..b0435d9 100644
+--- a/patches/bknewsticker.patch
++++ b/patches/bknewsticker.patch
+@@ -1,186 +0,0 @@
+-diff --git a/bknewsticker/ticker-color.php b/bknewsticker/ticker-color.php
+-index ad552ce..b64da01 100644
+---- a/bknewsticker/ticker-color.php
+-+++ b/bknewsticker/ticker-color.php
+-@@ -20,7 +20,7 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
+- }
+- #bknews-title h3{
+- 	 color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+--	 border-bottom: 40px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
+-+	 border-bottom: 25px solid <?php $background_title = get_option('ticker_background_title'); echo $background_title;?>;
+- 	 font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px;
+- }
+- #allticker{
+-@@ -30,4 +30,21 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
+- 	color: <?php $color_exerpt = get_option('ticker_color_link'); echo $color_exerpt;?>;
+- 	font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px;
+- }
+--</style>	
+-\ No newline at end of file
+-+
+-+#bknews-title h3 a:link {
+-+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+-+}
+-+
+-+#bknews-title h3 a:visited {
+-+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+-+}
+-+
+-+#bknews-title h3 a:hover {
+-+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+-+}
+-+
+-+#bknews-title h3 a:active {
+-+	color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
+-+}
+-+
+-+</style>	
+-diff --git a/bknewsticker/ticker.css b/bknewsticker/ticker.css
+-index 21440da..1f144c7 100644
+---- a/bknewsticker/ticker.css
+-+++ b/bknewsticker/ticker.css
+-@@ -5,6 +5,10 @@
+- 	border-bottom: 0px solid #ccc;
+- }
+- 
+-+#allticker > ul > li {
+-+    padding-top: 2px;
+-+}
+-+
+- #bknewsticker{
+- 	background: #F3F3F3;
+- 	margin: 0px;
+-@@ -16,7 +20,7 @@
+- 	background: #5A5A5A;
+- 	color: #ccc;
+- 	font-size: 10px;
+--	line-height: 39px;
+-+	line-height: 24px;
+- 	margin-left: 3px;
+- }
+- .tickerLink a, .tickermore a{
+-@@ -27,14 +31,14 @@
+- }
+- .tickerText{
+- 	color: #5A5A5A;
+--	line-height: 40px;
+-+	line-height: 25px;
+- 	font-size: 12px;
+- 
+- }
+- #bknews-title{
+- 	float: left;
+- 	width: auto;
+--	height: 40px;
+-+	height: 25px;
+- 	background: transparent;
+- 	
+- }
+-@@ -43,11 +47,11 @@
+- 	font-size: 14px;
+- 	margin: 0px;
+- 	text-align: center;
+--	text-transform: uppercase;
+-+	//text-transform: uppercase;
+- 	text-decoration: none;
+--    border-right: 20px solid transparent;
+-+    border-right: 25px solid transparent;
+-     height: 0;
+--    line-height: 40px;
+-+    line-height: 25px;
+-     padding-left: 5px;
+- }
+- 
+-@@ -56,4 +60,4 @@
+- 	}
+- @media only screen and (max-width: 320px) {
+- 	#bknews-title{ display: none!important;
+--	}
+-\ No newline at end of file
+-+	}
+-diff --git a/bknewsticker/ticker.php b/bknewsticker/ticker.php
+-index 139c966..f4daf85 100644
+---- a/bknewsticker/ticker.php
+-+++ b/bknewsticker/ticker.php
+-@@ -8,7 +8,8 @@ Author URI: http://www.bekero.com
+- Version: 1.0.3
+- */
+- define('TICKER_VERSION', '1.0.3');
+--define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
+-+// define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
+-+define('TICKER_MAX_INT', 100);
+- define('PHPREQ',5);
+- $phpver=phpversion();$phpmaj=$phpver[0];
+- function ticker_add_pages() {
+-@@ -60,18 +61,21 @@ function insert_bknewsticker(){
+- 	?>
+- 	<script type="text/javascript" language="javascript">
+- 	jQuery(document).ready(function(){
+-+		jQuery('#bknewsticker').show();
+- 		jQuery('#bknewsticker').cycle({ 
+- 			speed: <?php echo $tickerspeed; ?>000,
+- 			timeout: <?php echo $tickertimeout; ?>000,
+--			height: 40,
+-+			height: 25,
+- 			fx: '<?php echo $tickeranimation; ?>',
+- 			pause: 1,
+- 			containerResize: 1
+- 		});
+- 	});
+- </script><div id="allticker"> 
+--<div id="bknews-title"><h3><?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i></h3></div>
+--<ul id="bknewsticker" style="overflow:hidden;"><?php  ticker_content(); ?></ul>
+-+<div id="bknews-title"><h3><a href="<?php $title_cat_ids = get_option('ticker_category_filter'); echo get_category_link($title_cat_ids[0]); ?>">
+-+	<?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i>
+-+</a></h3></div>
+-+<ul id="bknewsticker" style="overflow:hidden;display:none;"><?php  ticker_content(); ?></ul>
+- </div>
+- <?php
+- }
+-@@ -183,6 +187,9 @@ function ticker_recent_comments($src_count, $src_length) {
+- }
+- 
+- function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+-+	// We do not want to fetch 2147483647 posts
+-+	$get_posts_category_param = count($cat_filter) > 0 ? $cat_filter[0] : '';
+-+
+- 	switch($type){
+- 		case 'popular':
+- 		$days = get_option('ticker_popular_days');
+-@@ -199,7 +206,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+- 		case 'recent':
+- 		$posts = get_posts(
+- 			array(
+--				'numberposts' => TICKER_MAX_INT, 
+-+				'numberposts' => $n ? $n : TICKER_MAX_INT,
+-+				'category' => $get_posts_category_param,
+- 				'orderby' => 'post_date',
+- 				'suppress_filters' => 0,
+- 				)
+-@@ -208,7 +216,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+- 		case 'commented':
+- 		$posts = get_posts(
+- 			array(
+--				'numberposts' => TICKER_MAX_INT,
+-+				'numberposts' => $n ? $n : TICKER_MAX_INT,
+-+				'category' => $get_posts_category_param,
+- 				'orderby' => 'comment_count',
+- 				'suppress_filters' => 0,
+- 				)
+-@@ -217,7 +226,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+- 		case 'userspecified':
+- 		$posts_tmp = get_posts(
+- 			array(
+--				'numberposts' => TICKER_MAX_INT,
+-+				'numberposts' => $n ? $n : TICKER_MAX_INT,
+-+				'category' => $get_posts_category_param,
+- 				'include' => $post_list,
+- 				'suppress_filters' => 0,
+- 				)
+-@@ -861,4 +871,4 @@ function ticker_plugin_action_links( $links, $file ) {
+- 	}
+- 	return $links;
+- }
+--?>
+-\ No newline at end of file
+-+?>
