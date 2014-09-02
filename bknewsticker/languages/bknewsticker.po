@@ -1,0 +1,316 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Text in echo
+#: bknewsticker/ticker.php:655
+msgid "
+						Blog Posts"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:774
+#: bknewsticker/ticker.php:787
+msgid "(Seconds)"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:752
+msgid "Background Title:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:743
+msgid "Background ticker:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:635
+msgid "BkNewsticker Settings"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:746
+msgid "Border bottom color:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:724
+msgid "Border bottom size:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:671
+msgid "Category Filter:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:758
+msgid "Color Link:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:755
+msgid "Color Title:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:644
+msgid "Content Setup"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:646
+msgid "Content Source:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:704
+msgid "Contents:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:736
+msgid "Enter how many characters long the auto-excerpt should be."
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:749
+msgid "Excerpt Color:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:664
+msgid "External RSS Feed Url:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:662
+msgid "External RSS feed"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:793
+msgid "Fade"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:794
+msgid "Fade and Expand"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:737
+msgid "First"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:811
+msgid "Integration:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:660
+msgid "Local Comments RSS feed"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:658
+msgid "Local Entries RSS feed"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:695
+msgid "Most Commented Posts"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:742
+msgid "News Ticker Color:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:730
+msgid "Newsticker Title:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:807
+msgid "None"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:714
+msgid "Number of Posts:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:665
+msgid "Number of entries to display:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:812
+msgid "Paste the PHP code to your desired template location: Copy and past the below mentioned code to your desired template location."
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:693
+msgid "Post Selection:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:699
+msgid "Recent Comments"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:697
+msgid "Recent Posts"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:796
+msgid "Scroll down"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:797
+msgid "Scroll left"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:798
+msgid "Scroll right"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:795
+msgid "Scroll up"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:672
+msgid "Select the categories to include."
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:791
+msgid "Select the ticker animation"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:825
+msgid "Settings"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:707
+msgid "Show Dates"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:709
+msgid "Show Excerpts"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:806
+msgid "Slide X"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:805
+msgid "Slide Y"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:719
+msgid "Text size:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:765
+msgid "The speed of ticker transition"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:778
+msgid "The time between ticker transitions"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:790
+msgid "Ticker Animation:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:735
+msgid "Ticker Length:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:701
+msgid "Ticker Setup"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:764
+msgid "Ticker Speed:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:777
+msgid "Ticker Timeout:"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:804
+msgid "Turn Down"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:802
+msgid "Turn Left"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:801
+msgid "Turn Right"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:803
+msgid "Turn Up"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:800
+msgid "Uncover"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:821
+msgid "Update Options"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:650
+msgid "Use of these options currently requires php version "
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:651
+msgid "Your current version is "
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:799
+msgid "Zoom"
+msgstr ""
+
+#. Text in echo
+#: bknewsticker/ticker.php:739
+msgid "characters"
+msgstr ""

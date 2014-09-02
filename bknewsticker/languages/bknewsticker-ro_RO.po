@@ -1,0 +1,318 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#. Text in echo
+#: bknewsticker/ticker.php:774 bknewsticker/ticker.php:787
+msgid "(Seconds)"
+msgstr "(Secunde)"
+
+#. Text in echo
+#: bknewsticker/ticker.php:752
+msgid "Background Title:"
+msgstr "Fundal Titlu:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:743
+msgid "Background ticker:"
+msgstr "Fundal ticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:635
+msgid "BkNewsticker Settings"
+msgstr "Setari BkNewsticker "
+
+#. Text in echo
+#: bknewsticker/ticker.php:746
+msgid "Border bottom color:"
+msgstr "Culoare border jos:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:724
+msgid "Border bottom size:"
+msgstr "Dimensiune border jos:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:671
+msgid "Category Filter:"
+msgstr "Filtru Categorie:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:758
+msgid "Color Link:"
+msgstr "Culoare Link:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:755
+msgid "Color Title:"
+msgstr "Culoare Titlu:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:644
+msgid "Content Setup"
+msgstr "Setare Continut:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:646
+msgid "Content Source:"
+msgstr "Sursa:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:704
+msgid "Contents:"
+msgstr "Cuntinut:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:736
+msgid "Enter how many characters long the auto-excerpt should be."
+msgstr "Adauga numarul de caractere :"
+
+#. Text in echo
+#: bknewsticker/ticker.php:749
+msgid "Excerpt Color:"
+msgstr "Culoare mesaj:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:664
+msgid "External RSS Feed Url:"
+msgstr "RSS Feed Url Extern:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:662
+msgid "External RSS feed"
+msgstr "Rss feed extern:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:793
+msgid "Fade"
+msgstr "Fad"
+
+#. Text in echo
+#: bknewsticker/ticker.php:794
+msgid "Fade and Expand"
+msgstr "Fad si Extins"
+
+#. Text in echo
+#: bknewsticker/ticker.php:737
+msgid "First"
+msgstr "Primul"
+
+#. Text in echo
+#: bknewsticker/ticker.php:811
+msgid "Integration:"
+msgstr "Integrare:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:660
+msgid "Local Comments RSS feed"
+msgstr " Comentarii RSS feed locale"
+
+#. Text in echo
+#: bknewsticker/ticker.php:658
+msgid "Local Entries RSS feed"
+msgstr "Intrari RSS feed locale"
+
+#. Text in echo
+#: bknewsticker/ticker.php:695
+msgid "Most Commented Posts"
+msgstr "Cele mai comentate posturi"
+
+#. Text in echo
+#: bknewsticker/ticker.php:742
+msgid "News Ticker Color:"
+msgstr "Culoare News Ticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:730
+msgid "Newsticker Title:"
+msgstr "Titlu Newsticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:807
+msgid "None"
+msgstr "Fara"
+
+#. Text in echo
+#: bknewsticker/ticker.php:714
+msgid "Number of Posts:"
+msgstr "Numar de posturi:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:665
+msgid "Number of entries to display:"
+msgstr "Numar de posturi afisate"
+
+#. Text in echo
+#: bknewsticker/ticker.php:812
+msgid ""
+"Paste the PHP code to your desired template location: Copy and past the "
+"below mentioned code to your desired template location."
+msgstr "Copiaza codul si adauga-l in tema ta"
+
+#. Text in echo
+#: bknewsticker/ticker.php:693
+msgid "Post Selection:"
+msgstr "Selecteaza Post:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:699
+msgid "Recent Comments"
+msgstr "Comentarii Recente"
+
+#. Text in echo
+#: bknewsticker/ticker.php:697
+msgid "Recent Posts"
+msgstr "Posturi Recente"
+
+#. Text in echo
+#: bknewsticker/ticker.php:796
+msgid "Scroll down"
+msgstr "Deruleaza in jos"
+
+#. Text in echo
+#: bknewsticker/ticker.php:797
+msgid "Scroll left"
+msgstr "Deruleaza la stanga"
+
+#. Text in echo
+#: bknewsticker/ticker.php:798
+msgid "Scroll right"
+msgstr "Deruleaza la dreapta"
+
+#. Text in echo
+#: bknewsticker/ticker.php:795
+msgid "Scroll up"
+msgstr "Deruleaza in sus"
+
+#. Text in echo
+#: bknewsticker/ticker.php:672
+msgid "Select the categories to include."
+msgstr "Selecteaza categoria"
+
+#. Text in echo
+#: bknewsticker/ticker.php:791
+msgid "Select the ticker animation"
+msgstr "Selecteaza animatia pentru ticker"
+
+#. Text in echo
+#: bknewsticker/ticker.php:825
+msgid "Settings"
+msgstr "Setari"
+
+#. Text in echo
+#: bknewsticker/ticker.php:707
+msgid "Show Dates"
+msgstr "Arata Data"
+
+#. Text in echo
+#: bknewsticker/ticker.php:709
+msgid "Show Excerpts"
+msgstr "Arata textul"
+
+#. Text in echo
+#: bknewsticker/ticker.php:806
+msgid "Slide X"
+msgstr "Slide X"
+
+#. Text in echo
+#: bknewsticker/ticker.php:805
+msgid "Slide Y"
+msgstr "Slide Y"
+
+#. Text in echo
+#: bknewsticker/ticker.php:719
+msgid "Text size:"
+msgstr "Dimensiune text:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:765
+msgid "The speed of ticker transition"
+msgstr "Viteza pentru animatie ticker"
+
+#. Text in echo
+#: bknewsticker/ticker.php:778
+msgid "The time between ticker transitions"
+msgstr "TImp intre animatii:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:790
+msgid "Ticker Animation:"
+msgstr "Animatie Ticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:735
+msgid "Ticker Length:"
+msgstr "Lungime Ticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:701
+msgid "Ticker Setup"
+msgstr "Setare Ticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:764
+msgid "Ticker Speed:"
+msgstr "Viteza Ticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:777
+msgid "Ticker Timeout:"
+msgstr "Pauza Ticker:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:804
+msgid "Turn Down"
+msgstr "Turn Down"
+
+#. Text in echo
+#: bknewsticker/ticker.php:802
+msgid "Turn Left"
+msgstr "Turn Left"
+
+#. Text in echo
+#: bknewsticker/ticker.php:801
+msgid "Turn Right"
+msgstr "Turn Right"
+
+#. Text in echo
+#: bknewsticker/ticker.php:803
+msgid "Turn Up"
+msgstr "Turn Up"
+
+#. Text in echo
+#: bknewsticker/ticker.php:800
+msgid "Uncover"
+msgstr "Uncover"
+
+#. Text in echo
+#: bknewsticker/ticker.php:821
+msgid "Update Options"
+msgstr "Actualizeaza Optiunile:"
+
+#. Text in echo
+#: bknewsticker/ticker.php:650
+msgid "Use of these options currently requires php version "
+msgstr "Utilizarea acestor opțiuni necesită în prezent  o versiune php"
+
+#. Text in echo
+#: bknewsticker/ticker.php:651
+msgid "Your current version is "
+msgstr "Versiunea curenta este"
+
+#. Text in echo
+#: bknewsticker/ticker.php:799
+msgid "Zoom"
+msgstr "Zoom"
+
+#. Text in echo
+#: bknewsticker/ticker.php:739
+msgid "characters"
+msgstr "caractere"

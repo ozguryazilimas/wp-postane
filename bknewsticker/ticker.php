@@ -5,32 +5,52 @@ Plugin URI: http://bekero.com/bknewsticker/
 Description: BkNewsticker for Wordpress is a multi-functional data display plugin
 Author: Bechetaru Constantin
 Author URI: http://www.bekero.com
-Version: 1.0.3
+Version: 1.0.4
 */
-define('TICKER_VERSION', '1.0.3');
-// define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
-define('TICKER_MAX_INT', 100);
+define('TICKER_VERSION', '1.0.4');
+define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
 define('PHPREQ',5);
 $phpver=phpversion();$phpmaj=$phpver[0];
 function ticker_add_pages() {
 	add_options_page('BkNewsticker', 'BkNewsticker', 'edit_pages','tickeroptions', 'ticker_options_page');
 }
+// BkNewsticker languages
+
+add_action( 'plugins_loaded', 'bknewsticker_localization' );
+/**
+ * Setup localization
+ *
+ * @since 1.0.4
+ */
+function bknewsticker_localization() {
+	load_plugin_textdomain( 'bknewsticker', false, 'bknewsticker/languages/' );
+}
+
 
 // BkNewsticker plugin
+
 if($phpmaj>=PHPREQ){ require_once('bk-rss.php'); }
 register_activation_hook( __FILE__, 'ticker_activate' );
 register_deactivation_hook( __FILE__, 'ticker_deactivate' );
 add_action('switch_theme', 'ticker_activate');
 add_action('admin_menu', 'ticker_add_pages');
 
+function bk_ticker_js(){	
+	if(!is_admin()){
+		wp_enqueue_script ('jquery');	
+		wp_enqueue_script ('ticker_pack', plugins_url('cycle.js', __FILE__ ),array( 'jquery' ), '1.0.4', false );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'bk_ticker_js' );
+
 add_action( 'admin_enqueue_scripts', 'mw_enqueue_color_picker' );
 function mw_enqueue_color_picker( $hook_suffix ) {
 	wp_enqueue_style( 'wp-color-picker' );
-	wp_enqueue_script( 'my-script-handle', plugins_url('bk-color.js', __FILE__ ), array( 'wp-color-picker' ), true );
+	wp_enqueue_script( 'my-script-handle', plugins_url('bk-color.js', __FILE__ ), array( 'wp-color-picker' ), false );
 }
 function bkticker_register_style() {
 	if (!is_admin()) {
-		wp_enqueue_style('bktickercss', plugins_url('ticker.css', __FILE__ ),'1.0.2');
+		wp_enqueue_style('bktickercss', plugins_url('ticker.css', __FILE__ ),'1.0.4');
 	}
 }
 add_action('wp_enqueue_scripts', 'bkticker_register_style');
@@ -39,13 +59,6 @@ function bkfont_register_style() {
 }
 add_action('wp_enqueue_scripts', 'bkfont_register_style');
 
-function bk_ticker_js(){	
-	if(!is_admin()){
-		wp_enqueue_script ('jquery');	
-		wp_enqueue_script ('ticker_pack', plugins_url('cycle.js', __FILE__ ),array( 'jquery' ), '1.0.2', false );
-	}
-}
-add_action( 'wp_enqueue_scripts', 'bk_ticker_js' );
 
 function bk_header_style()
 {	
@@ -61,21 +74,18 @@ function insert_bknewsticker(){
 	?>
 	<script type="text/javascript" language="javascript">
 	jQuery(document).ready(function(){
-		jQuery('#bknewsticker').show();
 		jQuery('#bknewsticker').cycle({ 
 			speed: <?php echo $tickerspeed; ?>000,
 			timeout: <?php echo $tickertimeout; ?>000,
-			height: 25,
+			height: 40,
 			fx: '<?php echo $tickeranimation; ?>',
 			pause: 1,
 			containerResize: 1
 		});
 	});
 </script><div id="allticker"> 
-<div id="bknews-title"><h3><a href="<?php $title_cat_ids = get_option('ticker_category_filter'); echo get_category_link($title_cat_ids[0]); ?>">
-	<?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i>
-</a></h3></div>
-<ul id="bknewsticker" style="overflow:hidden;display:none;"><?php  ticker_content(); ?></ul>
+<div id="bknews-title"><h3><?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i></h3></div>
+<ul id="bknewsticker" style="overflow:hidden;"><?php  ticker_content(); ?></ul>
 </div>
 <?php
 }
@@ -187,9 +197,6 @@ function ticker_recent_comments($src_count, $src_length) {
 }
 
 function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
-	// We do not want to fetch 2147483647 posts
-	$get_posts_category_param = count($cat_filter) > 0 ? $cat_filter[0] : '';
-
 	switch($type){
 		case 'popular':
 		$days = get_option('ticker_popular_days');
@@ -206,8 +213,7 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'recent':
 		$posts = get_posts(
 			array(
-				'numberposts' => $n ? $n : TICKER_MAX_INT,
-				'category' => $get_posts_category_param,
+				'numberposts' => TICKER_MAX_INT, 
 				'orderby' => 'post_date',
 				'suppress_filters' => 0,
 				)
@@ -216,8 +222,7 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'commented':
 		$posts = get_posts(
 			array(
-				'numberposts' => $n ? $n : TICKER_MAX_INT,
-				'category' => $get_posts_category_param,
+				'numberposts' => TICKER_MAX_INT,
 				'orderby' => 'comment_count',
 				'suppress_filters' => 0,
 				)
@@ -226,8 +231,7 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'userspecified':
 		$posts_tmp = get_posts(
 			array(
-				'numberposts' => $n ? $n : TICKER_MAX_INT,
-				'category' => $get_posts_category_param,
+				'numberposts' => TICKER_MAX_INT,
 				'include' => $post_list,
 				'suppress_filters' => 0,
 				)
@@ -818,7 +822,7 @@ function ticker_options_page() {
 											</tr>
 											<tr valign="top" class="bkpost-extra">
 										<th scope="row"><div class="bktitle-admin-two"><i class="fa fa-info-circle"> <?php _e( 'Integration:',  'bknewsticker' ); ?></div></th>
-										<td>Paste the PHP code to your desired template location: Copy and past the below mentioned code to your desired template location. <br/>
+										<td><?php _e( 'Paste the PHP code to your desired template location: Copy and past the below mentioned code to your desired template location.',  'bknewsticker' ); ?><br/>
 										 <code><?php echo htmlspecialchars( sprintf( "<?php if ( function_exists('insert_bknewsticker') ) { insert_bknewsticker(); } ?>") ) ?></code>
 
 											<br />
@@ -866,7 +870,7 @@ function ticker_strpos_nth($n, $haystack, $needle, $offset=0){
 }
 function ticker_plugin_action_links( $links, $file ) {
 	if ( $file == plugin_basename( __FILE__ ) ) {
-		$igr_links = '<a href="'.get_admin_url().'options-general.php?page=tickeroptions">'.__('Settings').'</a>';
+		$igr_links = '<a href="'.get_admin_url().'options-general.php?page=tickeroptions">'._e( 'Settings',  'bknewsticker' ).'</a>';
 		array_unshift( $links, $igr_links );
 	}
 	return $links;
