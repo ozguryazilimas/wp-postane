@@ -17,6 +17,8 @@ class WP_Widget_Login_Logout extends WP_Widget {
 	}
 	
 	function widget( $args, $instance ) { // outputs the content of the widget
+        global $wpdb;
+
 		extract($args);
 		//$title = apply_filters('widget_title', empty($instance['title']) ? __('Login-Logout', 'login-logout') : $instance['title'], $instance, $this->id_base);
 		$title = apply_filters('widget_title', $instance['title']);
@@ -66,7 +68,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			if ( is_user_logged_in() ){
 				$current_user = wp_get_current_user();
 				$username = $current_user->display_name;
-				$username_link = '<a href="'.admin_url('profile.php').'">'.$username.'</a>';
+				$username_link = '<a href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
 				$welcome_text_new = str_replace('[username]', $username_link, $welcome_text);
 				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
 			}
@@ -78,7 +80,20 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
 		}else{
 			echo '"item_logout">';
-			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
+			$current_user = wp_get_current_user();
+			$rows = $wpdb->get_results('SELECT count(*) as unread_msg_count from ' . $wpdb->prefix . 'cpm_meta where user_id='.$current_user->ID.' and opened=0', ARRAY_A);
+
+			$unread_message_count = 0;			
+			foreach ( $rows as $row ) {
+			    $unread_message_count = $row['unread_msg_count'];			
+			}
+			
+			$unread_str = '';
+			if ($unread_message_count > 0){
+			    $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
+			}			
+			
+			echo '<a class="postane_link" href="/postane">postane</a>'.$unread_str.' | <a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
 		}
 		echo $item_after;
 		//wp_register();
