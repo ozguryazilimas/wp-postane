@@ -1,22 +1,22 @@
-=== Login Logout ===
+=== Login-Logout ===
 Contributors: webvitaly
 Donate link: http://web-profile.com.ua/donate/
-Tags: login, log-in, logout, log-out, widget, meta, sidebar, admin, register
-Author URI: http://web-profile.com.ua/wordpress/
+Tags: login, logout, widget, meta, sidebar, admin, register
 Requires at least: 3.0
-Tested up to: 3.7.1
-Stable tag: 2.7
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tested up to: 4.0
+Stable tag: 2.8
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl.html
 
 Widget with login, logout, admin and register links. Replacement of the default Meta widget
 
 == Description ==
 
+[WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly) |
 [Login-Logout](http://web-profile.com.ua/wordpress/plugins/login-logout/ "Plugin page") |
 [Donate](http://web-profile.com.ua/donate/ "Support the development")
 
-"Login Logout" plugin adds widget with login or logout link. Also can be shown register or site-admin link. It is the replacement of the default Meta widget.
+"Login-Logout" plugin adds widget with login or logout link. Also can be shown register or site-admin link. It is the replacement of the default Meta widget.
 
 = If user is not logged in there are such links: =
 * login (after login action user will return to previous page);
@@ -29,9 +29,9 @@ Widget with login, logout, admin and register links. Replacement of the default 
 
 
 = Useful plugins: =
-* ["activetab" - responsive clean theme](http://wordpress.org/themes/activetab "responsive clean theme")
-* ["Page-list" - show list of pages with shortcodes](http://wordpress.org/plugins/page-list/ "list of pages with shortcodes")
-* ["Filenames to latin" - sanitize filenames to latin during upload](http://wordpress.org/plugins/filenames-to-latin/ "sanitize filenames to latin")
+* ["Anti-spam" - block spam in comments](http://wordpress.org/plugins/anti-spam/ "no spam, no captcha")
+* ["Anti-spam Pro"](http://codecanyon.net/item/antispam-pro/6491169?ref=webvitaly)
+* ["Easy to use" - unmask password field and enable 'remember me' by default](http://wordpress.org/plugins/easy-to-use/ "unmask password and enable remember me")
 
 
 == Screenshots ==
@@ -42,6 +42,9 @@ Widget with login, logout, admin and register links. Replacement of the default 
 4. Widget output when user is logged in and inline option is on
 
 == Changelog ==
+
+= 2.8 - 2014-09-11 =
+* Czech translation made by Daniel Čermák - http://danielcermak.eu/
 
 = 2.7 - 2013-11-07 =
 * Spanish translation made by Maria Ramos from WebHostingHub
@@ -102,4 +105,4 @@ Widget with login, logout, admin and register links. Replacement of the default 
 == Installation ==
 
 1. Install and activate the plugin on the Plugins page
-2. Add "Login Logout" widget to your sidebar and customize it
+2. Add "Login-Logout" widget to your sidebar and customize it

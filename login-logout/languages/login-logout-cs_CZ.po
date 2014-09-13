@@ -1,0 +1,107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Login Logout\n"
+"POT-Creation-Date: 2013-10-15 17:03+0200\n"
+"PO-Revision-Date: 2014-09-10 21:25+0100\n"
+"Last-Translator: Daniel Cermak <cermak.daniel@gmail.com>\n"
+"Language-Team:  <web.vitaly@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: ./\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../login-logout.php:18
+msgid "Login-Logout widget"
+msgstr "Přihlásit-Odhlásit widget"
+
+#: ../login-logout.php:19 ../login-logout.php:242
+msgid "Login-Logout"
+msgstr "Web pluginu"
+
+#: ../login-logout.php:26
+msgid "Log in"
+msgstr "Přihlásit"
+
+#: ../login-logout.php:27
+msgid "Log out"
+msgstr "Odhlásit"
+
+#: ../login-logout.php:29
+msgid "Welcome [username]"
+msgstr "Vítej, [username]"
+
+#: ../login-logout.php:31
+msgid "Register"
+msgstr "Registrovat"
+
+#: ../login-logout.php:33
+msgid "Admin section"
+msgstr "Administrace"
+
+#: ../login-logout.php:175
+msgid "Title"
+msgstr "Nadpis"
+
+#: ../login-logout.php:178
+msgid "Login text"
+msgstr "Text pro přihlášení"
+
+#: ../login-logout.php:181
+msgid "Logout text"
+msgstr "Text pro odhlášení"
+
+#: ../login-logout.php:184
+msgid "Show welcome text if user is logged in"
+msgstr "Zobrazit uvítací text pro přihlášené uživatele"
+
+#: ../login-logout.php:187
+msgid "Welcome text (use [username] for showing the name of the logged user)"
+msgstr ""
+"Uvítací text (použijte [username] pro zobrazení přezdívky přihlášeného "
+"uživatele)"
+
+#: ../login-logout.php:190
+msgid "Show register link (if user is logged out and if users can register)"
+msgstr ""
+"Zobrazit odkaz pro registraci (pokud je uživatel odhlášen a je povolena "
+"registrace)"
+
+#: ../login-logout.php:193
+msgid "Register text"
+msgstr "Text pro registraci"
+
+#: ../login-logout.php:196
+msgid "Show admin link (if user is logged in)"
+msgstr "Zobrazit odkaz na administraci (pouze pro přihlášené uživatele)"
+
+#: ../login-logout.php:199
+msgid "Admin text"
+msgstr "Text pro odkaz na administraci"
+
+#: ../login-logout.php:202
+msgid "Redirect to this page after login"
+msgstr "Po přihlášení přesměrovat na tuto adresu."
+
+#: ../login-logout.php:205
+msgid "Redirect to this page after logout"
+msgstr "Po odhlášení přesměrovat na tuto adresu"
+
+#: ../login-logout.php:208
+msgid "Inline (list or line of links)"
+msgstr "Seřadit odkazy do řady (odkazy budou vedle sebe, nikoliv pod sebou)"
+
+#: ../login-logout.php:211
+msgid "Extra item when user is logged in"
+msgstr "Speciální text nebo odkazy pro přihlášené uživatele"
+
+#: ../login-logout.php:215
+msgid "Extra item when user is logged out"
+msgstr "Speciální text nebo odkazy pro odhlášené uživatele"
+
+#: ../login-logout.php:243
+msgid "Donate"
+msgstr "Přispět"

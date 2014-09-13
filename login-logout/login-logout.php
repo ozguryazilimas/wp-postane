@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Login Logout
+Plugin Name: Login-Logout
 Plugin URI: http://wordpress.org/plugins/login-logout/
 Description: Show login or logout link. Show register or site-admin link. It is the replacement of the default Meta widget.
-Version: 2.7
+Version: 2.8
 Author: webvitaly
 Author URI: http://web-profile.com.ua/wordpress/plugins/
-License: GPLv2 or later
+License: GPLv3
 */
 
 class WP_Widget_Login_Logout extends WP_Widget {
@@ -17,8 +17,6 @@ class WP_Widget_Login_Logout extends WP_Widget {
 	}
 	
 	function widget( $args, $instance ) { // outputs the content of the widget
-        global $wpdb;
-
 		extract($args);
 		//$title = apply_filters('widget_title', empty($instance['title']) ? __('Login-Logout', 'login-logout') : $instance['title'], $instance, $this->id_base);
 		$title = apply_filters('widget_title', $instance['title']);
@@ -62,13 +60,13 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			$item_after = '</li>';
 			$split_char = '';
 		}
-		echo "\n".'<!-- Login-Logout plugin v.2.7 wordpress.org/plugins/login-logout/ -->'."\n";
+		echo "\n".'<!-- Login-Logout plugin v.2.8 wordpress.org/plugins/login-logout/ -->'."\n";
 		echo $wrap_before."\n";
 		if ( $show_welcome_text ){
 			if ( is_user_logged_in() ){
 				$current_user = wp_get_current_user();
 				$username = $current_user->display_name;
-				$username_link = '<a href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
+				$username_link = '<a href="'.admin_url('profile.php').'">'.$username.'</a>';
 				$welcome_text_new = str_replace('[username]', $username_link, $welcome_text);
 				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
 			}
@@ -80,20 +78,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
 		}else{
 			echo '"item_logout">';
-			$current_user = wp_get_current_user();
-			$rows = $wpdb->get_results('SELECT count(*) as unread_msg_count from ' . $wpdb->prefix . 'cpm_meta where user_id='.$current_user->ID.' and opened=0', ARRAY_A);
-
-			$unread_message_count = 0;			
-			foreach ( $rows as $row ) {
-			    $unread_message_count = $row['unread_msg_count'];			
-			}
-			
-			$unread_str = '';
-			if ($unread_message_count > 0){
-			    $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
-			}			
-			
-			echo '<a class="postane_link" href="/postane">postane</a>'.$unread_str.' | <a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
+			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
 		}
 		echo $item_after;
 		//wp_register();
@@ -251,8 +236,8 @@ endif; // end of login_logout_plugin_unqprfx_init()
 if ( ! function_exists( 'login_logout_unqprfx_plugin_meta' ) ) :
 	function login_logout_unqprfx_plugin_meta( $links, $file ) { // add 'Plugin page' and 'Donate' links to plugin meta row
 		if ( strpos( $file, 'login-logout.php' ) !== false ) {
-			$links = array_merge( $links, array( '<a href="http://web-profile.com.ua/wordpress/plugins/login-logout/" title="Plugin page">' . __('Login-Logout', 'login-logout') . '</a>' ) );
-			$links = array_merge( $links, array( '<a href="http://web-profile.com.ua/donate/" title="Support the development">' . __('Donate', 'login-logout') . '</a>' ) );
+			$links = array_merge( $links, array( '<a href="http://web-profile.com.ua/wordpress/plugins/login-logout/" title="Plugin page">Login-Logout</a>' ) );
+			$links = array_merge( $links, array( '<a href="http://web-profile.com.ua/donate/" title="Support the development">Donate</a>' ) );
 		}
 		return $links;
 	}
