@@ -4,12 +4,11 @@
 function relevanssi_populate_stopwords() {
 	global $wpdb, $relevanssi_variables;
 
-	if (WPLANG == '') {
-		$lang = "en_GB";
-	}
-	else {
+	$lang = get_option('WPLANG');
+	if (empty($lang) && WPLANG != '') {
 		$lang = WPLANG;
 	}
+	if (empty($lang)) $lang = "en_GB";
 	
 	if (file_exists($relevanssi_variables['plugin_dir'] . 'stopwords/stopwords.' . $lang)) {
 		include($relevanssi_variables['plugin_dir'] . 'stopwords/stopwords.' . $lang);

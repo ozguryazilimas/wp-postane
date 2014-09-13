@@ -16,7 +16,7 @@ add_action('edit_attachment', 'relevanssi_edit');
 add_action('transition_post_status', 'relevanssi_update_child_posts',99,3);
 // END added by renaissancehack
 add_action('init', 'relevanssi_init');
-add_action('init', 'relevanssi_check_old_data', 99);
+add_action('admin_head', 'relevanssi_check_old_data', 99);
 add_filter('relevanssi_hits_filter', 'relevanssi_wpml_filter');
 add_filter('posts_request', 'relevanssi_prevent_default_request', 10, 2 );
 add_filter('relevanssi_remove_punctuation', 'relevanssi_remove_punct');
@@ -36,17 +36,17 @@ function relevanssi_init() {
 	if (!get_option('relevanssi_indexed') && !$index) {
 		function relevanssi_warning() {
 			RELEVANSSI_PREMIUM ? $plugin = 'relevanssi-premium' : $plugin = 'relevanssi';
-			echo "<div id='relevanssi-warning' class='updated fade'><p><strong>"
-			   . sprintf(__('Relevanssi needs attention: Remember to build the index (you can do it at <a href="%1$s">the
-			   settings page</a>), otherwise searching won\'t work.'), "options-general.php?page=" . $plugin . "/relevanssi.php")
+			echo "<div id='relevanssi-warning' class='update-nag'><p><strong>"
+			   . __('You do not have an index! Remember to build the index (click the "Build the index" button), otherwise searching won\'t work.')
 			   . "</strong></p></div>";
 		}
-		add_action('admin_notices', 'relevanssi_warning');
+		if ( 'options-general.php' == $pagenow and isset( $_GET['page'] ) and plugin_basename($relevanssi_variables['file']) == $_GET['page'] )
+			add_action('admin_notices', 'relevanssi_warning');
 	}
 	
 	if (!function_exists('mb_internal_encoding')) {
 		function relevanssi_mb_warning() {
-			echo "<div id='relevanssi-warning' class='updated fade'><p><strong>"
+			echo "<div id='relevanssi-warning' class='error'><p><strong>"
 			   . "Multibyte string functions are not available. Relevanssi may not work well without them. "
 			   . "Please install (or ask your host to install) the mbstring extension."
 			   . "</strong></p></div>";

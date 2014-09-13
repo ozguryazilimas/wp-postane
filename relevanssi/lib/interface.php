@@ -920,7 +920,7 @@ function relevanssi_options_form() {
 
 	<label for='relevanssi_throttle_limit'><?php _e("Limit:", "relevanssi"); ?>
 	<input type='text' size='4' name='relevanssi_throttle_limit' id='relevanssi_throttle_limit' value='<?php echo $throttle_limit ?>' /></label><br />
-	<small><?php _e("For better performance, adjust the limit to a smaller number. Adjusting the limit to 100 - or even lower - should be safe for good results, and might bring a boost in search speed.", 'relevanssi'); ?></small>
+	<small><?php printf(__("For better performance, adjust the limit to a smaller number. Adjusting the limit to 100 or 200 should be safe for good results, and might bring a boost in search speed. DO NOT use this feature to limit the number of search results on search results pages, as that will lead to problems. For adjusting the number of search results displayed, see <a href='%s'>this knowledge base entry</a>.", 'relevanssi'), 'http://www.relevanssi.com/knowledge-base/posts-per-page/'); ?></small>
 
 	<br /><br />
 	

@@ -3,7 +3,7 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.3.5
+Version: 3.3.7.1
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
@@ -235,10 +235,11 @@ function _relevanssi_install() {
 	add_option('relevanssi_css', 'text-decoration: underline; text-color: #ff0000');
 	add_option('relevanssi_class', 'relevanssi-query-term');
 	add_option('relevanssi_excerpts', 'on');
-	add_option('relevanssi_excerpt_length', '450');
-	add_option('relevanssi_excerpt_type', 'chars');
+	add_option('relevanssi_excerpt_length', '30');
+	add_option('relevanssi_excerpt_type', 'words');
 	add_option('relevanssi_excerpt_allowable_tags', '');
 	add_option('relevanssi_log_queries', 'off');
+	add_option('relevanssi_log_queries_with_ip', 'off');
 	add_option('relevanssi_cat', '0');
 	add_option('relevanssi_excat', '0');
 	add_option('relevanssi_extag', '0');
@@ -249,7 +250,7 @@ function _relevanssi_install() {
 	add_option('relevanssi_highlight_comments', 'off');
 	add_option('relevanssi_index_comments', 'none');	//added by OdditY
 	add_option('relevanssi_show_matches', '');
-	add_option('relevanssi_show_matches_txt', '(Search hits: %body% in body, %title% in title, %tags% in tags, %comments% in comments. Score: %score%)');
+	add_option('relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %tags% in tags, %comments% in comments. Score: %score%)');
 	add_option('relevanssi_fuzzy', 'sometimes');
 	add_option('relevanssi_indexed', '');
 	add_option('relevanssi_expand_shortcodes', 'on');
@@ -262,7 +263,7 @@ function _relevanssi_install() {
 	add_option('relevanssi_index_limit', '500');
 	add_option('relevanssi_disable_or_fallback', 'off');
 	add_option('relevanssi_respect_exclude', 'on');
-	add_option('relevanssi_min_word_length', 3);
+	add_option('relevanssi_min_word_length', '3');
 	add_option('relevanssi_wpml_only_current', 'on');
 	add_option('relevanssi_word_boundaries', 'on');
 	add_option('relevanssi_default_orderby', 'relevance');

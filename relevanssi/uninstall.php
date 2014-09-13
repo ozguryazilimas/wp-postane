@@ -71,6 +71,7 @@ function relevanssi_uninstall() {
 	delete_option('relevanssi_include_cats');
 	delete_option('relevanssi_cache_seconds');
 	delete_option('relevanssi_enable_cache');
+	delete_option('relevanssi_show_matches_txt');
 
 	relevanssi_clear_database_tables();
 }

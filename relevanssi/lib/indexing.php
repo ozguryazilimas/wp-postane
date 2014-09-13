@@ -106,8 +106,9 @@ function relevanssi_build_index($extend = false) {
 	$content = $wpdb->get_results($q);
 	
 	foreach ($content as $post) {
-		$n += relevanssi_index_doc($post->ID, false, $custom_fields);
+		$n += relevanssi_index_doc($post->ID, false, $custom_fields, true);
 		// n calculates the number of insert queries
+		// $bypassglobalpost set to true, because at this point global $post should be NULL, but in some cases it is not
 	}
 	
 	$wpdb->query("ANALYZE TABLE $relevanssi_table");
@@ -229,6 +230,8 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 	$n = 0;	
 
+	$post = apply_filters('relevanssi_post_to_index', $post);
+
 	$min_word_length = get_option('relevanssi_min_word_length', 3);
 	$insert_data = array();
 
@@ -309,7 +312,8 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 	$index_titles = true;
 	if (apply_filters('relevanssi_index_titles', $index_titles)) {
-		$titles = relevanssi_tokenize(apply_filters('the_title', $post->post_title));
+		$filtered_title = apply_filters('relevanssi_post_title_before_tokenize', $post->post_title);
+		$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title));
 
 		if (count($titles) > 0) {
 			foreach ($titles as $title => $count) {
@@ -353,6 +357,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 				remove_shortcode('contact-form');			// Jetpack Contact Form causes an error message
 				remove_shortcode('starrater');				// GD Star Rating rater shortcode causes problems
 				remove_shortcode('responsive-flipbook');	// Responsive Flipbook causes problems
+				remove_shortcode('avatar_upload');			// WP User Avatar is incompatible
 				
 				$post_before_shortcode = $post;
 				$contents = do_shortcode($contents);
@@ -511,6 +516,9 @@ function relevanssi_update_child_posts($new_status, $old_status, $post) {
 // called by 'transition_post_status' action hook when a post is edited/published/deleted
 //  and calls appropriate indexing function on child posts/attachments
     global $wpdb;
+
+	// Safety check, for WordPress Editorial Calendar incompatibility
+	if (!isset($post) || !isset($post->ID)) return;
 
 	$index_statuses = apply_filters('relevanssi_valid_status', array('publish', 'private', 'draft', 'pending', 'future'));
     if (($new_status == $old_status)

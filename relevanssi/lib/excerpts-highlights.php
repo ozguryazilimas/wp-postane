@@ -19,7 +19,7 @@ function relevanssi_do_excerpt($t_post, $query) {
 	$post = $t_post;
 
 	$remove_stopwords = false;
-	$terms = relevanssi_tokenize($query, $remove_stopwords, -1, false);
+	$terms = relevanssi_tokenize($query, $remove_stopwords, -1);
 
 	// These shortcodes cause problems with Relevanssi excerpts
 	remove_shortcode('layerslider');
@@ -35,6 +35,8 @@ function relevanssi_do_excerpt($t_post, $query) {
 	$content = preg_replace("/\n\r|\r\n|\n|\r/", " ", $content);
 //	$content = trim(preg_replace("/\s\s+/", " ", $content));
 	
+	$query = relevanssi_add_synonyms($query);
+		
 	$excerpt_data = relevanssi_create_excerpt($content, $terms, $query);
 
 	if (get_option("relevanssi_index_comments") != 'none') {
@@ -66,6 +68,7 @@ function relevanssi_do_excerpt($t_post, $query) {
 	$highlight = get_option('relevanssi_highlight');
 	if ("none" != $highlight) {
 		if (!is_admin()) {
+			$query = relevanssi_add_synonyms($query);
 			$excerpt = relevanssi_highlight_terms($excerpt, $query);
 		}
 	}
@@ -133,7 +136,7 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 				$pos = relevanssi_stripos($content, $term, $pos);
 				if (false !== $pos) {
 					$term_positions[$pos] = $term_key;
-					$pos = $pos + strlen($term);
+					function_exists('mb_strlen') ? $pos = $pos + mb_strlen($term) : $pos = $pos + strlen(utf8_decode($term));
 				}
 			}
 		}
@@ -192,13 +195,14 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 	}
 	else {
 		$words = explode(' ', $content);
-		
 		$i = 0;
 		
 		while ($i < count($words)) {
 			if ($i + $excerpt_length > count($words)) {
 				$i = count($words) - $excerpt_length;
+				if ($i < 0) $i = 0;
 			}
+			
 			$excerpt_slice = array_slice($words, $i, $excerpt_length);
 			$excerpt_slice = implode(' ', $excerpt_slice);
 
@@ -243,7 +247,7 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 				if (false !== $pos) {
 					$term_hits++;
 					if (0 == $i) $start = true;
-			
+
 					if ($term_hits > $best_excerpt_term_hits) {
 						$best_excerpt_term_hits = $term_hits;
 						$excerpt = $excerpt_slice;
@@ -368,8 +372,11 @@ function relevanssi_highlight_terms($excerpt, $query) {
 
 	get_option('relevanssi_word_boundaries', 'on') == 'on' ? $word_boundaries = true : $word_boundaries = false;
 	foreach ($terms as $term) {
-		$pr_term = relevanssi_replace_punctuation(preg_quote($term, '/'));
-
+//		$pr_term = relevanssi_replace_punctuation(preg_quote($term, '/'));
+		$pr_term = preg_quote($term, '/');
+		
+		$excerpt = html_entity_decode($excerpt);
+		
 		if ($word_boundaries) {
 			$excerpt = preg_replace("/(\b$pr_term|$pr_term\b)(?!(^&+)?(;))/iu", $start_emp_token . '\\1' . $end_emp_token, $excerpt);
 		}
@@ -417,8 +424,9 @@ function relevanssi_highlight_terms($excerpt, $query) {
 	return $excerpt;
 }
 
+
 function relevanssi_replace_punctuation($a) {
-    $a = preg_replace('/[[:punct:]]+/u', '.+?', $a);
+    $a = preg_replace('/[[:punct:]]/u', '.', $a);
     return $a;
 }
 

@@ -56,8 +56,8 @@ function relevanssi_search($args) {
 	$hits = array();
 
 	$query_restrictions = "";
-	if (!isset($relation)) $relation = "or";
-	$relation = strtolower($relation);
+	if (!isset($tax_query_relation)) $tax_query_relation = "or";
+	$tax_query_relation = strtolower($tax_query_relation);
 	$term_tax_id = array();
 	$term_tax_ids = array();	
 	$not_term_tax_ids = array();	
@@ -152,7 +152,7 @@ function relevanssi_search($args) {
 				$tq_operator = 'IN';
 				if (isset($row['operator'])) $tq_operator = strtoupper($row['operator']);
 				if ($tq_operator != 'IN' && $tq_operator != 'NOT IN' && $tq_operator != 'AND') $tq_operator = 'IN';
-				if ($relation == 'and') {
+				if ($tax_query_relation == 'and') {
 					if ($tq_operator == 'AND') {
 						$query_restrictions .= " AND relevanssi.doc IN (
 							SELECT ID FROM $wpdb->posts WHERE 1=1 
@@ -181,7 +181,7 @@ function relevanssi_search($args) {
 				$wp_query->is_category = false;
 			}
 		}
-		if ($relation == 'or') {
+		if ($tax_query_relation == 'or') {
 			$term_tax_ids = array_unique($term_tax_ids);
 			if (count($term_tax_ids) > 0) {
 				$term_tax_ids = implode(',', $term_tax_ids);
@@ -199,12 +199,12 @@ function relevanssi_search($args) {
 				$and_term_tax_ids = implode(',', $and_term_tax_ids);
 				$n = count(explode(',', $and_term_tax_ids));
 				$query_restrictions .= " AND relevanssi.doc IN (
-					SELECT ID FROM $wpdb->posts AS posts WHERE 1=1 
+					SELECT ID FROM $wpdb->posts WHERE 1=1 
 					AND (
 						SELECT COUNT(1) 
 						FROM $wpdb->term_relationships AS tr
 						WHERE tr.term_taxonomy_id IN ($and_term_tax_ids) 
-						AND tr.object_id = $wpdb->posts.ID ) = $n
+						AND tr.object_id = posts.ID ) = $n
 					)";
 			    // Clean: all variables are Relevanssi-generated
 			}
@@ -302,6 +302,26 @@ function relevanssi_search($args) {
 					SELECT DISTINCT(postmeta.post_id) FROM $wpdb->postmeta AS postmeta
 					WHERE $key $and $meta_value $compare ($values))";
 				// Clean: values either Relevanssi-generated or escaped
+			}
+			else if ($compare == 'LIKE') {
+				if (method_exists($wpdb, 'esc_like')) {
+					$escaped_value = $wpdb->esc_like($meta['value']);
+				}
+				else {
+					// Compatibility for pre-4.0 WordPress
+					$escaped_value = like_escape($meta['value']);
+				}
+				isset($meta['value']) ? $value = " " . esc_sql($meta_value) . " " . $meta['compare'] . " '%" . $escaped_value . "%' " : $value = '';
+				(!empty($key) && !empty($value)) ? $and = " AND " : $and = "";
+				if (empty($key) && empty($and) && empty($value)) {
+					// do nothing
+				}
+				else {
+					$meta_query_restrictions .= " $meta_relation relevanssi.doc IN (
+						SELECT DISTINCT(postmeta.post_id) FROM $wpdb->postmeta AS postmeta
+						WHERE $key $and $value)";
+					// Clean: values either Relevanssi-generated or escaped
+				}
 			}
 			else {
 				isset($meta['value']) ? $value = " " . esc_sql($meta_value) . " " . $meta['compare'] . " '" . esc_sql($meta['value']) . "' " : $value = '';
@@ -470,13 +490,14 @@ function relevanssi_search($args) {
 	}
 
 	if ($post_status) {
+		// the -1 is there to get user profiles and category pages
 		$query_restrictions .= " AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
-			WHERE posts.post_status IN ($post_status))))";
+			WHERE posts.post_status IN ($post_status))) OR (doc = -1))";
 		// Clean: $post_status is escaped
 	}
 	
 	if ($phrases) {
-		$query_restrictions .= " AND relevanssi.doc IN ($phrases)";
+		$query_restrictions .= " $phrases";
 		// Clean: $phrases is escaped earlier
 	}
 
@@ -545,7 +566,19 @@ function relevanssi_search($args) {
 		foreach ($terms as $term) {
 			$term = trim($term);	// numeric search terms will start with a space
 			if (strlen($term) < $min_length) continue;
-			$term = like_escape(esc_sql($term));
+			$term = esc_sql($term);
+
+			if (strpos($o_term_cond, 'LIKE') !== false) {
+				// only like_escape() if necessary, otherwise _ in search terms will not work
+				if (method_exists($wpdb, 'esc_like')) {
+					$term = $wpdb->esc_like($term);
+				}
+				else {
+					// Compatibility for pre-4.0 WordPress
+					$term = like_escape($term);
+				}
+			}
+			
 			$term_cond = str_replace('#term#', $term, $o_term_cond);		
 			
 			!empty($post_type_weights['post_tag']) ? $tag = $post_type_weights['post_tag'] : $tag = $relevanssi_variables['post_type_weight_defaults']['post_tag'];
@@ -600,8 +633,8 @@ function relevanssi_search($args) {
 					$match->doc = 'u_' . $match->item;
 				}
 
-				if ('taxonomy' == $match->type) {
-					$match->doc = 't_' . $match->item;
+				if (!in_array($match->type, array('post', 'attachment'))) {
+					$match->doc = '**' . $match->type . '**' . $match->item;
 				}
 
 				if (isset($match->taxonomy_detail)) {
@@ -724,7 +757,7 @@ function relevanssi_search($args) {
 				// doc didn't match all terms, so it's discarded
 				continue;
 			}
-			
+
 			$hits[intval($i)] = relevanssi_get_post($doc);
 			$hits[intval($i)]->relevance_score = round($weight, 2);
 			$i++;
@@ -735,6 +768,7 @@ function relevanssi_search($args) {
 		if ($operator == "AND" AND get_option('relevanssi_disable_or_fallback') != 'on') {
 			$or_args = $args;
 			$or_args['operator'] = "OR";
+			$or_args['q'] = relevanssi_add_synonyms($q);
 			$return = relevanssi_search($or_args);
 			extract($return);
 		}
@@ -749,6 +783,9 @@ function relevanssi_search($args) {
 	$order = strtolower($order);
 	$order_accepted_values = array('asc', 'desc');
 	if (!in_array($order, $order_accepted_values)) $order = 'desc';
+	
+	$orderby = apply_filters('relevanssi_orderby', $orderby);
+	$order   = apply_filters('relevanssi_order', $order);
 	
 	if ($orderby != 'relevance')
 		relevanssi_object_sort($hits, $orderby, $order);

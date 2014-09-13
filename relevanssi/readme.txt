@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
-Tested up to: 3.9-beta
-Stable tag: 3.3.5
+Tested up to: 4.0
+Stable tag: 3.3.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,30 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.3.7.1 =
+* Fixed bbPress compatibility.
+
+= 3.3.7 =
+* Fixed bbPress compatibility.
+
+= 3.3.6 =
+* Relevanssi handles taxonomy terms in search better. The change requires a reindexing.
+* Fix in indexing: Relevanssi will now bypass the global $post when indexing. This should help with problems with the Cookie Law Info plugin, for example.
+* Tax query relation setting didn't work properly. It is now fixed.
+* Word-based excerpt building sometimes created too short excerpts. That is now fixed.
+* Synonyms are now highlighted.
+* Phrase matching had issues where searching for a too common phrase crashed the search. That has been fixed.
+* LIKE operator didn't work properly in meta_queries.
+* Problems with Avatar Upload plugin are fixed.
+* Offset errors with mb_stripos() shouldn't happen anymore.
+* A small problem in taxonomy search MySQL fixed, also a small problem with AND operator in tax_queries.
+* New filter: `relevanssi_post_to_index` lets you access the post object before the post is indexed.
+* New filter: `relevanssi_orderby` lets you modify the $orderby value before Relevanssi sorts posts.
+* New filter: `relevanssi_order` lets you modify the $order value before Relevanssi sorts posts.
+* New filter: `relevanssi_post_title_before_tokenize` lets you modify post titles before indexing.
+* New filter: `relevanssi_private_cap` lets you adjust the capability setting for private posts in custom post types.
+* Deprecated use of `like_escape` has been fixed.
 
 = 3.3.5 =
 * Fixed a bug where excluding posts would cause the search to fail.
@@ -1028,6 +1052,15 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.3.7.1 =
+* Improved bbPress compatibility.
+
+= 3.3.7 =
+* Fixed bbPress compatibility.
+
+= 3.3.6 =
+* Many new features, small bug fixes and WP 4.0 compatibility.
 
 = 3.3.5 =
 * Bug fixes and security updates.
