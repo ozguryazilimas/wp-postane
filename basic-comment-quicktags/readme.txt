@@ -2,8 +2,8 @@
 Contributors: Ipstenu, MarcDK
 Tags: comments, wysiwyg, quicktags, bbpress
 Requires at least: 3.8
-Tested up to: 3.9
-Stable tag: 3.2.3
+Tested up to: 4.0
+Stable tag: 3.3
 Donate Link: https://store.halfelf.org/donate/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -26,7 +26,7 @@ You can turn these on and off for bbPress or comments on the discussions page (s
 
 = Why did you do this? =
 
-MarcTV did it because he needed a simple plugin to do this job and decided to do it on his own. I kind of love him for that.
+MarcTV did it because he needed a simple plugin to do this job and decided to do it on his own. I kind of love him for that. 
 
 I forked it so I could extend it to bbPress, put in more checks and ifs/thens, and all the other toolbars were too heavy.
 
@@ -65,6 +65,10 @@ IE8 cheerfully ignores the rules of jQuery.
 Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9+, so I strongly suggest for consistant Internet behavior, upgrade IE.
 
 == Changelog ==
+
+= 3.3 = 
+* 2014 Sep 5, by Ipstenu
+* Removed P2 Support. it wasn't working and was causing issues with other themes. Sorry.
 
 = 3.2.3 =
 * 2014 Apr 11, by Ipstenu
@@ -143,6 +147,8 @@ Sometimes it works, sometimes it doesn't. I got it to work, and then came back a
 * Added failure if not WordPress 3.3 or greater
 
 == Upgrade Notice ==
+
+P2 IS NOT LONGER SUPPORTED! I'm really sorry, but P2 is doing weird things.
 
 == Installation ==
 
