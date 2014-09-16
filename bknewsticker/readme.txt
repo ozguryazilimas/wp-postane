@@ -3,8 +3,8 @@ Contributors: beke_ro
 Donate link: http://bekero.com/bknewsticker/
 Tags: newsticker, news ticker,comments, fader, live ticker, News,rss, scroller, text, textticker, ticker, animation, rotator, news alert,data,jquery,news rotator,scrolling
 Requires at least: 3.8
-Tested up to: 3.9.2
-Stable tag: 1.0.4
+Tested up to: 4.0
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,11 @@ It can be implemented anywhere on your Blog/Website. This Newsticker shows your 
 2. The Setup Page.
 
 == Changelog ==
+
+= 1.0.5 =
+* Added  Spanish translation
+* Fixed bug with css 
+
 
 = 1.0.4 =
 * Translation-Ready .po/.mo files included

@@ -5,11 +5,10 @@ Plugin URI: http://bekero.com/bknewsticker/
 Description: BkNewsticker for Wordpress is a multi-functional data display plugin
 Author: Bechetaru Constantin
 Author URI: http://www.bekero.com
-Version: 1.0.4
+Version: 1.0.5
 */
-define('TICKER_VERSION', '1.0.4');
-// define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
-define('TICKER_MAX_INT', 100);
+define('TICKER_VERSION', '1.0.5');
+define('TICKER_MAX_INT', defined('PHP_INT_MAX') ? PHP_INT_MAX : 32767);
 define('PHPREQ',5);
 $phpver=phpversion();$phpmaj=$phpver[0];
 function ticker_add_pages() {
@@ -75,21 +74,18 @@ function insert_bknewsticker(){
 	?>
 	<script type="text/javascript" language="javascript">
 	jQuery(document).ready(function(){
-		jQuery('#bknewsticker').show();
 		jQuery('#bknewsticker').cycle({ 
 			speed: <?php echo $tickerspeed; ?>000,
 			timeout: <?php echo $tickertimeout; ?>000,
-			height: 25,
+			height: 40,
 			fx: '<?php echo $tickeranimation; ?>',
 			pause: 1,
 			containerResize: 1
 		});
 	});
 </script><div id="allticker"> 
-<div id="bknews-title"><h3><a href="<?php $title_cat_ids = get_option('ticker_category_filter'); echo get_category_link($title_cat_ids[0]); ?>">
-	<?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i>
-</a></h3></div>
-<ul id="bknewsticker" style="overflow:hidden;display:none;"><?php  ticker_content(); ?></ul>
+<div id="bknews-title"><h3><?php $color_border = get_option('tiker_content_title'); echo $color_border;?> <i class="fa fa-forward"></i></h3></div>
+<ul id="bknewsticker" style="overflow:hidden;"><?php  ticker_content(); ?></ul>
 </div>
 <?php
 }
@@ -201,9 +197,6 @@ function ticker_recent_comments($src_count, $src_length) {
 }
 
 function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
-	// We do not want to fetch 2147483647 posts
-	$get_posts_category_param = count($cat_filter) > 0 ? $cat_filter[0] : '';
-
 	switch($type){
 		case 'popular':
 		$days = get_option('ticker_popular_days');
@@ -220,8 +213,7 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'recent':
 		$posts = get_posts(
 			array(
-				'numberposts' => $n ? $n : TICKER_MAX_INT,
-				'category' => $get_posts_category_param,
+				'numberposts' => TICKER_MAX_INT, 
 				'orderby' => 'post_date',
 				'suppress_filters' => 0,
 				)
@@ -230,8 +222,7 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'commented':
 		$posts = get_posts(
 			array(
-				'numberposts' => $n ? $n : TICKER_MAX_INT,
-				'category' => $get_posts_category_param,
+				'numberposts' => TICKER_MAX_INT,
 				'orderby' => 'comment_count',
 				'suppress_filters' => 0,
 				)
@@ -240,8 +231,7 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 		case 'userspecified':
 		$posts_tmp = get_posts(
 			array(
-				'numberposts' => $n ? $n : TICKER_MAX_INT,
-				'category' => $get_posts_category_param,
+				'numberposts' => TICKER_MAX_INT,
 				'include' => $post_list,
 				'suppress_filters' => 0,
 				)
