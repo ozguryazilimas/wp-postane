@@ -3,7 +3,7 @@
   Plugin Name: Basic Comment Quicktags
   Plugin URI: http://halfelf.org/plugins/basic-comment-quicktags/
   Description: Displays a bold, italic, add link and quote button on top of the comment form
-  Version: 3.3
+  Version: 3.3.1
   Author: Mika "Ipstenu" Epstein
   Author URI: http://ipstenu.org
   Text Domain: basic-comment-quicktags
@@ -31,18 +31,12 @@
 global $wp_version;
 	if (version_compare($wp_version,"3.8","<")) { exit( __('This plugin requires WordPress 3.8', 'basic-comment-quicktags') ); }
 
-$theme_name = wp_get_theme( 'p2' );
-
-if ( $theme_name->exists() ) { exit( __('This plugin does not run properly on P2 anymore. Sorry.', 'basic-comment-quicktags') ); }
-
 if (!class_exists('BasicCommentsQuicktagsHELF')) {
 	class BasicCommentsQuicktagsHELF {
 	
 		var $bcq_defaults;
 		var $bcq_bbp_fancy;
-		
-		static $gen_ver = '3.3'; // Plugin version so I can be lazy
-	
+			
 	    public function __construct() {
 	        add_action( 'init', array( &$this, 'init' ) );
 	        
@@ -77,7 +71,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 			wp_enqueue_style('basic-comment-quicktags', plugins_url( '/quicktags.css' ,__FILE__) );
 		}
 		function add_scripts() {
-			wp_enqueue_script('basic-comment-quicktags', plugins_url( '/quicktags.js' ,__FILE__), array("quicktags","jquery"), $gen_ver, 1); 
+			wp_enqueue_script('basic-comment-quicktags', plugins_url( '/quicktags.js' ,__FILE__), array("quicktags","jquery"), '3.3.1', 1); 
 		}
 		
 		function add_styles_frontend() {

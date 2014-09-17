@@ -3,7 +3,7 @@ Contributors: Ipstenu, MarcDK
 Tags: comments, wysiwyg, quicktags, bbpress
 Requires at least: 3.8
 Tested up to: 4.0
-Stable tag: 3.3
+Stable tag: 3.3.1
 Donate Link: https://store.halfelf.org/donate/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -65,6 +65,10 @@ IE8 cheerfully ignores the rules of jQuery.
 Sometimes it works, sometimes it doesn't. I got it to work, and then came back an hour later to no changes and it broke. At which point I bashed my head into the wall and went to the gym. Between caching and IE8 being inconsistant, I gave up. If anyone can fix it for everyone better than Trepmal did, you officially win. This is as good as I can get it. It works like a hero on Firefox, Safari, Chrome and IE9+, so I strongly suggest for consistant Internet behavior, upgrade IE.
 
 == Changelog ==
+
+= 3.3.1 =
+* 2014 Sep 16, by Ipstenu
+* Fixed P2.
 
 = 3.3 = 
 * 2014 Sep 5, by Ipstenu
@@ -145,10 +149,6 @@ Sometimes it works, sometimes it doesn't. I got it to work, and then came back a
 * Added in support for bbPress
 * Added in checks to only load JS/CSS when on a page where one might leave comments
 * Added failure if not WordPress 3.3 or greater
-
-== Upgrade Notice ==
-
-P2 IS NOT LONGER SUPPORTED! I'm really sorry, but P2 is doing weird things.
 
 == Installation ==
 
