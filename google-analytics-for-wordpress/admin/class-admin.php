@@ -3,19 +3,17 @@
  * This class is for the backend, extendable for all child classes
  */
 
-require_once plugin_dir_path( __FILE__ ) . '/wp-gdata/wp-gdata.php';
+require_once 'wp-gdata/wp-gdata.php';
 
 if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 
-	class Yoast_GA_Admin {
+	class Yoast_GA_Admin extends Yoast_GA_Options {
 
 		private $form_namespace;
 
-		public $options;
-
-		private $form_prefix = 'ga_general';
-
 		public function __construct() {
+			parent::__construct();
+
 			add_action( 'plugins_loaded', array( $this, 'init_ga' ) );
 			add_action( 'admin_init', array( $this, 'init_settings' ) );
 		}
@@ -25,25 +23,17 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		 */
 		public function init_ga() {
 			add_action( 'admin_menu', array( $this, 'create_menu' ), 5 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
-			add_filter( 'plugin_action_links_' . plugin_basename( GAWP_FILE ), array( $this, 'add_action_links' ), 10, 2 );
+			add_filter( 'plugin_action_links_' . plugin_basename( GAWP_FILE ), array( $this, 'add_action_links' ) );
 		}
 
 		/**
 		 * Init function for the settings of GA
 		 */
 		public function init_settings() {
-			$this->options = get_option( 'yst_ga' );
+			$this->options = $this->get_options();
 
-			if ( false == $this->options ) {
-				add_option( 'yst_ga', $this->default_ga_values() );
-				$this->options = get_option( 'yst_ga' );
-			}
-
-			global $Yoast_GA_Options;
-			if ( is_null( $Yoast_GA_Options->get_tracking_code() ) ) {
+			if ( is_null( $this->get_tracking_code() ) ) {
 				add_action( 'admin_notices', array( $this, 'config_warning' ) );
 			}
 
@@ -81,72 +71,24 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		}
 
 		/**
-		 * Set the default GA settings here
-		 * @return array
-		 */
-		public function default_ga_values() {
-			return array(
-				$this->form_prefix => array(
-					'analytics_profile'          => null,
-					'manual_ua_code'             => 0,
-					'manual_ua_code_field'       => null,
-					'track_internal_as_outbound' => null,
-					'track_internal_as_label'    => null,
-					'track_outbound'             => 0,
-					'anonymous_data'             => 0,
-					'enable_universal'           => 0,
-					'demographics'               => 0,
-					'ignore_users'               => array( 'editor' ),
-					'anonymize_ips'              => null,
-					'track_download_as'          => 'event',
-					'extensions_of_files'        => 'doc,exe,js,pdf,ppt,tgz,zip,xls',
-					'track_full_url'             => 'domain',
-					'subdomain_tracking'         => null,
-					'tag_links_in_rss'           => 0,
-					'allow_anchor'               => 0,
-					'add_allow_linker'           => 0,
-					'custom_code'                => null,
-					'debug_mode'                 => 0,
-					'firebug_lite'               => 0,
-				)
-			);
-		}
-
-		/**
-		 * Return the setting by name
-		 *
-		 * @param $name
-		 *
-		 * @return null
-		 */
-		public function get_setting( $name ) {
-
-			if ( isset( $this->options[ $this->form_prefix ][ $name ] ) ) {
-				return $this->options[ $this->form_prefix ][ $name ];
-			} else {
-				return null;
-			}
-		}
-
-		/**
 		 * This function saves the settings in the option field and returns a wp success message on success
 		 *
 		 * @param $data
 		 */
 		public function save_settings( $data ) {
 			foreach ( $data as $key => $value ) {
-				$this->options[ $this->form_prefix ][ $key ] = $value;
+				$this->options[ $key ] = $value;
 			}
 
 			// Check checkboxes, on a uncheck they won't be posted to this function
 			$defaults = $this->default_ga_values();
-			foreach ( $defaults['ga_general'] as $key => $value ) {
+			foreach ( $defaults[ $this->option_prefix ] as $key => $value ) {
 				if ( ! isset( $data[ $key ] ) ) {
-					$this->options[ $this->form_prefix ][ $key ] = $value;
+					$this->options[ $key ] = $value;
 				}
 			}
 
-			if ( update_option( 'yst_ga', $this->options ) ) {
+			if ( $this->update_option( $this->options ) ) {
 				// Success!
 			} else {
 				// Fail..
@@ -155,30 +97,15 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		}
 
 		/**
-		 * Get the singleton instance of this class
-		 *
-		 * @return object
-		 */
-		public static function get_instance() {
-			if ( ! ( self::$instance instanceof self ) ) {
-				self::$instance = new self();
-			}
-
-			return self::$instance;
-		}
-
-		/**
 		 * Add a link to the settings page to the plugins list
 		 *
-		 * @staticvar string $this_plugin holds the directory & filename for the plugin
+		 * @param array $links array of links for the plugins, adapted when the current plugin is found.
 		 *
-		 * @param    array  $links array of links for the plugins, adapted when the current plugin is found.
-		 * @param    string $file  the filename for the current plugin, which the filter loops through.
-		 *
-		 * @return    array    $links
+		 * @return array $links
 		 */
-		function add_action_links( $links, $file ) {
+		function add_action_links( $links ) {
 			// add link to knowledgebase
+			// @todo UTM link fix
 			$faq_link = '<a title="Yoast Knowledge Base" href="http://kb.yoast.com/category/43-google-analytics-for-wordpress">' . __( 'FAQ', 'google-analytics-for-wordpress' ) . '</a>';
 			array_unshift( $links, $faq_link );
 
@@ -193,12 +120,22 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		 *
 		 * @todo, we need to implement a new icon for this, currently we're using the WP seo icon
 		 */
-		public function create_menu( $param = null ) {
+		public function create_menu() {
+			/**
+			 * Filter: 'wpga_menu_on_top' - Allows filtering of menu location of the GA plugin, if false is returned, it moves to bottom.
+			 *
+			 * @api book unsigned
+			 */
+			$on_top = apply_filters( 'wpga_menu_on_top', true );
+
+			// Base 64 encoded SVG image
+			$icon_svg = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCIgWw0KCTwhRU5USVRZIG5zX2Zsb3dzICJodHRwOi8vbnMuYWRvYmUuY29tL0Zsb3dzLzEuMC8iPg0KCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPg0KCTwhRU5USVRZIG5zX2FpICJodHRwOi8vbnMuYWRvYmUuY29tL0Fkb2JlSWxsdXN0cmF0b3IvMTAuMC8iPg0KCTwhRU5USVRZIG5zX2dyYXBocyAiaHR0cDovL25zLmFkb2JlLmNvbS9HcmFwaHMvMS4wLyI+DQpdPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYWFnXzEiIHhtbG5zOng9IiZuc19leHRlbmQ7IiB4bWxuczppPSImbnNfYWk7IiB4bWxuczpncmFwaD0iJm5zX2dyYXBoczsiDQoJIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOmE9Imh0dHA6Ly9ucy5hZG9iZS5jb20vQWRvYmVTVkdWaWV3ZXJFeHRlbnNpb25zLzMuMC8iDQoJIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDAgMzEuODkiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDQwIDMxLjg5IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQwLDEyLjUyNEM0MCw1LjYwOCwzMS40NjksMCwyMCwwQzguNTMsMCwwLDUuNjA4LDAsMTIuNTI0YzAsNS41Niw1LjI0MywxMC4yNzIsMTMuNTU3LDExLjkwN3YtNC4wNjUNCgljMCwwLDAuMDQtMS0wLjI4LTEuOTJjLTAuMzItMC45MjEtMS43Ni0zLjAwMS0xLjc2LTUuMTIxYzAtMi4xMjEsMi41NjEtOS41NjMsNS4xMjItMTAuNDQ0Yy0wLjQsMS4yMDEtMC4zMiw3LjY4My0wLjMyLDcuNjgzDQoJczEuNCwyLjcyLDQuNjQxLDIuNzJjMy4yNDIsMCw0LjUxMS0xLjc2LDQuNzE1LTIuMmMwLjIwNi0wLjQ0LDAuODQ2LTguNzIzLDAuODQ2LTguNzIzczQuMDgyLDQuNDAyLDMuNjgyLDkuMzYzDQoJYy0wLjQwMSw0Ljk2Mi00LjQ4Miw3LjIwMy02LjEyMiw5LjEyM2MtMS4yODYsMS41MDUtMi4yMjQsMy4xMy0yLjYyOSw0LjE2OGMwLjgwMS0wLjAzNCwxLjU4Ny0wLjA5OCwyLjM2MS0wLjE4NGw5LjE1MSw3LjA1OQ0KCWwtNC44ODQtNy44M0MzNS41MzUsMjIuMTYxLDQwLDE3LjcxMyw0MCwxMi41MjR6Ii8+DQo8L2c+DQo8L3N2Zz4=';
+
 			// Add main page
 			add_menu_page( __( 'Yoast Google Analytics:', 'google-analytics-for-wordpress' ) . ' ' . __( 'General Settings', 'google-analytics-for-wordpress' ), __( 'Analytics', 'google-analytics-for-wordpress' ), 'manage_options', 'yst_ga_dashboard', array(
 				$this,
-				'load_page'
-			), plugins_url( 'img/yoast-icon.png', GAWP_FILE ), '2.00013467543' );
+				'load_page',
+			), $icon_svg, $on_top ? '2.00013467543': '100.00013467543' );
 
 			// Sub menu pages
 			$submenu_pages = array(
@@ -209,7 +146,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 					'manage_options',
 					'yst_ga_dashboard',
 					array( $this, 'load_page' ),
-					array( array( $this, 'yst_ga_dashboard' ) )
+					array( array( $this, 'yst_ga_dashboard' ) ),
 				),
 				array(
 					'yst_ga_dashboard',
@@ -218,7 +155,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 					'manage_options',
 					'yst_ga_settings',
 					array( $this, 'load_page' ),
-					array( array( $this, 'yst_ga_settings' ) )
+					array( array( $this, 'yst_ga_settings' ) ),
 				),
 				array(
 					'yst_ga_dashboard',
@@ -227,55 +164,80 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 					'manage_options',
 					'yst_ga_licenses',
 					array( $this, 'load_page' ),
-					null
+					array( array( $this, 'yst_ga_licenses' ) ),
 				),
 			);
 
 			if ( count( $submenu_pages ) ) {
 				foreach ( $submenu_pages as $submenu_page ) {
 					// Add submenu page
-					add_submenu_page( $submenu_page[0], $submenu_page[1], $submenu_page[2], $submenu_page[3], $submenu_page[4], $submenu_page[5] );
+					$page = add_submenu_page( $submenu_page[0], $submenu_page[1], $submenu_page[2], $submenu_page[3], $submenu_page[4], $submenu_page[5] );
+					add_action( 'admin_print_styles-' . $page, array( $this, 'enqueue_styles' ) );
+					if ( 'yst_ga_settings' === $submenu_page[4] || 'yst_ga_licenses' === $submenu_page[4] ) {
+						add_action( 'admin_print_styles-' . $page, array( $this, 'enqueue_settings_styles' ) );
+						add_action( 'admin_print_scripts-' . $page, array( $this, 'enqueue_scripts' ) );
+					}
 				}
 			}
 		}
 
 		/**
-		 * Add the scripts to the admin head
+		 * Check whether we can include the minified version or not
 		 *
-		 * @todo add minified JS files
+		 * @param string $ext
+		 *
+		 * @return string
+		 */
+		private function file_ext( $ext ) {
+			if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
+				$ext = '.min' . $ext;
+			}
+			return $ext;
+		}
+
+		/**
+		 * Add the scripts to the admin head
 		 */
 		public function enqueue_scripts() {
-			wp_enqueue_script( 'yoast_ga_admin', GAWP_URL . 'js/yoast_ga_admin.js' );
+			wp_enqueue_script( 'yoast_ga_admin', $this->plugin_url . 'js/yoast_ga_admin' . $this->file_ext( '.js' ) );
+
+			// Eqneue the chosen js file
+			wp_enqueue_script( 'chosen_js', plugins_url( 'js/chosen.jquery.min.js', GAWP_FILE ), array(), false, true );
 		}
 
 		/**
 		 * Add the styles in the admin head
-		 *
-		 * @todo add minified CSS files
 		 */
 		public function enqueue_styles() {
-			wp_enqueue_style( 'yoast_ga_styles', GAWP_URL . 'css/yoast_ga_styles.css' );
+			wp_enqueue_style( 'yoast_ga_styles', $this->plugin_url . 'css/yoast_ga_styles' . $this->file_ext( '.css' ) );
+		}
+
+		/**
+		 * Enqueues the settings page specific styles
+		 */
+		public function enqueue_settings_styles() {
+			// Enqueue the chosen css file
+			wp_enqueue_style( 'chosen_css', $this->plugin_url . 'css/chosen' . $this->file_ext( '.css' ) );
 		}
 
 		/**
 		 * Load the page of a menu item in the GA plugin
 		 */
 		public function load_page() {
-
-			require_once GAWP_PATH . 'admin/class-admin-ga-js.php';
+			require_once $this->plugin_path . 'admin/class-admin-ga-js.php';
 
 			if ( isset( $_GET['page'] ) ) {
 				switch ( $_GET['page'] ) {
 					case 'yst_ga_settings':
-						require_once( GAWP_PATH . 'admin/pages/settings.php' );
+						require_once( $this->plugin_path . 'admin/pages/settings.php' );
 
 						break;
 					case 'yst_ga_licenses':
-						require_once( GAWP_PATH . 'admin/pages/extensions.php' );
+						require_once( $this->plugin_path . 'admin/pages/extensions.php' );
 						break;
 					case 'yst_ga_dashboard':
 					default:
-						require_once( GAWP_PATH . 'admin/pages/dashboard.php' );
+						require_once( $this->plugin_path . 'admin/pages/dashboard.php' );
 						break;
 				}
 			}
@@ -284,14 +246,14 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		/**
 		 * Create a form element to init a form
 		 *
-		 * @param $namespace
+		 * @param string $namespace
 		 *
 		 * @return string
 		 */
 		public function create_form( $namespace ) {
 			$this->form_namespace = $namespace;
 
-			$action = $_SERVER['PHP_SELF'];
+			$action = admin_url( 'admin.php' );
 			if ( isset( $_GET['page'] ) ) {
 				$action .= '?page=' . $_GET['page'];
 			}
@@ -307,7 +269,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		 *
 		 * @return null|string
 		 */
-		public function end_form( $button_label = "Save changes", $name = 'submit' ) {
+		public function end_form( $button_label = 'Save changes', $name = 'submit' ) {
 			$output = null;
 			$output .= '<div class="ga-form ga-form-input">';
 			$output .= '<input type="submit" name="ga-form-' . $name . '" value="' . $button_label . '" class="button button-primary ga-form-submit" id="yoast-ga-form-submit-' . $this->form_namespace . '">';
@@ -319,11 +281,11 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		/**
 		 * Create a input form element with our labels and wrap them
 		 *
-		 * @param string $type
-		 * @param null   $title
-		 * @param null   $name
-		 * @param null   $text_label
-		 * @param null   $description
+		 * @param string      $type
+		 * @param null|string $title
+		 * @param null|string $name
+		 * @param null|string $text_label
+		 * @param null|string $description
 		 *
 		 * @return null|string
 		 */
@@ -337,16 +299,16 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 				$input .= '<label class="ga-form ga-form-' . $type . '-label ga-form-label-left" id="yoast-ga-form-label-' . $type . '-' . $this->form_namespace . '-' . $id . '" />' . $title . ':</label>';
 			}
 
-			if ( $type == 'checkbox' && $this->get_setting( $name ) == 1 ) {
+			if ( $type == 'checkbox' && $this->options[ $name ] == 1 ) {
 				$input .= '<input type="' . $type . '" class="ga-form ga-form-checkbox" id="yoast-ga-form-' . $type . '-' . $this->form_namespace . '-' . $id . '" name="' . $name . '" value="1" checked="checked" />';
 			} elseif ( $type == 'checkbox' ) {
 				$input .= '<input type="' . $type . '" class="ga-form ga-form-checkbox" id="yoast-ga-form-' . $type . '-' . $this->form_namespace . '-' . $id . '" name="' . $name . '" value="1" />';
 			} else {
-				$input .= '<input type="' . $type . '" class="ga-form ga-form-' . $type . '" id="yoast-ga-form-' . $type . '-' . $this->form_namespace . '-' . $id . '" name="' . $name . '" value="' . stripslashes( $this->get_setting( $name ) ) . '" />';
+				$input .= '<input type="' . $type . '" class="ga-form ga-form-' . $type . '" id="yoast-ga-form-' . $type . '-' . $this->form_namespace . '-' . $id . '" name="' . $name . '" value="' . stripslashes( $this->options[ $name ] ) . '" />';
 			}
 
 			if ( ! is_null( $text_label ) ) {
-				$input .= '<label class="ga-form ga-form-' . $type . '-label" id="yoast-ga-form-label-' . $type . '-textlabel-' . $this->form_namespace . '-' . $id . '" for="yoast-ga-form-' . $type . '-' . $this->form_namespace . '-' . $id . '" />' . __( $text_label, 'google-analytics-for-wordpress' ) . '</label>';
+				$input .= '<label class="ga-form ga-form-' . $type . '-label" id="yoast-ga-form-label-' . $type . '-textlabel-' . $this->form_namespace . '-' . $id . '" for="yoast-ga-form-' . $type . '-' . $this->form_namespace . '-' . $id . '" />' . $text_label . '</label>';
 			}
 
 			$input .= '</div>';
@@ -355,7 +317,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 			if ( ! is_null( $description ) ) {
 				$input .= '<div class="ga-form ga-form-input">';
 				$input .= '<label class="ga-form ga-form-select-label ga-form-label-left" id="yoast-ga-form-description-select-' . $this->form_namespace . '-' . $id . '" />&nbsp;</label>';
-				$input .= '<span class="ga-form ga-form-description">' . __( $description, 'google-analytics-for-wordpress' ) . '</span>';
+				$input .= '<span class="ga-form ga-form-description">' .  $description . '</span>';
 				$input .= '</div>';
 			}
 
@@ -365,11 +327,11 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		/**
 		 * Generate a select box
 		 *
-		 * @param      $title
-		 * @param      $name
-		 * @param      $values
-		 * @param null $description
-		 * @param bool $multiple
+		 * @param string      $title
+		 * @param string      $name
+		 * @param array       $values
+		 * @param null|string $description
+		 * @param bool        $multiple
 		 *
 		 * @return null|string
 		 */
@@ -379,7 +341,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 			$id     = str_replace( ']', '', $id );
 			$select .= '<div class="ga-form ga-form-input">';
 			if ( ! is_null( $title ) ) {
-				$select .= '<label class="ga-form ga-form-select-label ga-form-label-left" id="yoast-ga-form-label-select-' . $this->form_namespace . '-' . $id . '" />' . __( $title, 'google-analytics-for-wordpress' ) . ':</label>';
+				$select .= '<label class="ga-form ga-form-select-label ga-form-label-left" id="yoast-ga-form-label-select-' . $this->form_namespace . '-' . $id . '" />' . $title . ':</label>';
 			}
 
 			if ( $multiple ) {
@@ -389,14 +351,14 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 			}
 			if ( count( $values ) >= 1 ) {
 				foreach ( $values as $value ) {
-					if ( is_array( $this->get_setting( $name ) ) ) {
-						if ( in_array( $value['id'], $this->get_setting( $name ) ) ) {
+					if ( is_array( $this->options[ $name ] ) ) {
+						if ( in_array( $value['id'], $this->options[ $name ] ) ) {
 							$select .= '<option value="' . $value['id'] . '" selected="selected">' . stripslashes( $value['name'] ) . '</option>';
 						} else {
 							$select .= '<option value="' . $value['id'] . '">' . stripslashes( $value['name'] ) . '</option>';
 						}
 					} else {
-						$select .= '<option value="' . $value['id'] . '" ' . selected( $this->get_setting( $name ), $value['id'], false ) . '>' . stripslashes( $value['name'] ) . '</option>';
+						$select .= '<option value="' . $value['id'] . '" ' . selected( $this->options[ $name ], $value['id'], false ) . '>' . stripslashes( $value['name'] ) . '</option>';
 					}
 				}
 			}
@@ -417,20 +379,20 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		/**
 		 * Generate a textarea field
 		 *
-		 * @param        $title
-		 * @param        $name
-		 * @param null   $description
+		 * @param string      $title
+		 * @param string      $name
+		 * @param null|string $description
 		 *
 		 * @return null|string
 		 */
 		public function textarea( $title, $name, $description = null ) {
 			$text = null;
-			$id   = $this->form_prefix . '_' . $name;
+			$id   = $this->option_prefix . '_' . $name;
 			$text .= '<div class="ga-form ga-form-input">';
 			if ( ! is_null( $title ) ) {
 				$text .= '<label class="ga-form ga-form-select-label ga-form-label-left" id="yoast-ga-form-label-select-' . $this->form_namespace . '-' . $id . '" />' . __( $title, 'google-analytics-for-wordpress' ) . ':</label>';
 			}
-			$text .= '<textarea rows="5" cols="60" name="' . $name . '" id="yoast-ga-form-textarea-' . $this->form_namespace . '-' . $id . '">' . stripslashes( $this->get_setting( $name ) ) . '</textarea>';
+			$text .= '<textarea rows="5" cols="60" name="' . $name . '" id="yoast-ga-form-textarea-' . $this->form_namespace . '-' . $id . '">' . stripslashes( $this->options[ $name ] ) . '</textarea>';
 			$text .= '</div>';
 
 			// If we get a description, append it to this select field in a new row
@@ -446,16 +408,10 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 
 		/**
 		 * Get the Google Analytics profiles which are in this google account
+		 *
 		 * @return array
-		 * @todo OAuth connection to Google.com?
 		 */
 		public function get_profiles() {
-
-			// Enqueue the chosen css file
-			wp_enqueue_style( 'chosen_css', plugins_url( 'js/chosen.css', GAWP_FILE ) );
-
-			// Eqneue the chosen js file
-			wp_enqueue_script( 'chosen_js', plugins_url( 'js/chosen.jquery.min.js', GAWP_FILE ), array(), false, true );
 
 			$option_name = 'yst_ga_api';
 			$options     = get_option( $option_name );
@@ -476,7 +432,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 				if ( $http_code == 200 ) {
 					$options['ga_api_response'] = array(
 						'response' => array( 'code' => $http_code ),
-						'body'     => $response
+						'body'     => $response,
 					);
 					update_option( $option_name, $options );
 				} else {
@@ -510,7 +466,6 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 										'title' => $title,
 									);
 								}
-
 							}
 						} else {
 							if ( $xml_reader->link['href'] == 'https://www.google.com/analytics/feeds/accounts/default' ) {
@@ -532,7 +487,6 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 											'title' => $title,
 										);
 									}
-
 								}
 							}
 						}
@@ -559,18 +513,17 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		/**
 		 * Sorting the array in alphabetic order
 		 *
-		 * @param $a
-		 * @param $b
+		 * @param string $a
+		 * @param string $b
 		 *
 		 * @return int
 		 */
 		public function sort_profiles( $a, $b ) {
-			return strcmp( $a["title"], $b["title"] );
+			return strcmp( $a['title'], $b['title'] );
 		}
 
 		/**
 		 * Checks if there is a callback or reauth to get token from Google Analytics api
-		 *
 		 */
 		private function connect_with_google_analytics() {
 
@@ -582,7 +535,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 					$gdata = new WP_GData(
 						array(
 							'scope'              => 'https://www.google.com/analytics/feeds/',
-							'xoauth_displayname' => 'Google Analytics by Yoast'
+							'xoauth_displayname' => 'Google Analytics by Yoast',
 						),
 						$o['ga_oauth']['oauth_token'],
 						$o['ga_oauth']['oauth_token_secret']
@@ -604,7 +557,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 				$gdata = new WP_GData(
 					array(
 						'scope'              => 'https://www.google.com/analytics/feeds/',
-						'xoauth_displayname' => 'Google Analytics by Yoast'
+						'xoauth_displayname' => 'Google Analytics by Yoast',
 					)
 				);
 
@@ -631,6 +584,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 
 		/**
 		 * Get the user roles of this WordPress blog
+		 *
 		 * @return array
 		 */
 		public function get_userroles() {
@@ -638,6 +592,12 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 
 			$all_roles      = $wp_roles->roles;
 			$roles          = array();
+
+			/**
+			 * Filter: 'editable_roles' - Allows filtering of the roles shown within the plugin (and elsewhere in WP as it's a WP filter)
+			 *
+			 * @api array $all_roles
+			 */
 			$editable_roles = apply_filters( 'editable_roles', $all_roles );
 			foreach ( $editable_roles as $id => $name ) {
 				$roles[] = array(
@@ -651,6 +611,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 
 		/**
 		 * Get types of how we can track downloads
+		 *
 		 * @return array
 		 */
 		public function track_download_types() {
@@ -662,6 +623,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 
 		/**
 		 * Get options for the track full url or links setting
+		 *
 		 * @return array
 		 */
 		public function get_track_full_url() {
@@ -675,7 +637,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 		 * Render the admin page head for the GA Plugin
 		 */
 		public function content_head() {
-			require( "views/content_head.php" );
+			require 'views/content_head.php';
 		}
 
 		/**
@@ -685,23 +647,23 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 			$banners   = array();
 			$banners[] = array(
 				'url'    => 'https://yoast.com/hire-us/website-review/#utm_medium=banner&utm_source=gawp-config&utm_campaign=wpgaplugin',
-				'banner' => GAWP_URL . 'img/banner-website-review.png',
-				'title'  => 'Get a website review by Yoast'
+				'banner' => $this->plugin_url . 'img/banner-website-review.png',
+				'title'  => 'Get a website review by Yoast',
 			);
 			$banners[] = array(
 				'url'    => 'https://yoast.com/wordpress/plugins/seo-premium/#utm_medium=banner&utm_source=gawp-config&utm_campaign=wpgaplugin',
-				'banner' => GAWP_URL . 'img/banner-premium-seo.png',
-				'title'  => 'Get WordPress SEO premium'
+				'banner' => $this->plugin_url . 'img/banner-premium-seo.png',
+				'title'  => 'Get WordPress SEO premium',
 			);
 			$banners[] = array(
 				'url'    => 'https://yoast.com/ebook-optimize-wordpress-site/#utm_medium=banner&utm_source=gawp-config&utm_campaign=wpgaplugin',
-				'banner' => GAWP_URL . 'img/eBook_261x130.png',
-				'title'  => 'Get the Yoast ebook!'
+				'banner' => $this->plugin_url . 'img/eBook_261x130.png',
+				'title'  => 'Get the Yoast ebook!',
 			);
 			$banners[] = array(
 				'url'    => 'https://yoast.com/wordpress/plugins/local-seo/#utm_medium=banner&utm_source=gawp-config&utm_campaign=wpgaplugin',
-				'banner' => GAWP_URL . 'img/banner-local-seo.png',
-				'title'  => 'Get WooCommerce integrated in your Analytics'
+				'banner' => $this->plugin_url . 'img/banner-local-seo.png',
+				'title'  => 'Get WooCommerce integrated in your Analytics',
 			);
 
 			shuffle( $banners );
@@ -713,7 +675,7 @@ if ( ! class_exists( 'Yoast_GA_Admin' ) ) {
 				echo '</pre></div></div>';
 			}
 
-			require( "views/content_footer.php" );
+			require 'views/content-footer.php';
 		}
 
 	}
