@@ -1080,3 +1080,5 @@ $plugin_list
 		
 	</div>
 </div>
+
+<?php do_action( 'p3_runtime_by_plugin_notifications', self::$profile ); ?>

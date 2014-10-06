@@ -168,12 +168,19 @@ class P3_Profiler {
 			return $this;
 		}
 		
+		// Hook shutdown
+		register_shutdown_function( array( $this, 'shutdown_handler' ) );
+
 		// Error detection
 		$flag = get_option( 'p3_profiler-error_detection' );
-		if ( !empty( $flag ) ) {
+		if ( !empty( $flag ) && $flag > time() + 60 ) {
 			p3_profiler_disable();
-			delete_option( 'p3_profiler-error_detection' );
 			return $this;
+		}
+
+		// Set the error detection flag
+		if ( empty( $flag ) ) {
+			update_option( 'p3_profiler-error_detection', time() );
 		}
 
 		// Kludge memory limit / time limit
@@ -181,9 +188,6 @@ class P3_Profiler {
 			@ini_set( 'memory_limit', '256M' );
 		}
 		@set_time_limit( 90 );
-		
-		// Set the error detection flag
-		update_option( 'p3_profiler-error_detection', time() );
 		
 		// Set the profile file
 		$this->_profile_filename = $opts['profiling_enabled']['name'] . '.json';
@@ -236,7 +240,6 @@ class P3_Profiler {
 		// Monitor all function-calls
 		declare( ticks = 1 );
 		register_tick_function( array( $this, 'tick_handler' ) );
-		add_action( 'shutdown', array( $this, 'shutdown_handler' ) );
 	}
 
 	/**

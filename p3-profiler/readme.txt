@@ -2,8 +2,8 @@
 Contributors: Godaddy, StarfieldTech, kurtpayne
 Tags: debug, debugging, developer, development, performance, plugin, profiler, speed
 Requires at least: 3.3
-Tested up to: 3.9
-Stable tag: 1.5.1
+Tested up to: 4.0
+Stable tag: 1.5.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ Manual installation:
 4. Then activate the Plugin from Plugins page.
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+Fixed a race condition in the error detection logic.  Now P3 will auto deactivate 60 seconds after an error if it is not cleared.
 
 = 1.5.1 =
 Fix a bug which broke debug mode and caused scanning to not work properly for some users.
@@ -142,6 +145,10 @@ add_filter( 'p3_automatic_scan_urls', 'my_p3_auto_scan_pages' );
 </code>
 
 == Changelog ==
+
+= 1.5.2 =
+ * Fix a race condition in the error detection logic
+ * Add a notice about WordPress SEO and Jetpack
 
 = 1.5.1 =
  * Fix a bug which broke debug mode and caused scanning to not work properly for some users.

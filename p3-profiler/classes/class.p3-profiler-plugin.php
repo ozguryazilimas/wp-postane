@@ -75,9 +75,6 @@ class P3_Profiler_Plugin {
 		$opts['debug'] = false;
 		update_option( 'p3-profiler_options', $opts );
 		update_option( 'p3-profiler_debug_log', array() );
-		if ( !empty( $p3_profiler ) ) {
-			remove_action( 'shutdown', array( $p3_profiler, 'shutdown_handler' ) );
-		}
 
 		// Remove mu-plugin
 		if ( file_exists( WPMU_PLUGIN_DIR . '/p3-profiler.php' ) ) {

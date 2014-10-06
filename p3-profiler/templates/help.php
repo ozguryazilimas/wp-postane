@@ -440,6 +440,13 @@ After you've tuned your site up as much as possible, if you're still not happy w
 </div>
 
 <div class="p3-question">
+	<h2 class="p3-help-question q-jetpack"><?php _e( "Why do some plugins show artificially high results?", 'p3-profiler' ); ?></h2>
+	<blockquote class="q-specfic-data">
+		<?php _e( "P3 scans your site as a logged in user.  Some plugins enable more functionality when you are logged in.  When P3 detects a plugin which could be a false positive, such as Jetpack, you'll see a notice.  The authors of these plugins have put a focus on performance and you should feel safe leaving them enabled on your site if you need the functionality they provide.", 'p3-profiler' ); ?>
+	</blockquote>
+</div>
+
+<div class="p3-question">
 	<h2 class="p3-help-question q-glossary" style="border-bottom-width: 0px !important;"><?php _e( 'Glossary', 'p3-profiler' ); ?></h2>
 	<blockquote class="q-glossary-data">
 		<div>
