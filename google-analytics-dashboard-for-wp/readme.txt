@@ -4,7 +4,7 @@ Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
 Tested up to: 4.0
-Stable tag: 4.3.3
+Stable tag: 4.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,9 +36,9 @@ Using this plugin, your analytics data is collected in a fast and secure manner 
 
 - enable/disable google analytics tracking code
 - switch between universal analytics and classic analytics tracking methods
-- supports analytics.js tracking for comaptibility with Universal Analytics web property  
-- supports ga.js tracking for comaptibility with Classic Analytics web property
-- automatically generates the tracking code; the user can also define a custom code
+- supports analytics.js tracking for compatibility with Universal Analytics web property  
+- supports ga.js tracking for compatibility with Classic Analytics web property
+- automatically generates the Google Analytics tracking code
 - IP address anonymization feature
 - enhanced link attribution feature
 - remarketing, demographics and interests tracking
@@ -47,6 +47,10 @@ Using this plugin, your analytics data is collected in a fast and secure manner 
 - track events feature: track downloads, emails and outbound links (supported for both tracking methods: classic tracking and universal tracking)
 - exclude traffic based on user level access
 - option to exclude event tracking from bounce-rate calculation
+- multiple domains / cross domain tracking
+- action hook for code customization
+- track authors, publication year, categories and user engagement using Google Analytics custom dimensions
+- affiliate links tracking with Google Analytics
 
 = WPMU features =
 
@@ -58,12 +62,13 @@ Using this plugin, your analytics data is collected in a fast and secure manner 
 Google Analytics Dashboard for WP has been translated into the following languages:
 
 1. English
-2. German
-3. Hungarian
-4. Italian
-5. Polish
-6. Portuguese
-7. Spanish
+2. French
+3. German
+4. Hungarian
+5. Italian
+6. Polish
+7. Portuguese
+8. Spanish
 
 = Further reading and info =
 
@@ -113,6 +118,14 @@ A dedicated section for Wordpress Plugins is available here: [Wordpress Plugins 
 This plugin it's released under the GPLv2, you can use it free of charge on your personal or commercial website.
 
 == Changelog ==
+
+= 4.3.4 =
+- feature: ga_dash_addtrackingcode action hook
+- feature: French translation
+- feature: cross domain tracking support
+- feature: Google Analytics custom definitions, using custom dimensions to track authors, years, categories and engagement
+- feature: support for affiliate links tracking 
+- tweak: never treat downloads as outbound links
 
 = 4.3.3 =
 - feature: added Polish translation

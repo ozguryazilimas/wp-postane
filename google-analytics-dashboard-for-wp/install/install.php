@@ -48,7 +48,15 @@ class GADASH_Install {
 			$options ['ga_dash_network'] = 0;
 			$options['ga_dash_adsense'] = 0;
 			$options['ga_speed_samplerate'] = 1;
-			$options['ga_event_bouncerate'] = 1;
+			$options['ga_event_bouncerate'] = 0;
+			$options['ga_crossdomain_tracking'] = 0;
+			$options['ga_crossdomain_list'] = '';
+			$options ['ga_author_dimindex'] = 0;
+			$options ['ga_category_dimindex'] = 0;
+			$options ['ga_user_dimindex'] = 0;
+			$options ['ga_pubyear_dimindex'] = 0;
+			$options['ga_aff_tracking'] = 0;
+			$options ['ga_event_affiliates'] = '/out/';
 		} else {
 			$options = array ();
 			$options ['ga_dash_apikey'] = get_option ( 'ga_dash_apikey' );
@@ -94,7 +102,15 @@ class GADASH_Install {
 			$options ['ga_dash_default_metric'] = 'visits';
 			$options ['ga_dash_default_dimension'] = '30daysAgo';
 			$options ['ga_dash_network'] = 0;
-			$options['ga_event_bouncerate'] = 1;
+			$options['ga_event_bouncerate'] = 0;
+			$options['ga_crossdomain_tracking'] = 0;
+			$options['ga_crossdomain_list'] = '';
+			$options ['ga_author_dimindex'] = 0;
+			$options ['ga_category_dimindex'] = 0;
+			$options ['ga_user_dimindex'] = 0;
+			$options ['ga_pubyear_dimindex'] = 0;
+			$options ['ga_event_affiliates'] = '/out/';
+			$options['ga_aff_tracking'] = 0;
 			
 			delete_option ( 'ga_dash_apikey' );
 			delete_option ( 'ga_dash_clientid' );
