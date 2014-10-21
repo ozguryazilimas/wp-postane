@@ -1334,7 +1334,7 @@ class Ure_Lib extends Garvs_WP_Lib {
         // end of switch
         if (!empty($url)) {
             $link = '<a href="' . $url . '" title="read about ' . $capability . ' user capability" target="new"><img src="' . 
-                    URE_PLUGIN_URL . '/images/help.png" alt="' . esc_html__('Help', 'ure') . '" /></a>';
+                    URE_PLUGIN_URL . 'images/help.png" alt="' . esc_html__('Help', 'ure') . '" /></a>';
         } else {
             $link = '';
         }

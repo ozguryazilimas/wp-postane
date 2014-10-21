@@ -36,9 +36,12 @@ class URE_Screen_Help {
     protected function get_additional_modules_tab() {
         $text = '<h2>User Role Editor Options page help</h2>
             <p>
-            <ul>
-            <li><strong>' . esc_html__('Count users without role', 'ure').'</strong> - ' .
-                esc_html__('select roles below','ure') . '</li>';        
+            <ul>';
+        if (!is_multisite()) {
+            $text .= '<li><strong>' . esc_html__('Count users without role', 'ure').'</strong> - ' .
+                     esc_html__('Show at the "Users" page a quant of users without role. Module allows to assign all of them '.
+                     'an empty role "No rights", in order to look on the users list with role "No rights" at the separate tab then.','ure') . '</li>';        
+        }
         $text = apply_filters('ure_get_settings_additional_modules_tab_help', $text);
         $text .='
             </ul>

@@ -547,7 +547,7 @@ class User_Role_Editor {
             'title'	=> esc_html__('General'),
             'content'	=> $screen_help->get_settings_help('general')
             ));
-        if ($this->lib->pro || !$this->lib->multisite) {
+        if ($this->lib->is_pro() || !$this->lib->multisite) {
             $screen->add_help_tab( array(
                 'id'	=> 'additional_modules',
                 'title'	=> esc_html__('Additional Modules'),
@@ -559,11 +559,13 @@ class User_Role_Editor {
             'title'	=> esc_html__('Default Roles'),
             'content'	=> $screen_help->get_settings_help('default_roles')
             ));
-        $screen->add_help_tab( array(
-            'id'	=> 'multisite',
-            'title'	=> esc_html__('Multisite'),
-            'content'	=> $screen_help->get_settings_help('multisite')
-            ));
+        if ($this->lib->multisite) {
+            $screen->add_help_tab( array(
+                'id'	=> 'multisite',
+                'title'	=> esc_html__('Multisite'),
+                'content'	=> $screen_help->get_settings_help('multisite')
+                ));
+        }
     }
     // end of settings_screen_configure()
     

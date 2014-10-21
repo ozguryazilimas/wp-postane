@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: User Role Editor 4.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-01 12:45+0700\n"
+"POT-Creation-Date: 2014-10-21 10:24+0700\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Vladimir Garagulya <vladimir@shinephp.com>\n"
+"Last-Translator: Vladimir Garagulya <support@role-editor.com>\n"
 "Language-Team: \n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgid "Default Roles"
 msgstr "Alap szerepkörök"
 
 #: ../includes/settings-template.php:34
-#: ../includes/class-user-role-editor.php:564
+#: ../includes/class-user-role-editor.php:565
 msgid "Multisite"
 msgstr "Multisite"
 
@@ -66,7 +66,7 @@ msgid "Save"
 msgstr "Mentés"
 
 #: ../includes/settings-template.php:102
-#: ../includes/class-ure-screen-help.php:40
+#: ../includes/class-ure-screen-help.php:41
 msgid "Count users without role"
 msgstr "Szerepkör nélküli felhasználók számlálása"
 
@@ -120,72 +120,72 @@ msgid "Settings"
 msgstr "Beállítások"
 
 #: ../includes/class-user-role-editor.php:525
-#: ../includes/class-ure-lib.php:2292
+#: ../includes/class-ure-lib.php:2295
 msgid "Changelog"
 msgstr "Változások naplója"
 
-#: ../includes/class-user-role-editor.php:573
-#: ../includes/class-user-role-editor.php:601
-#: ../includes/class-user-role-editor.php:946
-#: ../includes/class-ure-lib.php:248
+#: ../includes/class-user-role-editor.php:575
+#: ../includes/class-user-role-editor.php:603
+#: ../includes/class-user-role-editor.php:948
+#: ../includes/class-ure-lib.php:251
 msgid "User Role Editor"
 msgstr "Szerepkör szerkesztő"
 
-#: ../includes/class-user-role-editor.php:658
-#: ../includes/class-user-role-editor.php:676
-#: ../includes/class-user-role-editor.php:720
+#: ../includes/class-user-role-editor.php:660
+#: ../includes/class-user-role-editor.php:678
+#: ../includes/class-user-role-editor.php:722
 msgid "User Role Editor options are updated"
 msgstr "Szerepkör szerkesztő beállításai frissítve"
 
-#: ../includes/class-user-role-editor.php:704
+#: ../includes/class-user-role-editor.php:706
 msgid "Default Roles are updated"
 msgstr "Alap szerepkörök frissítve"
 
-#: ../includes/class-user-role-editor.php:728
+#: ../includes/class-user-role-editor.php:730
 msgid ""
 "You do not have sufficient permissions to manage options for User Role "
 "Editor."
 msgstr ""
 "Nincs elég jogosultsága a Szerepkör szerkesztő beállításainak kezeléséhez."
 
-#: ../includes/class-user-role-editor.php:807
+#: ../includes/class-user-role-editor.php:809
 msgid "Insufficient permissions to work with User Role Editor"
 msgstr "Nincs elég jogosultsága a Szerepkör szerkesztő használatához"
 
-#: ../includes/class-user-role-editor.php:888
+#: ../includes/class-user-role-editor.php:890
 msgid "Select All"
 msgstr "Összeset kijelöl"
 
-#: ../includes/class-user-role-editor.php:889
+#: ../includes/class-user-role-editor.php:891
 msgid "Unselect All"
 msgstr "Kijelölés megszünt."
 
-#: ../includes/class-user-role-editor.php:890
+#: ../includes/class-user-role-editor.php:892
 msgid "Reverse"
 msgstr "Fordított kijelölés"
 
-#: ../includes/class-user-role-editor.php:891
+#: ../includes/class-user-role-editor.php:893
 msgid "Update"
 msgstr "Frissítés"
 
-#: ../includes/class-user-role-editor.php:892
+#: ../includes/class-user-role-editor.php:894
 msgid "Please confirm permissions update"
 msgstr "Képességek frissítésének megersőítése"
 
-#: ../includes/class-user-role-editor.php:893
+#: ../includes/class-user-role-editor.php:895
 msgid "Add New Role"
 msgstr "Új szerepkör létrehozása"
 
-#: ../includes/class-user-role-editor.php:894
-#: ../includes/class-user-role-editor.php:899
+#: ../includes/class-user-role-editor.php:896
+#: ../includes/class-user-role-editor.php:901
 msgid "Rename Role"
 msgstr "Szerepkör átnevezés"
 
-#: ../includes/class-user-role-editor.php:895
+#: ../includes/class-user-role-editor.php:897
 msgid " Role name (ID) can not be empty!"
 msgstr "A szerepkör neve (azonosító) nem lehet üres!"
 
-#: ../includes/class-user-role-editor.php:896
+#: ../includes/class-user-role-editor.php:898
 msgid ""
 " Role name (ID) must contain latin characters, digits, hyphens or underscore "
 "only!"
@@ -193,7 +193,7 @@ msgstr ""
 "A szerepkör neve (azonosítója) csak latin betűket, szűmokat, kötőjelet és "
 "aláhúzást tartalmazhat."
 
-#: ../includes/class-user-role-editor.php:897
+#: ../includes/class-user-role-editor.php:899
 msgid ""
 " WordPress does not support numeric Role name (ID). Add latin characters to "
 "it."
@@ -201,38 +201,38 @@ msgstr ""
 "A WordPress nem támoagtja a numeriks szerepkör neveket (azonosító). Kell "
 "bele legalább egy latin betű."
 
-#: ../includes/class-user-role-editor.php:898
+#: ../includes/class-user-role-editor.php:900
 msgid "Add Role"
 msgstr "Új szerepkör"
 
-#: ../includes/class-user-role-editor.php:900
+#: ../includes/class-user-role-editor.php:902
 msgid "Delete Role"
 msgstr "Szerepkör törlése"
 
-#: ../includes/class-user-role-editor.php:901
+#: ../includes/class-user-role-editor.php:903
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../includes/class-user-role-editor.php:902
+#: ../includes/class-user-role-editor.php:904
 msgid "Add Capability"
 msgstr "Új képesség"
 
-#: ../includes/class-user-role-editor.php:903
-#: ../includes/class-user-role-editor.php:912
+#: ../includes/class-user-role-editor.php:905
+#: ../includes/class-user-role-editor.php:914
 msgid "Delete Capability"
 msgstr "Képesség törlése"
 
-#: ../includes/class-user-role-editor.php:904
+#: ../includes/class-user-role-editor.php:906
 msgid "Reset"
 msgstr "Alaphelyzet"
 
-#: ../includes/class-user-role-editor.php:905
+#: ../includes/class-user-role-editor.php:907
 msgid "DANGER! Resetting will restore default settings from WordPress Core."
 msgstr ""
 "VESZÉLY! Az alaphelyzetre állítás a WordPress mag beállításait állítja be "
 "újra."
 
-#: ../includes/class-user-role-editor.php:906
+#: ../includes/class-user-role-editor.php:908
 msgid ""
 "If any plugins have changed capabilities in any way upon installation (such "
 "as S2Member, WooCommerce, and many more), those capabilities will be DELETED!"
@@ -240,7 +240,7 @@ msgstr ""
 "Ha bármilyen bővítmény módosított a képességeket bármilyen módon (pl.: "
 "S2Member, WooCommerce, és sok másik), ezek a módosítások TÖRÖLVE lesznek!"
 
-#: ../includes/class-user-role-editor.php:907
+#: ../includes/class-user-role-editor.php:909
 msgid ""
 "For more information on how to undo changes and restore plugin capabilities "
 "go to"
@@ -248,19 +248,19 @@ msgstr ""
 "További információ a képességek módosításainak visszavonásáról és "
 "helyreállításáról"
 
-#: ../includes/class-user-role-editor.php:909
+#: ../includes/class-user-role-editor.php:911
 msgid "Continue?"
 msgstr "Folytassuk?"
 
-#: ../includes/class-user-role-editor.php:910
+#: ../includes/class-user-role-editor.php:912
 msgid "Default Role"
 msgstr "Alap szerepkör"
 
-#: ../includes/class-user-role-editor.php:911
+#: ../includes/class-user-role-editor.php:913
 msgid "Set New Default Role"
 msgstr "Új alap szerepkör beállítása"
 
-#: ../includes/class-user-role-editor.php:913
+#: ../includes/class-user-role-editor.php:915
 msgid ""
 "Warning! Be careful - removing critical capability could crash some plugin "
 "or other custom code"
@@ -268,11 +268,11 @@ msgstr ""
 "Figyelem! Legyen óvatos - kritikus képesség törlésétől leállhat néhány "
 "bővítmény vagy egyedi kód."
 
-#: ../includes/class-user-role-editor.php:914
+#: ../includes/class-user-role-editor.php:916
 msgid " Capability name (ID) can not be empty!"
 msgstr "A képesség név (azonosító) nem lehet üres."
 
-#: ../includes/class-user-role-editor.php:915
+#: ../includes/class-user-role-editor.php:917
 msgid ""
 " Capability name (ID) must contain latin characters, digits, hyphens or "
 "underscore only!"
@@ -280,12 +280,12 @@ msgstr ""
 "A képesség név (azonosító) csak latin betűkből, számokból, kötőjelből és "
 "aláhúzásból állhat."
 
-#: ../includes/class-user-role-editor.php:949
-#: ../includes/class-user-role-editor.php:978
+#: ../includes/class-user-role-editor.php:951
+#: ../includes/class-user-role-editor.php:980
 msgid "Other Roles"
 msgstr "Más szerepkörök"
 
-#: ../includes/class-user-role-editor.php:960
+#: ../includes/class-user-role-editor.php:962
 msgid "Edit"
 msgstr "Szerkeszt"
 
@@ -318,79 +318,79 @@ msgstr "Gyors szűrés:"
 msgid "Custom capabilities:"
 msgstr "Egyedi képességek:"
 
-#: ../includes/class-ure-lib.php:156
+#: ../includes/class-ure-lib.php:159
 msgid "Error: wrong request"
 msgstr "Hiba: hibás kérés"
 
-#: ../includes/class-ure-lib.php:189 ../includes/class-ure-lib.php:200
+#: ../includes/class-ure-lib.php:192 ../includes/class-ure-lib.php:203
 msgid "Role name (ID): "
 msgstr "Szerepkör név (azonosító):"
 
-#: ../includes/class-ure-lib.php:191 ../includes/class-ure-lib.php:202
+#: ../includes/class-ure-lib.php:194 ../includes/class-ure-lib.php:205
 msgid "Display Role Name: "
 msgstr "Szerepkör megnevezése:"
 
-#: ../includes/class-ure-lib.php:193
+#: ../includes/class-ure-lib.php:196
 msgid "Make copy of: "
 msgstr "Ennek a másolata:"
 
-#: ../includes/class-ure-lib.php:209
+#: ../includes/class-ure-lib.php:212
 msgid "Select Role:"
 msgstr "Válasszon szerepkört:"
 
-#: ../includes/class-ure-lib.php:224
+#: ../includes/class-ure-lib.php:227
 msgid "Delete:"
 msgstr "Törlés:"
 
-#: ../includes/class-ure-lib.php:231
+#: ../includes/class-ure-lib.php:234
 msgid "Capability name (ID): "
 msgstr "Képesség név (azonosító):"
 
-#: ../includes/class-ure-lib.php:345
+#: ../includes/class-ure-lib.php:348
 msgid "Error: "
 msgstr "Hiba:"
 
-#: ../includes/class-ure-lib.php:345
+#: ../includes/class-ure-lib.php:348
 msgid "Role"
 msgstr "Szerepkör"
 
-#: ../includes/class-ure-lib.php:346
+#: ../includes/class-ure-lib.php:349
 msgid "does not exist"
 msgstr "nem létezik"
 
-#: ../includes/class-ure-lib.php:389
+#: ../includes/class-ure-lib.php:392
 msgid "Role is updated successfully"
 msgstr "Szerepkör sikeresen frissítve"
 
-#: ../includes/class-ure-lib.php:391
+#: ../includes/class-ure-lib.php:394
 msgid "Roles are updated for all network"
 msgstr "Szerepkörök frissítése a teljes hálózaton"
 
-#: ../includes/class-ure-lib.php:397
+#: ../includes/class-ure-lib.php:400
 msgid "Error occured during role(s) update"
 msgstr "Hiba történt a szerepkör(ök) frissítése során"
 
-#: ../includes/class-ure-lib.php:404
+#: ../includes/class-ure-lib.php:407
 msgid "User capabilities are updated successfully"
 msgstr "Felhasználó képességei sikeresen frissítve"
 
-#: ../includes/class-ure-lib.php:409
+#: ../includes/class-ure-lib.php:412
 msgid "Error occured during user update"
 msgstr "Hiba történt a felhasználó frissítése során"
 
-#: ../includes/class-ure-lib.php:467
+#: ../includes/class-ure-lib.php:470
 msgid "User Roles are restored to WordPress default values. "
 msgstr "Felhasználói szerepkörök visszaállítva a WordPress alaphelyzetébe."
 
-#: ../includes/class-ure-lib.php:1334
+#: ../includes/class-ure-lib.php:1337
 msgid "Help"
 msgstr "Súgó"
 
-#: ../includes/class-ure-lib.php:1692
+#: ../includes/class-ure-lib.php:1695
 msgid "Error is occur. Please check the log file."
 msgstr "Hiba történt. Nézze meg a naplófájlt!"
 
-#: ../includes/class-ure-lib.php:1735 ../includes/class-ure-lib.php:1802
+#: ../includes/class-ure-lib.php:1738 ../includes/class-ure-lib.php:1805
 msgid ""
 "Error: Role ID must contain latin characters, digits, hyphens or underscore "
 "only!"
@@ -398,7 +398,7 @@ msgstr ""
 "Hiba: a szerepkör azonosító csak latin betűkből, számokból, kötőjelből és "
 "aláhúzásból állhat."
 
-#: ../includes/class-ure-lib.php:1739 ../includes/class-ure-lib.php:1806
+#: ../includes/class-ure-lib.php:1742 ../includes/class-ure-lib.php:1809
 msgid ""
 "Error: WordPress does not support numeric Role name (ID). Add latin "
 "characters to it."
@@ -406,377 +406,377 @@ msgstr ""
 "Hiba: a WordPress nem támogatja a numerikus szerepkör neveket "
 "(azonosítókat). Legyen benn legalább egy latin betű."
 
-#: ../includes/class-ure-lib.php:1754
+#: ../includes/class-ure-lib.php:1757
 #, php-format
 msgid "Role %s exists already"
 msgstr "%s szerepkör már létezik"
 
-#: ../includes/class-ure-lib.php:1769
+#: ../includes/class-ure-lib.php:1772
 msgid "Error is encountered during new role create operation"
 msgstr "Hiba történt az új szerepkör létrehozása során."
 
-#: ../includes/class-ure-lib.php:1771
+#: ../includes/class-ure-lib.php:1774
 #, php-format
 msgid "Role %s is created successfully"
 msgstr "%s szerepkör sikeresen létrehozva"
 
-#: ../includes/class-ure-lib.php:1795
+#: ../includes/class-ure-lib.php:1798
 msgid "Error: Role ID is empty!"
 msgstr "Hiba: a szerepkör azonosító üres!"
 
-#: ../includes/class-ure-lib.php:1813
+#: ../includes/class-ure-lib.php:1816
 msgid "Error: Empty role display name is not allowed."
 msgstr "Hiba: nem lehet üres a szerepkör megjelenítendő neve."
 
-#: ../includes/class-ure-lib.php:1820
+#: ../includes/class-ure-lib.php:1823
 #, php-format
 msgid "Role %s does not exists"
 msgstr "%s szerepkör nem létezik"
 
-#: ../includes/class-ure-lib.php:1828
+#: ../includes/class-ure-lib.php:1831
 #, php-format
 msgid "Role %s is renamed to %s successfully"
 msgstr "%s szerepkör sikeresen átnevezve erre: %s"
 
-#: ../includes/class-ure-lib.php:1895
+#: ../includes/class-ure-lib.php:1898
 msgid "Error encountered during role delete operation"
 msgstr "Hiba történt a szerepkör törlése során."
 
-#: ../includes/class-ure-lib.php:1897
+#: ../includes/class-ure-lib.php:1900
 msgid "Unused roles are deleted successfully"
 msgstr "A nem használt szerepkörök sikeresen törölve lettek."
 
-#: ../includes/class-ure-lib.php:1899
+#: ../includes/class-ure-lib.php:1902
 #, php-format
 msgid "Role %s is deleted successfully"
 msgstr "%s szerepkör sikeresen törölve lett."
 
-#: ../includes/class-ure-lib.php:1924
+#: ../includes/class-ure-lib.php:1927
 msgid "Error encountered during default role change operation"
 msgstr "Hiba történt az alap szerepkör módosítása során."
 
-#: ../includes/class-ure-lib.php:1930
+#: ../includes/class-ure-lib.php:1933
 #, php-format
 msgid "Default role for new users is set to %s successfully"
 msgstr "Az új felhasználók alap szerepköre sikeresen módosítva erre: %s"
 
-#: ../includes/class-ure-lib.php:1949
+#: ../includes/class-ure-lib.php:1952
 msgid "Editor"
 msgstr "Szerkesztő"
 
-#: ../includes/class-ure-lib.php:1950
+#: ../includes/class-ure-lib.php:1953
 msgid "Author"
 msgstr "Szerző"
 
-#: ../includes/class-ure-lib.php:1951
+#: ../includes/class-ure-lib.php:1954
 msgid "Contributor"
 msgstr "Közreműködő"
 
-#: ../includes/class-ure-lib.php:1952
+#: ../includes/class-ure-lib.php:1955
 msgid "Subscriber"
 msgstr "Feliratkozó"
 
-#: ../includes/class-ure-lib.php:1954
+#: ../includes/class-ure-lib.php:1957
 msgid "Switch themes"
 msgstr "Sablon kiválasztása"
 
-#: ../includes/class-ure-lib.php:1955
+#: ../includes/class-ure-lib.php:1958
 msgid "Edit themes"
 msgstr "Sablonok szerkesztése"
 
-#: ../includes/class-ure-lib.php:1956
+#: ../includes/class-ure-lib.php:1959
 msgid "Activate plugins"
 msgstr "Bővítmény bekapcsolása"
 
-#: ../includes/class-ure-lib.php:1957
+#: ../includes/class-ure-lib.php:1960
 msgid "Edit plugins"
 msgstr "Bővítmények szerkesztése"
 
-#: ../includes/class-ure-lib.php:1958
+#: ../includes/class-ure-lib.php:1961
 msgid "Edit users"
 msgstr "Felhasználók szerkesztése"
 
-#: ../includes/class-ure-lib.php:1959
+#: ../includes/class-ure-lib.php:1962
 msgid "Edit files"
 msgstr "Fájlok szerkesztése"
 
-#: ../includes/class-ure-lib.php:1960
+#: ../includes/class-ure-lib.php:1963
 msgid "Manage options"
 msgstr "Beállítások kezelése"
 
-#: ../includes/class-ure-lib.php:1961
+#: ../includes/class-ure-lib.php:1964
 msgid "Moderate comments"
 msgstr "Hozzászólások moderálása"
 
-#: ../includes/class-ure-lib.php:1962
+#: ../includes/class-ure-lib.php:1965
 msgid "Manage categories"
 msgstr "Kategóriák kezelése"
 
-#: ../includes/class-ure-lib.php:1963
+#: ../includes/class-ure-lib.php:1966
 msgid "Manage links"
 msgstr "Hivatkozások kezelése"
 
-#: ../includes/class-ure-lib.php:1964
+#: ../includes/class-ure-lib.php:1967
 msgid "Upload files"
 msgstr "Fájlok feltöltése"
 
-#: ../includes/class-ure-lib.php:1965
+#: ../includes/class-ure-lib.php:1968
 msgid "Import"
 msgstr "Importálás"
 
-#: ../includes/class-ure-lib.php:1966
+#: ../includes/class-ure-lib.php:1969
 msgid "Unfiltered html"
 msgstr "Szűretlen HTML"
 
-#: ../includes/class-ure-lib.php:1967
+#: ../includes/class-ure-lib.php:1970
 msgid "Edit posts"
 msgstr "Bejegyzések szerkesztése"
 
-#: ../includes/class-ure-lib.php:1968
+#: ../includes/class-ure-lib.php:1971
 msgid "Edit others posts"
 msgstr "Mások bejegyzéseinek szerkeszése"
 
-#: ../includes/class-ure-lib.php:1969
+#: ../includes/class-ure-lib.php:1972
 msgid "Edit published posts"
 msgstr "Közzétett bejegyzések szerkesztése"
 
-#: ../includes/class-ure-lib.php:1970
+#: ../includes/class-ure-lib.php:1973
 msgid "Publish posts"
 msgstr "Bejegyzések közzététele"
 
-#: ../includes/class-ure-lib.php:1971
+#: ../includes/class-ure-lib.php:1974
 msgid "Edit pages"
 msgstr "Oldalak szerkesztése"
 
-#: ../includes/class-ure-lib.php:1972
+#: ../includes/class-ure-lib.php:1975
 msgid "Read"
 msgstr "Olvasás"
 
-#: ../includes/class-ure-lib.php:1973
+#: ../includes/class-ure-lib.php:1976
 msgid "Level 10"
 msgstr "10. szint"
 
-#: ../includes/class-ure-lib.php:1974
+#: ../includes/class-ure-lib.php:1977
 msgid "Level 9"
 msgstr "9. szint"
 
-#: ../includes/class-ure-lib.php:1975
+#: ../includes/class-ure-lib.php:1978
 msgid "Level 8"
 msgstr "8. szint"
 
-#: ../includes/class-ure-lib.php:1976
+#: ../includes/class-ure-lib.php:1979
 msgid "Level 7"
 msgstr "7. szint"
 
-#: ../includes/class-ure-lib.php:1977
+#: ../includes/class-ure-lib.php:1980
 msgid "Level 6"
 msgstr "6. szint"
 
-#: ../includes/class-ure-lib.php:1978
+#: ../includes/class-ure-lib.php:1981
 msgid "Level 5"
 msgstr "5. szint"
 
-#: ../includes/class-ure-lib.php:1979
+#: ../includes/class-ure-lib.php:1982
 msgid "Level 4"
 msgstr "4. szint"
 
-#: ../includes/class-ure-lib.php:1980
+#: ../includes/class-ure-lib.php:1983
 msgid "Level 3"
 msgstr "3. szint"
 
-#: ../includes/class-ure-lib.php:1981
+#: ../includes/class-ure-lib.php:1984
 msgid "Level 2"
 msgstr "2. szint"
 
-#: ../includes/class-ure-lib.php:1982
+#: ../includes/class-ure-lib.php:1985
 msgid "Level 1"
 msgstr "1. szint"
 
-#: ../includes/class-ure-lib.php:1983
+#: ../includes/class-ure-lib.php:1986
 msgid "Level 0"
 msgstr "0. szint"
 
-#: ../includes/class-ure-lib.php:1984
+#: ../includes/class-ure-lib.php:1987
 msgid "Edit others pages"
 msgstr "Mások oldalainak szerkesztése"
 
-#: ../includes/class-ure-lib.php:1985
+#: ../includes/class-ure-lib.php:1988
 msgid "Edit published pages"
 msgstr "Közzétett oldalak szerkesztése"
 
-#: ../includes/class-ure-lib.php:1986
+#: ../includes/class-ure-lib.php:1989
 msgid "Publish pages"
 msgstr "Oldalak közzététele"
 
-#: ../includes/class-ure-lib.php:1987
+#: ../includes/class-ure-lib.php:1990
 msgid "Delete pages"
 msgstr "Oldalak törlése"
 
-#: ../includes/class-ure-lib.php:1988
+#: ../includes/class-ure-lib.php:1991
 msgid "Delete others pages"
 msgstr "Mások oldalainak törlése"
 
-#: ../includes/class-ure-lib.php:1989
+#: ../includes/class-ure-lib.php:1992
 msgid "Delete published pages"
 msgstr "Közzétett oldalak törlése"
 
-#: ../includes/class-ure-lib.php:1990
+#: ../includes/class-ure-lib.php:1993
 msgid "Delete posts"
 msgstr "Bejegyzések törlése"
 
-#: ../includes/class-ure-lib.php:1991
+#: ../includes/class-ure-lib.php:1994
 msgid "Delete others posts"
 msgstr "Mások bejegyzéseinek törlése"
 
-#: ../includes/class-ure-lib.php:1992
+#: ../includes/class-ure-lib.php:1995
 msgid "Delete published posts"
 msgstr "Közzétett bejegyzések törlése"
 
-#: ../includes/class-ure-lib.php:1993
+#: ../includes/class-ure-lib.php:1996
 msgid "Delete private posts"
 msgstr "Privát bejegyzések törlése"
 
-#: ../includes/class-ure-lib.php:1994
+#: ../includes/class-ure-lib.php:1997
 msgid "Edit private posts"
 msgstr "Privát bejegyzések szerkesztése"
 
-#: ../includes/class-ure-lib.php:1995
+#: ../includes/class-ure-lib.php:1998
 msgid "Read private posts"
 msgstr "Privát bejegyzések olvasása"
 
-#: ../includes/class-ure-lib.php:1996
+#: ../includes/class-ure-lib.php:1999
 msgid "Delete private pages"
 msgstr "Privát oldalak törlése"
 
-#: ../includes/class-ure-lib.php:1997
+#: ../includes/class-ure-lib.php:2000
 msgid "Edit private pages"
 msgstr "Privát oldalak szerkesztése"
 
-#: ../includes/class-ure-lib.php:1998
+#: ../includes/class-ure-lib.php:2001
 msgid "Read private pages"
 msgstr "Privát oldalak olvasása"
 
-#: ../includes/class-ure-lib.php:1999
+#: ../includes/class-ure-lib.php:2002
 msgid "Delete users"
 msgstr "Felhasználók törlése"
 
-#: ../includes/class-ure-lib.php:2000
+#: ../includes/class-ure-lib.php:2003
 msgid "Create users"
 msgstr "Felhasználók létrehozása"
 
-#: ../includes/class-ure-lib.php:2001
+#: ../includes/class-ure-lib.php:2004
 msgid "Unfiltered upload"
 msgstr "Szűretlen feltöltés"
 
-#: ../includes/class-ure-lib.php:2002
+#: ../includes/class-ure-lib.php:2005
 msgid "Edit dashboard"
 msgstr "Vezérlőpult szerkesztése"
 
-#: ../includes/class-ure-lib.php:2003
+#: ../includes/class-ure-lib.php:2006
 msgid "Update plugins"
 msgstr "Bővítmények frissítése"
 
-#: ../includes/class-ure-lib.php:2004
+#: ../includes/class-ure-lib.php:2007
 msgid "Delete plugins"
 msgstr "Bővítmények törlése"
 
-#: ../includes/class-ure-lib.php:2005
+#: ../includes/class-ure-lib.php:2008
 msgid "Install plugins"
 msgstr "Bővítmények telepítése"
 
-#: ../includes/class-ure-lib.php:2006
+#: ../includes/class-ure-lib.php:2009
 msgid "Update themes"
 msgstr "Sablonok frissítése"
 
-#: ../includes/class-ure-lib.php:2007
+#: ../includes/class-ure-lib.php:2010
 msgid "Install themes"
 msgstr "Sablonok telepítése"
 
-#: ../includes/class-ure-lib.php:2008
+#: ../includes/class-ure-lib.php:2011
 msgid "Update core"
 msgstr "Mag frissítése"
 
-#: ../includes/class-ure-lib.php:2009
+#: ../includes/class-ure-lib.php:2012
 msgid "List users"
 msgstr "Felhasználók listázása"
 
-#: ../includes/class-ure-lib.php:2010
+#: ../includes/class-ure-lib.php:2013
 msgid "Remove users"
 msgstr "Felhasználók törlése"
 
-#: ../includes/class-ure-lib.php:2011
+#: ../includes/class-ure-lib.php:2014
 msgid "Add users"
 msgstr "Felhasználók hozzáadása"
 
-#: ../includes/class-ure-lib.php:2012
+#: ../includes/class-ure-lib.php:2015
 msgid "Promote users"
 msgstr "Felhasználók előléptetése"
 
-#: ../includes/class-ure-lib.php:2013
+#: ../includes/class-ure-lib.php:2016
 msgid "Edit theme options"
 msgstr "Sablon beállítások módosítása"
 
-#: ../includes/class-ure-lib.php:2014
+#: ../includes/class-ure-lib.php:2017
 msgid "Delete themes"
 msgstr "Sablonok törlése"
 
-#: ../includes/class-ure-lib.php:2015
+#: ../includes/class-ure-lib.php:2018
 msgid "Export"
 msgstr "Exportálás"
 
-#: ../includes/class-ure-lib.php:2125
+#: ../includes/class-ure-lib.php:2128
 msgid "Error: Capability name must contain latin characters and digits only!"
 msgstr "Hiba: a képesség neve csak latin betűkből és számokból állhat."
 
-#: ../includes/class-ure-lib.php:2138
+#: ../includes/class-ure-lib.php:2141
 #, php-format
 msgid "Capability %s is added successfully"
 msgstr "%s képesség sikeresen hozzáadva"
 
-#: ../includes/class-ure-lib.php:2140
+#: ../includes/class-ure-lib.php:2143
 #, php-format
 msgid "Capability %s exists already"
 msgstr "%s képesség már létezik"
 
-#: ../includes/class-ure-lib.php:2165
+#: ../includes/class-ure-lib.php:2168
 #, php-format
 msgid "Error! You do not have permission to delete this capability: %s!"
 msgstr "Hiba! Nincs jogosultsága a képesség (%s) törléséhez."
 
-#: ../includes/class-ure-lib.php:2184
+#: ../includes/class-ure-lib.php:2187
 #, php-format
 msgid "Capability %s is removed successfully"
 msgstr "%s képesség sikeresen törölve"
 
-#: ../includes/class-ure-lib.php:2288
+#: ../includes/class-ure-lib.php:2291
 msgid "Version:"
 msgstr "Verzió:"
 
-#: ../includes/class-ure-lib.php:2289
+#: ../includes/class-ure-lib.php:2292
 msgid "Author's website"
 msgstr "Szerző weboldala"
 
-#: ../includes/class-ure-lib.php:2290
+#: ../includes/class-ure-lib.php:2293
 msgid "Plugin webpage"
 msgstr "Bővítmény weboldala"
 
-#: ../includes/class-ure-lib.php:2291
+#: ../includes/class-ure-lib.php:2294
 msgid "Plugin download"
 msgstr "Bővítmény letöltése"
 
-#: ../includes/class-ure-lib.php:2293
+#: ../includes/class-ure-lib.php:2296
 msgid "FAQ"
 msgstr "GyIK"
 
-#: ../includes/class-ure-lib.php:2341
+#: ../includes/class-ure-lib.php:2344
 msgid "None"
 msgstr "Nincs"
 
-#: ../includes/class-ure-lib.php:2368
+#: ../includes/class-ure-lib.php:2371
 msgid "Delete All Unused Roles"
 msgstr "Minden nem használt szerepkör törlése"
 
-#: ../includes/class-ure-lib.php:2392
+#: ../includes/class-ure-lib.php:2395
 msgid "&mdash; No role for this site &mdash;"
 msgstr "&mdash; Nincs szerepköre ezen az oldalon &mdash;"
 
@@ -830,37 +830,36 @@ msgstr ""
 "használja. Csak a régi sablonokkal és bővítményekkel való kompatíbilitás "
 "miatt maradtak meg. Ez az opció ezeket az elavult képességeket jeleníti meg."
 
-#: ../includes/class-ure-screen-help.php:41
-#, fuzzy
-msgid "select roles below"
-msgstr "Kijelölés megszünt."
+#: ../includes/class-ure-screen-help.php:42
+msgid ""
+"Show at the \"Users\" page a quant of users without role. Module allows to "
+"assign all of them an empty role \"No rights\", in order to look on the "
+"users list with role \"No rights\" at the separate tab then."
+msgstr ""
 
-#: ../includes/class-ure-screen-help.php:56
-#, fuzzy
+#: ../includes/class-ure-screen-help.php:59
 msgid "Other default roles for new registered user"
 msgstr "Egyéb alap szerepkörök újonnan regisztrált felhasználók számára:"
 
-#: ../includes/class-ure-screen-help.php:57
-#, fuzzy
+#: ../includes/class-ure-screen-help.php:60
 msgid ""
 "select roles below to assign them to the new user automatically as an "
 "addition to the primary role. Note for multisite environment: take into "
 "account that other default roles should exist at the site, in order to be "
 "assigned to the new registered users."
 msgstr ""
-"Megjegyzés a MultiSite környezethez: vegye figyelembe, hogy több alap "
-"szerepkörnek is léteznie kell a weboldalon, az új felhasználók "
-"létrehozásához."
+"válassza ki alább az új felhasználókhoz (az elsődlegesen kívül) "
+"automatikusan hozzárendelendő szerepköröket. Megjegyzés a MultiSite "
+"környezethez: vegye figyelembe, hogy több alap szerepkörnek is léteznie kell "
+"a weboldalon, az új felhasználók létrehozásához."
 
-#: ../includes/class-ure-screen-help.php:75
-#, fuzzy
+#: ../includes/class-ure-screen-help.php:78
 msgid "Allow non super-admininstrators to create, edit and delete users"
 msgstr ""
 "Nem szuperadminok is hozhassanak létre, módosíthassanak és törölhessenek "
 "felhasználókat"
 
-#: ../includes/class-ure-screen-help.php:76
-#, fuzzy
+#: ../includes/class-ure-screen-help.php:79
 msgid ""
 "Super administrator only may create, edit and delete users under WordPress "
 "multi-site by default. Turn this option on in order to remove this "
@@ -870,10 +869,5 @@ msgstr ""
 "módosíthatnak és törölhetnek felhasználókat. Ezzel az opcióval ez a megkötés "
 "feloldható."
 
-#~ msgid "Allow create, edit and delete users to not super-admininstrators"
-#~ msgstr ""
-#~ "Engedély felhasználó létrehozására, módosítására és törlésére a nem "
-#~ "szuperadminoknak"
-
-#~ msgid "Overview"
-#~ msgstr "Áttekintés"
+#~ msgid "select roles below"
+#~ msgstr "válasszon szerepköröket alább"

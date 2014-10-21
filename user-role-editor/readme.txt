@@ -25,7 +25,7 @@ To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/
 Русская версия этой статьи доступна по адресу [ru.shinephp.com](http://ru.shinephp.com/user-role-editor-wordpress-plugin-rus/)
 
 Do you need more functionality with quality support in real time? Do you wish remove advertisements from User Role Editor pages? 
-Buy [Pro version](htpp://role-editor.com). 
+Buy [Pro version](https://www.role-editor.com). 
 Pro version includes extra modules:
 <ul>
 <li>Block selected admin menu items for role.</li>
@@ -69,13 +69,14 @@ To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/
 
 = Translations =
 * Catalan: [Efraim Bayarri](http://replicantsfactory.com/) - needs update;
-* Dutch: Arjan Bosch;
+* Dutch: Arjan Bosch - needs update;
+* French: [Transifex](https://www.transifex.com);
 * Hebrew: [atar4u](http://atar4u.com) - needs update;
 * Hungarian: Németh Balázs;
 * Persian: Morteza - needs update;
 * Russian: [Vladimir Garagulya](https://www.role-editor.com)
 * Spanish: [Dario Ferrer](http://darioferrer.com/) - needs update;
-* Turkish: [Muhammed YILDIRIM](http://ben.muhammed.im) - needs update.
+* Turkish: [Transifex](https://www.transifex.com).
 
 
 Dear plugin User!
@@ -84,6 +85,15 @@ Some translations may be outdated. If you have better translation for some phras
 
 
 == Changelog ==
+= 4.17.2 =
+* 21.10.2014
+* Notice: "Undefined property: Ure_Lib::$pro in .../class-user-role-editor.php on line 550" was fixed.
+* Settings help screen text was updated.
+* Russian translation was updated.
+* Hungarian translation was updated. Thanks to Németh Balázs.
+* French and Turkish translation are updated. Thanks to [Transifex](https://www.transifex.com) translation team.
+
+
 = 4.17.1 =
 * 01.10.2014
 * Bug fix for the PHP Fatal error: Call to undefined function is_plugin_active_for_network(). It may take place under multisite only, 
