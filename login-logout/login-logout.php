@@ -54,7 +54,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			$wrap_after = '</p>';
 			$item_before = '<span class='; // class will be added and the tag is not closed
 			$item_after = '</span>';
-			$split_char = ' | ';
+			$split_char = '';
 		}else{
 			$wrap_before = '<ul class="wrap_login_logout">';
 			$wrap_after = '</ul>';
@@ -68,16 +68,16 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			if ( is_user_logged_in() ){
 				$current_user = wp_get_current_user();
 				$username = $current_user->display_name;
-				$username_link = '<a href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
+				$username_link = '<a class="button_22dakika" href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
 				$welcome_text_new = str_replace('[username]', $username_link, $welcome_text);
-				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
+				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after;
 			}
 		}
 		echo $item_before;
 		//wp_loginout( $redirect_to_self );
 		if ( ! is_user_logged_in() ){
 			echo '"item_login">';
-			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
+			echo '<a class="button_22dakika" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
 		}else{
 			echo '"item_logout">';
 			$current_user = wp_get_current_user();
@@ -93,20 +93,20 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			    $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
 			}			
 			
-			echo '<a class="postane_link" href="/postane">postane</a>'.$unread_str.' | <a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
+			echo '<a class="button_22dakika" href="/postane">postane</a>'.$unread_str.' <a class="button_22dakika" href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
 		}
 		echo $item_after;
 		//wp_register();
 		if( $register_link ){ // register link
 			if ( ! is_user_logged_in() ) {
 				if ( get_option('users_can_register') ){
-					echo $split_char.$item_before.'"item_register">'.'<a href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
+					echo $split_char.$item_before.'"item_register">'.'<a class="button_22dakika" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
 				}
 			}
 		}
 		if( $admin_link ){ // admin link
 			if ( is_user_logged_in() ) {
-				echo $split_char.$item_before.'"item_admin">'.'<a href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
+				echo $split_char.$item_before.'"item_admin">'.'<a class="button_22dakika" href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
 			}
 		}
 		
