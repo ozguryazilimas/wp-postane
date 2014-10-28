@@ -15,11 +15,11 @@
   height: 21px;
   margin-bottom: 1px;
   padding: 3px 0 3px 35px;
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
   transition: all 0.7s ease 0s;
   width: 200px;
-  background-color: #BED7DE;
-  color: white;
+  background-color: #DDF0E9;
+  color: grey;
   font-weight: bold;
 }
 
@@ -27,10 +27,10 @@
 //  background: url("search-dark.png") no-repeat scroll 10px 4px #DFE3E3;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
   margin-bottom: 1px;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   width: 400px;
-  background-color: #BED7DE;
-  color: white;
+  background-color: #DDF0E9;
+  color: grey;
   font-weight: bold;
 }
 
@@ -46,25 +46,25 @@ a#ugurcum_toggle_medialink_form {
   display: inline-block;
   font-weight: bold;
   font-style: normal;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #00B1DE), color-stop(1, #004455));
-  background: -webkit-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:    -moz-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:     -ms-linear-gradient(top, #00B1DE 5%, #004455 100%);
-  background:      -o-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:         linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background-color: #00B1DE;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #00945E), color-stop(1, #003300));
+  background: -webkit-linear-gradient(center top, #00945E 5%, #003300 100%);
+  background:    -moz-linear-gradient(center top, #00945E 5%, #003300 100%);
+  background:     -ms-linear-gradient(top, #00945E 5%, #003300 100%);
+  background:      -o-linear-gradient(center top, #00945E 5%, #003300 100%);
+  background:         linear-gradient(center top, #00945E 5%, #003300 100%);
+  background-color: #00945E;
   color: #ffffff;
-  border: 1px solid #00B1DE;
+  border: 1px solid #00945E;
   width: 150px;
   height: 50px;
   margin-bottom: 30px;
   line-height: 50px;
   text-decoration: none;
   text-align: center;
-  text-shadow: 2px 2px 0px #158ECD;
-  -moz-box-shadow: inset 0px 1px 0px 5px #97DEFE;
-  -webkit-box-shadow: inset 0px 1px 0px 5px #97DEFE;
-  box-shadow: inset 0px 1px 0px 5px #97DEFE;
+  text-shadow: 2px 2px 0px #200020;
+  -moz-box-shadow: inset 0px 1px 0px 4px #53b792;
+  -webkit-box-shadow: inset 0px 1px 0px 4px #53b792;
+  box-shadow: inset 0px 1px 0px 4px #53b792;
 
   -webkit-border-top-left-radius: 20px;
   -moz-border-radius-topleft: 20px;
@@ -94,13 +94,13 @@ a#ugurcum_toggle_medialink_form.active {
 }
 
 a#ugurcum_toggle_medialink_form:hover {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #00B1DE));
-  background: -webkit-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:    -moz-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:     -ms-linear-gradient(top, #004455 5%, #00B1DE 100%);
-  background:      -o-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:         linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background-color: #004455;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #003300), color-stop(1, #00945E));
+  background: -webkit-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:    -moz-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:     -ms-linear-gradient(top, #003300 5%, #00945E 100%);
+  background:      -o-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:         linear-gradient(center top, #003300 5%, #00945E 100%);
+  background-color: #003300;
 }
 
 a#ugurcum_toggle_medialink_form:active {
@@ -129,13 +129,13 @@ table#ugurcum_submit {
   float: right;
   margin: 0 0 50px;
   // background-color: #6F6F94;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #00B1DE), color-stop(1, #004455));
-  background: -webkit-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:    -moz-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:     -ms-linear-gradient(top, #00B1DE 5%, #004455 100%);
-  background:      -o-linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background:         linear-gradient(center top, #00B1DE 5%, #004455 100%);
-  background-color: #00B1DE;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #00945E), color-stop(1, #003300));
+  background: -webkit-linear-gradient(center top, #00945E 5%, #003300 100%);
+  background:    -moz-linear-gradient(center top, #00945E 5%, #003300 100%);
+  background:     -ms-linear-gradient(top, #00945E 5%, #003300 100%);
+  background:      -o-linear-gradient(center top, #00945E 5%, #003300 100%);
+  background:         linear-gradient(center top, #00945E 5%, #003300 100%);
+  background-color: #00945E;
   color: white;
 
   -webkit-border-top-left-radius: 20px;
@@ -241,13 +241,13 @@ table#ugurcum_media_link_list th:last-child {
 
 
 table#ugurcum_media_link_list tbody tr:not(.unread) {
-  background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #00B1DE) );
-  background: -webkit-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:    -moz-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:     -ms-linear-gradient(top, #004455 5%, #00B1DE 100%);
-  background:      -o-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:         linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background-color: #004455;
+  background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #003300), color-stop(1, #00945E) );
+  background: -webkit-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:    -moz-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:     -ms-linear-gradient(top, #003300 5%, #00945E 100%);
+  background:      -o-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:         linear-gradient(center top, #003300 5%, #00945E 100%);
+  background-color: #003300;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
 }
 
@@ -256,18 +256,18 @@ table#ugurcum_media_link_list tbody tr {
 }
 
 table#ugurcum_media_link_list tbody tr.unread {
-  // background-color: #004455;
+  // background-color: #003300;
   // background-color: #D197FE;
   // background-color: #A1A1A1;
-  // background-color: #004455;
+  // background-color: #003300;
   // background-color: #007E9E;
-  background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #BED7DE) );
-  background: -webkit-linear-gradient(center top, #004455 5%, #BED7DE 100%);
-  background:    -moz-linear-gradient(center top, #004455 5%, #BED7DE 100%);
-  background:     -ms-linear-gradient(top, #004455 5%, #BED7DE 100%);
-  background:      -o-linear-gradient(center top, #004455 5%, #BED7DE 100%);
-  background:         linear-gradient(center top, #004455 5%, #BED7DE 100%);
-  background-color: #004455;
+  background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #003300), color-stop(1, #DDF0E9) );
+  background: -webkit-linear-gradient(center top, #003300 5%, #DDF0E9 100%);
+  background:    -moz-linear-gradient(center top, #003300 5%, #DDF0E9 100%);
+  background:     -ms-linear-gradient(top, #003300 5%, #DDF0E9 100%);
+  background:      -o-linear-gradient(center top, #003300 5%, #DDF0E9 100%);
+  background:         linear-gradient(center top, #003300 5%, #DDF0E9 100%);
+  background-color: #003300;
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
 }
 
@@ -342,22 +342,24 @@ select[name=ugurcum_media_link_list_length] {
   font-style: normal;
   text-decoration: none;
   line-height: 40px;
-  background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #004455), color-stop(1, #00B1DE) );
-  background: -webkit-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:    -moz-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:     -ms-linear-gradient(top, #004455 5%, #00B1DE 100%);
-  background:      -o-linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background:         linear-gradient(center top, #004455 5%, #00B1DE 100%);
-  background-color: #004455;
+  background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #003300), color-stop(1, #00945E) );
+  background: -webkit-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:    -moz-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:     -ms-linear-gradient(top, #003300 5%, #00945E 100%);
+  background:      -o-linear-gradient(center top, #003300 5%, #00945E 100%);
+  background:         linear-gradient(center top, #003300 5%, #00945E 100%);
+  background-color: #003300;
   color: #ffffff;
-  // text-shadow: 2px 2px 0px #158ECD;
+  // text-shadow: 2px 2px 0px #200020;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  border: 1px solid #00B1DE;
+  border: 1px solid #00945E;
   // text-align: center;
-  padding: 0 15px;
+  // padding: 0 15px;
+  padding: 0 10px;
+  display: flex;
   // width: 150px;
   // height: 50px;
 }
@@ -389,9 +391,9 @@ select[name=ugurcum_media_link_list_length] {
 .ugurcum_page_title {
   font-family: Helvetica Neue, Helvetica, Arial;
   font-weight: bold;
-  // text-shadow: 2px 2px 0px #158ECD;
+  // text-shadow: 2px 2px 0px #200020;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  color: #004455;
+  color: #003300;
 }
 
 #ugurcum_medialink_form_error {
