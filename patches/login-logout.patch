@@ -1,5 +1,5 @@
 diff --git a/login-logout/login-logout.php b/login-logout/login-logout.php
-index 95f9da5..ebdeb51 100644
+index 95f9da5..97ed88b 100644
 --- a/login-logout/login-logout.php
 +++ b/login-logout/login-logout.php
 @@ -17,6 +17,8 @@ class WP_Widget_Login_Logout extends WP_Widget {
@@ -11,17 +11,32 @@ index 95f9da5..ebdeb51 100644
  		extract($args);
  		//$title = apply_filters('widget_title', empty($instance['title']) ? __('Login-Logout', 'login-logout') : $instance['title'], $instance, $this->id_base);
  		$title = apply_filters('widget_title', $instance['title']);
-@@ -66,7 +68,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
+@@ -52,7 +54,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
+ 			$wrap_after = '</p>';
+ 			$item_before = '<span class='; // class will be added and the tag is not closed
+ 			$item_after = '</span>';
+-			$split_char = ' | ';
++			$split_char = '';
+ 		}else{
+ 			$wrap_before = '<ul class="wrap_login_logout">';
+ 			$wrap_after = '</ul>';
+@@ -66,32 +68,45 @@ class WP_Widget_Login_Logout extends WP_Widget {
  			if ( is_user_logged_in() ){
  				$current_user = wp_get_current_user();
  				$username = $current_user->display_name;
 -				$username_link = '<a href="'.admin_url('profile.php').'">'.$username.'</a>';
-+				$username_link = '<a href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
++				$username_link = '<a class="button_22dakika" href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
  				$welcome_text_new = str_replace('[username]', $username_link, $welcome_text);
- 				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
+-				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
++				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after;
  			}
-@@ -78,7 +80,20 @@ class WP_Widget_Login_Logout extends WP_Widget {
- 			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
+ 		}
+ 		echo $item_before;
+ 		//wp_loginout( $redirect_to_self );
+ 		if ( ! is_user_logged_in() ){
+ 			echo '"item_login">';
+-			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
++			echo '<a class="button_22dakika" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
  		}else{
  			echo '"item_logout">';
 -			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
@@ -38,10 +53,25 @@ index 95f9da5..ebdeb51 100644
 +			    $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
 +			}			
 +			
-+			echo '<a class="postane_link" href="/postane">postane</a>'.$unread_str.' | <a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
++			echo '<a class="button_22dakika" href="/postane">postane</a>'.$unread_str.' <a class="button_22dakika" href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
  		}
  		echo $item_after;
  		//wp_register();
+ 		if( $register_link ){ // register link
+ 			if ( ! is_user_logged_in() ) {
+ 				if ( get_option('users_can_register') ){
+-					echo $split_char.$item_before.'"item_register">'.'<a href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
++					echo $split_char.$item_before.'"item_register">'.'<a class="button_22dakika" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
+ 				}
+ 			}
+ 		}
+ 		if( $admin_link ){ // admin link
+ 			if ( is_user_logged_in() ) {
+-				echo $split_char.$item_before.'"item_admin">'.'<a href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
++				echo $split_char.$item_before.'"item_admin">'.'<a class="button_22dakika" href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
+ 			}
+ 		}
+ 		
 @@ -242,4 +257,4 @@ if ( ! function_exists( 'login_logout_unqprfx_plugin_meta' ) ) :
  		return $links;
  	}
