@@ -1,5 +1,5 @@
 diff --git a/login-logout/login-logout.php b/login-logout/login-logout.php
-index 95f9da5..97ed88b 100644
+index 95f9da5..d2840a2 100644
 --- a/login-logout/login-logout.php
 +++ b/login-logout/login-logout.php
 @@ -17,6 +17,8 @@ class WP_Widget_Login_Logout extends WP_Widget {
@@ -36,7 +36,7 @@ index 95f9da5..97ed88b 100644
  		if ( ! is_user_logged_in() ){
  			echo '"item_login">';
 -			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
-+			echo '<a class="kabartmatozu" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
++			echo '<a class="kabartmatozu kabartmatozu_color_red" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
  		}else{
  			echo '"item_logout">';
 -			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
@@ -61,7 +61,7 @@ index 95f9da5..97ed88b 100644
  			if ( ! is_user_logged_in() ) {
  				if ( get_option('users_can_register') ){
 -					echo $split_char.$item_before.'"item_register">'.'<a href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
-+					echo $split_char.$item_before.'"item_register">'.'<a class="kabartmatozu" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
++					echo $split_char.$item_before.'"item_register">'.'<a class="kabartmatozu kabartmatozu_color_red" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
  				}
  			}
  		}
