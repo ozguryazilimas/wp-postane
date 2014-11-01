@@ -1,8 +1,8 @@
 diff --git a/bknewsticker/ticker-color.php b/bknewsticker/ticker-color.php
-index d869548..e3305a2 100644
+index d869548..960d849 100644
 --- a/bknewsticker/ticker-color.php
 +++ b/bknewsticker/ticker-color.php
-@@ -20,7 +20,7 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
+@@ -20,14 +20,32 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
  }
  #bknews-title h3{
  	 color: <?php $color_title = get_option('ticker_color_title'); echo $color_title;?>;
@@ -11,7 +11,11 @@ index d869548..e3305a2 100644
  	 font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px!important;
  }
  #allticker{
-@@ -30,4 +30,21 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
+-	border-bottom: <?php $size_border = get_option('border_size_ticker'); echo $size_border;?>px solid <?php $color_border = get_option('ticker_color_border'); echo $color_border;?>!important;
++	// border-bottom: <?php $size_border = get_option('border_size_ticker'); echo $size_border;?>px solid <?php $color_border = get_option('ticker_color_border'); echo $color_border;?>!important;
++	box-shadow: 2px 2px 4px #4D4D4D;
+ }
+ .tickerLink a, .tickermore a{
  	color: <?php $color_exerpt = get_option('ticker_color_link'); echo $color_exerpt;?>!important;
  	font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px!important;
  }
