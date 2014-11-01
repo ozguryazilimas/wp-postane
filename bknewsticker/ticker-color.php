@@ -24,7 +24,8 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
 	 font-size: <?php $size_exerpt_text = get_option('bke_textall_size'); echo $size_exerpt_text;?>px!important;
 }
 #allticker{
-	border-bottom: <?php $size_border = get_option('border_size_ticker'); echo $size_border;?>px solid <?php $color_border = get_option('ticker_color_border'); echo $color_border;?>!important;
+	// border-bottom: <?php $size_border = get_option('border_size_ticker'); echo $size_border;?>px solid <?php $color_border = get_option('ticker_color_border'); echo $color_border;?>!important;
+	box-shadow: 2px 2px 4px #4D4D4D;
 }
 .tickerLink a, .tickermore a{
 	color: <?php $color_exerpt = get_option('ticker_color_link'); echo $color_exerpt;?>!important;
