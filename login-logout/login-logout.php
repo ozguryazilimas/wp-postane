@@ -77,7 +77,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 		//wp_loginout( $redirect_to_self );
 		if ( ! is_user_logged_in() ){
 			echo '"item_login">';
-			echo '<a class="kabartmatozu" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
+			echo '<a class="kabartmatozu kabartmatozu_color_red" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
 		}else{
 			echo '"item_logout">';
 			$current_user = wp_get_current_user();
@@ -100,7 +100,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 		if( $register_link ){ // register link
 			if ( ! is_user_logged_in() ) {
 				if ( get_option('users_can_register') ){
-					echo $split_char.$item_before.'"item_register">'.'<a class="kabartmatozu" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
+					echo $split_char.$item_before.'"item_register">'.'<a class="kabartmatozu kabartmatozu_color_red" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
 				}
 			}
 		}
