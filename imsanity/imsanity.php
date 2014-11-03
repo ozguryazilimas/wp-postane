@@ -4,11 +4,11 @@ Plugin Name: Imsanity
 Plugin URI: http://verysimple.com/products/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Jason Hinkle
-Version: 2.2.8
+Version: 2.2.9
 Author URI: http://verysimple.com/
 */
 
-define('IMSANITY_VERSION','2.2.8');
+define('IMSANITY_VERSION','2.2.9');
 define('IMSANITY_SCHEMA_VERSION','1.1');
 
 define('IMSANITY_DEFAULT_MAX_WIDTH',1024);
@@ -31,6 +31,15 @@ load_plugin_textdomain('imsanity', false, 'imsanity/languages/');
 include_once(plugin_dir_path(__FILE__).'libs/utils.php');
 include_once(plugin_dir_path(__FILE__).'settings.php');
 include_once(plugin_dir_path(__FILE__).'ajax.php');
+
+/**
+ * Fired with the WordPress upload dialog is displayed
+ */
+function imsanity_upload_ui()
+{
+	// TODO: output a message on the upload form showing that imanity is enabled
+	// echo '<p class="imsanity-upload-message">' . __("Imsanity plugin is enabled.  Add the text 'noresize' to the filename to bypass.") . '</p>';	
+}
 
 
 /**
@@ -81,6 +90,9 @@ function imsanity_handle_upload($params)
 {
 	/* debug logging... */
 	// file_put_contents ( "debug.txt" , print_r($params,1) . "\n" );
+	
+	// if "noresize" is included in the filename then we will bypass imsanity scaling
+	if (strpos($params['file'],'noresize') !== false) return $params;
 
 	$option_convert_bmp = imsanity_get_option('imsanity_bmp_to_jpg',IMSANITY_DEFAULT_BMP_TO_JPG);
 
@@ -208,6 +220,8 @@ function imsanity_bmp_to_jpg($params)
 /* add filters to hook into uploads */
 add_filter( 'wp_handle_upload', 'imsanity_handle_upload' );
 
+/* add filters/actions to customize upload page */
+add_action('post-upload-ui', 'imsanity_upload_ui');
 
 // TODO: if necessary to update the post data in the future...
 // add_filter( 'wp_update_attachment_metadata', 'imsanity_handle_update_attachment_metadata' );

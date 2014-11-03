@@ -3,7 +3,7 @@ Contributors: verysimple
 Donate link: http://verysimple.com/products/imsanity/
 Tags: imsanity, image, images, automatic scale, automatic resize, image resizer, image scaler, automatic image resizer, auto image resize, auto image resizer, space saver, image shrinker, image skruncher, image cruncher
 Requires at least: 2.9
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: trunk
 
 Imsanity automatically resizes huge image uploads.  Are contributors uploading
@@ -124,10 +124,15 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.2.8 =
-* hotfix for bux exif_read_data constant
+= 2.2.9 =
+* add "noresize" to filename will bypass imsanity
+* fix issue trying to auto-resize non-jpg images
+* add danish language support
 
 == Changelog ==
+
+= 2.2.8 =
+* hotfix for bux exif_read_data constant
 
 = 2.2.7 =
 * Automatically rotate images according to EXIF rotation data if available
