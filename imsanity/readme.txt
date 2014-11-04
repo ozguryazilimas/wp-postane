@@ -124,12 +124,18 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
+= 2.3.0 =
+* fix for incorrectly identifying media uploads as coming from 'other' on WP 4+
+
+== Changelog ==
+
+= 2.3.0 =
+* fix for incorrectly identifying media uploads as coming from 'other' on WP 4+
+
 = 2.2.9 =
 * add "noresize" to filename will bypass imsanity
 * fix issue trying to auto-resize non-jpg images
 * add danish language support
-
-== Changelog ==
 
 = 2.2.8 =
 * hotfix for bux exif_read_data constant

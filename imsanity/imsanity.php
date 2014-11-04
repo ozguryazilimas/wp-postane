@@ -4,11 +4,11 @@ Plugin Name: Imsanity
 Plugin URI: http://verysimple.com/products/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Jason Hinkle
-Version: 2.2.9
+Version: 2.3.0
 Author URI: http://verysimple.com/
 */
 
-define('IMSANITY_VERSION','2.2.9');
+define('IMSANITY_VERSION','2.3.0');
 define('IMSANITY_SCHEMA_VERSION','1.1');
 
 define('IMSANITY_DEFAULT_MAX_WIDTH',1024);
@@ -48,9 +48,18 @@ function imsanity_upload_ui()
  */
 function imsanity_get_source()
 {
-	return array_key_exists('post_id', $_REQUEST)
-		?  ($_REQUEST['post_id'] == 0 ? IMSANITY_SOURCE_LIBRARY : IMSANITY_SOURCE_POST)
-		: IMSANITY_SOURCE_OTHER;
+
+	$id = array_key_exists('post_id', $_REQUEST) ? $_REQUEST['post_id'] : '';
+	$action = array_key_exists('action', $_REQUEST) ? $_REQUEST['action'] : '';
+	
+	// a post_id indicates image is attached to a post
+	if ($id > 0) return IMSANITY_SOURCE_POST; 
+	
+	// post_id of 0 is 3.x otherwise use the action parameter
+	if ($id === 0 || $action == 'upload-attachment') return IMSANITY_SOURCE_LIBRARY;
+	
+	// we don't know where this one came from but $_REQUEST['_wp_http_referer'] may contain info
+	return IMSANITY_SOURCE_OTHER;
 }
 
 /**
