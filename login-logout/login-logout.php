@@ -17,6 +17,8 @@ class WP_Widget_Login_Logout extends WP_Widget {
 	}
 	
 	function widget( $args, $instance ) { // outputs the content of the widget
+        global $wpdb;
+
 		extract($args);
 		//$title = apply_filters('widget_title', empty($instance['title']) ? __('Login-Logout', 'login-logout') : $instance['title'], $instance, $this->id_base);
 		$title = apply_filters('widget_title', $instance['title']);
@@ -52,7 +54,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			$wrap_after = '</p>';
 			$item_before = '<span class='; // class will be added and the tag is not closed
 			$item_after = '</span>';
-			$split_char = ' | ';
+			$split_char = '';
 		} else {
 			$wrap_before = '<ul class="wrap_login_logout">';
 			$wrap_after = '</ul>';
@@ -66,32 +68,45 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			if ( is_user_logged_in() ){
 				$current_user = wp_get_current_user();
 				$username = $current_user->display_name;
-				$username_link = '<a href="'.admin_url('profile.php').'">'.$username.'</a>';
+				$username_link = '<a class="kabartmatozu" href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
 				$welcome_text_new = str_replace('[username]', $username_link, $welcome_text);
-				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
+				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after;
 			}
 		}
 		echo $item_before;
 		//wp_loginout( $redirect_to_self );
 		if ( ! is_user_logged_in() ){
 			echo '"item_login">';
-			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
+			echo '<a class="kabartmatozu kabartmatozu_color_red" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
 		} else {
 			echo '"item_logout">';
-			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
+			$current_user = wp_get_current_user();
+			$rows = $wpdb->get_results('SELECT count(*) as unread_msg_count from ' . $wpdb->prefix . 'cpm_meta where user_id='.$current_user->ID.' and opened=0', ARRAY_A);
+
+			$unread_message_count = 0;			
+			foreach ( $rows as $row ) {
+			    $unread_message_count = $row['unread_msg_count'];			
+			}
+			
+			$unread_str = '';
+			if ($unread_message_count > 0){
+			    $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
+			}			
+			
+			echo '<a class="kabartmatozu" href="/postane">postane</a>'.$unread_str.' <a class="kabartmatozu" href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
 		}
 		echo $item_after;
 		//wp_register();
 		if( $register_link ){ // register link
 			if ( ! is_user_logged_in() ) {
 				if ( get_option('users_can_register') ){
-					echo $split_char.$item_before.'"item_register">'.'<a href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
+					echo $split_char.$item_before.'"item_register">'.'<a class="kabartmatozu kabartmatozu_color_red" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
 				}
 			}
 		}
 		if( $admin_link ){ // admin link
 			if ( is_user_logged_in() ) {
-				echo $split_char.$item_before.'"item_admin">'.'<a href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
+				echo $split_char.$item_before.'"item_admin">'.'<a class="kabartmatozu" href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
 			}
 		}
 		
