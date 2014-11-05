@@ -17,7 +17,7 @@ index 95f9da5..d2840a2 100644
  			$item_after = '</span>';
 -			$split_char = ' | ';
 +			$split_char = '';
- 		}else{
+ 		} else {
  			$wrap_before = '<ul class="wrap_login_logout">';
  			$wrap_after = '</ul>';
 @@ -66,32 +68,45 @@ class WP_Widget_Login_Logout extends WP_Widget {
@@ -37,7 +37,7 @@ index 95f9da5..d2840a2 100644
  			echo '"item_login">';
 -			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
 +			echo '<a class="kabartmatozu kabartmatozu_color_red" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
- 		}else{
+ 		} else {
  			echo '"item_logout">';
 -			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
 +			$current_user = wp_get_current_user();
