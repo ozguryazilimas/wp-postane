@@ -4,7 +4,7 @@ Donate link: http://web-profile.com.ua/donate/
 Tags: login, logout, widget, meta, sidebar, admin, register
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.8
+Stable tag: 2.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -31,7 +31,7 @@ Widget with login, logout, admin and register links. Replacement of the default 
 = Useful plugins: =
 * ["Anti-spam" - block spam in comments](http://wordpress.org/plugins/anti-spam/ "no spam, no captcha")
 * ["Anti-spam Pro"](http://codecanyon.net/item/antispam-pro/6491169?ref=webvitaly)
-* ["Easy to use" - unmask password field and enable 'remember me' by default](http://wordpress.org/plugins/easy-to-use/ "unmask password and enable remember me")
+* ["Security-protection" - blocks brute-force attacks](http://wordpress.org/plugins/security-protection/ "stops brute-force attacks")
 
 
 == Screenshots ==
@@ -42,6 +42,9 @@ Widget with login, logout, admin and register links. Replacement of the default 
 4. Widget output when user is logged in and inline option is on
 
 == Changelog ==
+
+= 2.9 - 2014-11-04 =
+* French translation made by Jean-Michel HAROUY - http://www.ceism-angers.fr/
 
 = 2.8 - 2014-09-11 =
 * Czech translation made by Daniel Čermák - http://danielcermak.eu/
