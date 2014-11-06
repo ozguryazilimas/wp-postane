@@ -89,11 +89,15 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			}
 			
 			$unread_str = '';
+			$unread_class = '';
 			if ($unread_message_count > 0){
-			    $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
+				// $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
+				$unread_str = ' <span class="blink">(' . $unread_message_count . ')</span>';
+				$unread_class = 'kabartmatozu_color_orange';
 			}			
 			
-			echo '<a class="kabartmatozu" href="/postane">postane</a>'.$unread_str.' <a class="kabartmatozu" href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
+			echo '<a class="kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
+				' <a class="kabartmatozu" href="' . esc_url( wp_logout_url( $logout_redirect_to ) ) . '">' . $logout_text . '</a>';
 		}
 		echo $item_after;
 		//wp_register();
