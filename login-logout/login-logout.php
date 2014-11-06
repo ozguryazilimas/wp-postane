@@ -93,7 +93,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			if ($unread_message_count > 0){
 				// $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
 				$unread_str = ' <span class="blink">(' . $unread_message_count . ')</span>';
-				$unread_class = 'kabartmatozu_color_orange';
+				$unread_class = 'kabartmatozu_color_red';
 			}			
 			
 			echo '<a class="kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
