@@ -1,5 +1,6 @@
 #wp_page_numbers ul, #wp_page_numbers li, #wp_page_numbers a {
-	background: white;
+	// background: white;
+	background: none;
 	padding: 0;
 	margin: 0;
 	border: none;
@@ -22,7 +23,8 @@
 #wp_page_numbers {
 	margin-top: 10px;
 	width: 100%;
-	background: white;
+	// background: white;
+	background: none;
 	margin-bottom: 10px;
 }
 #wp_page_numbers ul {
@@ -40,9 +42,10 @@
 	margin-right: 2px;
 	display: block;
 	color: #343434;
-        background: #F2F2F2;
+	background: #F2F2F2;
 	border: 0 solid #bfbfbf;
-        border-radius: 3px;
+	border-radius: 3px;
+	box-shadow: 2px 2px 2px #7d7d7d;
 }
 
 #wp_page_numbers li a:hover {
