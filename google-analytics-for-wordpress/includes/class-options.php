@@ -79,6 +79,8 @@ if ( ! class_exists( 'Yoast_GA_Options' ) ) {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = $this;
 			}
+
+			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 		}
 
 		/**
@@ -226,7 +228,7 @@ if ( ! class_exists( 'Yoast_GA_Options' ) ) {
 					'enable_universal'           => 0,
 					'demographics'               => 0,
 					'ignore_users'               => array( 'editor' ),
-					'anonymize_ips'              => null,
+					'anonymize_ips'              => 0,
 					'track_download_as'          => 'event',
 					'extensions_of_files'        => 'doc,exe,js,pdf,ppt,tgz,zip,xls',
 					'track_full_url'             => 'domain',
@@ -244,5 +246,13 @@ if ( ! class_exists( 'Yoast_GA_Options' ) ) {
 
 			return $options;
 		}
+
+		/**
+		 * Load plugin textdomain
+		 */
+		public static function load_textdomain() {
+			load_plugin_textdomain( 'google-analytics-for-wordpress', false, dirname( plugin_basename( GAWP_FILE ) ) . '/languages/' );
+		}
+
 	}
 }

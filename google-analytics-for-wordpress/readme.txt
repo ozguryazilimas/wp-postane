@@ -4,7 +4,7 @@ Donate link: https://yoast.com/donate/
 Tags: analytics, google analytics, statistics, tracking, stats, google, yoast
 Requires at least: 3.8
 Tested up to: 4.0
-Stable tag: 5.0.7
+Stable tag: 5.1.1
 
 Track your WordPress site easily with the latest tracking codes and lots added data for search result pages and error pages.
 
@@ -13,7 +13,7 @@ Track your WordPress site easily with the latest tracking codes and lots added d
 The Google Analytics by Yoast plugin for WordPress allows you to track your blog easily and always stays up to date with the newest features in Google Analytics.
 
 > <strong>Development on GitHub</strong><br>
-> The development of Google Analytics by Yoast [takes place on GitHub](https://github.com/Yoast/google-analytics-for-wordpress). Bugs and pull requests are welcomed there. For support, please refer to the forums. A premium version of Google Analytics by Yoast will be available soon which will give you access to email support.
+> The development of Google Analytics by Yoast [takes place on GitHub](https://github.com/Yoast/google-analytics-for-wordpress). Bugs and pull requests are welcomed there. For support, you have two options: either [buy the premium version of Google Analytics by Yoast on Yoast.com](https://yoast.com/wordpress/plugins/google-analytics/), this will give you access to our support team, or refer to the forums.
 
 Full list of features:
 
@@ -48,6 +48,38 @@ This section describes how to install the plugin and get it working.
 1. Go to the options panel under the 'Settings' menu and add your Analytics account number and set the settings you want.
 
 == Changelog ==
+
+= 5.1.1 =
+
+Release Date: November 12th, 2014
+
+* Bugfixes:
+	* Fixes a conflict with Fancybox.
+	* Fixes a bug where links without the href attribute would cause the tracking code to be added wrongly.
+	* Fixes a multisite bug in Premium which was caused by the absence of a network admin menu.
+	* Fixes an issue with the version number.
+	* Fixes a bug where translations might be loaded several times.
+
+* Enhancements:
+	* Shows more relevant banners.
+	* Adds an image to the premium extension on the extensions page.
+	* Always show the custom dimension tab.
+	* Added translations for Finnish, Dutch and Russian.
+
+= 5.1 =
+
+Release Date: October 30th, 2014
+
+* Bugfixes:
+	* Fixes a possible JavaScript conflict within the tracking code.
+	* Makes sure translations are loaded correctly.
+
+* Enhancements:
+	* Improved UX for help texts in form.
+	* Added "Google Analytics by Yoast Premium" to the extensions page.
+	* Makes sure the user returns to the original settings tab after saving.
+	* Added a filter `wp_nav_menu` to enable tracking outbound links from the menu.
+	* Added a filter `wp_list_bookmarks` to enable tracking for blogroll widgets.
 
 = 5.0.7 =
 Release Date: October 14th, 2014

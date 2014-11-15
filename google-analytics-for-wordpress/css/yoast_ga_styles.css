@@ -165,9 +165,17 @@ select.ga-multiple {
 	background-image: url(../img/eComm_130x100.png) !important;
 }
 
+.ga_premium h3 {
+	background-image: url(../img/ga-premium-banner.png) !important;
+}
+
 #ga-debug-info h3 {
 	height: 30px;
 	margin-top: 10px;
 	padding-left: 16px;
 	font-size: 14px;
+}
+
+.yoast_help {
+	margin: 2px 5px 0 5px;
 }

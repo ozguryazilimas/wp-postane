@@ -9,9 +9,9 @@ if ( ! class_exists( 'Yoast_GA_JS' ) ) {
 		public $link_regex;
 
 		public function __construct() {
-			parent::__construct();
 
-			$this->link_regex = '/<a (.*?)href=[\'\"](.*?):\/*([^\'\"]+?)[\'\"](.*?)>(.*?)<\/a>/i';
+			$this->options    = Yoast_GA_Options::instance()->options;
+			$this->link_regex = $this->get_regex();
 
 			add_action( 'wp_head', array( $this, 'tracking' ), 8 );
 
@@ -19,6 +19,8 @@ if ( ! class_exists( 'Yoast_GA_JS' ) ) {
 				// Check for outbound
 				add_filter( 'the_content', array( $this, 'the_content' ), 99 );
 				add_filter( 'widget_text', array( $this, 'widget_content' ), 99 );
+				add_filter( 'wp_list_bookmarks', array( $this, 'widget_content' ), 99 );
+				add_filter( 'wp_nav_menu', array( $this, 'widget_content' ), 99 );
 				add_filter( 'the_excerpt', array( $this, 'the_content' ), 99 );
 				add_filter( 'comment_text', array( $this, 'comment_text' ), 99 );
 			}
@@ -318,6 +320,4 @@ if ( ! class_exists( 'Yoast_GA_JS' ) ) {
 
 	}
 
-	global $yoast_ga_js;
-	$yoast_ga_js = new Yoast_GA_JS;
 }
