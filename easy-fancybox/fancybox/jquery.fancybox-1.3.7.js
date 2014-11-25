@@ -7,7 +7,7 @@
  * Copyright (c) 2008 - 2010 Janis Skarnelis
  * That said, it is hardly a one-person project. Many people have submitted bugs, code, and offered their advice freely. Their support is greatly appreciated.
  *
- * Version: 1.3.4 (11/11/2010) patched and appended
+ * Version: 1.3.4 (11/11/2010) patched and appended to 1.3.7
  * Requires: jQuery v1.7+
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -15,11 +15,14 @@
  *   http://www.gnu.org/licenses/gpl.html
  *
  * Patches applied:
- *
- * Line 307, 712: patches for better centering on ipad etc.
- * Line 643: Check type = image for mousewheel
- * Line 818: qouted attribute selector, RavanH ravanhagen@gmail.com 
- * Line 39, 620 and 1123: added isTouch variable and autoResize parameter, RavanH ravanhagen@gmail.com 
+ * Removed/replaced non-HTML5 attributes
+ * Added parameter allowfullscreen for iframe, RavanH ravanhagen@gmail.com
+ * Line 309, 714: patches for better centering on ipad etc.
+ * Line 645: Check type = image for mousewheel
+ * Line 820: qouted attribute selector, RavanH ravanhagen@gmail.com 
+ * Line 41, 622 and 1125: added isTouch variable and autoResize parameter, RavanH ravanhagen@gmail.com 
+ * Line 34: WebP image support, RavanH ravanhagen@gmail.com 
+ * Line 126, 677, 686: 'image' class forces image type, RavanH ravanhagen@gmail.com 
  * Patched for jQuery 1.9+ compat by Sabel http://sabel.bluegfx.de/wordpress/wp-content/uploads/2013/03/jquery.fancybox-1.3.4.js
  * 
  * Added SVG support by Simon Maillard simon@ogesta.fr
@@ -29,7 +32,7 @@
 
 		selectedIndex = 0, selectedOpts = {}, selectedArray = [], currentIndex = 0, currentOpts = {}, currentArray = [],
 
-		ajaxLoader = null, imgPreloader = new Image(), imgRegExp = /\.(jpg|gif|png|bmp|jpeg)(.*)?$/i, swfRegExp = /[^\.]\.(swf)\s*$/i, svgRegExp = /[^\.]\.(svg)\s*$/i,
+		ajaxLoader = null, imgPreloader = new Image(), imgRegExp = /\.(jpg|gif|png|bmp|jpeg|webp)(.*)?$/i, swfRegExp = /[^\.]\.(swf)\s*$/i, svgRegExp = /[^\.]\.(svg)\s*$/i,
 
 		loadingTimer, loadingFrame = 1,
 
@@ -100,8 +103,8 @@
 				selectedOpts.orig = $(obj).children("img:first").length ? $(obj).children("img:first") : $(obj);
 			}
 
-			if (title === '' && selectedOpts.orig && selectedOpts.titleFromAlt) {
-				title = selectedOpts.orig.attr('alt');
+			if (title === '' && selectedOpts.orig) {
+				title = selectedOpts.titleFromAlt ? selectedOpts.orig.attr('alt') : selectedOpts.orig.attr('title');
 			}
 
 			href = selectedOpts.href || (obj.nodeName ? $(obj).attr('href') : obj.href) || null;
@@ -121,7 +124,7 @@
 				type = 'html';
 
 			} else if (href) {
-				if (href.match(imgRegExp)) {
+				if (href.match(imgRegExp) || $(obj).hasClass("image")) {
 					type = 'image';
 
 				} else if (href.match(swfRegExp)) {
@@ -490,7 +493,7 @@
 		_format_title = function(title) {
 			if (title && title.length) {
 				if (currentOpts.titlePosition == 'float') {
-					return '<table id="fancybox-title-float-wrap" cellpadding="0" cellspacing="0"><tr><td id="fancybox-title-float-left"></td><td id="fancybox-title-float-main">' + title + '</td><td id="fancybox-title-float-right"></td></tr></table>';
+					return '<table id="fancybox-title-float-wrap" style="border-spacing:0;border-collapse:collapse"><tr><td id="fancybox-title-float-left"></td><td id="fancybox-title-float-main">' + title + '</td><td id="fancybox-title-float-right"></td></tr></table>';
 				}
 
 				return '<div id="fancybox-title-' + currentOpts.titlePosition + '">' + title + '</div>';
@@ -651,7 +654,7 @@
 			}
 
 			if (currentOpts.type == 'iframe') {
-				$('<iframe id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '" frameborder="0" hspace="0" ' + (navigator.userAgent.match(/msie [6]/i) ? 'allowtransparency="true""' : '') + ' scrolling="' + selectedOpts.scrolling + '" src="' + currentOpts.href + '"></iframe>').appendTo(content);
+				$('<iframe id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '"' + (navigator.userAgent.match(/msie [6]/i) ? ' allowtransparency="true""' : '') + ' style="border:0;margin:0;overflow:' + (selectedOpts.scrolling == 'auto' ? 'auto' : (selectedOpts.scrolling == 'yes' ? 'scroll' : 'hidden')) + '" src="' + currentOpts.href + '"' + (false === selectedOpts.allowfullscreen ? '' : ' allowfullscreen') + '></iframe>').appendTo(content);
 			}
 
 			wrap.show();
@@ -672,7 +675,7 @@
 			if ((currentArray.length -1) > currentIndex) {
 				href = currentArray[ currentIndex + 1 ].href;
 
-				if (typeof href !== 'undefined' && href.match(imgRegExp)) {
+				if (typeof href !== 'undefined' && (href.match(imgRegExp) || $(obj).hasClass("image")) ) {
 					objNext = new Image();
 					objNext.src = href;
 				}
@@ -681,7 +684,7 @@
 			if (currentIndex > 0) {
 				href = currentArray[ currentIndex - 1 ].href;
 
-				if (typeof href !== 'undefined' && href.match(imgRegExp)) {
+				if (typeof href !== 'undefined' && (href.match(imgRegExp) || $(obj).hasClass("image")) ) {
 					objNext = new Image();
 					objNext.src = href;
 				}
@@ -1117,7 +1120,7 @@
 			loading.addClass('fancybox-ie6');
 			wrap.addClass('fancybox-ie6');
 
-			$('<iframe id="fancybox-hide-sel-frame" src="' + (/^https/i.test(window.location.href || '') ? 'javascript:void(false)' : 'about:blank' ) + '" scrolling="no" border="0" frameborder="0" tabindex="-1"></iframe>').prependTo(outer);
+			$('<iframe id="fancybox-hide-sel-frame" src="' + (/^https/i.test(window.location.href || '') ? 'javascript:void(false)' : 'about:blank' ) + '" style="overflow:hidden;border:0" tabindex="-1"></iframe>').prependTo(outer);
 		}
 	};
 
@@ -1127,6 +1130,7 @@
 		opacity : false,
 		modal : false,
 		cyclic : false,
+		allowfullscreen : false,
 		scrolling : 'auto',	// 'auto', 'yes' or 'no'
 
 		width : 560,

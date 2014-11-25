@@ -18,7 +18,7 @@ class easyFancyBox {
 	public static function main_script() {
 
 		echo '
-	<!-- Easy FancyBox ' . EASY_FANCYBOX_VERSION . ' using FancyBox ' . FANCYBOX_VERSION . ' - RavanH (http://status301.net/wordpress-plugins/easy-fancybox/) -->';
+<!-- Easy FancyBox ' . EASY_FANCYBOX_VERSION . ' using FancyBox ' . FANCYBOX_VERSION . ' - RavanH (http://status301.net/wordpress-plugins/easy-fancybox/) -->';
 
 		// check for any enabled sections
 		//if(!empty(self::$options['Global']['options']['Enable']['options']))
@@ -32,7 +32,7 @@ class easyFancyBox {
 		// and abort when none are active
 		if (!self::$add_scripts) {
 			echo '
-	<!-- Nothing enabled under Settings > Media > FancyBox. -->
+<!-- Nothing enabled under Settings > Media > FancyBox. -->
 
 	';
 			return;
@@ -40,16 +40,16 @@ class easyFancyBox {
 
 		// begin output FancyBox settings
 		echo '
-	<script type="text/javascript">
-	/* <![CDATA[ */
-	var fb_timeout = null;';
+<script type="text/javascript">
+/* <![CDATA[ */
+var fb_timeout = null;';
 
 		/*
 		 * Global settings routine
 		 */
 		$more=0;
 		echo '
-	var fb_opts = {';
+var fb_opts = {';
 		foreach (self::$options['Global']['options'] as $globals) {
 			foreach ($globals['options'] as $_key => $_value) {
 				if ( isset($_value['id']) )
@@ -78,7 +78,7 @@ class easyFancyBox {
 			}
 		}
 		echo ' };
-	var easy_fancybox_handler = function(){';
+var easy_fancybox_handler = function(){';
 	
 		foreach (self::$options as $key => $value) {
 			// check if not enabled or hide=true then skip
@@ -115,7 +115,7 @@ class easyFancyBox {
 							$type = '.'.$type;
 						if ($more>0)
 							echo ', ';
-						echo 'a['.$value['options']['autoAttribute']['selector'].'"'.$type.'"]:not(.nofancybox)'.$attributeLimit.', area['.$value['options']['autoAttribute']['selector'].'"'.$type.'"]:not(.nofancybox)'.$attributeLimit;
+						echo 'a['.$value['options']['autoAttribute']['selector'].'"'.$type.'"]:not(.nofancybox,.pin-it-button)'.$attributeLimit.', area['.$value['options']['autoAttribute']['selector'].'"'.$type.'"]:not(.nofancybox)'.$attributeLimit;
 						$more++;
 					}
 					echo '\';';
@@ -230,37 +230,42 @@ class easyFancyBox {
 				break;
 		}
 		echo '
-	}
-	/* ]]> */
-	</script>
-	<style type="text/css">
-.fancybox-hidden{display:none}.rtl #fancybox-left{left:auto;right:0px}.rtl #fancybox-right{left:0px;right:auto}.rtl #fancybox-right-ico{background-position:-40px -30px}.rtl #fancybox-left-ico{background-position:-40px -60px}.rtl .fancybox-title-over{text-align:right}.rtl #fancybox-left-ico,.rtl #fancybox-right-ico{right:-9999px}.rtl #fancybox-right:hover span{right:auto;left:20px}.rtl #fancybox-left:hover span{right:20px}#fancybox-img{max-width:none;max-height:none}';
+}
+/* ]]> */
+</script>
+';
 
-		if ('true' == $overlaySpotlight)
-			echo '
+	// customized styles
+	$styles = '';
+	if (isset($overlaySpotlight) && 'true' == $overlaySpotlight)
+		$styles .= '
 #fancybox-overlay{background-attachment:fixed;background-image:url("' . EASY_FANCYBOX_PLUGINURL . 'light-mask.png");background-position:center;background-repeat:no-repeat;background-size:cover;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' . EASY_FANCYBOX_PLUGINURL . 'light-mask.png",sizingMethod="scale");-ms-filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' . EASY_FANCYBOX_PLUGINURL . 'light-mask.png\',sizingMethod=\'scale\')";}';
-		if ( !empty($borderRadius) )
-			echo '
-#fancybox-bg-n,#fancybox-bg-ne,#fancybox-bg-e,#fancybox-bg-se,#fancybox-bg-s,#fancybox-bg-sw,#fancybox-bg-w,#fancybox-bg-nw{background-image:none}#fancybox-outer,#fancybox-content{border-radius:'.$borderRadius.'px}#fancybox-outer{-moz-box-shadow:0 0 12px #1111;-webkit-box-shadow:0 0 12px #111;box-shadow:0 0 12px #111}';
-		if ('' != $backgroundColor)
-			echo '
-#fancybox-outer{background-color:'.$backgroundColor.'}';
-		if ('' != $paddingColor)
-			echo '
-#fancybox-content{border-color:'.$paddingColor.'}';
-		if ('' != $textColor)
-			echo '
+	if (isset($borderRadius) && !empty($borderRadius))
+		$styles .= '
+#fancybox-bg-n,#fancybox-bg-ne,#fancybox-bg-e,#fancybox-bg-se,#fancybox-bg-s,#fancybox-bg-sw,#fancybox-bg-w,#fancybox-bg-nw{background-image:none}#fancybox-outer,#fancybox-content{border-radius:'.$borderRadius.'px}#fancybox-outer{-moz-box-shadow:0 0 12px #1111;-webkit-box-shadow:0 0 12px #111;box-shadow:0 0 12px #111}.fancybox-title-inside{padding-top:'.$borderRadius.'px;margin-top:-'.$borderRadius.'px !important;border-radius: 0 0 '.$borderRadius.'px '.$borderRadius.'px}';
+	if (isset($backgroundColor) && '' != $backgroundColor)
+		$styles .= '
+#fancybox-content{background-color:'.$backgroundColor.'}';
+	if (isset($paddingColor) && '' != $paddingColor)
+		$styles .= '
+#fancybox-content{border-color:'.$paddingColor.'}#fancybox-outer{background-color:'.$paddingColor.'}'; //.fancybox-title-inside{background-color:'.$paddingColor.';margin-left:0 !important;margin-right:0 !important;width:100% !important;}
+	if (isset($textColor) && '' != $textColor)
+		$styles .= '
 #fancybox-content{color:'.$textColor.'}';
-		if ('' != $frameOpacity && '1' != $frameOpacity) {
-			$frameOpacity_percent = (int)$frameOpacity*100;
-			echo '
-#fancybox-outer{filter:alpha(opacity='.$frameOpacity_percent.');-moz-opacity:'.$frameOpacity.';opacity:'.$frameOpacity.'}';
-		}
-	echo '
-	</style>';
+	if (isset($titleColor) && '' != $titleColor)
+		$styles .= '
+#fancybox-title,#fancybox-title-float-main{color:'.$titleColor.'}';
 
-		// running our IE alphaimageloader relative path styles here
-	echo '
+	if ( !empty($styles) ) {
+		echo '
+<style type="text/css">' . $styles . '
+</style>
+';
+	}
+
+	// running our IE alphaimageloader relative path styles here
+	if (isset($compatIE6) && 'true' == $compatIE6)
+		echo '
 	<!--[if lt IE 8]>            
 		<style type="text/css">
 .fancybox-ie6 #fancybox-close{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' . EASY_FANCYBOX_PLUGINURL . 'fancybox/fancy_close.png",sizingMethod="scale")}
@@ -283,6 +288,11 @@ class easyFancyBox {
 .fancybox-ie #fancybox-bg-nw{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' . EASY_FANCYBOX_PLUGINURL . 'fancybox/fancy_shadow_nw.png",sizingMethod="scale")}
 		</style>
 	<![endif]-->
+';
+
+	// running our IE alphaimageloader relative path styles here
+	if (isset($compatIE8) && 'true' == $compatIE8)
+		echo '
 	<!--[if IE 8]>            
 		<style type="text/css">
 .fancybox-ie #fancybox-bg-n{-ms-filter:\'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' . EASY_FANCYBOX_PLUGINURL . 'fancybox/fancy_shadow_n.png",sizingMethod="scale")\'}
@@ -458,7 +468,8 @@ class easyFancyBox {
 
 	public static function register_scripts() {	
 	
-	    if ( !is_admin() ) {
+	    if ( is_admin() ) return;
+	    
 		// ENQUEUE
 		// first get rid of previously registered variants of jquery.fancybox by other plugins or theme
 		wp_deregister_script('fancybox');
@@ -466,7 +477,10 @@ class easyFancyBox {
 		wp_deregister_script('jquery_fancybox');
 		wp_deregister_script('jquery-fancybox');
 		// register main fancybox script
-		wp_register_script('jquery-fancybox', EASY_FANCYBOX_PLUGINURL.'fancybox/jquery.fancybox-'.FANCYBOX_VERSION.'.pack.js', array('jquery'), EASY_FANCYBOX_VERSION, true);
+		if ( defined('WP_DEBUG') && true == WP_DEBUG )
+			wp_register_script('jquery-fancybox', EASY_FANCYBOX_PLUGINURL.'fancybox/jquery.fancybox-'.FANCYBOX_VERSION.'.js', array('jquery'), EASY_FANCYBOX_VERSION, true);
+		else
+			wp_register_script('jquery-fancybox', EASY_FANCYBOX_PLUGINURL.'fancybox/jquery.fancybox-'.FANCYBOX_VERSION.'.min.js', array('jquery'), EASY_FANCYBOX_VERSION, true);
 
 		// easing in IMG settings?
 		if ( ( '' == get_option( self::$options['IMG']['options']['easingIn']['id'], self::$options['IMG']['options']['easingIn']['default']) || 'linear' == get_option( self::$options['IMG']['options']['easingIn']['id'], self::$options['IMG']['options']['easingIn']['default']) ) && ( '' == get_option( self::$options['IMG']['options']['easingOut']['id'], self::$options['IMG']['options']['easingOut']['default']) || 'linear' == get_option( self::$options['IMG']['options']['easingOut']['id'], self::$options['IMG']['options']['easingOut']['default']) ) ) {
@@ -481,7 +495,7 @@ class easyFancyBox {
 		// mousewheel in IMG settings?
 		if ( '1' == get_option( self::$options['IMG']['options']['mouseWheel']['id'], self::$options['IMG']['options']['mouseWheel']['default']) ) {
 			wp_deregister_script('jquery-mousewheel');
-			wp_register_script('jquery-mousewheel', EASY_FANCYBOX_PLUGINURL.'jquery.mousewheel.pack.js', array('jquery'), MOUSEWHEEL_VERSION, true);
+			wp_register_script('jquery-mousewheel', EASY_FANCYBOX_PLUGINURL.'jquery.mousewheel.min.js', array('jquery'), MOUSEWHEEL_VERSION, true);
 		}
 		
 		// metadata in Link settings?
@@ -489,13 +503,15 @@ class easyFancyBox {
 			wp_deregister_script('jquery-metadata');
 			wp_register_script('jquery-metadata',EASY_FANCYBOX_PLUGINURL.'jquery.metadata.pack.js', array('jquery'), METADATA_VERSION, true);
 		}
-	    }
 	}
 
 	public static function enqueue_styles() {
 		// register style
 		wp_dequeue_style('fancybox');
-		wp_enqueue_style('fancybox', EASY_FANCYBOX_PLUGINURL.'fancybox/jquery.fancybox-'.FANCYBOX_VERSION.'.pack.css', false, EASY_FANCYBOX_VERSION, 'screen');
+		if ( defined('WP_DEBUG') && true == WP_DEBUG )
+			wp_enqueue_style('fancybox', EASY_FANCYBOX_PLUGINURL.'fancybox/jquery.fancybox-'.FANCYBOX_VERSION.'.css', false, EASY_FANCYBOX_VERSION, 'screen');
+		else
+			wp_enqueue_style('fancybox', EASY_FANCYBOX_PLUGINURL.'fancybox/jquery.fancybox-'.FANCYBOX_VERSION.'.min.css', false, EASY_FANCYBOX_VERSION, 'screen');
 	}
 
 	public static function enqueue_footer_scripts() {
@@ -641,4 +657,3 @@ jQuery(document).on(\'ready post-load\', easy_fancybox_handler );
 	}
 
 }
-
