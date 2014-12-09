@@ -28,7 +28,7 @@ echo $yoast_ga_admin->create_form( 'settings' );
 		echo '<h2>' . __( 'General settings', 'google-analytics-for-wordpress' ) . '</h2>';
 		echo '<div id="ga-promote">';
 
-		$profiles = $yoast_ga_admin->get_profiles();
+		$profiles = $yoast_ga_admin->parse_optgroups( $yoast_ga_admin->get_profiles() );
 		$ga_url   = $_SERVER['PHP_SELF'];
 		if ( isset( $_GET['page'] ) ) {
 			$ga_url .= '?page=' . $_GET['page'];
@@ -60,6 +60,7 @@ echo $yoast_ga_admin->create_form( 'settings' );
 		echo '</label>';
 		echo '<div id="enter_ua">';
 		echo $yoast_ga_admin->input( 'text', null, 'manual_ua_code_field' );
+		echo '<p><strong>' . __('Warning: If you use a manual UA code, you won\'t be able to use the dashboards.', 'google-analytics-for-wordpress') . '</strong></p>';
 		echo '</div>';
 		echo '<div class="clear"></div></div>';
 		?>
@@ -123,7 +124,9 @@ echo $yoast_ga_admin->content_footer();
 <script type="text/javascript">
 	jQuery(document).ready(
 		function () {
-			jQuery('#yoast-ga-form-select-settings-analytics_profile').chosen();
+			jQuery('#yoast-ga-form-select-settings-analytics_profile').chosen({
+				group_search : true
+			});
 			jQuery('#yoast-ga-form-select-settings-ignore_users').chosen({placeholder_text_multiple: '<?php echo __( 'Select the users to ignore', 'google-analytics-for-wordpress' ); ?>'});
 		}
 	);
