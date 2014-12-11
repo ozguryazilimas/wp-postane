@@ -52,7 +52,7 @@ function imsanity_resize_next(images,next_index)
 			
 			try {
 				result = JSON.parse(response);
-				target.append('<div>'+ result['message'] +'</div>');
+				target.append('<div>' + (next_index+1) + ' of ' + images.length + ' &gt;&gt; ' + result['message'] +'</div>');
 			}
 			catch(e) {
 				target.append('<div>Error parsing server response for POST ' + images[next_index] + ': '+ e.message +'.  Check the console for details.</div>');

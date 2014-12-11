@@ -508,7 +508,7 @@ function imsanity_settings_page()
 	<?php _e('<p>If you have existing images that were uploaded prior to installing Imsanity, you may resize them
 	all in bulk to recover disk space.  To begin, click the "Search Images" button to search all existing
 	attachments for images that are larger than the configured limit.</p>
-	<p>Limitations: For performance reasons a maximum of 250 images will be returned at one time.  Bitmap
+	<p>Limitations: For performance reasons a maximum of ' . IMSANITY_AJAX_MAX_RECORDS . ' images will be returned at one time.  Bitmap
 	image types are not supported and will not appear in the search results.</p>','imsanity'); ?>
 	</div>
 

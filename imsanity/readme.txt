@@ -124,10 +124,15 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.3.0 =
-* fix for incorrectly identifying media uploads as coming from 'other' on WP 4+
+= 2.3.1	 =
+* ignore errors if EXIF data is not readable
+* show counter when bulk resizing images
 
 == Changelog ==
+
+= 2.3.1	 =
+* ignore errors if EXIF data is not readable
+* show counter when bulk resizing images
 
 = 2.3.0 =
 * fix for incorrectly identifying media uploads as coming from 'other' on WP 4+

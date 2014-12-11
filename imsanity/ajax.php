@@ -73,7 +73,7 @@ function imsanity_get_images()
 			}
 
 			// make sure we only return a limited number of records so we don't overload the ajax features
-			if ($count >= 250) break;
+			if ($count >= IMSANITY_AJAX_MAX_RECORDS) break;
 		}
 	}
 
