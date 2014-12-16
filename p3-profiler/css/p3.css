@@ -292,8 +292,8 @@ p3-glossary-container {
 }
 #p3-copyright img {
 	margin-bottom: 7px;
-	height: 47px;
-	width: 125px;
+	#height: 47px;
+	#width: 125px;
 }
 
 
@@ -369,9 +369,12 @@ div.p3-question h2.p3-help-question {
 
 
 /** Did you liek this plugin? **/
+div#p3-footer-wrapper {
+	min-height: 150px;
+}
 div#p3-reminder {
 	position: relative;
-	z-index: 10;
+	z-index: 0;
 	float: left;
 	bottom: 0;
 	left: 0;
