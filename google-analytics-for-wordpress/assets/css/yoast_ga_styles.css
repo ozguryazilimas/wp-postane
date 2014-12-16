@@ -96,15 +96,34 @@ p.ga-topdescription {
 	max-width: 600px;
 }
 
-#ga-promote {
+#ga-promote,
+.ga-promote {
 	max-width: 600px;
 	padding-left: 10px;
 	border: 1px solid #ccc;
 	background-color: #fff;
 }
 
+.ga-promote {
+	margin-bottom: 10px;
+}
+
+#ga-promote p,
+.ga-promote p {
+	margin: 0;
+	padding: 1em 1em 1em 0;
+}
+
 #yoast-ga-form-settings input[type="text"] {
 	width: 325px;
+}
+
+#yoast-ga-form-settings #oauth_code div {
+	margin: 0 0 0 5px;
+}
+
+#yoast-ga-form-settings #oauth_code input[type="text"] {
+	width: 275px;
 }
 
 .ga-form .chosen-search input[type="text"] {
@@ -189,6 +208,6 @@ select.ga-multiple {
 }
 
 #enter_ua div {
-    display: inline-block;
-    margin: 0;
+	display: inline-block;
+	margin: 0;
 }
