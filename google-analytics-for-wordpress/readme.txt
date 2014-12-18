@@ -4,7 +4,7 @@ Donate link: https://yoast.com/donate/
 Tags: analytics, google analytics, statistics, tracking, stats, google, yoast
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 5.2.6
+Stable tag: 5.2.7
 
 Track your WordPress site easily with the latest tracking codes and lots added data for search result pages and error pages.
 
@@ -48,6 +48,18 @@ This section describes how to install the plugin and get it working.
 1. Go to the options panel under the 'Settings' menu and add your Analytics account number and set the settings you want.
 
 == Changelog ==
+
+= 5.2.7 =
+
+Release Date: December 18th, 2014
+
+* Bugfixes:
+	* Increase timeout limit for request to Google API to prevent quickly session time-outs.
+	* Setting SSL verifier to FALSE, to prevent checking SSL-chain.
+	* Checking for cURL version 7.19, it this version is used the plugin switches to http streams.
+
+* Enhancements:
+	* Using webproperties instead of account names in the select box for choosing the Google Analytics profile.
 
 = 5.2.6 =
 

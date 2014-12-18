@@ -116,7 +116,7 @@ if ( ! class_exists( 'Yoast_Google_Analytics', false ) ) {
 		 * @return bool
 		 */
 		public function has_refresh_token() {
-			return ($this->client->get_refresh_token() != '');
+			return ( $this->client->get_refresh_token() != '' );
 		}
 
 		/**
@@ -126,6 +126,31 @@ if ( ! class_exists( 'Yoast_Google_Analytics', false ) ) {
 		 */
 		public function get_options() {
 			return get_option( $this->option_name );
+		}
+
+		/**
+		 * Checks whether we'll ever be able to reach Google.
+		 *
+		 * @return bool
+		 */
+		public function check_google_access_from_wp() {
+			$can_access_google = true;
+			if ( defined( 'WP_HTTP_BLOCK_EXTERNAL' ) && WP_HTTP_BLOCK_EXTERNAL ) {
+				$can_access_google = false;
+				if ( defined( 'WP_ACCESSIBLE_HOSTS' ) ) {
+					// Better to use the internal WP logic from this point forward.
+					$can_access_google = $this->test_connection_to_google();
+				}
+			}
+
+			return $can_access_google;
+		}
+
+		/**
+		 * Check if we can access Google Apis from this server by making a dummy connection
+		 */
+		public function check_google_access() {
+			return $this->test_connection_to_google();
 		}
 
 		/**
@@ -153,6 +178,15 @@ if ( ! class_exists( 'Yoast_Google_Analytics', false ) ) {
 		}
 
 		/**
+		 * Gets an authentication URL
+		 *
+		 * @return mixed
+		 */
+		public function create_auth_url() {
+			return $this->client->createAuthUrl();
+		}
+
+		/**
 		 * Saving profile response in options
 		 *
 		 * @param array $accounts
@@ -161,6 +195,20 @@ if ( ! class_exists( 'Yoast_Google_Analytics', false ) ) {
 			$this->options['ga_api_response_accounts'] = $accounts;
 
 			$this->update_options();
+		}
+
+		/**
+		 * Test a connection to Google
+		 *
+		 * @return bool
+		 */
+		private function test_connection_to_google(){
+			$wp_http = new WP_Http();
+			if ( $wp_http->block_request( 'https://www.googleapis.com/analytics/v3/management/accountSummaries' ) === false ) {
+				return true;
+			}
+
+			return false;
 		}
 
 		/**
@@ -177,24 +225,39 @@ if ( ! class_exists( 'Yoast_Google_Analytics', false ) ) {
 					$accounts = array();
 
 					foreach ( $response['body']['items'] as $item ) {
+						// Check if webProperties is set
+						if ( isset( $item['webProperties'] ) ) {
+							$profiles = array();
 
-						$profiles = array();
-						foreach ( $item['webProperties'] AS $property ) {
-							foreach ( $property['profiles'] AS $key => $profile ) {
-								$property['profiles'][$key]['name'] = $profile['name'] . ' (' . $property['id'] . ')';
-								$property['profiles'][$key]['ua_code'] = $property['id'];
+							foreach ( $item['webProperties'] as $property_key => $property ) {
+								$profiles[$property_key] = array(
+									'id'    => $property['id'],
+									'name'  => $property['name'],
+									'items' => array(),
+								);
+
+								// Check if profiles is set
+								if ( isset( $property['profiles'] ) ) {
+									foreach ( $property['profiles'] as $key => $profile ) {
+										$profiles[$property_key]['items'][$key] = array_merge(
+											$profile,
+											array(
+												'name'    => $profile['name'] . ' (' . $property['id'] . ')',
+												'ua_code' => $property['id'],
+											)
+										);
+									}
+								}
 							}
 
-							$profiles = array_merge( $profiles, $property['profiles'] );
+							$accounts[$item['id']] = array(
+								'id'          => $item['id'],
+								'ua_code'     => $property['id'],
+								'parent_name' => $item['name'],
+								'items'       => $profiles,
+							);
+
 						}
-
-						$accounts[$item['id']] = array(
-							'id'          => $item['id'],
-							'ua_code'     => $property['id'],
-							'parent_name' => $item['name'],
-							'profiles'    => $profiles,
-						);
-
 					}
 
 					return $accounts;
