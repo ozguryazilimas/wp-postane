@@ -393,3 +393,12 @@ div#p3-reminder-wrapper {
 .ui-front:first-child {
 	z-index: 100 !important;
 }
+
+div[aria-describedby="p3-scanner-dialog"],
+div[aria-describedby="p3-ip-dialog"] {
+	z-index: 1;
+}
+
+div[aria-describedby="p3-scan-name-dialog"] {
+	z-index: 2;
+}
