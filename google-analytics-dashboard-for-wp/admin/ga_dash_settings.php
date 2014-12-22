@@ -145,6 +145,12 @@ final class GADASH_Settings
 									
 									
 									
+									
+									
+									
+									
+									
+									
 									</table>
 								</td>
 							</tr>
@@ -195,6 +201,12 @@ final class GADASH_Settings
 						</table>
 						<input type="hidden" name="options[ga_dash_hidden]" value="Y">
 						<?php wp_nonce_field('gadash_form','gadash_security'); ?>
+
+
+
+
+
+
 
 
 
@@ -275,6 +287,12 @@ final class GADASH_Settings
         }
         ?>
 						
+									
+									
+									
+									
+									
+									
 									
 									
 									
@@ -431,6 +449,12 @@ final class GADASH_Settings
 						</table>
 						<input type="hidden" name="options[ga_dash_hidden]" value="Y">
 						<?php wp_nonce_field('gadash_form','gadash_security'); ?>
+
+
+
+
+
+
 
 
 
@@ -788,6 +812,12 @@ final class GADASH_Settings
 									
 									
 									
+									
+									
+									
+									
+									
+									
 									</table>
 								</td>
 							</tr>
@@ -806,6 +836,12 @@ final class GADASH_Settings
 						</table>
 						<input type="hidden" name="options[ga_dash_hidden]" value="Y">
 						<?php wp_nonce_field('gadash_form','gadash_security'); ?>
+
+
+
+
+
+
 
 
 
@@ -835,25 +871,47 @@ final class GADASH_Settings
         /*
          * Include GAPI
          */
+        echo '<div id="gapi-warning" class="updated"><p><strong>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' </strong><a href="https://deconf.com/ask/question/ga-dashboard-absolutely-empty-general-settings#answer-770">Library conflicts between WordPress plugins</a></p></div>';
         include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
         global $GADASH_GAPI;
+        echo '<script type="text/javascript">jQuery("#gapi-warning").hide()</script>';
         
         if (isset($_POST['ga_dash_code'])) {
-            try {
-                $GADASH_GAPI->client->authenticate($_POST['ga_dash_code']);
-                $GADASH_Config->options['ga_dash_token'] = $GADASH_GAPI->client->getAccessToken();
-                $google_token = json_decode($GADASH_GAPI->client->getAccessToken());
-                $GADASH_Config->options['ga_dash_refresh_token'] = $google_token->refresh_token;
-                $GADASH_Config->set_plugin_options();
-                $message = "<div class='updated'><p><strong>" . __("Plugin authorization succeeded.", 'ga-dash') . "</strong></p></div>";
-                $options = self::set_get_options('general');
-            } catch (Google_IO_Exception $e) {
-                update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e));
-                return false;
-            } catch (Exception $e) {
-                update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e) . "\nResponseHttpCode:" . $e->getCode());
-                $GADASH_GAPI->ga_dash_reset_token(false);
+            if (! stripos('x' . $_POST['ga_dash_code'], 'UA-', 1) == 1) {
+                try {
+                    $GADASH_GAPI->client->authenticate($_POST['ga_dash_code']);
+                    $GADASH_Config->options['ga_dash_token'] = $GADASH_GAPI->client->getAccessToken();
+                    $google_token = json_decode($GADASH_GAPI->client->getAccessToken());
+                    $GADASH_Config->options['ga_dash_refresh_token'] = $google_token->refresh_token;
+                    $GADASH_Config->set_plugin_options();
+                    $message = "<div class='updated'><p><strong>" . __("Plugin authorization succeeded.", 'ga-dash') . "</strong></p></div>";
+                    $options = self::set_get_options('general');
+                    if (is_multisite()) { // Cleanup errors on the entire network
+                        foreach (wp_get_sites() as $blog) {
+                            switch_to_blog($blog['blog_id']);
+                            delete_transient('ga_dash_gapi_errors');
+                        }
+                    } else {
+                        delete_transient('ga_dash_gapi_errors');
+                    }
+                } catch (Google_IO_Exception $e) {
+                    update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e));
+                    return false;
+                } catch (Google_Service_Exception $e) {
+                    update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html("(" . $e->getCode() . ") " . $e->getMessage()));
+                    set_transient('ga_dash_gapi_errors', $e->getErrors(), $this->error_timeout);
+                    return $e->getCode();
+                } catch (Exception $e) {
+                    update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e) . "\nResponseHttpCode:" . $e->getCode());
+                    $GADASH_GAPI->ga_dash_reset_token(false);
+                }
+            } else {
+                $message = "<div class='error'><p>" . __("The access code is <strong>NOT</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X). Try again, and use the red link to get your access code", 'ga-dash') . ".</p></div>";
             }
+        }
+        
+        if ($GADASH_GAPI->gapi_errors_handler()) {
+            $message = "<div class='error'><p><strong>" . __("Something went wrong. Please check the Debugging Data section for possible errors", 'ga-dash') . ".</strong></p></div>";
         }
         
         if (function_exists('curl_version')) {
@@ -875,10 +933,6 @@ final class GADASH_Settings
                 }
             }
         }
-        
-        if ($GADASH_GAPI->gapi_errors_handler()){
-            $message = '<div class="updated"><p>' . __("Daily Limit Exceeded (quotas are automatically reseted by Google at 00:00 PST). The reports will be available after the reset.", 'ga-dash')." ".__("The tracking won't be affected and no further actions are required.", 'ga-dash') . '</p></div>';
-        }        
         
         if (isset($_POST['Clear'])) {
             if (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form')) {
@@ -925,7 +979,7 @@ final class GADASH_Settings
         }
         
         if (! function_exists('curl_version')) {
-            $message = "<div class='error'><p><strong>" . __("PHP CURL is required. Please install/enable PHP CURL!", 'ga-dash') . "</strong></p></div>";
+            $message = "<div class='error'><p><strong>" . __("PHP CURL is required. Ask your hosting provider to install/enable PHP CURL!", 'ga-dash') . "</strong></p></div>";
         }
         
         ?>
@@ -944,6 +998,7 @@ final class GADASH_Settings
         if (isset($_POST['Authorize'])) {
             $tools->ga_dash_clear_cache();
             $GADASH_GAPI->token_request();
+            echo "<div class='updated'><p>" . __("Use the red link (see below) to generate and get your access code!", 'ga-dash') . "</p></div>";
         } else {
             if (isset($message))
                 echo $message;
@@ -984,21 +1039,21 @@ final class GADASH_Settings
 								</td>
 								<td><input type="text" name="options[ga_dash_apikey]"
 									value="<?php echo esc_attr($options['ga_dash_apikey']); ?>"
-									size="40"></td>
+									size="40" required="required"></td>
 							</tr>
 							<tr>
 								<td class="title"><label for="options[ga_dash_clientid]"><?php _e("Client ID:", 'ga-dash'); ?></label>
 								</td>
 								<td><input type="text" name="options[ga_dash_clientid]"
 									value="<?php echo esc_attr($options['ga_dash_clientid']); ?>"
-									size="40"></td>
+									size="40" required="required"></td>
 							</tr>
 							<tr>
 								<td class="title"><label for="options[ga_dash_clientsecret]"><?php _e("Client Secret:", 'ga-dash'); ?></label>
 								</td>
 								<td><input type="text" name="options[ga_dash_clientsecret]"
 									value="<?php echo esc_attr($options['ga_dash_clientsecret']); ?>"
-									size="40"> <input type="hidden" name="options[ga_dash_hidden]"
+									size="40" required="required"> <input type="hidden" name="options[ga_dash_hidden]"
 									value="Y">
 									<?php wp_nonce_field('gadash_form','gadash_security'); ?>
 								</td>
@@ -1111,6 +1166,7 @@ final class GADASH_Settings
                 echo esc_html(print_r($anonim, true));
                 echo '<br/>Last Error: ';
                 echo esc_html(print_r(get_option('gadash_lasterror', 'N/A'), true));
+                echo "\n" . esc_html(print_r(get_transient('ga_dash_gapi_errors'), true));
                 echo '<br/><br/>************************************* End Log *************************************</pre>';
                 ?>
 								</div>
@@ -1171,9 +1227,10 @@ final class GADASH_Settings
                 if ($anonim['ga_dash_apikey']) {
                     $anonim['ga_dash_apikey'] = 'HIDDEN';
                 }
-                print_r($anonim);
+                echo esc_html(print_r($anonim, true));
                 echo '<br/>Last Error: ';
                 echo esc_html(print_r(get_option('gadash_lasterror', 'N/A'), true));
+                echo "\n" . esc_html(print_r(get_transient('ga_dash_gapi_errors'), true));
                 echo '<br/><br/>************************************* End Log *************************************</pre>';
                 ?>
 								</div>
@@ -1219,25 +1276,48 @@ final class GADASH_Settings
         /*
          * Include GAPI
          */
+        echo '<div id="gapi-warning" class="updated"><p><strong>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' </strong><a href="https://deconf.com/ask/question/ga-dashboard-absolutely-empty-general-settings#answer-770">Library conflicts between WordPress plugins</a></p></div>';
         include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
         global $GADASH_GAPI;
+        echo '<script type="text/javascript">jQuery("#gapi-warning").hide()</script>';
         
         if (isset($_POST['ga_dash_code'])) {
-            try {
-                $GADASH_GAPI->client->authenticate($_POST['ga_dash_code']);
-                $GADASH_Config->options['ga_dash_token'] = $GADASH_GAPI->client->getAccessToken();
-                $google_token = json_decode($GADASH_GAPI->client->getAccessToken());
-                $GADASH_Config->options['ga_dash_refresh_token'] = $google_token->refresh_token;
-                $GADASH_Config->set_plugin_options(true);
-                $message = "<div class='updated'><p><strong>" . __("Plugin authorization succeeded.", 'ga-dash') . "</strong></p></div>";
-                $options = self::set_get_options('network');
-            } catch (Google_IO_Exception $e) {
-                update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e));
-                return false;
-            } catch (Exception $e) {
-                update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e) . "\nResponseHttpCode:" . $e->getCode());
-                $GADASH_GAPI->ga_dash_reset_token(false);
+            if (! stripos('x' . $_POST['ga_dash_code'], 'UA-', 1) == 1) {
+                try {
+                    $GADASH_GAPI->client->authenticate($_POST['ga_dash_code']);
+                    $GADASH_Config->options['ga_dash_token'] = $GADASH_GAPI->client->getAccessToken();
+                    $google_token = json_decode($GADASH_GAPI->client->getAccessToken());
+                    $GADASH_Config->options['ga_dash_refresh_token'] = $google_token->refresh_token;
+                    $GADASH_Config->set_plugin_options(true);
+                    $message = "<div class='updated'><p><strong>" . __("Plugin authorization succeeded.", 'ga-dash') . "</strong></p></div>";
+                    $options = self::set_get_options('network');
+                    delete_transient('ga_dash_gapi_errors');
+                    if (is_multisite()) { // Cleanup errors on the entire network
+                        foreach (wp_get_sites() as $blog) {
+                            switch_to_blog($blog['blog_id']);
+                            delete_transient('ga_dash_gapi_errors');
+                        }
+                    } else {
+                        delete_transient('ga_dash_gapi_errors');
+                    }
+                } catch (Google_IO_Exception $e) {
+                    update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e));
+                    return false;
+                } catch (Google_Service_Exception $e) {
+                    update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html("(" . $e->getCode() . ") " . $e->getMessage()));
+                    set_transient('ga_dash_gapi_errors', $e->getErrors(), $this->error_timeout);
+                    return $e->getCode();
+                } catch (Exception $e) {
+                    update_option('gadash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e) . "\nResponseHttpCode:" . $e->getCode());
+                    $GADASH_GAPI->ga_dash_reset_token(false);
+                }
+            } else {
+                $message = "<div class='error'><p>" . __("The access code is <strong>NOT</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X). Try again, and use the red link to get your access code", 'ga-dash') . ".</p></div>";
             }
+        }
+        
+        if ($GADASH_GAPI->gapi_errors_handler()) {
+            $message = "<div class='error'><p><strong>" . __("Something went wrong. Please check the Debugging Data section for possible errors", 'ga-dash') . ".</strong></p></div>";
         }
         
         if (isset($_POST['Refresh'])) {
@@ -1315,7 +1395,7 @@ final class GADASH_Settings
         }
         
         if (! function_exists('curl_version')) {
-            $message = "<div class='error'><p><strong>" . __("PHP CURL is required. Please install/enable PHP CURL!", 'ga-dash') . "</strong></p></div>";
+            $message = "<div class='error'><p><strong>" . __("PHP CURL is required. Ask your hosting provider to install/enable PHP CURL!", 'ga-dash') . "</strong></p></div>";
         }
         
         ?>
@@ -1334,6 +1414,7 @@ final class GADASH_Settings
         if (isset($_POST['Authorize'])) {
             $tools->ga_dash_clear_cache();
             $GADASH_GAPI->token_request();
+            echo "<div class='updated'><p>" . __("Use the red link (see below) to generate and get your access code!", 'ga-dash') . "</p></div>";
         } else {
             if (isset($message))
                 echo $message;
@@ -1400,14 +1481,14 @@ final class GADASH_Settings
 													</td>
 													<td><input type="text" name="options[ga_dash_apikey]"
 														value="<?php echo esc_attr($options['ga_dash_apikey']); ?>"
-														size="40"></td>
+														size="40" required="required"></td>
 												</tr>
 												<tr>
 													<td class="title"><label for="options[ga_dash_clientid]"><?php _e("Client ID:", 'ga-dash'); ?></label>
 													</td>
 													<td><input type="text" name="options[ga_dash_clientid]"
 														value="<?php echo esc_attr($options['ga_dash_clientid']); ?>"
-														size="40"></td>
+														size="40" required="required"></td>
 												</tr>
 												<tr>
 													<td class="title"><label
@@ -1415,7 +1496,7 @@ final class GADASH_Settings
 													</td>
 													<td><input type="text" name="options[ga_dash_clientsecret]"
 														value="<?php echo esc_attr($options['ga_dash_clientsecret']); ?>"
-														size="40"> <input type="hidden"
+														size="40" required="required"> <input type="hidden"
 														name="options[ga_dash_hidden]" value="Y">
 										<?php wp_nonce_field('gadash_form','gadash_security'); ?>
 									</td>
@@ -1520,9 +1601,10 @@ final class GADASH_Settings
                     if ($anonim['ga_dash_apikey']) {
                         $anonim['ga_dash_apikey'] = 'HIDDEN';
                     }
-                    print_r($anonim);
+                    echo esc_html(print_r($anonim, true));
                     echo '<br/>Last Error: ';
                     echo esc_html(print_r(get_option('gadash_lasterror', 'N/A'), true));
+                    echo "\n" . esc_html(print_r(get_transient('ga_dash_gapi_errors'), true));
                     echo '<br/><br/>************************************* End Log *************************************</pre>';
                     ?>
 									</div>
@@ -1588,6 +1670,7 @@ final class GADASH_Settings
                     echo esc_html(print_r($anonim, true));
                     echo '<br/>Last Error: ';
                     echo esc_html(print_r(get_option('gadash_lasterror', 'N/A'), true));
+                    echo "\n" . esc_html(print_r(get_transient('ga_dash_gapi_errors'), true));
                     echo '<br/><br/>************************************* End Log *************************************</pre>';
                     ?>
 									</div>
