@@ -76,8 +76,31 @@ function ugurcum_get_time() {
   return $now;
 }
 
+function prepare_for_dt($medialink) {
+  $ret = array(
+    'title' => '<a href="' . $medialink->medialink . '">' . $medialink->title . '</a>',
+    'description' => '<a href="' . $medialink->medialink . '">' . $medialink->description. '</a>',
+    'user' => $medialink->user_login,
+    'updated_at' => date('H:i Y/m/d', strtotime($medialink->updated_at)),
+    'unread' => $medialink->unread == '1'
+  );
+
+  return $ret;
+}
+
+function ugurcum_get_media_links_json() {
+  $raw_data = ugurcum_get_media_links();
+  return array_map('prepare_for_dt', $raw_data);
+}
+
 function ugurcum_get_media_links() {
   global $wp_query, $wpdb, $user_ID, $ugurcum_db_main;
+
+  if ($user_ID != '') {
+    $last_read_time = ugurcum_get_last_read_time();
+  } else {
+    $last_read_time = 0;
+  }
 
   $get_media_links_sql = $wpdb->prepare("SELECT
                                            um.title as title,
@@ -85,7 +108,8 @@ function ugurcum_get_media_links() {
                                            um.medialink as medialink,
                                            um.visible as visible,
                                            um.updated_at as updated_at,
-                                           wpu.user_login as user_login
+                                           wpu.user_login as user_login,
+                                           (SELECT '$last_read_time' < um.updated_at) as unread
                                          FROM $ugurcum_db_main as um
                                          JOIN
                                            $wpdb->users as wpu

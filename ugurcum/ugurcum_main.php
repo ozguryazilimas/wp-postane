@@ -136,7 +136,7 @@ $output .='
           <tbody>
   ';
 
-$output .= ugurcum_display_media_links();
+// $output .= ugurcum_display_media_links();
 $output .= '
           </tbody>
         </table>
@@ -146,14 +146,14 @@ $output .= '
 
 echo $output;
 
-ugurcum_set_time();
-
 get_footer();
 ?>
 
 
 <script language="javascript" type="text/javascript">
 //<![CDATA[
+
+var dt_data;
 
 jQuery(document).ready(function() {
 <?php
@@ -165,14 +165,22 @@ jQuery(document).ready(function() {
           next: "' . __('Next', 'ugurcum') . '",
           previous: "' . __('Previous', 'ugurcum') . '",
           info: "' . __('_TOTAL_ total', 'ugurcum') . '"
-        };'
+        };';
+
+  echo 'dt_data = ' . json_encode(ugurcum_get_media_links_json()) . ';';
 ?>
 
-  jQuery('table#ugurcum_media_link_list').dataTable({
+  var mediatable = jQuery('table#ugurcum_media_link_list').dataTable({
     "iDisplayLength": 25,
     "bPaginate": true,
     "bSearchable": true,
     "aaSorting": [],
+    "aoColumns": [
+      {"mData": "title"},
+      {"mData": "description"},
+      {"mData": "user"},
+      {"mData": "updated_at"}
+    ],
     "language": {
       "search": '',
       "lengthMenu": "_MENU_",
@@ -186,11 +194,18 @@ jQuery(document).ready(function() {
         "last": dt_str['last'],
         "next": dt_str['next'],
         "previous": dt_str['previous']
-      },
+      }
+    },
+    "fnCreatedRow": function(nRow, aData, iDataIndex) {
+      // console.log(aData);
+      if (aData['unread']) {
+        jQuery(nRow).addClass('unread');
+      }
     }
   });
 
   jQuery('.dataTables_filter input').attr("placeholder", dt_str.search);
+  mediatable.fnAddData(dt_data);
 
   jQuery('a#ugurcum_toggle_medialink_form').on('click', function() {
     var media_link_form = jQuery('form#ugurcum_add_media_link');
@@ -224,3 +239,9 @@ jQuery(document).ready(function() {
 
 //]]>
 </script>
+
+<?php
+
+ugurcum_set_time();
+
+?>
