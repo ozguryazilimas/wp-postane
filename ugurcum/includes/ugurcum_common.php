@@ -99,7 +99,7 @@ function ugurcum_get_media_links() {
   if ($user_ID != '') {
     $last_read_time = ugurcum_get_last_read_time();
   } else {
-    $last_read_time = 0;
+    $last_read_time = '1970-01-01 19:42';
   }
 
   $get_media_links_sql = $wpdb->prepare("SELECT
