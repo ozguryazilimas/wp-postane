@@ -98,8 +98,9 @@ function ugurcum_get_media_links() {
 
   if ($user_ID != '') {
     $last_read_time = ugurcum_get_last_read_time();
+    $last_read_time_sql = "SELECT '$last_read_time' < um.updated_at";
   } else {
-    $last_read_time = '1970-01-01 19:42';
+    $last_read_time_sql = 'SELECT 0';
   }
 
   $get_media_links_sql = $wpdb->prepare("SELECT
@@ -109,7 +110,7 @@ function ugurcum_get_media_links() {
                                            um.visible as visible,
                                            um.updated_at as updated_at,
                                            wpu.user_login as user_login,
-                                           (SELECT '$last_read_time' < um.updated_at) as unread
+                                           ($last_read_time_sql) as unread
                                          FROM $ugurcum_db_main as um
                                          JOIN
                                            $wpdb->users as wpu

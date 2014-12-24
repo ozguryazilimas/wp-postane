@@ -154,6 +154,7 @@ get_footer();
 //<![CDATA[
 
 var dt_data;
+var mediatable;
 
 jQuery(document).ready(function() {
 <?php
@@ -170,16 +171,16 @@ jQuery(document).ready(function() {
   echo 'dt_data = ' . json_encode(ugurcum_get_media_links_json()) . ';';
 ?>
 
-  var mediatable = jQuery('table#ugurcum_media_link_list').dataTable({
+  mediatable = jQuery('table#ugurcum_media_link_list').dataTable({
     "iDisplayLength": 25,
     "bPaginate": true,
     "bSearchable": true,
     "aaSorting": [],
     "aoColumns": [
-      {"mData": "title"},
-      {"mData": "description"},
-      {"mData": "user"},
-      {"mData": "updated_at"}
+      {"mData": "title", "sWidth": "31%"},
+      {"mData": "description", "sWidth": "33%"},
+      {"mData": "user", "sWidth": "19%"},
+      {"mData": "updated_at", "sWidth": "15%"}
     ],
     "language": {
       "search": '',
