@@ -3,7 +3,7 @@
 Plugin Name: Detailed-Search v1
 Plugin URI: http://ozguryazilim.com.tr
 Description: Detailed Search plugin For 22dakika.org project
-Version: 1.0
+Version: 1.1
 Author: Kivilcim Eray
 Author URI: http://github.com/kivicko
 License: GPL
@@ -284,6 +284,7 @@ function sonucu_ekrana_bas_yorum($sonuc){
 
         if ($wp_query->query_vars['name'] == 'ayrintili-ara') {
             $wp_query->is_404 = false;
+            status_header(200);
             include(ABSPATH . 'wp-content/plugins/oy-detailed-search/oy-template.php');
             exit;
         }
