@@ -3,7 +3,7 @@
 Plugin Name: Ugurcum
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: This plugin displays a list of multimedia files in a fancy way. Allows addition for logged in users, and modification for admin users.
-Version: 0.9.0
+Version: 0.9.1
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
@@ -109,6 +109,8 @@ function ugurcum_custom_page_template_redirect() {
 
   if ($wp_query->query_vars['name'] == 'ugurcum') {
     $wp_query->is_404 = false;
+    // $wp_query->is_archive = true;
+    status_header(200);
     include(ABSPATH . 'wp-content/plugins/ugurcum/ugurcum_main.php');
     exit;
   }

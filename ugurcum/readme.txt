@@ -4,7 +4,7 @@ Donate link:
 Tags: ugurcum, ugur, ladybug, video, multimedia, video list, fancybox, lightbox
 Requires at least: 3.5.1
 Tested up to: 4.1.0
-Stable tag: 0.9.0
+Stable tag: 0.9.1
 
 This plugin displays a list of multimedia files in a fancy way. Allows addition for logged in users, and modification for admin users. Currentlydepends on easy-fancybox plugin.
 
