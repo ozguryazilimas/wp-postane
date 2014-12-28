@@ -248,7 +248,7 @@ jQuery(document).ready(function() {
         }
       },
       {"data": "user", "width": "15%"},
-      {"data": "updated_at", "width": "15%"}
+      {"data": "created_at", "width": "15%"}
     ],
     "language": {
       "search": '',

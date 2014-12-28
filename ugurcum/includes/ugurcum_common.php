@@ -84,7 +84,7 @@ function prepare_for_dt($medialink) {
     'description' => $medialink->description,
     'user' => $medialink->user_login,
     'medialink' => $medialink->medialink,
-    'updated_at' => date('H:i Y/m/d', strtotime($medialink->updated_at)),
+    'created_at' => date('H:i Y/m/d', strtotime($medialink->created_at)),
     'unread' => $medialink->unread == '1'
   );
 
@@ -120,6 +120,7 @@ function ugurcum_get_media_links() {
                                            um.medialink as medialink,
                                            um.visible as visible,
                                            um.updated_at as updated_at,
+                                           um.created_at as created_at,
                                            um.user_id as user_id,
                                            wpu.user_login as user_login,
                                            ($can_edit_sql) as can_edit,
@@ -128,7 +129,7 @@ function ugurcum_get_media_links() {
                                          JOIN
                                            $wpdb->users as wpu
                                          ON um.user_id = wpu.ID
-                                         ORDER BY um.updated_at desc
+                                         ORDER BY um.created_at desc
                                          ");
 
   return $wpdb->get_results($get_media_links_sql);
