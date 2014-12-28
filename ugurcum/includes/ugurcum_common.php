@@ -78,9 +78,12 @@ function ugurcum_get_time() {
 
 function prepare_for_dt($medialink) {
   $ret = array(
-    'title' => '<a href="' . $medialink->medialink . '">' . $medialink->title . '</a>',
-    'description' => '<a href="' . $medialink->medialink . '">' . $medialink->description. '</a>',
+    'id' => $medialink->id,
+    'can_edit' => $medialink->can_edit == '1',
+    'title' => $medialink->title,
+    'description' => $medialink->description,
     'user' => $medialink->user_login,
+    'medialink' => $medialink->medialink,
     'updated_at' => date('H:i Y/m/d', strtotime($medialink->updated_at)),
     'unread' => $medialink->unread == '1'
   );
@@ -99,23 +102,34 @@ function ugurcum_get_media_links() {
   if ($user_ID != '') {
     $last_read_time = ugurcum_get_last_read_time();
     $last_read_time_sql = "SELECT '$last_read_time' < um.updated_at";
+
+    if (current_user_can('edit_others_posts')) {
+      $can_edit_sql = "SELECT 1";
+    } else {
+      $can_edit_sql = "SELECT $user_ID = user_id";
+    }
   } else {
     $last_read_time_sql = 'SELECT 0';
+    $can_edit_sql = 'SELECT 0';
   }
 
   $get_media_links_sql = $wpdb->prepare("SELECT
+                                           um.id as id,
                                            um.title as title,
                                            um.description as description,
                                            um.medialink as medialink,
                                            um.visible as visible,
                                            um.updated_at as updated_at,
+                                           um.user_id as user_id,
                                            wpu.user_login as user_login,
+                                           ($can_edit_sql) as can_edit,
                                            ($last_read_time_sql) as unread
                                          FROM $ugurcum_db_main as um
                                          JOIN
                                            $wpdb->users as wpu
                                          ON um.user_id = wpu.ID
-                                         ORDER BY um.updated_at desc");
+                                         ORDER BY um.updated_at desc
+                                         ");
 
   return $wpdb->get_results($get_media_links_sql);
 }
@@ -168,6 +182,45 @@ function ugurcum_insert_media_link($series, $description, $media_link) {
     VALUES ('$series', '$description', '$media_link', $user_ID, true, '$current_time', '$current_time');";
 
   $success = $wpdb->query($add_media_link_sql);
+}
+
+function ugurcum_update_media_link($media_link_id, $title, $description, $media_link) {
+  global $wp_query, $wpdb, $user_ID, $ugurcum_db_main;
+
+  $user_check_sql = "AND user_id = $user_ID";
+  $current_time = ugurcum_get_time();
+
+  if (current_user_can('edit_others_posts')) {
+    $user_check_sql = '';
+  }
+
+  $update_media_link_sql = $wpdb->prepare("
+                            UPDATE $ugurcum_db_main
+                            SET
+                                title = '$title',
+                                description = '$description',
+                                medialink = '$media_link',
+                                updated_at = '$current_time'
+                            WHERE
+                                id = $media_link_id
+                                $user_check_sql
+                            ");
+
+  $success = $wpdb->query($update_media_link_sql);
+}
+
+function ugurcum_delete_media_link($media_link_id) {
+  global $wp_query, $wpdb, $user_ID, $ugurcum_db_main;
+
+  $user_check_sql = "AND user_id = $user_ID";
+  if (current_user_can('edit_others_posts')) {
+    $user_check_sql = '';
+  }
+
+  $delete_media_link_sql = $wpdb->prepare("DELETE FROM $ugurcum_db_main
+                                           WHERE id = $media_link_id $user_check_sql");
+
+  $success = $wpdb->query($delete_media_link_sql);
 }
 
 function ugurcum_get_last_read_time() {

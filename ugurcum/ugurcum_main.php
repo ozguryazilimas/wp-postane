@@ -42,6 +42,19 @@ if (isset($_POST['ugurcum_submit'])) {
   }
 }
 
+if (isset($_POST['ugurcum_inner_update_delete'])) {
+  $delete_id = $_POST['ugurcum_inner_update_id'];
+  ugurcum_delete_media_link($delete_id);
+}
+
+if (isset($_POST['ugurcum_inner_update_update'])) {
+  $update_id = $_POST['ugurcum_inner_update_id'];
+  $update_series = trim($_POST['series']);
+  $update_description = trim($_POST['description']);
+  $update_media_link = trim($_POST['media_link']);
+
+  ugurcum_update_media_link($update_id, $update_series, $update_description, $update_media_link);
+}
 
 $output .='
   <div class="leftpane article-page content">
@@ -127,6 +140,7 @@ $output .='
         <table id="ugurcum_media_link_list">
           <thead>
             <tr>
+              <th>&nbsp;</th>
               <th>' . __('Series', 'ugurcum') . '</th>
               <th>' . __('About Video', 'ugurcum') . '</th>
               <th>' . __('Author', 'ugurcum') . '</th>
@@ -165,22 +179,76 @@ jQuery(document).ready(function() {
           last: "' . __('Last', 'ugurcum') . '",
           next: "' . __('Next', 'ugurcum') . '",
           previous: "' . __('Previous', 'ugurcum') . '",
-          info: "' . __('_TOTAL_ total', 'ugurcum') . '"
+          info: "' . __('_TOTAL_ total', 'ugurcum') . '",
+          form_series: "' . __('Series', 'ugurcum') . '",
+          form_about_video: "' . __('About Video', 'ugurcum') . '",
+          form_link: "' . __('Link', 'ugurcum') . '",
+          form_add: "' .  __('Add', 'ugurcum') . '",
+          form_update: "' .  __('Update', 'ugurcum') . '",
+          form_delete: "' .  __('Delete', 'ugurcum') . '"
         };';
 
   echo 'dt_data = ' . json_encode(ugurcum_get_media_links_json()) . ';';
 ?>
 
-  mediatable = jQuery('table#ugurcum_media_link_list').dataTable({
+  function ugurcum_format_mediatable_form(d) {
+    var retval = '' +
+      '<div class="ugurcum_inner_update">' +
+        '<form id="ugurcum_inner_update_form" name="ugurcum_inner_update_form" method="post">' +
+          '<input type="hidden" name="ugurcum_inner_update_id" value="' + d.id + '" />' +
+          '<table id="ugurcum_inner_update_table">' +
+            '<tr>' +
+              '<td><label for="series">' + dt_str['form_series'] + '</label></td>' +
+              '<td><input type="text" name="series" size="50" required="true" value="' + d.title + '" /></td>' +
+            '</tr>' +
+            '<tr>' +
+              '<td><label for="description">' + dt_str['form_about_video'] + '</label></td>' +
+              '<td><input type="text" name="description" size="50" required="true" value="' + d.description + '" /></td>' +
+            '</tr>' +
+            '<tr>' +
+              '<td><label for="media_link">' + dt_str['form_link'] + '</label></td>' +
+              '<td><input type="text" name="media_link" size="50" required="true" value="' + d.medialink + '" /></td>' +
+            '</tr>' +
+            '<tr>' +
+              '<td><input type="submit" name="ugurcum_inner_update_delete" value="' + dt_str['form_delete'] + '"/></td>' +
+              '<td><input type="submit" name="ugurcum_inner_update_update" value="' + dt_str['form_update'] + '"/></td>' +
+            '</tr>' +
+          '</table>' +
+        '</form>' +
+      '</div>';
+
+    return retval;
+  }
+
+  mediatable = jQuery('table#ugurcum_media_link_list').DataTable({
     "iDisplayLength": 25,
     "bPaginate": true,
     "bSearchable": true,
     "aaSorting": [],
-    "aoColumns": [
-      {"mData": "title", "sWidth": "31%"},
-      {"mData": "description", "sWidth": "33%"},
-      {"mData": "user", "sWidth": "19%"},
-      {"mData": "updated_at", "sWidth": "15%"}
+    "columns": [
+      {
+        "data": null,
+        "defaultContent": '&nbsp;',
+        "width": "5%",
+        "orderable": false,
+        "class": "ugurcum_mediatable_edit",
+      },
+      {
+        "data": "title",
+        "width": "30%",
+        "render": function(data, type, row, meta) {
+          return '<a href="' + row.medialink + '">' + data + '</a>';
+        }
+      },
+      {
+        "data": "description",
+        "width": "33%",
+        "render": function(data, type, row, meta) {
+          return '<a href="' + row.medialink + '">' + data + '</a>';
+        }
+      },
+      {"data": "user", "width": "15%"},
+      {"data": "updated_at", "width": "15%"}
     ],
     "language": {
       "search": '',
@@ -202,11 +270,15 @@ jQuery(document).ready(function() {
       if (aData['unread']) {
         jQuery(nRow).addClass('unread');
       }
+
+      if (aData['can_edit']) {
+        jQuery(nRow).children('td.ugurcum_mediatable_edit').addClass('ugurcum_can_edit');
+      }
     }
   });
 
   jQuery('.dataTables_filter input').attr("placeholder", dt_str.search);
-  mediatable.fnAddData(dt_data);
+  mediatable.rows.add(dt_data).draw();
 
   jQuery('a#ugurcum_toggle_medialink_form').on('click', function() {
     var media_link_form = jQuery('form#ugurcum_add_media_link');
@@ -230,6 +302,26 @@ jQuery(document).ready(function() {
 
   jQuery('table#ugurcum_media_link_list tbody').on('click', 'a', function () {
     jQuery(this).closest('tr').removeClass('unread');
+  });
+
+  mediatable.on('click', 'td.ugurcum_mediatable_edit.ugurcum_can_edit', function() {
+    var tr = jQuery(this).closest('tr');
+    var td = jQuery(this);
+    var row = mediatable.row(tr);
+
+    if (row.child.isShown()) {
+      jQuery('div.ugurcum_inner_update', row.child()).slideUp(function () {
+        row.child.hide();
+        // tr.removeClass('shown');
+        td.removeClass('shown');
+      });
+    } else {
+      row.child(ugurcum_format_mediatable_form(row.data()), 'no_padding').show();
+      // tr.addClass('shown');
+      td.addClass('shown');
+
+      jQuery('div.ugurcum_inner_update', row.child()).slideDown();
+    }
   });
 
 <?php if ($error_msg != '') { ?>
