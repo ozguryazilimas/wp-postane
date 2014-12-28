@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-21 22:00+0300\n"
-"PO-Revision-Date: 2014-07-21 22:05+0300\n"
+"PO-Revision-Date: 2014-12-28 19:12+0300\n"
 "Last-Translator: Onur Küçük <onur@ozguryazilim.com.tr>\n"
 "Language-Team: \n"
 "Language: Turkish \n"
@@ -29,75 +29,84 @@ msgstr "Lütfen geçerli bağlantı girin"
 
 #: ugurcum_main.php:31
 msgid "Please enter valid description"
-msgstr "Lütfen geçerli video hakkında bilgisi girin"
+msgstr "Lütfen geçerli video bilgisi girin"
 
 #: ugurcum_main.php:36
 msgid "This link was already added"
 msgstr "Bu bağlantı daha önce eklenmiş"
 
-#: ugurcum_main.php:27
+#: ugurcum_main.php:67 ugurcum_main.php:71 includes/ugurcum_common.php:6
+#: includes/ugurcum_common.php:56
+msgid "Play it Sam"
+msgstr "Oynat Uğurcum"
+
+#: ugurcum_main.php:70
 msgid "Videos"
 msgstr "Videolar"
 
-#: ugurcum_main.php:34
+#: ugurcum_main.php:79
 msgid "Add New Video"
 msgstr "Yeni Video Ekle"
 
-#: ugurcum_main.php:47 ugurcum_main.php:85
+#: ugurcum_main.php:105 ugurcum_main.php:144 ugurcum_main.php:183
 msgid "Series"
 msgstr "Dizi"
 
-#: ugurcum_main.php:55 ugurcum_main.php:86
+#: ugurcum_main.php:113 ugurcum_main.php:145 ugurcum_main.php:184
 msgid "About Video"
 msgstr "Video Hakkında"
 
-#: ugurcum_main.php:63
+#: ugurcum_main.php:121 ugurcum_main.php:185
 msgid "Link"
 msgstr "Bağlantı"
 
-#: ugurcum_main.php:73
+#: ugurcum_main.php:131 ugurcum_main.php:186
 msgid "Add"
 msgstr "Ekle"
 
-#: ugurcum_main.php:87
+#: ugurcum_main.php:146
 msgid "Author"
 msgstr "Yazar"
 
-#: ugurcum_main.php:88
+#: ugurcum_main.php:147
 msgid "Date"
 msgstr "Tarih"
 
-#: ugurcum_main.php:116
+#: ugurcum_main.php:176
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
-#: ugurcum_main.php:117
+#: ugurcum_main.php:177
 msgid "Search"
 msgstr "Ara"
 
-#: ugurcum_main.php:118
+#: ugurcum_main.php:178
 msgid "First"
 msgstr "İlk"
 
-#: ugurcum_main.php:119
+#: ugurcum_main.php:179
 msgid "Last"
 msgstr "Son"
 
-#: ugurcum_main.php:120
+#: ugurcum_main.php:180
 msgid "Next"
 msgstr "Sonraki"
 
-#: ugurcum_main.php:121
+#: ugurcum_main.php:181
 msgid "Previous"
 msgstr "Önceki"
 
-#: ugurcum_main.php:122
+#: ugurcum_main.php:182
 msgid "_TOTAL_ total"
 msgstr "Toplam _TOTAL_"
 
-#: includes/ugurcum_common.php:6 includes/ugurcum_common.php:32
-msgid "Play it Sam"
-msgstr "Oynat Uğurcum"
+#: ugurcum_main.php:187
+msgid "Update"
+msgstr "Güncelle"
+
+#: ugurcum_main.php:188
+msgid "Delete"
+msgstr "Sil"
 
 #: includes/ugurcum_common.php:8
 msgid "Ugurcum"
@@ -107,7 +116,7 @@ msgstr "Ugurcum"
 msgid "Title:"
 msgstr "Başlık:"
 
-#: includes/ugurcum_common.php:189
+#: includes/ugurcum_common.php:273
 #, php-format
 msgid "There are %s new videos you have not watched"
 msgstr "İzlemediğiniz %s yeni video var"
