@@ -4,16 +4,17 @@ Plugin Name: Imsanity
 Plugin URI: http://verysimple.com/products/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Jason Hinkle
-Version: 2.3.1
+Version: 2.3.2
 Author URI: http://verysimple.com/
 */
 
-define('IMSANITY_VERSION','2.3.1');
+define('IMSANITY_VERSION','2.3.2');
 define('IMSANITY_SCHEMA_VERSION','1.1');
 
 define('IMSANITY_DEFAULT_MAX_WIDTH',1024);
 define('IMSANITY_DEFAULT_MAX_HEIGHT',1024);
 define('IMSANITY_DEFAULT_BMP_TO_JPG',1);
+define('IMSANITY_DEFAULT_PNG_TO_JPG',0);
 define('IMSANITY_DEFAULT_QUALITY',90);
 
 define('IMSANITY_SOURCE_POST',1);
@@ -105,11 +106,13 @@ function imsanity_handle_upload($params)
 	// if "noresize" is included in the filename then we will bypass imsanity scaling
 	if (strpos($params['file'],'noresize') !== false) return $params;
 
-	$option_convert_bmp = imsanity_get_option('imsanity_bmp_to_jpg',IMSANITY_DEFAULT_BMP_TO_JPG);
-
-	if ($params['type'] == 'image/bmp' && $option_convert_bmp)
-	{
-		$params = imsanity_bmp_to_jpg($params);
+	// if preferences specify so then we can convert an original bmp or png file into jpg
+	if ($params['type'] == 'image/bmp' && imsanity_get_option('imsanity_bmp_to_jpg',IMSANITY_DEFAULT_BMP_TO_JPG)) {
+		$params = imsanity_convert_to_jpg('bmp',$params);
+	}
+	
+	if ($params['type'] == 'image/png' && imsanity_get_option('imsanity_png_to_jpg',IMSANITY_DEFAULT_PNG_TO_JPG)) {
+		$params = imsanity_convert_to_jpg('png',$params);
 	}
 
 	// make sure this is a type of image that we want to convert and that it exists
@@ -182,35 +185,49 @@ function imsanity_handle_upload($params)
 
 
 /**
- * If the uploaded image is a bmp this function handles the details of converting
- * the bmp to a jpg, saves the new file and adjusts the params array as necessary
+ * read in the image file from the params and then save as a new jpg file.
+ * if successful, remove the original image and alter the return
+ * parameters to return the new jpg instead of the original
  *
+ * @param string 'bmp' or 'png'
  * @param array $params
+ * @return array altered params
  */
-function imsanity_bmp_to_jpg($params)
+function imsanity_convert_to_jpg($type,$params)
 {
 
-	// read in the bmp file and then save as a new jpg file.
-	// if successful, remove the original bmp and alter the return
-	// parameters to return the new jpg instead of the bmp
+	$img = null;
+	
+	if ($type == 'bmp') {
+		include_once('libs/imagecreatefrombmp.php');
+		$img = imagecreatefrombmp($params['file']);
+	}
+	elseif ($type == 'png') {
+		
+		if(!function_exists('imagecreatefrompng')) {
+			return wp_handle_upload_error( $params['file'],'imsanity_convert_to_jpg requires gd library enabled');
+		}
+		
+		$img = imagecreatefrompng($params['file']);
 
-	include_once('libs/imagecreatefrombmp.php');
+	}
+	else {
+		return wp_handle_upload_error( $params['file'],'Unknown image type specified in imsanity_convert_to_jpg');
+	}
 
-	$bmp = imagecreatefrombmp($params['file']);
-
-	// we need to change the extension from .bmp to .jpg so we have to ensure it will be a unique filename
+	// we need to change the extension from the original to .jpg so we have to ensure it will be a unique filename
 	$uploads = wp_upload_dir();
 	$oldFileName = basename($params['file']);
-	$newFileName = basename(str_ireplace(".bmp", ".jpg", $oldFileName));
+	$newFileName = basename(str_ireplace(".".$type, ".jpg", $oldFileName));
 	$newFileName = wp_unique_filename( $uploads['path'], $newFileName );
-
+	
 	$quality = imsanity_get_option('imsanity_quality',IMSANITY_DEFAULT_QUALITY);
-
-	if (imagejpeg($bmp,$uploads['path'] . '/' . $newFileName, $quality))
+	
+	if (imagejpeg($img,$uploads['path'] . '/' . $newFileName, $quality))
 	{
 		// conversion succeeded.  remove the original bmp & remap the params
 		unlink($params['file']);
-
+	
 		$params['file'] = $uploads['path'] . '/' . $newFileName;
 		$params['url'] = $uploads['url'] . '/' . $newFileName;
 		$params['type'] = 'image/jpeg';
@@ -218,13 +235,13 @@ function imsanity_bmp_to_jpg($params)
 	else
 	{
 		unlink($params['file']);
-
+	
 		return wp_handle_upload_error( $oldPath,
-			__("Oh Snap! Imsanity was Unable to process the BMP file.  "
-			."If you continue to see this error you may need to disable the BMP-To-JPG "
-			."feature in Imsanity settings.", 'imsanity' ) );
+				__("Oh Snap! Imsanity was Unable to process the $type file.  "
+						."If you continue to see this error you may need to disable the $type-To-JPG "
+						."feature in Imsanity settings.", 'imsanity' ) );
 	}
-
+	
 	return $params;
 }
 

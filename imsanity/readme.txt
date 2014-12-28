@@ -124,11 +124,13 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.3.1	 =
-* ignore errors if EXIF data is not readable
-* show counter when bulk resizing images
+= 2.3.2	 =
+* Add PNG-To-JPG Option thanks to Jody Nesbitt
 
 == Changelog ==
+
+= 2.3.2	 =
+* Add PNG-To-JPG Option thanks to Jody Nesbitt
 
 = 2.3.1	 =
 * ignore errors if EXIF data is not readable

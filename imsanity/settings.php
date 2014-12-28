@@ -112,6 +112,7 @@ function imsanity_get_default_multisite_settings()
 	$data->imsanity_max_height_other = IMSANITY_DEFAULT_MAX_HEIGHT;
 	$data->imsanity_max_width_other = IMSANITY_DEFAULT_MAX_WIDTH;
 	$data->imsanity_bmp_to_jpg = IMSANITY_DEFAULT_BMP_TO_JPG;
+	$data->imsanity_png_to_jpg = IMSANITY_DEFAULT_PNG_TO_JPG;
 	$data->imsanity_quality = IMSANITY_DEFAULT_QUALITY;
 	return $data;
 }
@@ -259,6 +260,14 @@ function imsanity_network_settings()
 	</tr>
 
 	<tr valign="top">
+	<th scope="row"><?php _e("Convert PNG to JPG",'imsanity'); ?></th>
+	<td><select name="imsanity_png_to_jpg">
+		<option value="1" <?php if ($settings->imsanity_png_to_jpg == '1') echo "selected='selected'" ?> ><?php _e("Yes",'imsanity'); ?></option>
+		<option value="0" <?php if ($settings->imsanity_png_to_jpg == '0') echo "selected='selected'" ?> ><?php _e("No",'imsanity'); ?></option>
+	</select></td>
+	</tr>
+
+	<tr valign="top">
 	<th scope="row"><?php _e("JPG Quality",'imsanity'); ?></th>
 		<td><select name="imsanity_quality">
 			<?php
@@ -307,6 +316,7 @@ function imsanity_network_settings_update()
 	$data->imsanity_max_height_other = $_REQUEST['imsanity_max_height_other'];
 	$data->imsanity_max_width_other = $_REQUEST['imsanity_max_width_other'];
 	$data->imsanity_bmp_to_jpg = $_REQUEST['imsanity_bmp_to_jpg'] == 1;
+	$data->imsanity_png_to_jpg = $_REQUEST['imsanity_png_to_jpg'] == 1;
 	$data->imsanity_quality = $_REQUEST['imsanity_quality'];
 
 	$wpdb->update(
@@ -398,6 +408,7 @@ function imsanity_register_settings()
 	register_setting( 'imsanity-settings-group', 'imsanity_max_height_other' );
 	register_setting( 'imsanity-settings-group', 'imsanity_max_width_other' );
 	register_setting( 'imsanity-settings-group', 'imsanity_bmp_to_jpg' );
+	register_setting( 'imsanity-settings-group', 'imsanity_png_to_jpg' );
 	register_setting( 'imsanity-settings-group', 'imsanity_quality' );
 }
 
@@ -598,6 +609,14 @@ function imsanity_settings_page_form()
 		<td><select name="imsanity_bmp_to_jpg">
 			<option <?php if (get_option('imsanity_bmp_to_jpg',IMSANITY_DEFAULT_BMP_TO_JPG) == "1") {echo "selected='selected'";} ?> value="1"><?php _e("Yes",'imsanity'); ?></option>
 			<option <?php if (get_option('imsanity_bmp_to_jpg',IMSANITY_DEFAULT_BMP_TO_JPG) == "0") {echo "selected='selected'";} ?> value="0"><?php _e("No",'imsanity'); ?></option>
+		</select></td>
+		</tr>
+
+		<tr valign="middle">
+		<th scope="row"><?php _e("Convert PNG To JPG",'imsanity'); ?></th>
+		<td><select name="imsanity_png_to_jpg">
+			<option <?php if (get_option('imsanity_png_to_jpg',IMSANITY_DEFAULT_PNG_TO_JPG) == "1") {echo "selected='selected'";} ?> value="1"><?php _e("Yes",'imsanity'); ?></option>
+			<option <?php if (get_option('imsanity_png_to_jpg',IMSANITY_DEFAULT_PNG_TO_JPG) == "0") {echo "selected='selected'";} ?> value="0"><?php _e("No",'imsanity'); ?></option>
 		</select></td>
 		</tr>
 
