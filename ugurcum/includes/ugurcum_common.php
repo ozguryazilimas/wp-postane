@@ -101,7 +101,7 @@ function ugurcum_get_media_links() {
 
   if ($user_ID != '') {
     $last_read_time = ugurcum_get_last_read_time();
-    $last_read_time_sql = "SELECT '$last_read_time' < um.updated_at";
+    $last_read_time_sql = "SELECT '$last_read_time' < um.created_at";
 
     if (current_user_can('edit_others_posts')) {
       $can_edit_sql = "SELECT 1";
@@ -119,7 +119,6 @@ function ugurcum_get_media_links() {
                                            um.description as description,
                                            um.medialink as medialink,
                                            um.visible as visible,
-                                           um.updated_at as updated_at,
                                            um.created_at as created_at,
                                            um.user_id as user_id,
                                            wpu.user_login as user_login,
@@ -267,7 +266,7 @@ function display_new_video_count() {
 
   if ($user_ID != '') {
     $last_read_time = ugurcum_get_last_read_time();
-    $video_count_sql .= "WHERE updated_at > '$last_read_time'";
+    $video_count_sql .= "WHERE created_at > '$last_read_time'";
   }
 
   $new_video_count = $wpdb->get_var($video_count_sql);
