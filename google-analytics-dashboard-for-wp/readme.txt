@@ -4,7 +4,7 @@ Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
 Tested up to: 4.1
-Stable tag: 4.3.10
+Stable tag: 4.3.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,17 @@ A dedicated section for WordPress Plugins is available here: [Wordpress Plugins 
 This plugin it's released under the GPLv2, you can use it free of charge on your personal or commercial website.
 
 == Changelog ==
+
+= 4.3.11 =
+- Bug Fix: improvements on QPS management
+- Bug Fix: fall-back to world map when a wrong country code is entered
+- Bug Fix: removed double transient call on successful authorization
+- Bug Fix: PHP warning when authorizing without a Google Analytics account
+- Bug Fix: switch back to initial blog after completing an error clean up in multisite mode
+- Enhancement: clear all errors on version change
+- Enhancement: grid lines are now transparent
+- Enhancement: responsive design improvements for admin widget
+- Enhancement: add css and js version number
 
 = 4.3.10 =
 - Bug Fix: removed the PHP debugging log for frontend queries
