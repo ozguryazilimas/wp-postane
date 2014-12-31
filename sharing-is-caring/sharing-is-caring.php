@@ -756,7 +756,8 @@ if (has_action('sic_sharing')) { //check for existence of hook sic_sharing
 
 add_shortcode('sic', 'sic_content'); //add [sic] shortcode to manually output buttons
 
-add_filter('the_content', 'sic_content_filter', $options["contentfilterpriority"]);
+// add_filter('the_content', 'sic_content_filter', $options["contentfilterpriority"]);
+add_filter('the_content', 'sic_content_filter', 20);
 
 add_filter('language_attributes', 'sic_filter_html_tag');//Add fb namespace (if needed) and schema.org itemscope
 
