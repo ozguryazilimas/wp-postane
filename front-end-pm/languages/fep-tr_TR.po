@@ -47,19 +47,19 @@ msgstr "Selam"
 
 #: fep-class.php:124 fep-class.php:1466
 msgid "You have"
-msgstr ""
+msgstr "Okumadığınız"
 
 #: fep-class.php:124
 msgid "new message(s)"
-msgstr "yeni mesaj(lar)"
+msgstr "yeni mesaj"
 
 #: fep-class.php:125
 msgid "There are"
-msgstr ""
+msgstr "Yeni"
 
 #: fep-class.php:125 fep-class.php:1467
 msgid "announcement(s)"
-msgstr "duyuru(lar)"
+msgstr "duyuru var"
 
 #: fep-class.php:127
 msgid "All Message"
