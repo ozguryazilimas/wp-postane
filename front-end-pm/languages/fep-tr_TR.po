@@ -586,7 +586,7 @@ msgstr "Hoş geldiniz"
 
 #: fep-class.php:1466
 msgid "new messages"
-msgstr "yeni mesajlar"
+msgstr "yeni mesaj"
 
 #: fep-class.php:1467
 msgid "and"
