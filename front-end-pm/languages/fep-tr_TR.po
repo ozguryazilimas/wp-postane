@@ -1,0 +1,988 @@
+# Copyright (C) 2014 Front End PM
+# This file is distributed under the same license as the Front End PM package.
+# Doruk Fisek <dfisek@ozguryazilim.com.tr>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: Front End PM 2.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/front-end-pm\n"
+"POT-Creation-Date: 2014-06-09 17:57:50+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-01-05 01:03+0200\n"
+"Last-Translator: Doruk Fisek <dfisek@ozguryazilim.com.tr>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: fep-class.php:89 fep-class.php:116
+msgid "Login to view your messages"
+msgstr "Görmek için giriş yapın"
+
+#: fep-class.php:97
+msgid "Inbox"
+msgstr "Gelen"
+
+#: fep-class.php:98
+msgid "Announcement"
+msgstr "Duyuru"
+
+#: fep-class.php:100 fep-class.php:1492
+msgid "Contact Message%s"
+msgstr "İletişim Mesajı%s"
+
+#: fep-class.php:102 fep-class.php:1501 fep-contact-form.php:455
+#: fep-contact-form.php:506
+msgid "Send Email"
+msgstr "E-posta Gönder"
+
+#: fep-class.php:114
+msgid "Messages"
+msgstr "Mesajlar"
+
+#: fep-class.php:123
+msgid "Hi"
+msgstr "Selam"
+
+#: fep-class.php:124 fep-class.php:1466
+msgid "You have"
+msgstr ""
+
+#: fep-class.php:124
+msgid "new message(s)"
+msgstr "yeni mesaj(lar)"
+
+#: fep-class.php:125
+msgid "There are"
+msgstr ""
+
+#: fep-class.php:125 fep-class.php:1467
+msgid "announcement(s)"
+msgstr "duyuru(lar)"
+
+#: fep-class.php:127
+msgid "All Message"
+msgstr "Tüm Mesaj"
+
+#: fep-class.php:128 fep-class.php:1499
+msgid "All Contact Message%s"
+msgstr "Tüm İletişim Mesajı%s"
+
+#: fep-class.php:206 fep-class.php:1496 fep-contact-form.php:623
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: fep-class.php:207
+msgid "FEP Contact Form settings"
+msgstr "FEP İletişim Formu ayarları"
+
+#: fep-class.php:208
+msgid "Instruction"
+msgstr "Yönergeler"
+
+#: fep-class.php:215 fep-contact-form.php:22
+msgid "Options successfully saved"
+msgstr "Ayarlar başarıyla kaydedildi"
+
+#: fep-class.php:223
+msgid "Front End PM Settings"
+msgstr "Front End PM Ayarları"
+
+#: fep-class.php:224
+msgid "For FEP Contact Form Settings <a href='%s' >Click Here</a>"
+msgstr "FEP Contact Form Ayarları İçin <a href='%s' >Buraya Tıklayın</a>"
+
+#: fep-class.php:225 fep-contact-form.php:34
+msgid ""
+"If you like this plugin please <a href='%s' target='_blank'>Review in "
+"Wordpress.org</a> and give 5 star"
+msgstr ""
+"Eğer bu eklentiyi beğendiyseniz, lütfen <a href='%s' target='_blank'>"
+"Wordpress.org 'da değerlendirin</a> ve 5 yıldız verin"
+
+#: fep-class.php:240 fep-contact-form.php:58
+msgid "Setting"
+msgstr "Ayar"
+
+#: fep-class.php:240 fep-contact-form.php:58
+msgid "Value"
+msgstr "Değer"
+
+#: fep-class.php:242
+msgid "Max messages a user can keep in box? (0 = Unlimited)"
+msgstr ""
+"Bir kullanıcının kutusunda saklayabileceği en çok mesaj sayısı? (0 = Sınırsız)"
+
+#: fep-class.php:242
+msgid "Admins always have Unlimited"
+msgstr "Yöneticiler her zaman Sınırsız kotaya sahiptir"
+
+#: fep-class.php:242 fep-class.php:243 fep-class.php:244 fep-class.php:245
+msgid "Default"
+msgstr "Öntanımlı"
+
+#: fep-class.php:243
+msgid "Messages to show per page"
+msgstr "Her sayfada gösterilecek mesaj sayısı"
+
+#: fep-class.php:243 fep-class.php:244
+msgid "Do not set this to 0!"
+msgstr "Bunu 0 olarak ayarlamayın!"
+
+#: fep-class.php:244
+msgid "Maximum user per page in Directory"
+msgstr "Dizinde sayfa başına en fazla kullanıcı sayısı"
+
+#: fep-class.php:245
+msgid ""
+"Time delay between two messages send by a user in minutes (0 = No delay "
+"required)"
+msgstr ""
+"Bir kullanıcı tarafından gönderilecek iki mesaj arasında dakika cinsinden "
+"zaman gecikmesi (0 = Gecikmeye gerek yoktur)"
+
+#: fep-class.php:245
+msgid "Admins have no restriction"
+msgstr "Yöneticilerin kısıtlaması yoktur"
+
+#: fep-class.php:246
+msgid "Block Username"
+msgstr "Kullanıcı adını engelle"
+
+#: fep-class.php:246 fep-contact-form.php:61 fep-contact-form.php:63
+msgid "Separated by comma"
+msgstr "Virgülle ayrılmış"
+
+#: fep-class.php:247
+msgid "Valid email address for \"to\" field of announcement email"
+msgstr "Duyuru e-postasının \"alıcı\" alanı için geçerli e-posta adresi"
+
+#: fep-class.php:247
+msgid "All users email will be in \"Bcc\" field"
+msgstr "Tüm kullanıcıların e-posta adresleri \"Bcc\" alanında yer alacak"
+
+#: fep-class.php:248
+msgid "Minimum Capability to use messaging"
+msgstr "Mesajlaşma kullanabilmek için en az olması gereken yetenek"
+
+#: fep-class.php:248
+msgid ""
+"see <a href='%s' target='_blank'>WORDPRESS CAPABILITIES</a> to get "
+"capabilities (use only one capability)"
+msgstr ""
+"Yetenek alabilmek için <a href='%s' target='_blank'>Wordpress Yetenekleri</a> "
+"sayfasını inceleyiniz (yalnız bir yetenek kullanınız)"
+
+#: fep-class.php:248
+msgid "Keep blank if allowed for all users"
+msgstr "Tüm kullanıcılara izin verilmesi için boş bırakınız"
+
+#: fep-class.php:249
+msgid "Send email to all users when a new announcement is published?"
+msgstr ""
+"Yeni bir duyuru yayınlandığında tüm kullanıcılara e-posta gönderilsin mi?"
+
+#: fep-class.php:250
+msgid "Hide Directory from front end?"
+msgstr "Ön yüzden Dizin Saklansın mı?"
+
+#: fep-class.php:250 fep-class.php:251
+msgid "Always shown to Admins"
+msgstr "Yöneticilere her zaman gösterilsin"
+
+#: fep-class.php:251
+msgid "Hide Autosuggestion when typing recipient name?"
+msgstr "Alıcı ismi yazarken otomatik önerme gizlensin mi?"
+
+#: fep-class.php:252
+msgid "Disable \"send new message\" for all users except admins?"
+msgstr ""
+"\"Yeni mesaj gönderme\" özelliği yöneticiler dışında tüm kullanıcılara "
+"kapatılsın mı?"
+
+#: fep-class.php:252
+msgid "Users can send reply"
+msgstr "Kullanıcılar yanıt verebilir"
+
+#: fep-class.php:253
+msgid "Hide Branding Footer?"
+msgstr "Dipnot gizlensin mi?"
+
+#: fep-class.php:254 fep-class.php:426 fep-contact-form.php:55
+#: fep-contact-form.php:72
+msgid "Save Options"
+msgstr "Ayarları Kaydet"
+
+#: fep-class.php:257 fep-class.php:274 fep-contact-form.php:75
+msgid ""
+"For more info or report bug pleasse visit <a href='%s' target='_blank'>Front "
+"End PM</a>"
+msgstr ""
+"Daha fazla bilgi ve hata raporlamak için lütfen <a href='%s' target='_blank'>"
+"Front "
+"End PM</a> adresini ziyaret edin."
+
+#: fep-class.php:265
+msgid "Front End PM Setup Instruction"
+msgstr "Front End PM Ayar Yönergesi"
+
+#: fep-class.php:266
+msgid "Create a new page."
+msgstr "Yeni bir sayfa oluştur."
+
+#: fep-class.php:267
+msgid "Paste following code under the HTML tab of the page editor"
+msgstr "Aşağıdaki kodu sayfa düzenleyicinin HTML sekmesine yapıştırın"
+
+#: fep-class.php:268
+msgid "Publish the page."
+msgstr "Sayfayı yayınla."
+
+#: fep-class.php:269
+msgid "Or you can create a page below."
+msgstr "ya da aşağıdaki sayfayı oluşturabilirsiniz."
+
+#: fep-class.php:270
+msgid "FEP Contact Form Setup Instruction"
+msgstr "FEP Contact Form Ayar Yönergesi"
+
+#: fep-class.php:271
+msgid "Create a new page or post."
+msgstr "Yeni bir sayfa ya da yazı oluştur."
+
+#: fep-class.php:272
+msgid "Paste following code under the HTML tab of the page/post editor"
+msgstr "Aşağıdaki kodu sayfa/yazı düzenleyicisinin HTML sekmesine yapıştırın"
+
+#: fep-class.php:273
+msgid "Publish the page/post."
+msgstr "Sayfa/yazıyı yayınla."
+
+#: fep-class.php:276
+msgid "Create Page For \"Front End PM\""
+msgstr "\"Front End PM\" İçin Sayfa Oluştur"
+
+#: fep-class.php:286
+msgid "Please enter a valid email address!"
+msgstr "Lütfen geçerli bir e-posta adresin girin!"
+
+#: fep-class.php:289
+msgid "First four fields support only positive numbers!"
+msgstr "İlk dört alan yalnızca pozitif sayıları destekler!"
+
+#: fep-class.php:345
+msgid "Title of \"Front End PM\" Page"
+msgstr "\"Front End PM\" Sayfasının Başlığı"
+
+#: fep-class.php:347
+msgid "Slug"
+msgstr "Kısa isim"
+
+#: fep-class.php:347
+msgid "If blank, slug will be automatically created based on Title"
+msgstr "Eğer boş bırakılırsa, kısa isim başlığa göre otomatik oluşturulacak"
+
+#: fep-class.php:350
+msgid "Create Page"
+msgstr "Sayfa Oluştur"
+
+#: fep-class.php:364
+msgid ""
+"Already created page <a href='%s'>%s </a> for \"Front End PM\". Please use "
+"that page instead!"
+msgstr ""
+"\"Front End PM\" için <a href='%s'>%s </a> sayfası zaten oluşturulmuştu. "
+"Lütfen yerine o sayfayı kullanın!"
+
+#: fep-class.php:367
+msgid "You must enter a valid Title!"
+msgstr "Geçerli bir başlık girmelisiniz!"
+
+#: fep-class.php:373 fep-class.php:697 fep-class.php:1089
+msgid "Invalid Token. Please try again!"
+msgstr "Geçersiz Token. Lütfen tekrar deneyin!"
+
+#: fep-class.php:378
+msgid "Page for \"Front End PM\" successfully created!"
+msgstr "\"Front End PM\" için sayfa başarıyla oluşturuldu!"
+
+#: fep-class.php:391
+msgid "Something wrong.Please try again to create page!"
+msgstr "Yanlış bir şeyler var. Lütfen tekrar sayfa oluşturmayı deneyin!"
+
+#: fep-class.php:394
+msgid "Page <a href='%s'>%s </a> for \"Front End PM\" successfully created!"
+msgstr ""
+"\"Front End PM\" için <a href='%s'>%s </a> sayfası başarıyla oluşturuldu!"
+
+#: fep-class.php:406
+msgid "Your settings have been saved!"
+msgstr "Ayarlarınız kaydedildi!"
+
+#: fep-class.php:409
+msgid "Set your preferences below"
+msgstr "Ayarlarınızı aşağıdan düzenleyin"
+
+#: fep-class.php:414
+msgid "Allow others to send me messages?"
+msgstr "Başkaları size mesaj gönderebilsin mi?"
+
+#: fep-class.php:419
+msgid "Email me when I get new messages?"
+msgstr "Yeni mesajınız olduğunda size e-posta gönderelim mi?"
+
+#: fep-class.php:424
+msgid "Email me when New announcement is published?"
+msgstr "Yeni bir duyuru yayınlandığında size e-posta gönderelim mi?"
+
+#: fep-class.php:479 fep-class.php:590 fep-class.php:676
+#: fep-contact-form.php:191
+msgid "You cannot send messages because you are blocked by administrator!"
+msgstr "Yönetici sizi engellediğinden dolayı mesaj gönderemiyorsunuz!"
+
+#: fep-class.php:484
+msgid "Send new message is disabled for users!"
+msgstr "Yeni mesaj gönderimi kullanıcılar için devre dışıdır!"
+
+#: fep-class.php:494
+msgid "Create New Message"
+msgstr "Yeni Mesaj Oluştur"
+
+#: fep-class.php:496 fep-class.php:801 fep-class.php:1192
+#: fep-contact-form.php:493
+msgid "To"
+msgstr "Kime"
+
+#: fep-class.php:505 fep-class.php:564 fep-class.php:802 fep-class.php:1002
+#: fep-class.php:1027 fep-class.php:1193 fep-class.php:1257
+#: fep-contact-form.php:227 fep-contact-form.php:499
+msgid "Subject"
+msgstr "Konu"
+
+#: fep-class.php:507 fep-class.php:535 fep-class.php:1008 fep-class.php:1254
+#: fep-contact-form.php:229 fep-contact-form.php:501
+msgid "Message"
+msgstr "Mesaj"
+
+#: fep-class.php:512 fep-class.php:587 fep-class.php:1273 fep-class.php:1414
+#: fep-class.php:1420 fep-contact-form.php:164 fep-contact-form.php:238
+msgid "Send Message"
+msgstr "Mesaj Gönder"
+
+#: fep-class.php:519
+msgid ""
+"You cannot send messages because your message box is full! Please delete "
+"some messages."
+msgstr ""
+"Mesaj kutunuz dolu olduğu için mesaj gönderemiyorsunuz! Lütfen bazı mesajları "
+"siliniz."
+
+#: fep-class.php:534 fep-class.php:1253
+msgid "Message Thread"
+msgstr "Mesaj İpliği (Thread)"
+
+#: fep-class.php:535 fep-class.php:1254
+msgid "Sender"
+msgstr "Gönderen"
+
+#: fep-class.php:542 fep-class.php:1244
+msgid "You do not have permission to view this message!"
+msgstr "Bu mesajı görme yetkiniz yok!"
+
+#: fep-class.php:553 fep-class.php:554
+msgid "Re:"
+msgstr "Ynt:"
+
+#: fep-class.php:577 fep-class.php:1263
+msgid "Add Reply"
+msgstr "Yanıt Ekle"
+
+#: fep-class.php:654
+msgid "You must enter a valid recipient!"
+msgstr "Geçerli bir alıcı girmelisiniz!"
+
+#: fep-class.php:656 fep-class.php:1076
+msgid "You must enter a valid subject!"
+msgstr "Geçerli bir konu girmelisiniz!"
+
+#: fep-class.php:658
+msgid "You must enter some message content!"
+msgstr "Biraz mesaj içeriği girmelisiniz!"
+
+#: fep-class.php:660 fep-class.php:689
+msgid "You do not have permission to send this message!"
+msgstr "Bu mesajı gönderme yetkiniz yok!"
+
+#: fep-class.php:666
+msgid "This user does not want to receive messages!"
+msgstr "Bu kullanıcı mesaj almak istemiyor!"
+
+#: fep-class.php:671
+msgid "Your or Recipients Message Box Is Full!"
+msgstr "Sizin ya da Alıcının Mesaj Kutusu Dolu!"
+
+#: fep-class.php:682 fep-contact-form.php:314
+msgid "Please wait at least more %s to send another message!"
+msgstr "Başka bir mesaj göndermek için en az %s bekleyiniz!"
+
+#: fep-class.php:711
+msgid "Your message was successfully sent!"
+msgstr "Mesajınız başarıyla gönderildi!"
+
+#: fep-class.php:782
+msgid "Your Messages"
+msgstr "Mesajlarınız"
+
+#: fep-class.php:786 fep-class.php:1176 fep-class.php:1404
+msgid "Page"
+msgstr "Sayfa"
+
+#: fep-class.php:800
+msgid "Started By"
+msgstr "Başlatan"
+
+#: fep-class.php:803
+msgid "Last Reply By"
+msgstr "Son Yanıtlayan"
+
+#: fep-class.php:804 fep-class.php:829 fep-class.php:831 fep-class.php:1006
+#: fep-class.php:1212 fep-class.php:1215 fep-class.php:1217
+msgid "Delete"
+msgstr "Sil"
+
+#: fep-class.php:810 fep-class.php:1199
+msgid "Unread"
+msgstr "Okunmamış"
+
+#: fep-class.php:812 fep-class.php:1201
+msgid "Read"
+msgstr "Okunmuş"
+
+#: fep-class.php:829 fep-class.php:831 fep-class.php:1006 fep-class.php:1212
+#: fep-class.php:1215 fep-class.php:1217
+msgid "Are you sure?"
+msgstr "Emin misiniz?"
+
+#: fep-class.php:843
+msgid "Your message box is empty!"
+msgstr "Mesaj kutunuz boş!"
+
+#: fep-class.php:921 fep-class.php:953
+msgid "Invalid Token!"
+msgstr "Geçersiz Token!"
+
+#: fep-class.php:939 fep-class.php:961
+msgid "No permission!"
+msgstr "Yetkiniz yok!"
+
+#: fep-class.php:942
+msgid "Your message was successfully deleted!"
+msgstr "Mesajınız başarıyla silindi!"
+
+#: fep-class.php:959
+msgid "Message was successfully deleted!"
+msgstr "Mesaj başarıyla silindi!"
+
+#: fep-class.php:978
+msgid "The announcement was successfully deleted!"
+msgstr "Duyuru başarıyla silindi!"
+
+#: fep-class.php:984 fep-class.php:993
+msgid "Announcements"
+msgstr "Duyurular"
+
+#: fep-class.php:989
+msgid "There are no announcements!"
+msgstr "Hiç duyuru yok!"
+
+#: fep-class.php:1003
+msgid "Date"
+msgstr "Tarih"
+
+#: fep-class.php:1005
+msgid "Added by"
+msgstr "Ekleyen:"
+
+#: fep-class.php:1025
+msgid "Add a new announcement below"
+msgstr "Aşağı yeni bir duyuru ekleyin"
+
+#: fep-class.php:1033
+msgid "Submit"
+msgstr "Gönder"
+
+#: fep-class.php:1078
+msgid "You must enter some content!"
+msgstr "Biraz içerik girmelisiniz!"
+
+#: fep-class.php:1080
+msgid "Please try again!"
+msgstr "Lütfen tekrar deneyin!"
+
+#: fep-class.php:1094 fep-class.php:1105
+msgid "The announcement was successfully added!"
+msgstr "Duyuru başarıyla eklendi!"
+
+#: fep-class.php:1102
+msgid "The announcement was successfully added and sent email to all users!"
+msgstr "Duyuru başarıyla eklendi ve tüm kullanıcılara e-posta gönderildi!"
+
+#: fep-class.php:1172
+msgid "All Messages"
+msgstr "Tüm Mesajlar"
+
+#: fep-class.php:1191
+msgid "From"
+msgstr "Gönderen"
+
+#: fep-class.php:1194
+msgid "Action"
+msgstr "Eylem"
+
+#: fep-class.php:1203 fep-class.php:1250
+msgid "Registered"
+msgstr "Kayıtlı"
+
+#: fep-class.php:1205 fep-class.php:1252
+msgid "Unregistered"
+msgstr "Kayıtlı Olmayan"
+
+#: fep-class.php:1214
+msgid "Not-Spam"
+msgstr "Spam Olmayan"
+
+#: fep-class.php:1229
+msgid "Message box is empty!"
+msgstr "Mesaj kutusu boş!"
+
+#: fep-class.php:1250 fep-class.php:1252
+msgid "Reply"
+msgstr "Yanıt"
+
+#: fep-class.php:1381
+msgid "Your message was successfully moved to Contact Message!"
+msgstr "Mesajınız başarıyla İletişim Mesajı'na taşındı!"
+
+#: fep-class.php:1400
+msgid "Total Users"
+msgstr "Toplam Kullanıcı"
+
+#: fep-class.php:1413
+msgid "User"
+msgstr "Kullanıcı"
+
+#: fep-class.php:1429
+msgid "No User!"
+msgstr "Kullanıcı Yok!"
+
+#: fep-class.php:1459 fep-class.php:1468
+msgid "Unlimited"
+msgstr "Sınırsız"
+
+#: fep-class.php:1465
+msgid "Welcome"
+msgstr "Hoş geldiniz"
+
+#: fep-class.php:1466
+msgid "new messages"
+msgstr "yeni mesajlar"
+
+#: fep-class.php:1467
+msgid "and"
+msgstr "ve"
+
+#: fep-class.php:1469
+msgid "Message box size"
+msgstr "Mesaj kutusu boyutu"
+
+#: fep-class.php:1469
+msgid "of"
+msgstr "/"
+
+#: fep-class.php:1471
+msgid "Your Message Box Is Full! Please delete some messages."
+msgstr "Mesaj Kutunuz Dolu! Lütfen bazı mesajları siliniz."
+
+#: fep-class.php:1489
+msgid "New Message"
+msgstr "Yeni Mesaj"
+
+#: fep-class.php:1490
+msgid "Message Box%s"
+msgstr "Mesaj Kutusu%s"
+
+#: fep-class.php:1493
+msgid "Announcements%s"
+msgstr "Duyurular%s"
+
+#: fep-class.php:1495
+msgid "Directory"
+msgstr "Dizin"
+
+#: fep-class.php:1498
+msgid "All Messages%s"
+msgstr "Tüm Mesajlar%s"
+
+#: fep-class.php:1500
+msgid "Spam%s"
+msgstr "Spam%s"
+
+#: fep-class.php:1546
+msgid "Messaging is only allowed for users at least %s capability!"
+msgstr "Mesajlaşma izni en az %s yeteneğine sahip kullanıcılara verilmektedir!"
+
+#: fep-class.php:1619
+msgid "You must be logged-in to view your message."
+msgstr "Mesajınızı görmek için giriş yapmış olmalısınız."
+
+#: fep-class.php:1700
+msgid "Bold"
+msgstr "Koyu"
+
+#: fep-class.php:1701
+msgid "Italic"
+msgstr "Eğik"
+
+#: fep-class.php:1702
+msgid "Underline"
+msgstr "Altı çizili"
+
+#: fep-class.php:1703
+msgid "Strikethrough"
+msgstr "Üstü çizili"
+
+#: fep-class.php:1704
+msgid "Code"
+msgstr "Kod"
+
+#: fep-class.php:1705
+msgid "Quote"
+msgstr "Alıntı"
+
+#: fep-class.php:1706
+msgid "List"
+msgstr "Liste"
+
+#: fep-class.php:1707
+msgid "List item"
+msgstr "Liste maddesi"
+
+#: fep-class.php:1708
+msgid "Link"
+msgstr "Bağlantı"
+
+#: fep-class.php:1709
+msgid "Image"
+msgstr "Resim"
+
+#: fep-class.php:1710 fep-contact-form.php:216
+msgid "Email"
+msgstr "E-posta"
+
+#: fep-class.php:1711
+msgid "Add Hex Color"
+msgstr "Onaltılı (Hex) Renk Ekle"
+
+#: fep-class.php:1712
+msgid "Embed"
+msgstr "Gömülü"
+
+#: fep-contact-form.php:32
+msgid "FEP Contact Form Settings"
+msgstr "FEP Contact Form Ayarları"
+
+#: fep-contact-form.php:33
+msgid "For FRONT END PM Settings <a href='%s' >Click Here</a>"
+msgstr "FRONT END PM Ayarları İçin <a href='%s' >Buraya Tıklayın</a>"
+
+#: fep-contact-form.php:60
+msgid "Required Fields"
+msgstr "Zorunlu Alanlar"
+
+#: fep-contact-form.php:60
+msgid "Name, Email, Subject, Message always required."
+msgstr "Ad, E-posta, Konu, Mesaj her zaman zorunludur."
+
+#: fep-contact-form.php:60
+msgid "Separated by comma. Available (Address,Website)"
+msgstr "Virgülle ayrılmış. Kullanılabilir (Adres, Web Sitesi)"
+
+#: fep-contact-form.php:61
+msgid "Bad words"
+msgstr "Kötü sözcükler"
+
+#: fep-contact-form.php:62
+msgid "Email Footer"
+msgstr "E-posta Dipnotu"
+
+#: fep-contact-form.php:62
+msgid "For sending email"
+msgstr "E-posta göndermek için"
+
+#: fep-contact-form.php:63
+msgid "Block IP"
+msgstr "IP'yi Engelle"
+
+#: fep-contact-form.php:64
+msgid "Maximum points before mark as spam"
+msgstr "Spam olarak işaretlenme sınırı (puan)"
+
+#: fep-contact-form.php:64
+msgid "Default: 4"
+msgstr "Öntanımlı: 4"
+
+#: fep-contact-form.php:65
+msgid ""
+"Time delay between two messages send by a user via FEP Contact Form in "
+"minutes (0 = No delay required)"
+msgstr ""
+"Bir kullanıcının FEP Contact Form ile göndereceği iki mesaj arasında dakika "
+"cinsinden gecikme süresi (0 = Gecikme gerekmez)"
+
+#: fep-contact-form.php:65
+msgid "Applicable only for registered users"
+msgstr "Yalnız kayıtlı kullanıcılar için uygulanabilir"
+
+#: fep-contact-form.php:66
+msgid "Enable CAPTCHA?"
+msgstr "CAPTCHA etkinleştirilsin mi?"
+
+#: fep-contact-form.php:66
+msgid "Configure CAPTCHA below"
+msgstr "CAPTCHA 'yı aşağıda ayarlayın"
+
+#: fep-contact-form.php:67
+msgid "CAPTCHA Question"
+msgstr "CAPTCHA Sorusu"
+
+#: fep-contact-form.php:67
+msgid "It will show on FEP Contact Form"
+msgstr "FEP Contact Form 'da görülecek"
+
+#: fep-contact-form.php:68
+msgid "CAPTCHA Answer"
+msgstr "CAPTCHA Yanıtı"
+
+#: fep-contact-form.php:68
+msgid "Have to be same answer to send contact message."
+msgstr "İletişim mesajının gönderilebilmesi için verilen yanıt aynı olmalı."
+
+#: fep-contact-form.php:69
+msgid "Require logged in to send contact message?"
+msgstr "İletişim mesajı göndermek için giriş yapmış olmak gereksin mi?"
+
+#: fep-contact-form.php:70
+msgid "Enable AKISMET check?"
+msgstr "AKISMET kontrolü etkinleştirilsin mi?"
+
+#: fep-contact-form.php:70
+msgid "Need AKISMET plugin installed."
+msgstr "AKISMET eklentisinin kurulu olması gerekiyor."
+
+#: fep-contact-form.php:87
+msgid "Sorry, your nonce did not verify"
+msgstr "Üzgünüm, yanıtınız doğrulanamadı"
+
+#: fep-contact-form.php:91
+msgid "Please set points and time delay!"
+msgstr "Lütfen puan ve zaman gecikmesini belirleyin!"
+
+#: fep-contact-form.php:172
+msgid "Message successfully send."
+msgstr "Mesaj başarıyla gönderildi."
+
+#: fep-contact-form.php:203
+msgid "Department"
+msgstr "Bölüm"
+
+#: fep-contact-form.php:209
+msgid "Please add departments from FEP contact form settings in backend."
+msgstr "Lütfen arka uçtaki FEP contact form ayarlarından bölümler ekleyiniz."
+
+#: fep-contact-form.php:211
+msgid "Name"
+msgstr "Ad"
+
+#: fep-contact-form.php:218
+msgid "Website"
+msgstr "Web sitesi"
+
+#: fep-contact-form.php:220
+msgid "H Name"
+msgstr "H Ad"
+
+#: fep-contact-form.php:222
+msgid "H Email"
+msgstr "H E-posta"
+
+#: fep-contact-form.php:225
+msgid "Address"
+msgstr "Adres"
+
+#: fep-contact-form.php:233
+msgid "CAPTCHA question"
+msgstr "CAPTCHA sorusu"
+
+#: fep-contact-form.php:235
+msgid "CAPTCHA answer"
+msgstr "CAPTCHA yanıtı"
+
+#: fep-contact-form.php:245
+msgid "Please log in to contact with us."
+msgstr "Lütfen bizimle bağlantı kurmak için giriş yapınız."
+
+#: fep-contact-form.php:284
+msgid "You must select a department."
+msgstr "Bir bölüm seçmelisiniz."
+
+#: fep-contact-form.php:286
+msgid "You must enter your name."
+msgstr "Adınızı girmelisiniz."
+
+#: fep-contact-form.php:288
+msgid "You must enter your valid e-mail address."
+msgstr "Geçerli e-posta adresinizi girmelisiniz."
+
+#: fep-contact-form.php:290
+msgid "You must enter subject."
+msgstr "Konu girmelisiniz."
+
+#: fep-contact-form.php:292
+msgid "You must enter some messages."
+msgstr "Biraz mesaj girmelisiniz."
+
+#: fep-contact-form.php:300
+msgid "%s is required."
+msgstr "%s gereklidir."
+
+#: fep-contact-form.php:305
+msgid "CAPTCHA answer is incorrect."
+msgstr "CAPTCHA yanıtı yanlış."
+
+#: fep-contact-form.php:308
+msgid ""
+"If you see \"H Name\" or \"H Email\" Field DO NOT fill those.Those for Bot "
+"check."
+msgstr ""
+"Eğer \"H Ad\" ya da \"H E-posta\" alanlarını görürseniz, onları doldurMAyın. "
+"Bot kontrolü için bulunuyorlar."
+
+#: fep-contact-form.php:318
+msgid "No bots please! UA reported as: %s"
+msgstr "Lütfen bot kullanmayın! UA raporuna göre: %s"
+
+#: fep-contact-form.php:323
+msgid "Your IP %s is Blocked."
+msgstr "%s IP adresiniz engellenmiş."
+
+#: fep-contact-form.php:385
+msgid "AKISMET KEY is not configured."
+msgstr "AKISMET anahtarı ayarlanmadı."
+
+#: fep-contact-form.php:389
+msgid "AKISMET plugin is not installed."
+msgstr "AKISMET eklentisi kurulu değil."
+
+#: fep-contact-form.php:398 fep-contact-form.php:552
+msgid "Empty Token."
+msgstr "Boş Token."
+
+#: fep-contact-form.php:410 fep-contact-form.php:559
+msgid "Something wrong please try again!"
+msgstr "Yanlış bir şeyler var. Lütfen tekrar deneyin!"
+
+#: fep-contact-form.php:463
+msgid "Email successfully send."
+msgstr "E-posta başarıyla gönderildi."
+
+#: fep-contact-form.php:495
+msgid "From Name"
+msgstr "Gönderici Adı"
+
+#: fep-contact-form.php:497
+msgid "From Email"
+msgstr "Gönderici E-postası"
+
+#: fep-contact-form.php:503
+msgid "Footer"
+msgstr "Dipnot"
+
+#: fep-contact-form.php:512
+msgid "No permission."
+msgstr "Yetki yok."
+
+#: fep-contact-form.php:535
+msgid "Please enter a valid email address in \"To\" field!"
+msgstr "Lütfen \"Alıcı\" alanı için geçerli bir e-psota adresi girin!"
+
+#: fep-contact-form.php:537
+msgid "Please enter a valid Name in \"From Name\" field!"
+msgstr "Lütfen \"Gönderici Adı\" alanı için geçerli bir ad girin!"
+
+#: fep-contact-form.php:539
+msgid "Please enter a valid email address in \"From Email\" field!"
+msgstr ""
+"Lütfen \"Gönderici E-posta\" alanı için geçerli bir e-posta adresi girin!"
+
+#: fep-contact-form.php:541
+msgid "Please your message Subject in \"Subject\" field!"
+msgstr "Lütfen \"Konu\" alanına mesaj konunuzu girin!"
+
+#: fep-contact-form.php:543
+msgid "Please enter your message in \"Message\" field!"
+msgstr "Lütfen mesajınızı \"Mesaj\" alanına girin!"
+
+#: fep-contact-form.php:613
+msgid "Error"
+msgstr "Hata"
+
+#: fep-contact-form.php:633
+msgid "Once Weekly"
+msgstr "Bir Kez Haftalık"
+
+#: front-end-pm.php:50
+msgid "FEP button widget"
+msgstr "FEP düğme bileşeni"
+
+#: front-end-pm.php:51
+msgid "FEP text widget"
+msgstr "FEP metin bileşeni"
+
+#: js/search.php:26
+msgid "No Matches Found"
+msgstr "Eşleşen Kayıt Bulunamadı"
+
+#. Plugin Name of the plugin/theme
+msgid "Front End PM"
+msgstr "Front End PM"
+
+#. #-#-#-#-#  plugin.pot (Front End PM 2.0)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (Front End PM 2.0)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.banglardokan.com/blog/recent/project/front-end-pm-2215/"
+msgstr "http://www.banglardokan.com/blog/recent/project/front-end-pm-2215/"
+
+#. Description of the plugin/theme
+msgid ""
+"Front End PM is a Private Messaging system and a secure contact form to your "
+"WordPress site.This is full functioning messaging system from front end. The "
+"messaging is done entirely through the front-end of your site rather than "
+"the Dashboard. This is very helpful if you want to keep your users out of "
+"the Dashboard area."
+msgstr ""
+"Front End PM, Wordpress siteniz için bir Özel Mesajlaşma sistemi ve güvenilir "
+"bir "
+"iletişim formudur. Bu ön yüzden tam fonksiyonel bir mesajlaşma sistemidir. "
+"Tüm "
+"mesajlaşma, Başlangıç (Dashboard)'tan yerine tamamen sitenin ön-yüzünden "
+"yapılmaktadır, Eğer kullanıcılarınızı Başlangıç alanından uzak tutmak "
+"istiyorsanız, "
+"bu çok işe yarar."
+
+#. Author of the plugin/theme
+msgid "Shamim"
+msgstr "Shamim"
+
+
