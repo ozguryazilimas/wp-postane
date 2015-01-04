@@ -250,25 +250,37 @@ pre.code
 #fep-menu .fep-button,.fep-button {
 	display: inline-block;
 	color:#000000 !important;
-	font-size:13px;
-	background:#F0FCFF;
-	border: 1px solid #8FBFC9;
-	padding:10px 20px;
+	// font-size:13px;
+	// background:#F0FCFF;
+	background:#F9FFF0;
+	// border: 1px solid #8FBFC9;
+	border: 1px solid #B3C98F;
+	// padding:10px 20px;
+	padding: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	margin-right:10px;
 	margin-top:10px;
-	font-weight:bold;
+	// font-weight:bold;
 	text-decoration:none !important;
+	font: normal 13px/14px Helvetica Neue, Helvetica, Arial;
 }
 
 #fep-menu .fep-button:hover,.fep-button:hover {
-	background:#D3EEF5;
+	// background:#D3EEF5;
+	background:#D9FF9E;
 	color: #333;
-	font-size: 14px;
+	// font-size: 14px;
 }
 /*Hide form fields*/
 #fep-hd {
 display:none;
 }
+
+/* 22dakika custom stuff */
+#fep-content > form > a {
+    float: left;
+}
+
+
