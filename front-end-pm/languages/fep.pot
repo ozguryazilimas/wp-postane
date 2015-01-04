@@ -1,0 +1,951 @@
+# Copyright (C) 2014 Front End PM
+# This file is distributed under the same license as the Front End PM package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Front End PM 2.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/front-end-pm\n"
+"POT-Creation-Date: 2014-06-09 17:57:50+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: fep-class.php:89 fep-class.php:116
+msgid "Login to view your messages"
+msgstr ""
+
+#: fep-class.php:97
+msgid "Inbox"
+msgstr ""
+
+#: fep-class.php:98
+msgid "Announcement"
+msgstr ""
+
+#: fep-class.php:100 fep-class.php:1492
+msgid "Contact Message%s"
+msgstr ""
+
+#: fep-class.php:102 fep-class.php:1501 fep-contact-form.php:455
+#: fep-contact-form.php:506
+msgid "Send Email"
+msgstr ""
+
+#: fep-class.php:114
+msgid "Messages"
+msgstr ""
+
+#: fep-class.php:123
+msgid "Hi"
+msgstr ""
+
+#: fep-class.php:124 fep-class.php:1466
+msgid "You have"
+msgstr ""
+
+#: fep-class.php:124
+msgid "new message(s)"
+msgstr ""
+
+#: fep-class.php:125
+msgid "There are"
+msgstr ""
+
+#: fep-class.php:125 fep-class.php:1467
+msgid "announcement(s)"
+msgstr ""
+
+#: fep-class.php:127
+msgid "All Message"
+msgstr ""
+
+#: fep-class.php:128 fep-class.php:1499
+msgid "All Contact Message%s"
+msgstr ""
+
+#: fep-class.php:206 fep-class.php:1496 fep-contact-form.php:623
+msgid "Settings"
+msgstr ""
+
+#: fep-class.php:207
+msgid "FEP Contact Form settings"
+msgstr ""
+
+#: fep-class.php:208
+msgid "Instruction"
+msgstr ""
+
+#: fep-class.php:215 fep-contact-form.php:22
+msgid "Options successfully saved"
+msgstr ""
+
+#: fep-class.php:223
+msgid "Front End PM Settings"
+msgstr ""
+
+#: fep-class.php:224
+msgid "For FEP Contact Form Settings <a href='%s' >Click Here</a>"
+msgstr ""
+
+#: fep-class.php:225 fep-contact-form.php:34
+msgid ""
+"If you like this plugin please <a href='%s' target='_blank'>Review in "
+"Wordpress.org</a> and give 5 star"
+msgstr ""
+
+#: fep-class.php:240 fep-contact-form.php:58
+msgid "Setting"
+msgstr ""
+
+#: fep-class.php:240 fep-contact-form.php:58
+msgid "Value"
+msgstr ""
+
+#: fep-class.php:242
+msgid "Max messages a user can keep in box? (0 = Unlimited)"
+msgstr ""
+
+#: fep-class.php:242
+msgid "Admins always have Unlimited"
+msgstr ""
+
+#: fep-class.php:242 fep-class.php:243 fep-class.php:244 fep-class.php:245
+msgid "Default"
+msgstr ""
+
+#: fep-class.php:243
+msgid "Messages to show per page"
+msgstr ""
+
+#: fep-class.php:243 fep-class.php:244
+msgid "Do not set this to 0!"
+msgstr ""
+
+#: fep-class.php:244
+msgid "Maximum user per page in Directory"
+msgstr ""
+
+#: fep-class.php:245
+msgid ""
+"Time delay between two messages send by a user in minutes (0 = No delay "
+"required)"
+msgstr ""
+
+#: fep-class.php:245
+msgid "Admins have no restriction"
+msgstr ""
+
+#: fep-class.php:246
+msgid "Block Username"
+msgstr ""
+
+#: fep-class.php:246 fep-contact-form.php:61 fep-contact-form.php:63
+msgid "Separated by comma"
+msgstr ""
+
+#: fep-class.php:247
+msgid "Valid email address for \"to\" field of announcement email"
+msgstr ""
+
+#: fep-class.php:247
+msgid "All users email will be in \"Bcc\" field"
+msgstr ""
+
+#: fep-class.php:248
+msgid "Minimum Capability to use messaging"
+msgstr ""
+
+#: fep-class.php:248
+msgid ""
+"see <a href='%s' target='_blank'>WORDPRESS CAPABILITIES</a> to get "
+"capabilities (use only one capability)"
+msgstr ""
+
+#: fep-class.php:248
+msgid "Keep blank if allowed for all users"
+msgstr ""
+
+#: fep-class.php:249
+msgid "Send email to all users when a new announcement is published?"
+msgstr ""
+
+#: fep-class.php:250
+msgid "Hide Directory from front end?"
+msgstr ""
+
+#: fep-class.php:250 fep-class.php:251
+msgid "Always shown to Admins"
+msgstr ""
+
+#: fep-class.php:251
+msgid "Hide Autosuggestion when typing recipient name?"
+msgstr ""
+
+#: fep-class.php:252
+msgid "Disable \"send new message\" for all users except admins?"
+msgstr ""
+
+#: fep-class.php:252
+msgid "Users can send reply"
+msgstr ""
+
+#: fep-class.php:253
+msgid "Hide Branding Footer?"
+msgstr ""
+
+#: fep-class.php:254 fep-class.php:426 fep-contact-form.php:55
+#: fep-contact-form.php:72
+msgid "Save Options"
+msgstr ""
+
+#: fep-class.php:257 fep-class.php:274 fep-contact-form.php:75
+msgid ""
+"For more info or report bug pleasse visit <a href='%s' target='_blank'>Front "
+"End PM</a>"
+msgstr ""
+
+#: fep-class.php:265
+msgid "Front End PM Setup Instruction"
+msgstr ""
+
+#: fep-class.php:266
+msgid "Create a new page."
+msgstr ""
+
+#: fep-class.php:267
+msgid "Paste following code under the HTML tab of the page editor"
+msgstr ""
+
+#: fep-class.php:268
+msgid "Publish the page."
+msgstr ""
+
+#: fep-class.php:269
+msgid "Or you can create a page below."
+msgstr ""
+
+#: fep-class.php:270
+msgid "FEP Contact Form Setup Instruction"
+msgstr ""
+
+#: fep-class.php:271
+msgid "Create a new page or post."
+msgstr ""
+
+#: fep-class.php:272
+msgid "Paste following code under the HTML tab of the page/post editor"
+msgstr ""
+
+#: fep-class.php:273
+msgid "Publish the page/post."
+msgstr ""
+
+#: fep-class.php:276
+msgid "Create Page For \"Front End PM\""
+msgstr ""
+
+#: fep-class.php:286
+msgid "Please enter a valid email address!"
+msgstr ""
+
+#: fep-class.php:289
+msgid "First four fields support only positive numbers!"
+msgstr ""
+
+#: fep-class.php:345
+msgid "Title of \"Front End PM\" Page"
+msgstr ""
+
+#: fep-class.php:347
+msgid "Slug"
+msgstr ""
+
+#: fep-class.php:347
+msgid "If blank, slug will be automatically created based on Title"
+msgstr ""
+
+#: fep-class.php:350
+msgid "Create Page"
+msgstr ""
+
+#: fep-class.php:364
+msgid ""
+"Already created page <a href='%s'>%s </a> for \"Front End PM\". Please use "
+"that page instead!"
+msgstr ""
+
+#: fep-class.php:367
+msgid "You must enter a valid Title!"
+msgstr ""
+
+#: fep-class.php:373 fep-class.php:697 fep-class.php:1089
+msgid "Invalid Token. Please try again!"
+msgstr ""
+
+#: fep-class.php:378
+msgid "Page for \"Front End PM\" successfully created!"
+msgstr ""
+
+#: fep-class.php:391
+msgid "Something wrong.Please try again to create page!"
+msgstr ""
+
+#: fep-class.php:394
+msgid "Page <a href='%s'>%s </a> for \"Front End PM\" successfully created!"
+msgstr ""
+
+#: fep-class.php:406
+msgid "Your settings have been saved!"
+msgstr ""
+
+#: fep-class.php:409
+msgid "Set your preferences below"
+msgstr ""
+
+#: fep-class.php:414
+msgid "Allow others to send me messages?"
+msgstr ""
+
+#: fep-class.php:419
+msgid "Email me when I get new messages?"
+msgstr ""
+
+#: fep-class.php:424
+msgid "Email me when New announcement is published?"
+msgstr ""
+
+#: fep-class.php:479 fep-class.php:590 fep-class.php:676
+#: fep-contact-form.php:191
+msgid "You cannot send messages because you are blocked by administrator!"
+msgstr ""
+
+#: fep-class.php:484
+msgid "Send new message is disabled for users!"
+msgstr ""
+
+#: fep-class.php:494
+msgid "Create New Message"
+msgstr ""
+
+#: fep-class.php:496 fep-class.php:801 fep-class.php:1192
+#: fep-contact-form.php:493
+msgid "To"
+msgstr ""
+
+#: fep-class.php:505 fep-class.php:564 fep-class.php:802 fep-class.php:1002
+#: fep-class.php:1027 fep-class.php:1193 fep-class.php:1257
+#: fep-contact-form.php:227 fep-contact-form.php:499
+msgid "Subject"
+msgstr ""
+
+#: fep-class.php:507 fep-class.php:535 fep-class.php:1008 fep-class.php:1254
+#: fep-contact-form.php:229 fep-contact-form.php:501
+msgid "Message"
+msgstr ""
+
+#: fep-class.php:512 fep-class.php:587 fep-class.php:1273 fep-class.php:1414
+#: fep-class.php:1420 fep-contact-form.php:164 fep-contact-form.php:238
+msgid "Send Message"
+msgstr ""
+
+#: fep-class.php:519
+msgid ""
+"You cannot send messages because your message box is full! Please delete "
+"some messages."
+msgstr ""
+
+#: fep-class.php:534 fep-class.php:1253
+msgid "Message Thread"
+msgstr ""
+
+#: fep-class.php:535 fep-class.php:1254
+msgid "Sender"
+msgstr ""
+
+#: fep-class.php:542 fep-class.php:1244
+msgid "You do not have permission to view this message!"
+msgstr ""
+
+#: fep-class.php:553 fep-class.php:554
+msgid "Re:"
+msgstr ""
+
+#: fep-class.php:577 fep-class.php:1263
+msgid "Add Reply"
+msgstr ""
+
+#: fep-class.php:654
+msgid "You must enter a valid recipient!"
+msgstr ""
+
+#: fep-class.php:656 fep-class.php:1076
+msgid "You must enter a valid subject!"
+msgstr ""
+
+#: fep-class.php:658
+msgid "You must enter some message content!"
+msgstr ""
+
+#: fep-class.php:660 fep-class.php:689
+msgid "You do not have permission to send this message!"
+msgstr ""
+
+#: fep-class.php:666
+msgid "This user does not want to receive messages!"
+msgstr ""
+
+#: fep-class.php:671
+msgid "Your or Recipients Message Box Is Full!"
+msgstr ""
+
+#: fep-class.php:682 fep-contact-form.php:314
+msgid "Please wait at least more %s to send another message!"
+msgstr ""
+
+#: fep-class.php:711
+msgid "Your message was successfully sent!"
+msgstr ""
+
+#: fep-class.php:782
+msgid "Your Messages"
+msgstr ""
+
+#: fep-class.php:786 fep-class.php:1176 fep-class.php:1404
+msgid "Page"
+msgstr ""
+
+#: fep-class.php:800
+msgid "Started By"
+msgstr ""
+
+#: fep-class.php:803
+msgid "Last Reply By"
+msgstr ""
+
+#: fep-class.php:804 fep-class.php:829 fep-class.php:831 fep-class.php:1006
+#: fep-class.php:1212 fep-class.php:1215 fep-class.php:1217
+msgid "Delete"
+msgstr ""
+
+#: fep-class.php:810 fep-class.php:1199
+msgid "Unread"
+msgstr ""
+
+#: fep-class.php:812 fep-class.php:1201
+msgid "Read"
+msgstr ""
+
+#: fep-class.php:829 fep-class.php:831 fep-class.php:1006 fep-class.php:1212
+#: fep-class.php:1215 fep-class.php:1217
+msgid "Are you sure?"
+msgstr ""
+
+#: fep-class.php:843
+msgid "Your message box is empty!"
+msgstr ""
+
+#: fep-class.php:921 fep-class.php:953
+msgid "Invalid Token!"
+msgstr ""
+
+#: fep-class.php:939 fep-class.php:961
+msgid "No permission!"
+msgstr ""
+
+#: fep-class.php:942
+msgid "Your message was successfully deleted!"
+msgstr ""
+
+#: fep-class.php:959
+msgid "Message was successfully deleted!"
+msgstr ""
+
+#: fep-class.php:978
+msgid "The announcement was successfully deleted!"
+msgstr ""
+
+#: fep-class.php:984 fep-class.php:993
+msgid "Announcements"
+msgstr ""
+
+#: fep-class.php:989
+msgid "There are no announcements!"
+msgstr ""
+
+#: fep-class.php:1003
+msgid "Date"
+msgstr ""
+
+#: fep-class.php:1005
+msgid "Added by"
+msgstr ""
+
+#: fep-class.php:1025
+msgid "Add a new announcement below"
+msgstr ""
+
+#: fep-class.php:1033
+msgid "Submit"
+msgstr ""
+
+#: fep-class.php:1078
+msgid "You must enter some content!"
+msgstr ""
+
+#: fep-class.php:1080
+msgid "Please try again!"
+msgstr ""
+
+#: fep-class.php:1094 fep-class.php:1105
+msgid "The announcement was successfully added!"
+msgstr ""
+
+#: fep-class.php:1102
+msgid "The announcement was successfully added and sent email to all users!"
+msgstr ""
+
+#: fep-class.php:1172
+msgid "All Messages"
+msgstr ""
+
+#: fep-class.php:1191
+msgid "From"
+msgstr ""
+
+#: fep-class.php:1194
+msgid "Action"
+msgstr ""
+
+#: fep-class.php:1203 fep-class.php:1250
+msgid "Registered"
+msgstr ""
+
+#: fep-class.php:1205 fep-class.php:1252
+msgid "Unregistered"
+msgstr ""
+
+#: fep-class.php:1214
+msgid "Not-Spam"
+msgstr ""
+
+#: fep-class.php:1229
+msgid "Message box is empty!"
+msgstr ""
+
+#: fep-class.php:1250 fep-class.php:1252
+msgid "Reply"
+msgstr ""
+
+#: fep-class.php:1381
+msgid "Your message was successfully moved to Contact Message!"
+msgstr ""
+
+#: fep-class.php:1400
+msgid "Total Users"
+msgstr ""
+
+#: fep-class.php:1413
+msgid "User"
+msgstr ""
+
+#: fep-class.php:1429
+msgid "No User!"
+msgstr ""
+
+#: fep-class.php:1459 fep-class.php:1468
+msgid "Unlimited"
+msgstr ""
+
+#: fep-class.php:1465
+msgid "Welcome"
+msgstr ""
+
+#: fep-class.php:1466
+msgid "new messages"
+msgstr ""
+
+#: fep-class.php:1467
+msgid "and"
+msgstr ""
+
+#: fep-class.php:1469
+msgid "Message box size"
+msgstr ""
+
+#: fep-class.php:1469
+msgid "of"
+msgstr ""
+
+#: fep-class.php:1471
+msgid "Your Message Box Is Full! Please delete some messages."
+msgstr ""
+
+#: fep-class.php:1489
+msgid "New Message"
+msgstr ""
+
+#: fep-class.php:1490
+msgid "Message Box%s"
+msgstr ""
+
+#: fep-class.php:1493
+msgid "Announcements%s"
+msgstr ""
+
+#: fep-class.php:1495
+msgid "Directory"
+msgstr ""
+
+#: fep-class.php:1498
+msgid "All Messages%s"
+msgstr ""
+
+#: fep-class.php:1500
+msgid "Spam%s"
+msgstr ""
+
+#: fep-class.php:1546
+msgid "Messaging is only allowed for users at least %s capability!"
+msgstr ""
+
+#: fep-class.php:1619
+msgid "You must be logged-in to view your message."
+msgstr ""
+
+#: fep-class.php:1700
+msgid "Bold"
+msgstr ""
+
+#: fep-class.php:1701
+msgid "Italic"
+msgstr ""
+
+#: fep-class.php:1702
+msgid "Underline"
+msgstr ""
+
+#: fep-class.php:1703
+msgid "Strikethrough"
+msgstr ""
+
+#: fep-class.php:1704
+msgid "Code"
+msgstr ""
+
+#: fep-class.php:1705
+msgid "Quote"
+msgstr ""
+
+#: fep-class.php:1706
+msgid "List"
+msgstr ""
+
+#: fep-class.php:1707
+msgid "List item"
+msgstr ""
+
+#: fep-class.php:1708
+msgid "Link"
+msgstr ""
+
+#: fep-class.php:1709
+msgid "Image"
+msgstr ""
+
+#: fep-class.php:1710 fep-contact-form.php:216
+msgid "Email"
+msgstr ""
+
+#: fep-class.php:1711
+msgid "Add Hex Color"
+msgstr ""
+
+#: fep-class.php:1712
+msgid "Embed"
+msgstr ""
+
+#: fep-contact-form.php:32
+msgid "FEP Contact Form Settings"
+msgstr ""
+
+#: fep-contact-form.php:33
+msgid "For FRONT END PM Settings <a href='%s' >Click Here</a>"
+msgstr ""
+
+#: fep-contact-form.php:60
+msgid "Required Fields"
+msgstr ""
+
+#: fep-contact-form.php:60
+msgid "Name, Email, Subject, Message always required."
+msgstr ""
+
+#: fep-contact-form.php:60
+msgid "Separated by comma. Available (Address,Website)"
+msgstr ""
+
+#: fep-contact-form.php:61
+msgid "Bad words"
+msgstr ""
+
+#: fep-contact-form.php:62
+msgid "Email Footer"
+msgstr ""
+
+#: fep-contact-form.php:62
+msgid "For sending email"
+msgstr ""
+
+#: fep-contact-form.php:63
+msgid "Block IP"
+msgstr ""
+
+#: fep-contact-form.php:64
+msgid "Maximum points before mark as spam"
+msgstr ""
+
+#: fep-contact-form.php:64
+msgid "Default: 4"
+msgstr ""
+
+#: fep-contact-form.php:65
+msgid ""
+"Time delay between two messages send by a user via FEP Contact Form in "
+"minutes (0 = No delay required)"
+msgstr ""
+
+#: fep-contact-form.php:65
+msgid "Applicable only for registered users"
+msgstr ""
+
+#: fep-contact-form.php:66
+msgid "Enable CAPTCHA?"
+msgstr ""
+
+#: fep-contact-form.php:66
+msgid "Configure CAPTCHA below"
+msgstr ""
+
+#: fep-contact-form.php:67
+msgid "CAPTCHA Question"
+msgstr ""
+
+#: fep-contact-form.php:67
+msgid "It will show on FEP Contact Form"
+msgstr ""
+
+#: fep-contact-form.php:68
+msgid "CAPTCHA Answer"
+msgstr ""
+
+#: fep-contact-form.php:68
+msgid "Have to be same answer to send contact message."
+msgstr ""
+
+#: fep-contact-form.php:69
+msgid "Require logged in to send contact message?"
+msgstr ""
+
+#: fep-contact-form.php:70
+msgid "Enable AKISMET check?"
+msgstr ""
+
+#: fep-contact-form.php:70
+msgid "Need AKISMET plugin installed."
+msgstr ""
+
+#: fep-contact-form.php:87
+msgid "Sorry, your nonce did not verify"
+msgstr ""
+
+#: fep-contact-form.php:91
+msgid "Please set points and time delay!"
+msgstr ""
+
+#: fep-contact-form.php:172
+msgid "Message successfully send."
+msgstr ""
+
+#: fep-contact-form.php:203
+msgid "Department"
+msgstr ""
+
+#: fep-contact-form.php:209
+msgid "Please add departments from FEP contact form settings in backend."
+msgstr ""
+
+#: fep-contact-form.php:211
+msgid "Name"
+msgstr ""
+
+#: fep-contact-form.php:218
+msgid "Website"
+msgstr ""
+
+#: fep-contact-form.php:220
+msgid "H Name"
+msgstr ""
+
+#: fep-contact-form.php:222
+msgid "H Email"
+msgstr ""
+
+#: fep-contact-form.php:225
+msgid "Address"
+msgstr ""
+
+#: fep-contact-form.php:233
+msgid "CAPTCHA question"
+msgstr ""
+
+#: fep-contact-form.php:235
+msgid "CAPTCHA answer"
+msgstr ""
+
+#: fep-contact-form.php:245
+msgid "Please log in to contact with us."
+msgstr ""
+
+#: fep-contact-form.php:284
+msgid "You must select a department."
+msgstr ""
+
+#: fep-contact-form.php:286
+msgid "You must enter your name."
+msgstr ""
+
+#: fep-contact-form.php:288
+msgid "You must enter your valid e-mail address."
+msgstr ""
+
+#: fep-contact-form.php:290
+msgid "You must enter subject."
+msgstr ""
+
+#: fep-contact-form.php:292
+msgid "You must enter some messages."
+msgstr ""
+
+#: fep-contact-form.php:300
+msgid "%s is required."
+msgstr ""
+
+#: fep-contact-form.php:305
+msgid "CAPTCHA answer is incorrect."
+msgstr ""
+
+#: fep-contact-form.php:308
+msgid ""
+"If you see \"H Name\" or \"H Email\" Field DO NOT fill those.Those for Bot "
+"check."
+msgstr ""
+
+#: fep-contact-form.php:318
+msgid "No bots please! UA reported as: %s"
+msgstr ""
+
+#: fep-contact-form.php:323
+msgid "Your IP %s is Blocked."
+msgstr ""
+
+#: fep-contact-form.php:385
+msgid "AKISMET KEY is not configured."
+msgstr ""
+
+#: fep-contact-form.php:389
+msgid "AKISMET plugin is not installed."
+msgstr ""
+
+#: fep-contact-form.php:398 fep-contact-form.php:552
+msgid "Empty Token."
+msgstr ""
+
+#: fep-contact-form.php:410 fep-contact-form.php:559
+msgid "Something wrong please try again!"
+msgstr ""
+
+#: fep-contact-form.php:463
+msgid "Email successfully send."
+msgstr ""
+
+#: fep-contact-form.php:495
+msgid "From Name"
+msgstr ""
+
+#: fep-contact-form.php:497
+msgid "From Email"
+msgstr ""
+
+#: fep-contact-form.php:503
+msgid "Footer"
+msgstr ""
+
+#: fep-contact-form.php:512
+msgid "No permission."
+msgstr ""
+
+#: fep-contact-form.php:535
+msgid "Please enter a valid email address in \"To\" field!"
+msgstr ""
+
+#: fep-contact-form.php:537
+msgid "Please enter a valid Name in \"From Name\" field!"
+msgstr ""
+
+#: fep-contact-form.php:539
+msgid "Please enter a valid email address in \"From Email\" field!"
+msgstr ""
+
+#: fep-contact-form.php:541
+msgid "Please your message Subject in \"Subject\" field!"
+msgstr ""
+
+#: fep-contact-form.php:543
+msgid "Please enter your message in \"Message\" field!"
+msgstr ""
+
+#: fep-contact-form.php:613
+msgid "Error"
+msgstr ""
+
+#: fep-contact-form.php:633
+msgid "Once Weekly"
+msgstr ""
+
+#: front-end-pm.php:50
+msgid "FEP button widget"
+msgstr ""
+
+#: front-end-pm.php:51
+msgid "FEP text widget"
+msgstr ""
+
+#: js/search.php:26
+msgid "No Matches Found"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Front End PM"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (Front End PM 2.0)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (Front End PM 2.0)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "http://www.banglardokan.com/blog/recent/project/front-end-pm-2215/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Front End PM is a Private Messaging system and a secure contact form to your "
+"WordPress site.This is full functioning messaging system from front end. The "
+"messaging is done entirely through the front-end of your site rather than "
+"the Dashboard. This is very helpful if you want to keep your users out of "
+"the Dashboard area."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Shamim"
+msgstr ""
