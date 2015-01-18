@@ -548,9 +548,12 @@ if (!class_exists("fep_main_class"))
         //Check for privacy errors first
         if ($post->to_user != $user_ID && $post->from_user != $user_ID && !current_user_can( 'manage_options' ))
         {
-          $this->error = __("You do not have permission to view this message!", "fep");
-          return;
-        }
+          if ($count_wholeThread == 1) {
+            $this->error = __("You do not have permission to view this message!", "fep");
+            // threads converted from cpm causes permission issues, hiding all the thread
+            return;
+          }
+        } else {
 
         //setup info for the reply form
         if ($post->parent_id == 0) //If it is the parent message
@@ -587,6 +590,7 @@ if (!class_exists("fep_main_class"))
 		$threadOut .= "<hr /><strong>" . __("Attachment", "fep") . ":</strong><br />";
 		$threadOut .= "<a href='{$this->pluginURL}attachment-download.php?attachment_id=$attachment_id' title='Download ". basename($meta->attachment_url)."'>". basename($meta->attachment_url)."</a>"; } }
 		$threadOut .="</td></tr>";
+        }
         }
       }
 
