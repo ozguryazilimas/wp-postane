@@ -202,7 +202,7 @@ Humans URI: http://humanstxt.org/Standard.html
 
 			$last = get_option( WPMS_OPTION, false );
 
-			if ( ( $last !== false ) && ( $last > ( time() - ( 5 * 60 ) ) ) )
+			if ( ( $last !== false ) && ( $last > ( time() - ( 15 * 60 ) ) ) )
 				return;
 
 			update_option( WPMS_OPTION, time() );
@@ -214,7 +214,11 @@ Humans URI: http://humanstxt.org/Standard.html
 		{
 			global $wpdb;
 
-			$qry = <<<SQL			SELECT ID FROM {$wpdb->posts} WHERE ( ( post_date > 0 && post_date <= %s ) ) AND post_status = 'future' LIMIT 0,10SQL;
+			$qry = <<<SQL
+
+			SELECT ID FROM {$wpdb->posts} WHERE ( ( post_date > 0 && post_date <= %s ) ) AND post_status = 'future' LIMIT 0,10
+
+SQL;
 
 			$sql = $wpdb->prepare( $qry, current_time( 'mysql', 0 ) );
 

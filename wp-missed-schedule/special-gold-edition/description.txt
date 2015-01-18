@@ -1,4 +1,4 @@
-WP Missed Schedule - Special Gold Edition - (2013.1231.2013)
+WP Missed Schedule - Build 2015-01-16 (Stable Version 2013.1231.2014 Reloaded)
 
 DISCLAIMER: This Special Gold Edition is for expert and "Advenced Users", and was installed only on manual mode.
 
@@ -18,7 +18,7 @@ There are various versions with the time of checking variable from 1 minute to 2
 
 Foe example, you will want to install the version with a time of "checking 1 hour", perform the following:
 
-rename wp-missed-schedule-60.php to wp-missed-schedule.php
+rename wp-missed-schedule.60 to wp-missed-schedule.php
 
 Simple!
 
