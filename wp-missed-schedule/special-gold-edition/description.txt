@@ -1,4 +1,4 @@
-WP Missed Schedule - Build 2015-01-16 (Stable Version 2013.1231.2014 Reloaded)
+WP Missed Schedule - Build 2015-01-19 (Stable Version 2013.1231.2015 Major Release)
 
 DISCLAIMER: This Special Gold Edition is for expert and "Advenced Users", and was installed only on manual mode.
 

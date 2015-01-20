@@ -1,13 +1,13 @@
-WP Missed Schedule - Build 2015-01-16 (Stable Version 2013.1231.2014 Reloaded) MD5 Checksum:
+WP Missed Schedule - Build 2015-01-19 (Stable Version 2013.1231.2015 Major Release) MD5 Checksum:
 
------------------------------------- Tags Branche 2013 -------------------------------------
+--------------------------------------- Tags Branche 2013 ---------------------------------------
 
-index.html                                                  A179F0896DE6744B2F841DBF25177B91
-.htaccess                                                   05E248EF7E4B3F039D8BEB53193B76E3
-gpl-2.0.txt                                                 B234EE4D69F5FCE4486A80FDAF4A4263
-humans.txt                                                  842BAA80FDF486FF78E6C772715E2CBC
-index.php                                                   B1DDE13C7371150BB5C1553A7E48E40C
-keybit.txt                                                  52612657CB21DE5D9D0D2E6F925289C3
-license.txt                                                 B234EE4D69F5FCE4486A80FDAF4A4263
-readme.txt                                                  3E0DFDA32CEAF6062D534AFB34E56096
-wp-missed-schedule.php                                      097659B749900E81EE85957A9565C687
+index.html                                                       A179F0896DE6744B2F841DBF25177B91
+.htaccess                                                        05E248EF7E4B3F039D8BEB53193B76E3
+gpl-2.0.txt                                                      B234EE4D69F5FCE4486A80FDAF4A4263
+humans.txt                                                       842BAA80FDF486FF78E6C772715E2CBC
+index.php                                                        B1DDE13C7371150BB5C1553A7E48E40C
+keybit.txt                                                       473EECF9D3F544F9F05231BD847092F1
+license.txt                                                      B234EE4D69F5FCE4486A80FDAF4A4263
+readme.txt                                                       C5DB73A42A1E1F3AF2A5C5B402BD868C
+wp-missed-schedule.php                                           C36833AA810454EFAE26F3C30B3F599F

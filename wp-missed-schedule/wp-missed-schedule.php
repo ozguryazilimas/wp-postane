@@ -2,9 +2,9 @@
 /*
 Plugin Name: WP Missed Schedule
 Plugin URI: http://slangji.wordpress.com/wp-missed-schedule/
-Description: WordPress Plugin WP <code>Missed Schedule</code> Fix <code>Scheduled</code> <code>Failed Future Posts</code> <code>Virtual Cron Job</code>: find only items that match this problem, no others, and republish them correctly 10 items each session, every 5 minutes. All others will be solved on next sessions, to no waste resources, until no longer exist: 10 items every 5 minutes, 120 items every hour, 1 session every 5 minutes, 12 sessions every hour - Free Version - Build 2015-01-16 Stable
-Version: 2013.1231.2014
-Author: slangjis
+Description: WordPress Plugin WP <code>Missed Schedule</code> Fix <code>Scheduled</code> <code>Failed Future Posts</code> <code>Virtual Cron Job</code>: find only items that match this problem, no others, and republish them correctly 10 items each session, every 5 minutes. All others will be solved on next sessions, to no waste resources, until no longer exist: 10 items every 5 minutes, 120 items every hour, 1 session every 5 minutes, 12 sessions every hour - Free (UNIX STYLE) Version - Build 2015-01-19 Stable Major Release
+Version: 2013.1231.2015
+Author: sLa NGjI's
 Author URI: http://slangji.wordpress.com/
 Requires at least: 2.5
 Network: true
@@ -21,7 +21,7 @@ Humans URI: http://humanstxt.org/Standard.html
  *
  * BETA          release: Version 2015 Build 0110 Revision 1833
  *
- * GOLD          release: Version 2013 Build 1231 Revision 2014
+ * GOLD          release: Version 2013 Build 1231 Revision 2015
  *
  * PROFESSIONAL  release: Version 2015 Build 0101 Revision 2015
  *
@@ -148,19 +148,19 @@ Humans URI: http://humanstxt.org/Standard.html
 	 * @author slangjis
 	 * @since       2.5+
 	 * @branche     2013
-	 * @build       2015-01-16
-	 * @version     2013.1231.2014
+	 * @build       2015-01-19
+	 * @version     2013.1231.2015
 	 * @1stversion  2007.0807.2007
 	 * @devversion  2014.0912.0410-DEV
 	 * @betaversion 2015.0110.1833-NEW
-	 * @goldversion 2013.1231.2014-GLD
+	 * @goldversion 2013.1231.2015-GLD
 	 * @proversion  2015.0101.2015-PRO
 	 * @license GPLv2 or later
 	 * @indentation GNU style coding standard
 	 * @satisfaction 4 Jan 2014 3:57 100.000 Downloads!
-	 * @keybit zFXj3lC62b79H865141m78BbFMtb31574J4YQCeLCQM540g46FsK338a8kT29FPAN
-	 * @keysum 52612657CB21DE5D9D0D2E6F925289C3
-	 * @keytag d06de72c0246b7bdf3a24bcc52449e37
+	 * @keybit mFXj3lC62b79H8651411574J4YQCeLCQM540z78BbFMtb3g46FsK338kT29FPANa8
+	 * @keysum 473EECF9D3F544F9F05231BD847092F1
+	 * @keytag 991777abf4277c24f209b74b5da25563
 	 */
 
 	if ( !function_exists( 'add_action' ) )
@@ -266,7 +266,7 @@ Humans URI: http://humanstxt.org/Standard.html
 
 	function wpms_shfl()
 		{
-			echo "\r\n<!--Plugin WP Missed Schedule 2013.1231.2014 Build 2015-01-16 Active - Tag ".md5(md5("zFXj3lC62b79H865141m78BbFMtb31574J4YQCeLCQM540g46FsK338a8kT29FPAN"."6C33486E8694ECB50857E8283BC532D9"))."-->\r\n";
+			echo "\r\n<!--Plugin WP Missed Schedule 2013.1231.2015 Build 2015-01-19 Active - Tag ".md5(md5("mFXj3lC62b79H8651411574J4YQCeLCQM540z78BbFMtb3g46FsK338kT29FPANa8"."473EECF9D3F544F9F05231BD847092F1"))."-->\r\n";
 			echo "\r\n<!-- This website is patched against a big problem not solved from WordPress 2.5+ to date -->\r\n\r\n";
 		}
 	add_action( 'wp_head', 'wpms_shfl', 0 );
@@ -277,5 +277,4 @@ Humans URI: http://humanstxt.org/Standard.html
 			delete_option( WPMS_OPTION );
 		}
 	register_deactivation_hook( __FILE__, 'wpms_clnp', 0 );
-
 ?>
