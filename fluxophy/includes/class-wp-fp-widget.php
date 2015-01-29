@@ -145,13 +145,14 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
         $output .= '<img src="' . $picture_url . '"></img>';
       }
 
-      $output .= '<a href="' . $received->entries[$i]->alternate . '" title="' . date_i18n('G:i - d F Y', strtotime($received->entries[$i]->published)) . '" target="_blank">';
-      $output .= date_i18n('d M', strtotime($received->entries[$i]->published));
+      $output .= '<a href="' . $received->data[$i]->link . '" title="' . date_i18n('G:i - d F Y', strtotime($received->data[$i]->updated_time)) . '" target="_blank">';
+      $output .= date_i18n('d M', strtotime($received->data[$i]->updated_time));
       $output .= '</a>';
 
       $output .= '</div>';
       $output .= '<div class="fluxophy_entry_data">';
-      $output .= $received->entries[$i]->title;
+      // $output .= $request_result;
+      $output .= $received->data[$i]->message;
       $output .= '</div>';
       $output .= '</li>';
     }
