@@ -18,38 +18,24 @@
 require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /**
- * A blank storage class, for cases where caching is not
- * required.
+ * Null logger based on the PSR-3 standard.
+ *
+ * This logger simply discards all messages.
  */
-class Google_Cache_Null extends Google_Cache_Abstract
+class Google_Logger_Null extends Google_Logger_Abstract
 {
-  public function __construct(Google_Client $client)
-  {
-
-  }
-
-   /**
-   * @inheritDoc
+  /**
+   * {@inheritdoc}
    */
-  public function get($key, $expiration = false)
+  public function shouldHandle($level)
   {
     return false;
   }
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
-  public function set($key, $value)
+  protected function write($message, array $context = array())
   {
-    // Nop.
-  }
-
-  /**
-   * @inheritDoc
-   * @param String $key
-   */
-  public function delete($key)
-  {
-    // Nop.
   }
 }

@@ -4,16 +4,16 @@ Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 2.8
 Tested up to: 4.1
-Stable tag: 4.3.11
+Stable tag: 4.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Displays Google Analytics reports and real-time statistics in your WordPress Dashboard. Inserts the latest tracking code in every page of your site.
 
 == Description ==
-Using a widget, [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) displays detailed analytics info and statistics about: number of visits, number of visitors, bounce rates, organic searches, pages per visit directly on your WordPress Dashboard.
+Using a widget, [Google Analytics Dashboard](https://deconf.com/google-analytics-dashboard-wordpress/) displays detailed analytics info and statistics about: number of visits (sessions), number of visitors (users), bounce rates, organic searches, pages per visit directly on your WordPress Dashboard.
 
-Authorized users can also view statistics like Views, UniqueViews and top searches, on frontend, at the end of each article.
+Authorized users can also view statistics like views, unique views and searches, on frontend, at the end of each article.
 
 > <strong>Google Analytics Dashboard on GitHub</strong><br>
 > You can submit pull requests, feature requests or bugs on [Google Analytics Dashboard](https://github.com/deconf/Google-Analytics-Dashboard-for-WP) repository.
@@ -24,7 +24,7 @@ Google Analytics reports, in real-time, on your dashboard screen:
 
 - displays the total number of visitors in real-time 
 - real-time statistics about your acquisition channels
-- per page real-time reports
+- per page real-time reports with traffic sources details 
 
 = Google Analytics Reports =
 
@@ -32,10 +32,10 @@ The reports you need, in your dashboard and on site's frontend:
 
 - you can access all websites statistics in a single widget (websites within same Google Account)
 - option to choose a default color for your charts, graphs and maps
-- option to display top 24 pages, referrers and searches (sortable by columns)
-- option to display Visitors by Country on Geo Map
-- local websites and business have an option to display cities, instead of countries, on a regional map
-- option to display Traffic Overview in Pie Charts
+- visitors by pages, referrers and searches reports
+- location reports, displaying visitors by country on a Geo Map and in a table chart
+- local websites and business have an option to display cities, instead of countries, on a regional map and in a table chart
+- traffic overview reports with details about acquisition channels, social networks, search engines, traffic mediums and visitor type 
 - user access level settings for Backend statistics and analytics reports
 - user access level settings for Frontend analytics data and reports
 - option to display Google Analytics statistics on frontend, at the end of each article
@@ -126,6 +126,46 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 
 == Changelog ==
 
+= 4.4.3 =
+- Enhancement: further optimization on queries
+- Enhancement: less error prone while running JavaScript
+- Enhancement: GAPI errors handling improvement
+- Enhancement: added GADWP_IP_VERSION constant to force a particular Internet Protocol version when needed  
+- Enhancement: run the clean-up method only in settings screen
+- Enhancement: added tabs to Tracking Code page
+- Enhancement: added a new menu item for errors and debugging
+- Enhancement: error alerts for Error & Debug sub-menu
+- Enhancement: disable file cache functionality in GAPI library
+- Enhancement: if cURL is not available fall-back to HTTP streams; cURL is no longer a requirement
+- Enhancement: wp_get_sites limit can now be adjusted through gadwp_sites_limit filter
+
+= 4.4.2 =
+- Bug Fix: additional check for frontend widget
+
+= 4.4.1 =
+- Bug Fix: frontend widget nonce issue while using a cache plugin, reported by [Rick](https://deconf.com/ask/author/rickbates/)
+- Bug Fix: clear the buffer immediately before returning AJAX response
+- Bug Fix: add full-path while loading autoload.php
+
+= 4.4 =
+- Bug Fix: frontend reports and widget are not responsive
+- Bug Fix: random notices for today and yesterday reports
+- Enhancement: Italian translation, updated by [Leo](https://www.facebook.com/leo.thestrategist)
+- Enhancement: admin widget responsive design and optimizations
+- Enhancement: added acquisition channel reports
+- Enhancement: added acquisition social networks reports
+- Enhancement: added acquisition search engines reports
+- Enhancement: new location report and countries/cities list table
+- Enhancement: new pages report (removed top 24 limit)
+- Enhancement: new searches report (removed top 24 limit)
+- Enhancement: new referrers report (removed top 24 limit)
+- Enhancement: frontend, per page reports (removed top 24 limit)
+- Enhancement: added campaigns in real-time report/screen
+- Enhancement: asynchronous reports loading and speed improvements
+- Enhancement: code optimization for all frontend and backend features
+- Enhancement: finished the error standardization process; easier debugging
+- Enhancement: GAPI library update
+
 = 4.3.11 =
 - Bug Fix: improvements on QPS management
 - Bug Fix: fall-back to world map when a wrong country code is entered
@@ -146,7 +186,7 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 
 = 4.3.9 =
 - Enhancement: marking classes as final
-- Enhancement: redesign the frontend widget
+- Enhancement: re-design the frontend widget
 - Enhancement: responsive design for frontend widget
 - Enhancement: responsive design for page reports
 - Enhancement: error codes standardization
@@ -157,7 +197,7 @@ This plugin it's released under the GPLv2, you can use it free of charge on your
 - Bug Fix: stop retrying when a daily limit has exceeded
 
 = 4.3.8 =
-- Enhancement: frontend component redesign
+- Enhancement: frontend component re-design
 - Enhancement: optimizing frontend component to improve page loading speed
 - Enhancement: optimizing frontend component to minimize GAPI requests  
 - Enhancement: loading jsapi using wp-enqueue-script

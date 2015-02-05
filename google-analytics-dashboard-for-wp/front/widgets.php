@@ -6,6 +6,7 @@
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
+
 class GADSH_Frontend_Widget extends WP_Widget
 {
 
@@ -94,31 +95,31 @@ class GADSH_Frontend_Widget extends WP_Widget
         
         switch ($instance['display']) {
             case '1':
-                echo '<div id="gadash-widget"><div id="gadash-widgetchart"></div><div id="gadash-widgettotals"></div></div>';
+                echo '<div id="gadwp-widget"><div id="gadwp-widgetchart"></div><div id="gadwp-widgettotals"></div></div>';
                 break;
             case '2':
-                echo '<div id="gadash-widget"><div id="gadash-widgetchart"></div></div>';
+                echo '<div id="gadwp-widget"><div id="gadwp-widgetchart"></div></div>';
                 break;
             case '3':
-                echo '<div id="gadash-widget"><div id="gadash-widgettotals"></div></div>';
+                echo '<div id="gadwp-widget"><div id="gadwp-widgettotals"></div></div>';
                 break;
         }
         
         echo '<script type="text/javascript">
 
-				jQuery.post("' . admin_url('admin-ajax.php') . '", {action: "gadash_get_frontendwidget_data",gadash_anonim: "' . $instance['anonim'] . '",gadash_period: "' . $instance['period'] . '",gadash_display: "' . $instance['display'] . '",gadash_security_afw: "' . wp_create_nonce('gadash_get_frontendwidget_data') . '"}, function(response){
+				jQuery.post("' . admin_url('admin-ajax.php') . '", {action: "gadash_get_frontendwidget_data",gadash_anonim: "' . $instance['anonim'] . '",gadash_period: "' . $instance['period'] . '"}, function(response){
 					response = jQuery.parseJSON(response);
 				    if (!jQuery.isNumeric(response)){
-				        if (jQuery("#gadash-widgetchart")[0]){
+				        if (jQuery("#gadwp-widgetchart")[0]){
 				           gadash_widgetsessions=jQuery.parseJSON(response[0]); 
 						   google.setOnLoadCallback(ga_dash_drawfwidgetsessions(gadash_widgetsessions));
 				        }
-				        if (jQuery("#gadash-widgettotals")[0]){ 
+				        if (jQuery("#gadwp-widgettotals")[0]){ 
 						   ga_dash_drawtotalsstats(jQuery.parseJSON(response[1]));
 				        }  
 					}else{
-				        jQuery("#gadash-widgetchart").css({"background-color":"#F7F7F7","height":"auto","padding-top":"50px","padding-bottom":"50px","color":"#000","text-align":"center"});  
-				        jQuery("#gadash-widgetchart").html("' . __("This report is unavailable", 'ga-dash') . ' ("+response+")");
+				        jQuery("#gadwp-widgetchart").css({"background-color":"#F7F7F7","height":"auto","padding-top":"50px","padding-bottom":"50px","color":"#000","text-align":"center"});  
+				        jQuery("#gadwp-widgetchart").html("' . __("This report is unavailable", 'ga-dash') . ' ("+response+")");
                     }	
 				});';
         
@@ -132,15 +133,17 @@ class GADSH_Frontend_Widget extends WP_Widget
     					  titlePosition: "in",
     					  chartArea: {width: "95%",height:"75%"},
     					  hAxis: { textPosition: "none"},
-    					  vAxis: { textPosition: "none", minValue: 0, gridlines: {color: "transparent"}, baselineColor: "transparent"},
-    					  allowHtml:true
+    					  vAxis: { textPosition: "none", minValue: 0, gridlines: {color: "transparent"}, baselineColor: "transparent"}
     				 	}
-    					var chart = new google.visualization.AreaChart(document.getElementById("gadash-widgetchart"));
+    					var chart = new google.visualization.AreaChart(document.getElementById("gadwp-widgetchart"));
     					' . $formater . '
     					chart.draw(data, options);
 				   }
     			   function ga_dash_drawtotalsstats(response) {
-                        jQuery("#gadash-widgettotals").html("<div class=\"gadash-left\">' . __("Period:", 'ga-dash') . '</div> <div class=\"gadash-right\">' . $periodtext . '</div><div class=\"gadash-left\">' . __("Sessions:", 'ga-dash') . '</div> <div class=\"gadash-right\">"+response+"</div>");
+    					if (response == null){
+    					    response = 0;
+                        }    
+                        jQuery("#gadwp-widgettotals").html("<div class=\"gadwp-left\">' . __("Period:", 'ga-dash') . '</div> <div class=\"gadwp-right\">' . $periodtext . '</div><div class=\"gadwp-left\">' . __("Sessions:", 'ga-dash') . '</div> <div class=\"gadwp-right\">"+response+"</div>");
                    }';
         
         echo '</script>';
