@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /*
@@ -30,8 +29,8 @@ class Google_Cache_File extends Google_Cache_Abstract
   const MAX_LOCK_RETRIES = 10;
   private $path;
   private $fh;
-
   /**
+   *
    * @var Google_Client the current client
    */
   private $client;
@@ -46,38 +45,34 @@ class Google_Cache_File extends Google_Cache_Abstract
   {
     $storageFile = $this->getCacheFile($key);
     $data = false;
-
-    if (!file_exists($storageFile)) {
-      $this->client->getLogger()->debug(
-          'File cache miss',
-          array('key' => $key, 'file' => $storageFile)
-      );
+    if (! file_exists($storageFile)) {
+      $this->client->getLogger()->debug('File cache miss', array(
+        'key' => $key,
+        'file' => $storageFile
+      ));
       return false;
     }
-
     if ($expiration) {
       $mtime = filemtime($storageFile);
       if ((time() - $mtime) >= $expiration) {
-        $this->client->getLogger()->debug(
-            'File cache miss (expired)',
-            array('key' => $key, 'file' => $storageFile)
-        );
+        $this->client->getLogger()->debug('File cache miss (expired)', array(
+          'key' => $key,
+          'file' => $storageFile
+        ));
         $this->delete($key);
         return false;
       }
     }
-
     if ($this->acquireReadLock($storageFile)) {
       $data = fread($this->fh, filesize($storageFile));
-      $data =  unserialize($data);
+      $data = unserialize($data);
       $this->unlock($storageFile);
     }
-
-    $this->client->getLogger()->debug(
-        'File cache hit',
-        array('key' => $key, 'file' => $storageFile, 'var' => $data)
-    );
-
+    $this->client->getLogger()->debug('File cache hit', array(
+      'key' => $key,
+      'file' => $storageFile,
+      'var' => $data
+    ));
     return $data;
   }
 
@@ -90,34 +85,33 @@ class Google_Cache_File extends Google_Cache_Abstract
       $data = serialize($value);
       $result = fwrite($this->fh, $data);
       $this->unlock($storageFile);
-
-      $this->client->getLogger()->debug(
-          'File cache set',
-          array('key' => $key, 'file' => $storageFile, 'var' => $value)
-      );
+      $this->client->getLogger()->debug('File cache set', array(
+        'key' => $key,
+        'file' => $storageFile,
+        'var' => $value
+      ));
     } else {
-      $this->client->getLogger()->notice(
-          'File cache set failed',
-          array('key' => $key, 'file' => $storageFile)
-      );
+      $this->client->getLogger()->notice('File cache set failed', array(
+        'key' => $key,
+        'file' => $storageFile
+      ));
     }
   }
 
   public function delete($key)
   {
     $file = $this->getCacheFile($key);
-    if (file_exists($file) && !unlink($file)) {
-      $this->client->getLogger()->error(
-          'File cache delete failed',
-          array('key' => $key, 'file' => $file)
-      );
+    if (file_exists($file) && ! unlink($file)) {
+      $this->client->getLogger()->error('File cache delete failed', array(
+        'key' => $key,
+        'file' => $file
+      ));
       throw new Google_Cache_Exception("Cache file could not be deleted");
     }
-
-    $this->client->getLogger()->debug(
-        'File cache delete',
-        array('key' => $key, 'file' => $file)
-    );
+    $this->client->getLogger()->debug('File cache delete', array(
+      'key' => $key,
+      'file' => $file
+    ));
   }
 
   private function getWriteableCacheFile($file)
@@ -138,10 +132,9 @@ class Google_Cache_File extends Google_Cache_Abstract
     $storageDir = $this->path . '/' . substr(md5($file), 0, 2);
     if ($forWrite && ! is_dir($storageDir)) {
       if (! mkdir($storageDir, 0755, true)) {
-        $this->client->getLogger()->error(
-            'File cache creation failed',
-            array('dir' => $storageDir)
-        );
+        $this->client->getLogger()->error('File cache creation failed', array(
+          'dir' => $storageDir
+        ));
         throw new Google_Cache_Exception("Could not create storage directory: $storageDir");
       }
     }
@@ -156,11 +149,10 @@ class Google_Cache_File extends Google_Cache_Abstract
   private function acquireWriteLock($storageFile)
   {
     $rc = $this->acquireLock(LOCK_EX, $storageFile);
-    if (!$rc) {
-      $this->client->getLogger()->notice(
-          'File cache write lock failed',
-          array('file' => $storageFile)
-      );
+    if (! $rc) {
+      $this->client->getLogger()->notice('File cache write lock failed', array(
+        'file' => $storageFile
+      ));
       $this->delete($storageFile);
     }
     return $rc;
@@ -171,10 +163,10 @@ class Google_Cache_File extends Google_Cache_Abstract
     $mode = $type == LOCK_EX ? "w" : "r";
     $this->fh = fopen($storageFile, $mode);
     $count = 0;
-    while (!flock($this->fh, $type | LOCK_NB)) {
+    while (! flock($this->fh, $type | LOCK_NB)) {
       // Sleep for 10ms.
       usleep(10000);
-      if (++$count < self::MAX_LOCK_RETRIES) {
+      if (++ $count < self::MAX_LOCK_RETRIES) {
         return false;
       }
     }

@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,25 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /**
+ *
  * @author Chirag Shah <chirags@google.com>
  */
 class Google_Http_Batch
 {
-  /** @var string Multipart Boundary. */
+  /**
+   *
+   * @var string Multipart Boundary.
+   */
   private $boundary;
-
-  /** @var array service requests to be executed. */
+  /**
+   *
+   * @var array service requests to be executed.
+   */
   private $requests = array();
-
-  /** @var Google_Client */
+  /**
+   *
+   * @var Google_Client
+   */
   private $client;
-
   private $expected_classes = array();
-
   private $base_path;
 
   public function __construct(Google_Client $client, $boundary = false)
@@ -49,33 +54,30 @@ class Google_Http_Batch
     if (false == $key) {
       $key = mt_rand();
     }
-
     $this->requests[$key] = $request;
   }
 
   public function execute()
   {
     $body = '';
-
-    /** @var Google_Http_Request $req */
+    /**
+     *
+     * @var Google_Http_Request $req
+     */
     foreach ($this->requests as $key => $req) {
       $body .= "--{$this->boundary}\n";
       $body .= $req->toBatchString($key) . "\n";
       $this->expected_classes["response-" . $key] = $req->getExpectedClass();
     }
-
     $body = rtrim($body);
     $body .= "\n--{$this->boundary}--";
-
     $url = $this->base_path . '/batch';
     $httpRequest = new Google_Http_Request($url, 'POST');
-    $httpRequest->setRequestHeaders(
-        array('Content-Type' => 'multipart/mixed; boundary=' . $this->boundary)
-    );
-
+    $httpRequest->setRequestHeaders(array(
+      'Content-Type' => 'multipart/mixed; boundary=' . $this->boundary
+    ));
     $httpRequest->setPostBody($body);
     $response = $this->client->getIo()->makeRequest($httpRequest);
-
     return $this->parseResponse($response);
   }
 
@@ -90,38 +92,30 @@ class Google_Http_Batch
         $boundary = $part[1];
       }
     }
-
     $body = $response->getResponseBody();
     if ($body) {
       $body = str_replace("--$boundary--", "--$boundary", $body);
       $parts = explode("--$boundary", $body);
       $responses = array();
-
       foreach ($parts as $part) {
         $part = trim($part);
-        if (!empty($part)) {
-          list($metaHeaders, $part) = explode("\r\n\r\n", $part, 2);
+        if (! empty($part)) {
+          list ($metaHeaders, $part) = explode("\r\n\r\n", $part, 2);
           $metaHeaders = $this->client->getIo()->getHttpResponseHeaders($metaHeaders);
-
           $status = substr($part, 0, strpos($part, "\n"));
           $status = explode(" ", $status);
           $status = $status[1];
-
-          list($partHeaders, $partBody) = $this->client->getIo()->ParseHttpResponse($part, false);
+          list ($partHeaders, $partBody) = $this->client->getIo()->ParseHttpResponse($part, false);
           $response = new Google_Http_Request("");
           $response->setResponseHttpCode($status);
           $response->setResponseHeaders($partHeaders);
           $response->setResponseBody($partBody);
-
           // Need content id.
           $key = $metaHeaders['content-id'];
-
-          if (isset($this->expected_classes[$key]) &&
-              strlen($this->expected_classes[$key]) > 0) {
+          if (isset($this->expected_classes[$key]) && strlen($this->expected_classes[$key]) > 0) {
             $class = $this->expected_classes[$key];
             $response->setExpectedClass($class);
           }
-
           try {
             $response = Google_Http_REST::decodeHttpResponse($response, $this->client);
             $responses[$key] = $response;
@@ -132,10 +126,8 @@ class Google_Http_Batch
           }
         }
       }
-
       return $responses;
     }
-
     return null;
   }
 }

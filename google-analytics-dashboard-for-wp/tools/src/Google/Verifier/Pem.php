@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /**
@@ -30,17 +29,19 @@ class Google_Verifier_Pem extends Google_Verifier_Abstract
    * Constructs a verifier from the supplied PEM-encoded certificate.
    *
    * $pem: a PEM encoded certificate (not a file).
-   * @param $pem
+   *
+   * @param
+   *          $pem
    * @throws Google_Auth_Exception
    * @throws Google_Exception
    */
   public function __construct($pem)
   {
-    if (!function_exists('openssl_x509_read')) {
+    if (! function_exists('openssl_x509_read')) {
       throw new Google_Exception('Google API PHP client needs the openssl PHP extension');
     }
     $this->publicKey = openssl_x509_read($pem);
-    if (!$this->publicKey) {
+    if (! $this->publicKey) {
       throw new Google_Auth_Exception("Unable to parse PEM: $pem");
     }
   }
@@ -56,8 +57,11 @@ class Google_Verifier_Pem extends Google_Verifier_Abstract
    * Verifies the signature on data.
    *
    * Returns true if the signature is valid, false otherwise.
-   * @param $data
-   * @param $signature
+   *
+   * @param
+   *          $data
+   * @param
+   *          $signature
    * @throws Google_Auth_Exception
    * @return bool
    */
@@ -65,7 +69,7 @@ class Google_Verifier_Pem extends Google_Verifier_Abstract
   {
     $hash = defined("OPENSSL_ALGO_SHA256") ? OPENSSL_ALGO_SHA256 : "sha256";
     $status = openssl_verify($data, $signature, $this->publicKey, $hash);
-    if ($status === -1) {
+    if ($status === - 1) {
       throw new Google_Auth_Exception('Signature verification error: ' . openssl_error_string());
     }
     return $status === 1;

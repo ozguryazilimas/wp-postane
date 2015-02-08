@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /**
@@ -37,7 +36,6 @@ abstract class Google_Logger_Abstract
    * Example: 16/Nov/2014:03:26:16 -0500
    */
   const DEFAULT_DATE_FORMAT = 'd/M/Y:H:i:s O';
-
   /**
    * System is unusable
    */
@@ -81,65 +79,60 @@ abstract class Google_Logger_Abstract
    * Detailed debug information.
    */
   const DEBUG = 'debug';
-
   /**
+   *
    * @var array $levels Logging levels
    */
   protected static $levels = array(
-      self::EMERGENCY  => 600,
-      self::ALERT => 550,
-      self::CRITICAL => 500,
-      self::ERROR => 400,
-      self::WARNING => 300,
-      self::NOTICE => 250,
-      self::INFO => 200,
-      self::DEBUG => 100,
+    self::EMERGENCY => 600,
+    self::ALERT => 550,
+    self::CRITICAL => 500,
+    self::ERROR => 400,
+    self::WARNING => 300,
+    self::NOTICE => 250,
+    self::INFO => 200,
+    self::DEBUG => 100
   );
-
   /**
+   *
    * @var integer $level The minimum logging level
    */
   protected $level = self::DEBUG;
-
   /**
+   *
    * @var string $logFormat The current log format
    */
   protected $logFormat = self::DEFAULT_LOG_FORMAT;
   /**
+   *
    * @var string $dateFormat The current date format
    */
   protected $dateFormat = self::DEFAULT_DATE_FORMAT;
-
   /**
+   *
    * @var boolean $allowNewLines If newlines are allowed
    */
   protected $allowNewLines = false;
 
   /**
-   * @param Google_Client $client  The current Google client
+   *
+   * @param Google_Client $client
+   *          The current Google client
    */
   public function __construct(Google_Client $client)
   {
-    $this->setLevel(
-        $client->getClassConfig('Google_Logger_Abstract', 'level')
-    );
-
+    $this->setLevel($client->getClassConfig('Google_Logger_Abstract', 'level'));
     $format = $client->getClassConfig('Google_Logger_Abstract', 'log_format');
     $this->logFormat = $format ? $format : self::DEFAULT_LOG_FORMAT;
-
     $format = $client->getClassConfig('Google_Logger_Abstract', 'date_format');
     $this->dateFormat = $format ? $format : self::DEFAULT_DATE_FORMAT;
-
-    $this->allowNewLines = (bool) $client->getClassConfig(
-        'Google_Logger_Abstract',
-        'allow_newlines'
-    );
+    $this->allowNewLines = (bool) $client->getClassConfig('Google_Logger_Abstract', 'allow_newlines');
   }
 
   /**
    * Sets the minimum logging level that this logger handles.
    *
-   * @param integer $level
+   * @param integer $level          
    */
   public function setLevel($level)
   {
@@ -149,7 +142,7 @@ abstract class Google_Logger_Abstract
   /**
    * Checks if the logger should handle messages at the provided level.
    *
-   * @param  integer $level
+   * @param integer $level          
    * @return boolean
    */
   public function shouldHandle($level)
@@ -160,8 +153,10 @@ abstract class Google_Logger_Abstract
   /**
    * System is unusable.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function emergency($message, array $context = array())
   {
@@ -174,8 +169,10 @@ abstract class Google_Logger_Abstract
    * Example: Entire website down, database unavailable, etc. This should
    * trigger the SMS alerts and wake you up.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function alert($message, array $context = array())
   {
@@ -187,8 +184,10 @@ abstract class Google_Logger_Abstract
    *
    * Example: Application component unavailable, unexpected exception.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function critical($message, array $context = array())
   {
@@ -199,8 +198,10 @@ abstract class Google_Logger_Abstract
    * Runtime errors that do not require immediate action but should typically
    * be logged and monitored.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function error($message, array $context = array())
   {
@@ -213,8 +214,10 @@ abstract class Google_Logger_Abstract
    * Example: Use of deprecated APIs, poor use of an API, undesirable things
    * that are not necessarily wrong.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function warning($message, array $context = array())
   {
@@ -224,8 +227,10 @@ abstract class Google_Logger_Abstract
   /**
    * Normal but significant events.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function notice($message, array $context = array())
   {
@@ -237,8 +242,10 @@ abstract class Google_Logger_Abstract
    *
    * Example: User logs in, SQL logs.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function info($message, array $context = array())
   {
@@ -248,8 +255,10 @@ abstract class Google_Logger_Abstract
   /**
    * Detailed debug information.
    *
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function debug($message, array $context = array())
   {
@@ -259,75 +268,67 @@ abstract class Google_Logger_Abstract
   /**
    * Logs with an arbitrary level.
    *
-   * @param mixed $level    The log level
-   * @param string $message The log message
-   * @param array $context  The log context
+   * @param mixed $level
+   *          The log level
+   * @param string $message
+   *          The log message
+   * @param array $context
+   *          The log context
    */
   public function log($level, $message, array $context = array())
   {
-    if (!$this->shouldHandle($level)) {
+    if (! $this->shouldHandle($level)) {
       return false;
     }
-
     $levelName = is_int($level) ? array_search($level, self::$levels) : $level;
-    $message = $this->interpolate(
-        array(
-            'message' => $message,
-            'context' => $context,
-            'level' => strtoupper($levelName),
-            'datetime' => new DateTime(),
-        )
-    );
-
+    $message = $this->interpolate(array(
+      'message' => $message,
+      'context' => $context,
+      'level' => strtoupper($levelName),
+      'datetime' => new DateTime()
+    ));
     $this->write($message);
   }
 
   /**
    * Interpolates log variables into the defined log format.
    *
-   * @param  array $variables The log variables.
+   * @param array $variables
+   *          The log variables.
    * @return string
    */
   protected function interpolate(array $variables = array())
   {
     $template = $this->logFormat;
-
-    if (!$variables['context']) {
+    if (! $variables['context']) {
       $template = str_replace('%context%', '', $template);
       unset($variables['context']);
     } else {
       $this->reverseJsonInContext($variables['context']);
     }
-
     foreach ($variables as $key => $value) {
-      if (strpos($template, '%'. $key .'%') !== false) {
-        $template = str_replace(
-            '%' . $key . '%',
-            $this->export($value),
-            $template
-        );
+      if (strpos($template, '%' . $key . '%') !== false) {
+        $template = str_replace('%' . $key . '%', $this->export($value), $template);
       }
     }
-
     return $template;
   }
 
   /**
    * Reverses JSON encoded PHP arrays and objects so that they log better.
    *
-   * @param array $context The log context
+   * @param array $context
+   *          The log context
    */
   protected function reverseJsonInContext(array &$context)
   {
-    if (!$context) {
+    if (! $context) {
       return;
     }
-
     foreach ($context as $key => $val) {
-      if (!$val || !is_string($val) || !($val[0] == '{' || $val[0] == '[')) {
+      if (! $val || ! is_string($val) || ! ($val[0] == '{' || $val[0] == '[')) {
         continue;
       }
-
       $json = @json_decode($val);
       if (is_object($json) || is_array($json)) {
         $context[$key] = $json;
@@ -338,7 +339,8 @@ abstract class Google_Logger_Abstract
   /**
    * Exports a PHP value for logging to a string.
    *
-   * @param mixed $value The value to
+   * @param mixed $value
+   *          The value to
    */
   protected function export($value)
   {
@@ -346,39 +348,29 @@ abstract class Google_Logger_Abstract
       if ($this->allowNewLines) {
         return $value;
       }
-
       return preg_replace('/[\r\n]+/', ' ', $value);
     }
-
     if (is_resource($value)) {
-      return sprintf(
-          'resource(%d) of type (%s)',
-          $value,
-          get_resource_type($value)
-      );
+      return sprintf('resource(%d) of type (%s)', $value, get_resource_type($value));
     }
-
     if ($value instanceof DateTime) {
       return $value->format($this->dateFormat);
     }
-
     if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
       $options = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
-
       if ($this->allowNewLines) {
         $options |= JSON_PRETTY_PRINT;
       }
-
       return @json_encode($value, $options);
     }
-
     return str_replace('\\/', '/', @json_encode($value));
   }
 
   /**
    * Converts a given log level to the integer form.
    *
-   * @param  mixed $level   The logging level
+   * @param mixed $level
+   *          The logging level
    * @return integer $level The normalized level
    * @throws Google_Logger_Exception If $level is invalid
    */
@@ -387,20 +379,17 @@ abstract class Google_Logger_Abstract
     if (is_int($level) && array_search($level, self::$levels) !== false) {
       return $level;
     }
-
     if (is_string($level) && isset(self::$levels[$level])) {
       return self::$levels[$level];
     }
-
-    throw new Google_Logger_Exception(
-        sprintf("Unknown LogLevel: '%s'", $level)
-    );
+    throw new Google_Logger_Exception(sprintf("Unknown LogLevel: '%s'", $level));
   }
 
   /**
    * Writes a message to the current log implementation.
    *
-   * @param string $message The message
+   * @param string $message
+   *          The message
    */
   abstract protected function write($message);
 }

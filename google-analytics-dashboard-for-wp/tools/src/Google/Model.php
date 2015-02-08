@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright 2011 Google Inc.
  *
@@ -6,7 +7,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,14 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * This class defines attributes, valid values, and usage which is generated
  * from a given json schema.
  * http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5
  *
  * @author Chirag Shah <chirags@google.com>
- *
+ *        
  */
 class Google_Model implements ArrayAccess
 {
@@ -45,71 +45,70 @@ class Google_Model implements ArrayAccess
 
   /**
    * Getter that handles passthrough access to the data array, and lazy object creation.
-   * @param string $key Property name.
+   *
+   * @param string $key
+   *          Property name.
    * @return mixed The value if any, or null.
    */
   public function __get($key)
   {
     $keyTypeName = $this->keyType($key);
     $keyDataType = $this->dataType($key);
-    if (isset($this->$keyTypeName) && !isset($this->processed[$key])) {
+    if (isset($this->$keyTypeName) && ! isset($this->processed[$key])) {
       if (isset($this->modelData[$key])) {
         $val = $this->modelData[$key];
-      } else if (isset($this->$keyDataType) &&
-          ($this->$keyDataType == 'array' || $this->$keyDataType == 'map')) {
-        $val = array();
-      } else {
-        $val = null;
-      }
-
+      } else 
+        if (isset($this->$keyDataType) && ($this->$keyDataType == 'array' || $this->$keyDataType == 'map')) {
+          $val = array();
+        } else {
+          $val = null;
+        }
       if ($this->isAssociativeArray($val)) {
         if (isset($this->$keyDataType) && 'map' == $this->$keyDataType) {
           foreach ($val as $arrayKey => $arrayItem) {
-              $this->modelData[$key][$arrayKey] =
-                $this->createObjectFromName($keyTypeName, $arrayItem);
+            $this->modelData[$key][$arrayKey] = $this->createObjectFromName($keyTypeName, $arrayItem);
           }
         } else {
           $this->modelData[$key] = $this->createObjectFromName($keyTypeName, $val);
         }
-      } else if (is_array($val)) {
-        $arrayObject = array();
-        foreach ($val as $arrayIndex => $arrayItem) {
-          $arrayObject[$arrayIndex] =
-            $this->createObjectFromName($keyTypeName, $arrayItem);
+      } else 
+        if (is_array($val)) {
+          $arrayObject = array();
+          foreach ($val as $arrayIndex => $arrayItem) {
+            $arrayObject[$arrayIndex] = $this->createObjectFromName($keyTypeName, $arrayItem);
+          }
+          $this->modelData[$key] = $arrayObject;
         }
-        $this->modelData[$key] = $arrayObject;
-      }
       $this->processed[$key] = true;
     }
-
     return isset($this->modelData[$key]) ? $this->modelData[$key] : null;
   }
 
   /**
    * Initialize this object's properties from an array.
    *
-   * @param array $array Used to seed this object's properties.
+   * @param array $array
+   *          Used to seed this object's properties.
    * @return void
    */
   protected function mapTypes($array)
   {
     // Hard initilise simple types, lazy load more complex ones.
     foreach ($array as $key => $val) {
-      if ( !property_exists($this, $this->keyType($key)) &&
-        property_exists($this, $key)) {
-          $this->$key = $val;
-          unset($array[$key]);
+      if (! property_exists($this, $this->keyType($key)) && property_exists($this, $key)) {
+        $this->$key = $val;
+        unset($array[$key]);
       } elseif (property_exists($this, $camelKey = Google_Utils::camelCase($key))) {
-          // This checks if property exists as camelCase, leaving it in array as snake_case
-          // in case of backwards compatibility issues.
-          $this->$camelKey = $val;
+        // This checks if property exists as camelCase, leaving it in array as snake_case
+        // in case of backwards compatibility issues.
+        $this->$camelKey = $val;
       }
     }
     $this->modelData = $array;
   }
 
   /**
-   * Blank initialiser to be used in subclasses to do  post-construction initialisation - this
+   * Blank initialiser to be used in subclasses to do post-construction initialisation - this
    * avoids the need for subclasses to have to implement the variadics handling in their
    * constructors.
    */
@@ -120,14 +119,14 @@ class Google_Model implements ArrayAccess
 
   /**
    * Create a simplified object suitable for straightforward
-   * conversion to JSON. This is relatively expensive
+   * conversion to JSON.
+   * This is relatively expensive
    * due to the usage of reflection, but shouldn't be called
    * a whole lot, and is the most straightforward way to filter.
    */
   public function toSimpleObject()
   {
     $object = new stdClass();
-
     // Process all other data.
     foreach ($this->modelData as $key => $val) {
       $result = $this->getSimpleValue($val);
@@ -135,7 +134,6 @@ class Google_Model implements ArrayAccess
         $object->$key = $result;
       }
     }
-
     // Process all public properties.
     $reflect = new ReflectionObject($this);
     $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
@@ -147,7 +145,6 @@ class Google_Model implements ArrayAccess
         $object->$name = $result;
       }
     }
-
     return $object;
   }
 
@@ -159,17 +156,18 @@ class Google_Model implements ArrayAccess
   {
     if ($value instanceof Google_Model) {
       return $value->toSimpleObject();
-    } else if (is_array($value)) {
-      $return = array();
-      foreach ($value as $key => $a_value) {
-        $a_value = $this->getSimpleValue($a_value);
-        if ($a_value !== null) {
-          $key = $this->getMappedName($key);
-          $return[$key] = $a_value;
+    } else 
+      if (is_array($value)) {
+        $return = array();
+        foreach ($value as $key => $a_value) {
+          $a_value = $this->getSimpleValue($a_value);
+          if ($a_value !== null) {
+            $key = $this->getMappedName($key);
+            $return[$key] = $a_value;
+          }
         }
+        return $return;
       }
-      return $return;
-    }
     return $value;
   }
 
@@ -178,8 +176,7 @@ class Google_Model implements ArrayAccess
    */
   private function getMappedName($key)
   {
-    if (isset($this->internal_gapi_mappings) &&
-        isset($this->internal_gapi_mappings[$key])) {
+    if (isset($this->internal_gapi_mappings) && isset($this->internal_gapi_mappings[$key])) {
       $key = $this->internal_gapi_mappings[$key];
     }
     return $key;
@@ -187,12 +184,13 @@ class Google_Model implements ArrayAccess
 
   /**
    * Returns true only if the array is associative.
-   * @param array $array
+   *
+   * @param array $array          
    * @return bool True if the array is associative.
    */
   protected function isAssociativeArray($array)
   {
-    if (!is_array($array)) {
+    if (! is_array($array)) {
       return false;
     }
     $keys = array_keys($array);
@@ -207,8 +205,10 @@ class Google_Model implements ArrayAccess
   /**
    * Given a variable name, discover its type.
    *
-   * @param $name
-   * @param $item
+   * @param
+   *          $name
+   * @param
+   *          $item
    * @return object The object from the item.
    */
   private function createObjectFromName($name, $item)
@@ -219,16 +219,17 @@ class Google_Model implements ArrayAccess
 
   /**
    * Verify if $obj is an array.
+   *
    * @throws Google_Exception Thrown if $obj isn't an array.
-   * @param array $obj Items that should be validated.
-   * @param string $method Method expecting an array as an argument.
+   * @param array $obj
+   *          Items that should be validated.
+   * @param string $method
+   *          Method expecting an array as an argument.
    */
   public function assertIsArray($obj, $method)
   {
-    if ($obj && !is_array($obj)) {
-      throw new Google_Exception(
-          "Incorrect parameter type passed to $method(). Expected an array."
-      );
+    if ($obj && ! is_array($obj)) {
+      throw new Google_Exception("Incorrect parameter type passed to $method(). Expected an array.");
     }
   }
 
@@ -239,9 +240,7 @@ class Google_Model implements ArrayAccess
 
   public function offsetGet($offset)
   {
-    return isset($this->$offset) ?
-        $this->$offset :
-        $this->__get($offset);
+    return isset($this->$offset) ? $this->$offset : $this->__get($offset);
   }
 
   public function offsetSet($offset, $value)

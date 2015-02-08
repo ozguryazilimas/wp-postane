@@ -7,297 +7,271 @@
  */
 if (! class_exists('GADASH_Widgets')) {
 
-    class GADASH_Widgets
+  class GADASH_Widgets
+  {
+
+    function __construct()
     {
+      global $GADASH_Config;
+      add_action('wp_dashboard_setup', array(
+        $this,
+        'ga_dash_setup'
+      ));
+      // Admin Styles
+      add_action('admin_enqueue_scripts', array(
+        $this,
+        'ga_dash_admin_enqueue_styles'
+      ));
+      // Admin Menu
+      add_action('admin_menu', array(
+        $this,
+        'ga_dash_admin_actions'
+      ));
+      // Network Menu
+      add_action('network_admin_menu', array(
+        $this,
+        'ga_dash_network_actions'
+      ));
+      // Plugin Settings link
+      add_filter("plugin_action_links_" . plugin_basename($GADASH_Config->plugin_path) . '/gadwp.php', array(
+        $this,
+        'ga_dash_settings_link'
+      ));
+      // Add error bubble
+      add_action('admin_print_scripts', array(
+        $this,
+        'draw_error_bubble'
+      ), 10000);
+    }
 
-        function __construct()
-        {
-            global $GADASH_Config;
-            add_action('wp_dashboard_setup', array(
-                $this,
-                'ga_dash_setup'
-            ));
-            // Admin Styles
-            add_action('admin_enqueue_scripts', array(
-                $this,
-                'ga_dash_admin_enqueue_styles'
-            ));
-            // Admin Menu
-            add_action('admin_menu', array(
-                $this,
-                'ga_dash_admin_actions'
-            ));
-            // Network Menu
-            add_action('network_admin_menu', array(
-                $this,
-                'ga_dash_network_actions'
-            ));
-            // Plugin Settings link
-            add_filter("plugin_action_links_" . plugin_basename($GADASH_Config->plugin_path) . '/gadwp.php', array(
-                $this,
-                'ga_dash_settings_link'
-            ));
-            // Add error bubble
-            add_action('admin_print_scripts', array(
-                $this,
-                'draw_error_bubble'
-            ), 10000);
-        }
-
-        function draw_error_bubble()
-        {
-            $bubble_msg = '!';
-            if (get_transient('ga_dash_gapi_errors')) {
-                ?>
-                    <script type="text/javascript">
+    function draw_error_bubble()
+    {
+      $bubble_msg = '!';
+      if (get_transient('ga_dash_gapi_errors')) {
+        ?>
+<script type="text/javascript">
                     jQuery(document).ready(function() {
                         jQuery('#toplevel_page_gadash_settings li > a[href*="page=gadash_errors_debugging"]').append('&nbsp;<span class="awaiting-mod count-1"><span class="pending-count" style="padding:0 7px;"><?php echo $bubble_msg ?></span></span>');
                     });
                 </script>
-                <?php
-            }
+<?php
+      }
+    }
+
+    function ga_dash_admin_actions()
+    {
+      global $GADASH_Config;
+      global $wp_version;
+      if (current_user_can('manage_options')) {
+        include ($GADASH_Config->plugin_path . '/admin/ga_dash_settings.php');
+        add_menu_page(__("Google Analytics", 'ga-dash'), __("Google Analytics", 'ga-dash'), 'manage_options', 'gadash_settings', array(
+          'GADASH_Settings',
+          'general_settings'
+        ), version_compare($wp_version, '3.8.0', '>=') ? 'dashicons-chart-area' : $GADASH_Config->plugin_url . '/admin/images/gadash-icon.png');
+        add_submenu_page('gadash_settings', __("General Settings", 'ga-dash'), __("General Settings", 'ga-dash'), 'manage_options', 'gadash_settings', array(
+          'GADASH_Settings',
+          'general_settings'
+        ));
+        add_submenu_page('gadash_settings', __("Backend Settings", 'ga-dash'), __("Backend Settings", 'ga-dash'), 'manage_options', 'gadash_backend_settings', array(
+          'GADASH_Settings',
+          'backend_settings'
+        ));
+        add_submenu_page('gadash_settings', __("Frontend Settings", 'ga-dash'), __("Frontend Settings", 'ga-dash'), 'manage_options', 'gadash_frontend_settings', array(
+          'GADASH_Settings',
+          'frontend_settings'
+        ));
+        add_submenu_page('gadash_settings', __("Tracking Code", 'ga-dash'), __("Tracking Code", 'ga-dash'), 'manage_options', 'gadash_tracking_settings', array(
+          'GADASH_Settings',
+          'tracking_settings'
+        ));
+        add_submenu_page('gadash_settings', __("Errors & Debug", 'ga-dash'), __("Errors & Debug", 'ga-dash'), 'manage_options', 'gadash_errors_debugging', array(
+          'GADASH_Settings',
+          'errors_debugging'
+        ));
+      }
+    }
+
+    function ga_dash_network_actions()
+    {
+      global $GADASH_Config;
+      global $wp_version;
+      if (current_user_can('manage_netwrok')) {
+        include ($GADASH_Config->plugin_path . '/admin/ga_dash_settings.php');
+        add_menu_page(__("Google Analytics", 'ga-dash'), __("Google Analytics", 'ga-dash'), 'manage_netwrok', 'gadash_settings', array(
+          'GADASH_Settings',
+          'general_settings_network'
+        ), version_compare($wp_version, '3.8.0', '>=') ? 'dashicons-chart-area' : $GADASH_Config->plugin_url . '/admin/images/gadash-icon.png');
+        add_submenu_page('gadash_settings', __("General Settings", 'ga-dash'), __("General Settings", 'ga-dash'), 'manage_netwrok', 'gadash_settings', array(
+          'GADASH_Settings',
+          'general_settings_network'
+        ));
+        add_submenu_page('gadash_settings', __("Errors & Debug", 'ga-dash'), __("Errors & Debug", 'ga-dash'), 'manage_network', 'gadash_errors_debugging', array(
+          'GADASH_Settings',
+          'errors_debugging'
+        ));
+      }
+    }
+
+    /*
+     * Include styles
+     */
+    function ga_dash_admin_enqueue_styles($hook)
+    {
+      global $GADASH_Config;
+      $valid_hooks = array(
+        'toplevel_page_gadash_settings',
+        'google-analytics_page_gadash_backend_settings',
+        'google-analytics_page_gadash_frontend_settings',
+        'google-analytics_page_gadash_tracking_settings',
+        'google-analytics_page_gadash_errors_debugging'
+      );
+      if (! in_array($hook, $valid_hooks) and 'index.php' != $hook)
+        return;
+      wp_enqueue_style('ga_dash-nprogress', $GADASH_Config->plugin_url . '/tools/nprogress/nprogress.css', NULL, GADWP_CURRENT_VERSION);
+      wp_register_style('ga_dash', $GADASH_Config->plugin_url . '/admin/css/ga_dash.css', NULL, GADWP_CURRENT_VERSION);
+      wp_enqueue_style('ga_dash');
+      wp_enqueue_style('wp-color-picker');
+      wp_enqueue_script('wp-color-picker');
+      wp_enqueue_script('wp-color-picker-script-handle', plugins_url('js/wp-color-picker-script.js', __FILE__), array(
+        'wp-color-picker'
+      ), false, true);
+      wp_enqueue_script('gadash-general-settings', plugins_url('js/admin.js', __FILE__), array(
+        'jquery'
+      ), GADWP_CURRENT_VERSION);
+      if (! wp_script_is('googlejsapi')) {
+        wp_register_script('googlejsapi', 'https://www.google.com/jsapi');
+        wp_enqueue_script('googlejsapi');
+      }
+      wp_enqueue_script('ga_dash-nprogress', $GADASH_Config->plugin_url . '/tools/nprogress/nprogress.js', array(
+        'jquery'
+      ), GADWP_CURRENT_VERSION);
+    }
+
+    function ga_dash_settings_link($links)
+    {
+      $settings_link = '<a href="' . get_admin_url(null, 'admin.php?page=gadash_settings') . '">' . __("Settings", 'ga-dash') . '</a>';
+      array_unshift($links, $settings_link);
+      return $links;
+    }
+
+    function ga_dash_setup()
+    {
+      global $GADASH_Config;
+      /*
+       * Include Tools
+       */
+      include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
+      $tools = new GADASH_Tools();
+      if ($tools->check_roles($GADASH_Config->options['ga_dash_access_back'])) {
+        wp_add_dashboard_widget('gadash-widget', __("Google Analytics Dashboard", 'ga-dash'), array(
+          $this,
+          'gadash_dashboard_widgets'
+        ), $control_callback = null);
+      }
+    }
+
+    function gadash_dashboard_widgets()
+    {
+      global $GADASH_Config;
+      /*
+       * Include GAPI
+       */
+      if ($GADASH_Config->options['ga_dash_token']) {
+        include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
+        global $GADASH_GAPI;
+      } else {
+        echo '<p>' . __("This plugin needs an authorization:", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("Authorize Plugin", 'ga-dash'), 'secondary') . '</form>';
+        return;
+      }
+      /*
+       * Include Tools
+       */
+      include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
+      $tools = new GADASH_Tools();
+      if (current_user_can('manage_options')) {
+        if (isset($_REQUEST['ga_dash_profile_select'])) {
+          $GADASH_Config->options['ga_dash_tableid'] = $_REQUEST['ga_dash_profile_select'];
         }
-
-        function ga_dash_admin_actions()
-        {
-            global $GADASH_Config;
-            global $wp_version;
-            
-            if (current_user_can('manage_options')) {
-                include ($GADASH_Config->plugin_path . '/admin/ga_dash_settings.php');
-                
-                add_menu_page(__("Google Analytics", 'ga-dash'), __("Google Analytics", 'ga-dash'), 'manage_options', 'gadash_settings', array(
-                    'GADASH_Settings',
-                    'general_settings'
-                ), version_compare($wp_version, '3.8.0', '>=') ? 'dashicons-chart-area' : $GADASH_Config->plugin_url . '/admin/images/gadash-icon.png');
-                add_submenu_page('gadash_settings', __("General Settings", 'ga-dash'), __("General Settings", 'ga-dash'), 'manage_options', 'gadash_settings', array(
-                    'GADASH_Settings',
-                    'general_settings'
-                ));
-                add_submenu_page('gadash_settings', __("Backend Settings", 'ga-dash'), __("Backend Settings", 'ga-dash'), 'manage_options', 'gadash_backend_settings', array(
-                    'GADASH_Settings',
-                    'backend_settings'
-                ));
-                add_submenu_page('gadash_settings', __("Frontend Settings", 'ga-dash'), __("Frontend Settings", 'ga-dash'), 'manage_options', 'gadash_frontend_settings', array(
-                    'GADASH_Settings',
-                    'frontend_settings'
-                ));
-                add_submenu_page('gadash_settings', __("Tracking Code", 'ga-dash'), __("Tracking Code", 'ga-dash'), 'manage_options', 'gadash_tracking_settings', array(
-                    'GADASH_Settings',
-                    'tracking_settings'
-                ));
-                add_submenu_page('gadash_settings', __("Errors & Debug", 'ga-dash'), __("Errors & Debug", 'ga-dash'), 'manage_options', 'gadash_errors_debugging', array(
-                    'GADASH_Settings',
-                    'errors_debugging'
-                ));
-            }
-        }
-
-        function ga_dash_network_actions()
-        {
-            global $GADASH_Config;
-            global $wp_version;
-            
-            if (current_user_can('manage_netwrok')) {
-                include ($GADASH_Config->plugin_path . '/admin/ga_dash_settings.php');
-                
-                add_menu_page(__("Google Analytics", 'ga-dash'), __("Google Analytics", 'ga-dash'), 'manage_netwrok', 'gadash_settings', array(
-                    'GADASH_Settings',
-                    'general_settings_network'
-                ), version_compare($wp_version, '3.8.0', '>=') ? 'dashicons-chart-area' : $GADASH_Config->plugin_url . '/admin/images/gadash-icon.png');
-                add_submenu_page('gadash_settings', __("General Settings", 'ga-dash'), __("General Settings", 'ga-dash'), 'manage_netwrok', 'gadash_settings', array(
-                    'GADASH_Settings',
-                    'general_settings_network'
-                ));
-                add_submenu_page('gadash_settings', __("Errors & Debug", 'ga-dash'), __("Errors & Debug", 'ga-dash'), 'manage_network', 'gadash_errors_debugging', array(
-                    'GADASH_Settings',
-                    'errors_debugging'
-                ));
-            }
-        }
-
-        /*
-         * Include styles
-         */
-        function ga_dash_admin_enqueue_styles($hook)
-        {
-            global $GADASH_Config;
-            $valid_hooks = array(
-                'toplevel_page_gadash_settings',
-                'google-analytics_page_gadash_backend_settings',
-                'google-analytics_page_gadash_frontend_settings',
-                'google-analytics_page_gadash_tracking_settings',
-                'google-analytics_page_gadash_errors_debugging'
-            );
-            
-            if (! in_array($hook, $valid_hooks) and 'index.php' != $hook)
-                return;
-            
-            wp_enqueue_style('ga_dash-nprogress', $GADASH_Config->plugin_url . '/tools/nprogress/nprogress.css', NULL, GADWP_CURRENT_VERSION);
-            
-            wp_register_style('ga_dash', $GADASH_Config->plugin_url . '/admin/css/ga_dash.css', NULL, GADWP_CURRENT_VERSION);
-            
-            wp_enqueue_style('ga_dash');
-            wp_enqueue_style('wp-color-picker');
-            wp_enqueue_script('wp-color-picker');
-            wp_enqueue_script('wp-color-picker-script-handle', plugins_url('js/wp-color-picker-script.js', __FILE__), array(
-                'wp-color-picker'
-            ), false, true);
-            wp_enqueue_script('gadash-general-settings', plugins_url('js/admin.js', __FILE__), array(
-                'jquery'
-            ), GADWP_CURRENT_VERSION);
-            if (! wp_script_is('googlejsapi')) {
-                wp_register_script('googlejsapi', 'https://www.google.com/jsapi');
-                wp_enqueue_script('googlejsapi');
-            }
-            wp_enqueue_script('ga_dash-nprogress', $GADASH_Config->plugin_url . '/tools/nprogress/nprogress.js', array(
-                'jquery'
-            ), GADWP_CURRENT_VERSION);
-        }
-
-        function ga_dash_settings_link($links)
-        {
-            $settings_link = '<a href="' . get_admin_url(null, 'admin.php?page=gadash_settings') . '">' . __("Settings", 'ga-dash') . '</a>';
-            array_unshift($links, $settings_link);
-            return $links;
-        }
-
-        function ga_dash_setup()
-        {
-            global $GADASH_Config;
-            
-            /*
-             * Include Tools
-             */
-            include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
-            $tools = new GADASH_Tools();
-            
-            if ($tools->check_roles($GADASH_Config->options['ga_dash_access_back'])) {
-                wp_add_dashboard_widget('gadash-widget', __("Google Analytics Dashboard", 'ga-dash'), array(
-                    $this,
-                    'gadash_dashboard_widgets'
-                ), $control_callback = null);
-            }
-        }
-
-        function gadash_dashboard_widgets()
-        {
-            global $GADASH_Config;
-
-            /*
-             * Include GAPI
-             */
-            if ($GADASH_Config->options['ga_dash_token']) {
-                include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
-                global $GADASH_GAPI;
+        $profiles = $GADASH_Config->options['ga_dash_profile_list'];
+        $profile_switch = '';
+        if (is_array($profiles)) {
+          if (! $GADASH_Config->options['ga_dash_tableid']) {
+            if ($GADASH_Config->options['ga_dash_tableid_jail']) {
+              $GADASH_Config->options['ga_dash_tableid'] = $GADASH_Config->options['ga_dash_tableid_jail'];
             } else {
-                echo '<p>' . __("This plugin needs an authorization:", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("Authorize Plugin", 'ga-dash'), 'secondary') . '</form>';
-                return;
+              $GADASH_Config->options['ga_dash_tableid'] = $tools->guess_default_domain($profiles);
             }
-            
-            /*
-             * Include Tools
-             */
-            include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
-            $tools = new GADASH_Tools();
-            
-            $tools->ga_dash_cleanup_timeouts();
-            
-            if (current_user_can('manage_options')) {
-                
-                if (isset($_REQUEST['ga_dash_profile_select'])) {
-                    $GADASH_Config->options['ga_dash_tableid'] = $_REQUEST['ga_dash_profile_select'];
-                }
-                
-                $profiles = $GADASH_Config->options['ga_dash_profile_list'];
-                $profile_switch = '';
-                
-                if (is_array($profiles)) {
-                    if (! $GADASH_Config->options['ga_dash_tableid']) {
-                        if ($GADASH_Config->options['ga_dash_tableid_jail']) {
-                            $GADASH_Config->options['ga_dash_tableid'] = $GADASH_Config->options['ga_dash_tableid_jail'];
-                        } else {
-                            $GADASH_Config->options['ga_dash_tableid'] = $tools->guess_default_domain($profiles);
-                        }
-                    } else 
-                        if ($GADASH_Config->options['ga_dash_jailadmins'] and $GADASH_Config->options['ga_dash_tableid_jail']) {
-                            $GADASH_Config->options['ga_dash_tableid'] = $GADASH_Config->options['ga_dash_tableid_jail'];
-                        }
-                    
-                    $profile_switch .= '<select id="ga_dash_profile_select" name="ga_dash_profile_select" onchange="this.form.submit()">';
-                    foreach ($profiles as $profile) {
-                        if (! $GADASH_Config->options['ga_dash_tableid']) {
-                            $GADASH_Config->options['ga_dash_tableid'] = $profile[1];
-                        }
-                        if (isset($profile[3])) {
-                            $profile_switch .= '<option value="' . esc_attr($profile[1]) . '" ';
-                            $profile_switch .= selected($profile[1], $GADASH_Config->options['ga_dash_tableid'], false);
-                            $profile_switch .= ' title="' . __("View Name:", 'ga-dash') . ' ' . esc_attr($profile[0]) . '">' . esc_attr($tools->ga_dash_get_profile_domain($profile[3])) . '</option>';
-                        }
-                    }
-                    $profile_switch .= "</select>";
-                } else {
-                    echo '<p>' . __("Something went wrong while retrieving profiles list.", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("More details", 'ga-dash'), 'secondary') . '</form>';
-                    return;
-                }
+          } else 
+            if ($GADASH_Config->options['ga_dash_jailadmins'] and $GADASH_Config->options['ga_dash_tableid_jail']) {
+              $GADASH_Config->options['ga_dash_tableid'] = $GADASH_Config->options['ga_dash_tableid_jail'];
             }
-            
-            $GADASH_Config->set_plugin_options();
-            
-            ?>
+          $profile_switch .= '<select id="ga_dash_profile_select" name="ga_dash_profile_select" onchange="this.form.submit()">';
+          foreach ($profiles as $profile) {
+            if (! $GADASH_Config->options['ga_dash_tableid']) {
+              $GADASH_Config->options['ga_dash_tableid'] = $profile[1];
+            }
+            if (isset($profile[3])) {
+              $profile_switch .= '<option value="' . esc_attr($profile[1]) . '" ';
+              $profile_switch .= selected($profile[1], $GADASH_Config->options['ga_dash_tableid'], false);
+              $profile_switch .= ' title="' . __("View Name:", 'ga-dash') . ' ' . esc_attr($profile[0]) . '">' . esc_attr($tools->ga_dash_get_profile_domain($profile[3])) . '</option>';
+            }
+          }
+          $profile_switch .= "</select>";
+        } else {
+          echo '<p>' . __("Something went wrong while retrieving profiles list.", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("More details", 'ga-dash'), 'secondary') . '</form>';
+          return;
+        }
+      }
+      $GADASH_Config->set_plugin_options();
+      ?>
 <form id="ga-dash" method="POST">
 						<?php
-            
-            if (current_user_can('manage_options')) {
-                if ($GADASH_Config->options['ga_dash_jailadmins']) {
-                    if ($GADASH_Config->options['ga_dash_tableid_jail']) {
-                        $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
-                    } else {
-                        echo '<p>' . __("An admin should asign a default Google Analytics Profile.", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("Select Domain", 'ga-dash'), 'secondary') . '</form>';
-                        return;
-                    }
-                } else {
-                    echo $profile_switch;
-                    $projectId = $GADASH_Config->options['ga_dash_tableid'];
-                }
-            } else {
-                if ($GADASH_Config->options['ga_dash_tableid_jail']) {
-                    $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
-                } else {
-                    echo '<p>' . __("An admin should asign a default Google Analytics Profile.", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("Select Domain", 'ga-dash'), 'secondary') . '</form>';
-                    return;
-                }
-            }
-            
-            if (! ($projectId)) {
-                echo '<p>' . __("Something went wrong while retrieving property data. You need to create and properly configure a Google Analytics account:", 'ga-dash') . '</p> <form action="https://deconf.com/how-to-set-up-google-analytics-on-your-website/" method="POST">' . get_submit_button(__("Find out more!", 'ga-dash'), 'secondary') . '</form>';
-                return;
-            } else {
-                $profile_info = $tools->get_selected_profile($GADASH_Config->options['ga_dash_profile_list'], $projectId);
-                if (isset($profile_info[4])) {
-                    $GADASH_GAPI->timeshift = $profile_info[4];
-                } else {
-                    $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
-                }
-            }
-            
-            if (isset($_REQUEST['query'])) {
-                $query = $_REQUEST['query'];
-                $GADASH_Config->options['ga_dash_default_metric'] = $query;
-                $GADASH_Config->set_plugin_options();
-            } else {
-                $query = isset($GADASH_Config->options['ga_dash_default_metric']) ? $GADASH_Config->options['ga_dash_default_metric'] : 'sessions';
-            }
-            
-            if (isset($_REQUEST['period'])) {
-                $period = $_REQUEST['period'];
-                $GADASH_Config->options['ga_dash_default_dimension'] = $period;
-                $GADASH_Config->set_plugin_options();
-            } else {
-                $period = isset($GADASH_Config->options['ga_dash_default_dimension']) ? $GADASH_Config->options['ga_dash_default_dimension'] : '30daysAgo';
-            }
-            
-            ?>
+      if (current_user_can('manage_options')) {
+        if ($GADASH_Config->options['ga_dash_jailadmins']) {
+          if ($GADASH_Config->options['ga_dash_tableid_jail']) {
+            $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
+          } else {
+            echo '<p>' . __("An admin should asign a default Google Analytics Profile.", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("Select Domain", 'ga-dash'), 'secondary') . '</form>';
+            return;
+          }
+        } else {
+          echo $profile_switch;
+          $projectId = $GADASH_Config->options['ga_dash_tableid'];
+        }
+      } else {
+        if ($GADASH_Config->options['ga_dash_tableid_jail']) {
+          $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
+        } else {
+          echo '<p>' . __("An admin should asign a default Google Analytics Profile.", 'ga-dash') . '</p><form action="' . menu_page_url('gadash_settings', false) . '" method="POST">' . get_submit_button(__("Select Domain", 'ga-dash'), 'secondary') . '</form>';
+          return;
+        }
+      }
+      if (! ($projectId)) {
+        echo '<p>' . __("Something went wrong while retrieving property data. You need to create and properly configure a Google Analytics account:", 'ga-dash') . '</p> <form action="https://deconf.com/how-to-set-up-google-analytics-on-your-website/" method="POST">' . get_submit_button(__("Find out more!", 'ga-dash'), 'secondary') . '</form>';
+        return;
+      } else {
+        $profile_info = $tools->get_selected_profile($GADASH_Config->options['ga_dash_profile_list'], $projectId);
+        if (isset($profile_info[4])) {
+          $GADASH_GAPI->timeshift = $profile_info[4];
+        } else {
+          $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
+        }
+      }
+      if (isset($_REQUEST['query'])) {
+        $query = $_REQUEST['query'];
+        $GADASH_Config->options['ga_dash_default_metric'] = $query;
+        $GADASH_Config->set_plugin_options();
+      } else {
+        $query = isset($GADASH_Config->options['ga_dash_default_metric']) ? $GADASH_Config->options['ga_dash_default_metric'] : 'sessions';
+      }
+      if (isset($_REQUEST['period'])) {
+        $period = $_REQUEST['period'];
+        $GADASH_Config->options['ga_dash_default_dimension'] = $period;
+        $GADASH_Config->set_plugin_options();
+      } else {
+        $period = isset($GADASH_Config->options['ga_dash_default_dimension']) ? $GADASH_Config->options['ga_dash_default_dimension'] : '30daysAgo';
+      }
+      ?>
 
 	<select id="ga_dash_period" name="period" onchange="this.form.submit()">
 		<option value="realtime"
@@ -341,99 +315,85 @@ if (! class_exists('GADASH_Widgets')) {
 	</form>
 <div id="gadash-progressbar"></div>
 <?php
-            switch ($period) {
-                
-                case 'today':
-                    $from = 'today';
-                    $to = 'today';
-                    $haxis = 4;
-                    break;
-                
-                case 'yesterday':
-                    $from = 'yesterday';
-                    $to = 'yesterday';
-                    $haxis = 4;
-                    break;
-                
-                case '7daysAgo':
-                    $from = '7daysAgo';
-                    $to = 'yesterday';
-                    $haxis = 2;
-                    break;
-                
-                case '14daysAgo':
-                    $from = '14daysAgo';
-                    $to = 'yesterday';
-                    $haxis = 3;
-                    break;
-                
-                case '30daysAgo':
-                    $from = '30daysAgo';
-                    $to = 'yesterday';
-                    $haxis = 5;
-                    break;
-                
-                default:
-                    $from = '90daysAgo';
-                    $to = 'yesterday';
-                    $haxis = 16;
-                    break;
-            }
-            
-            if ($query == 'visitBounceRate') {
-                $formater = "var formatter = new google.visualization.NumberFormat({
+      switch ($period) {
+        case 'today':
+          $from = 'today';
+          $to = 'today';
+          $haxis = 4;
+          break;
+        case 'yesterday':
+          $from = 'yesterday';
+          $to = 'yesterday';
+          $haxis = 4;
+          break;
+        case '7daysAgo':
+          $from = '7daysAgo';
+          $to = 'yesterday';
+          $haxis = 2;
+          break;
+        case '14daysAgo':
+          $from = '14daysAgo';
+          $to = 'yesterday';
+          $haxis = 3;
+          break;
+        case '30daysAgo':
+          $from = '30daysAgo';
+          $to = 'yesterday';
+          $haxis = 5;
+          break;
+        default:
+          $from = '90daysAgo';
+          $to = 'yesterday';
+          $haxis = 16;
+          break;
+      }
+      if ($query == 'visitBounceRate') {
+        $formater = "var formatter = new google.visualization.NumberFormat({
 				  pattern: '#,##%',
 				  fractionDigits: 2
 				});
             
 				formatter.format(data, 1);	";
-            } else {
-                $formater = '';
-            }
-            
-            /*
-             * Include Tools
-             */
-            include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
-            $tools = new GADASH_Tools();
-            
-            if (isset($GADASH_Config->options['ga_dash_style'])) {
-                $light_color = $tools->colourVariator($GADASH_Config->options['ga_dash_style'], 40);
-                $dark_color = $tools->colourVariator($GADASH_Config->options['ga_dash_style'], - 20);
-                $css = "colors:['" . $GADASH_Config->options['ga_dash_style'] . "','" . $tools->colourVariator($GADASH_Config->options['ga_dash_style'], - 20) . "'],";
-                $color = $GADASH_Config->options['ga_dash_style'];
-            } else {
-                $css = "";
-                $color = "#3366CC";
-            }
-            
-            if ($period == 'realtime') {
-                
-                wp_register_style('jquery-ui-tooltip-html', $GADASH_Config->plugin_url . '/realtime/jquery/jquery.ui.tooltip.html.css');
-                wp_enqueue_style('jquery-ui-tooltip-html');
-                
-                if (! wp_script_is('jquery')) {
-                    wp_enqueue_script('jquery');
-                }
-                if (! wp_script_is('jquery-ui-tooltip')) {
-                    wp_enqueue_script("jquery-ui-tooltip");
-                }
-                if (! wp_script_is('jquery-ui-core')) {
-                    wp_enqueue_script("jquery-ui-core");
-                }
-                if (! wp_script_is('jquery-ui-position')) {
-                    wp_enqueue_script("jquery-ui-position");
-                }
-                if (! wp_script_is('jquery-ui-position')) {
-                    wp_enqueue_script("jquery-ui-position");
-                }
-                
-                wp_register_script("jquery-ui-tooltip-html", $GADASH_Config->plugin_url . '/realtime/jquery/jquery.ui.tooltip.html.js');
-                wp_enqueue_script("jquery-ui-tooltip-html");
-            }
-            
-            if ($period == 'realtime') {
-                ?>
+      } else {
+        $formater = '';
+      }
+      /*
+       * Include Tools
+       */
+      include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
+      $tools = new GADASH_Tools();
+      if (isset($GADASH_Config->options['ga_dash_style'])) {
+        $light_color = $tools->colourVariator($GADASH_Config->options['ga_dash_style'], 40);
+        $dark_color = $tools->colourVariator($GADASH_Config->options['ga_dash_style'], - 20);
+        $css = "colors:['" . $GADASH_Config->options['ga_dash_style'] . "','" . $tools->colourVariator($GADASH_Config->options['ga_dash_style'], - 20) . "'],";
+        $color = $GADASH_Config->options['ga_dash_style'];
+      } else {
+        $css = "";
+        $color = "#3366CC";
+      }
+      if ($period == 'realtime') {
+        wp_register_style('jquery-ui-tooltip-html', $GADASH_Config->plugin_url . '/realtime/jquery/jquery.ui.tooltip.html.css');
+        wp_enqueue_style('jquery-ui-tooltip-html');
+        if (! wp_script_is('jquery')) {
+          wp_enqueue_script('jquery');
+        }
+        if (! wp_script_is('jquery-ui-tooltip')) {
+          wp_enqueue_script("jquery-ui-tooltip");
+        }
+        if (! wp_script_is('jquery-ui-core')) {
+          wp_enqueue_script("jquery-ui-core");
+        }
+        if (! wp_script_is('jquery-ui-position')) {
+          wp_enqueue_script("jquery-ui-position");
+        }
+        if (! wp_script_is('jquery-ui-position')) {
+          wp_enqueue_script("jquery-ui-position");
+        }
+        wp_register_script("jquery-ui-tooltip-html", $GADASH_Config->plugin_url . '/realtime/jquery/jquery.ui.tooltip.html.js');
+        wp_enqueue_script("jquery-ui-tooltip-html");
+      }
+      if ($period == 'realtime') {
+        ?>
 <div class="realtime">
 	<div class="gadash-rt-box">
 		<div class='gadash-tdo-left'>
@@ -719,7 +679,7 @@ if (! class_exists('GADASH_Widgets')) {
         	        NProgress.configure({ showSpinner: false });
         	        NProgress.start();
         		} catch(e) {
-        			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border":"1px solid red","border-left":"5px solid red"});
+        			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
         			jQuery("#gadash-progressbar").html("<?php _e("A JavaScript Error is blocking plugin resources!", 'ga-dash'); ?>");
         		}    
         	    npcounter = 0;
@@ -727,8 +687,15 @@ if (! class_exists('GADASH_Widgets')) {
                 jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "<?php echo $query; ?>",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
                 	   
                     if (!jQuery.isNumeric(response)){
+                        try{
                     	   gadash_prs=jQuery.parseJSON(response);
-                		   google.setOnLoadCallback(ga_dash_drawprs(gadash_prs));
+                    	   google.setOnLoadCallback(ga_dash_drawprs(gadash_prs));
+                        } catch(e) {
+                        	checknpcounter(0);
+                			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+                			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+                			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+                		}    
                 	}else{
                         jQuery("#gadash-prs").css({"background-color":"#F7F7F7","height":"auto","padding-top":"125px","padding-bottom":"125px","color":"#000","text-align":"center"});  
                         jQuery("#gadash-prs").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");                    	
@@ -739,8 +706,15 @@ if (! class_exists('GADASH_Widgets')) {
                 jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "trafficchannels",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
                     if (!jQuery.isNumeric(response)){
-                    	   gadash_trafficchannels=jQuery.parseJSON(response);
-                		   google.setOnLoadCallback(ga_dash_drawtrafficchannels(gadash_trafficchannels));
+                        try{
+                        	gadash_trafficchannels=jQuery.parseJSON(response);
+                        	google.setOnLoadCallback(ga_dash_drawtrafficchannels(gadash_trafficchannels));
+                         } catch(e) {
+                         	checknpcounter(0);
+                 			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+                 			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+                 			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+                 		}   
                 	}else{
                         jQuery("#gadash-trafficchannels").css({"background-color":"#F7F7F7","height":"auto","padding-top":"125px","padding-bottom":"125px","color":"#000","text-align":"center"});  
                         jQuery("#gadash-trafficchannels").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");                    	
@@ -802,7 +776,7 @@ if (! class_exists('GADASH_Widgets')) {
         	        NProgress.configure({ showSpinner: false });
         	        NProgress.start();
         		} catch(e) {
-        			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border":"1px solid red","border-left":"5px solid red"});
+        			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
         			jQuery("#gadash-progressbar").html("<?php _e("A JavaScript Error is blocking plugin resources!", 'ga-dash'); ?>");
         		}    
         	    npcounter = 0;            	
@@ -810,8 +784,15 @@ if (! class_exists('GADASH_Widgets')) {
                 jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "medium",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
                     if (!jQuery.isNumeric(response)){
-                    	   gadash_trafficmediums=jQuery.parseJSON(response);
-                		   google.setOnLoadCallback(ga_dash_drawtrafficmediums(gadash_trafficmediums));
+                        try{
+                        	gadash_trafficmediums=jQuery.parseJSON(response);
+                   		    google.setOnLoadCallback(ga_dash_drawtrafficmediums(gadash_trafficmediums));                        	
+                         } catch(e) {
+                         	checknpcounter(0);
+                 			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+                 			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+                 			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+                 		} 
                 	}else{
                         jQuery("#gadash-trafficmediums").css({"background-color":"#F7F7F7","height":"auto","padding-top":"80px","padding-bottom":"80px","color":"#000","text-align":"center"});  
                         jQuery("#gadash-trafficmediums").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");                    	
@@ -834,8 +815,15 @@ if (! class_exists('GADASH_Widgets')) {
                 jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "trafficchannels",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
                     if (!jQuery.isNumeric(response)){
-                    	   gadash_trafficchannels=jQuery.parseJSON(response);
-                		   google.setOnLoadCallback(ga_dash_drawtrafficchannels(gadash_trafficchannels));
+                        try{
+                        	gadash_trafficchannels=jQuery.parseJSON(response);
+                   		    google.setOnLoadCallback(ga_dash_drawtrafficchannels(gadash_trafficchannels));                        	
+                         } catch(e) {
+                         	checknpcounter(0);
+                 			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+                 			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+                 			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+                 		} 
                 	}else{
                         jQuery("#gadash-trafficchannels").css({"background-color":"#F7F7F7","height":"auto","padding-top":"125px","padding-bottom":"125px","color":"#000","text-align":"center"});  
                         jQuery("#gadash-trafficchannels").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");                    	
@@ -846,8 +834,15 @@ if (! class_exists('GADASH_Widgets')) {
                 jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "socialNetwork",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
                     if (!jQuery.isNumeric(response)){
-                    	   gadash_socialnetworks=jQuery.parseJSON(response);
-                		   google.setOnLoadCallback(ga_dash_drawsocialnetworks(gadash_socialnetworks));
+                        try{
+                        	gadash_socialnetworks=jQuery.parseJSON(response);
+                   		    google.setOnLoadCallback(ga_dash_drawsocialnetworks(gadash_socialnetworks));                        	
+                         } catch(e) {
+                         	checknpcounter(0);
+                 			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+                 			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+                 			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+                 		}                         
                 	}else{
                         jQuery("#gadash-socialnetworks").css({"background-color":"#F7F7F7","height":"auto","padding-top":"80px","padding-bottom":"80px","color":"#000","text-align":"center"});  
                         jQuery("#gadash-socialnetworks").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");                    	
@@ -859,8 +854,15 @@ if (! class_exists('GADASH_Widgets')) {
                 jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "source",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
                     if (!jQuery.isNumeric(response)){
-                    	   gadash_trafficorganic=jQuery.parseJSON(response);
-                		   google.setOnLoadCallback(ga_dash_drawtrafficorganic(gadash_trafficorganic));
+                        try{
+                        	gadash_trafficorganic=jQuery.parseJSON(response);
+                        	google.setOnLoadCallback(ga_dash_drawtrafficorganic(gadash_trafficorganic));
+                         } catch(e) {
+                         	checknpcounter(0);
+                 			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+                 			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+                 			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+                 		}                        
                 	}else{
                         jQuery("#gadash-trafficorganic").css({"background-color":"#F7F7F7","height":"auto","padding-top":"80px","padding-bottom":"80px","color":"#000","text-align":"center"});  
                         jQuery("#gadash-trafficorganic").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");                    	
@@ -966,7 +968,7 @@ if (! class_exists('GADASH_Widgets')) {
         	        NProgress.configure({ showSpinner: false });
         	        NProgress.start();
         		} catch(e) {
-        			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border":"1px solid red","border-left":"5px solid red"});
+        			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
         			jQuery("#gadash-progressbar").html("<?php _e("A JavaScript Error is blocking plugin resources!", 'ga-dash'); ?>");
         		}    
         	    npcounter = 0;
@@ -974,9 +976,16 @@ if (! class_exists('GADASH_Widgets')) {
                 jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "<?php echo $query; ?>",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
                     if (!jQuery.isNumeric(response)){
-                           gadash_locations=jQuery.parseJSON(response);
-                		   google.setOnLoadCallback(ga_dash_drawmaplocations(gadash_locations));
-                		   google.setOnLoadCallback(ga_dash_drawlocations(gadash_locations));
+                        try{
+                        	gadash_locations=jQuery.parseJSON(response);
+                    		google.setOnLoadCallback(ga_dash_drawmaplocations(gadash_locations));
+                    		google.setOnLoadCallback(ga_dash_drawlocations(gadash_locations));                        	
+                         } catch(e) {
+                         	checknpcounter(0);
+                 			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+                 			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+                 			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+                 		}                        
                 	}else{
                         jQuery("#gadash-map").css({"background-color":"#F7F7F7","height":"auto","padding-top":"125px","padding-bottom":"125px","color":"#000","text-align":"center"});  
                         jQuery("#gadash-map").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");
@@ -994,9 +1003,9 @@ if (! class_exists('GADASH_Widgets')) {
             			chartArea: {width: '99%',height: '90%'},	
             			colors: ['<?php echo $light_color; ?>', '<?php echo $dark_color; ?>'],
             			<?php
-                            $GADASH_GAPI->getcountrycodes();
-                            if ($GADASH_Config->options['ga_target_geomap'] and isset($GADASH_GAPI->country_codes[$GADASH_Config->options['ga_target_geomap']])) {
-                                ?>
+              $GADASH_GAPI->getcountrycodes();
+              if ($GADASH_Config->options['ga_target_geomap'] and isset($GADASH_GAPI->country_codes[$GADASH_Config->options['ga_target_geomap']])) {
+                ?>
         				region : '<?php echo esc_html($GADASH_Config->options ['ga_target_geomap']); ?>',
         				displayMode : 'markers',
         				datalessRegionColor : 'EFEFEF'
@@ -1070,7 +1079,7 @@ if (! class_exists('GADASH_Widgets')) {
         NProgress.configure({ showSpinner: false });
         NProgress.start();
 	} catch(e) {
-		jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border":"1px solid red","border-left":"5px solid red"});
+		jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
 		jQuery("#gadash-progressbar").html("<?php _e("A JavaScript Error is blocking plugin resources!", 'ga-dash'); ?>");
 	}    
     npcounter = 0;
@@ -1078,8 +1087,15 @@ if (! class_exists('GADASH_Widgets')) {
     jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "<?php echo $query; ?>",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
         if (!jQuery.isNumeric(response)){
-               gadash_mainchart=jQuery.parseJSON(response);
-    		   google.setOnLoadCallback(ga_dash_drawmainchart(gadash_mainchart));
+            try{
+            	gadash_mainchart=jQuery.parseJSON(response);
+       		    google.setOnLoadCallback(ga_dash_drawmainchart(gadash_mainchart));            	
+             } catch(e) {
+             	checknpcounter(0);
+     			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+     			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+     			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+     		}             
     	}else{
             jQuery("#gadash-mainchart").css({"background-color":"#F7F7F7","height":"auto","padding-top":"125px","padding-bottom":"125px","color":"#000","text-align":"center"});  
             jQuery("#gadash-mainchart").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");
@@ -1090,8 +1106,15 @@ if (! class_exists('GADASH_Widgets')) {
     jQuery.post(ajaxurl, {action: "gadashadmin_get_widgetreports",projectId: "<?php echo $projectId; ?>",from: "<?php echo $from; ?>",to: "<?php echo $to; ?>",query: "bottomstats",gadashadmin_security_widget_reports: "<?php echo wp_create_nonce('gadashadmin_get_widgetreports'); ?>"}, function(response){
 
         if (!jQuery.isNumeric(response)){
-               gadash_bottomstats=jQuery.parseJSON(response);
-    		   ga_dash_drawbottomstats(gadash_bottomstats);
+            try{
+            	gadash_bottomstats=jQuery.parseJSON(response);
+       		    ga_dash_drawbottomstats(gadash_bottomstats);
+             } catch(e) {
+             	checknpcounter(0);
+     			jQuery("#gadash-progressbar").css({"margin-top":"3px","padding-left":"5px","height":"auto","color":"#000","border-left":"5px solid red"});
+     			jQuery("#gadash-progressbar").html("<?php _e("Invalid response, more details in JavaScript Console (F12).", 'ga-dash'); ?>");
+     			console.log("\n********************* GADWP Log ********************* \n\n"+response);
+     		}              
     	}else{
             jQuery("#gadash-bottomstats").css({"background-color":"#F7F7F7","height":"auto","padding-top":"40px","padding-bottom":"40px","color":"#000","text-align":"center","width": "98%"});  
             jQuery("#gadash-bottomstats").html("<?php _e("This report is unavailable", 'ga-dash'); ?> ("+response+")");
@@ -1127,11 +1150,10 @@ if (! class_exists('GADASH_Widgets')) {
 	};
 </script>
 <?php
-                        }
-        }
+            }
     }
+  }
 }
-
 if (is_admin()) {
-    $GADASH_Widgets = new GADASH_Widgets();
+  $GADASH_Widgets = new GADASH_Widgets();
 }
