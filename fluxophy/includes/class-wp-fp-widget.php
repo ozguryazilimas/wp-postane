@@ -138,23 +138,25 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
     $received = json_decode($request_result);
 
     for ($i = 0; $i < $display_count; $i++) {
-      $output .= '<li class="fluxophy_widget">';
-      $output .= '<div class="fluxophy_entry_header">';
+      if (isset($received->data[$i]->message)) {
+        $output .= '<li class="fluxophy_widget">';
+        $output .= '<div class="fluxophy_entry_header">';
 
-      if (isset($picture_url)) {
-        $output .= '<img src="' . $picture_url . '"></img>';
+        if (isset($picture_url)) {
+          $output .= '<img src="' . $picture_url . '"></img>';
+        }
+
+        $output .= '<a href="' . $received->data[$i]->link . '" title="' . date_i18n('G:i - d F Y', strtotime($received->data[$i]->updated_time)) . '" target="_blank">';
+        $output .= date_i18n('d M', strtotime($received->data[$i]->updated_time));
+        $output .= '</a>';
+
+        $output .= '</div>';
+        $output .= '<div class="fluxophy_entry_data">';
+        // $output .= $request_result;
+        $output .= $received->data[$i]->message;
+        $output .= '</div>';
+        $output .= '</li>';
       }
-
-      $output .= '<a href="' . $received->data[$i]->link . '" title="' . date_i18n('G:i - d F Y', strtotime($received->data[$i]->updated_time)) . '" target="_blank">';
-      $output .= date_i18n('d M', strtotime($received->data[$i]->updated_time));
-      $output .= '</a>';
-
-      $output .= '</div>';
-      $output .= '<div class="fluxophy_entry_data">';
-      // $output .= $request_result;
-      $output .= $received->data[$i]->message;
-      $output .= '</div>';
-      $output .= '</li>';
     }
   }
 
