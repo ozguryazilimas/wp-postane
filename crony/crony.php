@@ -3,14 +3,14 @@
 Plugin Name: Crony Cronjob Manager
 Plugin URI: http://scottkclark.com/
 Description: Create and Manage Cronjobs in WP by loading Scripts via URLs, including Scripts, running Functions, and/or running PHP code. This plugin utilizes the wp_cron API.
-Version: 0.4.3
+Version: 0.4.4
 Author: Scott Kingsley Clark
 Author URI: http://scottkclark.com/
 */
 
 global $wpdb;
 define('CRONY_TBL', $wpdb->prefix . 'crony_');
-define('CRONY_VERSION', '043');
+define('CRONY_VERSION', '044');
 define('CRONY_URL', WP_PLUGIN_URL . '/crony');
 define('CRONY_DIR', WP_PLUGIN_DIR . '/crony');
 
@@ -25,80 +25,93 @@ if (is_admin() && isset($_GET['page']) && strpos($_GET['page'], 'crony') !== fal
     add_action('wp_admin_ui_post_delete', 'crony_remove_job', 10, 2);
 }
 
-function crony_init ()
-{
-    global $current_user,$wpdb;
-    // check version
-    $version = intval(get_option('crony_version'));
-    if(empty($version)||$version==10)
-    {
-        // thx pods ;)
-        $sql = file_get_contents(CRONY_DIR.'/assets/dump.sql');
-        $sql_explode = preg_split("/;\n/", str_replace('wp_', $wpdb->prefix, $sql));
-        if(count($sql_explode)==1)
-            $sql_explode = preg_split("/;\r/", str_replace('wp_', $wpdb->prefix, $sql));
-        for ($i = 0, $z = count($sql_explode); $i < $z; $i++)
-        {
-            $wpdb->query($sql_explode[$i]);
-        }
-        $version = CRONY_VERSION;
-        delete_option('crony_version');
-        add_option('crony_version',CRONY_VERSION);
-    }
-    if($version==11||$version==12)
-    {
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."jobs` ADD COLUMN `email` varchar(255) AFTER `schedule`");
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."jobs` ADD COLUMN `last_run` datetime AFTER `email`");
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."jobs` ADD COLUMN `next_run` datetime AFTER `last_run`");
-        // in case these fail (already exist) then on refresh it won't cause issues
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."jobs` ADD COLUMN `script` varchar(255) AFTER `next_run`");
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."jobs` ADD COLUMN `function` varchar(255) AFTER `script`");
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."jobs` ADD COLUMN `phpcode` longtext AFTER `function`");
-    }
-    if($version<30)
-    {
-        $wpdb->query($wpdb->prepare("UPDATE `".CRONY_TBL."jobs` SET `phpcode` = CONCAT(%s,`phpcode`) WHERE `phpcode` != ''","<?php\n"));
-        $wpdb->query("DROP TABLE IF EXISTS `".CRONY_TBL."logs`");
-        $wpdb->query("CREATE TABLE `".CRONY_TBL."logs` (`id` int(10) NOT NULL AUTO_INCREMENT,`crony_id` int(10) NOT NULL,`output` longtext NOT NULL,`real_time` datetime NOT NULL,`start` datetime NOT NULL,`end` datetime NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8");
-    }
-    if($version<31)
-    {
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."logs` CHANGE `real` `real_time` datetime");
-    }
-    if($version<40)
-    {
-        $wpdb->query("ALTER TABLE `".CRONY_TBL."jobs` ADD COLUMN `url` varchar(255) AFTER `next_run`");
-    }
-    if($version!=CRONY_VERSION)
-    {
-        delete_option('crony_version');
-        add_option('crony_version',CRONY_VERSION);
-    }
-    // thx gravity forms, great way of integration with members!
-    $capabilities = crony_capabilities();
-    if ( function_exists( 'members_get_capabilities' ) ){
-        add_filter('members_get_capabilities', 'crony_get_capabilities');
-        if(current_user_can("crony_full_access"))
-            $current_user->remove_cap("crony_full_access");
-        $is_admin_with_no_permissions = current_user_can("administrator") && !crony_current_user_can_any(crony_capabilities());
-        if($is_admin_with_no_permissions)
-        {
-            $role = get_role("administrator");
-            foreach($capabilities as $cap)
-            {
-                $role->add_cap($cap);
-            }
-        }
-    }
-    else
-    {
-        $crony_full_access = current_user_can("administrator") ? "crony_full_access" : "";
-        $crony_full_access = apply_filters("crony_full_access", $crony_full_access);
+function crony_install_update() {
 
-        if(!empty($crony_full_access))
-            $current_user->add_cap($crony_full_access);
-    }
+	global $wpdb;
+
+	// check version
+	$version = intval( get_option( 'crony_version' ) );
+
+	if ( empty( $version ) || $version == 10 ) {
+		// thx pods ;)
+		$sql = file_get_contents( CRONY_DIR . '/assets/dump.sql' );
+
+		$sql_explode = preg_split( "/;\n/", str_replace( 'wp_', $wpdb->prefix, $sql ) );
+
+		if ( count( $sql_explode ) == 1 ) {
+			$sql_explode = preg_split( "/;\r/", str_replace( 'wp_', $wpdb->prefix, $sql ) );
+		}
+
+		for ( $i = 0, $z = count( $sql_explode ); $i < $z; $i ++ ) {
+			$wpdb->query( $sql_explode[ $i ] );
+		}
+
+		$version = CRONY_VERSION;
+
+		delete_option( 'crony_version' );
+		add_option( 'crony_version', CRONY_VERSION );
+	}
+
+	if ( $version == 11 || $version == 12 ) {
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "jobs` ADD COLUMN `email` varchar(255) AFTER `schedule`" );
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "jobs` ADD COLUMN `last_run` datetime AFTER `email`" );
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "jobs` ADD COLUMN `next_run` datetime AFTER `last_run`" );
+		// in case these fail (already exist) then on refresh it won't cause issues
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "jobs` ADD COLUMN `script` varchar(255) AFTER `next_run`" );
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "jobs` ADD COLUMN `function` varchar(255) AFTER `script`" );
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "jobs` ADD COLUMN `phpcode` longtext AFTER `function`" );
+	}
+
+	if ( $version < 30 ) {
+		$wpdb->query( $wpdb->prepare( "UPDATE `" . CRONY_TBL . "jobs` SET `phpcode` = CONCAT(%s,`phpcode`) WHERE `phpcode` != ''", "<?php\n" ) );
+		$wpdb->query( "DROP TABLE IF EXISTS `" . CRONY_TBL . "logs`" );
+		$wpdb->query( "CREATE TABLE `" . CRONY_TBL . "logs` (`id` int(10) NOT NULL AUTO_INCREMENT,`crony_id` int(10) NOT NULL,`output` longtext NOT NULL,`real_time` datetime NOT NULL,`start` datetime NOT NULL,`end` datetime NOT NULL,PRIMARY KEY (`id`)) DEFAULT CHARSET=utf8" );
+	}
+
+	if ( $version < 31 ) {
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "logs` CHANGE `real` `real_time` datetime" );
+	}
+
+	if ( $version < 40 ) {
+		$wpdb->query( "ALTER TABLE `" . CRONY_TBL . "jobs` ADD COLUMN `url` varchar(255) AFTER `next_run`" );
+	}
+
+	if ( $version != CRONY_VERSION ) {
+		delete_option( 'crony_version' );
+		add_option( 'crony_version', CRONY_VERSION );
+	}
+
 }
+
+function crony_init() {
+
+	crony_install_update();
+
+	global $current_user;
+	// thx gravity forms, great way of integration with members!
+	$capabilities = crony_capabilities();
+	if ( function_exists( 'members_get_capabilities' ) ) {
+		add_filter( 'members_get_capabilities', 'crony_get_capabilities' );
+		if ( current_user_can( "crony_full_access" ) ) {
+			$current_user->remove_cap( "crony_full_access" );
+		}
+		$is_admin_with_no_permissions = current_user_can( "administrator" ) && ! crony_current_user_can_any( crony_capabilities() );
+		if ( $is_admin_with_no_permissions ) {
+			$role = get_role( "administrator" );
+			foreach ( $capabilities as $cap ) {
+				$role->add_cap( $cap );
+			}
+		}
+	} else {
+		$crony_full_access = current_user_can( "administrator" ) ? "crony_full_access" : "";
+		$crony_full_access = apply_filters( "crony_full_access", $crony_full_access );
+
+		if ( ! empty( $crony_full_access ) ) {
+			$current_user->add_cap( $crony_full_access );
+		}
+	}
+}
+
 function crony_menu ()
 {
     global $wpdb;
@@ -151,6 +164,15 @@ function crony_current_user_can_which ($caps)
 
 function crony_settings ()
 {
+	global $wpdb;
+
+    $tables = $wpdb->get_results( 'SHOW TABLES LIKE "' . CRONY_TBL . '%"', ARRAY_N );
+
+	// Force reset if tables don't exist
+    if ( count( $tables ) < 2 ) {
+	    $_POST['reset'] = 1;
+    }
+
     if (isset($_POST['clear-logs']) && !empty($_POST['clear-logs'])) {
         crony_empty_log();
 ?>
@@ -582,34 +604,57 @@ function crony_add_log ($id, $output, $real, $start, $end) {
 }
 
 function crony_empty_log () {
+
     global $wpdb;
     return $wpdb->query("TRUNCATE `" . CRONY_TBL . "logs`");
+
 }
 
 function crony_reset () {
+
     global $wpdb;
 
-    // Get current crons
-    $schedules = _get_cron_array();
+	$tables = $wpdb->get_results( 'SHOW TABLES LIKE "' . CRONY_TBL . '%"', ARRAY_N );
 
-    // Remove Existing Jobs
-    $jobs = $wpdb->get_col('SELECT `id` FROM `' . CRONY_TBL . 'jobs`');
-    foreach ($jobs as $job) {
-        $timestamp = false;
-        $key = md5(serialize(array($job)));
-        foreach ($schedules as $ts => $schedule)
-        {
-            if (isset($schedule['crony']) && isset($schedule['crony'][$key])) {
-                $timestamp = $ts;
-                wp_unschedule_event($timestamp, 'crony', array($job));
-            }
-        }
-    }
+	$remove_jobs = false;
 
-    // Reset Data
-    $tables = array('jobs',
-                    'logs');
-    foreach ($tables as $table) {
-        $wpdb->query("TRUNCATE `" . CRONY_TBL . $table . "`");
-    }
+	// Force reset if tables don't exist
+	if ( 2 == count( $tables ) ) {
+		$remove_jobs = true;
+	} elseif ( ! empty( $tables[ 0 ][ 0 ] ) && CRONY_TBL . 'jobs' == $tables[ 0 ][ 0 ] ) {
+		$remove_jobs = true;
+	}
+
+	// Get current crons
+	$schedules = _get_cron_array();
+
+	// Remove Existing Jobs
+	if ( $remove_jobs ) {
+		$jobs = $wpdb->get_col( 'SELECT `id` FROM `' . CRONY_TBL . 'jobs`' );
+
+		foreach ( $jobs as $job ) {
+			$key = md5( serialize( array( $job ) ) );
+			foreach ( $schedules as $ts => $schedule ) {
+				if ( isset( $schedule[ 'crony' ] ) && isset( $schedule[ 'crony' ][ $key ] ) ) {
+					wp_unschedule_event( $ts, 'crony', array( $job ) );
+				}
+			}
+		}
+
+		$wpdb->query( "DROP TABLE IF EXISTS `" . CRONY_TBL . "jobs`" );
+		$wpdb->query( "DROP TABLE IF EXISTS `" . CRONY_TBL . "logs`" );
+	} else {
+		// Remove general crony events
+		foreach ( $schedules as $ts => $schedule ) {
+			if ( isset( $schedule[ 'crony' ] ) ) {
+				wp_unschedule_event( $ts, 'crony' );
+			}
+		}
+	}
+
+	// Delete option
+	delete_option( 'crony_version' );
+
+	crony_install_update();
+
 }
