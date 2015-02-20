@@ -3,7 +3,7 @@ Contributors: verysimple
 Donate link: http://verysimple.com/products/imsanity/
 Tags: imsanity, image, images, automatic scale, automatic resize, image resizer, image scaler, automatic image resizer, auto image resize, auto image resizer, space saver, image shrinker, image skruncher, image cruncher
 Requires at least: 2.9
-Tested up to: 4.0
+Tested up to: 4.1.1
 Stable tag: trunk
 
 Imsanity automatically resizes huge image uploads.  Are contributors uploading
@@ -124,10 +124,19 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.3.2	 =
-* Add PNG-To-JPG Option thanks to Jody Nesbitt
+= 2.3.4	 =
+* Security update to network settings page
 
 == Changelog ==
+
+= 2.3.4	 =
+* Security update to network settings page
+
+= 2.3.3	 =
+* Update default size from 1024 to 2048
+* Tested up to WordPress 4.1.1
+* Move screenshots to /assets folder
+* Added 256x256 icon
 
 = 2.3.2	 =
 * Add PNG-To-JPG Option thanks to Jody Nesbitt

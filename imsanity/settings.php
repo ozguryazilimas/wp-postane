@@ -201,7 +201,7 @@ function imsanity_network_settings()
 		';
 
 	// we only want to update if the form has been submitted
-	if (isset($_REQUEST['update_settings']))
+	if (isset($_POST['update_settings']))
 	{
 		imsanity_network_settings_update();
 		echo "<div class='updated settings-error'><p><strong>".__("Imsanity network settings saved.",'imsanity')."</strong></p></div>";
@@ -308,16 +308,16 @@ function imsanity_network_settings_update()
 	$table_name = imsanity_get_custom_table_name();
 
 	$data = new stdClass();
-	$data->imsanity_override_site = $_REQUEST['imsanity_override_site'] == 1;
-	$data->imsanity_max_height = $_REQUEST['imsanity_max_height'];
-	$data->imsanity_max_width = $_REQUEST['imsanity_max_width'];
-	$data->imsanity_max_height_library = $_REQUEST['imsanity_max_height_library'];
-	$data->imsanity_max_width_library = $_REQUEST['imsanity_max_width_library'];
-	$data->imsanity_max_height_other = $_REQUEST['imsanity_max_height_other'];
-	$data->imsanity_max_width_other = $_REQUEST['imsanity_max_width_other'];
-	$data->imsanity_bmp_to_jpg = $_REQUEST['imsanity_bmp_to_jpg'] == 1;
-	$data->imsanity_png_to_jpg = $_REQUEST['imsanity_png_to_jpg'] == 1;
-	$data->imsanity_quality = $_REQUEST['imsanity_quality'];
+	$data->imsanity_override_site = $_POST['imsanity_override_site'] == 1;
+	$data->imsanity_max_height = sanitize_text_field($_POST['imsanity_max_height']);
+	$data->imsanity_max_width = sanitize_text_field($_POST['imsanity_max_width']);
+	$data->imsanity_max_height_library = sanitize_text_field($_POST['imsanity_max_height_library']);
+	$data->imsanity_max_width_library = sanitize_text_field($_POST['imsanity_max_width_library']);
+	$data->imsanity_max_height_other = sanitize_text_field($_POST['imsanity_max_height_other']);
+	$data->imsanity_max_width_other = sanitize_text_field($_POST['imsanity_max_width_other']);
+	$data->imsanity_bmp_to_jpg = $_POST['imsanity_bmp_to_jpg'] == 1;
+	$data->imsanity_png_to_jpg = $_POST['imsanity_png_to_jpg'] == 1;
+	$data->imsanity_quality = sanitize_text_field($_POST['imsanity_quality']);
 
 	$wpdb->update(
 		$table_name,

@@ -4,15 +4,15 @@ Plugin Name: Imsanity
 Plugin URI: http://verysimple.com/products/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Jason Hinkle
-Version: 2.3.2
+Version: 2.3.4
 Author URI: http://verysimple.com/
 */
 
-define('IMSANITY_VERSION','2.3.2');
+define('IMSANITY_VERSION','2.3.4');
 define('IMSANITY_SCHEMA_VERSION','1.1');
 
-define('IMSANITY_DEFAULT_MAX_WIDTH',1024);
-define('IMSANITY_DEFAULT_MAX_HEIGHT',1024);
+define('IMSANITY_DEFAULT_MAX_WIDTH',2048);
+define('IMSANITY_DEFAULT_MAX_HEIGHT',2048);
 define('IMSANITY_DEFAULT_BMP_TO_JPG',1);
 define('IMSANITY_DEFAULT_PNG_TO_JPG',0);
 define('IMSANITY_DEFAULT_QUALITY',90);
