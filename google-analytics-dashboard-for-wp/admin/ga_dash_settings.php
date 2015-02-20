@@ -675,6 +675,7 @@ final class GADASH_Settings
   public static function errors_debugging()
   {
     global $GADASH_Config;
+    global $wp_version;
     if (! current_user_can('manage_options')) {
       return;
     }
@@ -1447,10 +1448,10 @@ final class GADASH_Settings
 															</h3>
 															<div class="inside">
 																<div class="gadash-title">
-																	<a href="http://tracking.maxcdn.com/c/94142/36539/378"><img
+																	<a href="https://deconf.com/wordpress-cdn-speeds-up-your-site/"><img
 																		src="<?php echo plugins_url( 'images/mcdn.png' , __FILE__ ); ?>" /></a>
 																</div>
-																<div class="gadash-desc"><?php echo  __('Speed up your website and plug into a whole', 'ga-dash').' <a href="http://tracking.maxcdn.com/c/94142/36539/378">'.__('new level of site speed', 'ga-dash').'</a>.'; ?></div>
+																<div class="gadash-desc"><?php echo  __('Speed up your website and plug into a whole', 'ga-dash').' <a href="https://deconf.com/wordpress-cdn-speeds-up-your-site/">'.__('new level of site speed', 'ga-dash').'</a>.'; ?></div>
 																<br />
 																<div class="gadash-title">
 																	<a

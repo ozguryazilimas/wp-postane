@@ -27,7 +27,17 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
         'ajax_frontend_widget'
       ));
     }
-    // Frontend Reports/Page
+
+    function send_json($response)
+    {
+      @header('Content-Type: application/json; charset=' . get_option('blog_charset'));
+      echo json_encode($response);
+      if (defined('DOING_AJAX') && DOING_AJAX)
+        wp_die();
+      else
+        die();
+    }    
+
     /**
      * Ajax handler for getting analytics data for frontend Views vs UniqueViews
      *
@@ -37,7 +47,7 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
     {
       global $GADASH_Config;
       if (! isset($_REQUEST['gadash_security_pagereports']) or ! wp_verify_nonce($_REQUEST['gadash_security_pagereports'], 'gadash_get_frontend_pagereports')) {
-        wp_die(-30);
+        wp_die(- 30);
       }
       $page_url = esc_url($_REQUEST['gadash_pageurl']);
       $post_id = (int) $_REQUEST['gadash_postid'];
@@ -51,13 +61,13 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
       $tools = new GADASH_Tools();
       if (! $tools->check_roles($GADASH_Config->options['ga_dash_access_front']) or ! ($GADASH_Config->options['ga_dash_frontend_stats'] or $GADASH_Config->options['ga_dash_frontend_keywords'])) {
-        wp_die(-31);
+        wp_die(- 31);
       }
       if ($GADASH_Config->options['ga_dash_token'] and $GADASH_Config->options['ga_dash_tableid_jail']) {
         include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
         global $GADASH_GAPI;
       } else {
-        wp_die(-24);
+        wp_die(- 24);
       }
       $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
       $profile_info = $tools->get_selected_profile($GADASH_Config->options['ga_dash_profile_list'], $projectId);
@@ -67,17 +77,16 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
         $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
       }
       if (! $GADASH_GAPI->client->getAccessToken()) {
-        wp_die(-25);
+        wp_die(- 25);
       }
       switch ($query) {
         case 'pageviews':
-          print($GADASH_GAPI->frontend_afterpost_pageviews($projectId, $page_url, $post_id));
+          $this->send_json($GADASH_GAPI->frontend_afterpost_pageviews($projectId, $page_url, $post_id));
           break;
         default:
-          print($GADASH_GAPI->frontend_afterpost_searches($projectId, $page_url, $post_id));
+          $this->send_json($GADASH_GAPI->frontend_afterpost_searches($projectId, $page_url, $post_id));
           break;
       }
-      wp_die();
     }
     // Frontend Widget Reports
     /**
@@ -89,7 +98,7 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
     {
       global $GADASH_Config;
       if (! isset($_REQUEST['gadash_number']) or ! isset($_REQUEST['gadash_optionname']) or ! is_active_widget(false, false, 'gadash_frontend_widget')) {
-        wp_die(-30);
+        wp_die(- 30);
       }
       $widget_index = $_REQUEST['gadash_number'];
       $option_name = $_REQUEST['gadash_optionname'];
@@ -97,7 +106,7 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       if (isset($options[$widget_index])) {
         $instance = $options[$widget_index];
       } else {
-        wp_die(-32);
+        wp_die(- 32);
       }
       switch ($instance['period']) { // make sure we have a valid request
         case '7daysAgo':
@@ -119,7 +128,7 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
         include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
         $tools = new GADASH_Tools();
       } else {
-        wp_die(-24);
+        wp_die(- 24);
       }
       $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
       $profile_info = $tools->get_selected_profile($GADASH_Config->options['ga_dash_profile_list'], $projectId);
@@ -129,11 +138,9 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
         $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
       }
       if (! $GADASH_GAPI->client->getAccessToken()) {
-        wp_die(-25);
+        wp_die(- 25);
       }
-      $data_widget = $GADASH_GAPI->frontend_widget_stats($projectId, $period, (int) $instance['anonim']);
-      print(json_encode($data_widget));
-      wp_die();
+      $this->send_json($GADASH_GAPI->frontend_widget_stats($projectId, $period, (int) $instance['anonim']));
     }
   }
 }
