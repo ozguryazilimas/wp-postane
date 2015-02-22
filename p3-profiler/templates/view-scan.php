@@ -8,7 +8,7 @@ if ( !empty( self::$profile ) ) {
 	$domain    = @parse_url( self::$profile->report_url, PHP_URL_HOST );
 }
 $pie_chart_id                 = 'pie_'       . substr( md5( uniqid() ), -8 );
-$runtime_chart_id             = 'runtime_ '  . substr( md5( uniqid() ), -8 );
+$runtime_chart_id             = 'runtime_'   . substr( md5( uniqid() ), -8 );
 $query_chart_id               = 'query_'     . substr( md5( uniqid() ), -8 );
 $component_breakdown_chart_id = 'breakdown_' . substr( md5( uniqid() ), -8 );
 $component_runtime_chart_id   = 'runtime2_'  . substr( md5( uniqid() ), -8 );
