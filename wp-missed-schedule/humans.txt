@@ -29,13 +29,11 @@ humans.txt - we are the humans behind code programming | sLaNGjIs Team
     Skype:       No Thanks!
     WhatsApp:    No Thanks!
     Vimeo:       No Thanks!
-	YouTube:     No Thanks!
+    YouTube:     No Thanks!
 
 /* META */
 
-    Built with:  WordPress, bbPress, BuddyPress, phpBB,
-	             PHP, HTML, XHTML, HTML5, XHTML5, CSS, CSS3,
-				 jQuery, Ajax, JavaScript, MySQL, HyperDB
-				 Notepad++, FileZilla, TortoiseSVN, WaterFox,
-
-
+    Built with:  WordPress, bbPress, BuddyPress, phpBB
+                 PHP, HTML, XHTML, HTML5, XHTML5, CSS, CSS3
+                 jQuery, Ajax, JavaScript, MySQL, HyperDB
+                 Notepad++, FileZilla, TortoiseSVN, WaterFox

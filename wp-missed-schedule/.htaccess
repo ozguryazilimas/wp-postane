@@ -1,12 +1,7 @@
 DirectoryIndex index.php /index.php
 IndexIgnore *
-LimitRequestBody 1024000
 Options -Indexes
 <Files .htaccess>
-Order Allow,Deny
-Deny From All
-</Files>
-<Files description.txt>
 Order Allow,Deny
 Deny From All
 </Files>
@@ -15,6 +10,10 @@ Order Allow,Deny
 Deny From All
 </Files>
 <Files humans.txt>
+Order Allow,Deny
+Deny From All
+</Files>
+<Files keybit.txt>
 Order Allow,Deny
 Deny From All
 </Files>

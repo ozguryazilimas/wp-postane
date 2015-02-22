@@ -2,8 +2,8 @@
 /*
 Plugin Name: WP Missed Schedule
 Plugin URI: http://slangji.wordpress.com/wp-missed-schedule/
-Description: WordPress Plugin WP <code>Missed Schedule</code> Fix <code>Scheduled</code> <code>Failed Future Posts</code> <code>Virtual Cron Job</code>: find only items that match this problem, no others, and republish them correctly 10 items each session, every 5 minutes. All others will be solved on next sessions, to no waste resources, until no longer exist: 10 items every 5 minutes, 120 items every hour, 1 session every 5 minutes, 12 sessions every hour - Free (UNIX STYLE) Version - Build 2015-01-19 Stable Major Release
-Version: 2013.1231.2015
+Description: WordPress Plugin WP <code>Missed Schedule</code> Fix <code>Scheduled</code> <code>Failed Future Posts</code> <code>Virtual Cron Job</code>: find only items that match this problem, no others, and republish them correctly 10 items each session, every 10 minutes. All others will be solved on next sessions, to no waste resources, until no longer exist: 10 items every 10 minutes, 60 items every hour, 1 session every 10 minutes, 6 sessions every hour - Free (UNIX STYLE) Version - Build 2015-02-21 - Stable Major Release
+Version: 2014.0221.2015
 Author: sLa NGjI's
 Author URI: http://slangji.wordpress.com/
 Requires at least: 2.5
@@ -17,13 +17,9 @@ Indentation URI: http://www.gnu.org/prep/standards/standards.html
 Humans: We are the humans behind
 Humans URI: http://humanstxt.org/Standard.html
  *
- * DEVELOPMENTAL release: Version 2014 Build 0912 Revision 0410
+ * ALPHA DEVELOPMENT Release: Version 2014 Build 0912 Revision 0410
  *
- * BETA          release: Version 2015 Build 0110 Revision 1833
- *
- * GOLD          release: Version 2013 Build 1231 Revision 2015
- *
- * PROFESSIONAL  release: Version 2015 Build 0101 Revision 2015
+ * BETA  DEVELOPMENT Release: Version 2015 Build 0221 Revision 0541
  *
  * LICENSING (license.txt)
  *
@@ -146,24 +142,21 @@ Humans URI: http://humanstxt.org/Standard.html
 	 * @requirements Not need other actions except activate, deactivate, or delete it.
 	 * @status STABLE (tags) release
 	 * @author slangjis
-	 * @since       2.5+
-	 * @branche     2013
-	 * @build       2015-01-19
-	 * @version     2013.1231.2015
-	 * @1stversion  2007.0807.2007
-	 * @devversion  2014.0912.0410-DEV
-	 * @betaversion 2015.0110.1833-NEW
-	 * @goldversion 2013.1231.2015-GLD
-	 * @proversion  2015.0101.2015-PRO
+	 * @since   2.5+ (Year 2007)
+	 * @branche 2014
+	 * @build   2015-02-21
+	 * @version 2014.0221.2015
 	 * @license GPLv2 or later
 	 * @indentation GNU style coding standard
-	 * @satisfaction 4 Jan 2014 3:57 100.000 Downloads!
-	 * @keybit mFXj3lC62b79H8651411574J4YQCeLCQM540z78BbFMtb3g46FsK338kT29FPANa8
-	 * @keysum 473EECF9D3F544F9F05231BD847092F1
-	 * @keytag 991777abf4277c24f209b74b5da25563
+	 * @satisfaction 04 Jan 2014 3:57 100.000 Downloads!
+	 * @satisfaction 26 Jan 2015 8:23 150.000 Downloads!
+	 * @keybit eLCQM540z78BbFMtmFXj3lC62b79H8651411574J4YQCb3g46FsK338kT29FPANa8
+	 * @keysum 2195874D0C12C94A9E87B4DEA0279183C0435498
+	 * @keytag e3388f8646b4151f10e12e5e38ff9ff8cb4f1c11
+	 * @authag e3388f8646b4151f10e12e5e38ff9ff8cb4f1c11
 	 */
 
-	if ( !function_exists( 'add_action' ) )
+	if ( ! function_exists( 'add_action' ) )
 		{
 			header( 'HTTP/0.9 403 Forbidden' );
 			header( 'HTTP/1.0 403 Forbidden' );
@@ -172,6 +165,8 @@ Humans URI: http://humanstxt.org/Standard.html
 			header( 'Connection: Close' );
 				exit();
 		}
+
+	defined( 'ABSPATH' ) OR exit;
 
 	global $wp_version;
 
@@ -182,6 +177,9 @@ Humans URI: http://humanstxt.org/Standard.html
 
 	function wpms_1st()
 		{
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+
 			$wp_path_to_this_file = preg_replace( '/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR . "/$2", __FILE__ );
 			$this_plugin          = plugin_basename( trim( $wp_path_to_this_file ) );
 			$active_plugins       = get_option( 'active_plugins' );
@@ -196,36 +194,66 @@ Humans URI: http://humanstxt.org/Standard.html
 		}
 	add_action( 'activated_plugin', 'wpms_1st', 0 );
 
+	function wpms_activation()
+		{
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+
+			if ( ! get_option( 'wp_missed_schedule' ) )
+				return;
+
+			delete_option( 'wp_missed_schedule' );
+		}
+	register_activation_hook( __FILE__, 'wpms_activation', 0 );
+
 	function wpms_option()
 		{
-			define( 'WPMS_OPTION', 'wp_missed_schedule' );
+			define( 'WPMS_OPTION', 'wp_scheduled_missed' );
 
 			$last = get_option( WPMS_OPTION, false );
 
-			if ( ( $last !== false ) && ( $last > ( time() - ( 5 * 60 ) ) ) )
+			if ( ( $last !== false ) && ( $last > ( time() - ( 60 * 10 ) ) ) )
 				return;
 
 			update_option( WPMS_OPTION, time() );
 		}
-
 	add_action( 'init', 'wpms_option', 0 );
 
 	function wpms_init()
 		{
 			global $wpdb;
 
-			$qry = <<<SQL			SELECT ID FROM {$wpdb->posts} WHERE ( ( post_date > 0 && post_date <= %s ) ) AND post_status = 'future' LIMIT 0,10SQL;
+			/**
+			 * START OF WARNING
+			 *
+			 * This portion of SQL query code is formatted to UNIX STYLE
+			 * if is edited without respect UNIX STYLE broke all queries
+			 * plugin stop to work correctly and WordPress was instable.
+			 *
+			 * Both DOS and UNIX style line endings causes a problem with SVN repositories.
+			 * Change the file to use only one style of line endings UNIX or DOS.
+			 *
+			 * Use (Otto42) Plugin and Theme Check to verify the code integrity.
+			 *
+			 * @since	2013-12-31
+			 * @version	2015-02-21
+			 * @author	sLaNGjIs @ slangji.wordpress.com
+			 */
+			$qry = <<<SQL SELECT ID FROM {$wpdb->posts} WHERE ( ( post_date > 0 && post_date <= %s ) ) AND post_status = 'future' LIMIT 0,10 SQL;
+			/**
+			 * END OF WARNING
+			 */
 
 			$sql = $wpdb->prepare( $qry, current_time( 'mysql', 0 ) );
 
 			$scheduledIDs = $wpdb->get_col( $sql );
 
-			if ( !count( $scheduledIDs ) )
+			if ( ! count( $scheduledIDs ) )
 				return;
 
 			foreach ( $scheduledIDs as $scheduledID )
 				{
-					if ( !$scheduledID )
+					if ( ! $scheduledID )
 						continue;
 
 					wp_publish_post( $scheduledID );
@@ -266,14 +294,37 @@ Humans URI: http://humanstxt.org/Standard.html
 
 	function wpms_shfl()
 		{
-			echo "\r\n<!--Plugin WP Missed Schedule 2013.1231.2015 Build 2015-01-19 Active - Tag ".md5(md5("mFXj3lC62b79H8651411574J4YQCeLCQM540z78BbFMtb3g46FsK338kT29FPANa8"."473EECF9D3F544F9F05231BD847092F1"))."-->\r\n";
-			echo "\r\n<!-- This website is patched against a big problem not solved from WordPress 2.5+ to date -->\r\n\r\n";
+			if ( ! is_home() || ! is_front_page() )
+				return;
+			{
+				echo "\r\n<!--Plugin WP Missed Schedule (free) Active - Secured with Genuine Authenticity Key Tag-->\r\n";
+				echo "\r\n<!-- This site is patched against a big problem not solved since WordPress 2.5 to date -->\r\n\r\n";
+			}
 		}
 	add_action( 'wp_head', 'wpms_shfl', 0 );
 	add_action( 'wp_footer', 'wpms_shfl', 0 );
 
+	function wpms_shfl_authag()
+		{
+			if ( ! current_user_can( 'administrator' ) )
+				return;
+			{
+				echo "\r\n<!--Secured Auth Tag: ".sha1(sha1("eLCQM540z78BbFMtmFXj3lC62b79H8651411574J4YQCb3g46FsK338kT29FPANa8"."2195874D0C12C94A9E87B4DEA0279183C0435498"))."-->\r\n";
+				echo "\r\n<!--Verified Key Tag: e3388f8646b4151f10e12e5e38ff9ff8cb4f1c11-->\r\n";
+				echo "\r\n<!-- Your copy of Plugin WP Missed Schedule (free) is Genuine -->\r\n";
+			}
+		}
+	add_action( 'admin_head', 'wpms_shfl_authag', 0 );
+	add_action( 'admin_footer', 'wpms_shfl_authag', 0 );
+
 	function wpms_clnp()
 		{
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+
+			if ( get_option( 'WPMS_OPTION' ) )
+				return;
+
 			delete_option( WPMS_OPTION );
 		}
 	register_deactivation_hook( __FILE__, 'wpms_clnp', 0 );

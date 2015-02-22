@@ -2,31 +2,35 @@
 Contributors: slangjis
 Donate link: http://slangji.wordpress.com/donate/
 Tags: failed-future-posts, missed, missed-schedule, missed-schedule-fix, missed-schedule-wordpress, missed-scheduled, schedule, scheduled, sLaNGjIs, wordpress-missed-schedule, wordpress-missed-schedule-fix, wp-missed-schedule
-Stable tag: 2013.1231.2015
+Stable tag: 2014.0221.2015
 Requires at least: 2.5
 Tested up to: 4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-wordpress plugin wp missed schedule fix failed future posts that match this problem and republish them correctly 10 items each session every 5 minutes
+wordpress plugin wp missed schedule fix failed future posts that match this problem and republish them correctly 10 item each session every 10 minutes
 == Description ==
-wordrress plugin wp <code>missed schedule</code> fix <code>scheduled</code> <code>failed future posts</code> cron job that match this problem and republish them correctly fixed 10 items each session every 5 minutes without waste resources others will be solved next until no longer exist 10 items every 5 minutes, 120 items every hour, 1 session every 5 minutes, 12 sessions every hour.
+wordpress plugin wp <code>missed schedule</code> fix <code>scheduled</code> <code>failed future posts</code> that match this problem and republish them correctly fixed 10 items each session every 10 minutes without waste resources others will be solved on next <code>virtual cron job</code> until no longer exist 10 items every 10 minutes, 60 items every hour, 1 session every 10 minutes, 6 sessions every hour.
+
+<a href="//slangji.wordpress.com/wp-missed-schedule-pro/" title="Upgrade to WP Missed Schedule Pro Version">Upgrade to Pro Version</a> | <a href="//slangji.wordpress.com/premium-support/" title="Premium Support">Premium Support</a> | <a href="//slangji.wordpress.com/wp-missed-schedule-beta/" title="Try New WP Missed Schedule Beta Version">Try New Beta Version</a>
 `
-=> 4 Jan 2014 3:57 100.000 Downloads Thanks :) 
+=> 04 Jan 2014 3:57 100.000 Downloads Thanks :)
+
+=> 26 Jan 2015 8:23 150.000 Downloads Thanks :)
 
 A special thank to all users who have installed
 this plugin: best regards by sLa NGjI's Team ;)
 `
-[sLa NGjI's Team do not provide support on WordPress.org forum](//wordpress.org/plugins/wp-missed-schedule/other_notes/)!
+[sLaNGjIs Team do not provide support on WordPress.org forum](//wordpress.org/plugins/wp-missed-schedule/other_notes/)
 
-This plugin patched an important unfixed bug since WordPress 2.5+
+This plugin patched an important unfixed bug since WordPress 2.5+ to date because Missed Schedule is a WordPress Bug!
 
-Version <a href="//slangji.wordpress.com/wp-missed-schedule-pro/" title="WP Missed Schedule Pro">WP Missed Schedule PRO</a> (Build 2015-01-01)
+Version [2015.0221.0541](//downloads.wordpress.org/plugin/wp-missed-schedule.2015.0221.0541.zip) new cron check method (Build 2015-02-21)
 
-Version [2015.0110.1833](//downloads.wordpress.org/plugin/wp-missed-schedule.2015.0110.1833.zip) with New Cron Method (Build 2015-01-10)
+Version [2013.1231.2015](//downloads.wordpress.org/plugin/wp-missed-schedule.2013.1231.2015.zip) was recently updated (Build 2015-02-21)
 
-Version [2013.1231.2014](//downloads.wordpress.org/plugin/wp-missed-schedule.2013.1231.2014.zip) was recently updated (Build 2015-01-16)
+Version [2013.1231.2014](//downloads.wordpress.org/plugin/wp-missed-schedule.2013.1231.2014.zip) was recently updated (Build 2015-02-21)
 
-Version [2013.1231.2013](//downloads.wordpress.org/plugin/wp-missed-schedule.2013.1231.2013.zip) was recently updated (Build 2015-01-16)
+Version [2013.1231.2013](//downloads.wordpress.org/plugin/wp-missed-schedule.2013.1231.2013.zip) was recently updated (Build 2015-02-21)
 `
 Failed run when a good post goes to future
 
@@ -57,10 +61,10 @@ Prioritization of Plugin Loading: Beta Testers Wanted! [Apply Here](//slangji.wo
 `
 New WP Missed Schedule Features and Future Updates
 
-Actual Version 2013.1231.2015 Release 2015 FREE
+Actual Version 2014.0221.2015 Release 2015 FREE
 
 Limited Missed Scheduled Posts Fixing per days!
-Introducing (a New Idea of sLa) Key Tag Authenticity!
+Introducing (a New Idea of sLa) Secure Key Tag Auth
 Full Support WordPress 2.5+ ~ 4.1+ Versions
 Preemptive Support WordPress 4.2-alpha 2015 Release
 All in One Gold Versions with vary Frequency of Checking
@@ -69,7 +73,7 @@ Fast Queries with index table and CPU Load Optimization
 W3 Total Cache and others Caching Plugins Compatibility
 JetPack and Social Publishing Plugins Transparency
 
-New Beta Version 2015.0110.1833 Release 2015 FREE
+New Beta Version 2015.0221.0541 Release 2015 FREE
 
 Limited Missed Scheduled Posts Fixing per days!
 New Cron Method Interval Checking Rewrited Coding
@@ -86,16 +90,16 @@ Admin DashBoard Help and FAQ Panel (concept only)
 Plugin Class Isolation Constructor (support php 4 and 5)
 Plugin Functions Isolation Constructor (php 4 and 5)
 
-Future <a href="//slangji.wordpress.com/wp-missed-schedule-pro/" title="WP Missed Schedule Pro">WP Missed Schedule Pro</a> Version Release 2015/2016
+Future WP Missed Schedule Pro Version Release 2015/2016
 
 Unlimited Missed Scheduled Posts Fixing per days!
-Check Key Tag Authenticity Before Activation
+Check Secure Key Tag Auth Before Activation
 Check WordPress Version Requirements Before Activation
 Check Administration Users Permissions Requirements
 Prioritization Plugin Loading (with db table index)
 Plugin Class and Functions Isolation Constructor
 Dynamic Row Meta Links Plugin Activation Support
-Enable or Disable Header and Footer Log
+Enable or Disable FrontEnd Header and Footer Log
 Plugin Translation Languages Support
 Admin DashBoard Options Control Panel
 Admin DashBoard Help and FAQ Panel
@@ -158,16 +162,10 @@ Scheduled Posts Regression <a href="//core.trac.wordpress.org/Ticket/22944" titl
  * [Noindex (total) WordPress Deindexing](//wordpress.org/plugins/wp-total-deindexing/) (refreshed)
  * [Header and Footer Log](//wordpress.org/plugins/wp-header-footer-log/) Only For Developers
 == Installation ==
-= Warning: =
-wp <code>missed schedule</code> on /mu-plugins/ directory stop to work: install and activate it only on default mode trough plugin control panel.
-= How to Repair /mu-plugins/ db wp_option Table Data? =
-Activate and Deactivate, (one time only) [WPMS db Cleaner](//downloads.wordpress.org/plugin/wp-missed-schedule.wpms-mu-plugins-clnr.zip) before install version 2013.0725.5555 or any later newer release.
-= Action Link Cron =
-Please Noted That: Action Link Cron on left when plugin is activated is accessible only with [WP Crontrol](//wordpress.org/plugins/wp-crontrol/) Active (error: You do not have sufficient permissions to access this page.)
-= WordPress Multisite =
-Remenber That: if WordPress MultiSite is active "WP Missed Schedule" activation, and options panel, is only available on Super Admin Menu.
 = How to install Special Gold Edition ? =
-Special Gold Edition is for advenced users, and was installed only on manual mode.
+wp <code>missed schedule</code> special gold edition is for advanced users and was installed only on manual mode
+
+WARNING: Is not possible to install WP Missed Schedule Gold directly from Admin Control Panel Dasboard.
 
 Clarifications about manual installation of the WP Missed Schedule Special Gold Edition.
 
@@ -181,13 +179,14 @@ Here's everything you need to know:
 
 That's it!
 
-There are various versions with the time of checking variable from 1 minute to 24 hours ...
+There are various versions with the time of checking variable from 10 minutes to 24 hours.
 
 For example, you will want to install the version with a time of checking 1 hour, perform the following:
 
-rename wp-missed-schedule.60 to wp-missed-schedule.php
+rename wp-missed-schedule.060 to wp-missed-schedule.php
 
 Simple!
+= Step by Step Installation =
 = For users of single WordPress 2.5+ to 4.1+ (via FTP) =
 1. Download WP Missed Schedule from WordPress.org plugin repository.
 1. Upload it into /wp-content/plugins`/wp-missed-schedule/` via FTP.
@@ -207,19 +206,23 @@ Simple!
 1. Delete WP Missed Schedule from Menu Plugins of Control Panel.
 = Troubleshooting =
 If all else fails and your site is broken remove directly via ftp on your host space /home/your-wp-install-dir/wp-content/plugins`/wp-missed-schedule/`.
+= Action Link Cron =
+Please Noted That: Action Link Cron on left when plugin is activated is accessible only with [WP Crontrol](//wordpress.org/plugins/wp-crontrol/) Active (error: You do not have sufficient permissions to access this page.)
+= WordPress Multisite =
+Remenber That: if WordPress MultiSite is active "WP Missed Schedule" activation, and options panel, is only available on Super Admin Menu.
 == Frequently Asked Questions ==
 reasons why <code>WordPress virtual cron job</code> fails could be due to:
 
+* wp-cron not executed on heavy servers load
+* wp-cron rarely executed on unvisited servers
+* Plugins conflict: Jetpack for example!
+* WordPress bugs: Missed Schedule is a WordPress Bug!
 * DNS issue in the server
 * DNS issue in the database
 * Server Timezone Misconfiguration
 * Database Timezone Misconfiguration
-* Heavy server load results WP-Cron not fully executed
-* Unvisited server results WP-Cron rarely executed
 * Using cache plugins that prevent WP-Cron from loading
 * Using cache objects that prevent WP-Cron from loading
-* Plugins conflict: Jetpack for example!
-* WordPress bugs: Missed Schedule is a WordPress Bug!
 * And many other reasons
 
 WordPress comes with its own cron job that allows you to schedule your posts and events. however, in many situations, the wp-cron is not working well and leads to posts missed their publication schedule and/or scheduled events not executed.
@@ -262,6 +265,7 @@ If you’re not familiar with programming, don’t worry, there is a simple solu
 = Conclusion = 
 I hope the fix working fine for you. WordPress should really look into this issue seriously and provide a fix or help to resolve the issue faced by many of the bloggers. If WordPress is not able to publish future post at predefined time, it should recheck it periodically for several time, says every 5/10/15 minutes, and publish the post as soon as possible.
 == Screenshots ==
+0. <code>Missed Schedule Pro</code> Screenshot
 1. <code>Missed Schedule</code> Screenshot
 2. <code>Planification Manquée</code> Screenshot
 3. <code>Programmazione Mancante</code> Screenshot
@@ -273,12 +277,12 @@ I hope the fix working fine for you. WordPress should really look into this issu
 9. <code>Japanese Language</code> Screenshot
 
 Please: if you have others screenshots on your language contact me a.s.a.p.
-== Disclaimer ==
-[sLa NGjI's Team do not provide support on WordPress.org forum](//wordpress.org/plugins/wp-missed-schedule/other_notes/)!
+== Disclaimer: ==
+[sLaNGjIs team do not providing support on wordpress.org forum](//wordpress.org/plugins/wp-missed-schedule/other_notes/) because we are not interested in reviews o stars on our plugins!
 
-Dear user of plugins or themes:
+Dear user of plugins or themes: Missed Schedule is a WordPress Bug!
 
-sLa NGjI’s Team has started adventure on WordPress.org forum 7 years ago since 2007!
+sLaNGjIs Team has started adventure on WordPress.org forum 7 years ago since 2007!
 
 Everything was very different from today: the plugins and themes developed by us were much less, and also the users who used it.
 
@@ -296,8 +300,8 @@ Our team has tried to respond to all for seven long years, and maintained the su
 
 Failing to provide a service that gives us satisfaction, through the instruments of WordPress.org forum, as of today August 15, 2014 we abandon the active support with this type of structure, started since August 7, 2007 to try to give one type of service more personalized, and targeted, to requests of users.
 
-1. For bug's please refer to [sLa NGjI's GitHub ](//github.com/slangji/) bug's report support
-1. For tickets please refer to [sLa NGjI's Contact](//slangji.wordpress.com/contact/) tickets form support
+1. For bug's please refer to [sLaNGjIs GitHub ](//github.com/slangji/) bug's report support
+1. For tickets please refer to [sLaNGjIs Contact](//slangji.wordpress.com/contact/) tickets form support
 
 * Please note that:
  * We are not interested in reviews on our plugins and themes.
@@ -325,78 +329,58 @@ After 2 weeks, any posts and threads opened on WordPress.org forum support for "
 
 Users who write very few minutes after other users, or at the same time, to carry on, and confirm, a certain negative idea on the "Missed Schedule WP Plugin", or when a single users makes multiple accounts with the sole intention of leaving reviews on their own plugins, or leaving poor reviews on their competitors, or leaving reviews on other plugins, or leaving poor reviews on other competitors, is called being a "Sock Puppet" and this behavior is expressly NOT welcome on the WordPress Forums and Reviews as it is spamming, and it can result is us removing your accounts and it is also blocked from our network.
 == Changelog ==
-available version 2015 with new cron method interval check rewrited coding [2015.0110.1833](//downloads.wordpress.org/plugin/wp-missed-schedule.2015.0110.1833.zip)
+available new version [2015.0221.0541](//downloads.wordpress.org/plugin/wp-missed-schedule.2015.0221.0541.zip) with code totally rewrited that applies innovative method for interval of check with lowest load
 
-[sLa NGjI's Team do not provide support on WordPress.org forum](//wordpress.org/plugins/wp-missed-schedule/other_notes/)!
+<a href="//slangji.wordpress.com/wp-missed-schedule-pro/" title="Upgrade to WP Missed Schedule Pro Version">Upgrade to Pro Version</a> | <a href="//slangji.wordpress.com/premium-support/" title="Premium Support">Premium Support</a>
 
+[sLaNGjIs Team do not provide support on WordPress.org forum](//wordpress.org/plugins/wp-missed-schedule/other_notes/)
 = To-Do List =
+This plugin patched an important unfixed bug since WordPress 2.5+ to date because Missed Schedule is a WordPress Bug!
+= Branche 2016 (alpha) =
+* All in One Virtual and Real Cron Method (2016.1231.2016)
+= Branche 2015 (beta) =
+* Real Cron Method of Checking Interval (2015.1231.2015)
+* Merge Branche 2013 and 2014 to 2015 (2015.0000.2015)
 
-This plugin patched an important unfixed bug since WordPress 2.5+
-
-= Branche 2016 =
-
-Future <a href="//slangji.wordpress.com/wp-missed-schedule-pro/" title="WP Missed Schedule Pro">WP Missed Schedule Pro</a> Version Release 2015/2016
-
-* Unlimited Missed Scheduled Posts Fixing per days!
-* Check WordPress Version Requirements Before Activation (2016.0000.2017-PRO)
-* Check Administration Users Permissions Requirements (2016.0000.2017-PRO)
-* Check Plugin Authenticity Before Activation (2016.0000.2017-PRO)
-* Prioritization Plugin Loading (with db table index) (2016.0000.2017-PRO)
-* Plugin Class and Functions Isolation Constructor (2016.0000.2017-PRO)
-* Dynamic Row Meta Links Plugin Activation Support (2016.0000.2017-PRO)
-* Plugin Translation Languages Support (2016.0000.2017-PRO)
-* Admin Menu Classic Plugin Settings Page (2016.0000.2017-PRO)
-* Customization of all Plugin Options (2016.0000.2017-PRO)
-* Manual Scheduling Plugin Checking and Fixing (2016.0000.9999-PRO)
-* Manual Change the Number of Failed Posts Fixed (2016.0000.8888-PRO)
-* Manual Scheduling the Number of Checking Sessions (2016.0000.7777-PRO)
-* Ticket #3740220 [Change Frequency](//wordpress.org/support/topic/change-frequency/) (2016.0000.6666-PRO)
-* Switching from Local GMT and UTC Time. (2016.0000.5555-PRO)
-* Enable or Disable Header and Footer Log (2016.0000.4444-PRO)
-* Change User Level Permissions (2016.0000.3333-PRO)
-* Admin DashBoard Help and FAQ Panel (2016.0000.2222-PRO)
-* Admin DashBoard Options Control Panel (2016.0000.1111-PRO)
-
-= Branche 2015 =
-
-* Stable Major Release 2016 (2015.1231.2016)
-* All in One Virtual and Real Cron Method (2015.0000.2016)
-
-Development Version (code in becoming) Dev Preemptive FREE:
-
-* Plugin Class Isolation Constructor (2015.0000.2016-DEV) php 4 and 5
-* Admin Menu Classic Plugin Settings Page (2015.0000.2016-DEV) concept only
-* Admin DashBoard Options Control Panel (2015.0000.2016-DEV) concept only
-* Admin DashBoard Help and FAQ Panel (2015.0000.2016-DEV) concept only
-* Preemptive Support WP 4.2-alpha Future (trunk) 2015 Releases (2014.0912.0410-DEV)
-* Translation Languages Support (2014.0110.1913-DEV) concept only
-* Plugin Functions Isolation Constructor (2014.0110.1913-DEV) php 4 and 5
-* Preemptive Support WP 4.0+ Future (trunk) 2014 Releases (2013.1228.1833-DEV)
-* Customization of all Plugin Options (2013.1009.1916-DEV) concept only
-* Prioritization Plugin Loading (2013.0824.0312-DEV) now active for beta testers
-* Preemptive Support WP 3.9+ Future (trunk) 2014 Releases (2013.0730.1530-DEV)
-
-= Branche 2014 =
-
-* Stable Major Release 2015 (2014.1231.2015)
-* Merge Branche 2013 and 2014 to 2015 (2014.1231.2015)
-* Full Support for WordPress 4.4+ Release (2014.1230.2015)
-* Full Support for WordPress 4.3+ Release (2014.0830.2015)
-* Full Support for WordPress 4.2+ Release (2014.0430.2015)
-
-New Beta Version 2015.0110.1833 Release 2015 Improved FREE:
+Beta Version 2015.0221.0541 Release 2015 Improved FREE:
 
 * Limited Missed Scheduled Posts Fixing per days!
+* Merge Genuine Auth Tag from Pro Version (2014.0221.0541)
+* Merge Secure Key Tag Auth from Pro Version (2015.0207.2314)
 * Support for [Plugin Beta Tester](//wordpress.org/plugins/plugin-beta-tester/) Specifications (2015.0110.1833)
 * New Cron Method Check Rewrited Coding (2014.0316.0230)
 * Prioritization Plugin Loading (2014.0316.1111) Testers Wanted
+= Branche 2014 =
+* Full Support for WordPress 4.4+ Release (2014.1231.2015)
+* Full Support for WordPress 4.3+ Release (2014.0831.2015)
+* Full Support for WordPress 4.2+ Release (2014.0430.2015)
+* Merge Genuine Aut Tag from Pro Version (2014.0221.2015)
+* Merge Secured Key Tag from Pro Version (2014.0221.2015)
+
+Development Version (code in becoming) Dev Preemptive FREE:
+
+* Plugin Class Isolation Constructor (2016.0000.2016-DEV)
+* Admin Menu Classic Plugin Settings Page (2015.0000.2015-DEV)
+* Admin DashBoard Options Control Panel (2015.0000.2015-DEV)
+* Admin DashBoard Help and FAQ Panel (2015.0000.2015-DEV)
+* Preemptive Support WP 4.2-alpha (2014.0912.0410-DEV)
+* Translation Languages Support (2014.0110.1913-DEV)
+* Plugin Functions Isolation Constructor (2014.0110.1913-DEV)
+* Preemptive Support WP 4.1-alpha (2014.0110.1913-DEV)
+* Preemptive Support WP 4.0-alpha (2013.1228.1833-DEV)
+* Customization of all Plugin Options (2013.1009.1916-DEV)
+* Prioritization Plugin Loading (2013.0824.0312-DEV)
+* Preemptive Support WP 3.9-alpha (2013.0730.1530-DEV)
 
 = Branche 2013 =
 
 Actual Stable Version 2013.1231.2015 Major Release 2015 FREE:
 
 * Limited Missed Scheduled Posts Fixing per days!
+* Merge Genuine Aut Tag from Pro Version (2013.1231.2015)
+* Merge Secured Key Tag from Pro Version (2013.1231.2015)
 * Fix Activation on localhost or Virtual VPS (2013.1231.2015)
+* Full Support for WordPress 4.2+ Release (2013.1231.2015)
 * Support for [Plugin Check](//wordpress.org/plugins/plugin-check/) Specifications (2013.1231.2014)
 * Support for [Theme Check](//wordpress.org/plugins/theme-check/) Specifications (2013.1231.2014)
 * Full Support for WordPress 4.1+ Release (2013.1231.2014)
@@ -471,7 +455,6 @@ version number (*2013*.1231.*2014*) 2013 for example.
 Incremental Build is identified with progressive number
 on final Version number (2015.1213.*9999*) for example.
 `
-
 = Please Noted That =
 `
 On WordPress MultiSite, activation, and options panel,
@@ -482,12 +465,13 @@ accessible only with WP Crontrol plugin Active.
 `
 = Development Release =
 [Version 2014 Build 0912-BUGFIX.0410-DEVELOPMENT](//downloads.wordpress.org/plugin/wp-missed-schedule.zip)
-= 2013.1231.2015 =
-* Major Release 2015 [STABLE][BUGFIX] The plugin does not have a valid header!
+= 2014.0221.2015 =
+* Update [RECOMMENDED] Disabled identification of version and build installed!
  * Please update as soon as possible!
- * Zero Bug Major Release 2014 Reloaded Build 2015-01-19
+ * Major Release 2015 Reloaded Branche 2014 Build 2015-02-21
  * The state of art for fix big core bug since WordPress 2.5+
- * 4 Jan 2014 3:57 100.000 Downloads!
+ * 04 Jan 2014 3:57 100.000 Downloads!
+ * 26 Jan 2015 8:23 150.000 Downloads!
  * Fix Missed Schedule Failed Future Posts Scheduled Items.
  * Full Support and Compatibility for WordPress 2.5+ ~ 4.1+
  * Preemptive Support for WordPress 4.2-alpha
@@ -498,6 +482,45 @@ accessible only with WP Crontrol plugin Active.
  * Support for [Plugin Beta Tester](//wordpress.org/plugins/plugin-beta-tester/) specifications.
  * Support for [Plugin Check](//wordpress.org/plugins/plugin-check/) specifications.
  * Support for [Theme Check](//wordpress.org/plugins/theme-check/) specifications.
+ * SPECIAL GOLD EDITION is now a [separate distro](//downloads.wordpress.org/plugin/wp-missed-schedule.2014.0221.2015.special.gold.edition.zip).
+ * NEW supercalifragilisticexpialidocious
+ * NEW prisencolinensinainciusol
+ * IMPORTED Key and Auth Tag from Pro Version.
+ * UPDATED Header and Footer Log Code.
+ * ADDED security rules to activate and manage functions.
+ * REVISED some possible paranoid security issues.
+ * DISABLED identification of version and build installed.
+ * MIGRATED MD5 Checksum to SHA1.
+ * SECURITY only admins view backend header and footer log.
+ * SECURITY limited frontend header and footer log to home.
+ * UPDATED realtime checking: 1 session every 10 minutes.
+ * UPDATED realtime checking: 6 sessions every hour.
+ * UPDATED realtime checking: 10 future posts every 10 minute.
+ * UPDATED realtime checking: 60 items every hour.
+ * INTEGRATED WPMS db Cleaner.
+ * INCLUDED All Features of Major Release 2013.1231.2015
+ * INCLUDED All Features of Major Release 2013.1231.2014
+ * INCLUDED All Features of Major Release 2013.1231.2013
+ * BUMP Version 2014 Build 0221 Revision 2015
+= 2013.1231.2015 =
+* Major Release 2015 [STABLE][RELOADED] The plugin does not have a valid header!
+ * Please update as soon as possible!
+ * Major Release 2015 Reloaded Branche 2013 Build 2015-02-21
+ * The state of art for fix big core bug since WordPress 2.5+
+ * 04 Jan 2014 3:57 100.000 Downloads!
+ * 26 Jan 2015 8:23 150.000 Downloads!
+ * Fix Missed Schedule Failed Future Posts Scheduled Items.
+ * Full Support and Compatibility for WordPress 2.5+ ~ 4.1+
+ * Preemptive Support for WordPress 4.2-alpha
+ * Compatible with WordPress, bbPress, Buddypress.
+ * Work under [GPLv2](//www.gnu.org/licenses/gpl-2.0.html) or later License.
+ * Implement [GNU style](//www.gnu.org/prep/standards/standards.html) coding standard indentation.
+ * Meet detailed [Plugin Guidelines](//wordpress.org/plugins/about/guidelines/) quality requirements.
+ * Support for [Plugin Beta Tester](//wordpress.org/plugins/plugin-beta-tester/) specifications.
+ * Support for [Plugin Check](//wordpress.org/plugins/plugin-check/) specifications.
+ * Support for [Theme Check](//wordpress.org/plugins/theme-check/) specifications.
+ * MERGED Genuine Aut Tag from Pro Version (Only for Admin)
+ * MERGED Secured Key Tag from Pro Version (Only for Admin)
  * FIXED Error [The plugin does not have a valid header](//wordpress.org/support/topic/the-plugin-does-not-have-a-valid-header-72)
  * FIXED Activation on localhost (127.0.0.1) Installations.
  * FIXED Activation on local XAMPP, EASYPHP, Installations.
@@ -506,17 +529,17 @@ accessible only with WP Crontrol plugin Active.
  * INCLUDED All Features of Major Release 2013.1231.2014
  * INCLUDED All Features of Major Release 2013.1231.2013
  * NEW Renamed Distribution Files on Special Gold Edition.
- * NEW Action Link Cron on left is accessible only with [WP Crontrol](//wordpress.org/plugins/wp-crontrol/) Active.
+ * NEW Action Link Cron is accessible only with [WP Crontrol](//wordpress.org/plugins/wp-crontrol/) Active.
  * NEW Fully Compatible with WordPress Multisite Install.
- * THANKS to [Jan Dembrowsky](//wordpress.org/support/profile/jdembowski) for help me to discover this issue!
+ * THANKS to [Jan Dembowski](//wordpress.org/support/profile/jdembowski) for help me to discover this issue!
  * BUMP Version 2013 Build 1231 Revision 2015
 = 2013.1231.2014 =
 * Major Release 2014 [STABLE][RELOADED] The state of art for fix big core bug!
  * Please update as soon as possible!
- * Zero Bug Major Release 2014 Reloaded Build 2015-01-16
- * The state of art for fix big core bug since WordPress 2.5+ to date!
+ * Major Release 2014 Reloaded Branche 2013 Build 2015-02-21
+ * The state of art for fix big core bug since WordPress 2.5+
  * 4 Jan 2014 3:57 100.000 Downloads!
- * Fix Missed Schedule Failed Future Posts Scheduled Virtual Cron Job Items.
+ * Fix Missed Schedule Failed Future Posts Scheduled Items.
  * Full Support and Compatibility for WordPress 2.5+ ~ 4.1+
  * Preemptive Support for WordPress 4.2-alpha
  * Compatible with WordPress, bbPress, Buddypress.
@@ -536,10 +559,10 @@ accessible only with WP Crontrol plugin Active.
 = 2013.1231.2013 =
 * Major Release 2013 [STABLE][RELOADED] One year of testing and bug corrections!
  * Please update as soon as possible!
- * Zero Bug Major Release 2013 Reloaded Build 2015-01-16
- * The state of art for fix big core bug since WordPress 2.5+ to date!
+ * Major Release 2013 Reloaded Branche 2013 Build 2015-02-21
+ * The state of art for fix big core bug since WordPress 2.5+
  * 4 Jan 2014 3:57 100.000 Downloads!
- * Fix Missed Schedule Failed Future Posts Scheduled Virtual Cron Job Items.
+ * Fix Missed Schedule Failed Future Posts Scheduled Items.
  * Full Support and Compatibility for WordPress 2.5+ ~ 4.0+
  * Preemptive Support for WordPress 4.1-alpha
  * Compatible with WordPress, bbPress, Buddypress.
@@ -798,5 +821,5 @@ accessible only with WP Crontrol plugin Active.
  * 1ST Plugin Build
  * Bump Version 2007 Build 0807 Revision 2007
 == Upgrade Notice ==
-= 2013.1231.2015 =
-Major Release 2015 [STABLE][BUGFIX] Fixed Activation Error: The plugin does not have a valid header. Maximized stability and speedup performances! The state of art for fix big core bug since WordPress 2.5+ (Build 2015-01-19) Full Support and Compatibility for WordPress 2.5+ to 4.1+ and 4.2-alpha
+= 2014.0221.2015 =
+Update [RECOMMENDED] WP 2.5+ to 4.1+ ~ 4.2-alpha (Build 2015-02-21) Imported Key and Auth Tag from pro version. Updated header footer code. Added security rules to activate and manage functions. Disabled the ability to identify the version and build installed. Migrated MD5 Checksum to SHA1 !!!!!!!!!
