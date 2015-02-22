@@ -3,7 +3,7 @@ Contributors: Godaddy, StarfieldTech, kurtpayne
 Tags: debug, debugging, developer, development, performance, plugin, profiler, speed
 Requires at least: 3.3
 Tested up to: 4.1
-Stable tag: 1.5.3.6
+Stable tag: 1.5.3.7
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ Manual installation:
 4. Then activate the Plugin from Plugins page.
 
 == Upgrade Notice ==
+= 1.5.3.7
+Ensure HTML element names are distinct. Props mogulbuster
+
 = 1.5.3.6 =
 Internal version bump to ensure new CSS/JS isn't cached
 
@@ -165,6 +168,9 @@ add_filter( 'p3_automatic_scan_urls', 'my_p3_auto_scan_pages' );
 </code>
 
 == Changelog ==
+= 1.5.3.7 =
+Ensure HTML element names are distinct. Props mogulbuster
+
 = 1.5.3.6 =
 Internal version bump to ensure new CSS/JS isn't cached
 
