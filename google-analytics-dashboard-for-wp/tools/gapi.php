@@ -12,7 +12,7 @@ if (! class_exists('GADASH_GAPI')) {
     public $client, $service;
     public $country_codes;
     public $timeshift;
-    private $error_timeout;
+    public $error_timeout;
     private $managequota;
 
     function __construct()

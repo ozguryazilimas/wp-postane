@@ -76,9 +76,6 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       } else {
         $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
       }
-      if (! $GADASH_GAPI->client->getAccessToken()) {
-        wp_die(- 25);
-      }
       switch ($query) {
         case 'pageviews':
           $this->send_json($GADASH_GAPI->frontend_afterpost_pageviews($projectId, $page_url, $post_id));
@@ -136,9 +133,6 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
         $GADASH_GAPI->timeshift = $profile_info[4];
       } else {
         $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
-      }
-      if (! $GADASH_GAPI->client->getAccessToken()) {
-        wp_die(- 25);
       }
       $this->send_json($GADASH_GAPI->frontend_widget_stats($projectId, $period, (int) $instance['anonim']));
     }

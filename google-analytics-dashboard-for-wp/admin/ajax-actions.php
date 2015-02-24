@@ -66,6 +66,14 @@ if (! class_exists('GADASH_Backend_Ajax')) {
       } else {
         wp_die(- 24);
       }
+      
+      $profile_info = $tools->get_selected_profile($GADASH_Config->options['ga_dash_profile_list'], $projectId);
+      if (isset($profile_info[4])) {
+        $GADASH_GAPI->timeshift = $profile_info[4];
+      } else {
+        $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
+      }      
+      
       switch ($query) {
         case 'referrers':
           $this->send_json($GADASH_GAPI->get_referrers($projectId, $from, $to));
