@@ -47,11 +47,17 @@ Manual Installation:
 2. Unzip and upload the 'imsanity' folder to your '/wp-content/plugins/' directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
+Optional:
+
+If you prefer not to see the Imsanity girl logo image on the settings page, add the following line to wp-config.php:
+
+define('IMSANITY_HIDE_LOGO',true);
+
 == Screenshots ==
 
 1. Imsanity girl will cut you
 2. Imsanity settings page to configure max height/width
-2. Imsanity bulk image resize feature
+3. Imsanity bulk image resize feature
 
 == Frequently Asked Questions ==
 
@@ -124,10 +130,13 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.3.4	 =
-* Security update to network settings page
+= 2.3.5	 =
+* Add option to hide Imsanity girl logo image on settings screen
 
 == Changelog ==
+
+= 2.3.5	 =
+* Add option to hide Imsanity girl logo image on settings screen
 
 = 2.3.4	 =
 * Security update to network settings page

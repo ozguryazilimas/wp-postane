@@ -458,9 +458,12 @@ function imsanity_settings_banner()
 	wp_enqueue_script( 'my_plugin_script' );
 	
 	echo '
-	<div id="imsanity_header" style="float: left;">
-		<a href="http://verysimple.com/products/imsanity/"><img alt="Imsanity" src="' . plugins_url() . '/imsanity/images/imsanity.png" style="float: right; margin-left: 15px;"/></a>
-
+	<div id="imsanity_header" style="float: left;">';
+	
+	if (!defined('IMSANITY_HIDE_LOGO')) 
+		echo '<a href="http://verysimple.com/products/imsanity/"><img alt="Imsanity" src="' . plugins_url() . '/imsanity/images/imsanity.png" style="float: right; margin-left: 15px;"/></a>';
+	
+	echo '
 		<h4>'.__("Imsanity automatically resizes insanely huge image uploads",'imsanity').'</h4>'.
 
 		__("<p>Imsanity automaticaly reduces the size of images that are larger than the specified maximum and replaces the original
