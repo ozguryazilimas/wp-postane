@@ -2,14 +2,15 @@
 /*
 Plugin Name: WP Missed Schedule
 Plugin URI: http://slangji.wordpress.com/wp-missed-schedule/
-Description: WordPress Plugin WP <code>Missed Schedule</code> Fix <code>Scheduled</code> <code>Failed Future Posts</code> <code>Virtual Cron Job</code>: find only items that match this problem, no others, and republish them correctly 10 items each session, every 10 minutes. All others will be solved on next sessions, to no waste resources, until no longer exist: 10 items every 10 minutes, 60 items every hour, 1 session every 10 minutes, 6 sessions every hour - Free (UNIX STYLE) Version - Build 2015-02-21 - Stable Major Release
-Version: 2014.0221.2015
+Description: WordPress Plugin WP <code>Missed Schedule</code> Fix <code>Scheduled</code> <code>Failed Future Posts</code> <code>Virtual Cron Job</code>: find only items that match this problem, no others, and republish them correctly 10 items each session, every 10 minutes. All others will be solved on next sessions, to no waste resources, until no longer exist: 10 items every 10 minutes, 60 items every hour, 1 session every 10 minutes, 6 sessions every hour - Free (UNIX STYLE) Version - Build 2015-02-28 - Stable Release Branche 2014 - <a title="Try New Stable Beta Version Branche 2015" href="//slangji.wordpress.com/wp-missed-schedule-beta/">Try New Beta Branche 2015</a> - Cron link requires wp crontrol plugin activated
+Version: 2014.1231.0
+KeyTag: 7f71ee70ea1ce6795c69c81df4ea13ac5cf230b4
 Author: sLa NGjI's
 Author URI: http://slangji.wordpress.com/
 Requires at least: 2.5
 Network: true
-Domain Path: /languages/
 Text Domain: wpmissedscheduled
+Domain Path: /languages/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Indentation: GNU style coding standard
@@ -17,9 +18,9 @@ Indentation URI: http://www.gnu.org/prep/standards/standards.html
 Humans: We are the humans behind
 Humans URI: http://humanstxt.org/Standard.html
  *
- * ALPHA DEVELOPMENT Release: Version 2014 Build 0912 Revision 0410
+ * ALPHA DEVELOPMENT Release is available only on [GitHub](github.com/slangji)
  *
- * BETA  DEVELOPMENT Release: Version 2015 Build 0221 Revision 0541
+ * BETA Release: Version 2015 Build 0228 Revision 1
  *
  * LICENSING (license.txt)
  *
@@ -144,16 +145,17 @@ Humans URI: http://humanstxt.org/Standard.html
 	 * @author slangjis
 	 * @since   2.5+ (Year 2007)
 	 * @branche 2014
-	 * @build   2015-02-21
-	 * @version 2014.0221.2015
+	 * @build   2015-02-28
+	 * @version 2014.1231.0
 	 * @license GPLv2 or later
 	 * @indentation GNU style coding standard
 	 * @satisfaction 04 Jan 2014 3:57 100.000 Downloads!
 	 * @satisfaction 26 Jan 2015 8:23 150.000 Downloads!
+	 * @satisfaction 26 Feb 2015 9:00 160.000 Downloads!
+	 * @satisfaction 28 Feb 2015 0:00 60.000+ Active Installs!
 	 * @keybit eLCQM540z78BbFMtmFXj3lC62b79H8651411574J4YQCb3g46FsK338kT29FPANa8
-	 * @keysum 2195874D0C12C94A9E87B4DEA0279183C0435498
-	 * @keytag e3388f8646b4151f10e12e5e38ff9ff8cb4f1c11
-	 * @authag e3388f8646b4151f10e12e5e38ff9ff8cb4f1c11
+	 * @keysum FBE04369B6316C2D32562B10398C60D7461AEC7B
+	 * @keytag 7f71ee70ea1ce6795c69c81df4ea13ac5cf230b4
 	 */
 
 	if ( ! function_exists( 'add_action' ) )
@@ -167,6 +169,11 @@ Humans URI: http://humanstxt.org/Standard.html
 		}
 
 	defined( 'ABSPATH' ) OR exit;
+
+	if ( ! defined( 'WPINC' ) )
+		{
+			die;
+		}
 
 	global $wp_version;
 
@@ -199,10 +206,27 @@ Humans URI: http://humanstxt.org/Standard.html
 			if ( ! current_user_can( 'activate_plugins' ) )
 				return;
 
-			if ( ! get_option( 'wp_missed_schedule' ) )
-				return;
+			delete_option( 'byrev_fixshedule_next_verify' );
+			delete_option( 'missed_schedule' );
+			delete_option( 'scheduled_post_guardian_next_run' );
+			delete_option( 'wpt_scheduled_check' );
 
 			delete_option( 'wp_missed_schedule' );
+			delete_option( 'wp_missed_schedule_beta' );
+			delete_option( 'wp_missed_schedule_dev' );
+			delete_option( 'wp_missed_schedule_pro' );
+
+			delete_option( 'wp_scheduled_missed' );
+			delete_option( 'wp_scheduled_missed_beta' );
+			delete_option( 'wp_scheduled_missed_dev' );
+			delete_option( 'wp_scheduled_missed_pro' );
+
+			delete_transient( 'wp_scheduled_missed' );
+
+			wp_clear_scheduled_hook( 'missed_schedule_cron' );
+
+			wp_clear_scheduled_hook( 'wp_missed_schedule' );
+			wp_clear_scheduled_hook( 'wp_scheduled_missed' );
 		}
 	register_activation_hook( __FILE__, 'wpms_activation', 0 );
 
@@ -212,10 +236,19 @@ Humans URI: http://humanstxt.org/Standard.html
 
 			$last = get_option( WPMS_OPTION, false );
 
-			if ( ( $last !== false ) && ( $last > ( time() - ( 60 * 10 ) ) ) )
+			if ( ( $last !== false ) && ( $last > ( time() - ( 600 ) ) ) )
 				return;
 
 			update_option( WPMS_OPTION, time() );
+
+			set_transient( 'wp_scheduled_missed', $wp_scheduled_missed, 600 );
+
+			$wp_scheduled_missed = get_transient( wp_scheduled_missed, false );
+
+			if ( ( $wp_scheduled_missed !== false ) && ( $wp_scheduled_missed > ( time() - ( 600 ) ) ) )
+				return;
+
+			set_transient( 'wp_scheduled_missed', $wp_scheduled_missed, 600 );
 		}
 	add_action( 'init', 'wpms_option', 0 );
 
@@ -223,26 +256,7 @@ Humans URI: http://humanstxt.org/Standard.html
 		{
 			global $wpdb;
 
-			/**
-			 * START OF WARNING
-			 *
-			 * This portion of SQL query code is formatted to UNIX STYLE
-			 * if is edited without respect UNIX STYLE broke all queries
-			 * plugin stop to work correctly and WordPress was instable.
-			 *
-			 * Both DOS and UNIX style line endings causes a problem with SVN repositories.
-			 * Change the file to use only one style of line endings UNIX or DOS.
-			 *
-			 * Use (Otto42) Plugin and Theme Check to verify the code integrity.
-			 *
-			 * @since	2013-12-31
-			 * @version	2015-02-21
-			 * @author	sLaNGjIs @ slangji.wordpress.com
-			 */
 			$qry = <<<SQL SELECT ID FROM {$wpdb->posts} WHERE ( ( post_date > 0 && post_date <= %s ) ) AND post_status = 'future' LIMIT 0,10 SQL;
-			/**
-			 * END OF WARNING
-			 */
 
 			$sql = $wpdb->prepare( $qry, current_time( 'mysql', 0 ) );
 
@@ -287,6 +301,8 @@ Humans URI: http://humanstxt.org/Standard.html
 						{
 							$links[] = '<a title="Visit other author plugins" href="//slangji.wordpress.com/plugins/">Other</a>';
 						}
+
+					$links[] = '<a title="Try New Stable Beta Version Branche 2015" href="//slangji.wordpress.com/wp-missed-schedule-beta/">Beta</a>';
 				}
 			return $links;
 		}
@@ -294,11 +310,11 @@ Humans URI: http://humanstxt.org/Standard.html
 
 	function wpms_shfl()
 		{
-			if ( ! is_home() || ! is_front_page() )
+			if ( ! is_home() && ! is_front_page() )
 				return;
 			{
-				echo "\r\n<!--Plugin WP Missed Schedule (free) Active - Secured with Genuine Authenticity Key Tag-->\r\n";
-				echo "\r\n<!-- This site is patched against a big problem not solved since WordPress 2.5 to date -->\r\n\r\n";
+				echo "\r\n<!--Plugin WP Missed Schedule Active - Secured with Genuine Authenticity KeyTag-->\r\n";
+				echo "\r\n<!-- This site is patched against a big problem not solved since WordPress 2.5 -->\r\n\r\n";
 			}
 		}
 	add_action( 'wp_head', 'wpms_shfl', 0 );
@@ -309,8 +325,8 @@ Humans URI: http://humanstxt.org/Standard.html
 			if ( ! current_user_can( 'administrator' ) )
 				return;
 			{
-				echo "\r\n<!--Secured Auth Tag: ".sha1(sha1("eLCQM540z78BbFMtmFXj3lC62b79H8651411574J4YQCb3g46FsK338kT29FPANa8"."2195874D0C12C94A9E87B4DEA0279183C0435498"))."-->\r\n";
-				echo "\r\n<!--Verified Key Tag: e3388f8646b4151f10e12e5e38ff9ff8cb4f1c11-->\r\n";
+				echo "\r\n<!--Secured AuthTag - ".sha1(sha1("eLCQM540z78BbFMtmFXj3lC62b79H8651411574J4YQCb3g46FsK338kT29FPANa8"."FBE04369B6316C2D32562B10398C60D7461AEC7B"))."-->\r\n";
+				echo "\r\n<!--Verified KeyTag - 7f71ee70ea1ce6795c69c81df4ea13ac5cf230b4-->\r\n";
 				echo "\r\n<!-- Your copy of Plugin WP Missed Schedule (free) is Genuine -->\r\n";
 			}
 		}
@@ -322,10 +338,28 @@ Humans URI: http://humanstxt.org/Standard.html
 			if ( ! current_user_can( 'activate_plugins' ) )
 				return;
 
-			if ( get_option( 'WPMS_OPTION' ) )
-				return;
+			delete_option( 'byrev_fixshedule_next_verify' );
+			delete_option( 'missed_schedule' );
+			delete_option( 'scheduled_post_guardian_next_run' );
+			delete_option( 'wpt_scheduled_check' );
 
-			delete_option( WPMS_OPTION );
+			delete_option( 'wp_missed_schedule' );
+			delete_option( 'wp_missed_schedule_beta' );
+			delete_option( 'wp_missed_schedule_dev' );
+			delete_option( 'wp_missed_schedule_pro' );
+
+			delete_option( 'wp_scheduled_missed' );
+			delete_option( 'wp_scheduled_missed_beta' );
+			delete_option( 'wp_scheduled_missed_dev' );
+			delete_option( 'wp_scheduled_missed_pro' );
+
+			delete_transient( 'wp_scheduled_missed' );
+
+			wp_clear_scheduled_hook( 'missed_schedule_cron' );
+
+			wp_clear_scheduled_hook( 'wp_missed_schedule' );
+			wp_clear_scheduled_hook( 'wp_scheduled_missed' );
 		}
 	register_deactivation_hook( __FILE__, 'wpms_clnp', 0 );
+
 ?>
