@@ -5,30 +5,38 @@ global $wpdb;
 $id = preg_replace('/\D/', '',$_GET['attachment_id']);
 $userid = get_current_user_id();
 
-$msgsMeta = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}fep_meta WHERE id = %d", $id));
-
+$msgsMeta = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}fep_meta WHERE meta_id = %d", $id));
 if (!$msgsMeta)
 wp_die('No attachment found');
 
 $message_id = $msgsMeta->message_id;
-$attachment_type = $msgsMeta->attachment_type;
-$attachment_url = $msgsMeta->attachment_url;
+
+$unserialized_file = maybe_unserialize( $msgsMeta->field_value );
+		  
+if ( $msgsMeta->field_name != 'attachment' || !$unserialized_file['type'] || !$unserialized_file['url'] || !$unserialized_file['file'] )
+wp_die('Invalid Attachment');
+
+$attachment_type = $unserialized_file['type'];
+$attachment_url = $unserialized_file['url'];
+$attachment_path = $unserialized_file['file'];
 $attachment_name = basename($attachment_url);
 
-$msgsInfo = $wpdb->get_row($wpdb->prepare("SELECT from_user, to_user FROM {$wpdb->prefix}fep_messages WHERE id = %d", $message_id));
+$msgsInfo = $wpdb->get_row($wpdb->prepare("SELECT from_user, to_user, status FROM {$wpdb->prefix}fep_messages WHERE id = %d", $message_id));
 
 if (!$msgsInfo)
 wp_die('Message already deleted');
 
-if ( $msgsInfo->from_user != $userid && $msgsInfo->to_user != $userid && !current_user_can('manage_options') )
+if ( $msgsInfo->from_user != $userid && $msgsInfo->to_user != $userid && $msgsInfo->status != 2 && !current_user_can('manage_options') )
 wp_die('No permission');
 
-		
+if(!file_exists($attachment_path)){
+$wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}fep_meta WHERE meta_id = %d", $id));
+wp_die('Attachment already deleted');
+}
+	
 		header("Content-Type: $attachment_type", true, 200);
 		header("Content-Disposition: attachment; filename=\"$attachment_name\"");
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: no-cache');
-		header('Expires: 0');
+		nocache_headers();
 		
 		readfile($attachment_url);
 		
