@@ -4,10 +4,10 @@
  * Plugin URI: https://deconf.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: Alin Marcu
- * Version: 4.4.7
+ * Version: 4.5.1
  * Author URI: https://deconf.com
  */
-define('GADWP_CURRENT_VERSION', '4.4.7');
+define('GADWP_CURRENT_VERSION', '4.5.1');
 /*
  * Include Install
  */
@@ -16,6 +16,7 @@ register_activation_hook(__FILE__, array(
   'GADASH_Install',
   'install'
 ));
+
 /*
  * Include Uninstall
  */
@@ -24,37 +25,48 @@ register_uninstall_hook(__FILE__, array(
   'GADASH_Uninstall',
   'uninstall'
 ));
+
+/*
+ * Include Tools
+ */
+include_once (dirname(__FILE__) . '/tools/tools.php');
+
+/*
+ * Include Config
+ */
 include_once (dirname(__FILE__) . '/config.php');
-// Plugin i18n
+
+/*
+ * Add i18n support
+ */
 add_action('plugins_loaded', 'ga_dash_load_i18n');
 
 function ga_dash_load_i18n()
 {
   load_plugin_textdomain('ga-dash', false, basename(dirname(__FILE__)) . '/languages');
 }
+
 add_action('plugins_loaded', 'gadash_init');
 
 function gadash_init()
 {
   global $GADASH_Config;
-  /*
-   * Include Tools
-   */
-  include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
   $tools = new GADASH_Tools();
   if (is_admin()) {
     /*
-     * Include backend widgets
+     * Include backend resources
      */
     if ($tools->check_roles($GADASH_Config->options['ga_dash_access_back'])) {
-      include_once (dirname(__FILE__) . '/admin/dashboard_widgets.php');
+      include_once (dirname(__FILE__) . '/admin/setup.php');
+      include_once (dirname(__FILE__) . '/admin/widgets.php');
+      include_once (dirname(__FILE__) . '/admin/item-reports.php');
     }
   } else {
     /*
-     * Include frontend stats
+     * Include frontend resources
      */
     if ($tools->check_roles($GADASH_Config->options['ga_dash_access_front']) and ($GADASH_Config->options['ga_dash_frontend_stats'] or $GADASH_Config->options['ga_dash_frontend_keywords'])) {
-      include_once (dirname(__FILE__) . '/front/frontend.php');
+      include_once (dirname(__FILE__) . '/front/item-reports.php');
     }
     /*
      * Include tracking
@@ -64,7 +76,7 @@ function gadash_init()
     }
   }
   /*
-   * Include frontend widgets
+   * Include frontend widget
    */
   include_once (dirname(__FILE__) . '/front/widgets.php');
   /*

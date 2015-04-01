@@ -20,7 +20,7 @@ class GADASH_Install
       $options['ga_dash_access_back'][] = 'administrator';
       $options['ga_dash_tableid_jail'] = '';
       $options['ga_dash_style'] = '#1e73be';
-      $options['ga_dash_jailadmins'] = 1;
+      $options['switch_profile'] = 0;
       $options['ga_dash_cachetime'] = 3600;
       $options['ga_dash_tracking'] = 1;
       $options['ga_dash_tracking_type'] = 'universal';
@@ -55,6 +55,9 @@ class GADASH_Install
       $options['ga_pubyear_dimindex'] = 0;
       $options['ga_aff_tracking'] = 0;
       $options['ga_event_affiliates'] = '/out/';
+      $options['automatic_updates_minorversion'] = 1;
+      $options['item_reports'] = 1;
+      $options['dashboard_widget'] = 1;
     } else {
       $options = array();
       $options['ga_dash_apikey'] = get_option('ga_dash_apikey');
@@ -66,7 +69,7 @@ class GADASH_Install
       $options['ga_dash_tableid_jail'] = get_option('ga_dash_tableid_jail');
       $options['ga_dash_frontend_stats'] = get_option('ga_dash_frontend');
       $options['ga_dash_style'] = '#1e73be';
-      $options['ga_dash_jailadmins'] = get_option('ga_dash_jailadmins');
+      $options['switch_profile'] = get_option('ga_dash_jailadmins');
       $options['ga_dash_cachetime'] = get_option('ga_dash_cachetime');
       if (get_option('ga_dash_tracking') == 4) {
         $options['ga_dash_tracking'] = 0;
@@ -101,6 +104,10 @@ class GADASH_Install
       $options['ga_pubyear_dimindex'] = 0;
       $options['ga_event_affiliates'] = '/out/';
       $options['ga_aff_tracking'] = 0;
+      $options['automatic_updates_minorversion'] = 1;
+      $options['item_reports'] = 1;
+      $options['dashboard_widget'] = 1;
+      
       delete_option('ga_dash_apikey');
       delete_option('ga_dash_clientid');
       delete_option('ga_dash_clientsecret');

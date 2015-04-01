@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Google Analytics Dashboard for WP\n"
-"POT-Creation-Date: 2015-03-10 19:16+0200\n"
-"PO-Revision-Date: 2015-03-10 19:16+0200\n"
+"POT-Creation-Date: 2015-03-10 19:15+0200\n"
+"PO-Revision-Date: 2015-03-10 19:15+0200\n"
 "Last-Translator: Alin Marcu <admin@deconf.com>\n"
-"Language-Team: Deconf <admin@deconf.com>\n"
-"Language: fr_FR\n"
+"Language-Team: Ahmed Majed <admin@almobdaa.com>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +13,8 @@ msgstr ""
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Poedit-SearchPath-0: ../.\n"
 
 #: .././admin/item-reports.php:56
@@ -34,7 +35,7 @@ msgstr ""
 #: .././admin/settings.php:1230 .././admin/settings.php:1236
 #: .././admin/settings.php:1248
 msgid "Cheating Huh?"
-msgstr "Tricher Hein?"
+msgstr "تغش ها؟"
 
 #: .././admin/settings.php:92 .././admin/settings.php:211
 #: .././admin/settings.php:378 .././admin/settings.php:737
@@ -59,11 +60,11 @@ msgstr ""
 #: .././admin/settings.php:378 .././admin/settings.php:737
 #: .././admin/settings.php:943 .././admin/settings.php:1261
 msgid "authorize the plugin"
-msgstr "autoriser le plugin"
+msgstr "صرح بالدخول للأضافة"
 
 #: .././admin/settings.php:98
 msgid "Google Analytics Frontend Settings"
-msgstr "Google Analytics Paramètres Frontend"
+msgstr "اعدادات الظهور الامامي لأحصائيات كوكل"
 
 #: .././admin/settings.php:108 .././admin/settings.php:227
 msgid "Permissions"
@@ -79,7 +80,7 @@ msgstr ""
 
 #: .././admin/settings.php:175
 msgid " show page searches (after each article)"
-msgstr "Afficher la page de recherche (après chaque article)"
+msgstr "اظهر بحوث الصفحة (بعد كل مقالة)"
 
 #: .././admin/settings.php:184 .././admin/settings.php:350
 #: .././admin/settings.php:715 .././admin/settings.php:1106
@@ -93,7 +94,7 @@ msgstr ""
 
 #: .././admin/settings.php:279
 msgid "disable Switch Profile/View functionality"
-msgstr "désactiver Changer Profil/Voir fonctionnalité"
+msgstr "عطل امكانية تغيير اعدادات الحساب/المشاهدة"
 
 #: .././admin/settings.php:294
 msgid "disable stats on Posts List and Pages List"
@@ -105,11 +106,11 @@ msgstr ""
 
 #: .././admin/settings.php:313
 msgid "Real-Time Settings"
-msgstr "Paramètres Temps-Réel"
+msgstr "اعدادات الوقت الحقيقي"
 
 #: .././admin/settings.php:316
 msgid "Maximum number of pages to display on real-time tab:"
-msgstr "Nombre maximum de pages à afficher sur l&#39;onglet en temps réel:"
+msgstr "اكثر عدد صفحات يتم اظهارها في قسم الوقت الحقيقي:"
 
 #: .././admin/settings.php:321 .././admin/settings.php:337
 msgid "find out more"
@@ -117,7 +118,7 @@ msgstr ""
 
 #: .././admin/settings.php:323 .././admin/settings.php:340
 msgid "about this feature"
-msgstr "sur cette fonction"
+msgstr "حول هذه الميزة"
 
 #: .././admin/settings.php:328
 msgid "Location Settings"
@@ -141,11 +142,11 @@ msgstr ""
 
 #: .././admin/settings.php:381 .././admin/settings.php:417
 msgid "Enabled"
-msgstr "Active"
+msgstr "تفعيل"
 
 #: .././admin/settings.php:387
 msgid "Google Analytics Tracking Code"
-msgstr "Google Analytics Tracking Code"
+msgstr "كود تعقب احصائيات كوكل"
 
 #: .././admin/settings.php:396
 msgid "Basic Settings"
@@ -153,16 +154,16 @@ msgstr ""
 
 #: .././admin/settings.php:397 .././admin/settings.php:476
 msgid "Events Tracking"
-msgstr "Suivi des événements"
+msgstr "تعقب الافعال"
 
 #: .././admin/settings.php:398 .././admin/settings.php:540
 msgid "Custom Definitions"
-msgstr ""
+msgstr "تعاريف مخصصة"
 
 #: .././admin/settings.php:399 .././admin/settings.php:668
 #: .././admin/settings.php:1405
 msgid "Exclude Tracking"
-msgstr "Exclure Tracking"
+msgstr "لا تتبع"
 
 #: .././admin/settings.php:400
 msgid "Advanced Settings"
@@ -170,7 +171,7 @@ msgstr ""
 
 #: .././admin/settings.php:408
 msgid "Tracking Settings"
-msgstr "Paramètres de suivi"
+msgstr "اعدادات التعقب"
 
 #: .././admin/settings.php:411
 msgid "Tracking Options:"
@@ -178,30 +179,29 @@ msgstr ""
 
 #: .././admin/settings.php:415
 msgid "Disabled"
-msgstr "Désactive"
+msgstr "تعطيل"
 
 #: .././admin/settings.php:425 .././admin/settings.php:1040
 #: .././admin/settings.php:1065 .././admin/settings.php:1392
 #: .././admin/widgets.php:67
 msgid "View Name:"
-msgstr "Nom de la vue:"
+msgstr "شاهد الاسم:"
 
 #: .././admin/settings.php:425 .././admin/settings.php:1065
 msgid "Tracking ID:"
-msgstr "Suivi ID:"
+msgstr "معرف التعقب:"
 
 #: .././admin/settings.php:425 .././admin/settings.php:1065
 msgid "Default URL:"
-msgstr "URL par défaut:"
+msgstr "الرابط الرئيسي:"
 
 #: .././admin/settings.php:425 .././admin/settings.php:1065
 msgid "Time Zone:"
-msgstr "Fuseau horaire:"
+msgstr "المنطقة الزمنية:"
 
 #: .././admin/settings.php:430
-#, fuzzy
 msgid "Basic Tracking"
-msgstr "Suivi des événements"
+msgstr "التعقب الاساسي"
 
 #: .././admin/settings.php:433
 msgid "Tracking Type:"
@@ -209,38 +209,35 @@ msgstr ""
 
 #: .././admin/settings.php:437
 msgid "Classic Analytics"
-msgstr "Analytics classiques"
+msgstr "الاحصائيات الكلاسيكية"
 
 #: .././admin/settings.php:439
 msgid "Universal Analytics"
-msgstr "Universel Analytics"
+msgstr "الاحصائيات العالمية"
 
 #: .././admin/settings.php:453
 msgid " anonymize IPs while tracking"
-msgstr "anonymiser IP tout en suivant"
+msgstr "تجاهل الاي بي عند التعقب"
 
 #: .././admin/settings.php:468
 msgid " enable remarketing, demographics and interests reports"
-msgstr ""
-"permettre remarketing, les données démographiques et les rapports d&#39;"
-"intérêts"
+msgstr "فعل تقارير اعادة التسويق, الديمغرافي والاهتمام"
 
 #: .././admin/settings.php:490
 msgid " track downloads, mailto and outbound links"
-msgstr "téléchargement de titres, mailto et liens sortants"
+msgstr "تعقب التحميلات, ارسل الى والروابط الخارجية"
 
 #: .././admin/settings.php:494
-#, fuzzy
 msgid "Downloads Regex:"
-msgstr "Filtres téléchargement:"
+msgstr "حمل التقارير"
 
 #: .././admin/settings.php:511
 msgid " track affiliate links matching this regex"
-msgstr ""
+msgstr "تتبع روابط  الداعمين التي تطابق هذا الجزء"
 
 #: .././admin/settings.php:515
 msgid "Affiliates Regex:"
-msgstr ""
+msgstr "روابط الداعمين:"
 
 #: .././admin/settings.php:532
 msgid " track fragment identifiers, hashmarks (#) in URI links"
@@ -263,34 +260,32 @@ msgid "User Type:"
 msgstr ""
 
 #: .././admin/settings.php:587
-#, fuzzy
 msgid "Advanced Tracking"
-msgstr "Suivi des événements"
+msgstr "تتبع متطور"
 
 #: .././admin/settings.php:590
 msgid "Page Speed SR:"
-msgstr "Page Speed SR:"
+msgstr "سرعة الصفحة:"
 
 #: .././admin/settings.php:608
-#, fuzzy
 msgid " exclude events from bounce-rate calculation"
-msgstr " exclude the event hit from bounce-rate calculation"
+msgstr "لا تحسب الافعال من حسابات نسبة القفز"
 
 #: .././admin/settings.php:623
 msgid " enable enhanced link attribution"
-msgstr "permettre une meilleure liaison attribution"
+msgstr "فعل تعديل الرابط المحسن"
 
 #: .././admin/settings.php:637
 msgid " enable AdSense account linking"
-msgstr "Permettre la liaison avec votre compte Adsense"
+msgstr "فعل ربط حساب ادسينس"
 
 #: .././admin/settings.php:653
 msgid " enable cross domain tracking"
-msgstr ""
+msgstr "فعل التتبع عبر الروابط"
 
 #: .././admin/settings.php:657
 msgid "Cross Domains:"
-msgstr ""
+msgstr "عبر الروابط التالية:"
 
 #: .././admin/settings.php:671
 msgid "Exclude tracking for:"
@@ -344,7 +339,7 @@ msgstr ""
 
 #: .././admin/settings.php:852 .././admin/settings.php:1161
 msgid "Plugin authorization succeeded."
-msgstr "Autorisation Plugin réussi."
+msgstr "تم تفعيل تصريح الاضافة بنجاح."
 
 #: .././admin/settings.php:868 .././admin/settings.php:1186
 msgid ""
@@ -354,11 +349,11 @@ msgstr ""
 
 #: .././admin/settings.php:891 .././admin/settings.php:1218
 msgid "Cleared Cache."
-msgstr "Cache effacé."
+msgstr "الخزن المزال."
 
 #: .././admin/settings.php:900 .././admin/settings.php:1227
 msgid "Token Reseted and Revoked."
-msgstr "Jeton remis à zéro et révoqué."
+msgstr "الجزء المراح والمعدل."
 
 #: .././admin/settings.php:910
 msgid "All errors reseted."
@@ -366,11 +361,11 @@ msgstr ""
 
 #: .././admin/settings.php:923 .././admin/settings.php:1241
 msgid "All other domains/properties were removed."
-msgstr "Tous les autres domaines/propriétés ont été retirés."
+msgstr "كل الروابط/والخصائص تم إزالتها."
 
 #: .././admin/settings.php:935 .././admin/settings.php:1253
 msgid "Google Analytics Settings"
-msgstr "Réglages Google analytics"
+msgstr "إعدادات احصائيات كوكل"
 
 #: .././admin/settings.php:948 .././admin/settings.php:1266
 msgid "Use the red link (see below) to generate and get your access code!"
@@ -378,58 +373,55 @@ msgstr ""
 
 #: .././admin/settings.php:959 .././admin/settings.php:1301
 msgid "Plugin Authorization"
-msgstr "Autorisation Plugin"
+msgstr "تصريح الأضافة"
 
 #: .././admin/settings.php:963 .././admin/settings.php:1305
 msgid "You should watch the"
-msgstr "Vous devriez regarder la"
+msgstr "يجب ان تشاهد هذا"
 
 #: .././admin/settings.php:963 .././admin/settings.php:1305
 msgid "video"
-msgstr "video"
+msgstr "الڤيديو"
 
 #: .././admin/settings.php:963 .././admin/settings.php:1305
 msgid "and read this"
-msgstr "et lire ce"
+msgstr "وأقرأ هذا"
 
 #: .././admin/settings.php:963 .././admin/settings.php:1305
 msgid "tutorial"
-msgstr "Tutoriel"
+msgstr "الدرس"
 
 #: .././admin/settings.php:963 .././admin/settings.php:1305
 msgid ""
 "before proceeding to authorization. This plugin requires a properly "
 "configured Google Analytics account"
 msgstr ""
-"avant de procéder à l&#39;autorisation. Ce plugin nécessite un compte Google "
-"Analytics correctement configuré"
+"قبل ان تباشر التصريح. هذه الاضافة تتطلب حساب احصائيات كوكل معد بصورة صحيحة"
 
 #: .././admin/settings.php:975 .././admin/settings.php:1316
 msgid " use your own API Project credentials"
-msgstr ""
-"utiliser vos propres informations d&#39;identification de projets de l&#39;"
-"API"
+msgstr "أستخدام معرفات مشروع API خاصتك"
 
 #: .././admin/settings.php:982 .././admin/settings.php:1323
 msgid "API Key:"
-msgstr "Clé API:"
+msgstr "مفتاح API:"
 
 #: .././admin/settings.php:989 .././admin/settings.php:1331
 msgid "Client ID:"
-msgstr "Client ID:"
+msgstr "معرف الزيون:"
 
 #: .././admin/settings.php:997 .././admin/settings.php:1340
 msgid "Client Secret:"
-msgstr "Client Secret:"
+msgstr "سر الزبون:"
 
 #: .././admin/settings.php:1015 .././admin/settings.php:1359
 msgid "Clear Authorization"
-msgstr "Effacer autorisation"
+msgstr "أزل التصريحات"
 
 #: .././admin/settings.php:1019 .././admin/settings.php:1120
 #: .././admin/settings.php:1362 .././admin/settings.php:1440
 msgid "Clear Cache"
-msgstr "Effacer Cache"
+msgstr "أزل الخزن"
 
 #: .././admin/settings.php:1022
 msgid "Reset Errors"
@@ -438,7 +430,7 @@ msgstr ""
 #: .././admin/settings.php:1028 .././admin/setup.php:73
 #: .././admin/setup.php:109
 msgid "General Settings"
-msgstr "Réglages Généraux"
+msgstr "الأعدادات العامة"
 
 #: .././admin/settings.php:1031
 msgid "Select Domain:"
@@ -450,11 +442,11 @@ msgstr ""
 
 #: .././admin/settings.php:1049
 msgid "and/or hide all other domains"
-msgstr "et/ou masquer tous les autres domaines"
+msgstr "و/أو أخفي كل الروابط الأخرى"
 
 #: .././admin/settings.php:1052
 msgid "Hide Now"
-msgstr "Cacher Maintenant"
+msgstr "أخفي الأن"
 
 #: .././admin/settings.php:1071
 msgid "Theme Color:"
@@ -473,27 +465,27 @@ msgstr ""
 #: .././admin/settings.php:1116 .././admin/settings.php:1437
 #: .././admin/widgets.php:38
 msgid "Authorize Plugin"
-msgstr "autoriser le plugin"
+msgstr "صرح الأضافة "
 
 #: .././admin/settings.php:1192
 msgid "Properties refreshed."
-msgstr "Propriétés rafraîchies."
+msgstr "تم تحديث الخصائص."
 
 #: .././admin/settings.php:1278
 msgid "Network Setup"
-msgstr "Configuration du réseau"
+msgstr "اعدادات الشبكة"
 
 #: .././admin/settings.php:1293
 msgid " use a single Google Analytics account for the entire network"
-msgstr "utiliser un seul compte Google Analytics pour l&#39;ensemble du réseau"
+msgstr "أستخدم حساب أحصائيات كوكل واحد للشبكة كلها"
 
 #: .././admin/settings.php:1365
 msgid "Refresh Properties"
-msgstr "Propriétés Actualisées"
+msgstr "حدث الخصائص"
 
 #: .././admin/settings.php:1371
 msgid "Properties/Views Settings"
-msgstr "Propriétés/Paramètres Vues"
+msgstr "اعدادات الخصائص/المشاهدة"
 
 #: .././admin/settings.php:1419
 msgid " exclude Super Admin tracking for the entire network"
@@ -501,11 +493,11 @@ msgstr ""
 
 #: .././admin/settings.php:1471
 msgid "Setup Tutorial & Demo"
-msgstr "Configuration Tutorial et Démo"
+msgstr "درس التنصيب"
 
 #: .././admin/settings.php:1483
 msgid "Support & Reviews"
-msgstr "Support & avis"
+msgstr "الدعم والتقييم"
 
 #: .././admin/settings.php:1491
 msgid "Plugin documentation and support on"
@@ -513,35 +505,35 @@ msgstr ""
 
 #: .././admin/settings.php:1498
 msgid "Your feedback and review are both important,"
-msgstr "Vos commentaires et avis sont importants,"
+msgstr "رأيك وتقييمك كلاهما مهمان,"
 
 #: .././admin/settings.php:1498
 msgid "rate this plugin"
-msgstr "évaluer ce plugin"
+msgstr "قيم هذه الاضافة"
 
 #: .././admin/settings.php:1503
 msgid "Further Reading"
-msgstr "Lectures complémentaires"
+msgstr "أكمل القراءة"
 
 #: .././admin/settings.php:1511
 msgid "Improve search rankings"
-msgstr ""
+msgstr "حسن ترتيب البحث"
 
 #: .././admin/settings.php:1511
 msgid "by moving your website to HTTPS/SSL."
-msgstr ""
+msgstr "حول موقعك الى بروتوكول HTTPs/SSl"
 
 #: .././admin/settings.php:1518
 msgid "Other"
-msgstr "Autres"
+msgstr "اخرى"
 
 #: .././admin/settings.php:1518
 msgid "WordPress Plugins"
-msgstr "Plugin Wordpress"
+msgstr "اضافات وردبريس"
 
 #: .././admin/settings.php:1518
 msgid "written by the same author"
-msgstr "écrit par le même auteur"
+msgstr "كتبت من قبل نفس صاحب الاضافة"
 
 #: .././admin/settings.php:1523
 msgid "Other Services"
@@ -557,7 +549,7 @@ msgstr ""
 
 #: .././admin/settings.php:1538
 msgid "Web Analytics"
-msgstr "Web Analytics"
+msgstr "احصائيات الويب"
 
 #: .././admin/settings.php:1538
 msgid "service with users tracking at IP level."
@@ -565,41 +557,41 @@ msgstr ""
 
 #: .././admin/setup.php:69 .././admin/setup.php:105
 msgid "Google Analytics"
-msgstr "Google Analytics"
+msgstr "أحصائيات كوكل"
 
 #: .././admin/setup.php:77
 msgid "Backend Settings"
-msgstr "Réglages B.O"
+msgstr "أعدادات العمل"
 
 #: .././admin/setup.php:81
 msgid "Frontend Settings"
-msgstr "Réglages F.O"
+msgstr "اعدادات الظهور"
 
 #: .././admin/setup.php:85
 msgid "Tracking Code"
-msgstr "Code de Tracking"
+msgstr "كود التعقب"
 
 #: .././admin/setup.php:190 .././admin/widgets.php:123
 msgid "Today"
-msgstr "Aujourd&#39;hui"
+msgstr "اليوم"
 
 #: .././admin/setup.php:191 .././admin/widgets.php:125
 msgid "Yesterday"
-msgstr "Hier"
+msgstr "البارحة"
 
 #: .././admin/setup.php:192 .././admin/widgets.php:127
 #: .././front/widgets.php:68 .././front/widgets.php:176
 msgid "Last 7 Days"
-msgstr "7 Derniers Jours"
+msgstr "اخر ٧ ايام"
 
 #: .././admin/setup.php:193 .././admin/widgets.php:131
 #: .././front/widgets.php:74 .././front/widgets.php:178
 msgid "Last 30 Days"
-msgstr "30 Derniers Jours"
+msgstr "اخر ٣٠ يوم"
 
 #: .././admin/setup.php:194 .././admin/widgets.php:133
 msgid "Last 90 Days"
-msgstr "90 Derniers Jours"
+msgstr "أخر ٩٠ يوم"
 
 #: .././admin/setup.php:197 .././admin/setup.php:213
 #: .././admin/widgets.php:139 .././admin/widgets.php:881
@@ -617,19 +609,19 @@ msgstr ""
 
 #: .././admin/setup.php:199 .././admin/widgets.php:142
 msgid "Organic"
-msgstr "Organique"
+msgstr "عضوي"
 
 #: .././admin/setup.php:200 .././admin/setup.php:215
 #: .././admin/widgets.php:144 .././admin/widgets.php:889
 #: .././tools/gapi.php:375
 msgid "Page Views"
-msgstr "Pages vues"
+msgstr "مشاهدات الصفحة"
 
 #: .././admin/setup.php:201 .././admin/setup.php:216
 #: .././admin/widgets.php:146 .././admin/widgets.php:893
 #: .././tools/gapi.php:378
 msgid "Bounce Rate"
-msgstr "Taux de Rebond"
+msgstr "نسبة القفز"
 
 #: .././admin/setup.php:202 .././admin/widgets.php:148
 msgid "Location"
@@ -709,55 +701,52 @@ msgstr ""
 
 #: .././admin/setup.php:260
 msgid "Settings"
-msgstr "Réglages"
+msgstr "الاعدادات"
 
 #: .././admin/widgets.php:27 .././front/widgets.php:14
 msgid "Google Analytics Dashboard"
-msgstr "Tableau de Bord Google Analytics"
+msgstr "لوحة أحصائيات كوكل"
 
 #: .././admin/widgets.php:38
 msgid "This plugin needs an authorization:"
-msgstr "Ce plugin a besoin d&#39;une autorisation:"
+msgstr "هذه الاضافة تحتاج الى تصريح:"
 
 #: .././admin/widgets.php:72
 msgid "Something went wrong while retrieving profiles list."
-msgstr ""
-"Quelque chose s&#39;est mal passé lors de la récupération de la liste des "
-"profils."
+msgstr "حدث خطأ ما اثناء استرجاع قائمة البروفايلات."
 
 #: .././admin/widgets.php:72
 msgid "More details"
-msgstr "Plus de Détails"
+msgstr "المزيد من التفاصيل"
 
 #: .././admin/widgets.php:85 .././admin/widgets.php:96
 msgid "An admin should asign a default Google Analytics Profile."
-msgstr "Un administrateur doit assigner un profil Google Analytics par défaut."
+msgstr "المدير يجب ان يحصل على حساب احصائيات كوكل رئيسي."
 
 #: .././admin/widgets.php:85 .././admin/widgets.php:96
 msgid "Select Domain"
-msgstr "Sélectionner un Domaine"
+msgstr "حدد النطاق"
 
 #: .././admin/widgets.php:101
 msgid ""
 "Something went wrong while retrieving property data. You need to create and "
 "properly configure a Google Analytics account:"
 msgstr ""
-"Quelque chose s&#39;est mal passé lors de la récupération des données de "
-"propriété. Vous devez créer et configurer correctement un compte Google "
-"Analytics:"
+"حدث خطأ ما اثناء استرجاع بيانات الملكية. تحتاج الى انشاء واعداد حساب كوكل "
+"للأحصائيات بصورة صحيحة:"
 
 #: .././admin/widgets.php:101
 msgid "Find out more!"
-msgstr "En savoir plus!"
+msgstr "اعرف أكثر!"
 
 #: .././admin/widgets.php:122
 msgid "Real-Time"
-msgstr "Temps-Réel"
+msgstr "الوقت الحقيقي"
 
 #: .././admin/widgets.php:129 .././front/widgets.php:71
 #: .././front/widgets.php:177
 msgid "Last 14 Days"
-msgstr "14 Derniers Jours"
+msgstr "أخر ١٤ يوم"
 
 #: .././admin/widgets.php:150 .././tools/gapi.php:497
 msgid "Pages"
@@ -765,16 +754,16 @@ msgstr ""
 
 #: .././admin/widgets.php:244 .././admin/widgets.php:484
 msgid "REFERRAL"
-msgstr "RENVOI"
+msgstr "المصدر"
 
 #: .././admin/widgets.php:248 .././admin/widgets.php:485
 msgid "ORGANIC"
-msgstr "ORGANIQUE"
+msgstr "عضوي"
 
 #: .././admin/widgets.php:252 .././admin/widgets.php:372
 #: .././admin/widgets.php:486
 msgid "SOCIAL"
-msgstr "SOCIAL"
+msgstr "اجتماعي"
 
 #: .././admin/widgets.php:256 .././admin/widgets.php:375
 #: .././admin/widgets.php:487
@@ -784,23 +773,23 @@ msgstr ""
 #: .././admin/widgets.php:260 .././admin/widgets.php:378
 #: .././admin/widgets.php:490
 msgid "DIRECT"
-msgstr "DIRECT"
+msgstr "مباشر"
 
 #: .././admin/widgets.php:264 .././admin/widgets.php:491
 msgid "NEW"
-msgstr "NOUVEAU"
+msgstr "جديد"
 
 #: .././admin/widgets.php:366
 msgid "REFERRALS"
-msgstr "RÉFÉRENCES"
+msgstr "المصادر"
 
 #: .././admin/widgets.php:369
 msgid "KEYWORDS"
-msgstr "MOTS-CLÉS"
+msgstr "الكلمات المفتاحية"
 
 #: .././front/item-reports.php:130
 msgid "Views vs UniqueViews"
-msgstr "Vues VS Unique Vues"
+msgstr "المشاهدات ضد المشاهدات الحقيقية"
 
 #: .././front/item-reports.php:180
 msgid "Google Analytics Reports"
@@ -808,7 +797,7 @@ msgstr ""
 
 #: .././front/widgets.php:15
 msgid "Will display your google analytics stats in a widget"
-msgstr "Affichera vos statistiques Google Analytics dans un widget"
+msgstr "ستظهر احصائيات حسابك في مربع جانبي"
 
 #: .././front/widgets.php:40 .././tools/gapi.php:803
 msgid "trend"
@@ -816,7 +805,7 @@ msgstr ""
 
 #: .././front/widgets.php:127
 msgid "Period:"
-msgstr "Période:"
+msgstr "الفترة:"
 
 #: .././front/widgets.php:127
 msgid "Sessions:"
@@ -824,31 +813,31 @@ msgstr ""
 
 #: .././front/widgets.php:131
 msgid "generated by"
-msgstr "générée par"
+msgstr "اظهرت بواسطة"
 
 #: .././front/widgets.php:141
 msgid "Google Analytics Stats"
-msgstr "Google Analytics Statistiques"
+msgstr "احصائيات كوكل"
 
 #: .././front/widgets.php:148
 msgid "Title:"
-msgstr "Titre:"
+msgstr "العنوان:"
 
 #: .././front/widgets.php:155
 msgid "Display:"
-msgstr "Affichage:"
+msgstr "اظهر:"
 
 #: .././front/widgets.php:159
 msgid "Chart & Totals"
-msgstr "Graphique & Totaux"
+msgstr "الاحصائيات والكل"
 
 #: .././front/widgets.php:160
 msgid "Chart"
-msgstr "raphique"
+msgstr "الاحصائيات"
 
 #: .././front/widgets.php:161
 msgid "Totals"
-msgstr "Totaux"
+msgstr "الكل"
 
 #: .././front/widgets.php:165
 msgid "Anonymize stats:"
@@ -856,19 +845,19 @@ msgstr ""
 
 #: .././front/widgets.php:172
 msgid "Stats for:"
-msgstr "Statistiques pour:"
+msgstr "الاحصائيات لـ:"
 
 #: .././front/widgets.php:182
 msgid "Give credits:"
-msgstr "Accorder des crédits:"
+msgstr "أعطي الفضل:"
 
 #: .././tools/gapi.php:128
 msgid "Use this link to get your access code:"
-msgstr "Utilisez ce lien pour obtenir votre code d&#39;accès:"
+msgstr "أستخدم هذا الرابط للحصول على كود التعقب الخاص بك:"
 
 #: .././tools/gapi.php:128
 msgid "Get Access Code"
-msgstr "Obtenir le code d&#39;accès"
+msgstr "احصل على كود الدخول"
 
 #: .././tools/gapi.php:133 .././tools/gapi.php:137
 msgid "Use the red link to get your access code!"
@@ -876,27 +865,27 @@ msgstr ""
 
 #: .././tools/gapi.php:133
 msgid "Access Code:"
-msgstr "Code d&#39;Accès:"
+msgstr "كود الدخول:"
 
 #: .././tools/gapi.php:145
 msgid "Save Access Code"
-msgstr "Sauver le Code d&#39;Accès"
+msgstr "أحفظ كود الدخول"
 
 #: .././tools/gapi.php:381
 msgid "Organic Searches"
-msgstr "Recherches Organique"
+msgstr "البحث العضوي"
 
 #: .././tools/gapi.php:389
 msgid "Hour"
-msgstr "Heure"
+msgstr "الساعة"
 
 #: .././tools/gapi.php:392 .././tools/gapi.php:802 .././tools/gapi.php:854
 msgid "Date"
-msgstr "Date"
+msgstr "التاريخ"
 
 #: .././tools/gapi.php:498 .././tools/gapi.php:855
 msgid "Views"
-msgstr "Vues"
+msgstr "المشاهدات"
 
 #: .././tools/gapi.php:617
 msgid "Countries"
@@ -912,215 +901,217 @@ msgstr ""
 
 #: .././tools/gapi.php:761
 msgid "Type"
-msgstr "Type"
+msgstr "النوع"
 
 #: .././tools/gapi.php:856
 msgid "UniqueViews"
-msgstr "Unique vues"
+msgstr "المشاهدات الخاصة"
 
 #~ msgid "Google Analytics Dashboard Settings"
-#~ msgstr "Paramètres du tableau de bord Google Analytics"
+#~ msgstr "اعدادات الاضافة"
 
 #~ msgid "A new frontend widget is available! To enable it, go to"
-#~ msgstr ""
-#~ "Un nouveau widget frontend est disponible! Pour l&#39;activer, allez dans"
+#~ msgstr "هنالك ودجت أمامي جديدة متوفرة! لتفعلها, أذهب الى"
 
 #~ msgid "Appearance -> Widgets"
-#~ msgstr "Apparence -> Widgets"
+#~ msgstr "المظاهر -< المربعات الجانبية"
 
 #~ msgid "and look for Google Analytics Dashboard."
-#~ msgstr "et de chercher Google Analytics Dashboard."
+#~ msgstr "وابحث عن  المربع الخاص بالأضافة."
 
 #~ msgid "Something went wrong, you need to"
-#~ msgstr "Quelque chose s&#39;est mal passé, vous devez"
+#~ msgstr "حدث خطأ ما, تحتاج الى"
 
 #~ msgid "or properly configure your"
-#~ msgstr "ou bien configurer votre"
+#~ msgstr "أو عدل اعداداتك بصورة صحيحة"
 
 #~ msgid "Google Analytics account"
-#~ msgstr "Compte Google Analytics"
+#~ msgstr "حساب أحصائيات كوكل"
 
 #~ msgid "(find out more"
-#~ msgstr "(en savoir plus"
+#~ msgstr "(اعرف المزيد"
 
 #~ msgid ")"
-#~ msgstr ")"
+#~ msgstr "("
 
 #~ msgid "Additional Stats & Charts"
-#~ msgstr "Statistiques et graphiques supplémentaires"
+#~ msgstr "المزيد من الاحصائيات والاشكال"
 
 #~ msgid "Target Geo Map to region:"
-#~ msgstr "Cible Géo carte de la région:"
+#~ msgstr "حدد الخريطة الجغرافية لمنطقة معينة:"
 
 #~ msgid "and render top"
-#~ msgstr "et rendre haut"
+#~ msgstr "واظهر الاعلى"
 
 #~ msgid "cities (find out more"
-#~ msgstr "villes (en savoir plus"
+#~ msgstr "المدن (اعرف المزيد"
 
 #~ msgid " show traffic overview"
-#~ msgstr "Affiche la Vue d&#39;ensemble du Traffic"
+#~ msgstr "اظهر المرور بصورة عامة"
 
 #~ msgid " show top pages"
-#~ msgstr "Affiche le Top pages"
+#~ msgstr "اظهر الصفحات الاكثر شعبية"
 
 #~ msgid " show top referrers"
-#~ msgstr "Affiche le Top références"
+#~ msgstr "اظهر المصادر الاكثر شعبية"
 
 #~ msgid " show top searches"
-#~ msgstr "Affiche le Top recherches"
+#~ msgstr "اظهر كلمات البحث الاكثر شعبية"
 
 #~ msgid "Dumping log data."
-#~ msgstr "D&#39;exporter les données du journal."
+#~ msgstr "امسح بيانات السجل."
 
 #~ msgid ""
 #~ "Something went wrong. Please check the Debugging Data section for "
 #~ "possible errors"
-#~ msgstr ""
-#~ "Quelque chose s&#39;est mal passé. S&#39;il vous plaît consulter la "
-#~ "section Mise au point de données pour d&#39;éventuelles erreurs"
+#~ msgstr "حدث خطأ ما. الرجاء التأكد من سجل الاصلاحات لرؤية الاخطاء المحتملة"
 
 #~ msgid "Debugging Data"
-#~ msgstr "débogage des données"
+#~ msgstr "بيانات التصليح"
 
 #~ msgid "Anonimize chart&#39;s stats:"
-#~ msgstr "Les statistiques de Anonimize graphique:"
+#~ msgstr "عمم الاحصائيات:"
 
 #~ msgid "Top Searches"
-#~ msgstr "Top Recherches"
+#~ msgstr "البحث الاكثر شعبية"
 
 #~ msgid "Error Log"
-#~ msgstr "Log erreurs"
+#~ msgstr "سجل الاخطاء"
 
 #~ msgid "Visits"
-#~ msgstr "Visites"
+#~ msgstr "الزيارات"
 
 #~ msgid "Visitors"
-#~ msgstr "Visiteurs"
+#~ msgstr "الزائرين"
 
 #~ msgid ""
 #~ "No stats available. Please check the Debugging Data section for possible "
 #~ "errors"
 #~ msgstr ""
-#~ "Aucune statistique n&#39;est disponible. S&#39;il vous plaît consulter la "
-#~ "section Mise au point de données pour d&#39;éventuelles erreurs"
+#~ "لا يوجد أحصائيات. الرجاء التأكد من بيانات الاخطاء لوجود أخطاء محتملة"
 
 #~ msgid "Country/City"
-#~ msgstr "Pays/Ville"
+#~ msgstr "الدولة/لمدينة"
 
 #~ msgid "Source"
-#~ msgstr "source"
+#~ msgstr "المصدر"
 
 #~ msgid "Traffic Sources"
-#~ msgstr "Sources de traffic"
+#~ msgstr "مصادر المرور"
 
 #~ msgid "New vs. Returning"
-#~ msgstr "Nouveaux VS Connus"
+#~ msgstr "الجديد ضد العائد"
 
 #~ msgid "Top Pages"
-#~ msgstr "Top Pages"
+#~ msgstr "الصفحات الأكثر شعبية"
 
 #~ msgid "Top Referrers"
-#~ msgstr "Top Références"
+#~ msgstr "المشيرين الاكثر شعبية"
 
 #~ msgid "Visits:"
-#~ msgstr "Visites:"
+#~ msgstr "الزيارات:"
 
 #~ msgid "Visitors:"
-#~ msgstr "Visiteurs:"
+#~ msgstr "الزوار:"
 
 #~ msgid "Page Views:"
-#~ msgstr "Pages Vues:"
+#~ msgstr "مشاهدات الصفحة:"
 
 #~ msgid "Bounce Rate:"
-#~ msgstr "Taux de Rebond:"
+#~ msgstr "نسبة القفز:"
 
 #~ msgid "Organic Search:"
-#~ msgstr "Recherches Organique:"
+#~ msgstr "البحث العضوي:"
 
 #~ msgid "Pages per Visit:"
-#~ msgstr "Pages par visite:"
+#~ msgstr "الصفحات بالزيارة الواحدة:"
 
 #~ msgid ""
 #~ "This is a beta feature and is only available when using my Developer Key! "
 #~ "("
-#~ msgstr ""
-#~ "Il s&#39;agit d&#39;une fonctionnalité bêta et est disponible uniquement "
-#~ "lorsque vous utilisez ma clé de développeur! ("
+#~ msgstr "هذه ميزة تجريبية وهي متوفرة فقط عند استخدام مفتاح التطوير خاصتي! ("
 
 #~ msgid "more about this feature"
-#~ msgstr "plus sur cette fonction"
+#~ msgstr "المزيد حول هذه الميزة"
 
 #~ msgid "RETURN"
-#~ msgstr "RETOUR"
+#~ msgstr "عائد"
 
 #~ msgid "Visits from "
-#~ msgstr "Visites de"
+#~ msgstr "يزور من"
 
 #~ msgid "Visits by Country"
-#~ msgstr "Visites par Pays"
+#~ msgstr "الزيارات حسب البلد "
 
 #~ msgid "Traffic Overview"
-#~ msgstr "Aperçu du Traffic"
+#~ msgstr "مشاهدة عامة للزيارات"
 
 #~ msgid " show page visits and visitors in frontend (after each article)"
-#~ msgstr ""
-#~ "Afficher la page visites et de visiteurs en frontend (après chaque "
-#~ "article)"
+#~ msgstr "اظهر زيارات الصفحة والزوار في الواجهة (بعد كل مقالة)"
 
 #~ msgid " show Geo Map chart for visits"
-#~ msgstr "montrer carte Géographique pour les visites"
+#~ msgstr "اظهر شكل خريطة جغرافي للزيارات"
 
 #~ msgid "You can find support on"
-#~ msgstr "Vous pouvez trouver de l&#39;aide sur"
+#~ msgstr "يمكنك ايجاد الدعم في"
+
+#~ msgid "DeConf.com"
+#~ msgstr "DeConf.com"
 
 #~ msgid "service with visitors tracking at IP level."
-#~ msgstr "services auprès des visiteurs de suivi au niveau IP."
+#~ msgstr "خدمة تتبع الزوار على مستوى الاي بي"
 
 #~ msgid "Total Visits:"
-#~ msgstr "Total visits"
+#~ msgstr "الزيارات الكلية:"
 
 #~ msgid "PHP CURL is required. Please install/enable PHP CURL!"
-#~ msgstr ""
-#~ "PHP CURL est nécessaire. S&#39;il vous plaît installer / activer PHP CURL!"
+#~ msgstr "PHP CURL مطلوب. الرجاء فعل/نصب PHP CURL!"
 
 #~ msgid "Options saved."
-#~ msgstr "Options Sauvées"
+#~ msgstr "تم حفظ الاعدادات."
 
 #~ msgid "Show stats to: "
-#~ msgstr "Voir les statistiques de:"
+#~ msgstr "اظهر البيانات لـ:"
 
 #~ msgid "Update Options"
-#~ msgstr "Mise à jour des options"
+#~ msgstr "حدث الاعدادات"
 
 #~ msgid "Tracking Options: "
-#~ msgstr "Suivi Options:"
+#~ msgstr "خيارات التعقب:"
 
 #~ msgid "Tracking Type: "
-#~ msgstr "Type de suivi:"
+#~ msgstr "نوع التعقب:"
 
-#, fuzzy
+#~ msgid "Authors: "
+#~ msgstr "الكتاب:"
+
+#~ msgid "Publication Year: "
+#~ msgstr "سنة النشر:"
+
+#~ msgid "Categories: "
+#~ msgstr "التصنيفات:"
+
 #~ msgid "User Type: "
-#~ msgstr "Type de suivi:"
+#~ msgstr "نوع المستخدم:"
 
 #~ msgid "Exclude tracking for: "
-#~ msgstr "Exclure tracking pour:"
+#~ msgstr "لا تتبع لـ:"
 
 #~ msgid "Select Domain: "
-#~ msgstr "Sélectionner un domaine:"
+#~ msgstr "حدد الرابط:"
 
 #~ msgid "Theme Color: "
-#~ msgstr "Couleur du Thème:"
+#~ msgstr "لون القالب:"
 
 #~ msgid "&#39; trend"
-#~ msgstr "&#39; tendance"
+#~ msgstr "&#39; النزعة"
 
 #~ msgid "DeConf Help Center"
-#~ msgstr "DeConf Centre d'aide"
+#~ msgstr "مركز المساعدة"
 
 #~ msgid ""
 #~ " (watch this <a href='http://deconf.com/projects/google-analytics-"
 #~ "dashboard-for-wordpress/' target='_blank'>Step by step video tutorial</a>)"
 #~ msgstr ""
-#~ " (watch this <a href='http://deconf.com/projects/google-analytics-"
-#~ "dashboard-for-wordpress/' target='_blank'>Step by step video tutorial</a>)"
+#~ " (شاهد هذا <a href='http://deconf.com/projects/google-analytics-dashboard-"
+#~ "for-wordpress/' target='_blank'>الفيديو الذي يعلمك خطوة بخطوة</a>)"

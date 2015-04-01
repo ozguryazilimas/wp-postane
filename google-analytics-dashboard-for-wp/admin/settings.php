@@ -34,7 +34,9 @@ final class GADASH_Settings
         }
       } else 
         if ($who == 'backend') {
-          $options['ga_dash_jailadmins'] = 0;
+          $options['switch_profile'] = 0;
+          $options['item_reports'] = 0;
+          $options['dashboard_widget'] = 0;
           if (empty($new_options['ga_dash_access_back'])) {
             $new_options['ga_dash_access_back'][] = 'administrator';
           }
@@ -48,11 +50,15 @@ final class GADASH_Settings
           } else 
             if ($who == 'general') {
               $options['ga_dash_userapi'] = 0;
+              if (!is_multisite()){
+                $options['automatic_updates_minorversion'] = 0;
+              }  
             } else 
               if ($who == 'network') {
                 $options['ga_dash_userapi'] = 0;
                 $options['ga_dash_network'] = 0;
                 $options['ga_dash_excludesa'] = 0;
+                $options['automatic_updates_minorversion'] = 0;                
                 $network_settings = true;
               }
       $options = array_merge($options, $new_options);
@@ -86,7 +92,7 @@ final class GADASH_Settings
       }
     }
     if (! $GADASH_Config->options['ga_dash_tableid_jail'] or ! $GADASH_Config->options['ga_dash_token']) {
-      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('auhorize the plugin', 'ga-dash') . "</a>.</p></div>";
+      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('authorize the plugin', 'ga-dash') . "</a>.</p></div>";
     }
     ?>
 <form name="ga_dash_form" method="post"
@@ -102,7 +108,7 @@ final class GADASH_Settings
 					<?php if (isset($message)) echo $message; ?>
 						<table class="options">
 							<tr>
-								<td colspan="2"><?php echo "<h2>" . __( "General Settings", 'ga-dash' ) . "</h2>"; ?></td>
+								<td colspan="2"><?php echo "<h2>" . __( "Permissions", 'ga-dash' ) . "</h2>"; ?></td>
 							</tr>
 							<tr>
 								<td class="roles title"><label for="ga_dash_access_front"><?php _e("Show stats to:", 'ga-dash' ); ?></label></td>
@@ -134,7 +140,8 @@ final class GADASH_Settings
                                     		<?php
       }
     }
-    ?>									</table>
+    ?>
+									</table>
 								</td>
 							</tr>
 							<tr>
@@ -197,13 +204,13 @@ final class GADASH_Settings
       }
     }
     if (! $GADASH_Config->options['ga_dash_tableid_jail'] or ! $GADASH_Config->options['ga_dash_token']) {
-      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('auhorize the plugin', 'ga-dash') . "</a>.</p></div>";
+      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('authorize the plugin', 'ga-dash') . "</a>.</p></div>";
     }
     ?>
 <form name="ga_dash_form" method="post"
 	action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
 	<div class="wrap">
-			<?php echo "<h2>" . __( "Google Analytics Dashboard Settings", 'ga-dash' ) . "</h2>"; ?><hr>
+			<?php echo "<h2>" . __( "Google Analytics Backend Settings", 'ga-dash' ) . "</h2>"; ?><hr>
 	</div>
 	<div id="poststuff">
 		<div id="post-body" class="metabox-holder columns-2">
@@ -213,7 +220,7 @@ final class GADASH_Settings
 					<?php if (isset($message)) echo $message; ?>
 						<table class="options">
 							<tr>
-								<td colspan="2"><?php echo "<h2>" . __( "General Settings", 'ga-dash' ) . "</h2>"; ?></td>
+								<td colspan="2"><?php echo "<h2>" . __( "Permissions", 'ga-dash' ) . "</h2>"; ?></td>
 							</tr>
 							<tr>
 								<td class="roles title"><label for="ga_dash_access_back"><?php _e("Show stats to:", 'ga-dash' ); ?></label></td>
@@ -246,22 +253,51 @@ final class GADASH_Settings
                                     		<?php
       }
     }
-    ?>									</table>
+    ?>
+									</table>
 								</td>
 							</tr>
 							<tr>
 								<td colspan="2" class="title">
 									<div class="onoffswitch">
-										<input type="checkbox" name="options[ga_dash_jailadmins]"
+										<input type="checkbox" name="options[switch_profile]"
 											value="1" class="onoffswitch-checkbox"
-											id="ga_dash_jailadmins"
-											<?php checked( $options['ga_dash_jailadmins'], 1 ); ?>> <label
-											class="onoffswitch-label" for="ga_dash_jailadmins">
+											id="switch_profile"
+											<?php checked( $options['switch_profile'], 1 ); ?>> <label
+											class="onoffswitch-label" for="switch_profile">
 											<div class="onoffswitch-inner"></div>
 											<div class="onoffswitch-switch"></div>
 										</label>
 									</div>
-									<div class="switch-desc"><?php _e ( "disable Switch Profile/View functionality", 'ga-dash' );?></div>
+									<div class="switch-desc"><?php _e ( "enable Switch Profile/View functionality", 'ga-dash' );?></div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="title">
+									<div class="onoffswitch">
+										<input type="checkbox" name="options[item_reports]" value="1"
+											class="onoffswitch-checkbox" id="item_reports"
+											<?php checked( $options['item_reports'], 1 ); ?>> <label
+											class="onoffswitch-label" for="item_reports">
+											<div class="onoffswitch-inner"></div>
+											<div class="onoffswitch-switch"></div>
+										</label>
+									</div>
+									<div class="switch-desc"><?php _e ( "enable reports on Posts List and Pages List", 'ga-dash' );?></div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="title">
+									<div class="onoffswitch">
+										<input type="checkbox" name="options[dashboard_widget]"
+											value="1" class="onoffswitch-checkbox" id="dashboard_widget"
+											<?php checked( $options['dashboard_widget'], 1 ); ?>> <label
+											class="onoffswitch-label" for="dashboard_widget">
+											<div class="onoffswitch-inner"></div>
+											<div class="onoffswitch-switch"></div>
+										</label>
+									</div>
+									<div class="switch-desc"><?php _e ( "enable the main Dashboard Widget", 'ga-dash' );?></div>
 								</td>
 							</tr>
 							<tr>
@@ -314,10 +350,6 @@ final class GADASH_Settings
   public static function tracking_settings()
   {
     global $GADASH_Config;
-    /*
-     * Include Tools
-     */
-    include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
     $tools = new GADASH_Tools();
     if (! current_user_can('manage_options')) {
       return;
@@ -330,7 +362,7 @@ final class GADASH_Settings
       }
     }
     if (! $GADASH_Config->options['ga_dash_tableid_jail']) {
-      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('auhorize the plugin', 'ga-dash') . "</a>.</p></div>";
+      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('authorize the plugin', 'ga-dash') . "</a>.</p></div>";
     }
     if (! $options['ga_dash_tracking']) {
       $message = "<div class='error'><p>" . __("The tracking component is disabled. You should set", 'ga-dash') . " <strong>" . __("Tracking Options", 'ga-dash') . "</strong> " . __("to", 'ga-dash') . " <strong>" . __("Enabled", 'ga-dash') . "</strong>.</p></div>";
@@ -681,7 +713,7 @@ final class GADASH_Settings
     }
     $options = self::set_get_options('frontend');
     if (! $GADASH_Config->options['ga_dash_tableid_jail'] or ! $GADASH_Config->options['ga_dash_token']) {
-      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('auhorize the plugin', 'ga-dash') . "</a>.</p></div>";
+      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('authorize the plugin', 'ga-dash') . "</a>.</p></div>";
     }
     ?>
 <div class="wrap">
@@ -704,7 +736,7 @@ final class GADASH_Settings
 						<table class="options">
 							<tr>
 								<td>
-						              <?php echo __("For errors and/or other issues please check",'ga-dash')." <a href='https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=errors_screen&utm_campaign=gadwp' target='_blank'>". __("the plugin documentation page",'ga-dash')."</a> ".__("and related tutorials",'ga-dash').".";?>
+						              <?php echo __("For errors and/or other issues please check",'ga-dash')." <a href='https://deconf.com/error-codes-in-google-analytics-dashboard-for-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=errors_screen&utm_campaign=gadwp' target='_blank'>". __("this documentation page",'ga-dash')."</a> ".__("and related tutorials",'ga-dash').".";?>
 						        </td>
 							</tr>
 							<tr>
@@ -731,6 +763,8 @@ final class GADASH_Settings
     ?></pre><br />
 									<hr>
 								</td>
+							
+							
 							<tr>
 						
 						</table>
@@ -774,10 +808,6 @@ final class GADASH_Settings
   {
     global $GADASH_Config;
     global $wp_version;
-    /*
-     * Include Tools
-     */
-    include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
     $tools = new GADASH_Tools();
     if (! current_user_can('manage_options')) {
       return;
@@ -786,7 +816,7 @@ final class GADASH_Settings
     /*
      * Include GAPI
      */
-    echo '<div id="gapi-warning" class="updated"><p>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' <a href="https://deconf.com/ask/question/ga-dashboard-absolutely-empty-general-settings#answer-770">Library conflicts between WordPress plugins</a></p></div>';
+    echo '<div id="gapi-warning" class="updated"><p>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' <a href="https://deconf.com/error-codes-in-google-analytics-dashboard-for-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=general_screen&utm_campaign=gadwp">Library conflicts between WordPress plugins</a></p></div>';
     include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
     global $GADASH_GAPI;
     echo '<script type="text/javascript">jQuery("#gapi-warning").hide()</script>';
@@ -811,7 +841,7 @@ final class GADASH_Settings
           return $e->getCode();
         } catch (Exception $e) {
           set_transient('ga_dash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e) . "\nResponseHttpCode:" . $e->getCode(), $GADASH_GAPI->error_timeout);
-          $GADASH_GAPI->ga_dash_reset_token(false);
+          $GADASH_GAPI->reset_token(false);
         }
       } else {
         $message = "<div class='error'><p>" . __("The access code is <strong>NOT</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X). Try again, and use the red link to get your access code", 'ga-dash') . ".</p></div>";
@@ -836,7 +866,7 @@ final class GADASH_Settings
     }
     if (isset($_POST['Clear'])) {
       if (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form')) {
-        $tools->ga_dash_clear_cache();
+        $tools->clear_cache();
         $message = "<div class='updated'><p>" . __("Cleared Cache.", 'ga-dash') . "</p></div>";
       } else {
         $message = "<div class='error'><p>" . __("Cheating Huh?", 'ga-dash') . "</p></div>";
@@ -844,15 +874,24 @@ final class GADASH_Settings
     }
     if (isset($_POST['Reset'])) {
       if (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form')) {
-        $GADASH_GAPI->ga_dash_reset_token(true);
-        $tools->ga_dash_clear_cache();
+        $GADASH_GAPI->reset_token(true);
+        $tools->clear_cache();
         $message = "<div class='updated'><p>" . __("Token Reseted and Revoked.", 'ga-dash') . "</p></div>";
         $options = self::set_get_options('Reset');
       } else {
         $message = "<div class='error'><p>" . __("Cheating Huh?", 'ga-dash') . "</p></div>";
       }
     }
-    if (isset($_POST['options']['ga_dash_hidden']) and ! isset($_POST['Clear']) and ! isset($_POST['Reset'])) {
+    if (isset($_POST['Reset_Err'])) {
+      if (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form')) {
+        delete_transient('ga_dash_lasterror');
+        delete_transient('ga_dash_gapi_errors');
+        $message = "<div class='updated'><p>" . __("All errors reseted.", 'ga-dash') . "</p></div>";
+      } else {
+        $message = "<div class='error'><p>" . __("Cheating Huh?", 'ga-dash') . "</p></div>";
+      }
+    }
+    if (isset($_POST['options']['ga_dash_hidden']) and ! isset($_POST['Clear']) and ! isset($_POST['Reset']) and ! isset($_POST['Reset_Err'])) {
       $message = "<div class='updated'><p>" . __("Settings saved.", 'ga-dash') . "</p></div>";
       if (! (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form'))) {
         $message = "<div class='error'><p>" . __("Cheating Huh?", 'ga-dash') . "</p></div>";
@@ -880,10 +919,10 @@ final class GADASH_Settings
 								<div class="settings-wrapper">
 									<div class="inside">					<?php
     if ($GADASH_GAPI->gapi_errors_handler()) {
-      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('auhorize the plugin', 'ga-dash') . "</a>.</p></div>";
+      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('authorize the plugin', 'ga-dash') . "</a>.</p></div>";
     }
     if (isset($_POST['Authorize'])) {
-      $tools->ga_dash_clear_cache();
+      $tools->clear_cache();
       $GADASH_GAPI->token_request();
       echo "<div class='updated'><p>" . __("Use the red link (see below) to generate and get your access code!", 'ga-dash') . "</p></div>";
     } else {
@@ -956,7 +995,10 @@ final class GADASH_Settings
 														<?php echo $options['ga_dash_network']?'disabled="disabled"':''; ?> />
 														<input type="submit" name="Clear"
 														class="button button-secondary"
-														value="<?php _e( "Clear Cache", 'ga-dash' ); ?>" /></td>
+														value="<?php _e( "Clear Cache", 'ga-dash' ); ?>" /> <input
+														type="submit" name="Reset_Err"
+														class="button button-secondary"
+														value="<?php _e( "Reset Errors", 'ga-dash' ); ?>" /></td>
 												</tr>
 												<tr>
 													<td colspan="2"><hr></td>
@@ -974,7 +1016,7 @@ final class GADASH_Settings
           foreach ($options['ga_dash_profile_list'] as $items) {
             if ($items[3]) {
               echo '<option value="' . esc_attr($items[1]) . '" ' . selected($items[1], $options['ga_dash_tableid_jail']);
-              echo ' title="' . __("View Name:", 'ga-dash') . ' ' . esc_attr($items[0]) . '">' . esc_html($tools->ga_dash_get_profile_domain($items[3])) . ' &#8658; ' . esc_attr($items[0]) . '</option>';
+              echo ' title="' . __("View Name:", 'ga-dash') . ' ' . esc_attr($items[0]) . '">' . esc_html($tools->strip_protocol($items[3])) . ' &#8658; ' . esc_attr($items[0]) . '</option>';
             }
           }
         } else {
@@ -1014,9 +1056,28 @@ final class GADASH_Settings
 												<tr>
 													<td colspan="2"><hr></td>
 												</tr>
+												<?php if ( !is_multisite()) {?>												
 												<tr>
-													<td colspan="2"><?php echo __('A new frontend widget is available! To enable it, go to','ga-dash').' <a href="widgets.php">'.__('Appearance -> Widgets').'</a> '.__('and look for Google Analytics Dashboard.','ga-dash').' '.''; ?></td>
+													<td colspan="2"><?php echo "<h2>" . __( "Automatic Updates", 'ga-dash' ) . "</h2>"; ?></td>
 												</tr>
+												<tr>
+													<td colspan="2" class="title">
+														<div class="onoffswitch">
+															<input type="checkbox"
+																name="options[automatic_updates_minorversion]" value="1"
+																class="onoffswitch-checkbox"
+																id="automatic_updates_minorversion"
+																<?php checked( $options['automatic_updates_minorversion'], 1 ); ?>>
+															<label class="onoffswitch-label"
+																for="automatic_updates_minorversion">
+																<div class="onoffswitch-inner"></div>
+																<div class="onoffswitch-switch"></div>
+															</label>
+														</div>
+														<div class="switch-desc"><?php echo " ".__( "automatic updates for minor versions (security and maintenance releases only)", 'ga-dash' );?></div>
+													</td>
+												</tr>
+												<?php }?>
 												<tr>
 													<td colspan="2"><hr></td>
 												</tr>
@@ -1058,10 +1119,6 @@ final class GADASH_Settings
   {
     global $GADASH_Config;
     global $wp_version;
-    /*
-     * Include Tools
-     */
-    include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
     $tools = new GADASH_Tools();
     if (! current_user_can('manage_network_options')) {
       return;
@@ -1070,7 +1127,7 @@ final class GADASH_Settings
     /*
      * Include GAPI
      */
-    echo '<div id="gapi-warning" class="updated"><p>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' <a href="https://deconf.com/ask/question/ga-dashboard-absolutely-empty-general-settings#answer-770">Library conflicts between WordPress plugins</a></p></div>';
+    echo '<div id="gapi-warning" class="updated"><p>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' <a href="https://deconf.com/error-codes-in-google-analytics-dashboard-for-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=general_screen&utm_campaign=gadwp">Library conflicts between WordPress plugins</a></p></div>';
     include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
     global $GADASH_GAPI;
     echo '<script type="text/javascript">jQuery("#gapi-warning").hide()</script>';
@@ -1104,7 +1161,7 @@ final class GADASH_Settings
           return $e->getCode();
         } catch (Exception $e) {
           set_transient('ga_dash_lasterror', date('Y-m-d H:i:s') . ': ' . esc_html($e) . "\nResponseHttpCode:" . $e->getCode(), $GADASH_GAPI->error_timeout);
-          $GADASH_GAPI->ga_dash_reset_token(false);
+          $GADASH_GAPI->reset_token(false);
         }
       } else {
         $message = "<div class='error'><p>" . __("The access code is <strong>NOT</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X). Try again, and use the red link to get your access code", 'ga-dash') . ".</p></div>";
@@ -1138,7 +1195,7 @@ final class GADASH_Settings
     }
     if (isset($_POST['Clear'])) {
       if (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form')) {
-        $tools->ga_dash_clear_cache();
+        $tools->clear_cache();
         $message = "<div class='updated'><p>" . __("Cleared Cache.", 'ga-dash') . "</p></div>";
       } else {
         $message = "<div class='error'><p>" . __("Cheating Huh?", 'ga-dash') . "</p></div>";
@@ -1146,8 +1203,8 @@ final class GADASH_Settings
     }
     if (isset($_POST['Reset'])) {
       if (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form')) {
-        $GADASH_GAPI->ga_dash_reset_token(true);
-        $tools->ga_dash_clear_cache();
+        $GADASH_GAPI->reset_token(true);
+        $tools->clear_cache();
         $message = "<div class='updated'><p>" . __("Token Reseted and Revoked.", 'ga-dash') . "</p></div>";
         $options = self::set_get_options('Reset');
       } else {
@@ -1182,10 +1239,10 @@ final class GADASH_Settings
 													<div class="settings-wrapper">
 														<div class="inside">						<?php
     if ($GADASH_GAPI->gapi_errors_handler()) {
-      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('auhorize the plugin', 'ga-dash') . "</a>.</p></div>";
+      $message = "<div class='error'><p>" . __("Something went wrong, check", 'ga-dash') . " <a href='" . menu_page_url('gadash_errors_debugging', false) . "'>" . __('Errors & Debug', 'ga-dash') . "</a> " . __('or', 'ga-dash') . " <a href='" . menu_page_url('gadash_settings', false) . "'>" . __('authorize the plugin', 'ga-dash') . "</a>.</p></div>";
     }
     if (isset($_POST['Authorize'])) {
-      $tools->ga_dash_clear_cache();
+      $tools->clear_cache();
       $GADASH_GAPI->token_request();
       echo "<div class='updated'><p>" . __("Use the red link (see below) to generate and get your access code!", 'ga-dash') . "</p></div>";
     } else {
@@ -1313,7 +1370,7 @@ final class GADASH_Settings
               foreach ($options['ga_dash_profile_list'] as $items) {
                 if ($items[3]) {
                   echo '<option value="' . esc_attr($items[1]) . '" ' . selected($items[1], isset($options['ga_dash_tableid_network']->$blog['blog_id']) ? $options['ga_dash_tableid_network']->$blog['blog_id'] : '');
-                  echo ' title="' . __("View Name:", 'ga-dash') . ' ' . esc_attr($items[0]) . '">' . $tools->ga_dash_get_profile_domain($items[3]) . ' &#8658; ' . esc_attr($items[0]) . '</option>';
+                  echo ' title="' . __("View Name:", 'ga-dash') . ' ' . esc_attr($items[0]) . '">' . esc_html($tools->strip_protocol($items[3])) . ' &#8658; ' . esc_attr($items[0]) . '</option>';
                 }
               }
             } else {
@@ -1325,7 +1382,27 @@ final class GADASH_Settings
 							<?php
           }
           ?>
-							<tr>
+                    												<tr>
+																		<td colspan="2"><?php echo "<h2>" . __( "Automatic Updates", 'ga-dash' ) . "</h2>"; ?></td>
+																	</tr>
+																	<tr>
+																		<td colspan="2" class="title">
+																			<div class="onoffswitch">
+																				<input type="checkbox"
+																					name="options[automatic_updates_minorversion]"
+																					value="1" class="onoffswitch-checkbox"
+																					id="automatic_updates_minorversion"
+																					<?php checked( $options['automatic_updates_minorversion'], 1 ); ?>>
+																				<label class="onoffswitch-label"
+																					for="automatic_updates_minorversion">
+																					<div class="onoffswitch-inner"></div>
+																					<div class="onoffswitch-switch"></div>
+																				</label>
+																			</div>
+																			<div class="switch-desc"><?php echo " ".__( "automatic updates for minor versions (security and maintenance releases only)", 'ga-dash' );?></div>
+																		</td>
+																	</tr>
+																	<tr>
 																		<td colspan="2"><hr><?php echo "<h2>" . __( "Exclude Tracking", 'ga-dash' ) . "</h2>"; ?></td>
 																	</tr>
 																	<tr>
@@ -1448,7 +1525,8 @@ final class GADASH_Settings
 															</h3>
 															<div class="inside">
 																<div class="gadash-title">
-																	<a href="https://deconf.com/wordpress-cdn-speeds-up-your-site/"><img
+																	<a
+																		href="https://deconf.com/wordpress-cdn-speeds-up-your-site/"><img
 																		src="<?php echo plugins_url( 'images/mcdn.png' , __FILE__ ); ?>" /></a>
 																</div>
 																<div class="gadash-desc"><?php echo  __('Speed up your website and plug into a whole', 'ga-dash').' <a href="https://deconf.com/wordpress-cdn-speeds-up-your-site/">'.__('new level of site speed', 'ga-dash').'</a>.'; ?></div>
@@ -1466,8 +1544,5 @@ final class GADASH_Settings
 											</div>
 										</div>
 <?php
-    /*
-     * Include Tools
-     */
   }
 }

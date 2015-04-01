@@ -10,7 +10,6 @@ if (! class_exists('GADASH_Config')) {
   final class GADASH_Config
   {
     public $options;
-    public $country_codes;
     public $plugin_path, $plugin_url;
     public $access = array(
       '65556128781.apps.googleusercontent.com',
@@ -27,7 +26,34 @@ if (! class_exists('GADASH_Config')) {
         $this,
         'map'
       ), $this->access);
+      add_filter('auto_update_plugin', array(
+        $this,
+        'automatic_update'
+      ), 10, 2);
     }
+
+    function get_major_version($version)
+    {
+      $exploded_version = explode('.', $version);
+      return $exploded_version[0] . '.' . $exploded_version[1];
+    }
+
+    function automatic_update($update, $item)
+    {
+      $item = (array) $item;
+      if (is_multisite() && ! is_main_site()) {
+        return;
+      }
+      if (! isset($item['new_version']) || ! isset($item['plugin']) || ! $this->options['automatic_updates_minorversion']) {
+        return $update;
+      }
+      if (isset($item['slug']) and $item['slug'] == 'google-analytics-dashboard-for-wp') {
+        // Only when a minor update is available
+        return ($this->get_major_version(GADWP_CURRENT_VERSION) == $this->get_major_version($item['new_version']));
+      }
+      return $update;
+    }
+    
     // Validates data before storing
     private static function validate_data($options)
     {
@@ -113,6 +139,7 @@ if (! class_exists('GADASH_Config')) {
             $options['ga_dash_userapi'] = 0;
             $network_options['ga_dash_network'] = $this->options['ga_dash_network'];
             $network_options['ga_dash_excludesa'] = $this->options['ga_dash_excludesa'];
+            $network_options['automatic_updates_minorversion'] = $this->options['automatic_updates_minorversion'];
             unset($options['ga_dash_network']);
             if (isset($this->options['ga_dash_tableid_network'])) {
               $network_options['ga_dash_tableid_network'] = $this->options['ga_dash_tableid_network'];
@@ -145,10 +172,6 @@ if (! class_exists('GADASH_Config')) {
        * Get plugin options
        */
       global $blog_id;
-      /*
-       * Include Tools
-       */
-      include_once ($this->plugin_path . '/tools/tools.php');
       $tools = new GADASH_Tools();
       if (! get_option('gadash_options')) {
         GADASH_Install::install();
@@ -176,9 +199,8 @@ if (! class_exists('GADASH_Config')) {
     private function maintain_compatibility()
     {
       if (GADWP_CURRENT_VERSION != get_option('gadwp_version')) {
-        include_once ($this->plugin_path . '/tools/tools.php');
         $tools = new GADASH_Tools();
-        $tools->ga_dash_clear_cache();
+        $tools->clear_cache();
         delete_transient('ga_dash_lasterror');
         update_option('gadwp_version', GADWP_CURRENT_VERSION);
         if (is_multisite()) { // Cleanup errors on the entire network
@@ -193,67 +215,114 @@ if (! class_exists('GADASH_Config')) {
           delete_transient('ga_dash_gapi_errors');
         }
       }
+      $flag = false;
       if (! isset($this->options['ga_enhanced_links'])) {
         $this->options['ga_enhanced_links'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_enhanced_network'])) {
         $this->options['ga_dash_network'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_enhanced_excludesa'])) {
         $this->options['ga_dash_excludesa'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_dash_remarketing'])) {
         $this->options['ga_dash_remarketing'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_dash_adsense'])) {
         $this->options['ga_dash_adsense'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_speed_samplerate'])) {
         $this->options['ga_speed_samplerate'] = 1;
+        $flag = true;
+      }
+      if (! isset($this->options['automatic_updates_minorversion'])) {
+        $this->options['automatic_updates_minorversion'] = 1;
+        $flag = true;
       }
       if (! isset($this->options['ga_event_bouncerate'])) {
         $this->options['ga_event_bouncerate'] = 0;
+        $flag = true;
       }
       if (! is_array($this->options['ga_dash_access_front']) or empty($this->options['ga_dash_access_front'])) {
         $this->options['ga_dash_access_front'] = array();
         $this->options['ga_dash_access_front'][] = 'administrator';
+        $flag = true;
       }
       if (! is_array($this->options['ga_dash_access_back']) or empty($this->options['ga_dash_access_back'])) {
         $this->options['ga_dash_access_back'] = array();
         $this->options['ga_dash_access_back'][] = 'administrator';
+        $flag = true;
       }
       if (! is_array($this->options['ga_track_exclude'])) {
         $this->options['ga_track_exclude'] = array();
+        $flag = true;
       }
       if (! isset($this->options['ga_crossdomain_tracking'])) {
         $this->options['ga_crossdomain_tracking'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_crossdomain_list'])) {
         $this->options['ga_crossdomain_list'] = '';
+        $flag = true;
       }
       if (! isset($this->options['ga_author_dimindex'])) {
         $this->options['ga_author_dimindex'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_category_dimindex'])) {
         $this->options['ga_category_dimindex'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_user_dimindex'])) {
         $this->options['ga_user_dimindex'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_pubyear_dimindex'])) {
         $this->options['ga_pubyear_dimindex'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_event_affiliates'])) {
         $this->options['ga_event_affiliates'] = '/out/';
+        $flag = true;
       }
       if (! isset($this->options['ga_aff_tracking'])) {
         $this->options['ga_aff_tracking'] = 0;
+        $flag = true;
       }
       if (! isset($this->options['ga_hash_tracking'])) {
         $this->options['ga_hash_tracking'] = 0;
+        $flag = true;
+      }
+      if (! isset($this->options['item_reports'])) {
+        $this->options['item_reports'] = 1;
+        $flag = true;
+      }
+      if (! isset($this->options['dashboard_widget'])) {
+        $this->options['dashboard_widget'] = 1;
+        $flag = true;
       }
       if (isset($this->options['ga_tracking_code'])) {
         unset($this->options['ga_tracking_code']);
+        $flag = true;
+      }
+      if (isset($this->options['ga_dash_jailadmins'])) {
+        if (isset($this->options['ga_dash_jailadmins'])) { // invert disable with enable and change option name
+          $this->options['switch_profile'] = 0;
+          unset($this->options['ga_dash_jailadmins']);
+          $flag = true;
+        } else {
+          $this->options['switch_profile'] = 1;
+          unset($this->options['ga_dash_jailadmins']);
+          $flag = true;
+        }
+      }
+      if ($flag) {
+        $this->set_plugin_options(false);
       }
     }
   }

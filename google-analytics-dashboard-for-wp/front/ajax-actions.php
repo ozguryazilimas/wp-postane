@@ -28,16 +28,6 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       ));
     }
 
-    function send_json($response)
-    {
-      @header('Content-Type: application/json; charset=' . get_option('blog_charset'));
-      echo json_encode($response);
-      if (defined('DOING_AJAX') && DOING_AJAX)
-        wp_die();
-      else
-        die();
-    }    
-
     /**
      * Ajax handler for getting analytics data for frontend Views vs UniqueViews
      *
@@ -55,10 +45,6 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       if (ob_get_length()) {
         ob_clean();
       }
-      /*
-       * Include Tools
-       */
-      include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
       $tools = new GADASH_Tools();
       if (! $tools->check_roles($GADASH_Config->options['ga_dash_access_front']) or ! ($GADASH_Config->options['ga_dash_frontend_stats'] or $GADASH_Config->options['ga_dash_frontend_keywords'])) {
         wp_die(- 31);
@@ -69,7 +55,11 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       } else {
         wp_die(- 24);
       }
-      $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
+      if ($GADASH_Config->options['ga_dash_tableid_jail']) {
+        $projectId = $GADASH_Config->options['ga_dash_tableid_jail'];
+      } else {
+        wp_die(- 25);
+      }
       $profile_info = $tools->get_selected_profile($GADASH_Config->options['ga_dash_profile_list'], $projectId);
       if (isset($profile_info[4])) {
         $GADASH_GAPI->timeshift = $profile_info[4];
@@ -78,10 +68,10 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       }
       switch ($query) {
         case 'pageviews':
-          $this->send_json($GADASH_GAPI->frontend_afterpost_pageviews($projectId, $page_url, $post_id));
+          wp_send_json($GADASH_GAPI->frontend_afterpost_pageviews($projectId, $page_url, $post_id));
           break;
         default:
-          $this->send_json($GADASH_GAPI->frontend_afterpost_searches($projectId, $page_url, $post_id));
+          wp_send_json($GADASH_GAPI->frontend_afterpost_searches($projectId, $page_url, $post_id));
           break;
       }
     }
@@ -122,7 +112,7 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       if ($GADASH_Config->options['ga_dash_token'] and $GADASH_Config->options['ga_dash_tableid_jail']) {
         include_once ($GADASH_Config->plugin_path . '/tools/gapi.php');
         global $GADASH_GAPI;
-        include_once ($GADASH_Config->plugin_path . '/tools/tools.php');
+        
         $tools = new GADASH_Tools();
       } else {
         wp_die(- 24);
@@ -134,7 +124,7 @@ if (! class_exists('GADASH_Frontend_Ajax')) {
       } else {
         $GADASH_GAPI->timeshift = (int) current_time('timestamp') - time();
       }
-      $this->send_json($GADASH_GAPI->frontend_widget_stats($projectId, $period, (int) $instance['anonim']));
+      wp_send_json($GADASH_GAPI->frontend_widget_stats($projectId, $period, (int) $instance['anonim']));
     }
   }
 }
