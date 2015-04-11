@@ -5,56 +5,66 @@
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
-if (! class_exists('GADASH_Front_Stats')) {
 
-  final class GADASH_Front_Stats
-  {
+// Exit if accessed directly
+if (! defined('ABSPATH'))
+    exit();
 
-    function __construct()
+if (! class_exists('GADWP_Frontend_Item_Reports')) {
+
+    final class GADWP_Frontend_Item_Reports
     {
-      add_filter('the_content', array(
-        $this,
-        'ga_dash_front_content'
-      ));
-      // Frontend Styles
-      add_action('wp_enqueue_scripts', array(
-        $this,
-        'ga_dash_front_enqueue_styles'
-      ));
-    }
+        private $gadwp;
 
-    function ga_dash_front_enqueue_styles()
-    {
-      global $GADASH_Config;
-      if ((! is_page() and ! is_single()) or is_preview() or ! is_user_logged_in()) {
-        return;
-      }
-      wp_enqueue_style('ga_dash-front', $GADASH_Config->plugin_url . '/front/css/item-reports.css', NULL, GADWP_CURRENT_VERSION);
-      wp_enqueue_style('ga_dash-nprogress', $GADASH_Config->plugin_url . '/tools/nprogress/nprogress.css', NULL, GADWP_CURRENT_VERSION);
-      wp_enqueue_script('ga_dash-front', $GADASH_Config->plugin_url . '/front/js/item-reports.js', array(
-        'jquery'
-      ), GADWP_CURRENT_VERSION);
-      wp_enqueue_script('ga_dash-nprogress', $GADASH_Config->plugin_url . '/tools/nprogress/nprogress.js', array(
-        'jquery'
-      ), GADWP_CURRENT_VERSION);
-      wp_enqueue_script('googlejsapi', 'https://www.google.com/jsapi');
-    }
+        public function __construct()
+        {
+            $this->gadwp = GADWP();
+            
+            add_filter('the_content', array(
+                $this,
+                'add_content'
+            ));
+            // Frontend Styles
+            add_action('wp_enqueue_scripts', array(
+                $this,
+                'load_styles_scripts'
+            ));
+        }
 
-    function ga_dash_front_content($content)
-    {
-      global $post;
-      global $GADASH_Config;
-      $tools = new GADASH_Tools();
-      if (! $tools->check_roles($GADASH_Config->options['ga_dash_access_front']) or ! ($GADASH_Config->options['ga_dash_frontend_stats'] or $GADASH_Config->options['ga_dash_frontend_keywords'])) {
-        return $content;
-      }
-      if ((is_page() || is_single()) && ! is_preview()) {
-        wp_enqueue_script('gadash-general-settings', plugins_url('admin/js/admin.js', dirname(__FILE__)), array(
-          'jquery'
-        ));
-        $page_url = $_SERVER["REQUEST_URI"]; // str_replace(site_url(), "", get_permalink());
-        $post_id = $post->ID;
-        $content .= '<script type="text/javascript">
+        public function load_styles_scripts()
+        {
+            if ((! is_page() && ! is_single()) || is_preview() || ! is_user_logged_in()) {
+                return;
+            }
+            wp_enqueue_style('ga_dash-front', GADWP_URL . 'front/css/item-reports.css', null, GADWP_CURRENT_VERSION);
+            wp_enqueue_style('ga_dash-nprogress', GADWP_URL . 'tools/nprogress/nprogress.css', null, GADWP_CURRENT_VERSION);
+            wp_enqueue_script('ga_dash-front', GADWP_URL . 'front/js/item-reports.js', array(
+                'jquery'
+            ), GADWP_CURRENT_VERSION);
+            wp_enqueue_script('ga_dash-nprogress', GADWP_URL . 'tools/nprogress/nprogress.js', array(
+                'jquery'
+            ), GADWP_CURRENT_VERSION);
+            wp_enqueue_script('googlejsapi', 'https://www.google.com/jsapi');
+        }
+
+        public function add_content($content)
+        {
+            global $post;
+            
+            if (! GADWP_Tools::check_roles($this->gadwp->config->options['ga_dash_access_front']) || ! ($this->gadwp->config->options['ga_dash_frontend_stats'] || $this->gadwp->config->options['ga_dash_frontend_keywords'])) {
+                return $content;
+            }
+            
+            if (($this->gadwp->config->options['ga_dash_frontend_stats'] && $this->gadwp->config->options['ga_dash_frontend_keywords'])){
+                $npcounter = 1;
+            }else{
+                $npcounter = 0;
+            }
+            
+            if ((is_page() || is_single()) && ! is_preview()) {
+                $page_url = $_SERVER["REQUEST_URI"]; // str_replace(site_url(), "", get_permalink());
+                $post_id = $post->ID;
+                $content .= '<script type="text/javascript">
                   
                   gadash_firstclick = true;
                     
@@ -99,7 +109,7 @@ if (! class_exists('GADASH_Front_Stats')) {
 										  }else{
 									        jQuery("#gadwp-sessions").css({"background-color":"#F7F7F7","height":"auto","padding-top":"30px","padding-bottom":"30px","color":"#000","text-align":"center"});  
 									        jQuery("#gadwp-sessions").html("' . __("This report is unavailable", 'ga-dash') . ' ("+response+")");
-									        checknpcounter(1);    
+									        checknpcounter('.$npcounter.');    
                                           }	
 										});
 									}
@@ -118,7 +128,7 @@ if (! class_exists('GADASH_Front_Stats')) {
 											}else{
 										        jQuery("#gadwp-searches").css({"background-color":"#F7F7F7","height":"auto","padding-top":"30px","padding-bottom":"30px","color":"#000","text-align":"center"});
 										        jQuery("#gadwp-searches").html("' . __("This report is unavailable", 'ga-dash') . ' ("+response+")");
-										        checknpcounter(1);
+										        checknpcounter('.$npcounter.');
                                             }	
 										});
 									}
@@ -126,16 +136,16 @@ if (! class_exists('GADASH_Front_Stats')) {
 							}
 						});
 					});';
-        if ($GADASH_Config->options['ga_dash_frontend_stats']) {
-          $title = __("Views vs UniqueViews", 'ga-dash');
-          if (isset($GADASH_Config->options['ga_dash_style'])) {
-            $css = "colors:['" . $GADASH_Config->options['ga_dash_style'] . "','" . $tools->colourVariator($GADASH_Config->options['ga_dash_style'], - 20) . "'],";
-            $color = $GADASH_Config->options['ga_dash_style'];
-          } else {
-            $css = "";
-            $color = "#3366CC";
-          }
-          $content .= '
+                if ($this->gadwp->config->options['ga_dash_frontend_stats']) {
+                    $title = __("Views vs UniqueViews", 'ga-dash');
+                    if (isset($this->gadwp->config->options['ga_dash_style'])) {
+                        $css = "colors:['" . $this->gadwp->config->options['ga_dash_style'] . "','" . GADWP_Tools::colourVariator($this->gadwp->config->options['ga_dash_style'], - 20) . "'],";
+                        $color = $this->gadwp->config->options['ga_dash_style'];
+                    } else {
+                        $css = "";
+                        $color = "#3366CC";
+                    }
+                    $content .= '
 			google.load("visualization", "1", {packages:["corechart"]});
 			function ga_dash_drawpagesessions(gadash_pagesessions) {
 	
@@ -152,11 +162,11 @@ if (! class_exists('GADASH_Front_Stats')) {
 
 			var chart = new google.visualization.AreaChart(document.getElementById("gadwp-sessions"));
 			chart.draw(data, options);
-            checknpcounter(1);      
+            checknpcounter('.$npcounter.');      
 			}';
-        }
-        if ($GADASH_Config->options['ga_dash_frontend_keywords']) {
-          $content .= '
+                }
+                if ($this->gadwp->config->options['ga_dash_frontend_keywords']) {
+                    $content .= '
 				google.load("visualization", "1", {packages:["table"]})
 				function ga_dash_drawpagesearches(gadash_pagesearches) {
 
@@ -170,26 +180,23 @@ if (! class_exists('GADASH_Front_Stats')) {
 
 				var chart = new google.visualization.Table(document.getElementById("gadwp-searches"));
 				chart.draw(datas, options);
-				checknpcounter(1);
+				checknpcounter('.$npcounter.');
 			  }';
-        }
-        $content .= "</script>";
-        $content .= '<p>
+                }
+                $content .= "</script>";
+                $content .= '<p>
 								<div id="gadwp">
 									<div id="gadwp-title">
 									<a href="#gadwp">' . __('Google Analytics Reports', "ga-dash") . ' <span id="gadwp-arrow">&#x25BC;</span></a>
 									</div>
 									<div id="gadwp-progressbar"></div>    
 									<div id="gadwp-content">
-										' . ($GADASH_Config->options['ga_dash_frontend_stats'] ? '<div id="gadwp-sessions"></div>' : '') . ($GADASH_Config->options['ga_dash_frontend_keywords'] ? '<div id="gadwp-searches" class="gadwp-spinner"></div>' : '') . '
+										' . ($this->gadwp->config->options['ga_dash_frontend_stats'] ? '<div id="gadwp-sessions"></div>' : '') . ($this->gadwp->config->options['ga_dash_frontend_keywords'] ? '<div id="gadwp-searches" class="gadwp-spinner"></div>' : '') . '
 									</div>
 								</div>
 							</p>';
-      }
-      return $content;
+            }
+            return $content;
+        }
     }
-  }
-}
-if (! is_admin()) {
-  $GADASH_Front_Stats = new GADASH_Front_Stats();
 }

@@ -1,6 +1,5 @@
 /* Tab navigation */
-#gadwp-events, #gadwp-custom, #gadwp-advanced, #gadwp-exclude,
-	#gadwp-config {
+#gadwp-events, #gadwp-custom, #gadwp-advanced, #gadwp-exclude, #gadwp-config {
 	display: none;
 }
 
@@ -21,6 +20,10 @@ td.title, td.info {
 
 td.title-select {
 	width: 300px;
+}
+
+.gadwp-help{
+	padding-left:15px;	
 }
 
 td.debugging {

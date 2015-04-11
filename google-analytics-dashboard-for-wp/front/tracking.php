@@ -5,63 +5,66 @@
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
-if (! class_exists('GADASH_Tracking')) {
 
-  class GADASH_Tracking
-  {
+// Exit if accessed directly
+if (! defined('ABSPATH'))
+    exit();
 
-    function __construct()
+if (! class_exists('GADWP_Tracking')) {
+
+    class GADWP_Tracking
     {
-      add_action('wp_head', array(
-        $this,
-        'ga_dash_tracking'
-      ));
-      add_action('wp_enqueue_scripts', array(
-        $this,
-        'ga_dash_enqueue_scripts'
-      ));
-    }
 
-    function ga_dash_enqueue_scripts()
-    {
-      global $GADASH_Config;
-      if ($GADASH_Config->options['ga_event_tracking'] and ! wp_script_is('jquery')) {
-        wp_enqueue_script('jquery');
-      }
-    }
+        private $gadwp;
 
-    function ga_dash_tracking()
-    {
-      global $GADASH_Config;
-      $tools = new GADASH_Tools();
-      if ($tools->check_roles($GADASH_Config->options['ga_track_exclude'], true) or ($GADASH_Config->options['ga_dash_excludesa'] and current_user_can('manage_network'))) {
-        return;
-      }
-      $traking_mode = $GADASH_Config->options['ga_dash_tracking'];
-      $traking_type = $GADASH_Config->options['ga_dash_tracking_type'];
-      if ($traking_mode > 0) {
-        if (! $GADASH_Config->options['ga_dash_tableid_jail']) {
-          return;
+        public function __construct()
+        {
+            $this->gadwp = GADWP();
+            
+            add_action('wp_head', array(
+                $this,
+                'tracking_code'
+            ), 99);
+            add_action('wp_enqueue_scripts', array(
+                $this,
+                'load_scripts'
+            ));
         }
-        if ($traking_type == "classic") {
-          echo "\n<!-- BEGIN GADWP v" . GADWP_CURRENT_VERSION . " Classic Tracking - https://deconf.com/google-analytics-dashboard-wordpress/ -->\n";
-          if ($GADASH_Config->options['ga_event_tracking']) {
-            require_once 'tracking/events-classic.php';
-          }
-          require_once 'tracking/code-classic.php';
-          echo "\n<!-- END GADWP Classic Tracking -->\n\n";
-        } else {
-          echo "\n<!-- BEGIN GADWP v" . GADWP_CURRENT_VERSION . " Universal Tracking - https://deconf.com/google-analytics-dashboard-wordpress/ -->\n";
-          if ($GADASH_Config->options['ga_event_tracking'] or $GADASH_Config->options['ga_aff_tracking'] or $GADASH_Config->options['ga_hash_tracking']) {
-            require_once 'tracking/events-universal.php';
-          }
-          require_once 'tracking/code-universal.php';
-          echo "\n<!-- END GADWP Universal Tracking -->\n\n";
+
+        public function load_scripts()
+        {
+            if ($this->gadwp->config->options['ga_event_tracking'] && ! wp_script_is('jquery')) {
+                wp_enqueue_script('jquery');
+            }
         }
-      }
+
+        public function tracking_code()
+        {
+            if (GADWP_Tools::check_roles($this->gadwp->config->options['ga_track_exclude'], true) || ($this->gadwp->config->options['ga_dash_excludesa'] && current_user_can('manage_network'))) {
+                return;
+            }
+            $traking_mode = $this->gadwp->config->options['ga_dash_tracking'];
+            $traking_type = $this->gadwp->config->options['ga_dash_tracking_type'];
+            if ($traking_mode > 0) {
+                if (! $this->gadwp->config->options['ga_dash_tableid_jail']) {
+                    return;
+                }
+                if ($traking_type == "classic") {
+                    echo "\n<!-- BEGIN GADWP v" . GADWP_CURRENT_VERSION . " Classic Tracking - https://deconf.com/google-analytics-dashboard-wordpress/ -->\n";
+                    if ($this->gadwp->config->options['ga_event_tracking']) {
+                        require_once 'tracking/events-classic.php';
+                    }
+                    require_once 'tracking/code-classic.php';
+                    echo "\n<!-- END GADWP Classic Tracking -->\n\n";
+                } else {
+                    echo "\n<!-- BEGIN GADWP v" . GADWP_CURRENT_VERSION . " Universal Tracking - https://deconf.com/google-analytics-dashboard-wordpress/ -->\n";
+                    if ($this->gadwp->config->options['ga_event_tracking'] || $this->gadwp->config->options['ga_aff_tracking'] || $this->gadwp->config->options['ga_hash_tracking']) {
+                        require_once 'tracking/events-universal.php';
+                    }
+                    require_once 'tracking/code-universal.php';
+                    echo "\n<!-- END GADWP Universal Tracking -->\n\n";
+                }
+            }
+        }
     }
-  }
-}
-if (! is_admin()) {
-  $GADASH_Tracking = new GADASH_Tracking();
 }
