@@ -3,7 +3,7 @@
 
 function fep_backticker_encode($text) {
 	$text = $text[1];
-    $text = stripslashes($text);
+    //$text = stripslashes($text); //already done
     $text = str_replace('&amp;lt;', '&lt;', $text);
     $text = str_replace('&amp;gt;', '&gt;', $text);
 	$text = htmlspecialchars($text, ENT_QUOTES);
@@ -39,7 +39,7 @@ function fep_autosuggestion_ajax() {
 global $wpdb, $user_ID;
 
 if(fep_get_option('hide_autosuggest') == '1' && !current_user_can('manage_options'))
-die();
+wp_die();
 
 if ( check_ajax_referer( 'fep-autosuggestion', 'token', false )) {
 $SQL_FROM = $wpdb->users;
@@ -79,47 +79,18 @@ if(strlen($searchq)>0)
 	echo "</ul>";
 }
 }
-die();
+wp_die();
 }
 
 add_action('wp_ajax_fep_autosuggestion_ajax','fep_autosuggestion_ajax');	
 
 function header_note() {
 	$numNew = fep_get_new_message_number();
-	$s = ( $numNew > 1 ) ? 's': '';
+	$sm = ( $numNew != 1 ) ? __('new messages', 'fep'): __('new message', 'fep');
 	
-	echo __('You have', 'fep')." (<font color='red'>$numNew</font>) ".__("new message{$s}", 'fep');
+	echo __('You have', 'fep')." (<font color='red'>$numNew</font>) $sm";
 	}
 add_action ('fep_header_note',  'header_note');
-
-function fep_notification() 
-		{
-			$New_mgs = fep_get_new_message_number();
-				$sm = ( $New_mgs > 1 ) ? 's': '';
-				
-				$New_ann = 0;
-			if( class_exists('fep_announcement_class') )
-				$New_ann = fep_announcement_class::init()->getAnnouncementsNum();
-				$sa = ( $New_ann > 1 ) ? 's': '';
-	
-			if ( $New_mgs || $New_ann ) {
-				$show = __("You have", 'fep');
-	
-			if ( $New_mgs )
-				$show .= "<a href='".fep_action_url()."'>".sprintf(__(" %d new message%s", 'fep'), $New_mgs, $sm ).'</a>';
-	
-			if ( $New_mgs && $New_ann )
-				$show .= __(' and', 'fep');
-	
-			if ( $New_ann )
-				$show .= "<a href='".fep_action_url('announcements')."'>".sprintf(__(" %d new announcement%s", 'fep'), $New_ann, $sa ).'</a>';
-	
-			echo "<div id='fep-notification-bar'>$show</div>";
-				}
-		}
-		
-if ( fep_get_option('hide_notification',0) != 1 )
-add_action('wp_head', 'fep_notification');
 		
 		
 function fep_send_new_message_check( $errors )
@@ -147,8 +118,7 @@ add_filter('fep_filter_new_message_form', 'fep_send_new_message_filter');
 function fep_check_db()
     {
 	global $wpdb;
-	$version = fep_get_version();
-      if ( get_option( "fep_db_version" ) != $version['dbversion'] || get_option( "fep_meta_db_version" ) != $version['metaversion'] )
+      if ( get_option( "fep_db_version" ) != FEP_DB_VERSION || get_option( "fep_meta_db_version" ) != FEP_META_VERSION )
 	  	{
 			$wpdb->query( "ALTER TABLE ".FEP_META_TABLE." CHANGE COLUMN id meta_id int(11) NOT NULL auto_increment" );
 	  		fep_plugin_activate();
@@ -160,9 +130,80 @@ add_action('plugins_loaded', 'fep_check_db');
 
 function fep_show_code_post_help()
     {
-	echo '<p>Put code in between <code>`backticks`</code></p>';
+	echo '<p>' . __('Put code in between', 'fep'). ' <code>`'. __('backticks', 'fep').'`</code></p>';
     }	
 
 add_action('fep_message_form_after_content', 'fep_show_code_post_help', 5 );
 add_action('fep_reply_form_after_content', 'fep_show_code_post_help', 5 );	
 add_action('fep_announcement_form_after_content', 'fep_show_code_post_help', 5 );
+
+function fep_footer_credit()
+    {
+	if ( fep_get_option('hide_branding',0) == 1 )
+				return;
+	echo "<div><a href='http://frontendpm.blogspot.com/2015/03/front-end-pm.html' target='_blank'>Front End PM</a></div>";
+    }	
+
+add_action('fep_footer_note', 'fep_footer_credit' );
+
+function fep_notification() 
+		{
+			if ( ! is_user_logged_in() )
+				return;
+			if ( fep_get_option('hide_notification',0) == 1 )
+				return;
+			
+			$New_mgs = fep_get_new_message_number();
+			$sm = ( $New_mgs != 1 ) ? __('new messages', 'fep'): __('new message', 'fep');
+				
+				$New_ann = 0;
+				$show = '';
+			if( class_exists('fep_announcement_class') )
+				$New_ann = fep_announcement_class::init()->getAnnouncementsNum();
+				$sa = ( $New_ann != 1 ) ? __('new announcements', 'fep'): __('new announcement', 'fep');
+	
+			if ( $New_mgs || $New_ann ) {
+				$show = __("You have", 'fep');
+	
+			if ( $New_mgs )
+				$show .= "<a href='".fep_action_url('messagebox')."'> $New_mgs $sm</a>";
+	
+			if ( $New_mgs && $New_ann )
+				$show .= ' ' .__('and', 'fep');
+	
+			if ( $New_ann )
+				$show .= "<a href='".fep_action_url('announcements')."'> $New_ann $sa</a>";
+				
+				}
+				return apply_filters('fep_header_notification', $show);
+		}
+			
+
+function fep_notification_div() {
+	if ( ! is_user_logged_in() )
+				return;
+	if ( fep_get_option('hide_notification',0) == 1 )
+				return;
+				
+	wp_enqueue_script( 'fep-notification-script' );
+	$notification = fep_notification();
+	if ( $notification )
+	echo "<div id='fep-notification-bar'>$notification</div>";
+	else
+	echo "<div id='fep-notification-bar' style='display: none'></div>";
+	}
+
+add_action('wp_head', 'fep_notification_div');
+
+function fep_notification_ajax() {
+
+	if ( check_ajax_referer( 'fep-notification', 'token', false )) {
+	
+	$notification = fep_notification();
+	if ( $notification )
+	echo $notification;
+	}
+	wp_die();
+	}
+
+add_action('wp_ajax_fep_notification_ajax','fep_notification_ajax');

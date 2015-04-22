@@ -37,7 +37,7 @@ if (!class_exists('fep_directory_class'))
 	  return;
 	  }
 	  
-	  $page = (isset( $_GET['page']) && $_GET['page'] ) ? absint( $_GET['page'] ) : 0;
+	  $page = (isset( $_GET['feppage']) && $_GET['feppage'] ) ? absint( $_GET['feppage'] ) : 0;
 	  
       $offset = $page * fep_get_option('user_page', 50 );
 	  
@@ -47,7 +47,9 @@ if (!class_exists('fep_directory_class'))
 					'orderby' => 'display_name',
 					'order' => 'ASC'
 		);
-
+	
+	$args = apply_filters ('fep_directory_arguments', $args );
+	
 	// The Query
 	$user_query = new WP_User_Query( $args );
 	  $result = count_users();
@@ -60,8 +62,8 @@ if (!class_exists('fep_directory_class'))
         {
           $directory .= "<p><strong>".__("Page", 'fep').": </strong> ";
           for ($i = 0; $i < $numPgs; $i++)
-            if ($_GET['page'] != $i)
-              $directory .= "<a href='".fep_action_url()."directory&page=".$i."'>".($i+1)."</a> ";
+            if ($_GET['feppage'] != $i)
+              $directory .= "<a href='".fep_action_url()."directory&feppage=".$i."'>".($i+1)."</a> ";
             else
               $directory .= "[<b>".($i+1)."</b>] ";
           $directory .= "</p>";
@@ -94,5 +96,5 @@ if (!class_exists('fep_directory_class'))
   } //END CLASS
 } //ENDIF
 
-add_action('plugins_loaded', array(fep_directory_class::init(), 'actions_filters'));
+add_action('wp_loaded', array(fep_directory_class::init(), 'actions_filters'));
 ?>

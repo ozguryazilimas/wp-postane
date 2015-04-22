@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require_once('../../../wp-load.php');
 
 global $wpdb;
@@ -34,11 +35,18 @@ $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}fep_meta WHERE meta_id =
 wp_die('Attachment already deleted');
 }
 	
+		header("Content-Description: File Transfer");
+		header("Content-Transfer-Encoding: binary");
 		header("Content-Type: $attachment_type", true, 200);
 		header("Content-Disposition: attachment; filename=\"$attachment_name\"");
+		header("Content-Length: " . filesize($attachment_path));
 		nocache_headers();
 		
-		readfile($attachment_url);
+		//clean all levels of output buffering
+		while (ob_get_level()) {
+    		ob_end_clean();
+		}
+		
+		readfile($attachment_path);
 		
 		exit();
-		?>

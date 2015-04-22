@@ -71,6 +71,7 @@ class FEP_menu_widget extends WP_Widget {
 
 // register FEP_menu_widget widget
 function register_fep_menu_widget() {
+if ( is_user_logged_in() )
     register_widget( 'FEP_menu_widget' );
 }
 add_action( 'widgets_init', 'register_fep_menu_widget' );
@@ -186,6 +187,7 @@ class FEP_text_widget extends WP_Widget {
 
 // register FEP_menu_widget widget
 function register_fep_text_widget() {
+if ( is_user_logged_in() )
     register_widget( 'FEP_text_widget' );
 }
 add_action( 'widgets_init', 'register_fep_text_widget' );
@@ -276,6 +278,7 @@ class FEP_empty_widget extends WP_Widget {
 
 // register FEP_menu_widget widget
 function register_fep_empty_widget() {
+if ( is_user_logged_in() )
     register_widget( 'FEP_empty_widget' );
 }
 add_action( 'widgets_init', 'register_fep_empty_widget' );

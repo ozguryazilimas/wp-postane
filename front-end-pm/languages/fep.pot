@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Front End PM 3.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/front-end-pm\n"
-"POT-Creation-Date: 2015-03-19 15:42:59+00:00\n"
+"POT-Creation-Date: 2015-03-21 16:55:21+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,226 +12,227 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: admin/fep-admin-class.php:29 fep-menu-class.php:30
+#: admin/fep-admin-class.php:30 admin/fep-admin-class.php:200
+#: fep-menu-class.php:30
 msgid "Settings"
 msgstr ""
 
-#: admin/fep-admin-class.php:30
+#: admin/fep-admin-class.php:31
 msgid "Instruction"
 msgstr ""
 
-#: admin/fep-admin-class.php:48
+#: admin/fep-admin-class.php:49
 msgid "Options successfully saved."
 msgstr ""
 
-#: admin/fep-admin-class.php:51
+#: admin/fep-admin-class.php:52
 msgid "Front End PM Settings"
 msgstr ""
 
-#: admin/fep-admin-class.php:52
+#: admin/fep-admin-class.php:53
 msgid ""
 "If you like this plugin please <a href='%s' target='_blank'>Review in "
 "Wordpress.org</a> and give 5 star"
 msgstr ""
 
-#: admin/fep-admin-class.php:56
+#: admin/fep-admin-class.php:57
 msgid "Setting"
 msgstr ""
 
-#: admin/fep-admin-class.php:56
+#: admin/fep-admin-class.php:57
 msgid "Value"
 msgstr ""
 
-#: admin/fep-admin-class.php:58
+#: admin/fep-admin-class.php:59
 msgid "Max messages a user can keep in box? (0 = Unlimited)"
 msgstr ""
 
-#: admin/fep-admin-class.php:58
+#: admin/fep-admin-class.php:59
 msgid "Admins always have Unlimited"
 msgstr ""
 
-#: admin/fep-admin-class.php:58 admin/fep-admin-class.php:59
-#: admin/fep-admin-class.php:60 admin/fep-admin-class.php:61
+#: admin/fep-admin-class.php:59 admin/fep-admin-class.php:60
+#: admin/fep-admin-class.php:61 admin/fep-admin-class.php:62
 msgid "Default"
 msgstr ""
 
-#: admin/fep-admin-class.php:59
+#: admin/fep-admin-class.php:60
 msgid "Messages to show per page"
 msgstr ""
 
-#: admin/fep-admin-class.php:59 admin/fep-admin-class.php:60
+#: admin/fep-admin-class.php:60 admin/fep-admin-class.php:61
 msgid "Do not set this to 0!"
 msgstr ""
 
-#: admin/fep-admin-class.php:60
+#: admin/fep-admin-class.php:61
 msgid "Maximum user per page in Directory"
 msgstr ""
 
-#: admin/fep-admin-class.php:61
+#: admin/fep-admin-class.php:62
 msgid ""
 "Time delay between two messages send by a user in minutes (0 = No delay "
 "required)"
 msgstr ""
 
-#: admin/fep-admin-class.php:61
+#: admin/fep-admin-class.php:62
 msgid "Admins have no restriction"
 msgstr ""
 
-#: admin/fep-admin-class.php:62
+#: admin/fep-admin-class.php:63
 msgid "Block Username"
 msgstr ""
 
-#: admin/fep-admin-class.php:62
+#: admin/fep-admin-class.php:63
 msgid "Separated by comma"
 msgstr ""
 
-#: admin/fep-admin-class.php:63
+#: admin/fep-admin-class.php:64
 msgid "Custom CSS"
 msgstr ""
 
-#: admin/fep-admin-class.php:63
+#: admin/fep-admin-class.php:64
 msgid "add or override"
 msgstr ""
 
-#: admin/fep-admin-class.php:65
+#: admin/fep-admin-class.php:66
 msgid "Editor Type"
 msgstr ""
 
-#: admin/fep-admin-class.php:65
+#: admin/fep-admin-class.php:66
 msgid "Admin alwayes have Wp Editor"
 msgstr ""
 
-#: admin/fep-admin-class.php:70
+#: admin/fep-admin-class.php:71
 msgid "Minimum Capability to use messaging"
 msgstr ""
 
-#: admin/fep-admin-class.php:70
+#: admin/fep-admin-class.php:71
 msgid ""
 "see <a href='%s' target='_blank'>WORDPRESS CAPABILITIES</a> to get "
 "capabilities (use only one capability)"
 msgstr ""
 
-#: admin/fep-admin-class.php:70
+#: admin/fep-admin-class.php:71
 msgid "Keep blank if allowed for all users"
 msgstr ""
 
-#: admin/fep-admin-class.php:75
+#: admin/fep-admin-class.php:76
 msgid "Valid email address for \"to\" field of announcement email"
 msgstr ""
 
-#: admin/fep-admin-class.php:75
+#: admin/fep-admin-class.php:76
 msgid "All users email will be in \"Bcc\" field"
 msgstr ""
 
-#: admin/fep-admin-class.php:76
+#: admin/fep-admin-class.php:77
 msgid "Send email to all users when a new announcement is published?"
 msgstr ""
 
-#: admin/fep-admin-class.php:77
+#: admin/fep-admin-class.php:78
 msgid "Hide Directory from front end?"
 msgstr ""
 
-#: admin/fep-admin-class.php:77 admin/fep-admin-class.php:78
+#: admin/fep-admin-class.php:78 admin/fep-admin-class.php:79
 msgid "Always shown to Admins"
 msgstr ""
 
-#: admin/fep-admin-class.php:78
+#: admin/fep-admin-class.php:79
 msgid "Hide Autosuggestion when typing recipient name?"
 msgstr ""
 
-#: admin/fep-admin-class.php:79
+#: admin/fep-admin-class.php:80
 msgid "Disable \"send new message\" for all users except admins?"
 msgstr ""
 
-#: admin/fep-admin-class.php:79
+#: admin/fep-admin-class.php:80
 msgid "Users can send reply"
 msgstr ""
 
-#: admin/fep-admin-class.php:80
+#: admin/fep-admin-class.php:81
 msgid "Hide site wide notification in header?"
 msgstr ""
 
-#: admin/fep-admin-class.php:81
+#: admin/fep-admin-class.php:82
 msgid "Hide Branding Footer?"
 msgstr ""
 
-#: admin/fep-admin-class.php:82 fep-class.php:179
+#: admin/fep-admin-class.php:83 fep-class.php:179
 msgid "Save Options"
 msgstr ""
 
-#: admin/fep-admin-class.php:85 admin/fep-admin-class.php:132
+#: admin/fep-admin-class.php:86 admin/fep-admin-class.php:133
 msgid ""
 "For paid support pleasse visit <a href='%s' target='_blank'>Front End PM</a>"
 msgstr ""
 
-#: admin/fep-admin-class.php:98
+#: admin/fep-admin-class.php:99
 msgid "First four fields support only positive numbers!"
 msgstr ""
 
-#: admin/fep-admin-class.php:101
+#: admin/fep-admin-class.php:102
 msgid "Please enter a valid email address for announcement to field!"
 msgstr ""
 
-#: admin/fep-admin-class.php:104 admin/fep-admin-class.php:171
+#: admin/fep-admin-class.php:105 admin/fep-admin-class.php:172
 #: fep-announcement-class.php:237 fep-class.php:316
 msgid "Invalid Token. Please try again!"
 msgstr ""
 
-#: admin/fep-admin-class.php:127
+#: admin/fep-admin-class.php:128
 msgid "Front End PM Setup Instruction"
 msgstr ""
 
-#: admin/fep-admin-class.php:128
+#: admin/fep-admin-class.php:129
 msgid "Create a new page."
 msgstr ""
 
-#: admin/fep-admin-class.php:129
+#: admin/fep-admin-class.php:130
 msgid "Paste following code under the HTML tab of the page editor"
 msgstr ""
 
-#: admin/fep-admin-class.php:130
+#: admin/fep-admin-class.php:131
 msgid "Publish the page."
 msgstr ""
 
-#: admin/fep-admin-class.php:131
+#: admin/fep-admin-class.php:132
 msgid "Or you can create a page below."
 msgstr ""
 
-#: admin/fep-admin-class.php:134
+#: admin/fep-admin-class.php:135
 msgid "Create Page For \"Front End PM\""
 msgstr ""
 
-#: admin/fep-admin-class.php:142
+#: admin/fep-admin-class.php:143
 msgid "Title of \"Front End PM\" Page"
 msgstr ""
 
-#: admin/fep-admin-class.php:144
+#: admin/fep-admin-class.php:145
 msgid "Slug"
 msgstr ""
 
-#: admin/fep-admin-class.php:144
+#: admin/fep-admin-class.php:145
 msgid "If blank, slug will be automatically created based on Title"
 msgstr ""
 
-#: admin/fep-admin-class.php:147
+#: admin/fep-admin-class.php:148
 msgid "Create Page"
 msgstr ""
 
-#: admin/fep-admin-class.php:163
+#: admin/fep-admin-class.php:164
 msgid ""
 "Already created page <a href='%s'>%s </a> for \"Front End PM\". Please use "
 "that page instead!"
 msgstr ""
 
-#: admin/fep-admin-class.php:166
+#: admin/fep-admin-class.php:167
 msgid "You must enter a valid Title!"
 msgstr ""
 
-#: admin/fep-admin-class.php:184
+#: admin/fep-admin-class.php:185
 msgid "Something wrong.Please try again to create page!"
 msgstr ""
 
-#: admin/fep-admin-class.php:187
+#: admin/fep-admin-class.php:188
 msgid "Page <a href='%s'>%s </a> for \"Front End PM\" successfully created!"
 msgstr ""
 
@@ -278,7 +279,7 @@ msgid "Your Messages"
 msgstr ""
 
 #: essential-functions.php:320 fep-announcement-class.php:81
-#: fep-directory-class.php:61
+#: fep-directory-class.php:63
 msgid "Page"
 msgstr ""
 
@@ -309,17 +310,33 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
+#: essential-functions.php:371
+msgid "%s empty"
+msgstr ""
+
+#: essential-functions.php:459
+msgid "ago"
+msgstr ""
+
 #: essential-functions.php:489
 msgid "Add Reply"
 msgstr ""
 
 #: essential-functions.php:514 fep-class.php:256 fep-class.php:263
-#: fep-directory-class.php:72 fep-directory-class.php:79
+#: fep-directory-class.php:74 fep-directory-class.php:81
 msgid "Send Message"
 msgstr ""
 
-#: fep-announcement-class.php:34 fep-widgets.php:121 functions.php:112
-msgid " and"
+#: fep-announcement-class.php:32 functions.php:106
+msgid "new announcements"
+msgstr ""
+
+#: fep-announcement-class.php:32 functions.php:106
+msgid "new announcement"
+msgstr ""
+
+#: fep-announcement-class.php:34 functions.php:115
+msgid "and"
 msgstr ""
 
 #: fep-announcement-class.php:44
@@ -399,11 +416,11 @@ msgstr ""
 msgid "You do not have permission to add this announcement!"
 msgstr ""
 
-#: fep-announcement-class.php:423 fep-announcement-class.php:450
+#: fep-announcement-class.php:423 fep-announcement-class.php:455
 msgid "Announcement successfully Deleted."
 msgstr ""
 
-#: fep-announcement-class.php:454
+#: fep-announcement-class.php:431 fep-announcement-class.php:459
 msgid "Something wrong. Please try again."
 msgstr ""
 
@@ -571,19 +588,19 @@ msgstr ""
 msgid "Directory"
 msgstr ""
 
-#: fep-directory-class.php:57
+#: fep-directory-class.php:59
 msgid "Total Users"
 msgstr ""
 
-#: fep-directory-class.php:70
+#: fep-directory-class.php:72
 msgid "User"
 msgstr ""
 
-#: fep-directory-class.php:71 fep-directory-class.php:78
+#: fep-directory-class.php:73 fep-directory-class.php:80
 msgid "View Messages between"
 msgstr ""
 
-#: fep-directory-class.php:87
+#: fep-directory-class.php:89
 msgid "No users found."
 msgstr ""
 
@@ -647,15 +664,19 @@ msgstr ""
 msgid "Front End PM Text Widget"
 msgstr ""
 
-#: fep-widgets.php:111 functions.php:91 functions.php:106
+#: fep-widgets.php:111 functions.php:91 functions.php:109
 msgid "You have"
 msgstr ""
 
-#: fep-widgets.php:117 functions.php:109
+#: fep-widgets.php:117
 msgid " %d new message%s"
 msgstr ""
 
-#: fep-widgets.php:130 functions.php:115
+#: fep-widgets.php:121
+msgid " and"
+msgstr ""
+
+#: fep-widgets.php:130
 msgid " %d new announcement%s"
 msgstr ""
 
@@ -683,8 +704,24 @@ msgstr ""
 msgid "No Matches Found"
 msgstr ""
 
-#: functions.php:128 functions.php:138
+#: functions.php:89 functions.php:101
+msgid "new messages"
+msgstr ""
+
+#: functions.php:89 functions.php:101
+msgid "new message"
+msgstr ""
+
+#: functions.php:131 functions.php:141
 msgid "Send new message is disabled for users!"
+msgstr ""
+
+#: functions.php:166
+msgid "Put code in between"
+msgstr ""
+
+#: functions.php:166
+msgid "backticks"
 msgstr ""
 
 #. Plugin Name of the plugin/theme

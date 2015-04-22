@@ -33,7 +33,7 @@
             fep_get_by_id('fep_upload').appendChild(d);
 
         } else {
-            alert('maximum file allowed '+fep_attachment_script.maximum);
+            alert(fep_attachment_script.max_text+' '+fep_attachment_script.maximum);
         }
     }
     // Listener: automatically add new file field when the visible ones are full.
@@ -66,7 +66,7 @@
         if (maximum!=0 && num_img>maximum-1) {
 			//alert('maximum');
             $('#fep-attachment-field-add').hide();
-			$('#fep-attachment-note').html('maximum file allowed '+fep_attachment_script.maximum);
+			$('#fep-attachment-note').html(fep_attachment_script.max_text+' '+fep_attachment_script.maximum);
         } else {
 			$('#fep-attachment-field-add').show();
 			$('#fep-attachment-note').html('');

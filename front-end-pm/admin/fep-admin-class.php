@@ -17,6 +17,7 @@ if (!class_exists('fep_admin_class'))
     function actions_filters()
     {
 	add_action('admin_menu', array(&$this, 'addAdminPage'));
+	add_filter('plugin_action_links', array(&$this, 'add_settings_link'), 10, 2 );
     }
 
 
@@ -47,24 +48,30 @@ if (!class_exists('fep_admin_class'))
 		else{
 		echo'<div id="message" class="updated fade">' .__("Options successfully saved.", 'fep'). ' </div>';}}
 		
-      echo 	"<div class='wrap'>
+      echo "<div id='poststuff'>
+
+		<div id='post-body' class='metabox-holder columns-2'>
+
+		<!-- main content -->
+		<div id='post-body-content'>
+		<div class='postbox'><div class='inside'>
 	  	  <h2>".__("Front End PM Settings", 'fep')."</h2>
 		  <h5>".sprintf(__("If you like this plugin please <a href='%s' target='_blank'>Review in Wordpress.org</a> and give 5 star", 'fep'),esc_url($ReviewURL))."</h5>
           <form method='post' action='$actionURL'>
           <table class='widefat'>
           <thead>
-          <tr><th width='30%'>".__("Setting", 'fep')."</th><th width='70%'>".__("Value", 'fep')."</th></tr>
+          <tr><th width='50%'>".__("Setting", 'fep')."</th><th width='50%'>".__("Value", 'fep')."</th></tr>
           </thead>
-          <tr><td>".__("Max messages a user can keep in box? (0 = Unlimited)", 'fep')."<br /><small>".__("Admins always have Unlimited", 'fep')."</small></td><td><input type='text' size='10' name='num_messages' value='".fep_get_option('num_messages',50)."' /><br/> ".__("Default",'fep').": 50</td></tr>
-          <tr><td>".__("Messages to show per page", 'fep')."<br/><small>".__("Do not set this to 0!", 'fep')."</small></td><td><input type='text' size='10' name='messages_page' value='".fep_get_option('messages_page',15)."' /><br/> ".__("Default",'fep').": 15</td></tr>
-		  <tr><td>".__("Maximum user per page in Directory", 'fep')."<br/><small>".__("Do not set this to 0!", 'fep')."</small></td><td><input type='text' size='10' name='user_page' value='".fep_get_option('user_page',50)."' /><br/> ".__("Default",'fep').": 50</td></tr>
-		  <tr><td>".__("Time delay between two messages send by a user in minutes (0 = No delay required)", 'fep')."<br/><small>".__("Admins have no restriction", 'fep')."</small></td><td><input type='text' size='10' name='time_delay' value='".fep_get_option('time_delay',5)."' /><br/> ".__("Default",'fep').": 5</td></tr>
+          <tr><td>".__("Max messages a user can keep in box? (0 = Unlimited)", 'fep')."<br /><small>".__("Admins always have Unlimited", 'fep')."</small></td><td><input type='text' name='num_messages' value='".fep_get_option('num_messages',50)."' /><br/> ".__("Default",'fep').": 50</td></tr>
+          <tr><td>".__("Messages to show per page", 'fep')."<br/><small>".__("Do not set this to 0!", 'fep')."</small></td><td><input type='text' name='messages_page' value='".fep_get_option('messages_page',15)."' /><br/> ".__("Default",'fep').": 15</td></tr>
+		  <tr><td>".__("Maximum user per page in Directory", 'fep')."<br/><small>".__("Do not set this to 0!", 'fep')."</small></td><td><input type='text' name='user_page' value='".fep_get_option('user_page',50)."' /><br/> ".__("Default",'fep').": 50</td></tr>
+		  <tr><td>".__("Time delay between two messages send by a user in minutes (0 = No delay required)", 'fep')."<br/><small>".__("Admins have no restriction", 'fep')."</small></td><td><input type='text' name='time_delay' value='".fep_get_option('time_delay',5)."' /><br/> ".__("Default",'fep').": 5</td></tr>
 		  <tr><td>".__("Block Username", 'fep')."<br /><small>".__("Separated by comma", 'fep')."</small></td><td><TEXTAREA name='have_permission'>".fep_get_option('have_permission')."</TEXTAREA></td></tr>
 		  <tr><td>".__("Custom CSS", 'fep')."<br /><small>".__("add or override", 'fep')."</small></td><td><TEXTAREA name='custom_css'>".trim(fep_get_option('custom_css'))."</TEXTAREA></td></tr>
 		  
 		  <tr><td>".__("Editor Type", 'fep')."<br /><small>".__("Admin alwayes have Wp Editor", 'fep')."</small></td><td><select name='editor_type'>
 		  <option value='wp_editor' ".selected(fep_get_option('editor_type','teeny'), 'wp_editor',false).">Wp Editor</option>
-		  <option value='teeny' ".selected(fep_get_option('editor_type','teeny'), 'teeny',false).">Wp Editor (Tiny)</option>
+		  <option value='teeny' ".selected(fep_get_option('editor_type','teeny'), 'teeny',false).">Wp Editor (Teeny)</option>
 		  <option value='textarea' ".selected(fep_get_option('editor_type','teeny'), 'textarea',false).">Textarea</option></select></td></tr>
 		  
 		  <tr><td>".__("Minimum Capability to use messaging", 'fep')."<br /><small>".sprintf(__("see <a href='%s' target='_blank'>WORDPRESS CAPABILITIES</a> to get capabilities (use only one capability)", 'fep'),esc_url($capUrl))."</small></td><td><input type='text' size='30' name='min_cap' value='".fep_get_option('min_cap','read')."' /><br /><small>".__("Keep blank if allowed for all users", 'fep')."</small></td></tr>";
@@ -73,7 +80,7 @@ if (!class_exists('fep_admin_class'))
 		  
 		  echo "
 		  <tr><td>".__("Valid email address for \"to\" field of announcement email", 'fep')."<br /><small>".__("All users email will be in \"Bcc\" field", 'fep')."</small></td><td><input type='text' size='30' name='ann_to' value='".fep_get_option('ann_to', get_bloginfo('admin_email'))."' /></td></tr>
-		  <tr><td colspan='2'><input type='checkbox' name='notify_ann' value='1' ".checked(fep_get_option('notify_ann',1), '1', false)." /> ".__("Send email to all users when a new announcement is published?", 'fep')."</td></tr>
+		  <tr><td colspan='2'><input type='checkbox' name='notify_ann' value='1' ".checked(fep_get_option('notify_ann',0), '1', false)." /> ".__("Send email to all users when a new announcement is published?", 'fep')."</td></tr>
 		  <tr><td colspan='2'><input type='checkbox' name='hide_directory' value='1' ".checked(fep_get_option('hide_directory',0), '1', false)." /> ".__("Hide Directory from front end?", 'fep')."<br /><small>".__("Always shown to Admins", 'fep')."</small></td></tr>
 		  <tr><td colspan='2'><input type='checkbox' name='hide_autosuggest' value='1' ".checked(fep_get_option('hide_autosuggest',0), '1', false)." /> ".__("Hide Autosuggestion when typing recipient name?", 'fep')."<br /><small>".__("Always shown to Admins", 'fep')."</small></td></tr>
 		  <tr><td colspan='2'><input type='checkbox' name='disable_new' value='1' ".checked(fep_get_option('disable_new',0), '1', false)." /> ".__("Disable \"send new message\" for all users except admins?", 'fep')."<br /><small>".__("Users can send reply", 'fep')."</small></td></tr>
@@ -83,8 +90,49 @@ if (!class_exists('fep_admin_class'))
           </table>
 		  </form>
 		  <ul>".sprintf(__("For paid support pleasse visit <a href='%s' target='_blank'>Front End PM</a>", 'fep'),esc_url($url))."</ul>
-          </div>";
+          </div></div></div>
+		  ". $this->fep_admin_sidebar(). "
+		  </div></div>";
     }
+
+function fep_admin_sidebar()
+	{
+		return '<div id="postbox-container-1" class="postbox-container">
+
+
+				<div class="postbox">
+					<h3 class="hndle" style="text-align: center;">
+						<span>'. __( "Plugin Author", "fepcf" ). '</span>
+					</h3>
+
+					<div class="inside">
+						<div style="text-align: center; margin: auto">
+						<strong>Shamim Hasan</strong><br />
+						Know php, MySql, css, javascript, html. Expert in WordPress. <br /><br />
+								
+						You can hire for plugin customization, build custom plugin or any kind of wordpress job via <br> <a
+								href="https://shamimbiplob.wordpress.com/contact-us/"><strong>Contact Form</strong></a>
+					</div>
+				</div>
+			</div>
+
+				<div class="postbox">
+					<h3 class="hndle" style="text-align: center;">
+						<span>'. __( "Some Useful Links", "fepcf" ). '</span>
+					</h3><div class="inside">
+						<div style="text-align: center; margin: auto">
+							<p>Some useful links are bellow to work with this plugin.</p>
+						<ul>
+							<li><a href="http://frontendpm.blogspot.com/2015/03/front-end-pm.html" target="_blank">Front End PM</a></li>
+							<li><a href="http://frontendpm.blogspot.com/2015/03/front-end-pm-actions.html" target="_blank">Front End PM actions</a></li>
+							<li><a href="http://frontendpm.blogspot.com/2015/03/front-end-pm-filters.html" target="_blank">Front End PM filters</a></li>
+							<li><a href="http://frontendpm.blogspot.com/2015/03/changelog-of-front-end-pm.html" target="_blank">Changelog</a></li>
+							<li><a href="http://frontendpm.blogspot.com/2015/03/frequently-asked-questions.html" target="_blank">FAQ</a></li>
+						</ul></div>
+					</div>
+				</div>
+				</div>';
+	}
 
 
     function admin_settings_action()
@@ -123,7 +171,13 @@ if (!class_exists('fep_admin_class'))
 			{
 			$this->fep_createPage_action();
 			}
-	echo 	"<div class='wrap'>
+	echo "<div id='poststuff'>
+
+		<div id='post-body' class='metabox-holder columns-2'>
+
+		<!-- main content -->
+		<div id='post-body-content'>
+		<div class='postbox'><div class='inside'>
           <h2>".__("Front End PM Setup Instruction", 'fep')."</h2>
           <p><ul><li>".__("Create a new page.", 'fep')."</li>
           <li>".__("Paste following code under the HTML tab of the page editor", 'fep')."<code>[front-end-pm]</code></li>
@@ -132,7 +186,9 @@ if (!class_exists('fep_admin_class'))
 		  <li>".sprintf(__("For paid support pleasse visit <a href='%s' target='_blank'>Front End PM</a>", 'fep'),esc_url($url))."</li>
           </ul></p>
 		  <h2>".__("Create Page For \"Front End PM\"", 'fep')."</h2>
-		  ".$this->fep_createPage()."</div>";
+		  ".$this->fep_createPage()."</div></div></div>
+		  ". $this->fep_admin_sidebar(). "
+		  </div></div>";
 		  }
 	
 	function fep_createPage(){
@@ -191,10 +247,20 @@ if (!class_exists('fep_admin_class'))
 		
 		}
 	}
+	
+function add_settings_link( $links, $file ) {
+	//add settings link in plugins page
+	$plugin_file = 'front-end-pm/front-end-pm.php';
+	if ( $file == $plugin_file ) {
+		$settings_link = '<a href="' . admin_url( 'admin.php?page=fep-admin-settings' ) . '">' .__( 'Settings', 'fep' ) . '</a>';
+		array_unshift( $links, $settings_link );
+	}
+	return $links;
+}
 /******************************************ADMIN SETTINGS PAGE END******************************************/
 
   } //END CLASS
 } //ENDIF
 
-add_action('plugins_loaded', array(fep_admin_class::init(), 'actions_filters'));
+add_action('wp_loaded', array(fep_admin_class::init(), 'actions_filters'));
 ?>

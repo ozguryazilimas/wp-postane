@@ -65,11 +65,11 @@ if (!class_exists('fep_email_class'))
 	$chunked_bcc = array_chunk($bcc, 25);
 	
 	$subject =  get_bloginfo("name").': '.__('New Announcement', 'fep');
-	$message = __('A new Announcement is Published in ', 'fep').'\r\n';
+	$message = __('A new Announcement is Published in ', 'fep')."\r\n";
 	$message .= get_bloginfo("name")."\r\n";
 	$message .= sprintf(__("Title: %s", 'fep'), $mgs['message_title'] ). "\r\n";
-	$message .= __('Please Click the following link to view full Announcement.', 'fep'). '\r\n';
-	$message .= fep_get_option('announcements'). '\r\n';
+	$message .= __('Please Click the following link to view full Announcement.', 'fep'). "\r\n";
+	$message .= fep_action_url('announcements'). "\r\n";
 	foreach($chunked_bcc as $bcc_chunk){
         $headers = array();
 		$headers['From'] = 'From: '.get_bloginfo("name").'<'.$from.'>';
@@ -85,5 +85,5 @@ if (!class_exists('fep_email_class'))
   } //END CLASS
 } //ENDIF
 
-add_action('plugins_loaded', array(fep_email_class::init(), 'actions_filters'));
+add_action('wp_loaded', array(fep_email_class::init(), 'actions_filters'));
 ?>

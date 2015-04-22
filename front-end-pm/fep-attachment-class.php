@@ -37,8 +37,8 @@ if (!class_exists('fep_attachment_class'))
     }
 	
 	function settings() {
-	echo "<tr><td><input type='checkbox' id='fep-attachment-checkbox' name='allow_attachment' value='1' ".checked(fep_get_option('allow_attachment',0), '1', false)." />".__("Allow to send attachment", 'fep')."<br /><small>".__("Set maximum size of attachment", 'fep')."</small></td><td class='fep-show-if-checked' style='display:none;'><input type='text' size='30' name='attachment_size' value='".fep_get_option('attachment_size','4MB')."' /><br /><small>".__("Use KB, MB or GB.(eg. 4MB)", 'fep')."</small></td></tr>";
-	echo "<tr class='fep-show-if-checked' style='display:none;'><td>".__("Maximum Number of attachment?", 'fep')."<br /><small>".__("Set maximum number of attachment", 'fep')."</small></td><td><input type='text' size='30' name='attachment_no' value='".fep_get_option('attachment_no','4')."' /><br /><small>".__("0 = unlimited", 'fep')."</small></td></tr>";
+	echo "<tr><td><input type='checkbox' id='fep-attachment-checkbox' name='allow_attachment' value='1' ".checked(fep_get_option('allow_attachment',0), '1', false)." />".__("Allow to send attachment", 'fep')."<br /><small>".__("Set maximum size of attachment", 'fep')."</small></td><td class='fep-show-if-checked' style='display:none;'><input type='text' name='attachment_size' value='".fep_get_option('attachment_size','4MB')."' /><br /><small>".__("Use KB, MB or GB.(eg. 4MB)", 'fep')."</small></td></tr>";
+	echo "<tr class='fep-show-if-checked' style='display:none;'><td>".__("Maximum Number of attachment?", 'fep')."<br /><small>".__("Set maximum number of attachment", 'fep')."</small></td><td><input type='text' name='attachment_no' value='".fep_get_option('attachment_no','4')."' /><br /><small>".__("0 = unlimited", 'fep')."</small></td></tr>";
 	?>
 	<script type="text/javascript">
 	if(jQuery('#fep-attachment-checkbox').attr("checked")) {
@@ -235,5 +235,5 @@ function upload_file( $upload_data, $message_id ) {
   } //END CLASS
 } //ENDIF
 
-add_action('plugins_loaded', array(fep_attachment_class::init(), 'actions_filters'));
+add_action('wp_loaded', array(fep_attachment_class::init(), 'actions_filters'));
 ?>
