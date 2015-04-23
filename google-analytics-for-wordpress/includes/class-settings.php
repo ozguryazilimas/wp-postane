@@ -1,15 +1,12 @@
 <?php
 /**
- * @package GoogleAnalytics\OptionsUtils
+ * @package GoogleAnalytics\Includes
  */
 
 /**
- * Class Yoast_GA_Options_Utils
- *
- * Old name: Class Yoast_GA_Settings
+ * Settings class.
  */
-
-class Yoast_GA_Options_Utils {
+class Yoast_GA_Settings {
 
 	/**
 	 * Saving instance of it's own in this static var
@@ -41,11 +38,11 @@ class Yoast_GA_Options_Utils {
 	/**
 	 * Getting instance of this object. If instance doesn't exists it will be created.
 	 *
-	 * @return object|Yoast_GA_Options_Utils
+	 * @return object|Yoast_GA_Settings
 	 */
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {
-			self::$instance = new Yoast_GA_Options_Utils();
+			self::$instance = new Yoast_GA_Settings();
 		}
 
 		return self::$instance;
@@ -60,13 +57,4 @@ class Yoast_GA_Options_Utils {
 		return $this->options_class->option_value_to_bool( 'dashboards_disabled' );
 	}
 
-	/**
-	 * Add a notification to the notification transient
-	 *
-	 * @param string $transient_name The transient name
-	 * @param array  $settings       Set the values for this new transient
-	 */
-	public function add_notification( $transient_name, $settings ) {
-		set_transient( $transient_name, $settings, MINUTE_IN_SECONDS );
-	}
 }

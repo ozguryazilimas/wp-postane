@@ -1,6 +1,6 @@
 <?php
 /**
- * @package GoogleAnalytics\AdminMenu
+ * @package GoogleAnalytics\Admin
  */
 
 /**
@@ -44,7 +44,7 @@ class Yoast_GA_Admin_Menu {
 			add_action( 'network_admin_menu', array( $this, 'create_admin_menu' ), 5 );
 		}
 
-		$this->dashboards_disabled = Yoast_GA_Options_Utils::get_instance()->dashboards_disabled();
+		$this->dashboards_disabled = Yoast_GA_Settings::get_instance()->dashboards_disabled();
 		$this->parent_slug         = ( ( $this->dashboards_disabled ) ? 'yst_ga_settings' : 'yst_ga_dashboard' );
 	}
 
@@ -164,7 +164,6 @@ class Yoast_GA_Admin_Menu {
 	private function add_submenu_page( $submenu_page ) {
 		$page         = add_submenu_page( $submenu_page['parent_slug'], $submenu_page['page_title'], $submenu_page['menu_title'], $submenu_page['capability'], $submenu_page['menu_slug'], $submenu_page['submenu_function'] );
 		$is_dashboard = ( 'yst_ga_dashboard' === $submenu_page['menu_slug'] );
-
 		$this->add_assets( $page, $is_dashboard );
 	}
 
@@ -176,7 +175,6 @@ class Yoast_GA_Admin_Menu {
 	 */
 	private function add_assets( $page, $is_dashboard ) {
 		add_action( 'admin_print_styles-' . $page, array( 'Yoast_GA_Admin_Assets', 'enqueue_styles' ) );
-
 		add_action( 'admin_print_styles-' . $page, array( 'Yoast_GA_Admin_Assets', 'enqueue_settings_styles' ) );
 		add_action( 'admin_print_scripts-' . $page, array( 'Yoast_GA_Admin_Assets', 'enqueue_scripts' ) );
 		if ( ! $is_dashboard && filter_input( INPUT_GET, 'page' ) === 'yst_ga_dashboard' ) {
