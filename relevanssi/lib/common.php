@@ -180,7 +180,7 @@ function relevanssi_default_post_ok($post_ok, $doc) {
 	}
 	
 	// only show drafts, pending and future posts in admin search
-	if (in_array($status, array('draft', 'pending', 'future')) && is_admin()) {
+	if (in_array($status, apply_filters('relevanssi_valid_admin_status', array('draft', 'pending', 'future'))) && is_admin()) {
 		$post_ok = true;
 	}
 	
@@ -448,6 +448,11 @@ function relevanssi_prevent_default_request( $request, $query ) {
 		
 		$prevent = true;
 		$prevent = apply_filters('relevanssi_prevent_default_request', $prevent, $query );
+
+		if (empty($query->query_vars['s'])) {
+			$prevent = false;
+			$admin_search_ok = false;
+		}
 		
 		if (!is_admin() && $prevent )
 			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";		

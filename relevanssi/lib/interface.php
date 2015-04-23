@@ -66,7 +66,8 @@ function relevanssi_options() {
 	}
 	relevanssi_options_form();
 	
-	relevanssi_common_words();
+	if (apply_filters('relevanssi_display_common_words', true)) 
+		relevanssi_common_words();
 	
 	echo "<div style='clear:both'></div>";
 	

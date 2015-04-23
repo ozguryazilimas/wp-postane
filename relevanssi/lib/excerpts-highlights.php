@@ -67,6 +67,9 @@ function relevanssi_do_excerpt($t_post, $query) {
 	$excerpt = trim($excerpt);
 	$excerpt = apply_filters('relevanssi_excerpt', $excerpt);
 
+	if (empty($excerpt) && !empty($post->post_excerpt)) $excerpt = $post->post_excerpt;
+	$excerpt == $post->post_content ? $whole_post_excerpted = true : $whole_post_excerpted = false;
+
 	$ellipsis = apply_filters('relevanssi_ellipsis', '...');
 
 	$highlight = get_option('relevanssi_highlight');
@@ -79,14 +82,16 @@ function relevanssi_do_excerpt($t_post, $query) {
 
 	$excerpt = relevanssi_close_tags($excerpt);
 
-	if (!$start && !empty($excerpt)) {
-		$excerpt = $ellipsis . $excerpt;
-		// do not add three dots to the beginning of the post
+	if (!$whole_post_excerpted) {
+		if (!$start && !empty($excerpt)) {
+			$excerpt = $ellipsis . $excerpt;
+			// do not add three dots to the beginning of the post
+		}
+
+		if (!empty($excerpt))
+			$excerpt = $excerpt . $ellipsis;
 	}
-
-	if (!empty($excerpt))
-		$excerpt = $excerpt . $ellipsis;
-
+	
 	if (relevanssi_s2member_level($post->ID) == 1) $excerpt = $post->post_excerpt;
 
 	if ($old_global_post != NULL) $post = $old_global_post;
@@ -108,6 +113,7 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 	$best_excerpt_term_hits = -1;
 	$excerpt = "";
 
+	$content = preg_replace('/\s+/', ' ', $content);
 	$content = " $content";
 
 	$phrases = relevanssi_extract_phrases(stripslashes($query));

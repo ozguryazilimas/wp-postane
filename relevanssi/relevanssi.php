@@ -3,12 +3,12 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.3.8
+Version: 3.4
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
 
-/*  Copyright 2014 Mikko Saari  (email: mikko@mikkosaari.fi)
+/*  Copyright 2015 Mikko Saari  (email: mikko@mikkosaari.fi)
 
     This file is part of Relevanssi, a search plugin for WordPress.
 
@@ -388,7 +388,6 @@ comparison</a> and <a href="http://www.relevanssi.com/buy-premium/?utm_source=pl
 - Hiding Relevanssi branding from the User Searches page on a client installation<br />
 - Adjust weights separately for each post type and taxonomy<br />
 - Give extra weight to recent posts<br />
-- Highlight search terms for visitors from Google and other external search sources<br />
 - Make Relevanssi understand thousand separators to handle big numbers better<br />
 - Index and search any columns in the wp_posts database<br />
 - Index and search user profile pages<br />

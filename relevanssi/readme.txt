@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
-Tested up to: 4.0.1
-Stable tag: 3.3.8
+Tested up to: 4.2
+Stable tag: 3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,16 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.4 =
+* New filter: `relevanssi_valid_admin_status` can be used to adjust post statuses that Relevanssi will handle.
+* If Relevanssi creates an empty excerpt for a post and there's a user-set excerpt for the post, that excerpt is used.
+* No ellipsis is added to the post excerpt, if the post excerpt shows the whole post.
+* The `relevanssi_post_title_before_tokenize` filter now has a second parameter that contains the post object.
+* New filter: `relevanssi_display_common_words` can be used to disable the "25 most common words" listing on the settings page, if it's too heavy to load.
+* Relevanssi was sanitizing taxonomy titles too aggressively. That is now toned down a bit.
+* Relevanssi now supports `post_parent`, `post_parent__in` and `post_parent__not_in`, though you have to set them in `relevanssi_modify_wp_query` filter for them to work.
+* Meta query support should now be perfect; there were some limitations with complicated meta queries before.
 
 = 3.3.8 =
 * Fixed a bug that caused the results to change depending of the order of words in a multi-word search query.
@@ -1060,6 +1070,9 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.4 =
+* Bug fixes, better meta_query support, better excerpt handling.
 
 = 3.3.8 =
 * Bug fixes, fix for a possible XSS vulnerability, improved performance.
