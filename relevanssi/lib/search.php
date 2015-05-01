@@ -464,6 +464,7 @@ function relevanssi_search($args) {
 	}
 
 	$query_restrictions = apply_filters('relevanssi_where', $query_restrictions); // Charles St-Pierre
+	$query_join = "";
 	if (!empty($meta_join)) $query_join = $meta_join;
 	$query_join = apply_filters('relevanssi_join', $query_join);
 
