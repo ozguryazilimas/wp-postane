@@ -28,7 +28,7 @@ if (! class_exists('GADWP_Tools')) {
                 'http://',
                 'https://'
             ), '', $domain);
-            if (is_array($profiles)) {
+            if (!empty($profiles)) {
                 foreach ($profiles as $items) {
                     if (strpos($items[3], $domain)) {
                         return $items[1];
@@ -42,7 +42,7 @@ if (! class_exists('GADWP_Tools')) {
 
         public static function get_selected_profile($profiles, $profile)
         {
-            if (is_array($profiles)) {
+            if (!empty($profiles)) {
                 foreach ($profiles as $item) {
                     if ($item[1] == $profile) {
                         return $item;
@@ -113,7 +113,7 @@ if (! class_exists('GADWP_Tools')) {
         public static function check_roles($access_level, $tracking = false)
         {
             if (is_user_logged_in() && isset($access_level)) {
-                global $current_user;
+                $current_user = wp_get_current_user();
                 $roles = (array) $current_user->roles;
                 if ((current_user_can('manage_options')) && ! $tracking) {
                     return true;

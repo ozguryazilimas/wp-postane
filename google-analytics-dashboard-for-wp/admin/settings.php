@@ -269,7 +269,7 @@ final class GADWP_Settings
                                             <div class="onoffswitch-switch"></div>
                                         </label>
                                     </div>
-                                    <div class="switch-desc"><?php _e ( "enable Switch Profile/View functionality", 'ga-dash' );?></div>
+                                    <div class="switch-desc"><?php _e ( "enable Switch View functionality", 'ga-dash' );?></div>
                                 </td>
                             </tr>
                             <tr>
@@ -366,7 +366,7 @@ final class GADWP_Settings
         );
         self::navigation_tabs($tabs);
         ?>
-        <div class="gadwp-help"><?php printf(__('For more information about Tracking Options read %s.', 'ga-dash'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/tracking-google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=tracking_screen&utm_campaign=gadwp', __('this documentation page', 'ga-dash')));?></div>
+        <div class="gadwp-help"><?php printf(__('For more information about Tracking Options read %s.', 'ga-dash'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=tracking_screen&utm_campaign=gadwp', __('this documentation page', 'ga-dash')));?></div>
 					<?php if (isset($message)) echo $message; ?>
 					    <div id="gadwp-basic">
                             <table class="options">
@@ -679,7 +679,7 @@ final class GADWP_Settings
                         <table class="options">
                             <tr>
                                 <td>
-                                    <?php printf(__('For errors and/or other issues please check %s and related tutorials.', 'ga-dash'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/error-codes-in-google-analytics-dashboard-for-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=errors_screen&utm_campaign=gadwp', __('this documentation page', 'ga-dash')))?>
+                                    <?php printf(__('For errors and/or other issues check %s and related resources.', 'ga-dash'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=errors_screen&utm_campaign=gadwp', __('this documentation page', 'ga-dash')))?>
 						        </td>
                             </tr>
                             <tr>
@@ -739,7 +739,7 @@ final class GADWP_Settings
             return;
         }
         $options = self::update_options('general');
-        printf('<div id="gapi-warning" class="updated"><p>%1$s <a href="https://deconf.com/error-codes-in-google-analytics-dashboard-for-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=general_screen&utm_campaign=gadwp">%2$s</a></p></div>', __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash"), __('Library conflicts between WordPress plugins', "ga-dash"));
+        printf('<div id="gapi-warning" class="updated"><p>%1$s <a href="https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=general_screen&utm_campaign=gadwp">%2$s</a></p></div>', __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash"), __('Library conflicts between WordPress plugins', "ga-dash"));
         if (null === $gadwp->gapi_controller) {
             $gadwp->gapi_controller = new GADWP_GAPI_Controller();
         }
@@ -751,6 +751,7 @@ final class GADWP_Settings
                     $gadwp->config->options['ga_dash_token'] = $gadwp->gapi_controller->client->getAccessToken();
                     $google_token = json_decode($gadwp->gapi_controller->client->getAccessToken());
                     $gadwp->config->options['ga_dash_refresh_token'] = $google_token->refresh_token;
+                    $gadwp->config->options['automatic_updates_minorversion'] = 1;
                     $gadwp->config->set_plugin_options();
                     $options = self::update_options('general');
                     $message = "<div class='updated'><p>" . __("Plugin authorization succeeded.", 'ga-dash') . "</p></div>";
@@ -772,7 +773,7 @@ final class GADWP_Settings
             }
         }
         if ($gadwp->config->options['ga_dash_token'] && $gadwp->gapi_controller->client->getAccessToken()) {
-            if ($gadwp->config->options['ga_dash_profile_list']) {
+            if (!empty($gadwp->config->options['ga_dash_profile_list'])) {
                 $profiles = $gadwp->config->options['ga_dash_profile_list'];
             } else {
                 $profiles = $gadwp->gapi_controller->refresh_profiles();
@@ -901,10 +902,10 @@ final class GADWP_Settings
                                                     <td colspan="2"><?php echo "<h2>" . __( "General Settings", 'ga-dash' ) . "</h2>"; ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="title"><label for="ga_dash_tableid_jail"><?php _e("Select Domain:", 'ga-dash' ); ?></label></td>
-                                                    <td><select id="ga_dash_tableid_jail" <?php disabled(is_array($options['ga_dash_profile_list']), false); ?> name="options[ga_dash_tableid_jail]">
+                                                    <td class="title"><label for="ga_dash_tableid_jail"><?php _e("Select View:", 'ga-dash' ); ?></label></td>
+                                                    <td><select id="ga_dash_tableid_jail" <?php disabled(empty($options['ga_dash_profile_list']) || 1 == count($options['ga_dash_profile_list']), true); ?> name="options[ga_dash_tableid_jail]">
                                     								<?php
-                if (is_array($options['ga_dash_profile_list'])) {
+                if (!empty($options['ga_dash_profile_list'])) {
                     foreach ($options['ga_dash_profile_list'] as $items) {
                         if ($items[3]) {
                             echo '<option value="' . esc_attr($items[1]) . '" ' . selected($items[1], $options['ga_dash_tableid_jail']);
@@ -917,8 +918,7 @@ final class GADWP_Settings
                 ?>
                                     							</select>                                    							<?php
                 if (count($options['ga_dash_profile_list']) > 1) {
-                    _e("and/or hide all other domains", 'ga-dash');
-                    ?><input type="submit" name="Hide" class="button button-secondary" value="<?php _e( "Hide Now", 'ga-dash' ); ?>" /><?php
+                    ?>&nbsp;<input type="submit" name="Hide" class="button button-secondary" value="<?php _e( "Lock Selection", 'ga-dash' ); ?>" /><?php
                 }
                 ?>
 							                         </td>
@@ -997,7 +997,7 @@ final class GADWP_Settings
         /*
          * Include GAPI
          */
-        echo '<div id="gapi-warning" class="updated"><p>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' <a href="https://deconf.com/error-codes-in-google-analytics-dashboard-for-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=general_screen&utm_campaign=gadwp">Library conflicts between WordPress plugins</a></p></div>';
+        echo '<div id="gapi-warning" class="updated"><p>' . __('Loading the required libraries. If this results in a blank screen or a fatal error, try this solution:', "ga-dash") . ' <a href="https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=general_screen&utm_campaign=gadwp">Library conflicts between WordPress plugins</a></p></div>';
         
         if (null === $gadwp->gapi_controller) {
             $gadwp->gapi_controller = new GADWP_GAPI_Controller();
@@ -1011,6 +1011,7 @@ final class GADWP_Settings
                     $gadwp->config->options['ga_dash_token'] = $gadwp->gapi_controller->client->getAccessToken();
                     $google_token = json_decode($gadwp->gapi_controller->client->getAccessToken());
                     $gadwp->config->options['ga_dash_refresh_token'] = $google_token->refresh_token;
+                    $gadwp->config->options['automatic_updates_minorversion'] = 1;
                     $gadwp->config->set_plugin_options(true);
                     $options = self::update_options('network');
                     $message = "<div class='updated'><p>" . __("Plugin authorization succeeded.", 'ga-dash') . "</p></div>";
@@ -1042,7 +1043,7 @@ final class GADWP_Settings
         }
         if (isset($_POST['Refresh'])) {
             if (isset($_POST['gadash_security']) && wp_verify_nonce($_POST['gadash_security'], 'gadash_form')) {
-                $gadwp->config->options['ga_dash_profile_list'] = '';
+                $gadwp->config->options['ga_dash_profile_list'] = array();
                 $message = "<div class='updated'><p>" . __("Properties refreshed.", 'ga-dash') . "</p></div>";
                 $options = self::update_options('network');
             } else {
@@ -1050,7 +1051,7 @@ final class GADWP_Settings
             }
         }
         if ($gadwp->config->options['ga_dash_token'] && $gadwp->gapi_controller->client->getAccessToken()) {
-            if ($gadwp->config->options['ga_dash_profile_list']) {
+            if (!empty($gadwp->config->options['ga_dash_profile_list'])) {
                 $profiles = $gadwp->config->options['ga_dash_profile_list'];
             } else {
                 $profiles = $gadwp->gapi_controller->refresh_profiles();
@@ -1199,9 +1200,9 @@ final class GADWP_Settings
                         ?>
 							                                         <tr>
                                                                         <td class="title-select"><label for="ga_dash_tableid_network"><?php echo '<strong>'.$blog['domain'].$blog['path'].'</strong>: ';?></label></td>
-                                                                        <td><select id="ga_dash_tableid_network" <?php disabled(is_array($options['ga_dash_profile_list']),false);?> name="options[ga_dash_tableid_network][<?php echo $blog['blog_id'];?>]">
+                                                                        <td><select id="ga_dash_tableid_network" <?php disabled(!empty($options['ga_dash_profile_list']),false);?> name="options[ga_dash_tableid_network][<?php echo $blog['blog_id'];?>]">
 									<?php
-                        if (is_array($options['ga_dash_profile_list'])) {
+                        if (!empty($options['ga_dash_profile_list'])) {
                             foreach ($options['ga_dash_profile_list'] as $items) {
                                 if ($items[3]) {
                                     echo '<option value="' . esc_attr($items[1]) . '" ' . selected($items[1], isset($options['ga_dash_tableid_network']->$blog['blog_id']) ? $options['ga_dash_tableid_network']->$blog['blog_id'] : '');
