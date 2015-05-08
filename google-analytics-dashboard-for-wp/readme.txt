@@ -3,8 +3,8 @@ Contributors: deconf
 Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics widget,tracking,realtime,wpmu,multisite
 Requires at least: 3.5
-Tested up to: 4.2.1
-Stable tag: 4.7.1
+Tested up to: 4.2.2
+Stable tag: 4.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,7 +79,7 @@ Install the Google Analytics tracking code in less than a minute and customize i
 
 = Translations =
 
-Google Analytics Dashboard has been translated into the following languages: Arabic, Dutch, English, French, German, Hungarian, Italian, Japanese, Polish, Portuguese, and Spanish.
+Google Analytics Dashboard has been translated into the following languages: Arabic, Czech, Dutch, French, German, Hungarian, Italian, Japanese, Polish, Portuguese, and Spanish.
 
 = Further reading and info =
 
@@ -133,6 +133,11 @@ A dedicated section for WordPress Plugins is available here: [Wordpress Plugins 
 This plugin it's released under the GPLv2, you can use it free of charge on your personal or commercial website.
 
 == Changelog ==
+
+= 4.7.2 =
+- Enhancement: Czech translation
+- Bug Fix: apply tooltips only on GADWP widget
+- Bug Fix: use a custom data attribute instead of title to attach the tooltip
 
 = 4.7.1 =
 - Enhancement: Italian translation updated
