@@ -3,7 +3,7 @@ Contributors: shamim51
 Tags: front end pm,front-end-pm,pm,private message,personal message,front end,frontend pm,frontend,message,email,mail,contact form, secure contact form, simple contact form,akismet check,akismet
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=4HKBQ3QFSCPHJ&lc=US&item_name=Front%20End%20PM&item_number=Front%20End%20PM&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Requires at least: 3.3
-Tested up to: 4.1.2
+Tested up to: 4.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -25,7 +25,7 @@ Front End PM is a Private Messaging system to your WordPress site.This is full f
 
 * If you want paid support you can contact with me through [Front End PM paid support](http://frontendpm.blogspot.com/p/contact-us.html)
 
-[youtube http://www.youtube.com/watch?v=alFMkJAlU7Q]
+[youtube http://www.youtube.com/watch?v=SHKHTIlzr3w]
 
 **Features**
 
@@ -90,17 +90,23 @@ I am very busy with my job. In my leisure i code for plugins. If you want to hel
 You can visit [Front End PM](http://frontendpm.blogspot.com/p/contact-us.html) and contact with me for paid support.
 
 == Screenshots ==
-1. Admin settings page.
-2. Front End PM setup instruction.
-3. Front End pm.
-4. Button widgets.
-5. Text widgets.
-6. Front End Directory.
+
+1. Front End pm.
+2. Button widgets.
+3. Text widgets.
+4. Front End Directory.
+5. Admin settings page.
+6. Front End PM setup instruction.
 7. FEP Contact Form Settings
 8. FEP Contact Form Settings 2
 9. FEP Contact Form
 
 == Changelog ==
+
+= 3.3 =
+
+* Critical Security update. Found cross-site scripting (XSS) vulnerability and fixed.
+* Please update as soon as possible.
 
 = 3.2 =
 
@@ -195,6 +201,11 @@ You can visit [Front End PM](http://frontendpm.blogspot.com/p/contact-us.html) a
 * Initial release.
 
 == Upgrade Notice ==
+
+= 3.3 =
+
+* Critical Security update. Found cross-site scripting (XSS) vulnerability and fixed.
+* Please update as soon as possible.
 
 = 3.2 =
 

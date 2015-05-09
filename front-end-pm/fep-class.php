@@ -376,6 +376,9 @@ function view_message()
 	  $order = (isset ( $_GET['order'] ) && strtoupper($_GET['order']) == 'DESC' ) ? 'DESC' : 'ASC';
 	  if ( 'ASC' == $order ) $anti_order = 'DESC'; else $anti_order = 'ASC';
 	  
+	  if ( !$pID )
+	  return "<div id='fep-error'>".__("You do not have permission to view this message!", 'fep')."</div>";
+	  
       $wholeThread = $this->getWholeThread( $pID, $order );
 	  $token = fep_create_nonce('delete_message');
 

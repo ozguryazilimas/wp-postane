@@ -24,7 +24,7 @@ function fep_backticker_display_code($text) {
 add_filter('fep_filter_display_message', 'fep_backticker_display_code', 5);
 
 function fep_message_filter_content($html) {
-    $html = apply_filters('the_content', $html);
+    $html = apply_filters('comment_text', $html);
     return $html;
 }
 add_filter( 'fep_filter_display_message', 'fep_message_filter_content' );
@@ -39,39 +39,39 @@ function fep_autosuggestion_ajax() {
 global $wpdb, $user_ID;
 
 if(fep_get_option('hide_autosuggest') == '1' && !current_user_can('manage_options'))
-wp_die();
+die();
 
 if ( check_ajax_referer( 'fep-autosuggestion', 'token', false )) {
-$SQL_FROM = $wpdb->users;
-$SQL_WHERE = 'display_name';
 
-// do a version check
-$version = get_bloginfo('version');
-if ($version < 4.0 ) {
-//Previous version
-$searchq = like_escape ($_POST['searchBy']);
-} else {
-$searchq = $wpdb->esc_like ($_POST['searchBy']);
-} 
+$searchq = $_POST['searchBy'];
 
-$search = '%'.$searchq.'%';
-$getRecord_sql = $wpdb->prepare("SELECT ID,user_login,display_name FROM {$SQL_FROM} WHERE {$SQL_WHERE} LIKE %s LIMIT 5",$search);
-$rows = $wpdb->get_results($getRecord_sql);
+
+$args = array(
+					'search' => "*$searchq*",
+					'search_columns' => array( 'display_name' ),
+					'exclude' => array( $user_ID ),
+					'number' => 5,
+					'orderby' => 'display_name',
+					'order' => 'ASC'
+		);
+	
+	$args = apply_filters ('fep_autosuggestion_arguments', $args );
+	
+	// The Query
+	$user_query = new WP_User_Query( $args );
+	
 if(strlen($searchq)>0)
 {
 	echo "<ul>";
-	if ($wpdb->num_rows)
+	if (! empty( $user_query->results ))
 	{
-		foreach($rows as $row)
+		foreach($user_query->results as $user)
 		{
-			if($row->ID != $user_ID) //Don't let users message themselves
-			{
 				
 				?>
-				<li><a href="#" onClick="fep_fill_autosuggestion('<?php echo $row->user_login; ?>','<?php echo $row->display_name; ?>');return false;"><?php echo $row->display_name; ?></a></li>
+				<li><a href="#" onClick="fep_fill_autosuggestion('<?php echo $user->user_login; ?>','<?php echo $user->display_name; ?>');return false;"><?php echo $user->display_name; ?></a></li>
 				<?php
 			
-			}
 		}
 	}
 	else
@@ -79,7 +79,7 @@ if(strlen($searchq)>0)
 	echo "</ul>";
 }
 }
-wp_die();
+die();
 }
 
 add_action('wp_ajax_fep_autosuggestion_ajax','fep_autosuggestion_ajax');	

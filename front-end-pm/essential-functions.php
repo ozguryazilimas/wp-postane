@@ -478,6 +478,9 @@ function fep_format_date($date)
 	  } else {
 	  $html = apply_filters('fep_filter_display_message', $string);
 	  }
+	  
+	  $html = wp_kses_post( $html );
+	  
       return $html;
     }
 
