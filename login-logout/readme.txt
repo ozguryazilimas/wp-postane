@@ -3,8 +3,8 @@ Contributors: webvitaly
 Donate link: http://web-profile.com.ua/donate/
 Tags: login, logout, widget, meta, sidebar, admin, register
 Requires at least: 3.0
-Tested up to: 4.0
-Stable tag: 2.9
+Tested up to: 4.4
+Stable tag: 3.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -12,9 +12,9 @@ Widget with login, logout, admin and register links. Replacement of the default 
 
 == Description ==
 
-[WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly) |
-[Login-Logout](http://web-profile.com.ua/wordpress/plugins/login-logout/ "Plugin page") |
-[Donate](http://web-profile.com.ua/donate/ "Support the development")
+> [WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly) |
+> [Login-Logout](http://web-profile.com.ua/wordpress/plugins/login-logout/ "Plugin page") |
+> [Donate](http://web-profile.com.ua/donate/ "Support the development")
 
 "Login-Logout" plugin adds widget with login or logout link. Also can be shown register or site-admin link. It is the replacement of the default Meta widget.
 
@@ -30,8 +30,8 @@ Widget with login, logout, admin and register links. Replacement of the default 
 
 = Useful plugins: =
 * ["Anti-spam" - block spam in comments](http://wordpress.org/plugins/anti-spam/ "no spam, no captcha")
-* ["Anti-spam Pro"](http://codecanyon.net/item/antispam-pro/6491169?ref=webvitaly)
 * ["Security-protection" - blocks brute-force attacks](http://wordpress.org/plugins/security-protection/ "stops brute-force attacks")
+* [WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly)
 
 
 == Screenshots ==
@@ -42,6 +42,10 @@ Widget with login, logout, admin and register links. Replacement of the default 
 4. Widget output when user is logged in and inline option is on
 
 == Changelog ==
+
+= 3.0 - 2015-05-28 =
+* Minor bugfixing
+* Code cleanup
 
 = 2.9 - 2014-11-04 =
 * French translation made by Jean-Michel HAROUY - http://www.ceism-angers.fr/
