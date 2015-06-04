@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Google Analytics Dashboard for WP\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/google-analytics-"
 "dashboard-for-wp\n"
-"POT-Creation-Date: 2015-05-20 21:46+0200\n"
-"PO-Revision-Date: 2015-05-20 21:51+0200\n"
+"POT-Creation-Date: 2015-05-21 19:47+0200\n"
+"PO-Revision-Date: 2015-05-21 19:47+0200\n"
 "Last-Translator: Alin Marcu <admin@deconf.com>\n"
 "Language-Team: Nicolae Sfetcu\n"
 "Language: ro\n"
@@ -24,49 +24,49 @@ msgstr ""
 "X-Loco-Target-Locale: ro_RO\n"
 "X-Poedit-SearchPath-0: ../.\n"
 
-#: .././admin/item-reports.php:67
+#: .././admin/item-reports.php:52
 msgid "Analytics"
 msgstr "Analytics"
 
 #: .././admin/settings.php:94 .././admin/settings.php:197
-#: .././admin/settings.php:328 .././admin/settings.php:800
-#: .././admin/settings.php:1069
+#: .././admin/settings.php:328 .././admin/settings.php:803
+#: .././admin/settings.php:1079
 msgid "Settings saved."
 msgstr "Setări salvate."
 
 #: .././admin/settings.php:96 .././admin/settings.php:199
-#: .././admin/settings.php:330 .././admin/settings.php:777
-#: .././admin/settings.php:787 .././admin/settings.php:796
-#: .././admin/settings.php:802 .././admin/settings.php:814
-#: .././admin/settings.php:1030 .././admin/settings.php:1055
-#: .././admin/settings.php:1065 .././admin/settings.php:1071
-#: .././admin/settings.php:1083
+#: .././admin/settings.php:330 .././admin/settings.php:780
+#: .././admin/settings.php:790 .././admin/settings.php:799
+#: .././admin/settings.php:805 .././admin/settings.php:817
+#: .././admin/settings.php:1040 .././admin/settings.php:1065
+#: .././admin/settings.php:1075 .././admin/settings.php:1081
+#: .././admin/settings.php:1093
 msgid "Cheating Huh?"
-msgstr "Încerci să trişezi?"
+msgstr "Hei, trișezi?"
 
 #: .././admin/settings.php:100 .././admin/settings.php:203
-#: .././admin/settings.php:334 .././admin/settings.php:644
-#: .././admin/settings.php:828 .././admin/settings.php:1096
+#: .././admin/settings.php:334 .././admin/settings.php:647
+#: .././admin/settings.php:832 .././admin/settings.php:1107
 #, php-format
 msgid "Something went wrong, check %1$s or %2$s."
 msgstr "Ceva nu e în regulă, verifică %1$s sau %2$s"
 
 #: .././admin/settings.php:100 .././admin/settings.php:203
-#: .././admin/settings.php:334 .././admin/settings.php:644
-#: .././admin/settings.php:828 .././admin/settings.php:1096
-#: .././admin/setup.php:96 .././admin/setup.php:119
+#: .././admin/settings.php:334 .././admin/settings.php:647
+#: .././admin/settings.php:832 .././admin/settings.php:1107
+#: .././admin/setup.php:82 .././admin/setup.php:101
 msgid "Errors & Debug"
 msgstr "Erori și depanare"
 
 #: .././admin/settings.php:100 .././admin/settings.php:203
-#: .././admin/settings.php:334 .././admin/settings.php:644
-#: .././admin/settings.php:828 .././admin/settings.php:1096
+#: .././admin/settings.php:334 .././admin/settings.php:647
+#: .././admin/settings.php:832 .././admin/settings.php:1107
 msgid "authorize the plugin"
 msgstr "autorizează modulul"
 
 #: .././admin/settings.php:105
 msgid "Google Analytics Frontend Settings"
-msgstr "Setări în față Google Analytics"
+msgstr "Setările pentru fața Google Analytics"
 
 #: .././admin/settings.php:115 .././admin/settings.php:218
 msgid "Permissions"
@@ -78,17 +78,17 @@ msgstr "Arată statistici la:"
 
 #: .././admin/settings.php:157
 msgid "show page sessions and users in frontend (after each article)"
-msgstr "arată sesiunile paginii şi utilizatorii în faţă (după fiecare articol)"
+msgstr "arată sesiunile paginii și utilizatorii în față (după fiecare articol)"
 
 #: .././admin/settings.php:168
 msgid "show page searches (after each article)"
-msgstr "arată căutarile paginii (după fiecare articol)"
+msgstr "arată căutările paginii (după fiecare articol)"
 
 #: .././admin/settings.php:175 .././admin/settings.php:308
-#: .././admin/settings.php:602 .././admin/settings.php:945
-#: .././admin/settings.php:1233
+#: .././admin/settings.php:605 .././admin/settings.php:952
+#: .././admin/settings.php:1245
 msgid "Save Changes"
-msgstr "Salvează schimbările"
+msgstr "Salvează modificările"
 
 #: .././admin/settings.php:208
 msgid "Google Analytics Backend Settings"
@@ -96,7 +96,7 @@ msgstr "Setările din spate pentru Google Analytics"
 
 #: .././admin/settings.php:262
 msgid "enable Switch View functionality"
-msgstr "activează funcționalitatea Schimbare vedere"
+msgstr "activează funcționalitatea de Comutare a afișării"
 
 #: .././admin/settings.php:273
 msgid "enable reports on Posts List and Pages List"
@@ -108,11 +108,11 @@ msgstr "activează piesa principală din Panoul de control"
 
 #: .././admin/settings.php:288
 msgid "Real-Time Settings"
-msgstr "Setări timp real"
+msgstr "Setări de timp-real"
 
 #: .././admin/settings.php:291
 msgid "Maximum number of pages to display on real-time tab:"
-msgstr "Numărul maxim de pagini de afișare pe file de timp real:"
+msgstr "Numărul maxim de pagini afișate pe fila de timp-real:"
 
 #: .././admin/settings.php:296
 msgid "Location Settings"
@@ -120,7 +120,7 @@ msgstr "Setări locație"
 
 #: .././admin/settings.php:300
 msgid "Target Geo Map to country:"
-msgstr "Direcţionează Geo Map pentru ţara:"
+msgstr "Centrează Geo Map pe țara:"
 
 #: .././admin/settings.php:337
 msgid ""
@@ -128,7 +128,7 @@ msgid ""
 "strong> to <strong>Enabled</strong>"
 msgstr ""
 "Componenta de urmărire este dezactivată. Trebuie să setezi <strong>Activat</"
-"strong>la <strong>Opțiunile de urmărire</strong>"
+"strong> la <strong>Opțiunile de urmărire</strong>"
 
 #: .././admin/settings.php:342
 msgid "Google Analytics Tracking Code"
@@ -138,194 +138,194 @@ msgstr "Cod de urmărire Google Analytics"
 msgid "Basic Settings"
 msgstr "Setări de bază"
 
-#: .././admin/settings.php:352 .././admin/settings.php:418
+#: .././admin/settings.php:352 .././admin/settings.php:417
 msgid "Events Tracking"
 msgstr "Urmărire evenimente"
 
-#: .././admin/settings.php:353 .././admin/settings.php:466
+#: .././admin/settings.php:353 .././admin/settings.php:465
 msgid "Custom Definitions"
-msgstr "Definiţii personalizate"
+msgstr "Definiții personalizate"
 
-#: .././admin/settings.php:354 .././admin/settings.php:564
-#: .././admin/settings.php:1216
+#: .././admin/settings.php:354 .././admin/settings.php:563
+#: .././admin/settings.php:1228
 msgid "Exclude Tracking"
-msgstr "Exclude urmărire"
+msgstr "Exclude urmărirea"
 
 #: .././admin/settings.php:355
 msgid "Advanced Settings"
 msgstr "Setări avansate"
 
-#: .././admin/settings.php:363
+#: .././admin/settings.php:362
 msgid "Tracking Settings"
 msgstr "Setări urmărire"
 
-#: .././admin/settings.php:366
+#: .././admin/settings.php:365
 msgid "Tracking Options:"
 msgstr "Opțiuni urmărire:"
 
-#: .././admin/settings.php:368
+#: .././admin/settings.php:367
 msgid "Disabled"
 msgstr "Dezactivat"
 
-#: .././admin/settings.php:369
+#: .././admin/settings.php:368
 msgid "Enabled"
 msgstr "Activat"
 
-#: .././admin/settings.php:377 .././admin/settings.php:892
-#: .././admin/settings.php:913 .././admin/settings.php:1189
+#: .././admin/settings.php:376 .././admin/settings.php:897
+#: .././admin/settings.php:919 .././admin/settings.php:1201
 #: .././admin/widgets.php:71
 msgid "View Name:"
 msgstr "Nume afișare:"
 
-#: .././admin/settings.php:377 .././admin/settings.php:913
+#: .././admin/settings.php:376 .././admin/settings.php:919
 msgid "Tracking ID:"
 msgstr "ID urmărire:"
 
-#: .././admin/settings.php:377 .././admin/settings.php:913
+#: .././admin/settings.php:376 .././admin/settings.php:919
 msgid "Default URL:"
 msgstr "URL implicit:"
 
-#: .././admin/settings.php:377 .././admin/settings.php:913
+#: .././admin/settings.php:376 .././admin/settings.php:919
 msgid "Time Zone:"
 msgstr "Fus orar:"
 
-#: .././admin/settings.php:382
+#: .././admin/settings.php:381
 msgid "Basic Tracking"
 msgstr "Urmărire de bază"
 
-#: .././admin/settings.php:385
+#: .././admin/settings.php:384
 msgid "Tracking Type:"
-msgstr "Tip urmărire"
+msgstr "Tip urmărire:"
 
-#: .././admin/settings.php:387
+#: .././admin/settings.php:386
 msgid "Classic Analytics"
 msgstr "Analytics clasic"
 
-#: .././admin/settings.php:388
+#: .././admin/settings.php:387
 msgid "Universal Analytics"
 msgstr "Analytics universal"
 
-#: .././admin/settings.php:399
+#: .././admin/settings.php:398
 msgid "anonymize IPs while tracking"
 msgstr "anonimizează IP-urile pe perioada urmăririi"
 
-#: .././admin/settings.php:410
+#: .././admin/settings.php:409
 msgid "enable remarketing, demographics and interests reports"
-msgstr "activează rapoarte remarketing, demografice și de interese"
+msgstr "activează rapoartele de re-marketing, demografice și de interese"
 
-#: .././admin/settings.php:428
+#: .././admin/settings.php:427
 msgid "track downloads, mailto and outbound links"
-msgstr "urmărire descărcări, mesajele și legături de ieșire"
+msgstr "urmărire descărcări și legături de email sau în afară"
 
-#: .././admin/settings.php:432
+#: .././admin/settings.php:431
 msgid "Downloads Regex:"
-msgstr "Regex Descărcări:"
+msgstr "Regex descărcări:"
 
-#: .././admin/settings.php:443
+#: .././admin/settings.php:442
 msgid "track affiliate links matching this regex"
-msgstr "urmărire legături afiliate care se potrivesc cu acest regex"
+msgstr "urmărire legături afiliate potrivit acestei regex"
 
-#: .././admin/settings.php:447
+#: .././admin/settings.php:446
 msgid "Affiliates Regex:"
-msgstr "Regex afiliați"
+msgstr "Regex afiliați:"
 
-#: .././admin/settings.php:458
+#: .././admin/settings.php:457
 msgid "track fragment identifiers, hashmarks (#) in URI links"
-msgstr "urmărire identificatori de fragmente, semne-diez (#) în legături URI"
+msgstr "urmărire identificatori de fragmente, marcaje-diez (#) în legături URI"
 
-#: .././admin/settings.php:469
+#: .././admin/settings.php:468
 msgid "Authors:"
-msgstr "Autori"
+msgstr "Autori:"
 
-#: .././admin/settings.php:477
+#: .././admin/settings.php:476
 msgid "Publication Year:"
-msgstr "An publicare"
+msgstr "An publicare:"
 
-#: .././admin/settings.php:485
+#: .././admin/settings.php:484
 msgid "Categories:"
 msgstr "Categorii:"
 
-#: .././admin/settings.php:493
+#: .././admin/settings.php:492
 msgid "User Type:"
-msgstr "Tip utilizator"
+msgstr "Tip utilizator:"
 
-#: .././admin/settings.php:505
+#: .././admin/settings.php:504
 msgid "Advanced Tracking"
 msgstr "Urmărire avansată"
 
-#: .././admin/settings.php:508
+#: .././admin/settings.php:507
 msgid "Page Speed SR:"
 msgstr "SR viteză pagină:"
 
-#: .././admin/settings.php:519
+#: .././admin/settings.php:518
 msgid "exclude events from bounce-rate calculation"
 msgstr "exclude evenimente din calculul ratei de respingere"
 
-#: .././admin/settings.php:530
+#: .././admin/settings.php:529
 msgid "enable enhanced link attribution"
 msgstr "activează atribuirea îmbunătățită a legăturilor"
 
-#: .././admin/settings.php:541
+#: .././admin/settings.php:540
 msgid "enable AdSense account linking"
 msgstr "activează legătura cu contul AdSense"
 
-#: .././admin/settings.php:552
+#: .././admin/settings.php:551
 msgid "enable cross domain tracking"
 msgstr "activează urmărire domenii încrucișate"
 
-#: .././admin/settings.php:556
+#: .././admin/settings.php:555
 msgid "Cross Domains:"
 msgstr "Domenii încrucișate:"
 
-#: .././admin/settings.php:567
+#: .././admin/settings.php:566
 msgid "Exclude tracking for:"
 msgstr "Exclude urmărirea pentru:"
 
-#: .././admin/settings.php:648
+#: .././admin/settings.php:651
 msgid "Google Analytics Errors & Debugging"
-msgstr "Erori şi depanare Google Analytics"
+msgstr "Erori și depanare Google Analytics"
 
-#: .././admin/settings.php:658
+#: .././admin/settings.php:661
 msgid "Errors & Details"
 msgstr "Erori și detalii"
 
-#: .././admin/settings.php:659
+#: .././admin/settings.php:662
 msgid "Plugin Settings"
 msgstr "Setări modul"
 
-#: .././admin/settings.php:667
+#: .././admin/settings.php:670
 msgid "Last Error detected"
 msgstr "Ultima eroare detectată"
 
-#: .././admin/settings.php:673 .././admin/settings.php:686
+#: .././admin/settings.php:676 .././admin/settings.php:689
 msgid "None"
 msgstr "Niciunul"
 
-#: .././admin/settings.php:680
+#: .././admin/settings.php:683
 msgid "Error Details"
 msgstr "Detalii eroare"
 
-#: .././admin/settings.php:700
+#: .././admin/settings.php:703
 msgid "Plugin Configuration"
 msgstr "Configurare modul"
 
-#: .././admin/settings.php:722 .././admin/settings.php:980
+#: .././admin/settings.php:725 .././admin/settings.php:990
 msgid ""
 "Loading the required libraries. If this results in a blank screen or a fatal "
 "error, try this solution:"
 msgstr ""
-"Încărcarea bibliotecii necesare. Dacă apare un ecran alb sau o eroare "
-"fatală, încearcă această soluție:"
+"Încărcare biblioteci necesare. Dacă apare un ecran alb sau o eroare fatală, "
+"încearcă această soluție:"
 
-#: .././admin/settings.php:722
+#: .././admin/settings.php:725
 msgid "Library conflicts between WordPress plugins"
 msgstr "Conflicte de bibliotecă între module WordPress"
 
-#: .././admin/settings.php:737 .././admin/settings.php:997
+#: .././admin/settings.php:740 .././admin/settings.php:1007
 msgid "Plugin authorization succeeded."
-msgstr "Autorizarea modulului cu succes."
+msgstr "Autorizarea modulului a reușit."
 
-#: .././admin/settings.php:752 .././admin/settings.php:1021
+#: .././admin/settings.php:755 .././admin/settings.php:1031
 msgid ""
 "The access code is <strong>NOT</strong> your <strong>Tracking ID</strong> "
 "(UA-XXXXX-X). Try again, and use the red link to get your access code"
@@ -334,322 +334,320 @@ msgstr ""
 "strong> (UA-XXXXX-X). Încearcă din nou, și folosește legătura cu roșu pentru "
 "a obține codul tău de acces"
 
-#: .././admin/settings.php:775 .././admin/settings.php:1053
+#: .././admin/settings.php:778 .././admin/settings.php:1063
 msgid "Cleared Cache."
-msgstr "Cache curăţat."
+msgstr "Cache golit."
 
-#: .././admin/settings.php:784 .././admin/settings.php:1062
+#: .././admin/settings.php:787 .././admin/settings.php:1072
 msgid "Token Reseted and Revoked."
 msgstr "Jeton resetat și revocat."
 
-#: .././admin/settings.php:794
+#: .././admin/settings.php:797
 msgid "All errors reseted."
 msgstr "Toate erorile resetate."
 
-#: .././admin/settings.php:807 .././admin/settings.php:1076
+#: .././admin/settings.php:810 .././admin/settings.php:1086
 msgid "All other domains/properties were removed."
 msgstr "Toate celelalte domenii/proprietăți au fost înlăturate."
 
-#: .././admin/settings.php:819 .././admin/settings.php:1088
+#: .././admin/settings.php:822 .././admin/settings.php:1098
 msgid "Google Analytics Settings"
 msgstr "Setări Google Analytics"
 
-#: .././admin/settings.php:833 .././admin/settings.php:1101
+#: .././admin/settings.php:837 .././admin/settings.php:1112
 msgid "Use the red link (see below) to generate and get your access code!"
 msgstr ""
-"Folosește legătura cu roșu (vezi mai jos) pentru a genera și obţine codul "
+"Folosește legătura cu roșu (vezi mai jos) pentru a genera și obține codul "
 "tău de acces!"
 
-#: .././admin/settings.php:844 .././admin/settings.php:1129
+#: .././admin/settings.php:848 .././admin/settings.php:1140
 msgid "Plugin Authorization"
 msgstr "Autorizare modul"
 
-#: .././admin/settings.php:849 .././admin/settings.php:1133
+#: .././admin/settings.php:853 .././admin/settings.php:1144
 #, php-format
 msgid ""
 "You should watch the %1$s and read this %2$s before proceeding to "
 "authorization. This plugin requires a properly configured Google Analytics "
 "account!"
 msgstr ""
-"Trebuie să te uiţi la %1$s şi să citeşi acest %2$s înainte de a continua cu "
-"autorizarea. Acest modul necesită o configurare corectă a contului Google "
-"Analytics!"
+"Trebuie să te uiți la %1$s și să citești acest %2$s înainte de a continua cu "
+"autorizarea. Acest modul necesită un cont Google Analytics configurat corect!"
 
-#: .././admin/settings.php:849 .././admin/settings.php:1133
+#: .././admin/settings.php:853 .././admin/settings.php:1144
 msgid "video"
 msgstr "video"
 
-#: .././admin/settings.php:849 .././admin/settings.php:1133
+#: .././admin/settings.php:853 .././admin/settings.php:1144
 msgid "tutorial"
 msgstr "tutorial"
 
-#: .././admin/settings.php:854 .././admin/settings.php:1140
+#: .././admin/settings.php:858 .././admin/settings.php:1151
 msgid "use your own API Project credentials"
-msgstr "foloseşte propriile tale credite API Project"
+msgstr "folosește-ți propriile credențiale de proiect API"
 
-#: .././admin/settings.php:858 .././admin/settings.php:1147
+#: .././admin/settings.php:863 .././admin/settings.php:1159
 msgid "API Key:"
 msgstr "Cheie API:"
 
-#: .././admin/settings.php:862 .././admin/settings.php:1151
+#: .././admin/settings.php:867 .././admin/settings.php:1163
 msgid "Client ID:"
 msgstr "ID client:"
 
-#: .././admin/settings.php:866 .././admin/settings.php:1155
+#: .././admin/settings.php:871 .././admin/settings.php:1167
 msgid "Client Secret:"
 msgstr "Secret client:"
 
-#: .././admin/settings.php:876 .././admin/settings.php:1165
+#: .././admin/settings.php:881 .././admin/settings.php:1177
 msgid "Clear Authorization"
-msgstr "Şterge autorizare"
+msgstr "Șterge autorizarea"
 
-#: .././admin/settings.php:876 .././admin/settings.php:951
-#: .././admin/settings.php:1165 .././admin/settings.php:1240
+#: .././admin/settings.php:881 .././admin/settings.php:959
+#: .././admin/settings.php:1177 .././admin/settings.php:1254
 msgid "Clear Cache"
-msgstr "Şterge cache"
+msgstr "Golește cache"
 
-#: .././admin/settings.php:876
+#: .././admin/settings.php:881
 msgid "Reset Errors"
 msgstr "Resetează erori"
 
-#: .././admin/settings.php:882 .././admin/setup.php:80
-#: .././admin/setup.php:115
+#: .././admin/settings.php:887 .././admin/setup.php:70 .././admin/setup.php:98
 msgid "General Settings"
 msgstr "Setări generale"
 
-#: .././admin/settings.php:885
+#: .././admin/settings.php:890
 msgid "Select View:"
-msgstr "Selectează afișare:"
+msgstr "Selectare afișare:"
 
-#: .././admin/settings.php:896 .././admin/settings.php:1193
+#: .././admin/settings.php:901 .././admin/settings.php:1205
 msgid "Property not found"
-msgstr "Proprietatea nu a fost găsită"
+msgstr "Proprietate negăsită"
 
-#: .././admin/settings.php:901
+#: .././admin/settings.php:907
 msgid "Lock Selection"
-msgstr "Blochează selecția"
+msgstr "Blocare selecție"
 
-#: .././admin/settings.php:919
+#: .././admin/settings.php:926
 msgid "Theme Color:"
 msgstr "Culoare temă:"
 
-#: .././admin/settings.php:927 .././admin/settings.php:1202
+#: .././admin/settings.php:934 .././admin/settings.php:1214
 msgid "Automatic Updates"
 msgstr "Actualizări automate"
 
-#: .././admin/settings.php:937 .././admin/settings.php:1212
+#: .././admin/settings.php:944 .././admin/settings.php:1224
 msgid ""
 "automatic updates for minor versions (security and maintenance releases only)"
 msgstr ""
-"actualizări automate pentru versiuni minore (doar securitate şi întreţinere)"
+"actualizări automate pentru versiuni minore (doar securitate și întreținere)"
 
-#: .././admin/settings.php:951 .././admin/settings.php:1240
+#: .././admin/settings.php:959 .././admin/settings.php:1254
 #: .././admin/widgets.php:42
 msgid "Authorize Plugin"
 msgstr "Autorizează modul"
 
-#: .././admin/settings.php:1027
+#: .././admin/settings.php:1037
 msgid "Properties refreshed."
-msgstr "Proprietăţi actualizate."
+msgstr "Proprietăți actualizate."
 
-#: .././admin/settings.php:1111
+#: .././admin/settings.php:1122
 msgid "Network Setup"
-msgstr "Configurarea reţelei"
+msgstr "Configurarea rețelei"
 
-#: .././admin/settings.php:1121
+#: .././admin/settings.php:1132
 msgid "use a single Google Analytics account for the entire network"
-msgstr "foloseşte un singur cont Google Analytics pentru întreaga reţea"
+msgstr "folosește un singur cont Google Analytics pentru întreaga rețea"
 
-#: .././admin/settings.php:1165
+#: .././admin/settings.php:1177
 msgid "Refresh Properties"
 msgstr "Actualizează proprietățile"
 
-#: .././admin/settings.php:1171
+#: .././admin/settings.php:1183
 msgid "Properties/Views Settings"
 msgstr "Setări proprietăți/afișări"
 
-#: .././admin/settings.php:1226
+#: .././admin/settings.php:1238
 msgid "exclude Super Admin tracking for the entire network"
 msgstr "exclude urmărirea Super Admin pentru întreaga rețea"
 
-#: .././admin/settings.php:1271
+#: .././admin/settings.php:1285
 msgid "Setup Tutorial & Demo"
 msgstr "Tutorial și demo configurare"
 
-#: .././admin/settings.php:1279
+#: .././admin/settings.php:1293
 msgid "Support & Reviews"
 msgstr "Suport și recenzii"
 
-#: .././admin/settings.php:1286
+#: .././admin/settings.php:1300
 #, php-format
 msgid "Plugin documentation and support on %s"
 msgstr "Documentație și suport modul pe %s"
 
-#: .././admin/settings.php:1293
+#: .././admin/settings.php:1307
 #, php-format
 msgid "Your feedback and review are both important, %s!"
-msgstr "Părerea ta şi recenzia ta sunt amândouă importante, %s!"
+msgstr "Părerea și recenzia ta sunt amândouă importante, %s!"
 
-#: .././admin/settings.php:1293
+#: .././admin/settings.php:1307
 msgid "rate this plugin"
 msgstr "evaluează acest modul"
 
-#: .././admin/settings.php:1299
+#: .././admin/settings.php:1313
 msgid "Further Reading"
 msgstr "Citește mai departe"
 
-#: .././admin/settings.php:1306
+#: .././admin/settings.php:1320
 #, php-format
 msgid "%s by moving your website to HTTPS/SSL."
-msgstr "%s prin mutarea site-ului tău web pe HTTPS/SSL"
+msgstr "%s prin mutarea sitului tău web pe HTTPS/SSL"
 
-#: .././admin/settings.php:1306
+#: .././admin/settings.php:1320
 msgid "Improve search rankings"
-msgstr "Îmbunătățește poziția în căutări"
+msgstr "Îmbunătățește clasările în căutare"
 
-#: .././admin/settings.php:1313
+#: .././admin/settings.php:1327
 #, php-format
 msgid "Other %s written by the same author"
-msgstr "Alte %s scrise de acelaşi autor"
+msgstr "Alte %s scrise de același autor"
 
-#: .././admin/settings.php:1313
+#: .././admin/settings.php:1327
 msgid "WordPress Plugins"
 msgstr "Module WordPress"
 
-#: .././admin/settings.php:1319
+#: .././admin/settings.php:1333
 msgid "Other Services"
 msgstr "Alte servicii"
 
-#: .././admin/settings.php:1326
+#: .././admin/settings.php:1340
 #, php-format
 msgid "Speed up your website and plug into a whole %s"
-msgstr "Creşte viteza sitlui tău web și modulului într-un întreg %s"
+msgstr "Crește viteza sitului tău web și a modulului la un %s"
 
-#: .././admin/settings.php:1326
+#: .././admin/settings.php:1340
 msgid "new level of site speed"
-msgstr "nou nivel al vitezei site-ului"
+msgstr "nou nivel de viteze de internet"
 
-#: .././admin/settings.php:1333
+#: .././admin/settings.php:1347
 #, php-format
 msgid "%s service with users tracking at IP level."
 msgstr "%s serviciu de urmărire a utilizatorilor la nivel IP."
 
-#: .././admin/settings.php:1333
+#: .././admin/settings.php:1347
 msgid "Web Analytics"
 msgstr "Analitice web"
 
-#: .././admin/setup.php:76 .././admin/setup.php:111
+#: .././admin/setup.php:67 .././admin/setup.php:95
 msgid "Google Analytics"
 msgstr "Google Analytics"
 
-#: .././admin/setup.php:84
+#: .././admin/setup.php:73
 msgid "Backend Settings"
 msgstr "Setări în spate"
 
-#: .././admin/setup.php:88
+#: .././admin/setup.php:76
 msgid "Frontend Settings"
 msgstr "Setări în față"
 
-#: .././admin/setup.php:92
+#: .././admin/setup.php:79
 msgid "Tracking Code"
 msgstr "Cod urmărire"
 
-#: .././admin/setup.php:195 .././admin/widgets.php:126
+#: .././admin/setup.php:169 .././admin/widgets.php:126
 msgid "Today"
-msgstr "Astăzi"
+msgstr "Azi"
 
-#: .././admin/setup.php:196 .././admin/widgets.php:127
+#: .././admin/setup.php:170 .././admin/widgets.php:127
 msgid "Yesterday"
 msgstr "Ieri"
 
-#: .././admin/setup.php:197 .././admin/widgets.php:128
+#: .././admin/setup.php:171 .././admin/widgets.php:128
 #: .././front/widgets.php:74 .././front/widgets.php:182
 msgid "Last 7 Days"
 msgstr "Ultimele 7 zile"
 
-#: .././admin/setup.php:198 .././admin/widgets.php:130
+#: .././admin/setup.php:172 .././admin/widgets.php:130
 #: .././front/widgets.php:80 .././front/widgets.php:184
 msgid "Last 30 Days"
 msgstr "Ultimele 30 zile"
 
-#: .././admin/setup.php:199 .././admin/widgets.php:131
+#: .././admin/setup.php:173 .././admin/widgets.php:131
 msgid "Last 90 Days"
 msgstr "Ultimele 90 zile"
 
-#: .././admin/setup.php:202 .././admin/setup.php:218
+#: .././admin/setup.php:175 .././admin/setup.php:190
 msgid "Unique Views"
 msgstr "Afișări unice"
 
-#: .././admin/setup.php:203 .././admin/setup.php:219
+#: .././admin/setup.php:176 .././admin/setup.php:191
 #: .././admin/widgets.php:136 .././admin/widgets.php:875
 #: .././tools/gapi.php:391
 msgid "Users"
 msgstr "Utilizatori"
 
-#: .././admin/setup.php:204 .././admin/widgets.php:137
+#: .././admin/setup.php:177 .././admin/widgets.php:137
 msgid "Organic"
 msgstr "Organic"
 
-#: .././admin/setup.php:205 .././admin/setup.php:220
+#: .././admin/setup.php:178 .././admin/setup.php:192
 #: .././admin/widgets.php:138 .././admin/widgets.php:879
 #: .././tools/gapi.php:394
 msgid "Page Views"
 msgstr "Afișări pagină"
 
-#: .././admin/setup.php:206 .././admin/setup.php:221
+#: .././admin/setup.php:179 .././admin/setup.php:193
 #: .././admin/widgets.php:139 .././admin/widgets.php:883
 #: .././tools/gapi.php:397
 msgid "Bounce Rate"
-msgstr "Respingere"
+msgstr "Rata de respingere"
 
-#: .././admin/setup.php:207 .././admin/widgets.php:140
+#: .././admin/setup.php:180 .././admin/widgets.php:140
 msgid "Location"
 msgstr "Locație"
 
-#: .././admin/setup.php:208 .././admin/widgets.php:142 .././tools/gapi.php:566
+#: .././admin/setup.php:181 .././admin/widgets.php:142 .././tools/gapi.php:566
 msgid "Referrers"
-msgstr "Recomandări"
+msgstr "Referenți"
 
-#: .././admin/setup.php:209 .././admin/widgets.php:143 .././tools/gapi.php:612
+#: .././admin/setup.php:182 .././admin/widgets.php:143 .././tools/gapi.php:612
 #: .././tools/gapi.php:918
 msgid "Searches"
 msgstr "Căutări"
 
-#: .././admin/setup.php:210 .././admin/widgets.php:144
+#: .././admin/setup.php:183 .././admin/widgets.php:144
 msgid "Traffic Details"
 msgstr "Detalii trafic"
 
-#: .././admin/setup.php:213 .././admin/widgets.php:510
+#: .././admin/setup.php:185 .././admin/widgets.php:510
 #: .././admin/widgets.php:607 .././admin/widgets.php:805
 #: .././admin/widgets.php:917 .././front/item-reports.php:97
 msgid "A JavaScript Error is blocking plugin resources!"
 msgstr "O eroare JavaScript blochează resursele modulului!"
 
-#: .././admin/setup.php:214 .././admin/widgets.php:713
+#: .././admin/setup.php:186 .././admin/widgets.php:713
 msgid "Traffic Mediums"
 msgstr "Medii trafic"
 
-#: .././admin/setup.php:215 .././admin/widgets.php:729
+#: .././admin/setup.php:187 .././admin/widgets.php:729
 msgid "Visitor Type"
 msgstr "Tip vizitator"
 
-#: .././admin/setup.php:216 .././admin/widgets.php:745
+#: .././admin/setup.php:188 .././admin/widgets.php:745
 msgid "Social Networks"
-msgstr "Reţele sociale"
+msgstr "Rețele sociale"
 
-#: .././admin/setup.php:217 .././admin/widgets.php:761
+#: .././admin/setup.php:189 .././admin/widgets.php:761
 msgid "Search Engines"
 msgstr "Motoare de căutare"
 
-#: .././admin/setup.php:222 .././admin/widgets.php:887
+#: .././admin/setup.php:194 .././admin/widgets.php:887
 msgid "Organic Search"
-msgstr "Căutari"
+msgstr "Căutare organică"
 
-#: .././admin/setup.php:223 .././admin/widgets.php:891
+#: .././admin/setup.php:195 .././admin/widgets.php:891
 msgid "Pages/Session"
 msgstr "Pagini/Sesiune"
 
-#: .././admin/setup.php:224 .././admin/widgets.php:523
+#: .././admin/setup.php:196 .././admin/widgets.php:523
 #: .././admin/widgets.php:541 .././admin/widgets.php:620
 #: .././admin/widgets.php:638 .././admin/widgets.php:657
 #: .././admin/widgets.php:676 .././admin/widgets.php:696
@@ -659,11 +657,11 @@ msgstr "Pagini/Sesiune"
 msgid "Invalid response, more details in JavaScript Console (F12)."
 msgstr "Răspuns invalid, mai multe detalii în consola JavaScript (F12)."
 
-#: .././admin/setup.php:225
+#: .././admin/setup.php:197
 msgid "Not enough data collected"
-msgstr "Date colectate insuficiente"
+msgstr "Insuficiente date colectate"
 
-#: .././admin/setup.php:226 .././admin/widgets.php:528
+#: .././admin/setup.php:198 .././admin/widgets.php:528
 #: .././admin/widgets.php:546 .././admin/widgets.php:625
 #: .././admin/widgets.php:643 .././admin/widgets.php:662
 #: .././admin/widgets.php:681 .././admin/widgets.php:701
@@ -674,11 +672,11 @@ msgstr "Date colectate insuficiente"
 msgid "This report is unavailable"
 msgstr "Acest raport nu este disponibil"
 
-#: .././admin/setup.php:227
+#: .././admin/setup.php:199
 msgid "report generated by"
 msgstr "raport generat de"
 
-#: .././admin/setup.php:267
+#: .././admin/setup.php:233
 msgid "Settings"
 msgstr "Setări"
 
@@ -712,8 +710,8 @@ msgid ""
 "Something went wrong while retrieving property data. You need to create and "
 "properly configure a Google Analytics account:"
 msgstr ""
-"Ceva nu a mers bine în timpul recuperării datelor de proprietăți. Trebuie să "
-"creezi și configurezi corect un cont Google Analytics:"
+"Ceva nu a mers bine în timpul recuperării datelor proprietății. Trebuie să "
+"creezi și să configurezi corect un cont Google Analytics:"
 
 #: .././admin/widgets.php:105
 msgid "Find out more!"
@@ -721,7 +719,7 @@ msgstr "Află mai multe!"
 
 #: .././admin/widgets.php:125
 msgid "Real-Time"
-msgstr "Timp real"
+msgstr "Timp-real"
 
 #: .././admin/widgets.php:129 .././front/widgets.php:77
 #: .././front/widgets.php:183
@@ -741,7 +739,7 @@ msgstr "Pagini"
 
 #: .././admin/widgets.php:232 .././admin/widgets.php:472
 msgid "REFERRAL"
-msgstr "RECOMANDARE"
+msgstr "REFERIRE"
 
 #: .././admin/widgets.php:236 .././admin/widgets.php:473
 msgid "ORGANIC"
@@ -768,7 +766,7 @@ msgstr "NOU"
 
 #: .././admin/widgets.php:354
 msgid "REFERRALS"
-msgstr "RECOMANDĂRI"
+msgstr "REFERIRI"
 
 #: .././admin/widgets.php:357
 msgid "KEYWORDS"
@@ -784,11 +782,11 @@ msgstr "Rapoarte Google Analytics"
 
 #: .././front/widgets.php:23
 msgid "Will display your google analytics stats in a widget"
-msgstr "Va afişa statisticile tale Google Analytics într-o piesă"
+msgstr "Va afișa statisticile tale Google Analytics într-o piesă"
 
 #: .././front/widgets.php:46 .././tools/gapi.php:827
 msgid "trend"
-msgstr "tendinţă"
+msgstr "tendință"
 
 #: .././front/widgets.php:133
 msgid "Period:"
@@ -812,11 +810,11 @@ msgstr "Titlu:"
 
 #: .././front/widgets.php:161
 msgid "Display:"
-msgstr "Afişare:"
+msgstr "Afișare:"
 
 #: .././front/widgets.php:165
 msgid "Chart & Totals"
-msgstr "Grafic şi total"
+msgstr "Grafic și total"
 
 #: .././front/widgets.php:166
 msgid "Chart"
@@ -844,15 +842,15 @@ msgstr "Nu este permis, citește documentația!"
 
 #: .././tools/gapi.php:134
 msgid "Use this link to get your access code:"
-msgstr "Folosește această legătură pentru a obţine codul tău de acces:"
+msgstr "Folosește această legătură pentru a obține codul tău de acces:"
 
 #: .././tools/gapi.php:134
 msgid "Get Access Code"
-msgstr "Obţine codul de acces"
+msgstr "Obține codul de acces"
 
 #: .././tools/gapi.php:138 .././tools/gapi.php:139
 msgid "Use the red link to get your access code!"
-msgstr "Folosește legătura cu roșu pentru a obţine codul tău de acces!"
+msgstr "Folosește legătura cu roșu pentru a obține codul tău de acces!"
 
 #: .././tools/gapi.php:138
 msgid "Access Code:"
@@ -864,19 +862,19 @@ msgstr "Salvează codul de acces"
 
 #: .././tools/gapi.php:400
 msgid "Organic Searches"
-msgstr "Căutări"
+msgstr "Căutări organice"
 
 #: .././tools/gapi.php:403
 msgid "Unique Page Views"
-msgstr "Afișări pagină unice"
+msgstr "Afișări unice de pagină"
 
 #: .././tools/gapi.php:411
 msgid "Hour"
-msgstr "Ora"
+msgstr "Oră"
 
 #: .././tools/gapi.php:414 .././tools/gapi.php:826 .././tools/gapi.php:876
 msgid "Date"
-msgstr "Data"
+msgstr "Dată"
 
 #: .././tools/gapi.php:522 .././tools/gapi.php:877
 msgid "Views"
@@ -884,11 +882,11 @@ msgstr "Afișări"
 
 #: .././tools/gapi.php:640
 msgid "Countries"
-msgstr "Ţări"
+msgstr "Țări"
 
 #: .././tools/gapi.php:650
 msgid "Cities from"
-msgstr "Oraşe din"
+msgstr "Orașe din"
 
 #: .././tools/gapi.php:722
 msgid "Channels"
@@ -900,19 +898,19 @@ msgstr "Tip"
 
 #: .././tools/gapi.php:878
 msgid "UniqueViews"
-msgstr "Afiări unice"
+msgstr "Afișări unice"
 
 #~ msgid "Read %s for more information about Frontend Features and Options."
 #~ msgstr ""
-#~ "Citește %s pentru mai multe informații despre opțiunile și "
-#~ "caracteristicile din față."
+#~ "Citește %s pentru mai multe informații despre opțiuni și caracteristici "
+#~ "pentru față."
 
 #~ msgid "this documentation page"
-#~ msgstr "această pagină de documentaţie"
+#~ msgstr "această pagină de documentație"
 
 #~ msgid "Read %s for more information about Backend Features and Options."
 #~ msgstr ""
-#~ "Citeşte %s pentru mai multe informații despre opțiunile și "
+#~ "Citește %s pentru mai multe informații despre opțiunile și "
 #~ "caracteristicile din spate."
 
 #~ msgid "For more information about Tracking Options read %s."
