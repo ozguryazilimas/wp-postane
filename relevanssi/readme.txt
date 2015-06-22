@@ -4,7 +4,7 @@ Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
 Tested up to: 4.2
-Stable tag: 3.4.1
+Stable tag: 3.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,10 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.4.2 =
+* Empty lines on synonym settings caused problems. Fixed that.
+* In WordPress 4.2 installations, emoji in will be handled better. Emoji in posts may cause problems with WordPress versions below 4.2, so please update!
 
 = 3.4.1 =
 * Removed a notice about an undefined variable.
@@ -1073,6 +1077,9 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.4.2 =
+* Better emoji support in WP 4.2, fixed issues with synonyms.
 
 = 3.4.1 =
 * Removed a notice about an undefined variable.

@@ -392,6 +392,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 		$contents = preg_replace('/<[a-zA-Z\/][^>]*>/', ' ', $contents);
 		$contents = strip_tags($contents);
+		if (function_exists('wp_encode_emoji')) $contents = wp_encode_emoji($contents);
 		$contents = apply_filters('relevanssi_post_content_before_tokenize', $contents, $post);
 		$contents = relevanssi_tokenize($contents, true, $min_word_length);
 	

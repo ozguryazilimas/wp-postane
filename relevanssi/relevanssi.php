@@ -3,7 +3,7 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.4.1
+Version: 3.4.2
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
@@ -377,6 +377,43 @@ comparison</a> and <a href="http://www.relevanssi.com/buy-premium/?utm_source=pl
 			</div>
 		</div>
 	</div>
+
+		<div class="meta-box-sortables" style="min-height: 0">
+			<div id="relevanssi_list" class="postbox">
+			<!-- Begin MailChimp Signup Form -->
+<div id="mc_embed_signup">
+<form action="//painavasana.us11.list-manage.com/subscribe/post?u=33d7be02c521d776357962ad2&amp;id=ef7d31c98a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	<h3 class="hndle"><span>Subscribe to our mailing list</span></h3>
+
+			<div class="inside">
+
+<div class="mc-field-group">
+	<label for="mce-EMAIL">Email Address
+</label>
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;"><input type="text" name="b_33d7be02c521d776357962ad2_ef7d31c98a" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button-primary"></div>
+
+<p>Subscribe to our mailing list to get updates on Relevanssi development. As a thank you for subscribing, you'll
+get a <strong>20% discount</strong> for Relevanssi Premium.</p>
+
+    </div>
+
+</div>
+
+</form>
+
+</div>
+
+<!--End mc_embed_signup-->
+			</div>
+		</div>
 
 		<div class="meta-box-sortables" style="min-height: 0">
 			<div id="relevanssi_premium" class="postbox">

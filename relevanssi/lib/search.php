@@ -329,6 +329,7 @@ function relevanssi_search($args) {
 	}
 
 	$remove_stopwords = true;
+	if (function_exists('wp_encode_emoji')) $q = wp_encode_emoji($q);
 	$phrases = relevanssi_recognize_phrases($q);
 
 	if (function_exists('relevanssi_recognize_negatives')) {
@@ -747,6 +748,7 @@ function relevanssi_do_query(&$query) {
 
 	if (isset($query->query_vars['searchblogs'])) {
 		$multi_args['search_blogs'] = $query->query_vars['searchblogs'];
+		$multi_args['q'] = $q;
 
 		$post_type = false;
 		if (isset($query->query_vars["post_type"]) && $query->query_vars["post_type"] != 'any') {

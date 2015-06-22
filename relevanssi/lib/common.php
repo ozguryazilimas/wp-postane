@@ -607,6 +607,7 @@ function relevanssi_add_synonyms($q) {
 		}
 		$pairs = explode(";", $synonym_data);
 		foreach ($pairs as $pair) {
+			if (empty($pair)) continue; 		// skip empty rows
 			$parts = explode("=", $pair);
 			$key = strval(trim($parts[0]));
 			$value = trim($parts[1]);
@@ -616,7 +617,7 @@ function relevanssi_add_synonyms($q) {
 			$new_terms = array();
 			$terms = array_keys(relevanssi_tokenize($q, false)); // remove stopwords is false here
 			if (!in_array($q, $terms)) $terms[] = $q;
-			
+
 			foreach ($terms as $term) {
 				if (in_array(strval($term), array_keys($synonyms))) {		// strval, otherwise numbers cause problems
 					if (isset($synonyms[strval($term)])) {		// necessary, otherwise terms like "02" can cause problems
