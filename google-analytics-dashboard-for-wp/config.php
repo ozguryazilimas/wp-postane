@@ -27,6 +27,7 @@ if (! class_exists('GADWP_Config')) {
         {
             // get plugin options
             $this->get_plugin_options();
+			$this->last_requested_report();
             $this->access = array_map(array(
                 $this,
                 'map'
@@ -36,6 +37,23 @@ if (! class_exists('GADWP_Config')) {
                 'automatic_update'
             ), 10, 2);
         }
+
+        /*
+         * Stores the last requested dimension and metric in cookies
+         */
+		private function last_requested_report(){
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) { //Don't store queries while doing ajax
+				return;
+			}
+
+			if ( isset( $_REQUEST['period'] ) ) {
+				GADWP_Tools::set_cookie( 'default_dimension', $_REQUEST['period'] );
+			}
+
+			if ( isset( $_REQUEST['query'] ) ) {
+				GADWP_Tools::set_cookie( 'default_metric', $_REQUEST['query'] );
+			}
+		}
 
         public function get_major_version($version)
         {
