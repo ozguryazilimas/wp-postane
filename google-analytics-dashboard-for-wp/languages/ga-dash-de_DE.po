@@ -3,22 +3,22 @@ msgstr ""
 "Project-Id-Version: Google Analytics Dashboard for WP\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/google-analytics-"
 "dashboard-for-wp\n"
-"POT-Creation-Date: 2015-05-25 09:06+0200\n"
-"PO-Revision-Date: 2015-05-25 09:07+0200\n"
+"POT-Creation-Date: 2015-07-05 16:07+0300\n"
+"PO-Revision-Date: 2015-07-05 16:07+0300\n"
 "Last-Translator: Alin Marcu <admin@deconf.com>\n"
 "Language-Team: Alin Marcu\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8\n"
-"X-Poedit-KeywordsList: _e;__\n"
+"X-Generator: Poedit 1.8.2\n"
+"X-Poedit-KeywordsList: __;_e;_n;_x;_ex;_nx;esc_attr__;esc_attr_e;esc_attr_x;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SearchPath-0: ../.\n"
 
-#: .././admin/item-reports.php:61 .././front/item-reports.php:28
+#: .././admin/item-reports.php:61 .././front/item-reports.php:29
 msgid "Analytics"
 msgstr "Analytics"
 
@@ -48,7 +48,7 @@ msgstr "Etwas ist schief gelaufen. Überprüfen Sie %1$s oder %2$s."
 #: .././admin/settings.php:95 .././admin/settings.php:190
 #: .././admin/settings.php:324 .././admin/settings.php:641
 #: .././admin/settings.php:823 .././admin/settings.php:1095
-#: .././admin/setup.php:62 .././admin/setup.php:75
+#: .././admin/setup.php:46 .././admin/setup.php:59
 msgid "Errors & Debug"
 msgstr "Fehler & Debug"
 
@@ -71,8 +71,8 @@ msgid "Show stats to:"
 msgstr "Statistiken anzeigen für:"
 
 #: .././admin/settings.php:154
-msgid "show page sessions and users in frontend (after each article)"
-msgstr "zeige die Seiten-Sitzungen und Nutzer im Frontend (nach jedem Artikel)"
+msgid "enable web page reports on frontend"
+msgstr ""
 
 #: .././admin/settings.php:161 .././admin/settings.php:297
 #: .././admin/settings.php:598 .././admin/settings.php:943
@@ -165,7 +165,7 @@ msgstr "Aktiviert"
 
 #: .././admin/settings.php:367 .././admin/settings.php:888
 #: .././admin/settings.php:910 .././admin/settings.php:1188
-#: .././admin/widgets.php:65
+#: .././admin/widgets.php:61
 msgid "View Name:"
 msgstr "Anzeigename:"
 
@@ -402,7 +402,7 @@ msgstr "Cache leeren"
 msgid "Reset Errors"
 msgstr "Fehler zurücksetzen"
 
-#: .././admin/settings.php:878 .././admin/setup.php:58 .././admin/setup.php:74
+#: .././admin/settings.php:878 .././admin/setup.php:42 .././admin/setup.php:58
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
@@ -434,7 +434,7 @@ msgstr ""
 "Wartungsaktualisierungen)"
 
 #: .././admin/settings.php:950 .././admin/settings.php:1241
-#: .././admin/widgets.php:36
+#: .././admin/widgets.php:32
 msgid "Authorize Plugin"
 msgstr "Plugin autorisieren"
 
@@ -462,243 +462,273 @@ msgstr "Frontend Einstellungen"
 msgid "exclude Super Admin tracking for the entire network"
 msgstr "den Super-Admin im gesamten Netzwerk nicht tracken"
 
-#: .././admin/settings.php:1271
+#: .././admin/settings.php:1273
 msgid "Setup Tutorial & Demo"
 msgstr "Setup Tutorial & Demo"
 
-#: .././admin/settings.php:1279
-msgid "Support & Reviews"
-msgstr "Support & Bewertungen"
+#: .././admin/settings.php:1281
+msgid "Follow & Review"
+msgstr ""
 
-#: .././admin/settings.php:1286
-#, php-format
-msgid "Plugin documentation and support on %s"
-msgstr "Plugin-Dokumentation und Hilfe unter %s"
-
-#: .././admin/settings.php:1293
+#: .././admin/settings.php:1307
 #, php-format
 msgid "Your feedback and review are both important, %s!"
 msgstr "Ihre Bewertung und Rezension sind beide wichtig, %s!"
 
-#: .././admin/settings.php:1293
+#: .././admin/settings.php:1307
 msgid "rate this plugin"
 msgstr "Bewerte dieses Plugin"
 
-#: .././admin/settings.php:1299
+#: .././admin/settings.php:1313
 msgid "Further Reading"
 msgstr "Mehr erfahren"
 
-#: .././admin/settings.php:1306
+#: .././admin/settings.php:1320
 #, php-format
 msgid "%s by moving your website to HTTPS/SSL."
 msgstr "%s durch Umschalten der Webseite auf HTTPS/SSL."
 
-#: .././admin/settings.php:1306
+#: .././admin/settings.php:1320
 msgid "Improve search rankings"
 msgstr "Verbessern Sie Ihren Rang in den Suchergebnissen"
 
-#: .././admin/settings.php:1313
+#: .././admin/settings.php:1327
 #, php-format
 msgid "Other %s written by the same author"
 msgstr "Andere %s von diesem Autor"
 
-#: .././admin/settings.php:1313
+#: .././admin/settings.php:1327
 msgid "WordPress Plugins"
 msgstr "WordPress Plugins"
 
-#: .././admin/settings.php:1319
+#: .././admin/settings.php:1333
 msgid "Other Services"
 msgstr "Andere Dienste"
 
-#: .././admin/settings.php:1326
+#: .././admin/settings.php:1340
 #, php-format
 msgid "Speed up your website and plug into a whole %s"
 msgstr "Beschleunigen Sie Ihre Webseite und begeben Sie sich in ein %s"
 
-#: .././admin/settings.php:1326
+#: .././admin/settings.php:1340
 msgid "new level of site speed"
 msgstr "neues Level Seitenladegeschwindigkeit."
 
-#: .././admin/settings.php:1333
+#: .././admin/settings.php:1347
 #, php-format
 msgid "%s service with users tracking at IP level."
 msgstr "%s Service mit Nutzer-Tracking auf IP-Ebene."
 
-#: .././admin/settings.php:1333
+#: .././admin/settings.php:1347
 msgid "Web Analytics"
 msgstr "Web Analyse"
 
-#: .././admin/setup.php:57 .././admin/setup.php:73
+#: .././admin/setup.php:41 .././admin/setup.php:57
 msgid "Google Analytics"
 msgstr "Google Analytics"
 
-#: .././admin/setup.php:59
+#: .././admin/setup.php:43
 msgid "Backend Settings"
 msgstr "Backend Einstellungen"
 
-#: .././admin/setup.php:60
+#: .././admin/setup.php:44
 msgid "Frontend Settings"
 msgstr "Frontend Einstellungen"
 
-#: .././admin/setup.php:61
+#: .././admin/setup.php:45
 msgid "Tracking Code"
 msgstr "Tracking Code"
 
-#: .././admin/setup.php:147 .././admin/widgets.php:120 .././front/setup.php:71
+#: .././admin/setup.php:159 .././admin/widgets.php:117 .././front/setup.php:71
 msgid "Today"
 msgstr "Heute"
 
-#: .././admin/setup.php:148 .././admin/widgets.php:121 .././front/setup.php:72
+#: .././admin/setup.php:160 .././admin/widgets.php:118 .././front/setup.php:72
 msgid "Yesterday"
 msgstr "Gestern"
 
-#: .././admin/setup.php:149 .././admin/widgets.php:122 .././front/setup.php:73
-#: .././front/widgets.php:64 .././front/widgets.php:158
-msgid "Last 7 Days"
-msgstr "Letzte 7 Tage"
+#: .././admin/setup.php:161 .././admin/setup.php:162 .././admin/setup.php:163
+#: .././admin/setup.php:164 .././admin/widgets.php:119
+#: .././admin/widgets.php:120 .././admin/widgets.php:121
+#: .././admin/widgets.php:122 .././front/setup.php:73 .././front/setup.php:74
+#: .././front/setup.php:75 .././front/setup.php:76 .././front/widgets.php:64
+#: .././front/widgets.php:67 .././front/widgets.php:70
+#: .././front/widgets.php:158 .././front/widgets.php:159
+#: .././front/widgets.php:160
+#, php-format
+msgid "Last %d Days"
+msgstr "Letzte %d Tage"
 
-#: .././admin/setup.php:150 .././admin/widgets.php:124 .././front/setup.php:74
-#: .././front/widgets.php:70 .././front/widgets.php:160
-msgid "Last 30 Days"
-msgstr "Letzte 30 Tage"
+#: .././admin/setup.php:165 .././admin/setup.php:166
+#: .././admin/widgets.php:123 .././admin/widgets.php:124
+#: .././front/setup.php:77 .././front/setup.php:78
+#, php-format
+msgid "%s Year"
+msgstr ""
 
-#: .././admin/setup.php:151 .././admin/widgets.php:125 .././front/setup.php:75
-msgid "Last 90 Days"
-msgstr "Letzte 90 Tage"
+#: .././admin/setup.php:165 .././admin/widgets.php:123 .././front/setup.php:77
+msgid "One"
+msgstr ""
 
-#: .././admin/setup.php:153 .././admin/setup.php:168 .././front/setup.php:77
-#: .././front/setup.php:92
+#: .././admin/setup.php:166 .././admin/widgets.php:124 .././front/setup.php:78
+msgid "Three"
+msgstr ""
+
+#: .././admin/setup.php:169 .././admin/setup.php:185 .././front/setup.php:81
+#: .././front/setup.php:97
 msgid "Unique Views"
 msgstr "Einmalige Aufrufe"
 
-#: .././admin/setup.php:154 .././admin/setup.php:169
-#: .././admin/widgets.php:130 .././admin/widgets.php:869
-#: .././front/setup.php:78 .././front/setup.php:93 .././tools/gapi.php:355
+#: .././admin/setup.php:170 .././admin/setup.php:186
+#: .././admin/widgets.php:130 .././admin/widgets.php:830
+#: .././front/setup.php:82 .././front/setup.php:98 .././tools/gapi.php:358
 msgid "Users"
 msgstr "Nutzer"
 
-#: .././admin/setup.php:155 .././admin/widgets.php:131 .././front/setup.php:79
+#: .././admin/setup.php:171 .././admin/widgets.php:131 .././front/setup.php:83
 msgid "Organic"
 msgstr "Organisch"
 
-#: .././admin/setup.php:156 .././admin/setup.php:170
-#: .././admin/widgets.php:132 .././admin/widgets.php:873
-#: .././front/setup.php:80 .././front/setup.php:94 .././tools/gapi.php:358
+#: .././admin/setup.php:172 .././admin/setup.php:187
+#: .././admin/widgets.php:132 .././admin/widgets.php:834
+#: .././front/setup.php:84 .././front/setup.php:99 .././tools/gapi.php:361
 msgid "Page Views"
 msgstr "Seitenaufrufe"
 
-#: .././admin/setup.php:157 .././admin/setup.php:171
-#: .././admin/widgets.php:133 .././admin/widgets.php:877
-#: .././front/setup.php:81 .././front/setup.php:95 .././tools/gapi.php:361
+#: .././admin/setup.php:173 .././admin/setup.php:188
+#: .././admin/widgets.php:133 .././admin/widgets.php:838
+#: .././front/setup.php:85 .././front/setup.php:100 .././tools/gapi.php:364
 msgid "Bounce Rate"
 msgstr "Absprungrate"
 
-#: .././admin/setup.php:158 .././admin/widgets.php:134 .././front/setup.php:82
+#: .././admin/setup.php:174 .././admin/widgets.php:134 .././front/setup.php:86
 msgid "Location"
 msgstr "Geografisch"
 
-#: .././admin/setup.php:159 .././admin/widgets.php:136 .././front/setup.php:83
-#: .././tools/gapi.php:492
+#: .././admin/setup.php:175 .././admin/widgets.php:136 .././front/setup.php:87
+#: .././tools/gapi.php:503
 msgid "Referrers"
 msgstr "Verweise"
 
-#: .././admin/setup.php:160 .././admin/widgets.php:137 .././front/setup.php:84
-#: .././tools/gapi.php:525
+#: .././admin/setup.php:176 .././admin/widgets.php:137 .././front/setup.php:88
+#: .././tools/gapi.php:536
 msgid "Searches"
 msgstr "Suchen"
 
-#: .././admin/setup.php:161 .././admin/widgets.php:138 .././front/setup.php:85
+#: .././admin/setup.php:177 .././admin/widgets.php:138 .././front/setup.php:89
 msgid "Traffic Details"
 msgstr "Traffic Details"
 
-#: .././admin/setup.php:163 .././admin/widgets.php:504
-#: .././admin/widgets.php:601 .././admin/widgets.php:799
-#: .././admin/widgets.php:911 .././front/setup.php:87
+#: .././admin/setup.php:180 .././admin/widgets.php:505
+#: .././admin/widgets.php:590 .././admin/widgets.php:757
+#: .././admin/widgets.php:861 .././front/setup.php:92
 msgid "A JavaScript Error is blocking plugin resources!"
 msgstr "Ein JavaScript-Fehler blockiert die Plugin-Ressourcen!"
 
-#: .././admin/setup.php:164 .././admin/widgets.php:707 .././front/setup.php:88
+#: .././admin/setup.php:181 .././admin/widgets.php:681 .././front/setup.php:93
 msgid "Traffic Mediums"
 msgstr "Medium"
 
-#: .././admin/setup.php:165 .././admin/widgets.php:723 .././front/setup.php:89
+#: .././admin/setup.php:182 .././admin/widgets.php:696 .././front/setup.php:94
 msgid "Visitor Type"
 msgstr "Nutzertyp"
 
-#: .././admin/setup.php:166 .././admin/widgets.php:739 .././front/setup.php:90
+#: .././admin/setup.php:183 .././admin/widgets.php:711 .././front/setup.php:95
 msgid "Social Networks"
 msgstr "soziale Netzwerke"
 
-#: .././admin/setup.php:167 .././admin/widgets.php:755 .././front/setup.php:91
+#: .././admin/setup.php:184 .././admin/widgets.php:726 .././front/setup.php:96
 msgid "Search Engines"
 msgstr "Suchmaschinen"
 
-#: .././admin/setup.php:172 .././admin/widgets.php:881 .././front/setup.php:96
+#: .././admin/setup.php:189 .././admin/widgets.php:842
+#: .././front/setup.php:101
 msgid "Organic Search"
 msgstr "Organische Suche"
 
-#: .././admin/setup.php:173 .././admin/widgets.php:885 .././front/setup.php:97
+#: .././admin/setup.php:190 .././admin/widgets.php:846
+#: .././front/setup.php:102
 msgid "Pages/Session"
 msgstr "Seiten/Sitzung"
 
-#: .././admin/setup.php:174 .././admin/widgets.php:517
-#: .././admin/widgets.php:535 .././admin/widgets.php:614
-#: .././admin/widgets.php:632 .././admin/widgets.php:651
-#: .././admin/widgets.php:670 .././admin/widgets.php:690
-#: .././admin/widgets.php:813 .././admin/widgets.php:924
-#: .././admin/widgets.php:943 .././front/setup.php:98
+#: .././admin/setup.php:191 .././admin/widgets.php:517
+#: .././admin/widgets.php:531 .././admin/widgets.php:541
+#: .././admin/widgets.php:602 .././admin/widgets.php:616
+#: .././admin/widgets.php:630 .././admin/widgets.php:644
+#: .././admin/widgets.php:658 .././admin/widgets.php:668
+#: .././admin/widgets.php:770 .././admin/widgets.php:782
+#: .././admin/widgets.php:873 .././admin/widgets.php:887
+#: .././admin/widgets.php:897 .././front/setup.php:103
 msgid "Invalid response, more details in JavaScript Console (F12)."
 msgstr ""
 "ungültige Antwort. Weitere Details finden Sie in der JavaScript-Konsole (F12)"
 
-#: .././admin/setup.php:175 .././front/setup.php:99
+#: .././admin/setup.php:192 .././front/setup.php:104
 msgid "Not enough data collected"
 msgstr "Nicht genug Daten vorhanden"
 
-#: .././admin/setup.php:176 .././admin/widgets.php:522
-#: .././admin/widgets.php:540 .././admin/widgets.php:619
-#: .././admin/widgets.php:637 .././admin/widgets.php:656
-#: .././admin/widgets.php:675 .././admin/widgets.php:695
-#: .././admin/widgets.php:818 .././admin/widgets.php:821
-#: .././admin/widgets.php:929 .././admin/widgets.php:948
-#: .././front/setup.php:100 .././front/widgets.php:100
+#: .././admin/setup.php:193 .././admin/widgets.php:522
+#: .././admin/widgets.php:536 .././admin/widgets.php:607
+#: .././admin/widgets.php:621 .././admin/widgets.php:635
+#: .././admin/widgets.php:649 .././admin/widgets.php:663
+#: .././admin/widgets.php:775 .././admin/widgets.php:777
+#: .././admin/widgets.php:878 .././admin/widgets.php:892
+#: .././front/setup.php:105 .././front/widgets.php:100
 msgid "This report is unavailable"
 msgstr "Der Bericht ist nicht verfügbar"
 
-#: .././admin/setup.php:177 .././front/setup.php:101
+#: .././admin/setup.php:194 .././front/setup.php:106
 msgid "report generated by"
 msgstr "Bericht wurde generiert von"
 
-#: .././admin/setup.php:206
+#: .././admin/setup.php:225
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: .././admin/widgets.php:29 .././front/widgets.php:21
+#: .././admin/setup.php:237
+#, php-format
+msgid "Google Analytics Dashboard for WP has been updated to version %s."
+msgstr ""
+
+#: .././admin/setup.php:237
+#, php-format
+msgid "For details, check out %1$s and %2$s."
+msgstr ""
+
+#: .././admin/setup.php:237
+msgid "the documentation page"
+msgstr ""
+
+#: .././admin/setup.php:237
+msgid "the plugin&#39;s settings page"
+msgstr ""
+
+#: .././admin/widgets.php:27 .././front/widgets.php:21
 msgid "Google Analytics Dashboard"
 msgstr "Google Analytics Dashboard"
 
-#: .././admin/widgets.php:36
+#: .././admin/widgets.php:32
 msgid "This plugin needs an authorization:"
 msgstr "Diese Plugin benötigt eine Autorisierung:"
 
-#: .././admin/widgets.php:70
+#: .././admin/widgets.php:66
 msgid "Something went wrong while retrieving profiles list."
 msgstr ""
 "Ein Fehler ist aufgetreten. Die Profilliste konnte nicht abgerufen werden."
 
-#: .././admin/widgets.php:70
+#: .././admin/widgets.php:66
 msgid "More details"
 msgstr "Mehr Details"
 
-#: .././admin/widgets.php:83 .././admin/widgets.php:94
+#: .././admin/widgets.php:79 .././admin/widgets.php:90
 msgid "An admin should asign a default Google Analytics Profile."
 msgstr "Ein Admin sollte ein Standardprofil festlegen."
 
-#: .././admin/widgets.php:83 .././admin/widgets.php:94
+#: .././admin/widgets.php:79 .././admin/widgets.php:90
 msgid "Select Domain"
 msgstr "Wähle eine Domain aus."
 
-#: .././admin/widgets.php:99
+#: .././admin/widgets.php:95
 msgid ""
 "Something went wrong while retrieving property data. You need to create and "
 "properly configure a Google Analytics account:"
@@ -706,62 +736,57 @@ msgstr ""
 "Ein Fehler ist aufgetreten. Dein Google Analytics Account muss erstellt und "
 "fertig konfiguriert sein:"
 
-#: .././admin/widgets.php:99
+#: .././admin/widgets.php:95
 msgid "Find out more!"
 msgstr "Erfahre mehr!"
 
-#: .././admin/widgets.php:119
+#: .././admin/widgets.php:116
 msgid "Real-Time"
 msgstr "Echtzeit"
 
-#: .././admin/widgets.php:123 .././front/widgets.php:67
-#: .././front/widgets.php:159
-msgid "Last 14 Days"
-msgstr "Letzte 14 Tage"
-
-#: .././admin/widgets.php:129 .././admin/widgets.php:865
-#: .././front/widgets.php:36 .././tools/gapi.php:370 .././tools/gapi.php:492
-#: .././tools/gapi.php:525 .././tools/gapi.php:575 .././tools/gapi.php:655
-#: .././tools/gapi.php:684
+#: .././admin/widgets.php:129 .././admin/widgets.php:826
+#: .././front/widgets.php:36 .././tools/gapi.php:373 .././tools/gapi.php:503
+#: .././tools/gapi.php:536 .././tools/gapi.php:586 .././tools/gapi.php:666
+#: .././tools/gapi.php:695
 msgid "Sessions"
 msgstr "Sitzungen"
 
-#: .././admin/widgets.php:135 .././tools/gapi.php:460
+#: .././admin/widgets.php:135 .././tools/gapi.php:471
 msgid "Pages"
 msgstr "Seiten"
 
-#: .././admin/widgets.php:226 .././admin/widgets.php:466
+#: .././admin/widgets.php:236 .././admin/widgets.php:478
 msgid "REFERRAL"
 msgstr "VERWEISUNG"
 
-#: .././admin/widgets.php:230 .././admin/widgets.php:467
+#: .././admin/widgets.php:240 .././admin/widgets.php:479
 msgid "ORGANIC"
 msgstr "ORGANISCH"
 
-#: .././admin/widgets.php:234 .././admin/widgets.php:354
-#: .././admin/widgets.php:468
+#: .././admin/widgets.php:244 .././admin/widgets.php:364
+#: .././admin/widgets.php:480
 msgid "SOCIAL"
 msgstr "SOZIAL"
 
-#: .././admin/widgets.php:238 .././admin/widgets.php:357
-#: .././admin/widgets.php:469
+#: .././admin/widgets.php:248 .././admin/widgets.php:367
+#: .././admin/widgets.php:481
 msgid "CAMPAIGN"
 msgstr "KAMPANIE"
 
-#: .././admin/widgets.php:242 .././admin/widgets.php:360
-#: .././admin/widgets.php:472
+#: .././admin/widgets.php:252 .././admin/widgets.php:370
+#: .././admin/widgets.php:484
 msgid "DIRECT"
 msgstr "DIREKT"
 
-#: .././admin/widgets.php:246 .././admin/widgets.php:473
+#: .././admin/widgets.php:256 .././admin/widgets.php:485
 msgid "NEW"
 msgstr "NEUE"
 
-#: .././admin/widgets.php:348
+#: .././admin/widgets.php:358
 msgid "REFERRALS"
 msgstr "VERWEISUNGEN"
 
-#: .././admin/widgets.php:351
+#: .././admin/widgets.php:361
 msgid "KEYWORDS"
 msgstr "STICHWORTE"
 
@@ -769,7 +794,7 @@ msgstr "STICHWORTE"
 msgid "Will display your google analytics stats in a widget"
 msgstr "Zeigt deine Google Analytics Statistik in einem Widget an"
 
-#: .././front/widgets.php:36 .././tools/gapi.php:684
+#: .././front/widgets.php:36 .././tools/gapi.php:695
 msgid "trend"
 msgstr "Entwicklung"
 
@@ -825,61 +850,83 @@ msgstr "Verweise auf:"
 msgid "This is not allowed, read the documentation!"
 msgstr "Das ist nicht erlaubt! Bitte lesen Sie die Dokumentation."
 
-#: .././tools/gapi.php:125
+#: .././tools/gapi.php:128
 msgid "Use this link to get your access code:"
 msgstr "Nutze diesen Link, um deinen Zugriffscode zu erhalten:"
 
-#: .././tools/gapi.php:125
+#: .././tools/gapi.php:128
 msgid "Get Access Code"
 msgstr "Erhalte den Zugriffscode"
 
-#: .././tools/gapi.php:129 .././tools/gapi.php:130
+#: .././tools/gapi.php:132 .././tools/gapi.php:133
 msgid "Use the red link to get your access code!"
 msgstr "Benutzen Sie den roten Link um Ihren Zugriffsscode zu erhalten."
 
-#: .././tools/gapi.php:129
+#: .././tools/gapi.php:132
 msgid "Access Code:"
 msgstr "Zugriffscode:"
 
-#: .././tools/gapi.php:136
+#: .././tools/gapi.php:139
 msgid "Save Access Code"
 msgstr "Zugriffscode speichern"
 
-#: .././tools/gapi.php:364
+#: .././tools/gapi.php:367
 msgid "Organic Searches"
 msgstr "Organische Suche"
 
-#: .././tools/gapi.php:367
+#: .././tools/gapi.php:370
 msgid "Unique Page Views"
 msgstr "Einmalige Seitenaufrufe"
 
-#: .././tools/gapi.php:375
+#: .././tools/gapi.php:378
 msgid "Hour"
 msgstr "Stunde"
 
-#: .././tools/gapi.php:378 .././tools/gapi.php:684
+#: .././tools/gapi.php:382 .././tools/gapi.php:385 .././tools/gapi.php:695
 msgid "Date"
 msgstr "Datum"
 
-#: .././tools/gapi.php:460
+#: .././tools/gapi.php:471
 msgid "Views"
 msgstr "Aufrufe"
 
-#: .././tools/gapi.php:546
+#: .././tools/gapi.php:557
 msgid "Countries"
 msgstr "Länder"
 
-#: .././tools/gapi.php:556
+#: .././tools/gapi.php:567
 msgid "Cities from"
 msgstr "Städte von"
 
-#: .././tools/gapi.php:609
+#: .././tools/gapi.php:620
 msgid "Channels"
 msgstr "Kanäle"
 
-#: .././tools/gapi.php:655
+#: .././tools/gapi.php:666
 msgid "Type"
 msgstr "Typ"
+
+#~ msgid "Last 7 Days"
+#~ msgstr "Letzte 7 Tage"
+
+#~ msgid "Last 14 Days"
+#~ msgstr "Letzte 14 Tage"
+
+#~ msgid "Last 30 Days"
+#~ msgstr "Letzte 30 Tage"
+
+#~ msgid "Last 90 Days"
+#~ msgstr "Letzte 90 Tage"
+
+#~ msgid "show page sessions and users in frontend (after each article)"
+#~ msgstr ""
+#~ "zeige die Seiten-Sitzungen und Nutzer im Frontend (nach jedem Artikel)"
+
+#~ msgid "Support & Reviews"
+#~ msgstr "Support & Bewertungen"
+
+#~ msgid "Plugin documentation and support on %s"
+#~ msgstr "Plugin-Dokumentation und Hilfe unter %s"
 
 #~ msgid "Read %s for more information about Frontend Features and Options."
 #~ msgstr ""

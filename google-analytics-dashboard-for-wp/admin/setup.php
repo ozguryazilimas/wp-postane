@@ -27,24 +27,8 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			add_action( 'network_admin_menu', array( $this, 'network_menu' ) );
 			// Settings link
 			add_filter( "plugin_action_links_" . plugin_basename( GADWP_DIR . 'gadwp.php' ), array( $this, 'settings_link' ) );
-			// Error bubble
-			add_action( 'admin_print_scripts', array( $this, 'draw_error_bubble' ), 10000 );
-		}
-
-		/**
-		 * Error bubble for Errors & Debug
-		 */
-		public function draw_error_bubble() {
-			$bubble_msg = '!';
-			if ( get_transient( 'ga_dash_gapi_errors' ) ) {
-				?>
-<script type="text/javascript">
-  jQuery(document).ready(function() {
-      jQuery('#toplevel_page_gadash_settings li > a[href*="page=gadash_errors_debugging"]').append('&nbsp;<span class="awaiting-mod count-1"><span class="pending-count" style="padding:0 7px;"><?php echo $bubble_msg ?></span></span>');
-  });
-</script>
-<?php
-			}
+			// Updated admin notice
+			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		}
 
 		/**
@@ -54,7 +38,7 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			global $wp_version;
 			if ( current_user_can( 'manage_options' ) ) {
 				include ( GADWP_DIR . 'admin/settings.php' );
-				add_menu_page( __( "Google Analytics", 'ga-dash' ), 'Google Analytics', 'manage_options', 'gadash_settings', array( 'GADWP_Settings', 'general_settings' ), version_compare( $wp_version, '3.8.0', '>=' ) ? 'dashicons-chart-area' : GADWP_URL . 'admin/images/gadash-icon.png' );
+				add_menu_page( __( "Google Analytics", 'ga-dash' ), __( "Google Analytics", 'ga-dash' ), 'manage_options', 'gadash_settings', array( 'GADWP_Settings', 'general_settings' ), version_compare( $wp_version, '3.8.0', '>=' ) ? 'dashicons-chart-area' : GADWP_URL . 'admin/images/gadash-icon.png' );
 				add_submenu_page( 'gadash_settings', __( "General Settings", 'ga-dash' ), __( "General Settings", 'ga-dash' ), 'manage_options', 'gadash_settings', array( 'GADWP_Settings', 'general_settings' ) );
 				add_submenu_page( 'gadash_settings', __( "Backend Settings", 'ga-dash' ), __( "Backend Settings", 'ga-dash' ), 'manage_options', 'gadash_backend_settings', array( 'GADWP_Settings', 'backend_settings' ) );
 				add_submenu_page( 'gadash_settings', __( "Frontend Settings", 'ga-dash' ), __( "Frontend Settings", 'ga-dash' ), 'manage_options', 'gadash_frontend_settings', array( 'GADWP_Settings', 'frontend_settings' ) );
@@ -83,6 +67,13 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 		 *            $hook
 		 */
 		public function load_styles_scripts( $hook ) {
+			$new_hook = explode( '_page_', $hook );
+
+			if ( isset( $new_hook[1] ) ) {
+				$new_hook = '_page_' . $new_hook[1];
+			} else {
+				$new_hook = $hook;
+			}
 
 			/*
 			 * GADWP main stylesheet
@@ -90,11 +81,32 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			wp_enqueue_style( 'gadwp', GADWP_URL . 'admin/css/gadwp.css', null, GADWP_CURRENT_VERSION );
 
 			/*
+			 * GADWP UI
+			 */
+
+			if ( get_transient( 'ga_dash_gapi_errors' ) ) {
+				$ed_bubble = '!';
+			}else{
+				$ed_bubble = '';
+			}
+
+			wp_enqueue_script( 'gadwp_backend_ui', plugins_url( 'js/ui.js', __FILE__ ), array( 'jquery' ), GADWP_CURRENT_VERSION, true );
+
+			/* @formatter:off */
+			wp_localize_script( 'gadwp_backend_ui', 'gadwp_ui_data', array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'security' => wp_create_nonce( 'gadwp_dismiss_notices' ),
+				'ed_bubble' => $ed_bubble,
+			)
+			);
+			/* @formatter:on */
+
+			/*
 			 * Dashboard Widgets Styles & Scripts
 			 */
 			$widgets_hooks = array( 'index.php' );
 
-			if ( in_array( $hook, $widgets_hooks ) ) {
+			if ( in_array( $new_hook, $widgets_hooks ) ) {
 				if ( GADWP_Tools::check_roles( $this->gadwp->config->options['ga_dash_access_back'] ) && $this->gadwp->config->options['dashboard_widget'] ) {
 
 					wp_enqueue_style( 'gadwp-nprogress', GADWP_URL . 'tools/nprogress/nprogress.css', null, GADWP_CURRENT_VERSION );
@@ -146,9 +158,13 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 						'dateList' => array(
 							'today' => __( "Today", 'ga-dash' ),
 							'yesterday' => __( "Yesterday", 'ga-dash' ),
-							'7daysAgo' => __( "Last 7 Days", 'ga-dash' ),
-							'30daysAgo' => __( "Last 30 Days", 'ga-dash' ),
-							'90daysAgo' => __( "Last 90 Days", 'ga-dash' ) ),
+							'7daysAgo' => sprintf( __( "Last %d Days", 'ga-dash' ), 7 ),
+							'14daysAgo' => sprintf( __( "Last %d Days", 'ga-dash' ), 14 ),
+							'30daysAgo' => sprintf( __( "Last %d Days", 'ga-dash' ), 30 ),
+							'90daysAgo' => sprintf( __( "Last %d Days", 'ga-dash' ), 90 ),
+							'365daysAgo' =>  sprintf( _n( "%s Year", "%s Years", 1, 'ga-dash' ), __('One', 'ga-dash') ),
+							'1095daysAgo' =>  sprintf( _n( "%s Year", "%s Years", 3, 'ga-dash' ), __('Three', 'ga-dash') ),
+						),
 						'reportList' => array(
 							'uniquePageviews' => __( "Unique Views", 'ga-dash' ),
 							'users' => __( "Users", 'ga-dash' ),
@@ -158,7 +174,8 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 							'locations' => __( "Location", 'ga-dash' ),
 							'referrers' => __( "Referrers", 'ga-dash' ),
 							'searches' => __( "Searches", 'ga-dash' ),
-							'trafficdetails' => __( "Traffic Details", 'ga-dash' ) ),
+							'trafficdetails' => __( "Traffic Details", 'ga-dash' )
+						),
 						'i18n' => array(
 							__( "A JavaScript Error is blocking plugin resources!", 'ga-dash' ),
 							__( "Traffic Mediums", 'ga-dash' ),
@@ -174,9 +191,11 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 							__( "Invalid response, more details in JavaScript Console (F12).", 'ga-dash' ),
 							__( "Not enough data collected", 'ga-dash' ),
 							__( "This report is unavailable", 'ga-dash' ),
-							__( "report generated by", 'ga-dash' ) ),
+							__( "report generated by", 'ga-dash' ),
+						),
 						'colorVariations' => GADWP_Tools::variations( $this->gadwp->config->options['ga_dash_style'] ),
-						'region' => $region )
+						'region' => $region,
+						)
 					);
 					/* @formatter:on */
 				}
@@ -185,9 +204,9 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			/*
 			 * Settings Styles & Scripts
 			 */
-			$settings_hooks = array( 'toplevel_page_gadash_settings', 'google-analytics_page_gadash_backend_settings', 'google-analytics_page_gadash_frontend_settings', 'google-analytics_page_gadash_tracking_settings', 'google-analytics_page_gadash_errors_debugging' );
+			$settings_hooks = array( '_page_gadash_settings', '_page_gadash_backend_settings', '_page_gadash_frontend_settings', '_page_gadash_tracking_settings', '_page_gadash_errors_debugging' );
 
-			if ( in_array( $hook, $settings_hooks ) ) {
+			if ( in_array( $new_hook, $settings_hooks ) ) {
 				wp_enqueue_style( 'wp-color-picker' );
 				wp_enqueue_script( 'wp-color-picker' );
 				wp_enqueue_script( 'wp-color-picker-script-handle', plugins_url( 'js/wp-color-picker-script.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
@@ -206,6 +225,19 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			$settings_link = '<a href="' . esc_url( get_admin_url( null, 'admin.php?page=gadash_settings' ) ) . '">' . __( "Settings", 'ga-dash' ) . '</a>';
 			array_unshift( $links, $settings_link );
 			return $links;
+		}
+
+		/**
+		 *  Add an admin notice after a manual or atuomatic update
+		 */
+		function admin_notice() {
+			if ( get_option( 'gadwp_got_updated' ) ) :
+			?>
+				<div id="gadwp-notice" class="notice is-dismissible">
+				    <p><?php echo sprintf( __('Google Analytics Dashboard for WP has been updated to version %s.', 'ga-dash' ), GADWP_CURRENT_VERSION).' '.sprintf(__('For details, check out %1$s and %2$s.'),sprintf(' <a href="https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_notice&utm_medium=link&utm_content=release_notice&utm_campaign=gadwp">%s</a> ', __('the documentation page', 'ga-dash') ), sprintf(' <a href="%1$s">%2$s</a>', esc_url( get_admin_url( null, 'admin.php?page=gadash_settings' ) ), __('the plugin&#39;s settings page', 'ga-dash') )); ?></p>
+				</div>
+			<?php
+			endif;
 		}
 	}
 }

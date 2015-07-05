@@ -4,7 +4,7 @@
  * Plugin URI: https://deconf.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: Alin Marcu
- * Version: 4.8
+ * Version: 4.8.1
  * Author URI: https://deconf.com
  */
 
@@ -82,7 +82,7 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 
 			// Plugin Version
 			if ( ! defined( 'GADWP_CURRENT_VERSION' ) ) {
-				define( 'GADWP_CURRENT_VERSION', '4.8' );
+				define( 'GADWP_CURRENT_VERSION', '4.8.1' );
 			}
 
 			// Plugin Path
@@ -175,7 +175,9 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 						 * Load Backend ajax actions
 						 */
 						include_once ( GADWP_DIR . 'admin/ajax-actions.php' );
+						include_once ( GADWP_DIR . 'admin/ajax-actions-ui.php' );
 						self::$instance->backend_actions = new GADWP_Backend_Ajax();
+						new GADWP_UI_Ajax();
 					}
 
 					/*
