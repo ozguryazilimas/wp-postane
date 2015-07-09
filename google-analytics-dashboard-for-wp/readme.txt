@@ -4,7 +4,7 @@ Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics plugin,google analytics widget,tracking,universal google analytics,realtime,multisite,gadwp
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 4.8.1.1
+Stable tag: 4.8.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,6 +127,14 @@ For documentation, tutorials, FAQ and videos check out: [Google Analytics Dashbo
 Google Analytics Dashboard for WP it's released under the GPLv2, you can use it free of charge on your personal or commercial website.
 
 == Changelog ==
+
+= 4.8.1.2 =
+- Bug Fix: fixes automatic update switched on after each update
+- Bug Fix: add missing domain to an i18n string
+- Bug Fix: small CSS fix in item-reports.css
+- Bug Fix: using PHP to get web pages URIs instead of JavaScript
+- Enhancement: Italian translation updated
+- Enhancement: set the cookies to expire in 7 days
 
 = 4.8.1.1 =
 - Bug Fix: headers already sent warning on main dashboard widget
