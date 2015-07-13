@@ -10,7 +10,7 @@ if(isset($_SESSION['wmsc_options'])){
 	$characters_on_image 		= $wmsc_options['captcha_image_characters'];
 	$captcha_enable_space 		= isset_value('captcha_enable_space',$wmsc_options,0);
 	$captcha_image_font_adj		= isset_value('captcha_image_font_adj',$wmsc_options,0.6);
-	$font 						= $wmsc_options['captcha_image_font'];
+	$font 						= isset($wmsc_options['captcha_image_font']) ? $wmsc_options['captcha_image_font'] :'arial.ttf';
 	$possible_letters			= $wmsc_options['captcha_possible_letters'];
 	$random_dots 				= $wmsc_options['captcha_random_dots'];
 	$random_lines 				= $wmsc_options['captcha_random_lines'];
@@ -18,6 +18,9 @@ if(isset($_SESSION['wmsc_options'])){
 	$captcha_dots_color			= "0x".$wmsc_options['captcha_dots_color'];
 	$captcha_line_color 		= "0x".$wmsc_options['captcha_line_color'];
 	$captcha_background_color	= "0x".$wmsc_options['captcha_background_color'];
+	$font_path					= isset($wmsc_options['font_path']) ? $wmsc_options['font_path'] : "../fonts/";
+	
+	
 }else{
 	$image_width 				= 120;
 	$image_height 				= 25;
@@ -32,12 +35,15 @@ if(isset($_SESSION['wmsc_options'])){
 	$captcha_background_color 	= "0xFFFFFF";
 	$captcha_enable_space		= 0;
 	$captcha_image_font_adj		= "0.6";
+	$font_path					= "../fonts/";
 }
 
 $code 			= '';
 $code_string 	= '';
 $space 			= '';
-$font 			= "../fonts/".$font;
+$font 			= $font_path.$font;
+
+if(!file_exists($font)) $font = "../fonts/arial.ttf";
 
 if($captcha_enable_space == 1) $space = ' ';
 

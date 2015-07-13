@@ -2,8 +2,8 @@
 Contributors: http://plugins.web-mumbai.com/
 Tags: simple captcha, registration captcha, custom captcha image, register captcha image, theme my captcha
 Requires at least: 3.6
-Tested up to: 3.9
-Stable tag: 1.1.1
+Tested up to: 4.2.2
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,31 +86,39 @@ Yes, see the plugin settings page.
 
 
 == Upgrade Notice ==
-= 1.1.1 =
-* Bugfix : We fixed error on activation.
-* Tested : Wordpress 3.8.1
-* Tested : Wordpress 3.8.2
-* Tested : Wordpress 3.8.3
-* Tested : Wordpress 3.9
-= 1.1 =
+= 2.0.1 - 2015-07-12 =
+* Bugfix : We fixed
+
+= 2.0.0 - 2015-07-12 =
+* Tested : Wordpress 4.2.2
+* Added: Font Upload Functionality
+
+= 1.1 - 2015-03-02 =
 * Added : added 'uninstall.php' in 'wm-simple-captcha' root folder. When using 'uninstall.php' the plugin should always check for the WP_UNINSTALL_PLUGIN constant, before executing. The WP_UNINSTALL_PLUGIN constant is defined by WordPress at runtime during a plugin uninstall, it will not be present if 'uninstall.php' is requested directly.
 * Removed : register_uninstall_hook().
 * Bugfix : We fixed error on activation.
 
-= 1.0 =
+= 1.0 - 2015-03-01 =
 * Added: First working release of the Plugin
 
 == Changelog ==
-= 1.1.1 =
+= 2.0.1 - 2015-07-12 =
+* Bugfix : We fixed
+
+= 2.0.0 - 2015-07-12 =
+* Tested: tested in latest wordpress 4.2.2
+* Added: Font Upload Functionality
+		
+= 1.1.1 - 2015-04-18 =
 * Bugfix : We fixed error on activation.
 * Tested : Wordpress 3.8.1
 * Tested : Wordpress 3.8.2
 * Tested : Wordpress 3.8.3
 * Tested : Wordpress 3.9
 
-= 1.1 =
+= 1.1 - 2015-03-02 =
 * Bugfix : We fixed error on activation.
 
-= 1.0 =
-* Added: First working release of the Plugin
+= 1.0 - 2015-03-01 =
+* Initial Version
 

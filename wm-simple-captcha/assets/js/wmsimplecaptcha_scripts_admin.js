@@ -17,7 +17,7 @@ jQuery(document).ready(function() {
 
 jQuery(document).ready(function($){
 	
-	jQuery('.color_picker_callback').wpColorPicker();
+	jQuery('._color_picker_callback').wpColorPicker();
 	
     var custom_uploader;
 
