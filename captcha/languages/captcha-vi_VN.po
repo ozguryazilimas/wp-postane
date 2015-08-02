@@ -1,0 +1,551 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: captcha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-01 17:21+0300\n"
+"PO-Revision-Date: 2015-07-01 17:21+0300\n"
+"Last-Translator: bestwebsoft.com <plugins@bestwebsoft.com>\n"
+"Language-Team: NDT Solutions <admin@ndtan.net>\n"
+"Language: vi_VN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: captcha.php:31
+#: captcha.php:261
+#, fuzzy
+msgid "Captcha Settings"
+msgstr "Tùy chọn CAPTCHA"
+
+#: captcha.php:31
+msgid "Captcha"
+msgstr "Captcha"
+
+#: captcha.php:90
+#, fuzzy
+msgid "Please enter a CAPTCHA value."
+msgstr "Vui lòng nhập mã xác nhận!"
+
+#: captcha.php:91
+#, fuzzy
+msgid "Please enter a valid CAPTCHA value."
+msgstr "Vui lòng nhập mã xác nhận!"
+
+#: captcha.php:178
+msgid "Login form"
+msgstr "Khung đăng nhập"
+
+#: captcha.php:179
+#: captcha.php:316
+#, fuzzy
+msgid "Registration form"
+msgstr "Khung đăng ký"
+
+#: captcha.php:179
+msgid "Register form"
+msgstr "Khung đăng ký"
+
+#: captcha.php:180
+#, fuzzy
+msgid "Reset Password form"
+msgstr "Khung quên mật khẩu"
+
+#: captcha.php:180
+msgid "Lost password form"
+msgstr "Khung quên mật khẩu"
+
+#: captcha.php:181
+#: captcha.php:317
+msgid "Comments form"
+msgstr "Khung comment"
+
+#: captcha.php:182
+#, fuzzy
+msgid "Hide CAPTCHA in Comments form for registered users"
+msgstr "Ẩn CAPTCHA đối với thành viên đã đăng ký"
+
+#: captcha.php:187
+msgid "Plus (&#43;)"
+msgstr "Cộng (&#43;)"
+
+#: captcha.php:187
+msgid "Plus"
+msgstr "Cộng"
+
+#: captcha.php:188
+msgid "Minus (&minus;)"
+msgstr "Trừ (&minus;)"
+
+#: captcha.php:188
+msgid "Minus"
+msgstr "Trừ"
+
+#: captcha.php:189
+#, fuzzy
+msgid "Multiplication (&times;)"
+msgstr "Nhân (&times;)"
+
+#: captcha.php:189
+#, fuzzy
+msgid "Multiply"
+msgstr "Nhân (&times;)"
+
+#: captcha.php:194
+msgid "Numbers"
+msgstr "Số"
+
+#: captcha.php:195
+msgid "Words"
+msgstr "Từ"
+
+#: captcha.php:239
+#, fuzzy
+msgid "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
+msgstr "Hãy chọn một thời điểm trong các hành động số học khối và khó cho CAPTCHA"
+
+#: captcha.php:243
+#, fuzzy
+msgid "Settings saved."
+msgstr "Tùy chọn đã được lưu"
+
+#: captcha.php:250
+msgid "All plugin settings were restored."
+msgstr ""
+
+#: captcha.php:263
+#: captcha.php:1256
+#: captcha.php:1269
+msgid "Settings"
+msgstr "Cấu hình"
+
+#: captcha.php:264
+#: captcha.php:1270
+msgid "FAQ"
+msgstr "Câu hỏi thường gặp (FAQ)"
+
+#: captcha.php:265
+msgid "Go PRO"
+msgstr "Go PRO"
+
+#: captcha.php:267
+msgid "Notice:"
+msgstr "Chú ý:"
+
+#: captcha.php:267
+msgid "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button."
+msgstr "Thiết lập các plugin đã được thay đổi. Để thực hiện việc thay đổi xin đừng quên nhấn nút 'Save Changes'."
+
+#: captcha.php:277
+#: captcha.php:303
+#: captcha.php:312
+#: captcha.php:315
+#, fuzzy
+msgid "Enable CAPTCHA for:"
+msgstr "Kích hoạt tính năng CAPTCHA trên:"
+
+#: captcha.php:279
+#: captcha.php:367
+#: captcha.php:369
+msgid "Arithmetic actions for CAPTCHA"
+msgstr "Hành động số học cho CAPTCHA"
+
+#: captcha.php:287
+msgid "Activate contact form"
+msgstr "Kích hoạt Contact Form"
+
+#: captcha.php:290
+msgid "Download contact form"
+msgstr "Tải contact form về"
+
+#: captcha.php:293
+#, fuzzy
+msgid "If you would like to add Captcha to a custom form, please see"
+msgstr "Nếu bạn muốn tùy chỉnh plugin này cho một hình thức tùy chỉnh, xin vui lòng liên hệ với chúng tôi qua <a href=\"Mailto:plugin@bestwebsoft.com\"> plugin@bestwebsoft.com</a> hoặc điền vào mẫu liên hệ của chúng tôi trên trang web của chúng tôi."
+
+#: captcha.php:318
+msgid "\"Create a Group\" form"
+msgstr "Khung \"Tạo một nhóm\""
+
+#: captcha.php:324
+#, fuzzy
+msgid "Enable CAPTCHA:"
+msgstr "Kích hoạt tính năng CAPTCHA trên:"
+
+#: captcha.php:332
+msgid "If you upgrade to Pro version all your settings will be saved."
+msgstr "Nếu bạn nâng cấp lên phiên bản Pro tất cả các thiết lập của bạn sẽ được lưu lại."
+
+#: captcha.php:339
+msgid "Unlock premium options by upgrading to a PRO version."
+msgstr "Mở khóa tùy chọn cao cấp bằng cách nâng cấp lên phiên bản PRO."
+
+#: captcha.php:340
+msgid "Learn More"
+msgstr "Tìm hiểu thêm"
+
+#: captcha.php:343
+msgid "Go"
+msgstr "Go"
+
+#: captcha.php:350
+#, fuzzy
+msgid "Title for CAPTCHA in the form"
+msgstr "Nhãn cho CAPTCHA trong form"
+
+#: captcha.php:354
+msgid "Required symbol"
+msgstr "Biểu tượng cần thiết"
+
+#: captcha.php:360
+msgid "Error messages"
+msgstr ""
+
+#: captcha.php:362
+#, fuzzy
+msgid "If CAPTCHA field is empty"
+msgstr "Mã xác nhận không chính xác!"
+
+#: captcha.php:363
+#, fuzzy
+msgid "If CAPTCHA is incorrect"
+msgstr "Mã xác nhận không chính xác!"
+
+#: captcha.php:380
+#: captcha.php:382
+msgid "CAPTCHA complexity level"
+msgstr "Mức độ phức tạp của CAPTCHA"
+
+#: captcha.php:395
+msgid "Save Changes"
+msgstr "Lưu thay đổi"
+
+#: captcha.php:464
+#: captcha.php:479
+#: captcha.php:481
+#: captcha.php:488
+#: captcha.php:660
+#: captcha.php:668
+#: captcha.php:684
+#: captcha.php:692
+msgid "ERROR"
+msgstr "XẢY RA LỖI"
+
+#: captcha.php:605
+#: captcha.php:721
+msgid "Error"
+msgstr ""
+
+#: captcha.php:605
+#: captcha.php:721
+#, fuzzy
+msgid "Click the BACK button on your browser, and try again."
+msgstr "Lỗi: Bạn nhập vào cụm từ của mã xác nhận sai. Bấm nút quay lại trình duyệt của bạn và thử lại."
+
+#: captcha.php:745
+#: captcha.php:1047
+msgid "zero"
+msgstr "không"
+
+#: captcha.php:746
+#: captcha.php:1048
+#: captcha.php:1213
+msgid "one"
+msgstr "một"
+
+#: captcha.php:747
+#: captcha.php:1049
+msgid "two"
+msgstr "hai"
+
+#: captcha.php:748
+#: captcha.php:1050
+msgid "three"
+msgstr "ba"
+
+#: captcha.php:749
+#: captcha.php:1051
+msgid "four"
+msgstr "bốn"
+
+#: captcha.php:750
+#: captcha.php:1052
+msgid "five"
+msgstr "năm"
+
+#: captcha.php:751
+#: captcha.php:1053
+#: captcha.php:1213
+msgid "six"
+msgstr "sáu"
+
+#: captcha.php:752
+#: captcha.php:1054
+#: captcha.php:1201
+#: captcha.php:1207
+msgid "seven"
+msgstr "bảy"
+
+#: captcha.php:753
+#: captcha.php:1055
+#: captcha.php:1204
+msgid "eight"
+msgstr "tám"
+
+#: captcha.php:754
+#: captcha.php:1056
+msgid "nine"
+msgstr "chín"
+
+#: captcha.php:757
+#: captcha.php:1059
+msgid "eleven"
+msgstr "mười một"
+
+#: captcha.php:758
+#: captcha.php:1060
+msgid "twelve"
+msgstr "mười hai"
+
+#: captcha.php:759
+#: captcha.php:1061
+msgid "thirteen"
+msgstr "mười ba"
+
+#: captcha.php:760
+#: captcha.php:1062
+msgid "fourteen"
+msgstr "mười bốn"
+
+#: captcha.php:761
+#: captcha.php:1063
+msgid "fifteen"
+msgstr "mười lăm"
+
+#: captcha.php:762
+#: captcha.php:1064
+msgid "sixteen"
+msgstr "mười sáu"
+
+#: captcha.php:763
+#: captcha.php:1065
+msgid "seventeen"
+msgstr "mười bảy"
+
+#: captcha.php:764
+#: captcha.php:1066
+msgid "eighteen"
+msgstr "mười tám"
+
+#: captcha.php:765
+#: captcha.php:1067
+msgid "nineteen"
+msgstr "mười chín"
+
+#: captcha.php:768
+#: captcha.php:1070
+msgid "ten"
+msgstr "mười"
+
+#: captcha.php:769
+#: captcha.php:1071
+msgid "twenty"
+msgstr "hai mươi"
+
+#: captcha.php:770
+#: captcha.php:1072
+msgid "thirty"
+msgstr "ba mươi"
+
+#: captcha.php:771
+#: captcha.php:1073
+msgid "forty"
+msgstr "bốn mươi"
+
+#: captcha.php:772
+#: captcha.php:1074
+msgid "fifty"
+msgstr "năm mươi"
+
+#: captcha.php:773
+#: captcha.php:1075
+msgid "sixty"
+msgstr "sáu mươi"
+
+#: captcha.php:774
+#: captcha.php:1076
+msgid "seventy"
+msgstr "bảy mươi"
+
+#: captcha.php:775
+#: captcha.php:1077
+msgid "eighty"
+msgstr "tám mươi"
+
+#: captcha.php:776
+#: captcha.php:1078
+msgid "ninety"
+msgstr "chín mươi"
+
+#: captcha.php:863
+#: captcha.php:1165
+msgid "and"
+msgstr "và"
+
+#: captcha.php:936
+#, fuzzy
+msgid "Encryption password is not set"
+msgstr "Mật khẩu giải mã không được thiết lập"
+
+#: captcha.php:956
+#, fuzzy
+msgid "Decryption password is not set"
+msgstr "Mật khẩu giải mã không được thiết lập"
+
+#: captcha.php:1271
+msgid "Support"
+msgstr "Hỗ trợ"
+
+#~ msgid "requires"
+#~ msgstr "yêu cầu"
+
+#~ msgid ""
+#~ "or higher, that is why it has been deactivated! Please upgrade WordPress "
+#~ "and try again."
+#~ msgstr ""
+#~ "hoặc cao hơn, đó là lý do tại sao nó đã ngừng hoạt động! Hãy nâng cấp "
+#~ "WordPress và thử lại."
+
+#~ msgid "Back to the WordPress"
+#~ msgstr "Quay lại WordPress"
+
+#~ msgid "Plugins page"
+#~ msgstr "Trang plugins"
+
+#~ msgid "Wrong license key"
+#~ msgstr "Sai thông tin bản quyền"
+
+#~ msgid ""
+#~ "Something went wrong. Try again later. If the error will appear again, "
+#~ "please, contact us <a href=http://support.bestwebsoft.com>BestWebSoft</"
+#~ "a>. We are sorry for inconvenience."
+#~ msgstr ""
+#~ "Có lỗi xảy ra. Vui lòng thử lại sau. Nếu lỗi này vẫn tiếp tục xuất hiện, "
+#~ "hãy liên hệ với chúng tôi tại <a href=http://support.bestwebsoft."
+#~ "com>BestWebSoft</a>. Chúng tôi rất xin lỗi vì sự bất tiện này."
+
+#~ msgid "This license key is bind to another site"
+#~ msgstr "Key bản quyền này đã được sử dung tại trang web khác."
+
+#~ msgid ""
+#~ "Unfortunately, you have exceeded the number of available tries per day. "
+#~ "Please, upload the plugin manually."
+#~ msgstr ""
+#~ "Thật đáng tiếc, bạn đã vượt quá số lần thử có sẵn mỗi ngày. Xin vui lòng, "
+#~ "upload plugin bằng tay."
+
+#~ msgid ""
+#~ "Failed to download the zip archive. Please, upload the plugin manually"
+#~ msgstr ""
+#~ "Không thể tải về các kho lưu trữ zip. Xin vui lòng, upload plugin bằng tay"
+
+#~ msgid "Failed to open the zip archive. Please, upload the plugin manually"
+#~ msgstr ""
+#~ "Không thể mở các kho lưu trữ zip. Xin vui lòng, upload plugin bằng tay"
+
+#~ msgid ""
+#~ "Your server does not support either ZipArchive or Phar. Please, upload "
+#~ "the plugin manually"
+#~ msgstr ""
+#~ "Máy chủ không hỗ trợ ZipArchive hoặc Phar. Vui lòng upload plugin bằng tay"
+
+#, fuzzy
+#~ msgid "UploadDir is not writable. Please, upload the plugin manually"
+#~ msgstr ""
+#~ "Không thể mở các kho lưu trữ zip. Xin vui lòng, upload plugin bằng tay"
+
+#, fuzzy
+#~ msgid ""
+#~ "Something went wrong. Try again later or upload the plugin manually. We "
+#~ "are sorry for inconvenience."
+#~ msgstr ""
+#~ "Có lỗi xảy ra. Vui lòng thử lại sau hoặc upload plugin bằng tay. Chúng "
+#~ "tôi rất xin lỗi vì sự bất tiện này."
+
+#~ msgid "Please, enter Your license key"
+#~ msgstr "Vui lòng nhập key bản quyền của bạn"
+
+#~ msgid "Contact form"
+#~ msgstr "Khung liên hệ"
+
+#~ msgid "powered by"
+#~ msgstr "được cung cấp bởi"
+
+#~ msgid "Subscriber"
+#~ msgstr "Người đăng ký"
+
+#~ msgid "If you enjoy our plugin, please give it 5 stars on WordPress"
+#~ msgstr ""
+#~ "Nếu bạn thích các plugin của chúng tôi, xin vui lòng vote 5 sao trên "
+#~ "WordPress"
+
+#, fuzzy
+#~ msgid "Rate the plugin"
+#~ msgstr "Các plugin được khuyến cáo"
+
+#~ msgid "If there is something wrong about it, please contact us"
+#~ msgstr "Nếu có bất cứ điều gì sai về nó, hãy liên hệ với chúng tôi"
+
+#~ msgid ""
+#~ "Congratulations! The PRO version of the plugin is successfully download "
+#~ "and activated."
+#~ msgstr ""
+#~ "Xin chúc mừng! Phiên bản PRO của plugin đã được tải và kích hoạt thành "
+#~ "công."
+
+#~ msgid "Please, go to"
+#~ msgstr "Hãy đi đến"
+
+#~ msgid "the setting page"
+#~ msgstr "trang thiết lập"
+
+#~ msgid "You will be redirected automatically in 5 seconds."
+#~ msgstr "Bạn sẽ được chuyển tự động trong 5 giây."
+
+#~ msgid "You can download and activate"
+#~ msgstr "Bạn có thể tải về và kích hoạt"
+
+#~ msgid "version of this plugin by entering Your license key."
+#~ msgstr "phiên bản của plugin này bằng cách nhập key bản quyền của bạn."
+
+#~ msgid ""
+#~ "You can find your license key on your personal page Client area, by "
+#~ "clicking on the link"
+#~ msgstr ""
+#~ "Bạn có thể tìm thấy key bản quyền trên trang  cá nhân của bạn, bằng cách "
+#~ "nhấn vào liên kết"
+
+#~ msgid ""
+#~ "(your username is the email you specify when purchasing the product)."
+#~ msgstr "(tên người dùng của bạn là email bạn chỉ định khi mua sản phẩm)."
+
+#~ msgid "Go!"
+#~ msgstr "Go!"
+
+#, fuzzy
+#~ msgid "ERROR:"
+#~ msgstr "XẢY RA LỖI"
+
+#~ msgid ""
+#~ "It's time to upgrade your <strong>Captcha plugin</strong> to <strong>PRO</"
+#~ "strong> version"
+#~ msgstr ""
+#~ "Đây là thời điểm để nâng cấp <strong> Captcha plugin </ strong> của bạn "
+#~ "lên <strong> phiên bản PRO</ strong>"
+
+#~ msgid "Extend standard plugin functionality with new great options"
+#~ msgstr "Mở rộng chức năng plugin tiêu chuẩn với những tùy chọn mới"

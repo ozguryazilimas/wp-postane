@@ -1,0 +1,531 @@
+# Byrial Ole Jensen <byrial@vip.cybercity.dk>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: captcha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-01 17:16+0300\n"
+"PO-Revision-Date: 2015-07-01 17:16+0300\n"
+"Last-Translator: bestwebsoft.com <plugins@bestwebsoft.com>\n"
+"Language-Team: SM Mehdi Akram <mehdi.akram@gmail.com>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: captcha.php:31
+#: captcha.php:261
+msgid "Captcha Settings"
+msgstr "ক্যাপচা সেটিংস"
+
+#: captcha.php:31
+msgid "Captcha"
+msgstr "ক্যাপচা"
+
+#: captcha.php:90
+#, fuzzy
+msgid "Please enter a CAPTCHA value."
+msgstr "দয়া করে সঠিক ক্যাপচা লিখুন।"
+
+#: captcha.php:91
+msgid "Please enter a valid CAPTCHA value."
+msgstr "দয়া করে সঠিক ক্যাপচা লিখুন।"
+
+#: captcha.php:178
+msgid "Login form"
+msgstr "লগইন ফর্ম"
+
+#: captcha.php:179
+#: captcha.php:316
+msgid "Registration form"
+msgstr "রেজিষ্ট্রেশন ফর্ম"
+
+#: captcha.php:179
+msgid "Register form"
+msgstr "রেজিস্টার ফর্ম"
+
+#: captcha.php:180
+msgid "Reset Password form"
+msgstr "পাসওয়ার্ড রিসেট ফর্ম"
+
+#: captcha.php:180
+msgid "Lost password form"
+msgstr "পাসওয়ার্ড হারানোর ফর্ম"
+
+#: captcha.php:181
+#: captcha.php:317
+msgid "Comments form"
+msgstr "মন্তব্য ফর্ম"
+
+#: captcha.php:182
+msgid "Hide CAPTCHA in Comments form for registered users"
+msgstr "রেজিষ্টেশনকৃত ব্যবহাকারী থেকে ক্যাপচা লুকাও"
+
+#: captcha.php:187
+msgid "Plus (&#43;)"
+msgstr "যোগ (&#43;)"
+
+#: captcha.php:187
+msgid "Plus"
+msgstr "যোগ "
+
+#: captcha.php:188
+msgid "Minus (&minus;)"
+msgstr "বিয়োগ (&minus;)"
+
+#: captcha.php:188
+msgid "Minus"
+msgstr "বিয়োগ"
+
+#: captcha.php:189
+msgid "Multiplication (&times;)"
+msgstr "গুণ (&times;)"
+
+#: captcha.php:189
+msgid "Multiply"
+msgstr "গুণ"
+
+#: captcha.php:194
+msgid "Numbers"
+msgstr "সংখ্যা"
+
+#: captcha.php:195
+msgid "Words"
+msgstr "শব্দ"
+
+#: captcha.php:239
+msgid "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
+msgstr "ক্যাপচার জন্য ব্লক গাণিতিক এবং জটিলতা একটি আইটেম নির্বাচন করুন"
+
+#: captcha.php:243
+msgid "Settings saved."
+msgstr "অপশন সংরক্ষণ।"
+
+#: captcha.php:250
+msgid "All plugin settings were restored."
+msgstr ""
+
+#: captcha.php:263
+#: captcha.php:1256
+#: captcha.php:1269
+msgid "Settings"
+msgstr "সেটিংস"
+
+#: captcha.php:264
+#: captcha.php:1270
+msgid "FAQ"
+msgstr "অনবরত জিজ্ঞাসিত প্রশ্ন"
+
+#: captcha.php:265
+msgid "Go PRO"
+msgstr "প্রোফেশনালে যাও"
+
+#: captcha.php:267
+msgid "Notice:"
+msgstr "নোটিস:"
+
+#: captcha.php:267
+msgid "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button."
+msgstr "প্লাগইনটির সেটিংস পরিবর্তন করা হয়েছে। সংরক্ষণ করার জন্য 'পরিবর্তণ সংরক্ষন' বাটন ক্লিক করতে দয়া করে ভুলবেন না।"
+
+#: captcha.php:277
+#: captcha.php:303
+#: captcha.php:312
+#: captcha.php:315
+msgid "Enable CAPTCHA for:"
+msgstr "যাদের জন্য ক্যাপচা সক্রিয় করবেন:"
+
+#: captcha.php:279
+#: captcha.php:367
+#: captcha.php:369
+msgid "Arithmetic actions for CAPTCHA"
+msgstr "ক্যাপচার জন্য গাণিতিক কর্ম"
+
+#: captcha.php:287
+msgid "Activate contact form"
+msgstr "কন্টাক্ট ফর্ম সক্রিয়"
+
+#: captcha.php:290
+msgid "Download contact form"
+msgstr "কন্টাক্ট ফর্ম ডাউনলোড"
+
+#: captcha.php:293
+msgid "If you would like to add Captcha to a custom form, please see"
+msgstr "আপনি একটি কাস্টম ফর্ম এর জন্য এই প্লাগইনটি যুক্ত করতে চান, তাহলে দেখুন"
+
+#: captcha.php:318
+msgid "\"Create a Group\" form"
+msgstr "\"গ্রুপ তৈরী করুন\" ফর্ম"
+
+#: captcha.php:324
+msgid "Enable CAPTCHA:"
+msgstr "ক্যাপচা সক্রিয় করুন:"
+
+#: captcha.php:332
+msgid "If you upgrade to Pro version all your settings will be saved."
+msgstr "আপনি যদি প্রোফেশনাল সংস্করণে আপগ্রেড করেন তাহলে আপনার সব সেটিংস সংরক্ষণ করা হবে।"
+
+#: captcha.php:339
+msgid "Unlock premium options by upgrading to a PRO version."
+msgstr "প্রোফেশনাল সংস্করণে আপগ্রেড করে প্রিমিয়াম অপশনস আনলক করুন।"
+
+#: captcha.php:340
+msgid "Learn More"
+msgstr "আরো জানুন"
+
+#: captcha.php:343
+msgid "Go"
+msgstr "যাও"
+
+#: captcha.php:350
+msgid "Title for CAPTCHA in the form"
+msgstr "ক্যাপচা ফর্ম এর টাইটেল"
+
+#: captcha.php:354
+msgid "Required symbol"
+msgstr "প্রয়োজনীয় প্রতীক"
+
+#: captcha.php:360
+msgid "Error messages"
+msgstr ""
+
+#: captcha.php:362
+#, fuzzy
+msgid "If CAPTCHA field is empty"
+msgstr "El resultado introducido es incorrecto."
+
+#: captcha.php:363
+#, fuzzy
+msgid "If CAPTCHA is incorrect"
+msgstr "El resultado introducido es incorrecto."
+
+#: captcha.php:380
+#: captcha.php:382
+msgid "CAPTCHA complexity level"
+msgstr "ক্যাপচা জটিলতার ধাপ"
+
+#: captcha.php:395
+msgid "Save Changes"
+msgstr "পরিবর্তণ সংরক্ষন"
+
+#: captcha.php:464
+#: captcha.php:479
+#: captcha.php:481
+#: captcha.php:488
+#: captcha.php:660
+#: captcha.php:668
+#: captcha.php:684
+#: captcha.php:692
+msgid "ERROR"
+msgstr "ত্রুটি"
+
+#: captcha.php:605
+#: captcha.php:721
+msgid "Error"
+msgstr ""
+
+#: captcha.php:605
+#: captcha.php:721
+#, fuzzy
+msgid "Click the BACK button on your browser, and try again."
+msgstr "ত্রুটি: আপনি একটি ভুল ক্যাপচা দিয়েছেন। আপনার ব্রাউজারের ব্যাক বোতাম ক্লিক করুন এবং আবার চেষ্টা করুন।"
+
+#: captcha.php:745
+#: captcha.php:1047
+msgid "zero"
+msgstr "শুন্য"
+
+#: captcha.php:746
+#: captcha.php:1048
+#: captcha.php:1213
+msgid "one"
+msgstr "এক"
+
+#: captcha.php:747
+#: captcha.php:1049
+msgid "two"
+msgstr "দুই"
+
+#: captcha.php:748
+#: captcha.php:1050
+msgid "three"
+msgstr "তিন"
+
+#: captcha.php:749
+#: captcha.php:1051
+msgid "four"
+msgstr "চার"
+
+#: captcha.php:750
+#: captcha.php:1052
+msgid "five"
+msgstr "পাঁচ"
+
+#: captcha.php:751
+#: captcha.php:1053
+#: captcha.php:1213
+msgid "six"
+msgstr "ছয়"
+
+#: captcha.php:752
+#: captcha.php:1054
+#: captcha.php:1201
+#: captcha.php:1207
+msgid "seven"
+msgstr "সাত"
+
+#: captcha.php:753
+#: captcha.php:1055
+#: captcha.php:1204
+msgid "eight"
+msgstr "আট"
+
+#: captcha.php:754
+#: captcha.php:1056
+msgid "nine"
+msgstr "নয়"
+
+#: captcha.php:757
+#: captcha.php:1059
+msgid "eleven"
+msgstr "এগার"
+
+#: captcha.php:758
+#: captcha.php:1060
+msgid "twelve"
+msgstr "বার"
+
+#: captcha.php:759
+#: captcha.php:1061
+msgid "thirteen"
+msgstr "তের"
+
+#: captcha.php:760
+#: captcha.php:1062
+msgid "fourteen"
+msgstr "চৌদ্দ"
+
+#: captcha.php:761
+#: captcha.php:1063
+msgid "fifteen"
+msgstr "পনের"
+
+#: captcha.php:762
+#: captcha.php:1064
+msgid "sixteen"
+msgstr "ষোল"
+
+#: captcha.php:763
+#: captcha.php:1065
+msgid "seventeen"
+msgstr "সতের"
+
+#: captcha.php:764
+#: captcha.php:1066
+msgid "eighteen"
+msgstr "আঠারো"
+
+#: captcha.php:765
+#: captcha.php:1067
+msgid "nineteen"
+msgstr "উনিশ"
+
+#: captcha.php:768
+#: captcha.php:1070
+msgid "ten"
+msgstr "দশ"
+
+#: captcha.php:769
+#: captcha.php:1071
+msgid "twenty"
+msgstr "বিশ"
+
+#: captcha.php:770
+#: captcha.php:1072
+msgid "thirty"
+msgstr "ত্রিশ"
+
+#: captcha.php:771
+#: captcha.php:1073
+msgid "forty"
+msgstr "চল্লিশ"
+
+#: captcha.php:772
+#: captcha.php:1074
+msgid "fifty"
+msgstr "পঞ্চাশ"
+
+#: captcha.php:773
+#: captcha.php:1075
+msgid "sixty"
+msgstr "ষাট"
+
+#: captcha.php:774
+#: captcha.php:1076
+msgid "seventy"
+msgstr "সত্তোর"
+
+#: captcha.php:775
+#: captcha.php:1077
+msgid "eighty"
+msgstr "আশি"
+
+#: captcha.php:776
+#: captcha.php:1078
+msgid "ninety"
+msgstr "নব্বয়"
+
+#: captcha.php:863
+#: captcha.php:1165
+msgid "and"
+msgstr "এবং"
+
+#: captcha.php:936
+msgid "Encryption password is not set"
+msgstr "এনক্রিপশন পাসওয়ার্ড সেট করা হয় নাই"
+
+#: captcha.php:956
+msgid "Decryption password is not set"
+msgstr "ডিক্রিপশন পাসওয়ার্ড সেট করা হয় নাই"
+
+#: captcha.php:1271
+msgid "Support"
+msgstr "সমর্থন"
+
+#~ msgid "requires"
+#~ msgstr "প্রয়োজন"
+
+#~ msgid ""
+#~ "or higher, that is why it has been deactivated! Please upgrade WordPress "
+#~ "and try again."
+#~ msgstr ""
+#~ "বা উচ্চতর, এই কারণে এটি নিষ্ক্রিয় করা হয়েছে ! ওয়ার্ডপ্রেস আপগ্রেড করে আবার "
+#~ "চেষ্টা করুন।"
+
+#~ msgid "Back to the WordPress"
+#~ msgstr "ওয়ার্ডপ্রেসে ফিরে যাও"
+
+#~ msgid "Plugins page"
+#~ msgstr "প্লাগইন পাতা"
+
+#~ msgid "Wrong license key"
+#~ msgstr "ভুল লাইসেন্স কী"
+
+#~ msgid ""
+#~ "Something went wrong. Try again later. If the error will appear again, "
+#~ "please, contact us <a href=http://support.bestwebsoft.com>BestWebSoft</"
+#~ "a>. We are sorry for inconvenience."
+#~ msgstr ""
+#~ "কিছু ভুল হয়েছে। পরে আবার চেষ্টা করুন। যদি ত্রুটি আবার প্রদর্শিত হয়, দয়া করে "
+#~ "আমাদের সাথে যোগাযোগ করুন <a href=http://support.bestwebsoft.com> "
+#~ "BestWebSoft </a>. এই অসুবিধার জন্য আমরা দুঃখিত।"
+
+#~ msgid "This license key is bind to another site"
+#~ msgstr "এই লাইসেন্স কী অন্য সাইটে আবদ্ধ আছে"
+
+#~ msgid ""
+#~ "Unfortunately, you have exceeded the number of available tries per day. "
+#~ "Please, upload the plugin manually."
+#~ msgstr ""
+#~ "দুর্ভাগ্যবশত, আপনি প্রতিদিন উপলব্ধ চেষ্টা সংখ্যা অতিক্রম করেছেন।  দযা করে, নিজে "
+#~ "প্লাগিন আপলোড করুন।"
+
+#~ msgid ""
+#~ "Failed to download the zip archive. Please, upload the plugin manually"
+#~ msgstr "ZIP আর্কাইভ ডাউনলোড করতে ব্যর্থ হয়েছে। দয়া করে, নিজে প্লাগিন আপলোড করুন"
+
+#~ msgid "Failed to open the zip archive. Please, upload the plugin manually"
+#~ msgstr "ZIP আর্কাইভ খুলতে ব্যর্থ হয়েছে। দয়া করে, নিজে প্লাগিন আপলোড করুন"
+
+#~ msgid ""
+#~ "Your server does not support either ZipArchive or Phar. Please, upload "
+#~ "the plugin manually"
+#~ msgstr ""
+#~ "আপনার সার্ভার ZipArchive বা Phar সমর্থন করে না। দয়া করে, নিজে প্লাগিন আপলোড "
+#~ "করুন"
+
+#, fuzzy
+#~ msgid "UploadDir is not writable. Please, upload the plugin manually"
+#~ msgstr "ZIP আর্কাইভ খুলতে ব্যর্থ হয়েছে। দয়া করে, নিজে প্লাগিন আপলোড করুন"
+
+#~ msgid ""
+#~ "Something went wrong. Try again later or upload the plugin manually. We "
+#~ "are sorry for inconvenience."
+#~ msgstr ""
+#~ "কিছু ভুল হয়েছে। পরে আবার চেষ্টা করুন অথবা নিজে প্লাগিন আপলোড করুন। এই অসুবিধার "
+#~ "জন্য আমরা দুঃখিত।"
+
+#~ msgid "Please, enter Your license key"
+#~ msgstr "দয়া করে, আপনার লাইসেন্স কী লিখুন"
+
+#~ msgid "Contact form"
+#~ msgstr "কন্টাক্ট ফর্ম"
+
+#~ msgid "powered by"
+#~ msgstr "দ্বারা চালিত"
+
+#~ msgid "Subscriber"
+#~ msgstr "গ্রাহক"
+
+#~ msgid "If you enjoy our plugin, please give it 5 stars on WordPress"
+#~ msgstr "আপনি যদি আমাদের প্লাগিন উপভোগ, দয়া করে এটিতে ওয়ার্ডপ্রেস ৫ ষ্টার দিন"
+
+#~ msgid "Rate the plugin"
+#~ msgstr "প্লাগইনটির রেট দিন"
+
+#~ msgid "If there is something wrong about it, please contact us"
+#~ msgstr "যদি ভুল দেখতে পান, তাহলে আমাদের সাথে যোগাযোগ করুন"
+
+#~ msgid ""
+#~ "Congratulations! The PRO version of the plugin is successfully download "
+#~ "and activated."
+#~ msgstr ""
+#~ "অভিনন্দন! প্লাগইনটির প্রোফেশনাল সংস্করণ সফলভাবে ডাউনলোড এবং সক্রিয় হয়েছে।"
+
+#~ msgid "Please, go to"
+#~ msgstr "দয়া করে, এখানে যান"
+
+#~ msgid "the setting page"
+#~ msgstr "সেটিংস পাতা"
+
+#~ msgid "You will be redirected automatically in 5 seconds."
+#~ msgstr "আপনি ৫ সেকেন্ডের মধ্যে স্বয়ংক্রিয়ভাবে পুনঃনির্দেশিত হবেন।"
+
+#~ msgid "You can download and activate"
+#~ msgstr "আপনি ডাউনলোড এবং সক্রিয় করতে পারবেন"
+
+#~ msgid "version of this plugin by entering Your license key."
+#~ msgstr "সংস্করণ এর প্লাগইন আপনার লাইসেন্স কী প্রবেশ করেছে।"
+
+#~ msgid ""
+#~ "You can find your license key on your personal page Client area, by "
+#~ "clicking on the link"
+#~ msgstr ""
+#~ "এই লিঙ্কে ক্লিক করে, আপনার ব্যক্তিগত ক্লায়েন্ট এলাকা পাতা থেকে আপনি লাইসেন্স কী "
+#~ "পেতে পারেন"
+
+#~ msgid ""
+#~ "(your username is the email you specify when purchasing the product)."
+#~ msgstr ""
+#~ "(এই পণ্যটি ক্রয় করার সময় আপনার ব্যবহারকারী নাম যে ইমেল তা  নির্দিষ্ট করুন)।"
+
+#~ msgid "Go!"
+#~ msgstr "যাও!"
+
+#, fuzzy
+#~ msgid "ERROR:"
+#~ msgstr "ত্রুটি"
+
+#~ msgid ""
+#~ "It's time to upgrade your <strong>Captcha plugin</strong> to <strong>PRO</"
+#~ "strong> version"
+#~ msgstr ""
+#~ "এখনই সময় আপনার <strong>ক্যাপচা প্লাগইন</strong> টিকে <strong>প্রোফেশনাল</"
+#~ "strong> সংস্করণে আপগ্রেড করার"
+
+#~ msgid "Extend standard plugin functionality with new great options"
+#~ msgstr "বিস্তৃত মানের প্লাগইন কার্যকারিতার সাথে নতুন দারুন অপশনস রয়েছে"
