@@ -37,7 +37,7 @@ function yazar_id_return_et($yolla){
 // $ara_sql_ekleme yi döngü başına +1 yapacak şekilde ilerlet, en az 3 olmazsa ara sql i false döndür.
 // döndüğü yerde kontrol ettir, false geldiyse işlem yapmadan ekrana 3 naz 3 deger gir hatası bassın.
 
-function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, $ara_kelime_gecen, $ara_kelime_sirali,  $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutma_gelen, $ara_yazar_isim){
+function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, $ara_kelime_gecen, $ara_kelime_sirali,  $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutma_gelen, $ara_yazar_isim,$ara_etiketler,$ara_etiketler_hepsi){
 
 
 
@@ -83,11 +83,50 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 	if($ara_kelime_gecmeyen != NULL){
 		$ara_kelime_gecmeyen = explode(" ",$ara_kelime_gecmeyen);
 	}
+	if($ara_etiketler!=NULL)
+	{
+		$ara_etiketler=explode(",",$ara_etiketler);
+	}
+	if($ara_etiketler_hepsi!=NULL)
+	{
+		$ara_etiketler_hepsi=explode(",",$ara_etiketler_hepsi);
+	}
+
 
 	$ara_onyazi = " <br> Arama sonucu ";
 	$ara_sql["query"] = "SELECT * FROM wp_posts WHERE post_status = %s AND post_type = %s ";
 	$ara_sql["variables"] = array("publish","post");
-
+	if($ara_etiketler!=NULL){
+		$yama_sql="(select distinct(wp_term_relationships.object_id) as ID from (select term_taxonomy_id from (select * from wp_terms where";
+		$i=0;
+		foreach($ara_etiketler as $etiket){
+			if($i==0){
+				$i++;
+				$yama_sql.=" name = %s";
+			}else{
+				$yama_sql.=" or name = %s";
+			}
+			array_push($ara_sql["variables"],$etiket);
+		}
+		$yama_sql.=") as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id)";
+		$ara_sql["query"].=" AND ID in ".$yama_sql;
+	}
+	if($ara_etiketler_hepsi!=NULL){
+		$yama_sql="";
+		$i=0;
+		// birim sql (sadece bir etiket için sonuçları bulur): select wp_term_relationships.object_id as ID from (select term_taxonomy_id from (select * from wp_terms where name = 'erkan can') as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id
+		foreach($ara_etiketler_hepsi as $etiket){
+			if($i==0){
+				$yama_sql="(select wp_term_relationships.object_id as ID from (select term_taxonomy_id from (select * from wp_terms where name = %s) as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id)";
+				$i++;
+			}else{
+				$yama_sql.=" as A";
+				$yama_sql="(SELECT A.ID as ID from ".$yama_sql." inner join (select distinct(wp_term_relationships.object_id) as ID from (select term_taxonomy_id from (select * from wp_terms where name = %s) as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id) as B on B.ID=A.ID)";
+			}
+			array_push($ara_sql["variables"],$etiket);
+		}
+		$ara_sql["query"].=" AND ID in ".$yama_sql;
+	}
 	if($ara_yazar_id != NULL){
 		$ara_sql["query"] .= " AND post_author = %d ";
 		array_push($ara_sql["variables"],$ara_yazar_id);
@@ -107,7 +146,7 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 			array_push($ara_sql["variables"], '%' . $key . '%');
 			$ara_onyazi .= $key . " ";
 		}
-			$ara_onyazi .= "' ifadesi gecen";
+		$ara_onyazi .= "' ifadesi gecen";
 	}
 
 	if($ara_kelime_daginik != NULL){
@@ -137,13 +176,13 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 			$ara_onyazi .= " kelimelerini bulundurmayan";
 	}
 	if($ara_tarih_sirala == "artan"){
-		$ara_sql["query"].= "order by post_date asc";
+		$ara_sql["query"].= " order by post_date asc";
 	}else{
-		$ara_sql["query"].= "order by post_date desc";
+		$ara_sql["query"].= " order by post_date desc";
 	}
-
 //	döndürülen yazı ile stringin komutu aynı olduğundan, içinden / karakterlerini silmek caizdir.
 	$ara_onyazi = str_replace("\\","",$ara_onyazi);
+//	echo $ara_sql["query"];
 	return $ara_sql;
 }
 
@@ -249,13 +288,29 @@ function sonucu_ekrana_bas_yazi($sonuc){
 		$tutma_sayisi = $wpdb->get_var($tutma_sql);
 
 		if($tutma_sayisi >= $ara_tutma){
-			$page_data = get_page($page);
+			$page_data = get_post($page);
+			$replaced_content=preg_replace('/<[^>]+./','',$page_data->post_content);
+			$remember_length=mb_strlen($replaced_content,mb_internal_encoding());
+			$bas_length=min(300,$remember_length);
+			$bas_content=mb_substr($replaced_content,0,$bas_length);
 			$bas_title = $page_data->post_title;
 			$bas_time = $page_data->post_date;
 			$bas_link = get_post_permalink( $page );
-			echo "<a href='" . $bas_link . "' > <h2>" . $bas_title . "</h2> </a>";
-			echo $bas_time;
-			echo "<br><br>";
+			$bas_user=get_userdata($page_data->post_author)->user_nicename;
+			echo '
+				<div class="oy-arama-sonuc">
+					<div class="oy-arama-sonuc-baslik">
+						<p><a href="'.$bas_link.'">'.$bas_title.'</a></p>
+					</div>
+					<div class="oy-arama-sonuc-meta">
+						<p>Yazar:<a href="'.site_url().'?author='.$page_data->post_author.'">'.$bas_user.'</a>,Yayınlanma tarihi: '.$page_data->post_date.'</p>
+					</div>
+					<div class="oy-arama-sonuc-icerik">
+						<p>'.$bas_content.($remember_length==$bas_length?'':'...').'</p>
+					</div>
+				</div>
+			';
+			
 		}
 	}
 }
@@ -265,14 +320,35 @@ function sonucu_ekrana_bas_yorum($sonuc){
 	foreach ($sonuc as $key ) {
 		$page = $key->comment_post_ID;
 		$comment_date = $key->comment_date;
+		$author=$key->comment_author;
+		$comment_content=$key->comment_content;
+
 		$page_data = get_page($page);
+
+		$replaced_content=preg_replace('/<[^>]+./','',$comment_content);
+		$remember_length=mb_strlen($replaced_content,mb_internal_encoding());
+		$bas_length=min(100,$remember_length);
+		$bas_content=mb_substr($replaced_content,0,$bas_length);
+
+
 		$bas_title = $page_data->post_title;
 		$bas_link = get_post_permalink( $page );
 		$comment_id = $key->comment_ID;
-
-		echo "<a href='" . $bas_link . "#comment-" . $comment_id . "'> <h2>" . $bas_title . "</h2> </a>";
-		echo $comment_date;
-		echo "<br><br>";
+		
+		$user_id=get_user_by('slug',$author)->ID;
+		echo '
+				<div class="oy-arama-sonuc">
+					<div class="oy-arama-sonuc-baslik">
+						<p><a href="'.$bas_link.'#comment-'.$comment_id.'">'.$bas_title.'</a></p>
+					</div>
+					<div class="oy-arama-sonuc-meta">
+						<p>Yorumlayan:<a href="'.site_url().'?author='.$user_id.'">'.$author.'</a>,Yayınlanma tarihi: '.$comment_date.'</p>
+					</div>
+					<div class="oy-arama-sonuc-icerik">
+						<p>'.$bas_content.($remember_length==$bas_length?'':'...').'</p>
+					</div>
+				</div>
+			';
 		
 	}
 }
