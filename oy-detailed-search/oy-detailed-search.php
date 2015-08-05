@@ -94,37 +94,45 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 
 
 	$ara_onyazi = " <br> Arama sonucu ";
-	$ara_sql["query"] = "SELECT * FROM wp_posts WHERE post_status = %s AND post_type = %s ";
+	$ara_sql["query"] = "SELECT * FROM wp_posts WHERE post_status = '%s' AND post_type = '%s' ";
 	$ara_sql["variables"] = array("publish","post");
 	if($ara_etiketler!=NULL){
 		$yama_sql="(select distinct(wp_term_relationships.object_id) as ID from (select term_taxonomy_id from (select * from wp_terms where";
 		$i=0;
+    $ara_onyazi.='(';
 		foreach($ara_etiketler as $etiket){
 			if($i==0){
 				$i++;
 				$yama_sql.=" name = %s";
+        $ara_onyazi.=$etiket;
 			}else{
 				$yama_sql.=" or name = %s";
+        $ara_onyazi.=','.$etiket;
 			}
 			array_push($ara_sql["variables"],$etiket);
 		}
+    $ara_onyazi.=') etiketlerinin en az birine sahip ';
 		$yama_sql.=") as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id)";
 		$ara_sql["query"].=" AND ID in ".$yama_sql;
 	}
 	if($ara_etiketler_hepsi!=NULL){
 		$yama_sql="";
 		$i=0;
+    $ara_onyazi.='(';
 		// birim sql (sadece bir etiket için sonuçları bulur): select wp_term_relationships.object_id as ID from (select term_taxonomy_id from (select * from wp_terms where name = 'erkan can') as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id
 		foreach($ara_etiketler_hepsi as $etiket){
 			if($i==0){
 				$yama_sql="(select wp_term_relationships.object_id as ID from (select term_taxonomy_id from (select * from wp_terms where name = %s) as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id)";
+       $ara_onyazi.=$etiket;
 				$i++;
 			}else{
 				$yama_sql.=" as A";
 				$yama_sql="(SELECT A.ID as ID from ".$yama_sql." inner join (select distinct(wp_term_relationships.object_id) as ID from (select term_taxonomy_id from (select * from wp_terms where name = %s) as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id) as B on B.ID=A.ID)";
+        $ara_onyazi.=','.$etiket;
 			}
 			array_push($ara_sql["variables"],$etiket);
 		}
+    $ara_onyazi.=') etiketlerinin hepsine sahip ';
 		$ara_sql["query"].=" AND ID in ".$yama_sql;
 	}
 	if($ara_yazar_id != NULL){
@@ -138,12 +146,16 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 		array_push($ara_sql["variables"],$ara_tarih_ilk,$ara_tarih_son);
 		$ara_onyazi .= "'" . $ara_tarih_ilk1 . "' ile '" . $ara_tarih_son1 . "' tarihleri arasında yazılmış ";
 	}
+  //regex'ler #12386 için (Ayrıntılı arama link'lerin içindeki kelimeleri yakalamasın)
 
 	if($ara_kelime_gecen != NULL){
 		$ara_onyazi .= "' ";
 		foreach ($ara_kelime_gecen as $key ){
-			$ara_sql["query"] .= " AND post_content LIKE '%s' ";
+      $ara_sql["query"] .= " AND (post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s')))) ";
+      array_push($ara_sql["variables"], '%' . $key . '%');
 			array_push($ara_sql["variables"], '%' . $key . '%');
+      array_push($ara_sql["variables"], $key);
+      array_push($ara_sql["variables"], $key);
 			$ara_onyazi .= $key . " ";
 		}
 		$ara_onyazi .= "' ifadesi gecen";
@@ -153,8 +165,11 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 		$ara_sql["query"] .= "AND ( 1=0";
 		$ara_onyazi .= "' ";
 		foreach ($ara_kelime_daginik as $key ){
-			$ara_sql["query"].= " OR post_content LIKE '%s' ";
+			$ara_sql["query"].= " OR post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s'))) ";
 			array_push($ara_sql["variables"], '%' . $key . '%');
+      array_push($ara_sql["variables"], '%' . $key . '%');
+      array_push($ara_sql["variables"], $key);
+      array_push($ara_sql["variables"], $key);
 			$ara_onyazi .= $key . " ";
 		}
 		$ara_sql["query"].= ")";
@@ -162,15 +177,21 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 	}
 
 	if($ara_kelime_sirali != NULL){
-		$ara_sql["query"].= " AND post_content LIKE '%s' ";
+		$ara_sql["query"].= " AND (post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s')))) ";
 		array_push($ara_sql["variables"], '%' . $ara_kelime_sirali . '%');
+    array_push($ara_sql["variables"], '%' . $ara_kelime_sirali . '%');
+    array_push($ara_sql["variables"], $key);
+    array_push($ara_sql["variables"], $key);
 		$ara_onyazi .= "'" . $ara_kelime_sirali . "' kelimeleri sıralı olan ";
 	}
 
 	if($ara_kelime_gecmeyen != NULL){
 		foreach ($ara_kelime_gecmeyen as $key ){
-			$ara_sql["query"].= "AND post_content NOT LIKE '%s' ";
+			$ara_sql["query"].= "AND post_title NOT LIKE '%s' AND (post_content NOT LIKE '%s' OR NOT (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s'))) ";
 			array_push($ara_sql["variables"], '%' . $key . '%');
+      array_push($ara_sql["variables"], '%' . $key . '%');
+      array_push($ara_sql["variables"], $key);
+      array_push($ara_sql["variables"], $key);
 			$ara_onyazi .= "'" . $key ."' ,";
 		}
 			$ara_onyazi .= " kelimelerini bulundurmayan";
@@ -182,7 +203,6 @@ function sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk1, $ara_tarih_son1, 
 	}
 //	döndürülen yazı ile stringin komutu aynı olduğundan, içinden / karakterlerini silmek caizdir.
 	$ara_onyazi = str_replace("\\","",$ara_onyazi);
-//	echo $ara_sql["query"];
 	return $ara_sql;
 }
 
