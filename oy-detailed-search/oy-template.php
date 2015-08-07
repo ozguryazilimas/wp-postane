@@ -1,15 +1,10 @@
-<?php get_header();
-	wp_register_style( 'oy_template_css', WP_PLUGIN_URL.'/oy-detailed-search/oy-css.php' );
-	wp_enqueue_style('oy_template_css');
-	wp_enqueue_script('oy-js', WP_PLUGIN_URL.'/oy-detailed-search/oy-js.js');
-	global $ara_onyazi;
-	// Sayfa, fonksiyonlarını plugins/oy-detailed-search/oy-detailed-search.php  sayfasından çekiyor.  
-	// Plugini aktif tutmak farz.
-	echo "<div id='oy-unique' class='leftpane person-page'>";
-	echo '<div id="oy-hide-button" class="oy-rotate"><img src="'.site_url().'/wp-content/plugins/oy-detailed-search/arrow.png"/></div>';
-	echo '<div id="oy-hide-tip">Arama kutusunu açmak için tıklayın.</div>';
-	echo '<div id="oy-arama-container">
-			<h1 class="oy-ayrinti-text"> Ayrıntılı Arama </h1>
+<?php 
+get_header();
+echo "<div id='oy-unique' class='leftpane person-page'>";
+echo '<div id="oy-hide-button" class="oy-rotate"><img src="'.WP_PLUGIN_URL.'/oy-detailed-search/img/arrow.png"/></div>';
+echo '<div id="oy-hide-tip">Arama kutusunu açmak için tıklayın.</div>';
+echo '<div id="oy-arama-container">
+  		<h1 class="oy-ayrinti-text"> Ayrıntılı Arama </h1>
 			<div class="oy-arama-form">
 				<form name="input" action="?name=ayrintili-ara" id="input" method="post" onsubmit="return validateSearch_real()">
 					<div class="oy-arama-major-field">
@@ -18,28 +13,28 @@
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>hepsinin geçtiği:</p></div> 
 							<div class="oy-arama-box"> 
-								<input class="oy-arama-input-big" name="kelime_gecen" type="text"/>
+								<input class="oy-arama-input-big" name="words_included" type="text"/>
 							</div>
 						</div>
 
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>yan yana geçtiği:</p></div> 
 							<div class="oy-arama-box"> 
-								<input class="oy-arama-input-big" name="kelime_sirali" type="text"/>
+								<input class="oy-arama-input-big" name="words_ordered" type="text"/>
 							</div>
 						</div>
 
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>en az birinin geçtiği:</p></div> 
 							<div class="oy-arama-box"> 
-								<input class="oy-arama-input-big" name="kelime_daginik" type="text"/>
+								<input class="oy-arama-input-big" name="words_at_least_one" type="text"/>
 							</div>
 						</div>
 
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>geçmediği:</p></div> 
 							<div class="oy-arama-box"> 
-								<input class="oy-arama-input-big" name="kelime_gecmeyen" type="text"/>
+								<input class="oy-arama-input-big" name="words_excluded" type="text"/>
 							</div>
 						</div>
 					</div>
@@ -49,29 +44,29 @@
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>yazarı:</p></div> 
 							<div class="oy-arama-box"> 
-								<input class="oy-arama-input-mid" name="yazar_isim" type="username"/>
+								<input class="oy-arama-input-mid" name="author_slug" type="username"/>
 							</div>
 						</div>
 
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>yayınlanma tarih aralığı:</p></div> 
 							<div class="oy-arama-box"> 
-								<input id="txtFromDate" class="custom_date oy-arama-input-small" name="tarih_ilk" value="" type="text"/> - <input id="txtToDate" class="custom_date oy-arama-input-small" name="tarih_son" value="" type="text"/>
+								<input id="txtFromDate" class="custom_date oy-arama-input-small" name="date_begin" value="" type="text"/> - <input id="txtToDate" class="custom_date oy-arama-input-small" name="date_end" value="" type="text"/>
 							</div>
 						</div>
 
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>minimum tutulma sayısı:</p></div> 
 							<div class="oy-arama-box"> 
-								<input class="oy-arama-input-small-small" name="tutma" pattern="\d*" type="number" value="0">
+								<input class="oy-arama-input-small-small" name="likes" pattern="\d*" type="number" value="0">
 							</div>
 						</div>
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>arama yeri:</p></div> 
 							<div class="oy-arama-box"> 
-								<select class="oy-arama-select" id="oy-arama-tur-js-icin" name="arama_turu">
-									<option value="arama_yazi">Yazılar</option>
-									<option value="arama_yorum">Yorumlar</option>
+								<select class="oy-arama-select" id="oy-arama-tur-js-icin" name="search_type">
+									<option value="posts">Yazılar</option>
+									<option value="comments">Yorumlar</option>
 								</select>
 							</div>
 						</div>
@@ -79,9 +74,9 @@
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>sırası:</p></div> 
 							<div class="oy-arama-box"> 
-								<select class="oy-arama-select" name="tarih_sirala">
-									<option value="azalan">Yeniden eskiye</option>
-									<option value="artan">Eskiden yeniye</option>
+								<select class="oy-arama-select" name="date_order">
+									<option value="desc">Yeniden eskiye</option>
+									<option value="asc">Eskiden yeniye</option>
 								</select>
 							</div>
 						</div>
@@ -92,13 +87,13 @@
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>en az birinin bulunduğu:</p></div> 
 							<div class="oy-arama-box"> 
-								<input placeholder="(virgülle ayrılmış)" class="oy-arama-big" type="text" name="etiketler"/>
+								<input placeholder="(virgülle ayrılmış)" class="oy-arama-big" type="text" name="inc_tags"/>
 							</div>
 						</div>
 						<div class="oy-arama-input-field">
 							<div class="oy-arama-text"><p>hepsinin bulunduğu:</p></div> 
 							<div class="oy-arama-box"> 
-								<input placeholder="(virgülle ayrılmış)" class="oy-arama-big" type="text" name="etiketler_hepsi"/>
+								<input placeholder="(virgülle ayrılmış)" class="oy-arama-big" type="text" name="inc_tags_all"/>
 							</div>
 						</div>
 					</div>
@@ -113,52 +108,53 @@
 			</div>
 		</div>';
 
+/*
+Storing neccessary post data.
+*/
+$oy_author_slug         = $_POST["author_slug"];
+$oy_date_begin          = $_POST["date_begin"];
+$oy_date_end            = $_POST["date_end"];
+$oy_words_included      = $_POST["words_included"];
+$oy_words_ordered       = $_POST["words_ordered"];
+$oy_words_at_least_one  = $_POST["words_at_least_one"];
+$oy_words_excluded      = $_POST["words_excluded"];
+$oy_order               = $_POST["date_order"];
+$oy_likes               = (int)$_POST["likes"];
+$oy_type                = $_POST["search_type"];
+$oy_tags                = $_POST["inc_tags"];
+$oy_tags_all            = $_POST["inc_tags_all"];
+$oy_author_id           = NULL;
 
-// POST Verileri değişkenlere atandı.
-	$ara_yazar_isim = $_POST["yazar_isim"];
-	$ara_tarih_ilk = $_POST["tarih_ilk"];
-	$ara_tarih_son = $_POST["tarih_son"];
-	$ara_kelime_gecen = $_POST["kelime_gecen"];
-	$ara_kelime_sirali = $_POST["kelime_sirali"];
-	$ara_kelime_daginik = $_POST["kelime_daginik"];
-	$ara_kelime_gecmeyen = $_POST["kelime_gecmeyen"];
-	$ara_tarih_sirala = $_POST["tarih_sirala"];
-	$ara_tutmalar = $_POST["tutma"];
-	$ara_ozellik = $_POST["arama_turu"];
-	$ara_etiketler = $_POST["etiketler"];
-	$ara_etiketler_hepsi=$_POST["etiketler_hepsi"];
-	
-	//yazar isminden id elde edildi 
-	if( $_POST["yazar_isim"] != NULL ){
-		$yolla = $_POST["yazar_isim"];
-		$ara_yazar_id = yazar_id_return_et($yolla);
-	}
+/*
+If author is relevant to search get author id.
+*/
+if( $oy_author_slug != NULL ){
+  $oy_author_id = get_user_by('slug',$oy_author_slug)->ID;
+}
 
-	// preg_match('/[^A-Za-z0-9_ -]/', $str)
-	echo '<div class="oy-arama-sonuc-container">';
-	if($ara_ozellik == "arama_yazi"){
-		//sql e sorgu gönderildi.
-		$sql_sorgu = sql_sorgusu_uret_yazi($ara_yazar_id, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala, $ara_tutmalar, $ara_yazar_isim,$ara_etiketler,$ara_etiketler_hepsi);
-		
-		$sonuc = sql_sonuc_getir($sql_sorgu);
+echo '<div class="oy-arama-sonuc-container">';
 
-		echo $ara_onyazi ." " . count($sonuc) . " adet yazı bulunmuştur. <br><br> " ;
-		echo sonucu_ekrana_bas_yazi($sonuc);
+/*
+Based on the search place,do the things.
+- Generate query
+- Evaluate query
+- Print the results
+- Be happy
+*/
+if($oy_type == "comments"){
+	$query = oy_generate_comment_query($oy_author_slug, $oy_date_begin, $oy_date_end, $oy_words_included, $oy_words_ordered, $oy_words_at_least_one, $oy_words_excluded, $oy_order);
+	$result = $query->evaluate_query();
+	echo $result["message"];
+	oy_print_comments($result["results"]);
+} elseif ($oy_type == "posts") {
+    $query = oy_generate_post_query($oy_author_id, $oy_date_begin, $oy_date_end, $oy_words_included, $oy_words_ordered, $oy_words_at_least_one, $oy_words_excluded, $oy_order, $oy_likes, $oy_author_slug,$oy_tags,$oy_tags_all);
+	  $result = $query->evaluate_query();
+	  echo $result["message"];
+	  oy_print_posts($result["results"]);
+ }
 
-	}
-
-	if($ara_ozellik == "arama_yorum"){
-		// Yorumlarda tutma özelliği yok.
-		$sql_sorgu = sql_sorgusu_uret_yorum($ara_yazar_isim, $ara_tarih_ilk, $ara_tarih_son, $ara_kelime_gecen, $ara_kelime_sirali, $ara_kelime_daginik, $ara_kelime_gecmeyen, $ara_tarih_sirala);
-
-		$sonuc = sql_sonuc_getir($sql_sorgu);
-
-		echo $ara_onyazi ." " . count($sonuc) . " adet yorum bulunmuştur. <br><br> " ;
-		echo sonucu_ekrana_bas_yorum($sonuc);
-
-	}
-	echo "</div>";
-	echo "</div>";
+echo "</div>";
+echo "</div>";
 
 get_sidebar();
 get_footer();
