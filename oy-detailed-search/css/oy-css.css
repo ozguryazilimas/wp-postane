@@ -13,6 +13,8 @@
 }
 
 .oy-ayrinti-text {
+  font-size:50px;
+  font-weight:bold;
 	color:#32ACEB;
 }
 
@@ -21,7 +23,7 @@
 	top:-10px;
 	margin-left:5px;
 	display:inline-block;
-	font-size:0.5em;
+	font-size:10px;
 	height:30px;
 	line-height:30px;
 }
@@ -31,7 +33,7 @@
 }
 
 #oy-arama-container {
-	font-family: "Times New Roman", Times, serif;
+	font-family: "Helvetica Neue",Helvetica,Arial;
 	padding:0 5%;
 	margin-bottom:20px;
 }
@@ -60,7 +62,7 @@
 }
 
 .oy-arama-major-field h2 {
-	font-size:1.3em;
+	font-size:30px;
 	font-weight:normal;
 }
 
@@ -71,7 +73,7 @@
 .oy-arama-text {
 	display:inline-block;
 	width:30%;
-	font-size:0.8em;
+	font-size:17px;
 }
 
 .oy-arama-box {
@@ -142,6 +144,14 @@
 	font-size:0.6em;
 }
 
+.oy-arama-sonuc-baslik {
+  font-size:20px;
+}
+
+.oy-arama-sonuc-meta {
+  font-size:16px;
+}
+
 .oy-arama-sonuc {
 	color:white;
 }
@@ -160,4 +170,24 @@
 
 .oy-arama-sonuc a:focus,.oy-arama-sonuc-baslik a:active {
 	color:#eee;
+}
+
+.oy-thumb {
+  float:left;
+  display:inline-block;
+  width:20%;
+  text-align:center;
+  padding:5px 0;
+}
+
+.oy-content {
+  float:left;
+  display:inline-block;
+  width:79%;
+}
+
+.oy-arama-sonuc:after {
+  content: "";
+  display: table;
+  clear: both;
 }

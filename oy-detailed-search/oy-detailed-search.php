@@ -394,26 +394,34 @@ function oy_print_posts($post_array){
 	foreach ($post_array as $key ){
 		$page             = $key->ID;
 		$page_data        = get_post($page);
-		$replaced_content = preg_replace('/<[^>]+./','',$page_data->post_content);
-		$remember_length  = mb_strlen($replaced_content,mb_internal_encoding());
-		$print_length     = min(300,$remember_length);
-		$print_content    = mb_substr($replaced_content,0,$print_length);
+		//$replaced_content = preg_replace('/<[^>]+./','',$page_data->post_content);
+		//$remember_length  = mb_strlen($replaced_content,mb_internal_encoding());
+		//$print_length     = min(300,$remember_length);
+		//$print_content    = mb_substr($replaced_content,0,$print_length);
 		$print_title      = $page_data->post_title;
 		$print_time       = $page_data->post_date;
 		$print_link       = get_post_permalink( $page );
 		$print_user       = get_userdata($page_data->post_author)->user_nicename;
-
+    $thumbnail        = get_the_post_thumbnail($key->ID, array(100,100));	
+  
 		echo '
 			<div class="oy-arama-sonuc">
-				<div class="oy-arama-sonuc-baslik">
-					<p><a href="'.$print_link.'">'.$print_title.'</a></p>
-				</div>
-				<div class="oy-arama-sonuc-meta">
-					<p>Yazar:<a href="'.site_url().'?author='.$page_data->post_author.'">'.$print_user.'</a>,Yayınlanma tarihi: '.$page_data->post_date.'</p>
-				</div>
-				<div class="oy-arama-sonuc-icerik">
-					<p>'.$print_content.($remember_length==$print_length?'':'...').'</p>
-				</div>
+        <div class="oy-thumb">
+          <a href="'.$print_link.'">
+          '.$thumbnail.'
+          </a>
+        </div>
+        <div class="oy-content">
+				  <div class="oy-arama-sonuc-baslik">
+					  <p><a href="'.$print_link.'">'.$print_title.'</a></p>
+				  </div>
+				  <div class="oy-arama-sonuc-meta">
+					  <p>Yazar:<a href="'.site_url().'?author='.$page_data->post_author.'">'.$print_user.'</a>,Yayınlanma tarihi: '.$page_data->post_date.'</p>
+				  </div>
+				  <!--<div class="oy-arama-sonuc-icerik">
+					  <p>'.$print_content.($remember_length==$print_length?'':'...').'</p>
+				  </div>-->
+        </div>
 			</div>
 		';
 			
@@ -435,28 +443,35 @@ function oy_print_comments($comment_array){
     $page             = $key->comment_post_ID;
     $comment_date     = $key->comment_date;
     $author           = $key->comment_author;
-    $comment_content  = $key->comment_content;
+    //$comment_content  = $key->comment_content;
     $page_data        = get_post($page);
-    $replaced_content = preg_replace('/<[^>]+./','',$comment_content);
-    $remember_length  = mb_strlen($replaced_content,mb_internal_encoding());
-    $print_length     = min(100,$remember_length);
-    $print_content    = mb_substr($replaced_content,0,$print_length);
+    //$replaced_content = preg_replace('/<[^>]+./','',$comment_content);
+    //$remember_length  = mb_strlen($replaced_content,mb_internal_encoding());
+    //$print_length     = min(100,$remember_length);
+    //$print_content    = mb_substr($replaced_content,0,$print_length);
     $print_title      = $page_data->post_title;
     $print_link       = get_post_permalink( $page );
     $comment_id       = $key->comment_ID;
     $user_id          = get_user_by('slug',$author)->ID;
-
-		echo '
+    $thumbnail        = get_the_post_thumbnail($key->comment_post_ID, array(100,100));	
+  	echo '
 				<div class="oy-arama-sonuc">
-					<div class="oy-arama-sonuc-baslik">
-						<p><a href="'.$print_link.'#comment-'.$comment_id.'">'.$print_title.'</a></p>
-					</div>
-					<div class="oy-arama-sonuc-meta">
-						<p>Yorumlayan:<a href="'.site_url().'?author='.$user_id.'">'.$author.'</a>,Yayınlanma tarihi: '.$comment_date.'</p>
-					</div>
-					<div class="oy-arama-sonuc-icerik">
-						<p>'.$print_content.($remember_length==$print_length?'':'...').'</p>
-					</div>
+          <div class="oy-thumb">
+            <a href="'.$print_link.'">
+            '.$thumbnail.'
+            </a>
+          </div>
+          <div class="oy-content">
+					  <div class="oy-arama-sonuc-baslik">
+						  <p><a href="'.$print_link.'#comment-'.$comment_id.'">'.$print_title.'</a></p>
+					  </div>
+					  <div class="oy-arama-sonuc-meta">
+						  <p>Yorumlayan:<a href="'.site_url().'?author='.$user_id.'">'.$author.'</a>,Yayınlanma tarihi: '.$comment_date.'</p>
+					  </div>
+					  <!--<div class="oy-arama-sonuc-icerik">
+						  <p>'.$print_content.($remember_length==$print_length?'':'...').'</p>
+					  </div>-->
+          </div>
 				</div>
 			';
 		
