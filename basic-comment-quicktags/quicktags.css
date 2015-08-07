@@ -61,3 +61,11 @@
 .quicktags-toolbar input[value="b"] {
 	font-weight: bold
 }
+
+#smiley_container {
+  display:none;
+  margin-bottom:5px;
+}
+.smiley_smiley:hover {
+  cursor: pointer;
+}

@@ -1,8 +1,27 @@
+diff --git a/basic-comment-quicktags/quicktags.css b/basic-comment-quicktags/quicktags.css
+index bb9feac..b1332b2 100644
+--- a/basic-comment-quicktags/quicktags.css
++++ b/basic-comment-quicktags/quicktags.css
+@@ -60,4 +60,12 @@
+ 
+ .quicktags-toolbar input[value="b"] {
+ 	font-weight: bold
+-}
+\ No newline at end of file
++}
++
++#smiley_container {
++  display:none;
++  margin-bottom:5px;
++}
++.smiley_smiley:hover {
++  cursor: pointer;
++}
 diff --git a/basic-comment-quicktags/quicktags.js b/basic-comment-quicktags/quicktags.js
-index bf15aae..56b300b 100644
+index bf15aae..31c2853 100644
 --- a/basic-comment-quicktags/quicktags.js
 +++ b/basic-comment-quicktags/quicktags.js
-@@ -16,6 +16,15 @@
+@@ -16,6 +16,34 @@
        id: "posttext",
        buttons: "link,em,strong"
      });
@@ -17,6 +36,67 @@ index bf15aae..56b300b 100644
 +        QTags.TagButton.prototype.callback.call(this, e, c, ed);
 +    }
 +    QTags.addButton("ispiyon","ispiyon","[ispiyon]","[/ispiyon]","ispiyon","");
++    
++    QTags.addButton("smiley_button","smiley",toggle_smiley_menu);
++
++    var smiley_element = jQuery('#smiley_container');
++
++    function toggle_smiley_menu() {
++      if (smiley_element.css('display') == 'block') {
++        smiley_element.css('display','none');
++      } else {
++        smiley_element.css('display','block');
++      }
++    }
++
++    function smiley_insert(str) {
++      box=jQuery("#comment");
++      box.val(box.val()+" "+str+" ");
++      box.focus();
++    }
++
  //   });
- // })(jQuery);
+-// })(jQuery);
 \ No newline at end of file
++// })(jQuery);
+diff --git a/basic-comment-quicktags/quicktags.php b/basic-comment-quicktags/quicktags.php
+index a1acf5e..b571f17 100644
+--- a/basic-comment-quicktags/quicktags.php
++++ b/basic-comment-quicktags/quicktags.php
+@@ -58,6 +58,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
+ 		    if( !is_admin() && !in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' )) ) {
+     			add_action('wp_print_scripts', array( $this,'add_scripts_frontend'));
+     			add_action('wp_print_styles', array( $this,'add_styles_frontend') );
++          add_action('comment_form_top', array($this, 'echo_smiley_box'));
+ 			}
+ 			
+ 			add_action( 'admin_init', array( $this, 'admin_init'));
+@@ -96,7 +97,20 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
+                 $this->add_scripts();
+             }
+         }
+-			
++		function echo_smiley_box() {
++      global $wpsmiliestrans;
++      echo '<div id="smiley_container">';
++      $done = array();
++      foreach ($wpsmiliestrans as $smiley => $draw) {
++        if (array_search($draw, $done) === false) {
++          array_push($done, $draw);
++          echo '<span class="smiley_smiley" onclick="smiley_insert(\''.$smiley.'\')">';
++          echo convert_smilies($smiley);
++          echo '</span>';
++        }
++      }
++      echo '</div>';
++    }
+ 		function admin_init(){
+ 		
+ 			register_setting(
+@@ -170,4 +184,4 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
+ //instantiate the class
+ if (class_exists('BasicCommentsQuicktagsHELF')) {
+ 	new BasicCommentsQuicktagsHELF();
+-}
+\ No newline at end of file
++}

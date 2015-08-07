@@ -58,6 +58,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
 		    if( !is_admin() && !in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' )) ) {
     			add_action('wp_print_scripts', array( $this,'add_scripts_frontend'));
     			add_action('wp_print_styles', array( $this,'add_styles_frontend') );
+          add_action('comment_form_top', array($this, 'echo_smiley_box'));
 			}
 			
 			add_action( 'admin_init', array( $this, 'admin_init'));
@@ -96,7 +97,20 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
                 $this->add_scripts();
             }
         }
-			
+		function echo_smiley_box() {
+      global $wpsmiliestrans;
+      echo '<div id="smiley_container">';
+      $done = array();
+      foreach ($wpsmiliestrans as $smiley => $draw) {
+        if (array_search($draw, $done) === false) {
+          array_push($done, $draw);
+          echo '<span class="smiley_smiley" onclick="smiley_insert(\''.$smiley.'\')">';
+          echo convert_smilies($smiley);
+          echo '</span>';
+        }
+      }
+      echo '</div>';
+    }
 		function admin_init(){
 		
 			register_setting(
