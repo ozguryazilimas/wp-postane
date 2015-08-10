@@ -27,9 +27,9 @@ License: GPL
 /**
 * Class for generating queries.
 *
-* It is used for generating query,holding variables for prepare function, 
+* It is used for generating query,holding variables for prepare function,
 * holding message to be written in the screen and evaluating query with given variables.
-* 
+*
 * @author baskin
 */
 class OY_Query
@@ -81,7 +81,7 @@ class OY_Query
     if (is_array($vars)) {
       $this->variables = array_merge($this->variables, $vars);
     } else {
-      array_push($this->variables, $vars);    
+      array_push($this->variables, $vars);
     }
   }
 
@@ -139,7 +139,7 @@ class OY_Query
    * @return string The message associated with the query.
   */
   public function get_message() {
-    return $this->message;  
+    return $this->message;
   }
 
 }
@@ -187,23 +187,23 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
                                 $order, $min_like, $author_slug,$tags,$tags_all) {
 
   if ($words_included != NULL) {
-		$words_included = explode(" ", $words_included);
+    $words_included = explode(" ", $words_included);
   }
 
   if ($words_at_least_one != NULL) {
-		$words_at_least_one = explode(" ", $words_at_least_one);
+    $words_at_least_one = explode(" ", $words_at_least_one);
   }
 
   if ($words_excluded != NULL) {
-		$words_excluded = explode(" ", $words_excluded);
+    $words_excluded = explode(" ", $words_excluded);
   }
 
   if ($tags != NULL) {
-		$tags = explode(",", $tags);
+    $tags = explode(",", $tags);
   }
 
   if ($tags_all != NULL) {
-		$tags_all = explode(",", $tags_all);
+    $tags_all = explode(",", $tags_all);
   }
 
   $query = new OY_Query();
@@ -226,8 +226,8 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
     }
     $query->extend_query(") as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id)",
                          ") etiketlerinin en az birine sahip ");
-	}
- 
+  }
+
   if($tags_all!=NULL){
     $added_sql = "";
     $first = true;
@@ -265,7 +265,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
                            $key . " ",
                            array('%'.$key.'%', '%'.$key.'%', $key, $key));
     }
-		  $query->extend_query("", "ifadeleri geçen ");
+      $query->extend_query("", "ifadeleri geçen ");
   }
 
   if ($words_at_least_one != NULL) {
@@ -290,7 +290,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
                            $key." ",
                            array('%'.$key.'%', '%'.$key.'%', $key, $key));
     }
-			$query->extend_query("", "kelimelerini bulundurmayan ");
+      $query->extend_query("", "kelimelerini bulundurmayan ");
   }
 
   if ((int)$min_like > 0) {
@@ -302,7 +302,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
   if($order == "asc") {
     $query->extend_query("order by post_date asc");
   } else {
-		$query->extend_query("order by post_date desc");
+    $query->extend_query("order by post_date desc");
   }
 
   return $query;
@@ -316,13 +316,13 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
  * Then,for each parameter function extends the query appropriately:
  * $author_slug -> It checks whether the author of the comment is $author_slug.
  * $date_begin, $date_end -> It checks whether the comment_date is between [$date_begin,$date_end]
- * $words_included -> For each of the words in $words_included it checks whether the comment_content is like word
+ * $words_included -> For each of the words in $words_included it checks whether the comment_content is like word.
  * $words_at_least_one -> Does the same as $words_included but it selects if at least one of words is found.
  * $words_ordered -> Does the same as $words_included but it selects if the all words are ordered.
  * $words_excluded -> Selects comments if any of the words in this array is not included in the comment_content.
  * $order -> Determines the order of results (ascending or descending)
  *
- * @param string $author_slug Slug of the author
+ * @param string $author_slug Slug of the author.
  * @param string $date_begin Minimum date comment was published.
  * @param string $date_end Maximum date comment was published.
  * @param string $words_included List of words that comment contais,seperated by space.
@@ -336,20 +336,21 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
  *
  * @return OY_Query OY_Query object that includes query,variables and message
 */
-function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_included, $words_ordered, $words_at_least_one, $words_excluded, $order){
+function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_included, 
+                                   $words_ordered, $words_at_least_one, $words_excluded, $order) {
 
   $query = new OY_Query();
 
   if ($words_included != NULL) {
-		$words_included = explode(" ", $words_included);
+    $words_included = explode(" ", $words_included);
   }
 
   if ($words_at_least_one != NULL) {
-		$words_at_least_one = explode(" ", $words_at_least_one);
+    $words_at_least_one = explode(" ", $words_at_least_one);
   }
 
   if ($words_excluded != NULL) {
-		$words_excluded = explode(" ", $words_excluded);
+    $words_excluded = explode(" ", $words_excluded);
   }
 
   $query->extend_query("SELECT * FROM wp_comments WHERE comment_approved= %d", "Arama sonucu ", 1);
@@ -368,7 +369,7 @@ function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_
     foreach ($words_included as $key ) {
       $query->extend_query("AND comment_content LIKE '%s'", $key." ",'%'.$key.'%');
     }
-			$query->extend_query("", "ifadeleri geçen ");
+      $query->extend_query("", "ifadeleri geçen ");
   }
 
   if ($words_at_least_one != NULL) {
@@ -380,14 +381,14 @@ function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_
   }
 
   if ($words_ordered != NULL) {
-    $query->extend_query("AND comment_content LIKE '%s'",$words_ordered." kelimeleri sıralı olan ",'%'.$words_ordered.'%');
+    $query->extend_query("AND comment_content LIKE '%s'", $words_ordered." kelimeleri sıralı olan ", '%' . $words_ordered . '%');
   }
 
   if ($words_excluded != NULL) {
     foreach ($words_excluded as $key ) {
-      $query->extend_query("AND comment_content NOT LIKE '%s'",$key." ",'%'.$key.'%');
+      $query->extend_query("AND comment_content NOT LIKE '%s'", $key . " ", '%' . $key . '%');
     }
-    $query->extend_query("","kelimelerini bulundurmayan");
+    $query->extend_query("", "kelimelerini bulundurmayan");
   }
 
   if ($order == "asc") {
@@ -396,7 +397,7 @@ function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_
     $query->extend_query("order by comment_date desc");
   }
 
-	return $query;
+  return $query;
 }
 
 /**
@@ -455,10 +456,10 @@ function oy_generate_print_content($content_string, $word_list) {
                                    "start"     => $startpos,
                                    "end"       => $endpos));
     }
-  }		
+  }    
   $check_array = array();
   foreach ($result_array as $idx => $res) {
-    if (array_search($res["start"].",".$res["end"],$check_array) == false) {
+    if (array_search($res["start"] . "," . $res["end"], $check_array) == false) {
       array_push($check_array, $res["start"] . "," . $res["end"]);
     } else {
       unset($result_array[$idx]);
@@ -489,40 +490,40 @@ function oy_generate_print_content($content_string, $word_list) {
  * @param array $post_array The array containing the post ids.
  * @param array $word_list The array containing words that have been searched.
 */
-function oy_print_posts($post_array, $word_list){
-	global $wpdb;
-	foreach ($post_array as $key ) {
-		$page             = $key->ID;
-		$page_data        = get_post($page);
+function oy_print_posts($post_array, $word_list) {
+  global $wpdb;
+  foreach ($post_array as $key ) {
+    $page             = $key->ID;
+    $page_data        = get_post($page);
 
-		$print_title      = $page_data->post_title;
-		$print_time       = $page_data->post_date;
-		$print_link       = get_post_permalink( $page );
-		$print_user       = get_userdata($page_data->post_author)->user_nicename;
-    $thumbnail        = get_the_post_thumbnail($key->ID, array(100,100));	
-    $print_content    = oy_generate_print_content($page_data->post_content,$word_list);    
+    $print_title      = $page_data->post_title;
+    $print_time       = $page_data->post_date;
+    $print_link       = get_post_permalink($page);
+    $print_user       = get_userdata($page_data->post_author)->user_nicename;
+    $thumbnail        = get_the_post_thumbnail($key->ID, array(100,100));  
+    $print_content    = oy_generate_print_content($page_data->post_content, $word_list);
 
     echo '
-			<div class="oy-arama-sonuc">
+      <div class="oy-arama-sonuc">
         <div class="oy-thumb">
           <a href="'.$print_link.'">
           '.$thumbnail.'
           </a>
         </div>
         <div class="oy-content">
-				  <div class="oy-arama-sonuc-baslik">
-					  <p><a href="'.$print_link.'">'.$print_title.'</a></p>
-				  </div>
-				  <div class="oy-arama-sonuc-meta">
-					  <p>Yazar:<a href="'.site_url().'?author='.$page_data->post_author.'">'.$print_user.'</a>,Yayınlanma tarihi: '.$page_data->post_date.'</p>
-				  </div>
-				  <div class="oy-arama-sonuc-icerik">
-					  <p>'.$print_content.'</p>
-				  </div>
+          <div class="oy-arama-sonuc-baslik">
+            <p><a href="'.$print_link.'">'.$print_title.'</a></p>
+          </div>
+          <div class="oy-arama-sonuc-meta">
+            <p>Yazar:<a href="'.site_url().'?author='.$page_data->post_author.'">'.$print_user.'</a>,Yayınlanma tarihi: '.$page_data->post_date.'</p>
+          </div>
+          <div class="oy-arama-sonuc-icerik">
+            <p>'.$print_content.'</p>
+          </div>
         </div>
-			</div>
-		';
-	}
+      </div>
+    ';
+  }
 }
 
 
@@ -534,42 +535,42 @@ function oy_print_posts($post_array, $word_list){
  *
  * @param array $comment_array The array containing the comments.
 */
-function oy_print_comments($comment_array,$word_list){
-	global $wpdb;
-	foreach ($comment_array as $key ) {
+function oy_print_comments($comment_array, $word_list) {
+  global $wpdb;
+  foreach ($comment_array as $key) {
     $page             = $key->comment_post_ID;
     $comment_date     = $key->comment_date;
     $author           = $key->comment_author;
     $page_data        = get_post($page);
 
     $print_title      = $page_data->post_title;
-    $print_link       = get_post_permalink( $page );
+    $print_link       = get_post_permalink($page);
     $comment_id       = $key->comment_ID;
     $user_id          = get_user_by('slug',$author)->ID;
-    $thumbnail        = get_the_post_thumbnail($key->comment_post_ID, array(100,100));	
+    $thumbnail        = get_the_post_thumbnail($key->comment_post_ID, array(100,100));
     $print_content    = oy_generate_print_content($key->comment_content,$word_list);
 
-  	echo '
-				<div class="oy-arama-sonuc">
+    echo '
+        <div class="oy-arama-sonuc">
           <div class="oy-thumb">
             <a href="'.$print_link.'">
             '.$thumbnail.'
             </a>
           </div>
           <div class="oy-content">
-					  <div class="oy-arama-sonuc-baslik">
-						  <p><a href="'.$print_link.'#comment-'.$comment_id.'">'.$print_title.'</a></p>
-					  </div>
-					  <div class="oy-arama-sonuc-meta">
-						  <p>Yorumlayan:<a href="'.site_url().'?author='.$user_id.'">'.$author.'</a>,Yayınlanma tarihi: '.$comment_date.'</p>
-					  </div>
-					  <div class="oy-arama-sonuc-icerik">
-						  <p>'.$print_content.'</p>
-					  </div>
+            <div class="oy-arama-sonuc-baslik">
+              <p><a href="'.$print_link.'#comment-'.$comment_id.'">'.$print_title.'</a></p>
+            </div>
+            <div class="oy-arama-sonuc-meta">
+              <p>Yorumlayan:<a href="'.site_url().'?author='.$user_id.'">'.$author.'</a>,Yayınlanma tarihi: '.$comment_date.'</p>
+            </div>
+            <div class="oy-arama-sonuc-icerik">
+              <p>'.$print_content.'</p>
+            </div>
           </div>
-				</div>
-			';
-	}
+        </div>
+      ';
+  }
 }
 
 
@@ -603,8 +604,8 @@ add_action('init','oy_load');
  * @author baskin
 */
 function oy_load() {
-	wp_enqueue_script('jquery-ui-datepicker');
-	wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+  wp_enqueue_script('jquery-ui-datepicker');
+  wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
   wp_register_style('oy_template_css', WP_PLUGIN_URL.'/oy-detailed-search/css/oy-css.css');
   wp_enqueue_style('oy_template_css');
   wp_enqueue_script('oy-js', WP_PLUGIN_URL.'/oy-detailed-search/js/oy-js.js');
