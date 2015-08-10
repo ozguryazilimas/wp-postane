@@ -1,8 +1,8 @@
 diff --git a/basic-comment-quicktags/quicktags.css b/basic-comment-quicktags/quicktags.css
-index bb9feac..b1332b2 100644
+index bb9feac..ddefcdc 100644
 --- a/basic-comment-quicktags/quicktags.css
 +++ b/basic-comment-quicktags/quicktags.css
-@@ -60,4 +60,12 @@
+@@ -60,4 +60,20 @@
  
  .quicktags-toolbar input[value="b"] {
  	font-weight: bold
@@ -14,8 +14,16 @@ index bb9feac..b1332b2 100644
 +  display:none;
 +  margin-bottom:5px;
 +}
++
 +.smiley_smiley:hover {
 +  cursor: pointer;
++  border: 1px solid #ddd;
++  background-color: #eee;
++}
++
++.smiley_smiley:active,
++.smiley_smiley:focus {
++  background-color:#444;
 +}
 diff --git a/basic-comment-quicktags/quicktags.js b/basic-comment-quicktags/quicktags.js
 index bf15aae..31c2853 100644
