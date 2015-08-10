@@ -262,7 +262,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
     foreach ($words_at_least_one as $key ) {
       $query->extend_query("OR post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s')))", $key . " ", array('%'.$key.'%', '%'.$key.'%', $key, $key));
     }
-    $query->extend_query(")", "kelimelerine sahip olan");
+    $query->extend_query(")", "kelimelerinden en az birine sahip olan");
   }
 
   if ($words_ordered != NULL) {
@@ -378,8 +378,84 @@ function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_
 	return $query;
 }
 
+/**
+ *
+ * Used for sorting array by its 'start' element.
+ *
+ * @author baskin
+ *
+ * @return int Indicating the order of elements.Positive means greater, negative means less than, zero means equal to.
+ *
+*/
+function oy_sort_by_start($x, $y) {
+  return $x['start']-$y['start'];
+}
 
+/**
+ *
+ * Generates content to be printed.
+ *
+ * It does that by searching each word of word_list in content_string and taking the sentence of that word.
+ *
+ * @author baskin
+ *
+ * @param string $content_string Content string of either post or comment.
+ * @param array $word_list Array of words that are searched in $content_string.
+ *
+ * @return string The string to be printed.
+ *
+*/
+function oy_generate_print_content($content_string, $word_list) {
+  
+  $replaced_content = preg_replace('/<[^>]+>/','',$content_string);
+  $replaced_content = preg_replace('/\[[^\[]+\]/','',$replaced_content);
+  $replaced_content = preg_replace('/[=]+/','',$replaced_content);
 
+  $str_len          = strlen($replaced_content);
+  $result_array     = array();
+  foreach ($word_list as $word) {
+    $position = stripos ($replaced_content, $word);
+    if ($position != false) {
+      $endpos = $position;
+      $startpos = $position;
+      for (; $endpos < $str_len; $endpos++) {
+        if ($replaced_content[$endpos] == '.') {
+          break;
+        }
+      }
+      for(; $startpos>0; $startpos--) {
+        if ($replaced_content[$startpos] == '.') {
+          $startpos++;
+          break;
+        }
+      }
+      array_push($result_array,array("content" => substr($replaced_content,$startpos,$endpos-$startpos+1),
+                                   "start" => $startpos,
+                                   "end" => $endpos));
+    }
+  }		
+  $check_array = array();
+  foreach ($result_array as $idx => $res) {
+    if (array_search($res["start"].",".$res["end"],$check_array) == false) {
+      array_push($check_array, $res["start"].",".$res["end"]);
+    } else {
+      unset($result_array[$idx]);
+    }
+  }
+  usort($result_array, 'oy_sort_by_start');
+    
+  $print_content = "...";
+  if (count($result_array) == 0) {
+    $print_content = "";
+  } else if ($result_array[0]["start"]==0) {
+    $print_content = "";
+  }
+ foreach ($result_array as $res) {
+    $print_content .= $res["content"];
+    $print_content .= "..";
+  }
+  return $print_content;
+}
 
 /**
  * Prints the posts given as array.
@@ -388,23 +464,23 @@ function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_
  * @author baskin
  *
  * @param array $post_array The array containing the post ids.
+ * @param array $word_list The array containing words that have been searched.
 */
-function oy_print_posts($post_array){
+function oy_print_posts($post_array, $word_list){
 	global $wpdb;
 	foreach ($post_array as $key ){
 		$page             = $key->ID;
 		$page_data        = get_post($page);
-		//$replaced_content = preg_replace('/<[^>]+./','',$page_data->post_content);
-		//$remember_length  = mb_strlen($replaced_content,mb_internal_encoding());
-		//$print_length     = min(300,$remember_length);
-		//$print_content    = mb_substr($replaced_content,0,$print_length);
+
 		$print_title      = $page_data->post_title;
 		$print_time       = $page_data->post_date;
 		$print_link       = get_post_permalink( $page );
 		$print_user       = get_userdata($page_data->post_author)->user_nicename;
     $thumbnail        = get_the_post_thumbnail($key->ID, array(100,100));	
-  
-		echo '
+
+    $print_content    = oy_generate_print_content($page_data->post_content,$word_list);    
+
+    echo '
 			<div class="oy-arama-sonuc">
         <div class="oy-thumb">
           <a href="'.$print_link.'">
@@ -418,13 +494,12 @@ function oy_print_posts($post_array){
 				  <div class="oy-arama-sonuc-meta">
 					  <p>Yazar:<a href="'.site_url().'?author='.$page_data->post_author.'">'.$print_user.'</a>,Yayınlanma tarihi: '.$page_data->post_date.'</p>
 				  </div>
-				  <!--<div class="oy-arama-sonuc-icerik">
-					  <p>'.$print_content.($remember_length==$print_length?'':'...').'</p>
-				  </div>-->
+				  <div class="oy-arama-sonuc-icerik">
+					  <p>'.$print_content.'</p>
+				  </div>
         </div>
 			</div>
 		';
-			
 	}
 }
 
@@ -437,23 +512,21 @@ function oy_print_posts($post_array){
  *
  * @param array $comment_array The array containing the comments.
 */
-function oy_print_comments($comment_array){
+function oy_print_comments($comment_array,$word_list){
 	global $wpdb;
 	foreach ($comment_array as $key ) {
     $page             = $key->comment_post_ID;
     $comment_date     = $key->comment_date;
     $author           = $key->comment_author;
-    //$comment_content  = $key->comment_content;
     $page_data        = get_post($page);
-    //$replaced_content = preg_replace('/<[^>]+./','',$comment_content);
-    //$remember_length  = mb_strlen($replaced_content,mb_internal_encoding());
-    //$print_length     = min(100,$remember_length);
-    //$print_content    = mb_substr($replaced_content,0,$print_length);
     $print_title      = $page_data->post_title;
     $print_link       = get_post_permalink( $page );
     $comment_id       = $key->comment_ID;
     $user_id          = get_user_by('slug',$author)->ID;
     $thumbnail        = get_the_post_thumbnail($key->comment_post_ID, array(100,100));	
+
+    $print_content    = oy_generate_print_content($key->comment_content,$word_list);
+
   	echo '
 				<div class="oy-arama-sonuc">
           <div class="oy-thumb">
@@ -468,9 +541,9 @@ function oy_print_comments($comment_array){
 					  <div class="oy-arama-sonuc-meta">
 						  <p>Yorumlayan:<a href="'.site_url().'?author='.$user_id.'">'.$author.'</a>,Yayınlanma tarihi: '.$comment_date.'</p>
 					  </div>
-					  <!--<div class="oy-arama-sonuc-icerik">
-						  <p>'.$print_content.($remember_length==$print_length?'':'...').'</p>
-					  </div>-->
+					  <div class="oy-arama-sonuc-icerik">
+						  <p>'.$print_content.'</p>
+					  </div>
           </div>
 				</div>
 			';

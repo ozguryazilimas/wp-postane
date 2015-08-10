@@ -66,6 +66,14 @@
   display:none;
   margin-bottom:5px;
 }
+
 .smiley_smiley:hover {
   cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: #eee;
+}
+
+.smiley_smiley:active,
+.smiley_smiley:focus {
+  background-color:#444;
 }

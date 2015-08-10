@@ -144,13 +144,38 @@ Based on the search place,do the things.
 if($oy_type == "comments"){
 	$query = oy_generate_comment_query($oy_author_slug, $oy_date_begin, $oy_date_end, $oy_words_included, $oy_words_ordered, $oy_words_at_least_one, $oy_words_excluded, $oy_order);
 	$result = $query->evaluate_query();
+
+  $oy_word_list = array();
+  if ($oy_words_included != NULL) {
+    $oy_word_list = array_merge($oy_word_list, explode(" ",$oy_words_included));
+  }
+  if ($oy_words_at_least_one != NULL) {
+    $oy_word_list = array_merge($oy_word_list, explode(" ",$oy_words_at_least_one));
+  }
+  if ($oy_words_ordered != NULL) {
+   array_push($oy_word_list, $oy_words_ordered); 
+  }
+
 	echo $result["message"];
-	oy_print_comments($result["results"]);
+	oy_print_comments($result["results"], $oy_word_list);
+
 } elseif ($oy_type == "posts") {
     $query = oy_generate_post_query($oy_author_id, $oy_date_begin, $oy_date_end, $oy_words_included, $oy_words_ordered, $oy_words_at_least_one, $oy_words_excluded, $oy_order, $oy_likes, $oy_author_slug,$oy_tags,$oy_tags_all);
 	  $result = $query->evaluate_query();
+
+    $oy_word_list = array();
+    if ($oy_words_included != NULL) {
+      $oy_word_list = array_merge($oy_word_list, explode(" ",$oy_words_included));
+    }
+    if ($oy_words_at_least_one != NULL) {
+      $oy_word_list = array_merge($oy_word_list, explode(" ",$oy_words_at_least_one));
+    }
+    if ($oy_words_ordered != NULL) {
+     array_push($oy_word_list, $oy_words_ordered); 
+    }
+
 	  echo $result["message"];
-	  oy_print_posts($result["results"]);
+	  oy_print_posts($result["results"],$oy_word_list);
  }
 
 echo "</div>";

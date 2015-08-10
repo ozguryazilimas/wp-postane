@@ -115,6 +115,7 @@
 .oy-arama-input-field input[type="submit"] {
 	padding:4px 10px;
 	width:25%;
+  height:35px;
 	border:1px solid #eee;
 	background-color:#43BEEB;
 	color:white;
@@ -126,7 +127,7 @@
 
 .oy-arama-sonuc {
 	margin-bottom:20px;
-	background-color:#43BEEB;
+	background-color:#e3e3e3;
 	padding:3px 6px;
 	border-radius:5px;
 }
@@ -153,23 +154,23 @@
 }
 
 .oy-arama-sonuc {
-	color:white;
+	color:black;
 }
 
 .oy-arama-sonuc a:link {
-	color:white;
+	color:black;
 }
 
 .oy-arama-sonuc a:visited {
-	color:white;
+	color:black;
 }
 
 .oy-arama-sonuc a:hover {
-	color:#ddd;
+	color:#555;
 }
 
 .oy-arama-sonuc a:focus,.oy-arama-sonuc-baslik a:active {
-	color:#eee;
+	color:#333;
 }
 
 .oy-thumb {
