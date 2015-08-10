@@ -90,7 +90,7 @@ function action() {
  
   	$pagingString.= "</ul>\n<div style='float: none; clear: both;'></div>\n</div>\n";
 	
-	printf($pagingString);
+  echo $pagingString;
 }
 
 // end class

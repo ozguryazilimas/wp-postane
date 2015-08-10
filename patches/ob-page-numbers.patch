@@ -1,0 +1,20 @@
+diff --git a/ob-page-numbers/index.php b/ob-page-numbers/index.php
+index 87b9d43..fcd9825 100644
+--- a/ob-page-numbers/index.php
++++ b/ob-page-numbers/index.php
+@@ -90,7 +90,7 @@ function action() {
+  
+   	$pagingString.= "</ul>\n<div style='float: none; clear: both;'></div>\n</div>\n";
+ 	
+-	printf($pagingString);
++  echo $pagingString;
+ }
+ 
+ // end class
+@@ -104,4 +104,4 @@ function ob_page_numbers () {
+ 	$b->action();
+ 	}
+ 
+-?>
+\ No newline at end of file
++?>
