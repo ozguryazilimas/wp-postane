@@ -1,4 +1,32 @@
 
+function validateSearch_real() {
+  var author_slug             = document.getElementById('input').author_slug.value;
+  var date_begin              = document.getElementById('input').date_begin.value;
+  var date_end                = document.getElementById('input').date_end.value;
+  var words_included          = document.getElementById('input').words_included.value;
+  var words_ordered           = document.getElementById('input').words_ordered.value;
+  var words_at_least_one      = document.getElementById('input').words_at_least_one.value;
+  var words_excluded          = document.getElementById('input').words_excluded.value;
+  var likes                   = document.getElementById('input').likes.value;
+  var inc_tags                = document.getElementById('input').inc_tags.value;
+  var inc_tags_all            = document.getElementById('input').inc_tags_all.value;
+
+  var should_warn = author_slug === "" &&
+    (date_begin === "" || date_end === "") &&
+    words_included === "" &&
+    words_ordered === "" &&
+    words_at_least_one === ""
+    && words_excluded === "" &&
+    inc_tags === "" &&
+    likes === '0' &&
+    inc_tags_all === "";
+
+  if (should_warn) {
+    alert('En az bir parametre girmelisin!');
+    return false;
+  }
+}
+
 jQuery(document).ready(function($) {
 
   $("#txtFromDate").datepicker({
@@ -65,33 +93,5 @@ jQuery(document).ready(function($) {
 
     $("#oy-arama-tur-js-icin").change();
   });
-
-  function validateSearch_real() {
-    var author_slug             = document.getElementById('input').author_slug.value;
-    var date_begin              = document.getElementById('input').date_begin.value;
-    var date_end                = document.getElementById('input').date_end.value;
-    var words_included          = document.getElementById('input').words_included.value;
-    var words_ordered           = document.getElementById('input').words_ordered.value;
-    var words_at_least_one      = document.getElementById('input').words_at_least_one.value;
-    var words_excluded          = document.getElementById('input').words_excluded.value;
-    var likes                   = document.getElementById('input').likes.value;
-    var inc_tags                = document.getElementById('input').inc_tags.value;
-    var inc_tags_all            = document.getElementById('input').inc_tags_all.value;
-
-    var should_warn = author_slug === "" &&
-      (date_begin === "" || date_end === "") &&
-      words_included === "" &&
-      words_ordered === "" &&
-      words_at_least_one === ""
-      && words_excluded === "" &&
-      inc_tags === "" &&
-      likes === '0' &&
-      inc_tags_all === "";
-
-    if (should_warn) {
-      alert('En az bir parametre girmelisin!');
-      return false;
-    }
-  }
 });
 
