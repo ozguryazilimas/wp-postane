@@ -202,7 +202,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
 		$tags = explode(",", $tags);
   }
 
-  if ($tags_all != NULL)	{
+  if ($tags_all != NULL) {
 		$tags_all = explode(",", $tags_all);
   }
 
