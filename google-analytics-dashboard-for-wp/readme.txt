@@ -3,8 +3,8 @@ Contributors: deconf
 Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics plugin,google analytics widget,tracking,universal google analytics,realtime,multisite,gadwp
 Requires at least: 3.5
-Tested up to: 4.2.2
-Stable tag: 4.8.1.2
+Tested up to: 4.3
+Stable tag: 4.8.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,20 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 
 == Changelog ==
 
+= 4.8.1.3 =
+- Bug Fix: truncate long translation strings in google analytics reports
+- Bug Fix: rename query args to something more unique to avoid conflicts with other plugins
+- Bug Fix: Italian translation small fix
+- Bug Fix: add text domain and domain path in plugin's header; switch to default text domain
+- Bug Fix: avoid empty item reports while the URI ends with a slash and a Default Page is set in View settings (requires re-authorization)
+- Enhancement: throw an error in the General Settings screen (even if it's not a blocker) to acknowledge the user
+- Enhancement: item reports improvements, more suggestive error messages in item reports, hide unnecessary item reports divs on critical errors
+- Enhancement: Spanish translation updated
+- Enhancement: Greek translation, props by [Kostas Asargiotakis](https://www.facebook.com/kwstas.as)
+- Enhancement: i18n improvements, props by [Ivan Ridao Freitas](http://ivanrf.com)
+- Enhancement: all Google Analytics API requests need to pass additional validity checks and must be sent through get() method  
+- Enhancement: unset default dimension and default metric cookies after a plugin update
+ 
 = 4.8.1.2 =
 - Bug Fix: fixes automatic update switched on after each update
 - Bug Fix: add missing domain to an i18n string

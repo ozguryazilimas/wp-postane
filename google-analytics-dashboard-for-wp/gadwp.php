@@ -4,8 +4,10 @@
  * Plugin URI: https://deconf.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: Alin Marcu
- * Version: 4.8.1.2
+ * Version: 4.8.1.3
  * Author URI: https://deconf.com
+ * Text Domain: google-analytics-dashboard-for-wp
+ * Domain Path: /languages
  */
 
 // Exit if accessed directly
@@ -43,7 +45,7 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 		 */
 		private function __construct() {
 			if ( null !== self::$instance ) {
-				_doing_it_wrong( __FUNCTION__, __( "This is not allowed, read the documentation!", 'ga-dash' ), '4.6' );
+				_doing_it_wrong( __FUNCTION__, __( "This is not allowed, read the documentation!", 'google-analytics-dashboard-for-wp' ), '4.6' );
 			}
 		}
 
@@ -51,14 +53,14 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 		 * Clone warning
 		 */
 		private function __clone() {
-			_doing_it_wrong( __FUNCTION__, __( "This is not allowed, read the documentation!", 'ga-dash' ), '4.6' );
+			_doing_it_wrong( __FUNCTION__, __( "This is not allowed, read the documentation!", 'google-analytics-dashboard-for-wp' ), '4.6' );
 		}
 
 		/**
 		 * Wakeup warning
 		 */
 		private function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, __( "This is not allowed, read the documentation!", 'ga-dash' ), '4.6' );
+			_doing_it_wrong( __FUNCTION__, __( "This is not allowed, read the documentation!", 'google-analytics-dashboard-for-wp' ), '4.6' );
 		}
 
 		/**
@@ -82,7 +84,7 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 
 			// Plugin Version
 			if ( ! defined( 'GADWP_CURRENT_VERSION' ) ) {
-				define( 'GADWP_CURRENT_VERSION', '4.8.1.2' );
+				define( 'GADWP_CURRENT_VERSION', '4.8.1.3' );
 			}
 
 			// Plugin Path
@@ -154,7 +156,7 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 		 * Load i18n
 		 */
 		public function load_i18n() {
-			load_plugin_textdomain( 'ga-dash', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+			load_plugin_textdomain( 'google-analytics-dashboard-for-wp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 		}
 
 		/**
