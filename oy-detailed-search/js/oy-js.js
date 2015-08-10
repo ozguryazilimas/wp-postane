@@ -85,7 +85,7 @@ jQuery(document).ready(function($) {
   });
 
   $("#oy-arama-tur-js-icin").change(function() {
-    if ($(this).val()=="posts")  {
+    if ($(this).val()=="posts") {
       $('#oy-etiket-just-for-yazi').fadeIn(300);
     } else {
       $('#oy-etiket-just-for-yazi').fadeOut(300);
