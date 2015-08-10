@@ -32,8 +32,7 @@ License: GPL
 *
 * @author baskin
 */
-class OY_Query
-{
+class OY_Query {
   private $query;
   private $variables;
   private $message;
@@ -52,6 +51,7 @@ class OY_Query
   */
   function __construct($q = '', $m = '', $v = array()) {
     global $wpdb;
+
     $this->wpdb_p     = &$wpdb;
     $this->query      = $q;
     $this->message    = $m;
@@ -99,6 +99,7 @@ class OY_Query
   public function evaluate_query() {
     $ret=$this->wpdb_p->get_results($this->wpdb_p->prepare($this->query, $this->variables));
     $this->message .= ' ' . count($ret) . ' adet sonuç bulunmuştur.';
+
     return array('results' => $ret, 'message' => $this->message);
   }
 
@@ -142,8 +143,6 @@ class OY_Query
   }
 
 }
-
-
 
 
 /**
@@ -232,6 +231,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
     $first = true;
     $added_message .= '(';
     $variables = array();
+
     foreach ($tags_all as $tag) {
       if ($first) {
         $added_sql = "(select wp_term_relationships.object_id as ID from (select term_taxonomy_id from (select * from wp_terms where name = '%s') as A inner join wp_term_taxonomy on wp_term_taxonomy.term_id=A.term_id where wp_term_taxonomy.taxonomy='post_tag') as B inner join wp_term_relationships on B.term_taxonomy_id=wp_term_relationships.term_taxonomy_id)";
@@ -244,6 +244,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
       }
       array_push($variables, $tag);
     }
+
     $added_message .= ') etiketlerinin hepsine sahip ';
     $query->extend_query('AND ID in' . $added_sql . ' ', $added_message, $variables);
   }
@@ -269,11 +270,13 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
 
   if ($words_at_least_one != NULL) {
     $query->extend_query('AND ( 1=0');
+
     foreach ($words_at_least_one as $key) {
       $query->extend_query("OR post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s')))",
                            $key . ' ',
                            array('%' . $key . '%', '%' . $key . '%', $key, $key));
     }
+
     $query->extend_query(')', 'kelimelerinden en az birine sahip olan');
   }
 
@@ -289,7 +292,8 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
                            $key . ' ',
                            array('%' . $key . '%', '%' . $key . '%', $key, $key));
     }
-      $query->extend_query('', 'kelimelerini bulundurmayan ');
+
+    $query->extend_query('', 'kelimelerini bulundurmayan ');
   }
 
   if ((int)$min_like > 0) {
@@ -335,7 +339,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
  *
  * @return OY_Query OY_Query object that includes query,variables and message
 */
-function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_included, 
+function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_included,
                                    $words_ordered, $words_at_least_one, $words_excluded, $order) {
 
   $query = new OY_Query();
@@ -372,10 +376,12 @@ function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_
   }
 
   if ($words_at_least_one != NULL) {
-      $query->extend_query('AND (1=0');
+    $query->extend_query('AND (1=0');
+
     foreach ($words_at_least_one as $key ) {
       $query->extend_query("OR comment_content LIKE '%s'", $key . ' ', '%' . $key . '%');
     }
+
     $query->extend_query(')', 'kelime grubuna sahip olan');
   }
 
@@ -387,6 +393,7 @@ function oy_generate_comment_query($author_slug, $date_begin, $date_end, $words_
     foreach ($words_excluded as $key ) {
       $query->extend_query("AND comment_content NOT LIKE '%s'", $key . ' ', '%' . $key . '%');
     }
+
     $query->extend_query('', 'kelimelerini bulundurmayan');
   }
 
@@ -437,26 +444,32 @@ function oy_generate_print_content($content_string, $word_list) {
 
   foreach ($word_list as $word) {
     $position = stripos($replaced_content, $word);
+
     if ($position != false) {
       $endpos   = $position;
       $startpos = $position;
+
       for (; $endpos < $str_len; $endpos++) {
         if ($replaced_content[$endpos] == '.') {
           break;
         }
       }
+
       for (; $startpos>0; $startpos--) {
         if ($replaced_content[$startpos] == '.') {
           $startpos++;
           break;
         }
       }
+
       array_push($result_array, array('content' => substr($replaced_content, $startpos, $endpos - $startpos + 1),
                                       'start'   => $startpos,
                                       'end'     => $endpos));
     }
-  }    
+  }
+
   $check_array = array();
+
   foreach ($result_array as $idx => $res) {
     if (array_search($res['start'] . ',' . $res['end'], $check_array) == false) {
       array_push($check_array, $res['start'] . ',' . $res['end']);
@@ -468,15 +481,18 @@ function oy_generate_print_content($content_string, $word_list) {
   usort($result_array, 'oy_sort_by_start');
 
   $print_content = '...';
+
   if (count($result_array) == 0) {
     $print_content = '';
   } elseif ($result_array[0]['start'] == 0) {
     $print_content = '';
   }
- foreach ($result_array as $res) {
+
+  foreach ($result_array as $res) {
     $print_content .= $res['content'];
     $print_content .= '..';
   }
+
   return $print_content;
 }
 
@@ -584,13 +600,14 @@ add_action('template_redirect', 'oy_custom_page_template_redirect');
  *
 */
 function oy_custom_page_template_redirect() {
-    global $wp_query;
-    if ($wp_query->query_vars['name'] == 'ayrintili-ara') {
-        $wp_query->is_404 = false;
-        status_header(200);
-        include(ABSPATH . 'wp-content/plugins/oy-detailed-search/oy-template.php');
-        exit;
-    }
+  global $wp_query;
+
+  if ($wp_query->query_vars['name'] == 'ayrintili-ara') {
+      $wp_query->is_404 = false;
+      status_header(200);
+      include(ABSPATH . 'wp-content/plugins/oy-detailed-search/oy-template.php');
+      exit;
+  }
 }
 
 
