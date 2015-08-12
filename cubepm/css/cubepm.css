@@ -180,6 +180,11 @@
 	padding: 0;
 }
 
+.cpm-thread {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
 .cubepm .cpm-thread-reply,.cubepm .cpm-thread-reply td {
 	background: none !important;
 	padding: 0 !important;

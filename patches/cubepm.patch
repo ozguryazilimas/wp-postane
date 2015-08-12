@@ -1,0 +1,23 @@
+diff --git a/cubepm/css/cubepm.css b/cubepm/css/cubepm.css
+index 2bc3f54..fa61e0e 100644
+--- a/cubepm/css/cubepm.css
++++ b/cubepm/css/cubepm.css
+@@ -180,6 +180,11 @@
+ 	padding: 0;
+ }
+ 
++.cpm-thread {
++  table-layout: fixed;
++  word-wrap: break-word;
++}
++
+ .cubepm .cpm-thread-reply,.cubepm .cpm-thread-reply td {
+ 	background: none !important;
+ 	padding: 0 !important;
+@@ -271,4 +276,4 @@
+ .ac_over {
+ 	background-color: #ddd;
+ 	color: #000;
+-}
+\ No newline at end of file
++}
