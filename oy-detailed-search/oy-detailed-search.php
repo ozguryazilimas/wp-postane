@@ -444,8 +444,8 @@ function oy_generate_print_content($content_string, $word_list) {
 
   foreach ($word_list as $word) {
     $position = stripos($replaced_content, $word);
-
-    if ($position != false) {
+   
+    if ($position !== false) {
       $endpos   = $position;
       $startpos = $position;
       $endpos  += 50;
