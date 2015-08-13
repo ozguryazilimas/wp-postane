@@ -104,6 +104,7 @@ echo '<div id="oy-arama-container">
                   <input value="Ara" type="submit">
                 </div>
               </div>
+            <input type="hidden" name="oy_page" value="1"/>
             </form>
 
           </div>
@@ -125,7 +126,12 @@ $oy_type                = $_POST["search_type"];
 $oy_tags                = $_POST["inc_tags"];
 $oy_tags_all            = $_POST["inc_tags_all"];
 $oy_author_id           = NULL;
+$oy_page                = (int)$_POST['oy_page'];
+$oy_results_per_page    = 20;
 
+if ($oy_page <= 0) {
+  $oy_page = 1;
+}
 /*
 If author is relevant to search get author id.
 */
@@ -161,7 +167,7 @@ if ($oy_type == "comments") {
   }
 
   echo $result["message"];
-  oy_print_comments($result["results"], $oy_word_list);
+  oy_print_comments($result["results"], $oy_word_list, $oy_page, $oy_results_per_page);
 
   } elseif ($oy_type == "posts") {
     $query = oy_generate_post_query($oy_author_id, $oy_date_begin, $oy_date_end, $oy_words_included, $oy_words_ordered, $oy_words_at_least_one, $oy_words_excluded, $oy_order, $oy_likes, $oy_author_slug,$oy_tags,$oy_tags_all);
@@ -182,7 +188,7 @@ if ($oy_type == "comments") {
     }
 
     echo $result["message"];
-    oy_print_posts($result["results"],$oy_word_list);
+    oy_print_posts($result["results"],$oy_word_list, $oy_page, $oy_results_per_page);
  }
 
 echo "</div>";

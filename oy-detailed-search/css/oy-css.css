@@ -130,10 +130,12 @@
   margin-bottom:20px;
   padding:3px 6px;
   border-radius:5px;
+  background-color: #ebf6ff;
+  color: black;
 }
 
 .oy-arama-sonuc-icerik {
-  font-size:15px;
+  font-size:14px;
 }
 
 .oy-arama-sonuc-container {
@@ -156,13 +158,12 @@
 }
 
 
-.oy-arama-sonuc {
-  color:black;
-  background-color:#F9FFFF;
-}
+
 
 .oy-arama-sonuc a:link {
-  color:#3399FF;
+  color: #3399ff;
+  font-family: Helvetica Neueu;
+  font-size: 15px;
 }
 
 .oy-arama-sonuc a:visited {
@@ -198,3 +199,32 @@
   clear: both;
 }
 
+.oy-pagination{
+  width:100%;
+}
+
+.oy-pagination ul li {
+  border: none;
+  background: none;
+  font-size: 13px;
+  margin-right: 2px;
+}
+
+.oy-other-page-li input[type='submit'] {
+  border:none;
+  background:none;
+  background-color: #F0F5F5;
+}
+
+.oy-other-page-li input[type='submit']:hover {
+  border:none;
+  background:none;
+  background-color: #d0d5d5;
+}
+
+
+.oy-current-page-li input[type='submit'] {
+  border:none;
+  background:none;
+  background-color: #d0d5d5;
+}
