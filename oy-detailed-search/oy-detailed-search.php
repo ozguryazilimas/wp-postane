@@ -439,7 +439,7 @@ function oy_generate_print_content($content_string, $word_list) {
   $replaced_content = preg_replace('/\[[^\[]+\]/', '', $replaced_content);
   $replaced_content = preg_replace('/[=]+/', '', $replaced_content);
 
-  $str_len          = strlen($replaced_content);
+  $str_len          = mb_strlen($replaced_content);
   $result_array     = array();
 
   foreach ($word_list as $word) {
@@ -448,20 +448,22 @@ function oy_generate_print_content($content_string, $word_list) {
     if ($position != false) {
       $endpos   = $position;
       $startpos = $position;
-
-      for (; $endpos < $str_len; $endpos++) {
-        if ($replaced_content[$endpos] == '.') {
+      $endpos  += 50;
+      $startpos -= 50;
+      $startpos = max($startpos, 0);
+      $endpos = min($str_len-1, $endpos);
+      while($startpos != 0) {
+        if($replaced_content[$startpos] == ' ' || $replaced_content[$startpost] == '.') {
           break;
         }
+        $startpos--;
       }
-
-      for (; $startpos>0; $startpos--) {
-        if ($replaced_content[$startpos] == '.') {
-          $startpos++;
+      while($endpos != $str_len-1) {
+        if($replaced_content[$endpos] == ' ' || $replaced_content[$endpos] == '.') {
           break;
         }
+        $endpos++;
       }
-
       array_push($result_array, array('content' => substr($replaced_content, $startpos, $endpos - $startpos + 1),
                                       'start'   => $startpos,
                                       'end'     => $endpos));
@@ -490,7 +492,7 @@ function oy_generate_print_content($content_string, $word_list) {
 
   foreach ($result_array as $res) {
     $print_content .= $res['content'];
-    $print_content .= '..';
+    $print_content .= '...';
   }
 
   return $print_content;
@@ -520,20 +522,20 @@ function oy_print_posts($post_array, $word_list) {
     $author_link      = site_url() . '?author=' . $page_data->post_author;
     echo "
       <div class='oy-arama-sonuc'>
+        <div class='oy-arama-sonuc-baslik'>
+          <p><a href='$print_link'>$print_title</a></p>
+        </div>
         <div class='oy-thumb'>
           <a href='$print_link'>
             $thumbnail
           </a>
         </div>
         <div class='oy-content'>
-          <div class='oy-arama-sonuc-baslik'>
-            <p><a href='$print_link'>$print_title</a></p>
-          </div>
-          <div class='oy-arama-sonuc-meta'>
-            <p>Yazar:<a href='$author_link'>$print_user</a>,Yayınlanma tarihi: $page_data->post_date</p>
-          </div>
           <div class='oy-arama-sonuc-icerik'>
             <p>$print_content</p>
+          </div>
+          <div class='oy-arama-sonuc-meta'>
+            <p><a href='$author_link'>$print_user</a> | $page_data->post_date</p>
           </div>
         </div>
       </div>
@@ -562,25 +564,25 @@ function oy_print_comments($comment_array, $word_list) {
     $print_link       = get_post_permalink($page);
     $comment_id       = $key->comment_ID;
     $user_id          = get_user_by('slug', $author)->ID;
-    $thumbnail        = get_the_post_thumbnail($key->comment_post_ID, array(100, 100));
+    $thumbnail        = get_the_post_thumbnail($key->comment_post_ID, array(400, 400));
     $print_content    = oy_generate_print_content($key->comment_content, $word_list);
     $author_link      = site_url() . '?author=' . $user_id;
     echo "
         <div class='oy-arama-sonuc'>
+          <div class='oy-arama-sonuc-baslik'>
+            <p><a href='$print_link#comment-$comment_id'>$print_title</a></p>
+          </div>
           <div class='oy-thumb'>
             <a href='$print_link'>
               $thumbnail
             </a>
           </div>
           <div class='oy-content'>
-            <div class='oy-arama-sonuc-baslik'>
-              <p><a href='$print_link#comment-$comment_id'>$print_title</a></p>
-            </div>
-            <div class='oy-arama-sonuc-meta'>
-              <p>Yorumlayan:<a href='$author_link'>$author</a>,Yayınlanma tarihi: $comment_date</p>
-            </div>
             <div class='oy-arama-sonuc-icerik'>
               <p>$print_content</p>
+            </div>
+            <div class='oy-arama-sonuc-meta'>
+              <p><a href='$author_link'>$author</a> | $comment_date</p>
             </div>
           </div>
         </div>

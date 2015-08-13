@@ -13,9 +13,10 @@
 }
 
 .oy-ayrinti-text {
-  font-size:50px;
+  font-size:40px;
   font-weight:bold;
   color:#32ACEB;
+  font-family: "museo";
 }
 
 .oy-de-rotate+#oy-hide-tip {
@@ -33,7 +34,7 @@
 }
 
 #oy-arama-container {
-  font-family: "Helvetica Neue",Helvetica,Arial;
+  font-family: "museo";
   padding:0 5%;
   margin-bottom:20px;
 }
@@ -62,7 +63,7 @@
 }
 
 .oy-arama-major-field h2 {
-  font-size:30px;
+  font-size:25px;
   font-weight:normal;
 }
 
@@ -73,7 +74,7 @@
 .oy-arama-text {
   display:inline-block;
   width:30%;
-  font-size:17px;
+  font-size:14px;
 }
 
 .oy-arama-box {
@@ -127,56 +128,60 @@
 
 .oy-arama-sonuc {
   margin-bottom:20px;
-  background-color:#e3e3e3;
   padding:3px 6px;
   border-radius:5px;
 }
 
 .oy-arama-sonuc-icerik {
-  font-size:0.8em;
+  font-size:15px;
 }
 
 .oy-arama-sonuc-container {
+  
   padding:20px;
 }
 
 .oy-arama-sonuc-meta {
-  margin-bottom:2px;
-  font-size:0.6em;
+  font-size:12px;
+  margin-top:5px;
 }
 
 .oy-arama-sonuc-baslik {
-  font-size:20px;
+  font-family: "museo";
+  font-size: 20px;
+  background-color: #F0F5F5;
+  padding: 3px 10px;
+  margin-bottom:10px;
+
 }
 
-.oy-arama-sonuc-meta {
-  font-size:16px;
-}
 
 .oy-arama-sonuc {
   color:black;
+  background-color:#F9FFFF;
 }
 
 .oy-arama-sonuc a:link {
-  color:black;
+  color:#3399FF;
 }
 
 .oy-arama-sonuc a:visited {
-  color:black;
+  color:#3399FF;
 }
 
 .oy-arama-sonuc a:hover {
-  color:#555;
+  color:#70B8FF;
 }
 
 .oy-arama-sonuc a:focus,.oy-arama-sonuc-baslik a:active {
-  color:#333;
+  color:#70B8FF;
 }
 
 .oy-thumb {
   float:left;
   display:inline-block;
   width:20%;
+  margin-right:2%;
   text-align:center;
   padding:5px 0;
 }
@@ -184,7 +189,7 @@
 .oy-content {
   float:left;
   display:inline-block;
-  width:79%;
+  width:77%;
 }
 
 .oy-arama-sonuc:after {
