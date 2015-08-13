@@ -207,7 +207,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
   $query = new OY_Query();
 
   $query->extend_query("SELECT wp_posts.ID as ID FROM wp_posts WHERE post_status = '%s' AND post_type = '%s'",
-                       'Arama sonucu ',
+                       'Arama sonucu: ',
                        array('publish', 'post'));
 
   if ($tags != NULL) {
