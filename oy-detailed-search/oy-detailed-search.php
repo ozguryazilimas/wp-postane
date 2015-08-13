@@ -499,6 +499,57 @@ function oy_generate_print_content($content_string, $word_list) {
 }
 
 /**
+ *
+ * Generates pagination given current page and total number of pages
+ *
+ * @author baskin
+ *
+ * @param int $page_num Current page
+ * @param int $total_number_of_pages Total number of pages
+ *
+ * @return string Pagination
+ *
+*/
+function oy_generate_pagination($page_num, $total_number_of_pages) {
+  $pagination = "<div class='oy-pagination'><form action='' method='post'><input type='hidden' name='words_included' value='".$_POST['words_included']."'/><input type='hidden' name='author_slug' value='".$_POST['author_slug']."'/><input type='hidden' name='date_begin' value='".$_POST['date_begin']."'/><input type='hidden' name='date_end' value='".$_POST['date_end']."'/><input type='hidden' name='words_ordered' value='".$_POST['words_ordered']."'/><input type='hidden' name='words_at_least_one' value='".$_POST['words_at_least_one']."'/><input type='hidden' name='words_excluded' value='".$_POST['words_excluded']."'/><input type='hidden' name='date_order' value='".$_POST['date_order']."'/><input type='hidden' name='likes' value='".$_POST['likes']."'/><input type='hidden' name='search_type' value='".$_POST['search_type']."'/><input type='hidden' name='inc_tags' value='".$_POST['inc_tags']."'/><input type='hidden' name='inc_tags_all' value='".$_POST['inc_tags_all']."'/>";
+  $pagination .= "<ul>";
+  if ($page_num == 1) {
+    $pagination .= "<li class='oy-current-page-li'><input type='submit' name='oy_page' value='1'/></li>";
+  } elseif ($page_num <= 6) {
+    for ($i=1; $i<$page_num; $i++) {
+      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
+    }
+  } else {
+    $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='1'/></li>";
+    $pagination .= "<li>...</li>";
+    for ($i=$page_num-4; $i<$page_num; $i++) {
+      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
+    }
+    //print ... + prev 5 pages 
+  }
+  if ($page_num != 1) {
+    $pagination .= "<li class='oy-current-page-li'><input type='submit' name='oy_page' value='$page_num'/></li>";
+  }  
+  if ($page_num == $total_number_of_pages) {
+    //last page
+  } elseif ($page_num > $total_number_of_pages - 7) {
+    for($i = $page_num+1; $i<=$total_number_of_pages;$i++) {
+      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
+    }
+  } else {
+    for($i = $page_num+1; $i<=$page_num+5;$i++) {
+      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
+    }
+    $pagination .= "<li>...</li>";
+    $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$total_number_of_pages'/></li>";
+  }
+
+  $pagination .= "</ul></form></div>";
+  return $pagination;
+}
+
+
+/**
  * Prints the posts given as array and pagination.
  *
  * @author Kivilcim Eray
@@ -544,43 +595,7 @@ function oy_print_posts($post_array, $word_list, $page_num, $results_per_page) {
   
   $total_number_of_pages = ceil(count($post_array) / $results_per_page);
   if ($total_number_of_pages > 1) {
-    $pagination = "<div class='oy-pagination'><form action='' method='post'><input type='hidden' name='words_included' value='".$_POST['words_included']."'/><input type='hidden' name='author_slug' value='".$_POST['author_slug']."'/><input type='hidden' name='date_begin' value='".$_POST['date_begin']."'/><input type='hidden' name='date_end' value='".$_POST['date_end']."'/><input type='hidden' name='words_ordered' value='".$_POST['words_ordered']."'/><input type='hidden' name='words_at_least_one' value='".$_POST['words_at_least_one']."'/><input type='hidden' name='words_excluded' value='".$_POST['words_excluded']."'/><input type='hidden' name='date_order' value='".$_POST['date_order']."'/><input type='hidden' name='likes' value='".$_POST['likes']."'/><input type='hidden' name='search_type' value='".$_POST['search_type']."'/><input type='hidden' name='inc_tags' value='".$_POST['inc_tags']."'/><input type='hidden' name='inc_tags_all' value='".$_POST['inc_tags_all']."'/>";
-    $pagination .= "<ul>";
-    if ($page_num == 1) {
-      $pagination .= "<li class='oy-current-page-li'><input type='submit' name='oy_page' value='1'/></li>";
-    } elseif ($page_num <= 6) {
-      for ($i=1; $i<$page_num; $i++) {
-       $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-    } else {
-      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='1'/></li>";
-      $pagination .= "<li>...</li>";
-      for ($i=$page_num-4; $i<$page_num; $i++) {
-       $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-      //print ... + prev 5 pages 
-    }
-
-    if ($page_num != 1) {
-      $pagination .= "<li class='oy-current-page-li'><input type='submit' name='oy_page' value='$page_num'/></li>";
-    }  
-
-    if ($page_num == $total_number_of_pages) {
-      //last page
-    } elseif ($page_num > $total_number_of_pages - 7) {
-      for($i = $page_num+1; $i<=$total_number_of_pages;$i++) {
-        $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-    } else {
-      for($i = $page_num+1; $i<=$page_num+5;$i++) {
-        $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-      $pagination .= "<li>...</li>";
-      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$total_number_of_pages'/></li>";
-    }
-
-    $pagination .= "</ul></form></div>";
-    echo $pagination;
+    echo oy_generate_pagination($page_num, $total_number_of_pages);
   }
 }
 
@@ -634,43 +649,7 @@ function oy_print_comments($comment_array, $word_list, $page_num, $results_per_p
 
   $total_number_of_pages = ceil(count($comment_array) / $results_per_page);
   if ($total_number_of_pages > 1) {
-    $pagination = "<div class='oy-pagination'><form action='' method='post'><input type='hidden' name='words_included' value='".$_POST['words_included']."'/><input type='hidden' name='author_slug' value='".$_POST['author_slug']."'/><input type='hidden' name='date_begin' value='".$_POST['date_begin']."'/><input type='hidden' name='date_end' value='".$_POST['date_end']."'/><input type='hidden' name='words_ordered' value='".$_POST['words_ordered']."'/><input type='hidden' name='words_at_least_one' value='".$_POST['words_at_least_one']."'/><input type='hidden' name='words_excluded' value='".$_POST['words_excluded']."'/><input type='hidden' name='date_order' value='".$_POST['date_order']."'/><input type='hidden' name='likes' value='".$_POST['likes']."'/><input type='hidden' name='search_type' value='".$_POST['search_type']."'/><input type='hidden' name='inc_tags' value='".$_POST['inc_tags']."'/><input type='hidden' name='inc_tags_all' value='".$_POST['inc_tags_all']."'/>";
-    $pagination .= "<ul>";
-    if ($page_num == 1) {
-      $pagination .= "<li class='oy-current-page-li'><input type='submit' name='oy_page' value='1'/></li>";
-    } elseif ($page_num <= 6) {
-      for ($i=1; $i<$page_num; $i++) {
-       $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-    } else {
-      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='1'/></li>";
-      $pagination .= "<li>...</li>";
-      for ($i=$page_num-4; $i<$page_num; $i++) {
-       $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-      //print ... + prev 5 pages 
-    }
-
-    if ($page_num != 1) {
-      $pagination .= "<li class='oy-current-page-li'><input type='submit' name='oy_page' value='$page_num'/></li>";
-    }  
-
-    if ($page_num == $total_number_of_pages) {
-      //last page
-    } elseif ($page_num > $total_number_of_pages - 7) {
-      for($i = $page_num+1; $i<=$total_number_of_pages;$i++) {
-        $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-    } else {
-      for($i = $page_num+1; $i<=$page_num+5;$i++) {
-        $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$i'/></li>";
-      }
-      $pagination .= "<li>...</li>";
-      $pagination .= "<li class='oy-other-page-li'><input type='submit' name='oy_page' value='$total_number_of_pages'/></li>";
-    }
-
-    $pagination .= "</ul></form></div>";
-    echo $pagination;
+    echo oy_generate_pagination($page_num, $total_number_of_pages);
   }
 }
 
