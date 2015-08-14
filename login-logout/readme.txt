@@ -3,8 +3,8 @@ Contributors: webvitaly
 Donate link: http://web-profile.com.ua/donate/
 Tags: login, logout, widget, meta, sidebar, admin, register
 Requires at least: 3.0
-Tested up to: 4.4
-Stable tag: 3.0
+Tested up to: 4.5
+Stable tag: 3.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -42,6 +42,9 @@ Widget with login, logout, admin and register links. Replacement of the default 
 4. Widget output when user is logged in and inline option is on
 
 == Changelog ==
+
+= 3.1 - 2015-08-14 =
+* Replace PHP4 style constructors with PHP5 constructors - https://make.wordpress.org/core/2015/07/02/deprecating-php4-style-constructors-in-wordpress-4-3/
 
 = 3.0 - 2015-05-28 =
 * Minor bugfixing
