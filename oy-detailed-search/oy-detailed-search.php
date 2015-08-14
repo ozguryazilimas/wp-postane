@@ -568,7 +568,7 @@ function oy_print_posts($post_array, $word_list, $page_num, $results_per_page) {
     $print_time       = $page_data->post_date;
     $print_link       = get_post_permalink($page);
     $print_user       = get_userdata($page_data->post_author)->user_nicename;
-    $thumbnail        = get_the_post_thumbnail($key->ID, array(100, 100));
+    $thumbnail        = get_the_post_thumbnail($post_array[$i]->ID, array(100, 100));
     $print_content    = oy_generate_print_content($page_data->post_content, $word_list);
     $author_link      = site_url() . '?author=' . $page_data->post_author;
     echo "
