@@ -162,7 +162,7 @@ function oy_get_userid_by_display_name($d_name) {
   if ($user) {
     return $user->ID;
   }
-  return false;
+  return -1;
 }
 
 
