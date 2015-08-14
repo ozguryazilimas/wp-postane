@@ -146,6 +146,27 @@ class OY_Query {
 
 
 /**
+ *
+ * Returns userid given display_name
+ *
+ * @author baskin
+ *
+ * @param string $d_name Display name of user
+ *
+ * @return int ID of the user
+ *
+*/
+function oy_get_userid_by_display_name($d_name) {
+  global $wpdb;
+  $user = $wpdb->get_row($wpdb->prepare("SELECT ID FROM wp_users WHERE display_name = '%s'", $d_name));
+  if ($user) {
+    return $user->ID;
+  }
+  return false;
+}
+
+
+/**
  * Function to generate query for posts.
  *
  * Firstly,it extents the query to select ID from wp_posts that have status 'publish' and type 'post'.

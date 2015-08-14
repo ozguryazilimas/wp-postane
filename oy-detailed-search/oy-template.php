@@ -136,7 +136,7 @@ if ($oy_page <= 0) {
 If author is relevant to search get author id.
 */
 if( $oy_author_slug != NULL ) {
-  $oy_author_id = get_user_by('slug', $oy_author_slug)->ID;
+  $oy_author_id = oy_get_userid_by_display_name($oy_author_slug);
 }
 
 echo '<div class="oy-arama-sonuc-container">';
