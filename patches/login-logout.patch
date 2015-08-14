@@ -1,17 +1,16 @@
 diff --git a/login-logout/login-logout.php b/login-logout/login-logout.php
-index 4ba9f4d..dd534d9 100644
+index 1bc3df9..572761c 100644
 --- a/login-logout/login-logout.php
 +++ b/login-logout/login-logout.php
-@@ -17,6 +17,8 @@ class WP_Widget_Login_Logout extends WP_Widget {
+@@ -17,6 +17,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
  	}
  	
- 	function widget( $args, $instance ) { // outputs the content of the widget
-+        global $wpdb;
-+
+ 	public function widget( $args, $instance ) { // outputs the content of the widget
++		global $wpdb;
  		extract($args);
  		//$title = apply_filters('widget_title', empty($instance['title']) ? __('Login-Logout', 'login-logout') : $instance['title'], $instance, $this->id_base);
  		$title = apply_filters('widget_title', $instance['title']);
-@@ -52,7 +54,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
+@@ -52,7 +53,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
  			$wrap_after = '</p>';
  			$item_before = '<span class='; // class will be added and the tag is not closed
  			$item_after = '</span>';
@@ -20,7 +19,7 @@ index 4ba9f4d..dd534d9 100644
  		} else {
  			$wrap_before = '<ul class="wrap_login_logout">';
  			$wrap_after = '</ul>';
-@@ -66,32 +68,49 @@ class WP_Widget_Login_Logout extends WP_Widget {
+@@ -66,32 +67,49 @@ class WP_Widget_Login_Logout extends WP_Widget {
  			if ( is_user_logged_in() ){
  				$current_user = wp_get_current_user();
  				$username = $current_user->display_name;
@@ -76,7 +75,7 @@ index 4ba9f4d..dd534d9 100644
  			}
  		}
  		
-@@ -254,4 +273,4 @@ if ( ! function_exists( 'login_logout_unqprfx_plugin_meta' ) ) :
+@@ -254,4 +272,4 @@ if ( ! function_exists( 'login_logout_unqprfx_plugin_meta' ) ) :
  		return $links;
  	}
  	add_filter( 'plugin_row_meta', 'login_logout_unqprfx_plugin_meta', 10, 2 );
