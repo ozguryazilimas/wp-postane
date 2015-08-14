@@ -1,0 +1,230 @@
+#oy-hide-button {
+  width:30px;
+}
+
+.oy-rotate {
+  display:inline-block;
+  transform: rotate(270deg);
+}
+
+.oy-de-rotate {
+  display:inline-block;
+  transform: rotate(90deg);
+}
+
+.oy-ayrinti-text {
+  font-size:40px;
+  font-weight:bold;
+  color:#32ACEB;
+  font-family: "museo";
+}
+
+.oy-de-rotate+#oy-hide-tip {
+  position:relative;
+  top:-10px;
+  margin-left:5px;
+  display:inline-block;
+  font-size:10px;
+  height:30px;
+  line-height:30px;
+}
+
+.oy-rotate+#oy-hide-tip {
+  display:none;
+}
+
+#oy-arama-container {
+  font-family: "museo";
+  padding:0 5%;
+  margin-bottom:20px;
+}
+
+#oy-arama-container input {
+  padding-left:5px;
+  padding-right:5px;
+}
+
+.oy-arama-major-field {
+  width:100%;
+}
+
+.oy-divider {
+  width:90%;
+  height:0px;
+  margin-top:10px;
+  margin-bottom:10px;
+  border-bottom:1px solid #ddd;
+}
+
+.oy-divider-borderless {
+  height:0px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.oy-arama-major-field h2 {
+  font-size:25px;
+  font-weight:normal;
+}
+
+.oy-arama-input-field {
+  margin-top:3px;
+}
+
+.oy-arama-text {
+  display:inline-block;
+  width:30%;
+  font-size:14px;
+}
+
+.oy-arama-box {
+  display:inline-block;
+  width:55%;
+  padding:0 2%;
+  font-size:0.8em;
+}
+
+.oy-arama-box input[type="text"],
+.oy-arama-box input[type="username"] {
+  height:20px;
+}
+
+.oy-arama-select {
+  width:50%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color:white;
+}
+
+.oy-arama-input-small {
+  width:24%;
+}
+
+.oy-arama-input-small-small {
+  width:12%;
+}
+
+.oy-arama-input-big {
+  width:100%;
+}
+
+.oy-arama-input-mid {
+  width:49%;
+}
+
+.oy-arama-input-field input[type="submit"] {
+  padding:4px 10px;
+  width:25%;
+  height:35px;
+  border:1px solid #eee;
+  background-color:#43BEEB;
+  color:white;
+}
+
+.oy-arama-select option {
+  padding:3px 6px;
+}
+
+.oy-arama-sonuc {
+  margin-bottom:20px;
+  padding:3px 6px;
+  border-radius:5px;
+  background-color: #ebf6ff;
+  color: black;
+}
+
+.oy-arama-sonuc-icerik {
+  font-size:14px;
+}
+
+.oy-arama-sonuc-container {
+  
+  padding:20px;
+}
+
+.oy-arama-sonuc-meta {
+  font-size:12px;
+  margin-top:5px;
+}
+
+.oy-arama-sonuc-baslik {
+  font-family: "museo";
+  font-size: 20px;
+  background-color: #F0F5F5;
+  padding: 3px 10px;
+  margin-bottom:10px;
+
+}
+
+
+
+
+.oy-arama-sonuc a:link {
+  color: #3399ff;
+  font-family: Helvetica Neueu;
+  font-size: 15px;
+}
+
+.oy-arama-sonuc a:visited {
+  color:#3399FF;
+}
+
+.oy-arama-sonuc a:hover {
+  color:#70B8FF;
+}
+
+.oy-arama-sonuc a:focus,.oy-arama-sonuc-baslik a:active {
+  color:#70B8FF;
+}
+
+.oy-thumb {
+  float:left;
+  display:inline-block;
+  width:20%;
+  margin-right:2%;
+  text-align:center;
+  padding:5px 0;
+}
+
+.oy-content {
+  float:left;
+  display:inline-block;
+  width:77%;
+}
+
+.oy-arama-sonuc:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.oy-pagination{
+  width:100%;
+}
+
+.oy-pagination ul li {
+  border: none;
+  background: none;
+  font-size: 13px;
+  margin-right: 2px;
+}
+
+.oy-other-page-li input[type='submit'] {
+  border:none;
+  background:none;
+  background-color: #F0F5F5;
+}
+
+.oy-other-page-li input[type='submit']:hover {
+  border:none;
+  background:none;
+  background-color: #d0d5d5;
+}
+
+
+.oy-current-page-li input[type='submit'] {
+  border:none;
+  background:none;
+  background-color: #d0d5d5;
+}
