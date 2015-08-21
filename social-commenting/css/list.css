@@ -1,0 +1,99 @@
+.sc_subscribe_list {
+  padding:20px;
+  font-family:"museo";
+  font-weight:bold;
+  font-size:13px;
+}
+
+.sc_subscribe_list_element {
+  width:100%;
+  margin-bottom:20px;
+}
+
+.sc_subscribe_list_element_title,
+.sc_subscribe_list_unsubscribe,
+.sc_subscribe_list_comment_count {
+  display: inline-block;
+}
+
+.sc_subscribe_list_email_no {
+  display:none;
+  background-color:black;
+}
+
+.sc_subscribe_list_email_ok {
+  display:none;
+}
+
+.sc_subscribe_list_display {
+  display: inline-block;
+}
+
+.sc_subscribe_list_comment_count {
+  color:black;
+  padding:2%;
+  width:5%;
+  text-align:right;
+  
+}
+.sc_subscribe_list_element_title {
+  background-color: #f56e00;
+  width: 47%;
+  color:white;
+  padding:2%;
+}
+
+.sc_subscribe_list_email_ok,
+.sc_subscribe_list_email_no {
+  cursor:pointer;
+  background-color: #04b404;
+  width: 14%;
+  color:white;
+  padding:2%;
+}
+.sc_mark_as_read_container {
+  text-align:center;
+}
+.sc_mark_as_read {
+  cursor:pointer;
+  display:inline-block;
+  margin:0 auto;
+  font-size: 20px;
+  background-color:#c5c5c5;
+  color:white;
+  padding:7px;
+}
+.sc_mark_as_read:hover {
+  background-color:#555;
+}
+.sc_subscribe_list_email_no {
+  background-color:black;
+}
+
+.sc_subscribe_list_unsubscribe {
+  cursor:pointer;
+  background-color: #b40431;
+  width: 14%;
+  color:white;
+  padding:2%;
+}
+
+.sc_subscribe_list_unsubscribe:hover {
+  background-color: #740300;
+}
+
+.sc_subscribe_list_email_no:hover {
+  background-color: #555;
+}
+
+.sc_subscribe_list_email_ok:hover {
+  background-color: #049404;
+}
+
+.sc_subscribe_list_element_title:hover {
+  background-color:#c56e00;
+}
+
+.sc_subscribe_list_element a {
+  text-decoration: none;
+}

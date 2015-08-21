@@ -1,0 +1,45 @@
+.sc_plus {
+  display:none;
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 10px;
+  font-family: museo;
+  color: #666;
+  font-weight:bold;
+  border-radius: 3px;
+  background-color:white;
+}
+.sc_minus {
+  display:none;
+  background-color:#000;
+  color: #999;
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 10px;
+  font-family: museo;
+  font-weight:bold;
+  border-radius: 3px;
+}
+.sc_subscribe_button img {
+  width: 10px;
+  height: 10px;
+}
+
+.sc_minus:hover,
+.sc_plus:hover {
+  background-color:#fafafa;
+  color: #666;
+}
+
+.sc_display{
+  display:inline-block;
+}
+
+.sc_notice {
+  display:inline-block;
+  margin-left:5px;
+}
