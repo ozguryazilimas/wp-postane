@@ -186,12 +186,12 @@ function sc_new_comment($comment_id) {
     $header .= "MIME-Version: 1.0\r\n";
     $header .= "Content-type: text/html; charset=UTF-8\r\n";
     $subject = 'Takip ettiğiniz yazıya yorum yazıldı.';
-    $content = '" '.$post->post_title.' " başlıklı yazıya '.$comment->comment_author.' cevap yazdı.<br/><br/>Yazıya gitmek için tıklayınız: '.get_permalink($post->ID);
+    $content = '" '.$post->post_title.' " başlıklı yazıya '.$comment->comment_author." cevap yazdı.\n\nYazıya gitmek için tıklayınız: ".get_permalink($post->ID);
     foreach($mail_list as $u_id) {
       $udata=get_userdata($u_id);
       $email=$udata->user_email;
       $uname=$udata->display_name;
-      wp_mail( $email, $subject, 'Merhaba '.$uname.',<br/><br/>'.$content, $headers);
+      wp_mail( $email, $subject, 'Merhaba '.$uname.",\n\n".$content, $headers);
     }
   }
 
