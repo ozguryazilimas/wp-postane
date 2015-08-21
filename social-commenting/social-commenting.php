@@ -189,7 +189,6 @@ function sc_new_comment($comment_id) {
       $udata=get_userdata($u_id);
       $email=$udata->user_email;
       $uname=$udata->display_name;
-      echo $email;
       wp_mail( $email, $subject, 'Merhaba '.$uname.',\n\n'.$content, $headers);
     }
   }
