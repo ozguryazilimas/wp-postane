@@ -196,8 +196,8 @@ function sc_new_comment($comment_id) {
     $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    $subject = 'Takip ettiğiniz yazıya yorum yazıldı.';
-    $content = '" '.$post->post_title.' " başlıklı yazıya '.$comment->comment_author." cevap yazdı.<br/><br/>Yazıya gitmek için tıklayınız: ".$comment_link;
+    $subject = 'Takip ettiğiniz yazıya yeni yorum geldi.';
+    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarında '.$comment->comment_author." bir şeyler karaladı.<br/><br/>Yoruma gitmek için tıklayınız: ".$comment_link;
     //echo $content;
     foreach($subscriber_mail_list as $u_id) {
       $udata=get_userdata($u_id);
@@ -211,8 +211,8 @@ function sc_new_comment($comment_id) {
     $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    $subject = 'Bir yazıda adınız anıldı.';
-    $content = '" '.$post->post_title.' " başlıklı yazıda '.$comment->comment_author." sizi andı.<br/><br/>Yazıya gitmek için tıklayınız: ".$comment_link;
+    $subject = 'Bir yazının altında sizi andılar.';
+    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/><br/>Yoruma gitmek için tıklayınız: ".$comment_link;
     //echo $content;
     foreach($mention_mail_list as $u_id) {
       $udata=get_userdata($u_id);
