@@ -197,7 +197,7 @@ function sc_new_comment($comment_id) {
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $subject = 'Takip ettiğiniz yazıya yeni yorum geldi.';
-    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarında '.$comment->comment_author." bir şeyler karaladı.<br/><br/>Yoruma gitmek için tıklayınız: ".$comment_link;
+    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarında '.$comment->comment_author." bir şeyler karaladı.<br/><br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
     //echo $content;
     foreach($subscriber_mail_list as $u_id) {
       $udata=get_userdata($u_id);
@@ -212,7 +212,7 @@ function sc_new_comment($comment_id) {
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $subject = 'Bir yazının altında sizi andılar.';
-    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/><br/>Yoruma gitmek için tıklayınız: ".$comment_link;
+    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/><br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
     //echo $content;
     foreach($mention_mail_list as $u_id) {
       $udata=get_userdata($u_id);
