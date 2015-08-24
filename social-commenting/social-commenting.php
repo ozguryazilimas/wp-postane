@@ -197,13 +197,13 @@ function sc_new_comment($comment_id) {
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $subject = 'Takip ettiğiniz yazıya yorum yazıldı.';
-    $content = '" '.$post->post_title.' " başlıklı yazıya '.$comment->comment_author." cevap yazdı.\n\nYazıya gitmek için tıklayınız: ".$comment_link;
+    $content = '" '.$post->post_title.' " başlıklı yazıya '.$comment->comment_author." cevap yazdı.<br/><br/>Yazıya gitmek için tıklayınız: ".$comment_link;
     //echo $content;
     foreach($subscriber_mail_list as $u_id) {
       $udata=get_userdata($u_id);
       $email=$udata->user_email;
       $uname=$udata->display_name;
-      wp_mail( $email, $subject, 'Merhaba '.$uname.",\n\n".$content, $headers);
+      wp_mail( $email, $subject, 'Merhaba '.$uname.",<br/><br/>".$content, $headers);
     }
   }
 
@@ -212,13 +212,13 @@ function sc_new_comment($comment_id) {
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $subject = 'Bir yazıda adınız anıldı.';
-    $content = '" '.$post->post_title.' " başlıklı yazıda '.$comment->comment_author." sizi andı.\n\nYazıya gitmek için tıklayınız: ".$comment_link;
+    $content = '" '.$post->post_title.' " başlıklı yazıda '.$comment->comment_author." sizi andı.<br/><br/>Yazıya gitmek için tıklayınız: ".$comment_link;
     //echo $content;
     foreach($mention_mail_list as $u_id) {
       $udata=get_userdata($u_id);
       $email=$udata->user_email;
       $uname=$udata->display_name;
-      wp_mail( $email, $subject, 'Merhaba '.$uname.",\n\n".$content, $headers);
+      wp_mail( $email, $subject, 'Merhaba '.$uname.",<br/><br/>".$content, $headers);
     }
   }
 //echo $comment_link;
