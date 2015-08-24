@@ -10,9 +10,6 @@ License: GPL
 */
 
 
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
-error_reporting(-1);
 function sc_activate_plugin() {
   global $wpdb;
   $table_name = $wpdb->prefix . "sc_subscribe";
