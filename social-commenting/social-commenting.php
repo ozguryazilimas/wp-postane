@@ -163,31 +163,43 @@ function sc_get_post_subscribers_for_email($post_id) {
 function sc_new_comment($comment_id) {
   $comment = get_comment($comment_id);
   $post = get_post($comment->comment_post_ID);
-  $mail_list = array();
+  $mention_mail_list = array();
 
   $mention_list = sc_get_mention_list($comment->comment_content);
 
+  $current_user_id = get_current_user_id();
+
+
+  $comment_link = get_comment_link($comment_id);
+  echo $comment_link;
   foreach($mention_list as $key) {
     $user_id = sc_get_userid($key);
     $single = true;
     $applicable = get_user_meta($user_id, "sc_mention_mail",$single);
 
-    if($applicable == "true") {
-      $mail_list[] = $user_id;
+    if($applicable == "true" && ($user_id != $current_user_id)) {
+      $mention_mail_list[] = $user_id;
     }
   }
 
   $subscriber_list = sc_get_post_subscribers_for_email($post->ID);
 
-  $mail_list = array_merge($mail_list, $subscriber_list);
-  $mail_list = array_unique($mail_list);
-  if(!empty($mail_list)) {
+  $subscriber_mail_list = array();
+
+  foreach($subscriber_list as $key) {
+    if ($key != $current_user_id) {
+      $subscriber_mail_list[] = $key;
+    }  
+  }
+
+  if(!empty($subscriber_mail_list)) {
     $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
-    $header .= "MIME-Version: 1.0\r\n";
-    $header .= "Content-type: text/html; charset=UTF-8\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $subject = 'Takip ettiğiniz yazıya yorum yazıldı.';
-    $content = '" '.$post->post_title.' " başlıklı yazıya '.$comment->comment_author." cevap yazdı.\n\nYazıya gitmek için tıklayınız: ".get_permalink($post->ID);
-    foreach($mail_list as $u_id) {
+    $content = '" '.$post->post_title.' " başlıklı yazıya '.$comment->comment_author." cevap yazdı.\n\nYazıya gitmek için tıklayınız: ".$comment_link;
+    //echo $content;
+    foreach($subscriber_mail_list as $u_id) {
       $udata=get_userdata($u_id);
       $email=$udata->user_email;
       $uname=$udata->display_name;
@@ -195,6 +207,23 @@ function sc_new_comment($comment_id) {
     }
   }
 
+  if(!empty($mention_mail_list)) {
+    $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+    $subject = 'Bir yazıda adınız anıldı.';
+    $content = '" '.$post->post_title.' " başlıklı yazıda '.$comment->comment_author." sizi andı.\n\nYazıya gitmek için tıklayınız: ".$comment_link;
+    //echo $content;
+    foreach($mention_mail_list as $u_id) {
+      $udata=get_userdata($u_id);
+      $email=$udata->user_email;
+      $uname=$udata->display_name;
+      wp_mail( $email, $subject, 'Merhaba '.$uname.",\n\n".$content, $headers);
+    }
+  }
+//echo $comment_link;
+  //print_r($mention_mail_list);
+  //print_r($subscriber_mail_list);die();
   //print_r($mail_list);
 //  die();
 }
@@ -338,9 +367,20 @@ class sc_Widget extends WP_Widget {
 
       $post_title = mb_substr($post->post_title,0,25);
       $comment_count = $wpdb->get_row($sql)->c;
+
+      $sql = "SELECT comment_ID as ID FROM $comments_table WHERE comment_post_ID=" . $key['ID'] . " AND comment_date > (SELECT last_read_time FROM $plugin_table WHERE $plugin_table.user_id = $user_id AND $plugin_table.post_id=".$key['ID'].") ORDER BY comment_date ASC LIMIT 1";
+
+      $first_unread_comment_id = $wpdb->get_row($sql)->ID;
+      $first_unread_comment_link = null;
+
+      if($first_unread_comment_id != NULL)
+        $first_unread_comment_link = get_comment_link($first_unread_comment_id);
+      else
+        $first_unread_comment_link = get_permalink($key['ID']);
+
       echo "<tr class='sc_widget_post'>
               <td class='sc_widget_post_title'>
-                <a href='".get_permalink($key['ID'])."'><div class='sc_widget_title_div'>$post_title".(mb_strlen($post_title)==mb_strlen($post->post_title)?"":"...")."</div></a>
+                <a href='".$first_unread_comment_link."'><div class='sc_widget_title_div'>$post_title".(mb_strlen($post_title)==mb_strlen($post->post_title)?"":"...")."</div></a>
               </td>
               <td class='sc_widget_comment_count'>
                 $comment_count

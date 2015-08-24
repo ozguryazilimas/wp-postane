@@ -35,17 +35,27 @@ foreach($res as $key) {
   $email_subscribed = sc_user_email($user_id, $post_id);
   $sql = "SELECT COUNT(*) as c FROM $posts_table INNER JOIN $comments_table ON $posts_table.ID = $comments_table.comment_post_ID WHERE $posts_table.ID = $post_id AND $comments_table.comment_date > (SELECT last_read_time FROM $plugin_table WHERE $plugin_table.user_id=$user_id AND $plugin_table.post_id=$post_id)";
   $comment_count=$wpdb->get_row($sql)->c;
+
+
+  $sql = "SELECT comment_ID as ID FROM $comments_table WHERE comment_post_ID=" . $key['ID'] . " AND comment_date > (SELECT last_read_time FROM $plugin_table WHERE $plugin_table.user_id = $user_id AND $plugin_table.post_id=".$key['ID'].") ORDER BY comment_date ASC LIMIT 1";
+  $first_unread_comment_id = $wpdb->get_row($sql)->ID;
+  $first_unread_comment_link = null;
+  if($first_unread_comment_id != NULL)
+    $first_unread_comment_link = get_comment_link($first_unread_comment_id);
+  else
+    $first_unread_comment_link = get_permalink($key['ID']);
+
   echo "<div class='sc_subscribe_list_element'>
           <div class='sc_subscribe_list_comment_count'>
             $comment_count
           </div>
-          <a href='".get_permalink($post_id)."'>
+          <a href='".$first_unread_comment_link."'>
           <div class='sc_subscribe_list_element_title'>
             $post_title
           </div>
           </a>
-           <div data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>Email al.</div>
-           <div data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>Email alma.</div>
+           <div data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>Eposta al.</div>
+           <div data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>Eposta alma.</div>
           <div class='sc_subscribe_list_unsubscribe' data-postid='$post_id'>
             Takip etme.
           </div>

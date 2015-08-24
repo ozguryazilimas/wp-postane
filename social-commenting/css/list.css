@@ -38,7 +38,7 @@
 }
 .sc_subscribe_list_element_title {
   background-color: #f56e00;
-  width: 47%;
+  width: 45%;
   color:white;
   padding:2%;
 }
@@ -47,7 +47,7 @@
 .sc_subscribe_list_email_no {
   cursor:pointer;
   background-color: #04b404;
-  width: 14%;
+  width: 16%;
   color:white;
   padding:2%;
 }
