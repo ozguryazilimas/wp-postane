@@ -26,6 +26,13 @@ function sc_activate_plugin() {
         last_read_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP) 
         CHARACTER SET utf8";
   $wpdb->query($sql);
+
+  $table_name = $wpdb->prefix . "sc_mail_queue";
+  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+          id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+          comment_id INT NOT NULL)
+          CHARACTER SET utf8";
+  $wpdb->query($sql);
 }
 register_activation_hook(__FILE__,'sc_activate_plugin');
 
@@ -36,6 +43,10 @@ function sc_uninstall_plugin() {
   global $wpdb;
   $table_name = $wpdb->prefix . "sc_subscribe";
   $sql="DROP TABLE $table_name";
+  $wpdb->query($sql);
+  
+  $table_name = $wpdb->prefix . "sc_mail_queue";
+  $sql = "DROP TABLE $table_name";
   $wpdb->query($sql);
 }
 register_uninstall_hook(__FILE__, "sc_uninstall_plugin");
@@ -161,73 +172,91 @@ function sc_get_post_subscribers_for_email($post_id) {
 }
 
 function sc_new_comment($comment_id) {
-  $comment = get_comment($comment_id);
-  $post = get_post($comment->comment_post_ID);
-  $mention_mail_list = array();
-
-  $mention_list = sc_get_mention_list($comment->comment_content);
-
-  $current_user_id = get_current_user_id();
-
-
-  $comment_link = get_comment_link($comment_id);
-  echo $comment_link;
-  foreach($mention_list as $key) {
-    $user_id = sc_get_userid($key);
-    $single = true;
-    $applicable = get_user_meta($user_id, "sc_mention_mail",$single);
-
-    if($applicable == "true" && ($user_id != $current_user_id)) {
-      $mention_mail_list[] = $user_id;
-    }
-  }
-
-  $subscriber_list = sc_get_post_subscribers_for_email($post->ID);
-
-  $subscriber_mail_list = array();
-
-  foreach($subscriber_list as $key) {
-    if ($key != $current_user_id) {
-      $subscriber_mail_list[] = $key;
-    }  
-  }
-
-  if(!empty($subscriber_mail_list)) {
-    $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    $subject = 'Takip ettiğiniz yazıya yeni yorum geldi.';
-    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarında '.$comment->comment_author." bir şeyler karaladı.<br/><br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
-    //echo $content;
-    foreach($subscriber_mail_list as $u_id) {
-      $udata=get_userdata($u_id);
-      $email=$udata->user_email;
-      $uname=$udata->display_name;
-      wp_mail( $email, $subject, 'Merhaba '.$uname.",<br/><br/>".$content, $headers);
-    }
-  }
-
-  if(!empty($mention_mail_list)) {
-    $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    $subject = 'Bir yazının altında sizi andılar.';
-    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/><br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
-    //echo $content;
-    foreach($mention_mail_list as $u_id) {
-      $udata=get_userdata($u_id);
-      $email=$udata->user_email;
-      $uname=$udata->display_name;
-      wp_mail( $email, $subject, 'Merhaba '.$uname.",<br/><br/>".$content, $headers);
-    }
-  }
-//echo $comment_link;
-  //print_r($mention_mail_list);
-  //print_r($subscriber_mail_list);die();
-  //print_r($mail_list);
-//  die();
+  global $wpdb;
+  $plugin_table = $wpdb->prefix . "sc_mail_queue";
+  $sql = "INSERT INTO $plugin_table (comment_id) VALUES ($comment_id)";
+  $wpdb->query($sql);
 }
 add_action("comment_post","sc_new_comment");
+
+function sc_do_mail() {
+  global $wp_query;
+  global $wpdb;
+  if ($wp_query->query_vars['name'] == 'sc_do_mail') {
+    $plugin_table = $wpdb->prefix . "sc_mail_queue";
+    $sql = "SELECT * FROM $plugin_table";
+    $results = $wpdb->get_results($sql);
+    foreach ($results as $res) {
+    
+      $comment_id = $res->comment_id;
+      $comment = get_comment($comment_id);
+      $post = get_post($comment->comment_post_ID);
+      $mention_mail_list = array();
+
+      $mention_list = sc_get_mention_list($comment->comment_content);
+
+      $current_user_id = get_current_user_id();
+
+
+      $comment_link = get_comment_link($comment_id);
+
+      foreach($mention_list as $key) {
+        $user_id = sc_get_userid($key);
+        $single = true;
+        $applicable = get_user_meta($user_id, "sc_mention_mail",$single);
+
+        if($applicable == "true" && ($user_id != $current_user_id)) {
+          $mention_mail_list[] = $user_id;
+        }
+      }
+
+      $subscriber_list = sc_get_post_subscribers_for_email($post->ID);
+
+      $subscriber_mail_list = array();
+
+      foreach($subscriber_list as $key) {
+        if ($key != $current_user_id) {
+          $subscriber_mail_list[] = $key;
+        }  
+      }
+      print_r($subscriber_mail_list);
+      print_r($mention_mail_list);
+      if(!empty($subscriber_mail_list)) {
+        $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+        $subject = 'Takip ettiğiniz yazıya yeni yorum geldi.';
+        $content = '" '.$post->post_title.' " başlıklı yazının yorumlarında '.$comment->comment_author." bir şeyler karaladı.<br/><br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
+        //echo $content;
+        foreach($subscriber_mail_list as $u_id) {
+          $udata=get_userdata($u_id);
+          $email=$udata->user_email;
+          $uname=$udata->display_name;
+          wp_mail( $email, $subject, 'Merhaba '.$uname.",<br/><br/>".$content, $headers);
+        }
+      }
+
+      if(!empty($mention_mail_list)) {
+        $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+        $subject = 'Bir yazının altında sizi andılar.';
+        $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/><br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
+        //echo $content;
+        foreach($mention_mail_list as $u_id) {
+          $udata=get_userdata($u_id);
+          $email=$udata->user_email;
+          $uname=$udata->display_name;
+          wp_mail( $email, $subject, 'Merhaba '.$uname.",<br/><br/>".$content, $headers);
+        }
+      }
+    }
+    $wpdb->query("DELETE FROM $plugin_table");
+    exit;
+  }
+}
+
+add_action('template_redirect','sc_do_mail');
 
 function sc_user_subscribed($user_id,$post_id) {
   global $wpdb;
