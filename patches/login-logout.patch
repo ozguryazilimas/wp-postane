@@ -1,12 +1,12 @@
 diff --git a/login-logout/login-logout.php b/login-logout/login-logout.php
-index 1bc3df9..572761c 100644
+index 92178cd..78e5df6 100644
 --- a/login-logout/login-logout.php
 +++ b/login-logout/login-logout.php
 @@ -17,6 +17,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
  	}
  	
  	public function widget( $args, $instance ) { // outputs the content of the widget
-+		global $wpdb;
++    global $wpdb;
  		extract($args);
  		//$title = apply_filters('widget_title', empty($instance['title']) ? __('Login-Logout', 'login-logout') : $instance['title'], $instance, $this->id_base);
  		$title = apply_filters('widget_title', $instance['title']);
@@ -15,7 +15,7 @@ index 1bc3df9..572761c 100644
  			$item_before = '<span class='; // class will be added and the tag is not closed
  			$item_after = '</span>';
 -			$split_char = ' | ';
-+			$split_char = '';
++      $split_char = '';
  		} else {
  			$wrap_before = '<ul class="wrap_login_logout">';
  			$wrap_after = '</ul>';
