@@ -70,14 +70,14 @@ add_action('init', 'yirmiiki_shortcode_button_init');
 function yirmiiki_shortcode_button_init() {
   if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') && get_user_option('rich_editing') == 'true')
     return;
-  add_filter("mce_external_plugins", "yirmiiki_register_tinymce_plugin"); 
+  add_filter("mce_external_plugins", "yirmiiki_register_tinymce_plugin");
   add_filter('mce_buttons', 'yirmiiki_add_tinymce_button');
 }
 
 
 function yirmiiki_register_tinymce_plugin($plugin_array) {
-  $plugin_array['dizi_button'] = plugin_dir_url() . 'dizi.js';
-  $plugin_array['oyuncu_button'] = plugin_dir_url() . 'oyuncu.js';
+  $plugin_array['dizi_button'] = plugin_dir_url(__FILE__) . 'dizi.js';
+  $plugin_array['oyuncu_button'] = plugin_dir_url(__FILE__) . 'oyuncu.js';
   return $plugin_array;
 }
 
