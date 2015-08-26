@@ -27,6 +27,20 @@ $sql="(SELECT DISTINCT(A.ID) as ID FROM (SELECT $posts_table.ID as ID FROM $post
 $res = $wpdb->get_results($sql,"ARRAY_A");
 
 echo '<div class="sc_subscribe_list"/>';
+
+echo "<div class='sc_h_subscribe_list_element'>
+          <div class='sc_h_subscribe_list_element_title'>
+            Yazı başlığı
+          </div>
+          <div class='sc_h_subscribe_list_comment_count'>
+            Yeni yorum
+          </div>
+          <div class='sc_h_subscribe_list_mail'>E-posta</div>
+          <div class='sc_h_subscribe_list_unsubscribe'>
+            Takip
+          </div>
+        </div>
+    ";
 foreach($res as $key) {
   $post = get_post($key['ID']);
   $post_id = $key['ID'];
@@ -54,8 +68,8 @@ foreach($res as $key) {
           <div class='sc_subscribe_list_comment_count'>
             $comment_count
           </div>
-           <div data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>Eposta al.</div>
-           <div data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>Eposta alma.</div>
+           <div data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>E-posta al.</div>
+           <div data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>E-posta alma.</div>
           <div class='sc_subscribe_list_unsubscribe' data-postid='$post_id'>
             Takip etme.
           </div>
