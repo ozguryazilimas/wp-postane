@@ -29,13 +29,14 @@ $res = $wpdb->get_results($sql,"ARRAY_A");
 echo '<div class="sc_subscribe_list"/>';
 
 echo "<div class='sc_h_subscribe_list_element'>
-          <div class='sc_h_subscribe_list_element_title'>
+          <a><div class='sc_h_subscribe_list_element_title'>
             Yazı başlığı
-          </div>
+          </div></a>
           <div class='sc_h_subscribe_list_comment_count'>
             Yeni yorum
           </div>
           <div class='sc_h_subscribe_list_mail'>E-posta</div>
+          <div class='sc_h_subscribe_list_mail' style='display:none'>E-posta</div>
           <div class='sc_h_subscribe_list_unsubscribe'>
             Takip
           </div>
