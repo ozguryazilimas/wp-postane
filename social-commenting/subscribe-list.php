@@ -46,14 +46,14 @@ foreach($res as $key) {
     $first_unread_comment_link = get_permalink($key['ID']);
 
   echo "<div class='sc_subscribe_list_element'>
-          <div class='sc_subscribe_list_comment_count'>
-            $comment_count
-          </div>
           <a href='".$first_unread_comment_link."'>
           <div class='sc_subscribe_list_element_title'>
             $post_title
           </div>
           </a>
+          <div class='sc_subscribe_list_comment_count'>
+            $comment_count
+          </div>
            <div data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>Eposta al.</div>
            <div data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>Eposta alma.</div>
           <div class='sc_subscribe_list_unsubscribe' data-postid='$post_id'>
