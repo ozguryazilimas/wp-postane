@@ -32,7 +32,7 @@ function dizi_shortcode_replace($content) {
     $text = substr($content, $text_start, $text_len);
     $index_text = strtolower($text);
     if(isset($dizi_list[$index_text])) {
-      $content = substr($content,0,$start_pos) . "<a href='".$dizi_list[$index_text]."'>".$text."</a>" . substr($content,$end_pos + 7);
+      $content = substr($content,0,$start_pos) . "<a href='".$dizi_list[$index_text]['link']."'>".$text."</a>" . substr($content,$end_pos + 7);
     } else {
       $content = substr($content,0,$start_pos) . "<a href='".get_site_url()."/dizi-listesi'>".$text."</a>" . substr($content,$end_pos + 7);
     }
@@ -54,7 +54,7 @@ function oyuncu_shortcode_replace($content) {
     $text = substr($content, $text_start, $text_len);
     $index_text = strtolower($text);
     if(isset($oyuncu_list[$index_text])) {
-      $content = substr($content,0,$start_pos) . "<a href='".$oyuncu_list[$index_text]."'>".$text."</a>" . substr($content,$end_pos + 9);
+      $content = substr($content,0,$start_pos) . "<a href='".$oyuncu_list[$index_text]['link']."'>".$text."</a>" . substr($content,$end_pos + 9);
     } else {
       $content = substr($content,0,$start_pos) . "<a href='".get_site_url()."'>".$text."</a>" . substr($content,$end_pos + 9);
     }

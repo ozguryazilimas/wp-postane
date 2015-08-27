@@ -61,11 +61,9 @@
       $query = str_replace(' ','+',$oyuncu_index);
       $imdb_response = json_decode(file_get_contents("http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=$query"));
       if (isset($imdb_response->name_popular) && strcasecmp($imdb_response->name_popular[0]->name,$oyuncu)==0 ) {
-        $json_liste[$oyuncu_index] = "http://www.imdb.com/name/".$imdb_response->name_popular[0]->id;
+        $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_popular[0]->id, 'name' => $imdb_response->name_popular[0]->name);
       } elseif (isset($imdb_response->name_exact) && strcasecmp($imdb_response->name_exact[0]->name,$oyuncu)==0) {
-        $json_liste[$oyuncu_index] = "http://www.imdb.com/name/".$imdb_response->name_exact[0]->id;
-      } else {
-        $json_liste[$oyuncu_index] = get_site_url();
+        $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_exact[0]->id, 'name' => $imdb_response->name_exact[0]->name);
       }
     }
   }

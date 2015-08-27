@@ -56,7 +56,7 @@ foreach($ul_list as $list) {
       }
     }
     if($link != NULL) {
-      $res_array[strtolower($a_elem->textContent)] = $link;
+      $res_array[strtolower($a_elem->textContent)] = array('link' => $link,'name' => $a_elem->textContent);
     }
     $child = $child->nextSibling;
   }
