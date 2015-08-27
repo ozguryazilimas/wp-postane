@@ -1,12 +1,12 @@
 === WM Simple Captcha ===
-Contributors: http://plugins.web-mumbai.com/
+Contributors: webmumbai
 Tags: simple captcha, registration captcha, custom captcha image, register captcha image, theme my captcha
 Requires at least: 3.6
-Tested up to: 4.2.2
-Stable tag: 2.0.1
+Tested up to: 4.3
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
+Donate link: http://plugins.web-mumbai.com/
 Captcha image for registration page, customize according to your theme.
 
 == Description ==
@@ -86,6 +86,10 @@ Yes, see the plugin settings page.
 
 
 == Upgrade Notice ==
+= 2.0.2 - 2015-08-22 =
+* Tested: tested in latest wordpress 4.3
+* Bugfix : We fixed
+
 = 2.0.1 - 2015-07-12 =
 * Bugfix : We fixed
 
@@ -102,6 +106,10 @@ Yes, see the plugin settings page.
 * Added: First working release of the Plugin
 
 == Changelog ==
+= 2.0.2 - 2015-08-22 =
+* Tested: tested in latest wordpress 4.3
+* Bugfix : We fixed
+
 = 2.0.1 - 2015-07-12 =
 * Bugfix : We fixed
 
