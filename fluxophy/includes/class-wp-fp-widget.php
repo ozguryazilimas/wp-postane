@@ -145,7 +145,7 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
         if (isset($picture_url)) {
           $output .= '<img src="' . $picture_url . '"></img>';
         }
-
+        $output .= "<div class='fluxophy_22dakika'><a href='http://www.facebook.com/22dakika.org'>22dakika<br/><span style='font-weight:normal'>/22dakika.org</span></a></div>";
         $output .= '<a href="' . $received->data[$i]->link . '" title="' . date_i18n('G:i - d F Y', strtotime($received->data[$i]->updated_time)) . '" target="_blank">';
         $output .= date_i18n('d M', strtotime($received->data[$i]->updated_time));
         $output .= '</a>';

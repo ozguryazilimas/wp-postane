@@ -31,9 +31,8 @@ div.fluxophy_entry_data {
 
 .fluxophy_entry_header img {
   margin: 4px 4px 0 4px;
-  border: 1px solid #D2D2D2;
   border-radius: 4px;
-  width: 48px;
+  width: 32px;
 }
 
 .fluxophy_entry_header a {
@@ -116,4 +115,18 @@ div.fluxophy_entry_data {
   fill: #fff;
 }
 
+.fluxophy_22dakika {
+  display: inline-block;
+  font-weight: bold;
+  line-height: 15px; 
+  position: relative;
+  top: 5px;
+}
 
+.fluxophy_22dakika a:hover{
+  color: black;
+}
+
+.fluxophy_22dakika a:hover span {
+  text-decoration: none;
+}
