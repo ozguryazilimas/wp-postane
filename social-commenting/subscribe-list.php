@@ -32,9 +32,9 @@ echo "<div class='sc_h_subscribe_list_element'>
           <a><div class='sc_h_subscribe_list_element_title'>
             Yazı başlığı
           </div></a>
-          <div class='sc_h_subscribe_list_comment_count'>
+          <!--<div class='sc_h_subscribe_list_comment_count'>
             Yeni yorum
-          </div>
+          </div>-->
           <div class='sc_h_subscribe_list_mail'>E-posta</div>
           <div class='sc_h_subscribe_list_mail' style='display:none'>E-posta</div>
           <div class='sc_h_subscribe_list_unsubscribe'>
@@ -64,11 +64,11 @@ foreach($res as $key) {
           <a href='".$first_unread_comment_link."'>
           <div class='sc_subscribe_list_element_title'>
             $post_title
+            <div class='sc_subscribe_list_comment_count'>
+              $comment_count
+            </div>
           </div>
           </a>
-          <div class='sc_subscribe_list_comment_count'>
-            $comment_count
-          </div>
            <div data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>E-posta al.</div>
            <div data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>E-posta alma.</div>
           <div class='sc_subscribe_list_unsubscribe' data-postid='$post_id'>

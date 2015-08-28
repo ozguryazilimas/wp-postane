@@ -30,15 +30,17 @@
 }
 
 .sc_subscribe_list_comment_count {
-  color:black;
-  padding:2%;
-  width:14%;
-  text-align:right;
+  display:inline-block;
+  color:#7D7874;
   background-color: #ffd200;
+  border-radius:5px;
+  padding:0px 5px;
+  margin-left:5px;
+  float:right;
 }
 .sc_subscribe_list_element_title {
   background-color: #f56e00;
-  width: 36%;
+  width: 55%;
   color:white;
   padding:2%;
 }
@@ -108,20 +110,27 @@
   //text-align:center;
 }
 .sc_h_subscribe_list_element_title {
-  width: 36%;
+  height:30px;
+  width: 55%;
   color:black;
   padding:2%;
   background-color:#ddd;
 }
 
 .sc_h_subscribe_list_comment_count {
+  height:40px;
+  font-size:13px;
+  line-height:15px;
   color:black;
-  width:15%;
-  padding:2% 1.5%;
+  width:6%;
+  padding:0 1.5%;
+  
   background-color:#ddd;
+  border:1px solid #000;
 }
 
 .sc_h_subscribe_list_mail {
+  height:30px;
   width: 16%;
   color:black;
   padding:2%;
@@ -129,6 +138,7 @@
 }
 
 .sc_h_subscribe_list_unsubscribe {
+  height:30px;
   width: 14%;
   color: black;
   padding:2%;
