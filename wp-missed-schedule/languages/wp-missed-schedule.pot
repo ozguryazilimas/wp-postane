@@ -1,0 +1,104 @@
+# Copyright (C) 2015 WP Missed Schedule
+# This file is distributed under the same license as the WP Missed Schedule package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Missed Schedule 2014.1231.2014\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-missed-"
+"schedule\n"
+"POT-Creation-Date: 2015-08-25 22:30:36+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: wp-missed-schedule.php:190
+msgid ""
+"Plugin WP Missed Schedule Requires WordPress 2.1+ or Greater: Activation "
+"Stopped."
+msgstr ""
+
+#: wp-missed-schedule.php:328 wp-missed-schedule.php:337
+#: wp-missed-schedule.php:352
+msgid "View Your Missed Scheduled Failed Future Posts"
+msgstr ""
+
+#: wp-missed-schedule.php:328 wp-missed-schedule.php:337
+msgid "Missed"
+msgstr ""
+
+#: wp-missed-schedule.php:329 wp-missed-schedule.php:351
+msgid "Requires WP Crontrol Plugin Activated"
+msgstr ""
+
+#: wp-missed-schedule.php:329 wp-missed-schedule.php:351
+msgid "Cron"
+msgstr ""
+
+#: wp-missed-schedule.php:352
+msgid "Miss"
+msgstr ""
+
+#: wp-missed-schedule.php:386
+msgid "Offer a Beer to sLa"
+msgstr ""
+
+#: wp-missed-schedule.php:386
+msgid "Donate"
+msgstr ""
+
+#: wp-missed-schedule.php:387
+msgid "Bugfix and Suggestions"
+msgstr ""
+
+#: wp-missed-schedule.php:387
+msgid "Contact"
+msgstr ""
+
+#: wp-missed-schedule.php:388
+msgid "Visit other author plugins"
+msgstr ""
+
+#: wp-missed-schedule.php:388
+msgid "Other"
+msgstr ""
+
+#: wp-missed-schedule.php:389
+msgid "Try New Stable Beta Version Branche 2015"
+msgstr ""
+
+#: wp-missed-schedule.php:389
+msgid "Beta"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP Missed Schedule"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "//slangji.wordpress.com/wp-missed-schedule/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"WordPress plugin WP <code>Missed Schedule</code> Fix <code>Scheduled</code> "
+"<code>Failed Future Posts</code> <code>Virtual Cron Job</code>: find only "
+"items that match this problem, and republish them correctly 10 items each "
+"session, every 10 minutes. All others will be solved on next sessions, to no "
+"waste resources, until no longer exist - Free (UNIX STYLE) Stable Branche "
+"2014 - Version 2014.1231 - Revision 2 - Build 2015-08-25 - Cron link "
+"requires <a title=\"Required for Cron Link\" href=\"//wordpress.org/plugins/"
+"wp-crontrol/\">WP Crontrol</a> activated and WP 2.7+ or later - <a title="
+"\"Try New Stable Beta Version Branche 2015\" href=\"//slangji.wordpress.com/"
+"wp-missed-schedule-beta/\">Try New Beta Branche 2015</a> - More of 200.000+ "
+"downloads and 60.000+ installs"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "sLa NGjI's"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "//slangji.wordpress.com/"
+msgstr ""
