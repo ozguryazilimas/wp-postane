@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-18 02:57+0200\n"
+"POT-Creation-Date: 2015-08-29 18:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,30 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: includes/class-wp-fp-widget.php:12
+#: includes/class-wp-fp-widget.php:14
 msgid "Fetches data from external URL and shows as a nice list"
 msgstr ""
 
-#: includes/class-wp-fp-widget.php:84
+#: includes/class-wp-fp-widget.php:99
 msgid "Title:"
 msgstr ""
 
-#: includes/class-wp-fp-widget.php:88
+#: includes/class-wp-fp-widget.php:103
 msgid "Source URL:"
 msgstr ""
 
-#: includes/class-wp-fp-widget.php:92
+#: includes/class-wp-fp-widget.php:107
 msgid "Picture URL:"
 msgstr ""
 
-#: includes/class-wp-fp-widget.php:96
+#: includes/class-wp-fp-widget.php:111
 msgid "Account Name:"
 msgstr ""
 
-#: includes/class-wp-fp-widget.php:100
+#: includes/class-wp-fp-widget.php:115
 msgid "Account Link:"
 msgstr ""
 
-#: includes/class-wp-fp-widget.php:104
+#: includes/class-wp-fp-widget.php:119
 msgid "Number of entries to show (default 10):"
+msgstr ""
+
+#: includes/class-wp-fp-widget.php:123
+msgid "Twitter Account:"
+msgstr ""
+
+#: includes/class-wp-fp-widget.php:127
+msgid "Twitter Data ID:"
 msgstr ""

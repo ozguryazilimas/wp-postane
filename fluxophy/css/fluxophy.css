@@ -52,16 +52,11 @@ div.fluxophy_entry_data {
 
 /* home button */
 .fluxophy_button_home {
+  background-color: #C2C2C2;
   width: 100%;
   display: inline-block;
   position: relative;
   overflow: hidden;
-  background-color: #33477a;
-  background-image: -webkit-linear-gradient(top, #5975ba, #33477a 100%);
-  background-image: -moz-linear-gradient(top, #5975ba, #33477a);
-  background-image: -ms-linear-gradient(top, #5975ba, #33477a);
-  background-image: -o-linear-gradient(top, #5975ba, #33477a);
-  background-image: linear-gradient(top, #5975ba, #33477a);
   border: 0;
   border-radius: 0.4em;
   -webkit-border-radius: 0.4em;
@@ -82,13 +77,32 @@ div.fluxophy_entry_data {
   -webkit-appearance: none;
 }
 
-.fluxophy_button_home:hover {
-  background-color: #5975ba;
-  background-image: -webkit-linear-gradient(top, #33477a, #5975ba 90%);
-  background-image: -moz-linear-gradient(top, #33477a, #5975ba);
-  background-image: -ms-linear-gradient(top, #33477a, #5975ba);
-  background-image: -o-linear-gradient(top, #33477a, #5975ba);
-  background-image: linear-gradient(top, #33477a, #5975ba);
+#fluxophy_button_show_fb {
+  width: 50%;
+}
+
+#fluxophy_button_show_twitter {
+  width: 50%;
+  float: right;
+}
+
+#fluxophy_widget_twitter {
+  height: 350px;
+}
+
+span.fluxophy_button_home_fb:hover,
+#fluxophy_button_show_fb.active span.fluxophy_button_home_fb {
+  background-color: #33477a;
+  background-image: -webkit-linear-gradient(top, #5975ba, #33477a 100%);
+  background-image: -moz-linear-gradient(top, #5975ba, #33477a);
+  background-image: -ms-linear-gradient(top, #5975ba, #33477a);
+  background-image: -o-linear-gradient(top, #5975ba, #33477a);
+  background-image: linear-gradient(top, #5975ba, #33477a);
+}
+
+span.fluxophy_button_home_twitter:hover,
+#fluxophy_button_show_twitter.active .fluxophy_button_home_twitter {
+  background-color: #FFFFFF;
 }
 
 .fluxophy_button_home_icon,
@@ -112,13 +126,20 @@ div.fluxophy_entry_data {
 .fluxophy_button_home svg {
   width: 1.8em;
   height: 1.8em;
-  fill: #fff;
+}
+
+.fluxophy_button_home_fb svg {
+  fill: #FFFFFF;
+}
+
+.fluxophy_button_home_twitter svg {
+  fill: #55ACEE;
 }
 
 .fluxophy_22dakika {
   display: inline-block;
   font-weight: bold;
-  line-height: 15px; 
+  line-height: 15px;
   position: relative;
   top: 5px;
 }
