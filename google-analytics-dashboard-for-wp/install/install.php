@@ -36,7 +36,6 @@ class GADWP_Install {
 			$options['ga_target_geomap'] = '';
 			$options['ga_realtime_pages'] = 10;
 			$options['ga_dash_token'] = '';
-			$options['ga_dash_refresh_token'] = '';
 			$options['ga_dash_profile_list'] = array();
 			$options['ga_dash_tableid'] = '';
 			$options['ga_dash_frontend_keywords'] = 0;
@@ -89,7 +88,6 @@ class GADWP_Install {
 			$options['ga_target_geomap'] = get_option( 'ga_target_geomap' );
 			$options['ga_realtime_pages'] = get_option( 'ga_realtime_pages' );
 			$options['ga_dash_token'] = get_option( 'ga_dash_token' );
-			$options['ga_dash_refresh_token'] = get_option( 'ga_dash_refresh_token' );
 			$options['ga_dash_profile_list'] = get_option( 'ga_dash_profile_list' );
 			$options['ga_dash_tableid'] = get_option( 'ga_dash_tableid' );
 			$options['ga_dash_frontend_keywords'] = 0;
