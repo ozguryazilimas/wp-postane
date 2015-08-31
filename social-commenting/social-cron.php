@@ -104,18 +104,20 @@ $sql = "SELECT * FROM $plugin_table";
 $results = $wpdb->get_results($sql);
 
 $mail_contents = array();
+$subscriber_mail_array = array();
 
 foreach ($results as $res) {
   $comment_id = $res->comment_id;
   $comment = get_comment($comment_id);
   $post = get_post($comment->comment_post_ID);
   $mention_mail_list = array();
-
-  $mention_list = sc_get_mention_list($comment->comment_content);
-  $current_user_id = $comment->user_id;
-
-
   $comment_link = get_comment_link($comment_id);
+  if(isset($subscriber_mail_array[$post->ID])) {
+    $subscriber_mail_array[$post->ID]['comment_count']++;
+  } else {
+    $subscriber_mail_array[$post->ID] = array('comment_count' => 1, 'post_title' => $post->post_title, 'comment_link' => $comment_link, 'comment_author' => $comment->user_id);
+  }
+  $mention_list = sc_get_mention_list($comment->comment_content);
 
   foreach($mention_list as $key) {
     $user_id = sc_get_userid($key);
@@ -127,18 +129,10 @@ foreach ($results as $res) {
     }
   }
 
-  $subscriber_list = sc_get_post_subscribers_for_email($post->ID);
 
-  $subscriber_mail_list = array();
-
-  foreach($subscriber_list as $key) {
-    if ($key != $current_user_id) {
-      $subscriber_mail_list[] = $key;
-    }  
-  }
-  if(!empty($subscriber_mail_list)) {
-    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarında '.$comment->comment_author." bir şeyler karaladı.<br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
-    foreach($subscriber_mail_list as $u_id) {
+  if(!empty($mention_mail_list)) {
+    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
+    foreach($mention_mail_list as $u_id) {
       if(!isset($mail_contents[$u_id])) {
         $mail_contents[$u_id] = array($content);
       } else {
@@ -146,10 +140,13 @@ foreach ($results as $res) {
       }
     }
   }
+}
 
-  if(!empty($mention_mail_list)) {
-    $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
-    foreach($mention_mail_list as $u_id) {
+foreach($subscriber_mail_array as $post_id => $r_array) {
+  $subscriber_list = sc_get_post_subscribers_for_email($post_id);
+  $content = '" '.$r_array['post_title'].' " başlıklı yazının altında '.$r_array['comment_count'].' yeni yorum var.<br/>Okumadığınız ilk yoruma gitmek için tıklayınız: <a href="'.$r_array['comment_link'].'">'.$r_array['comment_link'].'</a>';
+  foreach($subscriber_list as $u_id) {
+    if($u_id != $r_array['comment_author']) {
       if(!isset($mail_contents[$u_id])) {
         $mail_contents[$u_id] = array($content);
       } else {
