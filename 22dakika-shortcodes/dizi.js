@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+    var opened=false;
     tinymce.create('tinymce.plugins.dizi_shortcode_plugin', {
         init : function(ed, url) {
                 ed.addCommand('dizi_insert_shortcode', function() {
@@ -7,7 +8,9 @@ jQuery(document).ready(function($) {
                     if (selected){
                         content = '[dizi]' + selected + '[/dizi]';
                     }else{
-                        content = '[dizi][/dizi]';
+                        if(!opened) content='[dizi]';
+                        else content='[/dizi]';
+                        opened=!opened;
                     }
 
                     tinymce.execCommand('mceInsertContent', false, content);

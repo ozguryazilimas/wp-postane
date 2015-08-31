@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+    var opened=false;
     tinymce.create('tinymce.plugins.oyuncu_shortcode_plugin', {
         init : function(ed, url) {
                 ed.addCommand('oyuncu_insert_shortcode', function() {
@@ -7,7 +8,9 @@ jQuery(document).ready(function($) {
                     if (selected) {
                         content = '[oyuncu]' + selected + '[/oyuncu]';
                     } else {
-                        content = '[oyuncu][/oyuncu]';
+                       if(!opened) content='[oyuncu]';
+                        else content='[/oyuncu]';
+                        opened=!opened;
                     }
                     tinymce.execCommand('mceInsertContent', false, content);
                 });
