@@ -144,7 +144,7 @@ foreach ($results as $res) {
 
 foreach($subscriber_mail_array as $post_id => $r_array) {
   $subscriber_list = sc_get_post_subscribers_for_email($post_id);
-  $content = '" '.$r_array['post_title'].' " başlıklı yazının altında '.$r_array['comment_count'].' yeni yorum var.<br/>Okumadığınız ilk yoruma gitmek için tıklayınız: <a href="'.$r_array['comment_link'].'">'.$r_array['comment_link'].'</a>';
+  $content = '" '.$r_array['post_title'].' " başlıklı yazının altında '.$r_array['comment_count'].' yeni yorum var.<br/>Okumadığınız yorumlara gitmek için tıklayınız: <a href="'.$r_array['comment_link'].'">'.$r_array['comment_link'].'</a>';
   foreach($subscriber_list as $u_id) {
     if($u_id != $r_array['comment_author']) {
       if(!isset($mail_contents[$u_id])) {
