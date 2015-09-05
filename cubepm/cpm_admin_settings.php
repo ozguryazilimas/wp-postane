@@ -6,6 +6,18 @@
  */
 
 
+function cpm_get_user_role_names() {
+  global $wp_roles;
+
+  if (!isset($wp_roles)) {
+    echo "not set";
+    $wp_roles = new WP_Roles();
+  }
+
+  return $wp_roles->get_names();
+}
+
+
 /**
  * CubePM Admin Settings Page
  * 
@@ -56,6 +68,7 @@ function cpm_admin_settings(){
 	$cpm_email_body = htmlspecialchars(get_option('cpm_email_body'));
 	$cpm_permission_newtopic = (array) get_option('cpm_permission_newtopic');
 ?>
+
 <div class="wrap"> 
 	<div id="icon-options-general" class="icon32"><br /></div> 
 <h2>CubePM - <?php _e('Settings', 'cubepm'); ?></h2> 
@@ -71,11 +84,21 @@ function cpm_admin_settings(){
 <th scope="row"><?php _e('Allowed to start PM topics', 'cubepm'); ?></th> 
 <td><fieldset>
 <p>
+<!--
 <label><input name="cpm_permission_newtopic[]"  type="checkbox" value="administrator" <?php echo in_array('administrator', $cpm_permission_newtopic) ? 'checked="checked"' : ''  ; ?> /> <?php _e('Administrators', 'cubepm'); ?></label><br />
 <label><input name="cpm_permission_newtopic[]"  type="checkbox" value="editor" <?php echo in_array('editor', $cpm_permission_newtopic) ? 'checked="checked"' : ''  ; ?> /> <?php _e('Editors', 'cubepm'); ?></label><br />
 <label><input name="cpm_permission_newtopic[]"  type="checkbox" value="author" <?php echo in_array('author', $cpm_permission_newtopic) ? 'checked="checked"' : ''  ; ?> /> <?php _e('Authors', 'cubepm'); ?></label><br />
 <label><input name="cpm_permission_newtopic[]"  type="checkbox" value="contributor" <?php echo in_array('contributor', $cpm_permission_newtopic) ? 'checked="checked"' : ''  ; ?> /> <?php _e('Contributors', 'cubepm'); ?></label><br />
 <label><input name="cpm_permission_newtopic[]"  type="checkbox" value="subscriber" <?php echo in_array('subscriber', $cpm_permission_newtopic) ? 'checked="checked"' : ''  ; ?> /> <?php _e('Subscribers', 'cubepm'); ?></label>
+-->
+<?php
+$current_roles = cpm_get_user_role_names();
+
+foreach ($current_roles as $role_name => $role_nice_name) {
+  $checked_attr = in_array($role_name, $cpm_permission_newtopic) ? 'checked="checked"' : '';
+  echo('<label><input name="cpm_permission_newtopic[]" type="checkbox" value="' . $role_name . '" ' . $checked_attr . ' /> ' . $role_nice_name . '</label><br>');
+}
+?>
 </p> 
 </fieldset></td> 
 </tr>
