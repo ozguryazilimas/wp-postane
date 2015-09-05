@@ -1,5 +1,7 @@
 <?php
-if(php_sapi_name()!="cli") die();
+if (php_sapi_name() != "cli") {
+  die();
+}
 
 define('WP_USE_THEMES', false);
 $wp_blog_path = array(
@@ -37,7 +39,7 @@ $list = $dom->getElementsByTagName("ul");
 $ul_list = array();
 
 foreach ($list as $elem) {
-  if($elem->hasAttribute("class") && $elem->getAttribute("class")=="dizi_listesi") {
+  if ($elem->hasAttribute("class") && $elem->getAttribute("class")=="dizi_listesi") {
     $ul_list[] = $elem;
   }
 }
@@ -47,22 +49,28 @@ $res_array = array();
 
 foreach($ul_list as $list) {
   $child = $list->firstChild;
+
   while ($child) {
     $a_elem = $child->firstChild;
     $link = NULL;
+
     foreach($a_elem->attributes as $attr) {
       if($attr->nodeName == "href") {
         $link = $attr->nodeValue;
       }
     }
-    if($link != NULL) {
+
+    if ($link != NULL) {
       $res_array[strtolower($a_elem->textContent)] = array('link' => $link,'name' => $a_elem->textContent);
     }
+
     $child = $child->nextSibling;
   }
 }
+
 $file_uri = plugin_dir_path(__FILE__) . '/dizi_listesi.json';
 $fp = fopen($file_uri, 'w') or die('could not open file: ' . $file_uri);
 fwrite($fp, json_encode($res_array));
 fclose($fp);
+
 ?>
