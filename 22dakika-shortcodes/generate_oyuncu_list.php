@@ -22,6 +22,48 @@ foreach($wp_blog_path as $incpath) {
   }
 }
 
+// initiate a fake curl session to mimmick browser
+function shorttag_generator_get_contents_for_browser($url) {
+  $header = array(
+    // 'Content-Type: application/json',
+    'Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5',
+    'Cache-Control: max-age=0',
+    'Connection: keep-alive',
+    'Keep-Alive: 300',
+    'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7',
+    'Accept-Language: en-us,en;q=0.5',
+    'Pragma: ' // keep this blank
+  );
+
+  $options = array(
+    CURLOPT_URL => $url,
+    CURLOPT_HTTPHEADER => $header,
+    CURLOPT_RETURNTRANSFER => true,
+    // CURLOPT_FOLLOWLOCATION => true,
+    // CURLOPT_USERAGENT => "Mozilla",
+    CURLOPT_USERAGENT => 'spider',
+    CURLOPT_AUTOREFERER => true,
+    // CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+    // CURLOPT_TIMEOUT => 120, // timeout on response
+    CURLOPT_TIMEOUT => 20,
+    // CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_SSL_VERIFYHOST => 0,
+    CURLOPT_REFERER => '',
+    CURLOPT_ENCODING => 'gzip,deflate'
+  );
+
+  $ch = curl_init();
+  curl_setopt_array( $ch, $options );
+
+  $result = curl_exec($ch);
+  $response_header = curl_getinfo($ch);
+  curl_close($ch);
+
+  return $result;
+}
+
+
 global $wpdb;
 $now = new DateTime();
 $now = $now->format('Y-m-d H:i:s');
@@ -65,7 +107,7 @@ foreach ($oyuncu_listesi as $oyuncu) {
 
   if (!isset($json_liste[$oyuncu_index])) {
     $query = str_replace(' ','+',$oyuncu_index);
-    $imdb_response = json_decode(file_get_contents("http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=$query"));
+    $imdb_response = json_decode(shorttag_generator_get_contents_for_browser("http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=$query"));
 
     if (isset($imdb_response->name_popular) && strcasecmp($imdb_response->name_popular[0]->name,$oyuncu)==0 ) {
       $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_popular[0]->id, 'name' => $imdb_response->name_popular[0]->name);
