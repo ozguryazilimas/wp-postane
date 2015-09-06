@@ -23,7 +23,7 @@ index 92178cd..78e5df6 100644
  			if ( is_user_logged_in() ){
  				$current_user = wp_get_current_user();
  				$username = $current_user->display_name;
--				$username_link = '<a href="'.admin_url('profile.php').'">'.$username.'</a>';
+-				$username_link = apply_filters( 'login_logout_username_link', '<a href="'.admin_url('profile.php').'">'.$username.'</a>', $current_user );
 +				$username_link = '<a class="kabartmatozu" href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
  				$welcome_text_new = str_replace('[username]', $username_link, $welcome_text);
 -				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
