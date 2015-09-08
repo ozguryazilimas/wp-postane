@@ -373,7 +373,7 @@ function postane_add_participants($user_id, $thread_id, $participants) {
   global $postane_user_thread;
 
   $sql = "SELECT COUNT(*) as c FROM $postane_user_thread WHERE user_id = $user_id AND thread_id = %d AND is_admin = 1";
-  $ret = $wpdb->query($wpdb->prepare($sql, $thread_id));
+  $ret = $wpdb->get_var($wpdb->prepare($sql, $thread_id));
 
   if($ret == 0) {
     return array("error" => PostaneLang::NO_AUTHORIZATION);
