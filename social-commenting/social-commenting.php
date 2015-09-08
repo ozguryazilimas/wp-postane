@@ -100,41 +100,40 @@ function sc_user_subscribed($user_id,$post_id) {
   return $count > 0;
 }
 
-function sc_load_subscribe_button() {
-  $plugin_dir = plugin_dir_url(__FILE__);
-  wp_enqueue_script("sc_subscribe_button_js",$plugin_dir . "js/subscribe.php?sc_url=" . admin_url('admin-ajax.php'));
-  wp_enqueue_style("sc_subscribe_button_css",$plugin_dir . "css/subscribe.css");
+function sc_load_subscribe_button($content, $id) {
+  if(in_the_loop() && !is_page() && is_single() && !empty($GLOBALS['post']) && get_the_ID() == $GLOBALS['post']->ID) {
+    $plugin_dir = plugin_dir_url(__FILE__);
+    wp_enqueue_script("sc_subscribe_button_js",$plugin_dir . "js/subscribe.php?sc_url=" . admin_url('admin-ajax.php'));
+    wp_enqueue_style("sc_subscribe_button_css",$plugin_dir . "css/subscribe.css");
 
-  $post_id = get_the_ID();
-  $current_user = get_current_user_id();
+    $post_id = get_the_ID();
+    $current_user = get_current_user_id();
 
-  $subscribed = sc_user_subscribed($current_user,$post_id);
-  if ($subscribed) {
-    echo "<div class='sc_subscribe_button sc_subscribed' data-postid='$post_id'>
-            <div class='sc_minus sc_display'/>
-              <img src='$plugin_dir/img/minus.png'/>
-              Bu yazıyı takip etme
-            </div>
-            <div class='sc_plus'>
-              <img src='$plugin_dir/img/plus.png'/>
-              Bu yazıyı takip et
+    $subscribed = sc_user_subscribed($current_user,$post_id);
+    if ($subscribed) {
+      $content = "<div class='sc_subscribe_button sc_subscribed' data-postid='$post_id'>
+              <div class='sc_minus sc_display' title='Bu yazıyı takip ediyorsunuz.'/>
+                <img src='$plugin_dir/img/minus.png'/>
               </div>
-          </div>";
-  } else {
-    echo "<div class='sc_subscribe_button' data-postid='$post_id'>
-            <div class='sc_minus'/>
-              <img src='$plugin_dir/img/minus.png'/>
-              Bu yazıyı takip etme
-            </div>
-            <div class='sc_plus sc_display'>
-              <img src='$plugin_dir/img/plus.png'/>
-              Bu yazıyı takip et
+              <div class='sc_plus' title='Bu yazıyı takip etmiyorsunuz.'>
+                <img src='$plugin_dir/img/plus.png'/>
+                </div>
+            </div>" . $content;
+    } else {
+      $content = "<div class='sc_subscribe_button' data-postid='$post_id'>
+              <div class='sc_minus'/>
+                <img src='$plugin_dir/img/minus.png' title='Bu yazıyı takip ediyorsunuz.'/>
               </div>
-          </div>";
+              <div class='sc_plus sc_display' title='Bu yazıyı takip etmiyorsunuz.'>
+                <img src='$plugin_dir/img/plus.png'/>
+                </div>
+            </div>" . $content;
+    }
   }
+  return $content;
 }
 
-add_action("comment_form","sc_load_subscribe_button");
+add_filter("the_content","sc_load_subscribe_button", 10, 2);
 
 
 function sc_subscribe($user_id, $post_id) {

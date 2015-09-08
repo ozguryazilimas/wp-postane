@@ -1,5 +1,5 @@
 .sc_subscribe_list {
-  padding:20px;
+  padding:10px 20px;
   font-family:"museo";
   font-weight:bold;
   font-size:13px;
@@ -7,13 +7,14 @@
 
 .sc_subscribe_list_element {
   width:100%;
-  margin-bottom:20px;
+  margin-bottom:5px;
 }
 
 .sc_subscribe_list_element_title,
 .sc_subscribe_list_unsubscribe,
 .sc_subscribe_list_comment_count {
   display: inline-block;
+  border-radius: 5px;
 }
 
 .sc_subscribe_list_email_no {
@@ -40,44 +41,49 @@
 }
 .sc_subscribe_list_element_title {
   background-color: #f56e00;
-  width: 55%;
+  width: 45%;
   color:white;
-  padding:2%;
+  padding:5px 2%;
 }
 
 .sc_subscribe_list_email_ok,
 .sc_subscribe_list_email_no {
+  border-radius:5px;
+  text-align:center;
   cursor:pointer;
   background-color: #04b404;
-  width: 16%;
+  width: 26%;
   color:white;
-  padding:2%;
+  padding:5px 2%;
 }
 .sc_mark_as_read_container {
   text-align:center;
 }
 .sc_mark_as_read {
+  border-radius:5px;
   cursor:pointer;
   display:inline-block;
   margin:0 auto;
-  font-size: 20px;
-  background-color:#555;
+  font-size: 18px;
+  background-color:#c00;
   color:white;
-  padding:7px;
+  padding:3px 10px;
 }
 .sc_mark_as_read:hover {
-  background-color:#c5c5c5;
+  background-color:#f60;
 }
-.sc_subscribe_list_email_no {
+.sc_subscribe_list_email_ok {
   background-color:black;
 }
 
 .sc_subscribe_list_unsubscribe {
+  text-align: center;
+  border-radius:5px;
   cursor:pointer;
   background-color: #b40431;
   width: 14%;
   color:white;
-  padding:2%;
+  padding:5px 2%;
 }
 
 .sc_subscribe_list_unsubscribe:hover {
@@ -102,7 +108,7 @@
 
 .sc_h_subscribe_list_element {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   font-size:14px;
 }
 .sc_h_subscribe_list_element div{
@@ -110,35 +116,26 @@
   //text-align:center;
 }
 .sc_h_subscribe_list_element_title {
-  height:30px;
-  width: 55%;
+  border-radius:5px;
+  height:20px;
+  width: 45%;
   color:black;
-  padding:2%;
+  padding:5px 2%;
   background-color:#ddd;
 }
 
-.sc_h_subscribe_list_comment_count {
-  height:40px;
-  font-size:13px;
-  line-height:15px;
-  color:black;
-  width:6%;
-  padding:0 1.5%;
-  
-  background-color:#ddd;
-  border:1px solid #000;
-}
 
 .sc_h_subscribe_list_mail {
-  height:30px;
-  width: 16%;
+  border-radius:5px;
+  height:25px;
+  width: 26%;
   color:black;
-  padding:2%;
+  padding:5px 2%;
   background-color:#ddd;
 }
 
 .sc_h_subscribe_list_unsubscribe {
-  height:30px;
+  height:25px;
   width: 14%;
   color: black;
   padding:2%;

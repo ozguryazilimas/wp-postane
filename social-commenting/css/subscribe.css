@@ -1,10 +1,8 @@
 .sc_plus {
   display:none;
   cursor: pointer;
-  margin: 10px 0;
   font-size: 16px;
   border: 1px solid rgba(0,0,0,0.1);
-  padding: 10px;
   font-family: museo;
   color: #666;
   font-weight:bold;
@@ -13,20 +11,24 @@
 }
 .sc_minus {
   display:none;
-  background-color:#000;
+  background-color:white;
   color: #999;
   cursor: pointer;
-  margin: 10px 0;
   font-size: 16px;
   border: 1px solid rgba(0,0,0,0.1);
-  padding: 10px;
   font-family: museo;
   font-weight:bold;
   border-radius: 3px;
 }
 .sc_subscribe_button img {
-  width: 10px;
-  height: 10px;
+  width:50px;
+  height:50px;
+  margin:0;
+}
+
+.sc_subscribe_button {
+  text-align:right;
+  display:block;
 }
 
 .sc_minus:hover,

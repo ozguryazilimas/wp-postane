@@ -19,11 +19,7 @@ jQuery(document).ready(function(){
       if(response=="done") {
         dis.removeClass("sc_display");
         parent.children('.sc_plus').addClass("sc_display");
-        jQuery(".sc_notice").remove();
-        var notice = jQuery("<div></div>");
-        notice.addClass("sc_notice");
-        notice.html("Takip iptal edildi.");
-        parent.append(notice);
+        alert("Artık bu yazıyı takip etmiyorsunuz.");
       }
     });
   });
@@ -42,11 +38,7 @@ jQuery(document).ready(function(){
       if(response=="done") {
         dis.removeClass("sc_display");
         parent.children('.sc_minus').addClass("sc_display");
-        jQuery(".sc_notice").remove();
-        var notice = jQuery("<div></div>");
-        notice.addClass("sc_notice");
-        notice.html("Takip edildi.");
-        parent.append(notice);
+        alert("Artık bu yazıyı takip ediyorsunuz.");
       }
     });
   });
