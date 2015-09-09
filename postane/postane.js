@@ -7,6 +7,33 @@ jQuery(document).ready(function(){
   jQuery("#postane_back").tooltip(postane_tooltip);
   jQuery("#postane_messages_quit_button").tooltip(postane_tooltip);
   jQuery("#postane_messages_addparticipant_button").tooltip(postane_tooltip);
+  jQuery("#postane_new_thread_participants").autocomplete({
+    source: function(request, response) {
+      data = {
+        'action' : 'postane',
+        'postane_action' : 'postane_autocomplete',
+        'postane_autocomplete_input' : request.term
+      };
+
+      jQuery.post(ajaxurl, data, function(data) {
+        response(jQuery.parseJSON(data));
+      });
+    }
+  });
+
+  jQuery("#postane_new_participant").autocomplete({
+    source: function(request, response) {
+      data = {
+        'action' : 'postane',
+        'postane_action' : 'postane_autocomplete',
+        'postane_autocomplete_input' : request.term
+      };
+
+      jQuery.post(ajaxurl, data, function(data) {
+        response(jQuery.parseJSON(data));
+      });
+    }
+  });
 
   function dump(obj) {
       var out = '';
