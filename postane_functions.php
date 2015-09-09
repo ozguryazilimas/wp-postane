@@ -16,6 +16,20 @@ function postane_get_user_id($display_name) {
   return false;
 }
 
+function postane_autocomplete($input) {
+  global $wpdb;
+  $users = $wpdb->users;
+  $sql = "SELECT display_name FROM $users WHERE display_name LIKE '%s'";
+  $results = $wpdb->get_results($wpdb->prepare($sql, $input . '%'), 'ARRAY_A');
+
+  $ret_array = array();
+  foreach($results as $res) {
+    $ret_array[] = array(value => $res['display_name']);
+  }
+
+  return $ret_array;
+}
+
 function postane_delete_message($user_id, $message_id) {
   global $wpdb;
   global $postane_user_message;
@@ -92,7 +106,10 @@ function postane_create_thread($user_id, $thread_title, $first_message, $partici
     $sql = "INSERT INTO $postane_user_message (user_id,message_id) VALUES ($p_id,$message_id)";
     $wpdb->query($sql);
   }
-  return true;
+
+    $sql = "UPDATE $postane_threads SET $postane_threads.last_message_time = (SELECT message_creation_time FROM $postane_messages WHERE $postane_messages.id = $message_id) WHERE $postane_threads.id = (SELECT thread_id FROM $postane_messages WHERE $postane_messages.id = $message_id)";
+  $wpdb->query($sql);
+  return array("success" => true);
 }
 
 function postane_edit_message($user_id, $message_id, $new_content) {
@@ -422,6 +439,9 @@ function postane_add_message($user_id, $thread_id, $message_content) {
 
   $message_id = $wpdb->insert_id;
 
+  $sql = "UPDATE $postane_threads SET $postane_threads.last_message_time = (SELECT message_creation_time FROM $postane_messages WHERE $postane_messages.id = $message_id) WHERE $postane_threads.id = (SELECT thread_id FROM $postane_messages WHERE $postane_messages.id = $message_id)";
+  $wpdb->query($sql);
+
   $sql = "SELECT user_id FROM $postane_user_thread WHERE thread_id = %d";
   $participants = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
 
@@ -468,7 +488,8 @@ function postane_setup_query($arr) {
                             'postane_exclusion_list' => array('type' => 'int_array'),
                             'postane_max_time' => array('type' => 'datetime'),
                             'postane_message_id' => array('type' => 'int'),
-                            'postane_min_time' => array('type' => 'datetime')
+                            'postane_min_time' => array('type' => 'datetime'),
+                            'postane_autocomplete_input' => array('type' => 'string')
                           );
   $query_vars = array();
   foreach ($arr as $key => $value) {

@@ -138,19 +138,11 @@ function postane_activate_plugin() {
     COLLATE = utf8_turkish_ci;
   ";
   $wpdb->query($sql);
-
-  $sql = "
-    CREATE TRIGGER `postane_messages_AINS` AFTER INSERT ON `$postane_messages` FOR EACH ROW
-    BEGIN
-	    UPDATE `$postane_threads` SET `$postane_threads`.`last_message_time` = NEW.`message_creation_time` WHERE `$postane_threads`.`id` = NEW.`thread_id`;
-    END
-  ";
-  $wpdb->query($sql);
 }
 register_activation_hook(__FILE__,'postane_activate_plugin');
 
 function postane_ajax() {
-  $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read');
+  $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read', 'postane_autocomplete');
   $action = isset($_POST['postane_action']) ? $_POST['postane_action'] : '';
 
   $query_vars = postane_setup_query($_POST);
@@ -163,6 +155,13 @@ function postane_ajax() {
   
   switch ($action) {
     case '':
+      break;
+    case 'postane_autocomplete':
+      if(!isset($query_vars['postane_autocomplete_input'])) {
+        wp_die();
+      }
+      $ret = postane_autocomplete($query_vars['postane_autocomplete_input']);
+      echo json_encode($ret);
       break;
     case 'delete_message': // makes a single message invisible to user.
       if(!isset($query_vars['postane_message_id'])) {
@@ -218,11 +217,7 @@ function postane_ajax() {
       $message_content = apply_filters('content_filtered_save_pre', $message_content);
       $participants = $query_vars['postane_participants'];
       $ret = postane_create_thread($user_id, $thread_title, $message_content, $participants);
-      if($ret === true) {
-        echo json_encode(array("success" => true));
-      } else {
-        echo json_encode($ret);
-      }
+      echo json_encode($ret);
       break;
     case 'edit_message': // edit message
       if(!isset($query_vars['postane_message_id']) || empty($query_vars['postane_message_id'])) {
@@ -351,6 +346,7 @@ function postane_entry($attr) {
     return;
   wp_enqueue_script("postane_js", plugin_dir_url(__FILE__) . 'postane.js');
   wp_enqueue_script("jquery-ui-tooltip");
+  wp_enqueue_script("jquery-ui-autocomplete");
   wp_enqueue_style("postane_css", plugin_dir_url(__FILE__) . 'postane.css');
   $plugin_dir_url = plugin_dir_url(__FILE__);
   ?>
@@ -372,12 +368,12 @@ function postane_entry($attr) {
           <div id="postane_threads">
             <div id="postane_threads_topmenu">
               <div id="postane_new_thread_toggle">
-                Yeni Mesaj
+                Yeni Özel Mesaj
               </div>
               <div id="postane_new_thread">
                 Başlık:
                 <div id="postane_new_thread_title" contenteditable="true"></div>
-                Katılımcı ekle (enter):
+                Kime (enter):
                 <div id="postane_new_thread_participants" contenteditable="true"></div>
                 <div id="postane_new_thread_participant_list"></div>
                 Mesaj:
@@ -412,7 +408,7 @@ function postane_entry($attr) {
             <div id="postane_participants_container" style="display:none">
             </div>
             <div id="postane_add_participant_container" style="display:none">
-              Katılımcı (enter): 
+              Kişi (enter): 
               <div id="postane_new_participant" contenteditable="true"></div>
               <div id="postane_new_participant_list"></div>
               <div id="postane_new_participants_send">Ekle</div>
