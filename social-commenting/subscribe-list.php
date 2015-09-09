@@ -43,7 +43,7 @@ echo "<div class='sc_h_subscribe_list_element'>
 foreach($res as $key) {
   $post = get_post($key['ID']);
   $post_id = $key['ID'];
-  $post_title = mb_strlen($post->post_title) > 35 ? mb_substr($post->post_title,0,35) : $post->post_title;
+  $post_title = mb_strlen($post->post_title) > 28 ? mb_substr($post->post_title,0,28) : $post->post_title;
   $email_subscribed = sc_user_email($user_id, $post_id);
   $sql = "SELECT COUNT(*) as c FROM $posts_table INNER JOIN $comments_table ON $posts_table.ID = $comments_table.comment_post_ID WHERE $posts_table.ID = $post_id AND $comments_table.comment_date > (SELECT last_read_time FROM $plugin_table WHERE $plugin_table.user_id=$user_id AND $plugin_table.post_id=$post_id)";
   $comment_count=$wpdb->get_row($sql)->c;
@@ -66,10 +66,10 @@ foreach($res as $key) {
             </div>
           </div>
           </a>
-           <div title='Bildirimleri açmak için tıklayınız.' data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>kapalı</div>
-           <div title='Bildirimleri kapatmak için tıklayınız.' data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>açık</div>
-           <div title='Yazıyı takip etmeyi bırakmak için tıklayınız.' class='sc_subscribe_list_unsubscribe' data-postid='$post_id'>
-            Takip etme.
+           <div title='Yazıya yeni yorum geldiğinde e-posta almak için tıklayınız.' data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>kapalı</div>
+           <div title='Yazıya yeni yorum geldiğinde e-posta almak istemiyorsanız tıklayınız.' data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>açık</div>
+           <div title='Yazıyı takibi bırakmak için tıklayınız.' class='sc_subscribe_list_unsubscribe' data-postid='$post_id'>
+            Takibi bırak.
           </div>
         </div>
     ";
