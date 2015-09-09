@@ -266,9 +266,11 @@ function postane_get_messages($user_id, $thread_id, $exclusion_list, $step, $max
     $participants_for_message_info[$info['user_id']] = $info;
   }
 
+  $send_mail = $participants_info[$user_id]['send_email'] == 1;
+
   $thread_info['thread_title'] = apply_filters('the_title', $thread_info['thread_title']);
 
-  return array("success" => array("is_current_user_admin" => $is_current_user_admin, 'thread_info' => $thread_info, 'participant_info' => $participants_info, 'message_info' => $messages, 'participants_for_message_info' => $participants_for_message_info));
+  return array("success" => array("send_email" => $send_mail, "is_current_user_admin" => $is_current_user_admin, 'thread_info' => $thread_info, 'participant_info' => $participants_info, 'message_info' => $messages, 'participants_for_message_info' => $participants_for_message_info));
 }
 
 
@@ -464,6 +466,27 @@ function postane_add_message($user_id, $thread_id, $message_content) {
   $dt->setTimezone(new DateTimeZone('Europe/Istanbul'));
   $message_time = $dt->format("Y-m-d H:i:s");
   $username = get_userdata($user_id)->display_name;
+
+
+  $sql = "SELECT user_id FROM $postane_user_thread WHERE send_email = 1 AND $postane_user_thread.thread_id = %d AND user_id != $user_id";
+  $user_ids = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
+  $sql = "SELECT thread_title FROM $postane_threads WHERE id = %d";
+  $thread_title = $wpdb->get_var($wpdb->prepare($sql, $thread_id));
+  $postane_url = get_site_url() . '/postane';
+
+  $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
+  $headers .= "MIME-Version: 1.0\r\n";
+  $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+  $subject = "22dakika.org Postane'de şu konuşmada yeni bir mesaj var: '" . mb_substr($thread_title, 0, min(25, mb_strlen($thread_title))) . (mb_strlen($thread_title) > 25 ? "...'" : "'");
+  foreach($user_ids as $u_id) {
+    $u_id = $u_id['user_id'];
+    $recip_userdata = get_userdata($u_id);
+    $recip_username = $recip_userdata->display_name;
+    $recip_email = $recip_userdata->user_email;
+    $content = "Merhaba $recip_username,<br/><br/>'$thread_title' başlıklı konuşmaya $username cevap yazdı.<br/><br/>$print_content<br/><br/>Postaneye gitmek için tıklayınız: <a href='$postane_url'></a>";
+    wp_mail($recip_email, $subject, $content, $headers);
+  }
+
   return array("success" => array('username' => $username, 'message_content' => $print_content, 'avatar' => $avatar, 'author_url' => $author_url, 'message_time' => $message_time, 'message_id' => $message_id));
 }
 
@@ -475,6 +498,37 @@ function postane_user_exists($user_name) {
   return $res != 0;
 }
 
+function postane_send_email($user_id, $thread_id) {
+  global $wpdb;
+  global $postane_user_thread;
+
+  $sql = "SELECT COUNT(*) FROM $postane_user_thread WHERE thread_id = %d AND user_id = $user_id AND send_email = 0";
+  $res = $wpdb->get_var($wpdb->prepare($sql, $thread_id));
+
+  if($res == 0) {
+    return array("error" => PostaneLang::ALREADY_RECEIVING_MAILS);
+  }
+
+  $sql = "UPDATE $postane_user_thread SET send_email = 1 WHERE user_id = $user_id AND thread_id = %d";
+  $wpdb->query($wpdb->prepare($sql, $thread_id));
+  return array("success" => true);
+}
+
+function postane_unsend_email($user_id, $thread_id) {
+  global $wpdb;
+  global $postane_user_thread;
+
+  $sql = "SELECT COUNT(*) FROM $postane_user_thread WHERE thread_id = %d AND user_id = $user_id AND send_email = 1";
+  $res = $wpdb->get_var($wpdb->prepare($sql, $thread_id));
+
+  if($res == 0) {
+    return array("error" => PostaneLang::ALREADY_NOTRECEIVING_MAILS);
+  }
+
+  $sql = "UPDATE $postane_user_thread SET send_email = 0 WHERE user_id = $user_id AND thread_id = %d";
+  $wpdb->query($wpdb->prepare($sql, $thread_id));
+  return array("success" => true);
+}
 
 function postane_setup_query($arr) {
   $query_var_types = array(

@@ -20,5 +20,7 @@ class PostaneLang {
   const NO_MAX_TIME_ERROR = ".";
   const NO_MIN_TIME_ERROR = ".";
   const NO_AUTHORIZATION = "Yetkiniz yok.";
+  const ALREADY_RECEIVING_MAILS = ".";
+  const ALREADY_NOTRECEIVING_MAILS = "./";
 }
 ?>

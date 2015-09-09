@@ -90,11 +90,12 @@ function postane_activate_plugin() {
       `is_admin` TINYINT NOT NULL DEFAULT 0,
       `join_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       `last_read_time` TIMESTAMP NOT NULL DEFAULT 0,
+      `send_email` TINYINT NOT NULL DEFAULT 0,
       PRIMARY KEY (`id`),
       UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-      UNIQUE KEY (`user_id`,`thread_id`),
       INDEX `fk_user_thread_to_users_idx` (`user_id` ASC),
       INDEX `fk_user_thread_to_threads_idx` (`thread_id` ASC),
+      UNIQUE INDEX `thread_pair_UNIQUE` (`user_id` ASC, `thread_id` ASC),
       CONSTRAINT `fk_user_thread_to_users`
         FOREIGN KEY (`user_id`)
         REFERENCES `$users` (`ID`)
@@ -120,9 +121,9 @@ function postane_activate_plugin() {
       `read` TINYINT NOT NULL DEFAULT 0,
       PRIMARY KEY (`id`),
       UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-      UNIQUE KEY (`user_id`,`message_id`),
       INDEX `fk_user_message_to_users_idx` (`user_id` ASC),
       INDEX `fk_user_message_to_messages_idx` (`message_id` ASC),
+      UNIQUE INDEX `user_message_unique_pair` (`user_id` ASC, `message_id` ASC),
       CONSTRAINT `fk_user_message_to_users`
         FOREIGN KEY (`user_id`)
         REFERENCES `$users` (`ID`)
@@ -142,7 +143,7 @@ function postane_activate_plugin() {
 register_activation_hook(__FILE__,'postane_activate_plugin');
 
 function postane_ajax() {
-  $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read', 'postane_autocomplete');
+  $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read', 'autocomplete_username', 'send_email', 'unsend_email');
   $action = isset($_POST['postane_action']) ? $_POST['postane_action'] : '';
 
   $query_vars = postane_setup_query($_POST);
@@ -156,7 +157,23 @@ function postane_ajax() {
   switch ($action) {
     case '':
       break;
-    case 'postane_autocomplete':
+    case 'send_email':
+      if(!isset($query_vars['postane_thread_id'])) {
+        echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
+        wp_die();
+      }
+      $ret = postane_send_email($user_id, $query_vars['postane_thread_id']);
+      echo json_encode($ret);
+      break;
+    case 'unsend_email':
+      if(!isset($query_vars['postane_thread_id'])) {
+        echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
+        wp_die();
+      }
+      $ret = postane_unsend_email($user_id, $query_vars['postane_thread_id']);
+      echo json_encode($ret);
+      break;
+    case 'autocomplete_username':
       if(!isset($query_vars['postane_autocomplete_input'])) {
         wp_die();
       }
@@ -403,6 +420,9 @@ function postane_entry($attr) {
                 <div id="postane_messages_addparticipant_button" style="display:none" title="Katılımcı ekle">
                   <img src="' . $plugin_dir_url . 'img/happy_user.png"/>
                 </div>
+              </div>
+              <div id="postane_message_email">
+                Bu konuşmaya yeni mesaj geldiğinde bana e-posta gönder.<input id="postane_email_checkbox" type="checkbox"/>
               </div>
             </div>
             <div id="postane_participants_container" style="display:none">

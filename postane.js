@@ -7,11 +7,11 @@ jQuery(document).ready(function(){
   jQuery("#postane_back").tooltip(postane_tooltip);
   jQuery("#postane_messages_quit_button").tooltip(postane_tooltip);
   jQuery("#postane_messages_addparticipant_button").tooltip(postane_tooltip);
-  jQuery("#postane_new_thread_participants").autocomplete({
+  jQuery("#postane_new_thread_participants").autocomplete( {
     source: function(request, response) {
       data = {
         'action' : 'postane',
-        'postane_action' : 'postane_autocomplete',
+        'postane_action' : 'autocomplete_username',
         'postane_autocomplete_input' : request.term
       };
 
@@ -25,7 +25,7 @@ jQuery(document).ready(function(){
     source: function(request, response) {
       data = {
         'action' : 'postane',
-        'postane_action' : 'postane_autocomplete',
+        'postane_action' : 'autocomplete_username',
         'postane_autocomplete_input' : request.term
       };
 
@@ -343,6 +343,7 @@ jQuery(document).ready(function(){
 
 
   function reset_message_screen() {
+    jQuery("#postane_email_checkbox").prop("checked", false);
     message_exclusion_list = [0];
     message_min_time = null;
     jQuery(".postane_message").remove();
@@ -436,6 +437,13 @@ jQuery(document).ready(function(){
         var participant_current_info = data["participant_info"];
         var participant_info = data["participants_for_message_info"];
         var message_info = data["message_info"];
+        var send_email = data["send_email"];
+
+        if(send_email) {
+          jQuery("#postane_email_checkbox").prop("checked", true);
+        } else {
+          jQuery("#postane_email_checkbox").prop("checked", false);
+        }
         if(is_admin) {
           jQuery("#postane_messages_addparticipant_button").css("display", "inline-block");
         }
@@ -957,6 +965,31 @@ jQuery(document).ready(function(){
       } else {
         postane_announce_error(result["error"]);
       }
+    });
+  });
+
+  jQuery("#postane_email_checkbox").change(function() {
+    var dis = jQuery(this);
+    var checked = dis.prop("checked");
+    var thread_id = jQuery("#postane_messages_title").attr("data-thread-id");
+
+    var data = null;
+
+    if(checked) {
+      var data = {
+        'action' : 'postane',
+        'postane_action' : 'send_email',
+        'postane_thread_id' : thread_id
+      };
+    } else {
+      var data = {
+        'action' : 'postane',
+        'postane_action' : 'unsend_email',
+        'postane_thread_id' : thread_id
+      }
+    }
+
+    jQuery.post(ajaxurl, data, function(data) {
     });
   });
 

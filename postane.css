@@ -417,3 +417,14 @@
   background: #44749d;
   border: 2px solid white;
 }
+
+#postane_message_email {
+  font-size:11px;
+}
+
+#postane_email_checkbox {
+  height:25px;
+  background-color: black;
+  margin-left: 5px;
+  cursor:pointer;
+}
