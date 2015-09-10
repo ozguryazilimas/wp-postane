@@ -994,4 +994,42 @@ jQuery(document).ready(function(){
     });
   });
 
+  function insertTextAtCursor(text) {
+    var sel, range, html;
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode( document.createTextNode(text) );
+        }
+    } else if (document.selection && document.selection.createRange) {
+        document.selection.createRange().text = text;
+    }
+  }
+
+  jQuery("[contenteditable]").on('paste', function(e) {
+    e.preventDefault();
+    insertTextAtCursor(e.originalEvent.clipboardData.getData('text'));
+  });
+
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
+  var t_id = getParameterByName('postane_thread_id');
+  if(t_id != '') {
+    reset_message_screen();
+    load_messages(parseInt(t_id));
+    jQuery("#postane_threads").fadeOut(50, function(){
+      jQuery("#postane_messages").fadeIn(50, function(){
+        message_container_scroll_to_bottom();
+        jQuery("#postane_back").show();
+      });
+    });
+  }
+
 });

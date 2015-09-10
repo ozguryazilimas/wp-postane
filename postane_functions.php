@@ -115,13 +115,13 @@ function postane_create_thread($user_id, $thread_title, $first_message, $partici
   $sql = "INSERT INTO $postane_user_message (user_id,message_id,$postane_user_message.read) VALUES ($user_id,$message_id,1)";
   $wpdb->query($sql);
 
-  $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
+  $headers = 'From: 22dakika.org <otomatikmesaj@22dakika.org>' . "\r\n";
   $headers .= "MIME-Version: 1.0\r\n";
   $headers .= "Content-type: text/html; charset=UTF-8\r\n";
   $username = get_userdata($user_id)->display_name;
-  $subject = "22dakika.org Postane'de $username yeni konuşma başlattı: '" . mb_substr($thread_title, 0, min(25, mb_strlen($thread_title))) . (mb_strlen($thread_title) > 25 ? "...'" : "'");
+  $subject = "$username diyor ki: '" . mb_substr($thread_title, 0, min(25, mb_strlen($thread_title))) . (mb_strlen($thread_title) > 25 ? "...'" : "'");
   $postane_url = get_site_url() . '/postane';
-
+  $thread_title = apply_filters('the_title', $thread_title);
   foreach ($participant_ids as $p_id) {
     $sql = "INSERT INTO $postane_user_thread (user_id,thread_id) VALUES ($p_id, $thread_id)";
     $wpdb->query($sql);
@@ -132,7 +132,7 @@ function postane_create_thread($user_id, $thread_title, $first_message, $partici
     $recip_userdata = get_userdata($p_id);
     $recip_username = $recip_userdata->display_name;
     $recip_email = $recip_userdata->user_email;
-    $content = "Merhaba $recip_username,<br/><br/>$username,'$thread_title' başlıklı bir konuşma başlattı.<br/><br/>$first_message<br/><br/><a href='$postane_url'>Postaneye gitmek için tıklayınız.</a>";
+    $content = "Merhaba $recip_username,<br/><br/>22dakika.org sitesinden $username size '$thread_title' konulu bir mesaj göndermiş.<br/><br/>Okumak için lütfen aşağıdaki linki takip edin:<br/><a href='$postane_url/?postane_thread_id=$thread_id'>$postane_url/postane_thread_id=$thread_id</a>";
     wp_mail($recip_email, $subject, $content, $headers);
   }
 
@@ -510,13 +510,13 @@ function postane_add_message($user_id, $thread_id, $message_content) {
   $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
   $headers .= "MIME-Version: 1.0\r\n";
   $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-  $subject = "22dakika.org Postane'de şu konuşmada yeni bir mesaj var: '" . mb_substr($thread_title, 0, min(25, mb_strlen($thread_title))) . (mb_strlen($thread_title) > 25 ? "...'" : "'");
+  $subject = "$username şu konuşmaya cevap yazdı: '" . mb_substr($thread_title, 0, min(25, mb_strlen($thread_title))) . (mb_strlen($thread_title) > 25 ? "...'" : "'");
   foreach($user_ids as $u_id) {
     $u_id = $u_id['user_id'];
     $recip_userdata = get_userdata($u_id);
     $recip_username = $recip_userdata->display_name;
     $recip_email = $recip_userdata->user_email;
-    $content = "Merhaba $recip_username,<br/><br/>'$thread_title' başlıklı konuşmaya $username cevap yazdı.<br/><br/>$message_content<br/><br/><a href='$postane_url'>Postaneye gitmek için tıklayınız.</a>";
+    $content = "Merhaba $recip_username,<br/><br/>22dakika.org sitesinde $username '$thread_title' başlıklı konuşmayacevap yazdı.<br/><br/>Okumak için lütfen aşağıdaki linki takip edin:<br/><a href='$postane_url/?postane_thread_id=$thread_id'>$postane_url/?postane_thread_id=$thread_id</a>";
     wp_mail($recip_email, $subject, $content, $headers);
   }
 
@@ -671,16 +671,16 @@ function postane_setup_query($arr) {
           $query_vars[$key] = (int)$value;
           break;
         case 'string':
-          $query_vars[$key] = (string)$value;
+          $query_vars[$key] = stripslashes(strval($value));
           break;
         case 'string_array':
           $arr = array();
           if (is_array($value)) {
             foreach ($value as $val) {
-              $arr[] = (string)$val;
+              $arr[] = stripslashes(strval($val));
             }
           } else {
-            $arr[] = (string)$value;
+            $arr[] = stripslashes(strval($value));
           }
           $query_vars[$key] = $arr;
           break;
