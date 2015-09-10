@@ -33,6 +33,7 @@ function postane_autocomplete($input) {
 function postane_delete_message($user_id, $message_id) {
   global $wpdb;
   global $postane_user_message;
+  global $postane_messages;
 
   $sql = "SELECT COUNT(*) FROM $postane_user_message WHERE $postane_user_message.user_id = $user_id AND $postane_user_message.message_id = %d";
   $res = $wpdb->get_var($wpdb->prepare($sql, $message_id));
@@ -41,8 +42,15 @@ function postane_delete_message($user_id, $message_id) {
     return array("error" => PostaneLang::NO_AUTHORIZATION);
   }
 
-  $sql = "UPDATE $postane_user_message SET $postane_user_message.visible = 0 WHERE $postane_user_message.message_id = %d AND $postane_user_message.user_id = $user_id";
+  $sql = "DELETE FROM $postane_user_message WHERE $postane_user_message.message_id = %d AND $postane_user_message.user_id = $user_id";
   $wpdb->query($wpdb->prepare($sql, $message_id));
+
+  $sql = "SELECT COUNT(*) FROM $postane_user_message WHERE $postane_user_message.message_id = %d";
+  $res = $wpdb->get_var($wpdb->prepare($sql, $message_id));
+  if($res == 0) {
+    $sql = "DELETE FROM $postane_messages WHERE $postane_messages.id = %d";
+    $wpdb->query($wpdb->prepare($sql, $message_id));
+  }
   return array("success" => true);
 }
 
@@ -58,8 +66,16 @@ function postane_delete_all_messages($user_id, $thread_id) {
     return array("error" => PostaneLang::NO_AUTHORIZATION_FOR_THREAD);
   }
 
-  $sql = "UPDATE $postane_user_message SET $postane_user_message.visible = 0 WHERE $postane_user_message.user_id = $user_id AND $postane_user_message.message_id IN (SELECT id FROM $postane_messages WHERE $postane_messages.thread_id = %d)";
+  $sql = "DELETE FROM $postane_user_message WHERE $postane_user_message.user_id = $user_id AND $postane_user_message.message_id IN (SELECT id FROM $postane_messages WHERE $postane_messages.thread_id = %d)";
   $wpdb->query($wpdb->prepare($sql, $thread_id));
+
+  $sql = "SELECT COUNT(*) FROM $postane_user_message WHERE $postane_user_message.message_id = %d";
+  $res = $wpdb->get_var($wpdb->prepare($sql, $message_id));
+  if($res == 0) {
+    $sql = "DELETE FROM $postane_messages WHERE $postane_messages.id = %d";
+    $wpdb->query($wpdb->prepare($sql, $message_id));
+  }
+
   return array("success" => true);
 }
 function postane_create_thread($user_id, $thread_title, $first_message, $participants) {
@@ -99,12 +115,25 @@ function postane_create_thread($user_id, $thread_title, $first_message, $partici
   $sql = "INSERT INTO $postane_user_message (user_id,message_id,$postane_user_message.read) VALUES ($user_id,$message_id,1)";
   $wpdb->query($sql);
 
+  $headers = 'From: 22dakika.org <noreply@22dakika.org>' . "\r\n";
+  $headers .= "MIME-Version: 1.0\r\n";
+  $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+  $username = get_userdata($user_id)->display_name;
+  $subject = "22dakika.org Postane'de $username yeni konuşma başlattı: '" . mb_substr($thread_title, 0, min(25, mb_strlen($thread_title))) . (mb_strlen($thread_title) > 25 ? "...'" : "'");
+  $postane_url = get_site_url() . '/postane';
+
   foreach ($participant_ids as $p_id) {
     $sql = "INSERT INTO $postane_user_thread (user_id,thread_id) VALUES ($p_id, $thread_id)";
     $wpdb->query($sql);
 
     $sql = "INSERT INTO $postane_user_message (user_id,message_id) VALUES ($p_id,$message_id)";
     $wpdb->query($sql);
+
+    $recip_userdata = get_userdata($p_id);
+    $recip_username = $recip_userdata->display_name;
+    $recip_email = $recip_userdata->user_email;
+    $content = "Merhaba $recip_username,<br/><br/>$username,'$thread_title' başlıklı bir konuşma başlattı.<br/><br/>$first_message<br/><br/><a href='$postane_url'>Postaneye gitmek için tıklayınız.</a>";
+    wp_mail($recip_email, $subject, $content, $headers);
   }
 
     $sql = "UPDATE $postane_threads SET $postane_threads.last_message_time = (SELECT message_creation_time FROM $postane_messages WHERE $postane_messages.id = $message_id) WHERE $postane_threads.id = (SELECT thread_id FROM $postane_messages WHERE $postane_messages.id = $message_id)";
@@ -185,6 +214,18 @@ function postane_quit_thread($user_id, $thread_id) {
 
   $sql = "DELETE FROM $postane_user_message WHERE $postane_user_message.user_id = $user_id AND $postane_user_message.message_id IN (SELECT id FROM $postane_messages WHERE $postane_messages.thread_id = %d)";
   $wpdb->query($wpdb->prepare($sql, $thread_id));
+
+  $sql = "SELECT COUNT(*) FROM $postane_user_thread WHERE thread_id = %d";
+  $res = $wpdb->get_var($wpdb->prepare($sql, $thread_id));
+
+  if($res == 0) {
+    $sql = "DELETE FROM $postane_user_message WHERE $postane_user_message.message_id IN (SELECT $postane_messages.id FROM $postane_messages WHERE $postane_messages.thread_id = %d)";
+    $wpdb->query($wpdb->prepare($sql, $thread_id));
+    $sql = "DELETE FROM $postane_messages WHERE $postane_messages.thread_id = %d";
+    $wpdb->query($wpdb->prepare($sql, $thread_id));
+    $sql = "DELETE FROM $postane_threads WHERE $postane_threads.id = %d";
+    $wpdb->query($wpdb->prepare($sql, $thread_id));
+  }
 
   return array("success" => true);
 }
@@ -379,14 +420,6 @@ function postane_get_threads($user_id, $exclusion_list, $step) {
   return $ret_array;
 }
 
-function postane_god_mode_get_messages($user_id, $thread_id, $start_idx, $end_idx) {
-
-}
-
-function postane_god_mode_get_threads($user_id, $start_idx, $end_idx) {
-
-}
-
 function postane_add_participants($user_id, $thread_id, $participants) {
   global $wpdb;
   global $postane_user_thread;
@@ -529,6 +562,84 @@ function postane_unsend_email($user_id, $thread_id) {
   $wpdb->query($wpdb->prepare($sql, $thread_id));
   return array("success" => true);
 }
+
+function postane_godmode_get_all_threads() {
+  global $wpdb;
+  global $postane_threads;
+  global $postane_user_thread;
+  $users = $wpdb->users;
+
+  $sql = "SELECT $postane_threads.id as thread_id,$postane_threads.thread_title as thread_title,$postane_threads.last_message_time as thread_last_message_time FROM $postane_threads ORDER BY $postane_threads.last_message_time DESC";
+  $results = $wpdb->get_results($sql, 'ARRAY_A');
+
+  foreach ($results as $result) {
+    $thread_title = apply_filters('the_title', $result['thread_title']);
+    $thread_id = $result['thread_id'];
+    $sql = "SELECT $users.ID as id,$users.display_name as display_name FROM $users INNER JOIN $postane_user_thread ON $users.ID = $postane_user_thread.user_id WHERE $postane_user_thread.thread_id = $thread_id";
+    $participant_array = $wpdb->get_results($sql,  'ARRAY_A');
+    $participant_ret_array = array();
+    foreach($participant_array as $part) {
+      $id = $part['id'];
+      $avatar = get_avatar($id);
+      $link = get_site_url() . '/?author=' . $id;
+      $part['avatar'] = $avatar;
+      $part['link'] = $link;
+      $participant_ret_array[] = $part;
+    }
+    $ret_array[] = array("thread_id" => $result['thread_id'], "thread_title" => $thread_title, "thread_last_message_time" => $result['thread_last_message_time'], "participants" => $participant_ret_array);
+  }
+  return $ret_array;
+}
+
+function postane_get_all_messages($thread_id) {
+  global $wpdb;
+  global $postane_user_message;
+  global $postane_messages;
+  global $postane_threads;
+  global $postane_user_thread;
+
+
+  $users = $wpdb->users;
+  $sql = "SELECT * FROM $postane_threads WHERE $postane_threads.id = %d";
+  $thread_info = $wpdb->get_row($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
+
+  $sql = "SELECT $postane_user_thread.user_id, $users.display_name FROM $postane_user_thread INNER JOIN $users ON $postane_user_thread.user_id = $users.ID WHERE $postane_user_thread.thread_id = %d";
+  $participant_info = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
+
+  $sql = "SELECT $postane_messages.* FROM $postane_messages WHERE $postane_messages.thread_id = %d ORDER BY $postane_messages.message_creation_time DESC";
+
+  $messages = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
+
+  $participants_info = array();
+  foreach($participant_info as $info) {
+    $avatar_url = get_avatar($info['user_id']);
+    $author_url = get_site_url() . '/?author=' . $info['user_id'];
+    $info['avatar'] = $avatar_url;
+    $info['author_url'] = $author_url;
+    $participants_info[$info['user_id']] = $info;
+  }
+
+  for($i=0; $i < count($messages); $i++) {
+     $messages[$i]['message_content'] = apply_filters('the_content', $messages[$i]['message_content']);
+  }
+  $messages = array_values($messages);
+
+  $sql = "SELECT $users.display_name, $users.ID as user_id FROM $users WHERE $users.ID IN (SELECT DISTINCT(user_id) FROM $postane_messages WHERE $postane_messages.thread_id = %d)";
+  $participant_for_message_info = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
+  $participants_for_message_info = array();
+  foreach($participant_for_message_info as $info) {
+    $avatar_url = get_avatar($info['user_id']);
+    $author_url = get_site_url() . '/?author=' . $info['user_id'];
+    $info['avatar'] = $avatar_url;
+    $info['author_url'] = $author_url;
+    $participants_for_message_info[$info['user_id']] = $info;
+  }
+
+  $thread_info['thread_title'] = apply_filters('the_title', $thread_info['thread_title']);
+
+  return array('thread_info' => $thread_info, 'participant_info' => $participants_info, 'message_info' => $messages, 'participants_for_message_info' => $participants_for_message_info);
+}
+
 
 function postane_setup_query($arr) {
   $query_var_types = array(

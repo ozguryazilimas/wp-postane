@@ -32,8 +32,27 @@
   box-shadow: none;
 }
 #postane_back {
+  display:inline-block;
   margin-top: 20px;
   cursor:pointer;
+}
+
+#postane_godmode_button {
+  text-align:center;
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: #44749d;
+  padding:5px 10px;
+  font-weight: bold;
+}
+
+#postane_godmode_button a{
+  color:white;
+  text-decoration:none;
+}
+
+#postane_godmode_button a:hover {
+  text-decoration:underline;
 }
 #postane_loading {
   text-align: center;
