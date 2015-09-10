@@ -154,7 +154,7 @@ function postane_ajax() {
   if (!in_array($action, $actions)) {
     return;
   }
-  
+
   $user_id = get_current_user_id();
   
   switch ($action) {
@@ -214,8 +214,7 @@ function postane_ajax() {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_CONTENT_ERROR));
         wp_die();
       }
-      $message_content = apply_filters('content_save_pre', $query_vars['postane_message_content']);
-      $message_content = apply_filters('content_filtered_save_pre', $message_content);
+      $message_content = $query_vars['postane_message_content'];
       $ret = postane_add_message($user_id, $query_vars['postane_thread_id'], $message_content);
       echo json_encode($ret);
       break;
@@ -233,8 +232,7 @@ function postane_ajax() {
         wp_die();
       }
       $thread_title = apply_filters('title_save_pre', $query_vars['postane_thread_title']);
-      $message_content = apply_filters('content_save_pre', $query_vars['postane_message_content']);
-      $message_content = apply_filters('content_filtered_save_pre', $message_content);
+      $message_content = $query_vars['postane_message_content'];
       $participants = $query_vars['postane_participants'];
       $ret = postane_create_thread($user_id, $thread_title, $message_content, $participants);
       echo json_encode($ret);
@@ -248,8 +246,7 @@ function postane_ajax() {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_CONTENT_ERROR));
         wp_die();
       }
-      $message_content = apply_filters('content_save_pre', $query_vars['postane_message_content']);
-      $message_content = apply_filters('content_filtered_save_pre', $message_content);
+      $message_content = $query_vars['postane_message_content'];
       $ret = postane_edit_message($user_id, $query_vars['postane_message_id'], $message_content);
       echo json_encode($ret);
       break;

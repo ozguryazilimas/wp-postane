@@ -516,7 +516,7 @@ function postane_add_message($user_id, $thread_id, $message_content) {
     $recip_userdata = get_userdata($u_id);
     $recip_username = $recip_userdata->display_name;
     $recip_email = $recip_userdata->user_email;
-    $content = "Merhaba $recip_username,<br/><br/>22dakika.org sitesinde $username '$thread_title' başlıklı konuşmayacevap yazdı.<br/><br/>Okumak için lütfen aşağıdaki linki takip edin:<br/><a href='$postane_url/?postane_thread_id=$thread_id'>$postane_url/?postane_thread_id=$thread_id</a>";
+    $content = "Merhaba $recip_username,<br/><br/>22dakika.org sitesinde $username '$thread_title' başlıklı konuşmaya cevap yazdı.<br/><br/>Okumak için lütfen aşağıdaki linki takip edin:<br/><a href='$postane_url/?postane_thread_id=$thread_id'>$postane_url/?postane_thread_id=$thread_id</a>";
     wp_mail($recip_email, $subject, $content, $headers);
   }
 
