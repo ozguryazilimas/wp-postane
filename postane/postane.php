@@ -358,7 +358,6 @@ function postane_ajax() {
   wp_die();
 }
 add_action('wp_ajax_postane', 'postane_ajax');
-add_action('wp_ajax_nopriv_postane', 'postane_ajax');
 
 
 function postane_entry($attr) {
