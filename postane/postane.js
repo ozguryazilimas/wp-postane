@@ -904,6 +904,7 @@ jQuery(document).ready(function(){
         postane_announce_error(result["error"]);
       }
     });
+    return false;
   });
 
 
@@ -944,7 +945,7 @@ jQuery(document).ready(function(){
         postane_announce_error(result["error"]);
       }
     });
-
+    return false;
   });
 
   jQuery("div").delegate(".postane_thread_mark_as_read", "click", function(e) {

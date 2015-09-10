@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
           } else {
             content = '[/oyuncu]';
           }
-
+        }
           opened = !opened;
           tinymce.execCommand('mceInsertContent', false, content);
         });

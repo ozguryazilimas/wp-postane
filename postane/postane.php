@@ -90,7 +90,7 @@ function postane_activate_plugin() {
       `is_admin` TINYINT NOT NULL DEFAULT 0,
       `join_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       `last_read_time` TIMESTAMP NOT NULL DEFAULT 0,
-      `send_email` TINYINT NOT NULL DEFAULT 0,
+      `send_email` TINYINT NOT NULL DEFAULT 1,
       PRIMARY KEY (`id`),
       UNIQUE INDEX `id_UNIQUE` (`id` ASC),
       INDEX `fk_user_thread_to_users_idx` (`user_id` ASC),
@@ -143,6 +143,9 @@ function postane_activate_plugin() {
 register_activation_hook(__FILE__,'postane_activate_plugin');
 
 function postane_ajax() {
+  if(!is_user_logged_in()) {
+    wp_die();
+  }
   $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read', 'autocomplete_username', 'send_email', 'unsend_email');
   $action = isset($_POST['postane_action']) ? $_POST['postane_action'] : '';
 
@@ -361,91 +364,230 @@ add_action('wp_ajax_postane', 'postane_ajax');
 function postane_entry($attr) {
   if(!is_user_logged_in())
     return;
-  wp_enqueue_script("postane_js", plugin_dir_url(__FILE__) . 'postane.js');
-  wp_enqueue_script("jquery-ui-tooltip");
-  wp_enqueue_script("jquery-ui-autocomplete");
-  wp_enqueue_style("postane_css", plugin_dir_url(__FILE__) . 'postane.css');
-  $plugin_dir_url = plugin_dir_url(__FILE__);
-  ?>
-  <script type="text/javascript">
-  var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
-  var postane_base = '<?php echo $plugin_dir_url; ?>';
-  </script>
-  <?php
-  echo '<div id="postane">
-          <div id="postane_notification">
-            <div id="postane_loading">
-              <img src="' . $plugin_dir_url . 'img/logo.png"/>
+  global $wp_query;
+  if(!isset($_GET['postane_god_mode'])) {
+    wp_enqueue_script("postane_js", plugin_dir_url(__FILE__) . 'postane.js');
+    wp_enqueue_script("jquery-ui-tooltip");
+    wp_enqueue_script("jquery-ui-autocomplete");
+    wp_enqueue_style("postane_css", plugin_dir_url(__FILE__) . 'postane.css');
+    $plugin_dir_url = plugin_dir_url(__FILE__);
+    ?>
+    <script type="text/javascript">
+    var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+    var postane_base = '<?php echo $plugin_dir_url; ?>';
+    </script>
+    <?php
+    echo '<div id="postane">
+            <div id="postane_notification">
+              <div id="postane_loading">
+                <img src="' . $plugin_dir_url . 'img/logo.png"/>
+              </div>
+              <div id="postane_error" style="display:none">
+              </div>
+              <div id="postane_success" style="display:none">
+              </div>
             </div>
-            <div id="postane_error" style="display:none">
+            <div id="postane_threads">
+              <div id="postane_threads_topmenu">
+                <div id="postane_new_thread_toggle">
+                  Yeni Özel Mesaj
+                </div>
+                <div id="postane_new_thread">
+                  Başlık:
+                  <div id="postane_new_thread_title" contenteditable="true"></div>
+                  Kime (enter):
+                  <div id="postane_new_thread_participants" contenteditable="true"></div>
+                  <div id="postane_new_thread_participant_list"></div>
+                  Mesaj:
+                  <div id="postane_new_thread_message" contenteditable="true"></div>
+                  <div id="postane_new_thread_send">Gönder</div>
+                </div>
+              </div>
+              <div id="postane_thread_container">
+                <div id="postane_thread_more_button" style="display:none">
+                  daha fazla...
+                </div>
+              </div>
             </div>
-            <div id="postane_success" style="display:none">
+            <div id="postane_messages" style="display:none">
+              <div id="postane_messages_topmenu">
+                <div id="postane_messages_title">
+                </div>
+                <div id="postane_messages_buttons">
+                  <div id="postane_messages_back_button">
+                  </div>
+                  <div id="postane_messages_participants_button" title="Katılımcılar">
+                    <img src="' . $plugin_dir_url . 'img/people.png"/>
+                  </div>
+                  <div id="postane_messages_quit_button" title="Konuşmadan ayrıl">
+                    <img src="' . $plugin_dir_url . 'img/cross.png"/>
+                  </div>
+                  <div id="postane_messages_addparticipant_button" style="display:none" title="Katılımcı ekle">
+                    <img src="' . $plugin_dir_url . 'img/happy_user.png"/>
+                  </div>
+                </div>
+                <div id="postane_message_email">
+                  Bu konuşmaya yeni mesaj geldiğinde bana e-posta gönder.<input id="postane_email_checkbox" type="checkbox"/>
+                </div>
+              </div>
+              <div id="postane_participants_container" style="display:none">
+              </div>
+              <div id="postane_add_participant_container" style="display:none">
+                Kişi (enter): 
+                <div id="postane_new_participant" contenteditable="true"></div>
+                <div id="postane_new_participant_list"></div>
+                <div id="postane_new_participants_send">Ekle</div>
+              </div>
+              <div id="postane_message_container">
+                <div id="postane_message_more_button" style="display:none">
+                  daha fazla...
+                </div>
+              </div>
+              <div id="postane_new_message" contenteditable="true"></div>
+              <div id="postane_new_message_send">Gönder</div>
             </div>
+          <div id="postane_back" style="display:none" title="Konuşma listesine geri dön.">
+             <img src="' . $plugin_dir_url . 'img/back.png"/>
           </div>
-          <div id="postane_threads">
-            <div id="postane_threads_topmenu">
-              <div id="postane_new_thread_toggle">
-                Yeni Özel Mesaj
-              </div>
-              <div id="postane_new_thread">
-                Başlık:
-                <div id="postane_new_thread_title" contenteditable="true"></div>
-                Kime (enter):
-                <div id="postane_new_thread_participants" contenteditable="true"></div>
-                <div id="postane_new_thread_participant_list"></div>
-                Mesaj:
-                <div id="postane_new_thread_message" contenteditable="true"></div>
-                <div id="postane_new_thread_send">Gönder</div>
-              </div>
-            </div>
-            <div id="postane_thread_container">
-              <div id="postane_thread_more_button" style="display:none">
-                daha fazla...
-              </div>
-            </div>
-          </div>
-          <div id="postane_messages" style="display:none">
-            <div id="postane_messages_topmenu">
-              <div id="postane_messages_title">
-              </div>
-              <div id="postane_messages_buttons">
-                <div id="postane_messages_back_button">
-                </div>
-                <div id="postane_messages_participants_button" title="Katılımcılar">
-                  <img src="' . $plugin_dir_url . 'img/people.png"/>
-                </div>
-                <div id="postane_messages_quit_button" title="Konuşmadan ayrıl">
-                  <img src="' . $plugin_dir_url . 'img/cross.png"/>
-                </div>
-                <div id="postane_messages_addparticipant_button" style="display:none" title="Katılımcı ekle">
-                  <img src="' . $plugin_dir_url . 'img/happy_user.png"/>
-                </div>
-              </div>
-              <div id="postane_message_email">
-                Bu konuşmaya yeni mesaj geldiğinde bana e-posta gönder.<input id="postane_email_checkbox" type="checkbox"/>
-              </div>
-            </div>
-            <div id="postane_participants_container" style="display:none">
-            </div>
-            <div id="postane_add_participant_container" style="display:none">
-              Kişi (enter): 
-              <div id="postane_new_participant" contenteditable="true"></div>
-              <div id="postane_new_participant_list"></div>
-              <div id="postane_new_participants_send">Ekle</div>
-            </div>
-            <div id="postane_message_container">
-              <div id="postane_message_more_button" style="display:none">
-                daha fazla...
-              </div>
-            </div>
-            <div id="postane_new_message" contenteditable="true"></div>
-            <div id="postane_new_message_send">Gönder</div>
-          </div>
-        <div id="postane_back" style="display:none" title="Konuşma listesine geri dön.">
-           <img src="' . $plugin_dir_url . 'img/back.png"/>
+    ';
+    if(current_user_can('administrator')) {
+      echo '
+        <div id="postane_godmode_button">
+          <a href="' . get_permalink($post->ID) . '?postane_god_mode">GODMODE</a>
         </div>
+      ';
+    }
+    echo ' 
         </div>
-  ';
+    ';
+  } else {
+    if(!current_user_can('administrator')) {
+      return;
+    }
+    $godmode_actions = array('postane_list_threads', 'postane_show_thread');
+    if(!isset($_GET['postane_action'])){
+      $_GET['postane_action'] = 'postane_list_threads';
+    }
+    if(!in_array($_GET['postane_action'], $godmode_actions)) {
+      return;
+    }
+    wp_enqueue_style("postane_godmode_style", plugin_dir_url(__FILE__) . "postane_godmode.css");
+    if($_GET['postane_action'] == 'postane_list_threads') {
+      $all_threads = postane_godmode_get_all_threads();
+      $page_link = get_permalink($post->ID);
+      echo "<div id='postane_godmode_return_postane'>
+              <a href='$page_link'>Postane'ye geri dön</a>
+            </div>";
+      if(!empty($all_threads)) {
+        echo "<table id='postane_godmode_thread_table'>";
+        echo "<tr><th>Başlık</th><th>Kim kime?</th><th>Son mesaj zamanı</th>";
+        $godmode_thread_base = $page_link . "?postane_god_mode&postane_action=postane_show_thread&postane_thread_id=";
+        foreach($all_threads as $thread) {
+          $title = $thread['thread_title'];
+          $participants = $thread['participants'];
+          $time = $thread['thread_last_message_time'];
+          $thread_id = $thread['thread_id'];
+          $thread_link = $godmode_thread_base . $thread_id;
+          echo "<tr>";
+          echo "<td><a href='$thread_link'>$title</a></td>";
+          echo "<td>";
+          $p_count = count($participants);
+          for($i=0; $i<$p_count; $i++) {
+            $link = $participants[$i]['link'];
+            echo "<div class='postane_godmode_thread_table_participant'>";
+            echo "<a href= '$link'>";
+            echo "<div class='postane_godmode_thread_table_avatar'>";
+            echo $participants[$i]['avatar'];
+            echo "</div>";
+            echo $participants[$i]['display_name'];
+            echo "</a>";
+            echo "</div>";
+            if($i != $p_count-1) {
+              echo ",";
+            }
+          }
+          echo "</td>";
+          echo "<td class='postane_godmode_time_column'>";
+          echo $time;
+          echo "</td>";
+          echo "</tr>";
+        }
+        echo "</table>";
+      }
+    } else if ($_GET['postane_action'] == 'postane_show_thread') {
+      $thread_id = (int)$_GET['postane_thread_id'];
+      $mass_info = postane_get_all_messages($thread_id);
+      $thread_info = $mass_info['thread_info'];
+      $thread_title = $thread_info['thread_title'];
+      $participants = $mass_info['participant_info'];
+      $message_writers = $mass_info['participants_for_message_info'];
+      $messages = $mass_info['message_info'];
+      $page_link = get_permalink($post->ID);
+      echo "<div id='postane_godmode_return_postane'>
+              <a href='$page_link?postane_god_mode'>Konuşma listesine geri dön.</a>
+            </div>";
+      echo "<div id='postane_godmode_thread_info'>
+              <div id='postane_godmode_thread_info_title'>
+               Başlık: $thread_title
+              </div>
+              <div id='postane_godmode_thread_info_participants'>Kim kime: ";
+      $p_count = count($participants);
+      $i=0;
+      foreach($participants as $key => $part) {
+        $name = $part['display_name'];
+        $avatar = $part['avatar'];
+        $link = $part['author_url'];
+        echo "
+          <div class='postane_godmode_thread_info_participant'>
+            <a href='$link'>
+              <div class='postane_godmode_thread_table_participant'>
+                <div class='postane_godmode_thread_table_avatar'>
+                  $avatar
+                </div>
+                <span class='postane_godmode_hover_underline'>
+                  $name
+                </span>
+              </div>
+            </a>
+          </div>
+        ";
+        if($i != $p_count-1) {
+          echo ',';
+        }
+        $i++;
+      }
+      echo   "</div>";
+      echo "<div id='postane_godmode_thread_info_messages'>";
+      foreach($messages as $message) {
+        $content = $message['message_content'];
+        $author = $message_writers[$message['user_id']];
+        $name = $author['display_name'];
+        $avatar = $author['avatar'];
+        $time = ($message['edited']==1 ? ("düzenlendi, ".$message['edit_time']) : $message['message_creation_time']);
+        echo "<div class='postane_godmode_thread_info_message'>
+                <div class='postane_godmode_thread_info_author'>
+                  <div class='postane_godmode_thread_info_author_avatar'>
+                    $avatar
+                  </div>
+                  <div class='postane_godmode_thread_info_author_name'>
+                    $name
+                  </div>
+                </div>
+                <div class='postane_godmode_thread_info_message_content'>
+                  <div class='postane_godmode_thread_info_message_content_content'>
+                    $content
+                  </div>
+                  <div class='postane_godmode_thread_info_message_content_time'>
+                    $time
+                  </div>
+                </div>
+              </div>";
+      }
+      echo "</div>";
+      echo "
+            </div>";
+    }
+  }
 }
 add_shortcode('postane', 'postane_entry');
 
