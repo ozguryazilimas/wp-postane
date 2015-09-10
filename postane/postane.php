@@ -231,7 +231,7 @@ function postane_ajax() {
         echo json_encode(array("error" => PostaneLang::NO_PARTICIPANTS_ERROR));
         wp_die();
       }
-      $thread_title = apply_filters('title_save_pre', $query_vars['postane_thread_title']);
+      $thread_title = $query_vars['postane_thread_title'];
       $message_content = $query_vars['postane_message_content'];
       $participants = $query_vars['postane_participants'];
       $ret = postane_create_thread($user_id, $thread_title, $message_content, $participants);
