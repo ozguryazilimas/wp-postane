@@ -4,7 +4,7 @@ Donate link: http://web-profile.com.ua/donate/
 Tags: login, logout, widget, meta, sidebar, admin, register
 Requires at least: 3.0
 Tested up to: 4.5
-Stable tag: 3.3
+Stable tag: 3.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -43,8 +43,11 @@ Widget with login, logout, admin and register links. Replacement of the default 
 
 == Changelog ==
 
+= 3.4 - 2015-09-09 =
+* Added 'https' support. Thanks to Sven
+
 = 3.3 - 2015-09-05 =
-* Added 'login_logout_username_link' filter; Idea and code provided by Jon
+* Added 'login_logout_username_link' filter. Idea and code provided by Jon
 
 = 3.2 - 2015-08-20 =
 * One more replace PHP4 style constructors with PHP5 constructors
