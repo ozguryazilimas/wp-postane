@@ -344,6 +344,7 @@ jQuery(document).ready(function(){
 
 
   function reset_message_screen() {
+    jQuery("#postane_messages_addparticipant_button").hide();
     jQuery("#postane_email_checkbox").prop("checked", false);
     message_exclusion_list = [0];
     message_min_time = null;
