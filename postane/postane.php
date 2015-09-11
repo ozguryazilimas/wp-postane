@@ -416,7 +416,7 @@ function postane_entry($attr) {
                   <div id="postane_messages_participants_button" title="Katılımcılar">
                     <img src="' . $plugin_dir_url . 'img/people.png"/>
                   </div>
-                  <div id="postane_messages_quit_button" title="Konuşmadan ayrıl">
+                  <div id="postane_messages_quit_button" title="Bu konuşmadaki tüm mesajları sil ve konuşmadan ayrıl">
                     <img src="' . $plugin_dir_url . 'img/cross.png"/>
                   </div>
                   <div id="postane_messages_addparticipant_button" style="display:none" title="Katılımcı ekle">
