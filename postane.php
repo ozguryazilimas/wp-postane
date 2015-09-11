@@ -117,7 +117,6 @@ function postane_activate_plugin() {
       `id` INT NOT NULL AUTO_INCREMENT,
       `user_id` BIGINT(20) UNSIGNED NOT NULL,
       `message_id` INT NOT NULL,
-      `visible` TINYINT NOT NULL DEFAULT 1,
       `read` TINYINT NOT NULL DEFAULT 0,
       PRIMARY KEY (`id`),
       UNIQUE INDEX `id_UNIQUE` (`id` ASC),
