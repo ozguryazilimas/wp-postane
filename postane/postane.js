@@ -1060,4 +1060,7 @@ jQuery(document).ready(function(){
     e.stopPropagation();
   });
 
+  jQuery("#postane_loading").click(function(){
+    jQuery("#postane_back").click();
+  });
 });
