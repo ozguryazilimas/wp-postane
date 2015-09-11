@@ -318,6 +318,7 @@ jQuery(document).ready(function(){
 
   jQuery("#postane_new_thread_title").keydown(function(e){
     if(e.keyCode == 13) {
+      e.preventDefault();
       document.execCommand('insertHTML', false, '');
       return false;
     }
