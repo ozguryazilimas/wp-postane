@@ -178,13 +178,14 @@ jQuery(document).ready(function(){
           var thread_title = results[i]['thread_title'];
           var last_message_time = results[i]['thread_last_message_time'];
           var last_read_time = results[i]['thread_last_read_time'];
+          var participants = results[i]['participants'];
           var title_div = jQuery("<div></div>");
           title_div.addClass("postane_thread_title");
           title_div.html("<p>" + thread_title + "</p>");
           thread_exclusion_list.push(thread_id);
           var date_div = jQuery("<div></div>");
           date_div.addClass("postane_thread_date");
-          date_div.html("<p>Son mesaj zamanı: " + last_message_time + "</p>");
+          date_div.html("<p>" + last_message_time.split(" ")[0] + " " + last_message_time.split(" ")[1].split(":")[0] + ":" + last_message_time.split(" ")[1].split(":")[1] + "</p>");
           var buttons_div = jQuery("<div></div>");
           buttons_div.addClass("postane_thread_buttons_div");
           var mark_as_read_div = jQuery("<div></div>");
@@ -202,11 +203,11 @@ jQuery(document).ready(function(){
           var remove_messages_img = jQuery("<img>");
           remove_messages_img.attr("src", postane_base + "img/clean.png");
           remove_messages_div.append(remove_messages_img);
-          remove_messages_div.attr("title", "Tüm mesajları sil");
+          remove_messages_div.attr("title", "Bu konuşmadaki tüm mesajları sil");
           remove_messages_div.tooltip(postane_tooltip);
           var quit_thread_div = jQuery("<div></div>");
           quit_thread_div.addClass("postane_thread_quit_thread");
-          quit_thread_div.attr("title", "Konuşmadan ayrıl");
+          quit_thread_div.attr("title", "Bu konuşmadaki tüm mesajları sil ve konuşmadan ayrıl");
           quit_thread_div.attr("data-thread-id", thread_id);
           quit_thread_div.tooltip(postane_tooltip);
           var quit_thread_img = jQuery("<img>");
@@ -217,11 +218,32 @@ jQuery(document).ready(function(){
           if(last_read_time < last_message_time) {
             thread_div.addClass("postane_thread_unread");
           }
-          buttons_div.append(mark_as_read_div);
+          var participants_div = jQuery("<div></div>");
+          participants_div.addClass("postane_threads_participant_list");
+          participants_div.html("Kimden: ");
+          for(j=0 ; j<participants.length; j++) {
+            var p_div = jQuery("<div></div>");
+            p_div.addClass("postane_threads_participant");
+            var avatar_div = jQuery("<div></div>");
+            avatar_div.addClass("postane_threads_avatar");
+            avatar_div.html(participants[j]['avatar']);
+
+            var username_div = jQuery("<div></div>");
+            username_div.addClass("postane_threads_username");
+            username_div.html('<a href="'+participants[j]['link'] + '">' + participants[j]['display_name'] + '</a>');
+            p_div.append(avatar_div);
+            p_div.append(username_div);
+            participants_div.append(p_div);
+            if(j != participants.length-1) {
+              participants_div.html(participants_div.html() + ",");
+            }
+          }
+          //buttons_div.append(mark_as_read_div);
           buttons_div.append(remove_messages_div);
           buttons_div.append(quit_thread_div);
           thread_div.append(title_div);
           thread_div.append(buttons_div);
+          thread_div.append(participants_div);
           thread_div.append(date_div);
           thread_div.attr("data-thread-id", thread_id);
           postane_thread_more_button.before(thread_div);
@@ -1033,5 +1055,9 @@ jQuery(document).ready(function(){
       });
     });
   }
+
+  jQuery("div").delegate(".postane_threads_username", "click", function(e) {
+    e.stopPropagation();
+  });
 
 });

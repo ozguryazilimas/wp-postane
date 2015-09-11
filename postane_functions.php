@@ -398,6 +398,7 @@ function postane_get_threads($user_id, $exclusion_list, $step) {
   global $wpdb;
   global $postane_threads;
   global $postane_user_thread;
+  $users = $wpdb->users;
   $sql = "SELECT $postane_threads.id as thread_id,$postane_threads.thread_title as thread_title,$postane_threads.last_message_time as thread_last_message_time,$postane_user_thread.last_read_time as thread_last_read_time FROM $postane_threads INNER JOIN $postane_user_thread ON $postane_user_thread.thread_id = $postane_threads.id WHERE $postane_user_thread.user_id = $user_id AND $postane_threads.id NOT IN (";
 
   $arr_len = count($exclusion_list);
@@ -415,7 +416,18 @@ function postane_get_threads($user_id, $exclusion_list, $step) {
   
   foreach ($results as $result) {
     $thread_title = apply_filters('the_title', $result->thread_title);
-    $ret_array[] = array("thread_id" => $result->thread_id, "thread_title" => $thread_title, "thread_last_message_time" => $result->thread_last_message_time, "thread_last_read_time" => $result->thread_last_read_time);
+    $t_id = $result->thread_id;
+    $sql = "SELECT $users.ID as user_id, $users.display_name as display_name FROM $postane_user_thread INNER JOIN $users ON $postane_user_thread.user_id = $users.ID WHERE $users.ID != $user_id AND $postane_user_thread.thread_id = $t_id";
+    $parts = $wpdb->get_results($sql, 'ARRAY_A');
+    $participants = array();
+    foreach($parts as $part) {
+      $avatar = get_avatar($part['user_id']);
+      $link = get_site_url() . '?author=' . $part['user_id'];
+      $part['avatar'] = $avatar;
+      $part['link'] = $link;
+      $participants[] = $part;
+    }
+    $ret_array[] = array("thread_id" => $result->thread_id, "thread_title" => $thread_title, "thread_last_message_time" => $result->thread_last_message_time, "thread_last_read_time" => $result->thread_last_read_time, "participants" => $participants);
   }
   return $ret_array;
 }

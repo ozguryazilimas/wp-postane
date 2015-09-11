@@ -447,3 +447,42 @@
   margin-left: 5px;
   cursor:pointer;
 }
+
+.postane_threads_avatar {
+  display:inline-block;
+  height: 15px;
+  width: 15px;
+  margin-left: 5px;
+}
+
+.postane_threads_avatar img {
+  height:15px;
+  width: 15px;
+}
+
+.postane_threads_username {
+  display: inline-block;
+}
+
+.postane_threads_username a {
+  color:black;
+  text-decoration:none;
+}
+
+.postane_threads_username a:hover {
+  text-decoration:underline;
+}
+
+.postane_thread:hover .postane_threads_username a {
+  color:white;
+}
+
+.postane_threads_participant {
+  display: inline-block;
+}
+
+.postane_threads_participant_list {
+  margin-top: 5px;
+  font-style: italic;
+  font-size:90%;
+}
