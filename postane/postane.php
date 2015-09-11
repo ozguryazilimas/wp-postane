@@ -232,6 +232,8 @@ function postane_ajax() {
         wp_die();
       }
       $thread_title = $query_vars['postane_thread_title'];
+      $thread_title = str_replace('<br>', '', $thread_title);
+      $thread_title = str_replace('<br/>', '', $thread_title);
       $message_content = $query_vars['postane_message_content'];
       $participants = $query_vars['postane_participants'];
       $ret = postane_create_thread($user_id, $thread_title, $message_content, $participants);
