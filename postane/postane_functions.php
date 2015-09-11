@@ -259,7 +259,7 @@ function postane_get_messages($user_id, $thread_id, $exclusion_list, $step, $max
   $sql = "SELECT $postane_user_thread.*, $users.display_name FROM $postane_user_thread INNER JOIN $users ON $postane_user_thread.user_id = $users.ID WHERE $postane_user_thread.thread_id = %d";
   $participant_info = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
 
-  $sql = "SELECT $postane_messages.*, $postane_user_message.read FROM $postane_messages INNER JOIN $postane_user_message ON $postane_user_message.message_id = $postane_messages.ID WHERE $postane_user_message.user_id= %d AND $postane_messages.thread_id = %d AND $postane_user_message.visible = 1 AND $postane_messages.id NOT IN (";
+  $sql = "SELECT $postane_messages.*, $postane_user_message.read FROM $postane_messages INNER JOIN $postane_user_message ON $postane_user_message.message_id = $postane_messages.ID WHERE $postane_user_message.user_id= %d AND $postane_messages.thread_id = %d AND $postane_messages.id NOT IN (";
 
   $arr_len = count($exclusion_list);
   for($i = 0; $i < $arr_len; $i++) {
@@ -343,7 +343,7 @@ function postane_get_messages_async($user_id, $thread_id, $exclusion_list, $min_
   $sql = "SELECT $postane_user_thread.*, $users.display_name FROM $postane_user_thread INNER JOIN $users ON $postane_user_thread.user_id = $users.ID WHERE $postane_user_thread.thread_id = %d";
   $participant_info = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
 
-  $sql = "SELECT $postane_messages.*, $postane_user_message.read FROM $postane_messages INNER JOIN $postane_user_message ON $postane_user_message.message_id = $postane_messages.ID WHERE $postane_user_message.user_id= %d AND $postane_messages.thread_id = %d AND $postane_user_message.visible = 1 AND $postane_messages.id NOT IN (";
+  $sql = "SELECT $postane_messages.*, $postane_user_message.read FROM $postane_messages INNER JOIN $postane_user_message ON $postane_user_message.message_id = $postane_messages.ID WHERE $postane_user_message.user_id= %d AND $postane_messages.thread_id = %d AND $postane_messages.id NOT IN (";
 
   $arr_len = count($exclusion_list);
   for($i = 0; $i < $arr_len; $i++) {
@@ -606,7 +606,7 @@ function postane_get_all_messages($thread_id) {
   $sql = "SELECT $postane_user_thread.user_id, $users.display_name FROM $postane_user_thread INNER JOIN $users ON $postane_user_thread.user_id = $users.ID WHERE $postane_user_thread.thread_id = %d";
   $participant_info = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
 
-  $sql = "SELECT $postane_messages.* FROM $postane_messages WHERE $postane_messages.thread_id = %d ORDER BY $postane_messages.message_creation_time DESC";
+  $sql = "SELECT $postane_messages.* FROM $postane_messages WHERE $postane_messages.thread_id = %d ORDER BY $postane_messages.message_creation_time ASC";
 
   $messages = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
 
