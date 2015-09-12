@@ -26,10 +26,11 @@ $cpm_messages = $wpdb->get_results("SELECT * FROM wp_cpm_msg WHERE subject IS NU
 $cpm_meta = $wpdb->get_results("SELECT * FROM wp_cpm_meta", 'ARRAY_A');
 $meta_info = array();
 
-foreach($cpm_meta as $info) {
-  if(!is_array($meta_info[$info['thread_id']])) {
+foreach ($cpm_meta as $info) {
+  if (!is_array($meta_info[$info['thread_id']])) {
     $meta_info[$info['thread_id']] = array();
   }
+
   $meta_info[$info['thread_id']][$info['user_id']] = array('read' => $info['opened'], 'send_mail' => $info['subscribe']);
 }
 
@@ -49,13 +50,15 @@ function add_message($user_id, $thread_id, $message_content, $time) {
 
   $sql = "SELECT COUNT(*) FROM $postane_user_thread WHERE user_id = $user_id AND thread_id = %d";
   $res = $wpdb->get_var($wpdb->prepare($sql, $thread_id));
+
   if ($res == 0) {
     return "\t $thread_id " . PostaneLang::NO_AUTHORIZATION_FOR_THREAD;
   }
 
   $sql = "SELECT COUNT(*) FROM $postane_threads WHERE id = %d";
   $res = $wpdb->get_var($wpdb->prepare($sql, $thread_id));
-  if($res == 0) {
+
+  if ($res == 0) {
     return "\t $thread_id " . PostaneLang::NO_SUCH_THREAD_ERROR;
   }
 
@@ -69,7 +72,6 @@ function add_message($user_id, $thread_id, $message_content, $time) {
 
   $sql = "SELECT user_id FROM $postane_user_thread WHERE thread_id = %d";
   $participants = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
-
 
   $sql = "INSERT INTO $postane_user_message (user_id, message_id, $postane_user_message.read) VALUES ($user_id, $message_id, 1)";
   $wpdb->query($sql);
@@ -86,7 +88,7 @@ function add_message($user_id, $thread_id, $message_content, $time) {
 }
 $mess_array = array();
 
-foreach($cpm_messages as $mess) {
+foreach ($cpm_messages as $mess) {
   if(!is_array($mess_array[$mess['thread_id']])) {
     $mess_array[$mess['thread_id']] = array();
   }
@@ -95,7 +97,7 @@ foreach($cpm_messages as $mess) {
 
 $cpm_messages = $mess_array;
 
-foreach($cpm_threads as $thread) {
+foreach ($cpm_threads as $thread) {
   $cpm_thread_id = $thread['thread_id'];
   $sender_id = $thread['sender_id'];
   $content = $thread['message'];
@@ -114,17 +116,19 @@ foreach($cpm_threads as $thread) {
   $sql = "INSERT INTO $postane_user_thread (user_id, thread_id, is_admin, join_time, last_read_time, send_email) VALUES ($sender_id, $postane_thread_id, 1, from_unixtime($time), CURRENT_TIMESTAMP, 0)";
   $wpdb->query($sql);
 
-  foreach($cpm_meta[$cpm_thread_id] as $user_id => $info) {
-    if($user_id != $sender_id) {
+  foreach ($cpm_meta[$cpm_thread_id] as $user_id => $info) {
+    if ($user_id != $sender_id) {
       $sql = "INSERT INTO $postane_user_thread (user_id, thread_id, is_admin, join_time, last_read_time, send_email) VALUES ($user_id, $postane_thread_id, 0, from_unixtime($time), CURRENT_TIMESTAMP, 0)";
       $wpdb->query($sql);
     }
   }
+
   echo add_message($sender_id, $postane_thread_id, $content, $time);
   echo "\n";
   flush();
   ob_flush();
-  foreach($cpm_messages[$cpm_thread_id] as $msg) {
+
+  foreach ($cpm_messages[$cpm_thread_id] as $msg) {
     echo add_message($msg['sender_id'], $postane_thread_id, $msg['message'], $msg['timestamp']);
     echo "\n";
     flush();

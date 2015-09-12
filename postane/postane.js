@@ -108,7 +108,7 @@ jQuery(document).ready(function(){
     message_content_div.addClass("postane_message_content");
     message_content_div.html(cur['message_content']);
 
-    
+
     var date_div = jQuery("<div></div>");
     date_div.addClass("postane_message_date");
     if(edited) {
@@ -117,7 +117,7 @@ jQuery(document).ready(function(){
       date_div.html(cur['message_creation_time']);
     }
 
-  
+
     var message_div = jQuery("<div></div>");
     message_div.addClass("postane_message");
 
@@ -475,7 +475,7 @@ jQuery(document).ready(function(){
         participant_table.addClass("postane_messages_participant_table");
         var participant_head_row = jQuery("<tr></tr>");
         participant_head_row.addClass("postane_messages_participant_header_row");
-        
+
         var dummy_header = jQuery("<td></td>");
         participant_head_row.append(dummy_header);
 
@@ -602,13 +602,10 @@ jQuery(document).ready(function(){
         message_content_div.addClass("postane_message_content");
         message_content_div.html(result['message_content']);
 
-          
         var date_div = jQuery("<div></div>");
         date_div.addClass("postane_message_date");
         date_div.html(result['message_time']);
-        
 
-        
         var message_div = jQuery("<div></div>");
         message_div.addClass("postane_message");
 
