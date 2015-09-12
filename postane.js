@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
+jQuery(document).ready(function() {
   var postane_tooltip = {
     tooltipClass : 'postane_tooltip'
   };
@@ -49,11 +49,11 @@ jQuery(document).ready(function(){
     if(e.target.id == "postane_thread_container") return;
   };
 
-  jQuery("#postane").mouseenter(function(){
+  jQuery("#postane").mouseenter(function() {
     jQuery("body").bind("mousewheel",handler);
   });
 
-  jQuery("#postane").mouseleave(function(){
+  jQuery("#postane").mouseleave(function() {
     jQuery("body").unbind("mousewheel", handler);
   });
 */
@@ -270,7 +270,7 @@ jQuery(document).ready(function(){
   load_threads();
 
 
-  jQuery("#postane_new_thread_toggle").click(function(){
+  jQuery("#postane_new_thread_toggle").click(function() {
     jQuery("#postane_new_thread").slideToggle();
   });
 
@@ -334,12 +334,12 @@ jQuery(document).ready(function(){
     dis.remove();
   });
 
-  jQuery("#postane_new_thread_send").click(function(){
+  jQuery("#postane_new_thread_send").click(function() {
     var title = jQuery("#postane_new_thread_title").html();
     var message_content = jQuery("#postane_new_thread_message").html();
     var participants = [];
 
-    jQuery(".postane_existing_participant").each(function(){
+    jQuery(".postane_existing_participant").each(function() {
       participants.push(jQuery(this).html());
     });
 
@@ -386,7 +386,7 @@ jQuery(document).ready(function(){
     }
   });
 
-  jQuery("#postane_thread_more_button").click(function(){
+  jQuery("#postane_thread_more_button").click(function() {
     load_threads();
   });
 
@@ -611,8 +611,8 @@ jQuery(document).ready(function(){
     reset_message_screen();
     load_messages(dis.attr("data-thread-id"));
 
-    jQuery("#postane_threads").fadeOut(50, function(){
-      jQuery("#postane_messages").fadeIn(50, function(){
+    jQuery("#postane_threads").fadeOut(50, function() {
+      jQuery("#postane_messages").fadeIn(50, function() {
         message_container_scroll_to_bottom();
         jQuery("#postane_back").show();
       });
@@ -621,7 +621,7 @@ jQuery(document).ready(function(){
     return false;
   });
 
-  jQuery("#postane_new_message_send").click(function(){
+  jQuery("#postane_new_message_send").click(function() {
     var thread_id = jQuery("#postane_messages_title").attr("data-thread-id");
     var message_content = jQuery("#postane_new_message").html();
 
@@ -684,7 +684,7 @@ jQuery(document).ready(function(){
   });
 
 
-  jQuery("#postane_message_more_button").click(function(){
+  jQuery("#postane_message_more_button").click(function() {
     load_messages(jQuery("#postane_messages_title").attr("data-thread-id"));
   });
 
@@ -720,12 +720,12 @@ jQuery(document).ready(function(){
   });
 
 
-  jQuery("div").delegate(".postane_messages_cancel_edit_button","click",function(){
+  jQuery("div").delegate(".postane_messages_cancel_edit_button","click",function() {
     var dis = jQuery(this);
     var message_content = dis.attr("data-prev-html");
     var content_divs = dis.siblings(".postane_message_content");
 
-    content_divs.each(function(){
+    content_divs.each(function() {
       var cdis = jQuery(this);
       cdis.removeAttr("contenteditable");
       cdis.html(message_content);
@@ -733,10 +733,10 @@ jQuery(document).ready(function(){
 
     var top_divs = dis.siblings(".postane_message_top_div");
 
-    top_divs.each(function(){
+    top_divs.each(function() {
       var tdis = jQuery(this);
       var edit_divs = tdis.children(".postane_messages_edit_button");
-      edit_divs.each(function(){
+      edit_divs.each(function() {
         jQuery(this).show();
         return false;
       });
@@ -744,7 +744,7 @@ jQuery(document).ready(function(){
 
     var edit_divs = dis.siblings(".postane_messages_edit_action_button");
 
-    edit_divs.each(function(){
+    edit_divs.each(function() {
       jQuery(this).remove();
       return false;
     });
@@ -752,13 +752,13 @@ jQuery(document).ready(function(){
     dis.remove();
   });
 
-  jQuery("div").delegate(".postane_messages_edit_action_button","click",function(){
+  jQuery("div").delegate(".postane_messages_edit_action_button","click",function() {
     var dis = jQuery(this);
     var message_id = dis.attr("data-message-id");
     var message_content = null;
     var content_divs = dis.siblings(".postane_message_content");
 
-    content_divs.each(function(){
+    content_divs.each(function() {
       message_content = jQuery(this).html();
       return false;
     });
@@ -777,7 +777,7 @@ jQuery(document).ready(function(){
         result = result["success"];
         var cancel_buttons = dis.siblings(".postane_messages_cancel_edit_button");
 
-        cancel_buttons.each(function(){
+        cancel_buttons.each(function() {
           jQuery(this).remove();
           return false;
         });
@@ -790,17 +790,17 @@ jQuery(document).ready(function(){
         });
 
         var top_divs = dis.siblings(".postane_message_top_div");
-        top_divs.each(function(){
+        top_divs.each(function() {
           var tdis = jQuery(this);
           var edit_divs = tdis.children(".postane_messages_edit_button");
-          edit_divs.each(function(){
+          edit_divs.each(function() {
             jQuery(this).show();
             return false;
           });
         });
 
         var date_divs = dis.siblings(".postane_message_date");
-        date_divs.each(function(){
+        date_divs.each(function() {
           jQuery(this).html("düzenlendi, " + result['edit_time']);
           return false;
         });
@@ -820,8 +820,8 @@ jQuery(document).ready(function(){
     reset_thread_screen();
     load_threads();
 
-    jQuery("#postane_messages").fadeOut(50, function(){
-      jQuery("#postane_threads").fadeIn(50, function(){
+    jQuery("#postane_messages").fadeOut(50, function() {
+      jQuery("#postane_threads").fadeIn(50, function() {
         jQuery("#postane_back").hide();
       });
     });
@@ -839,7 +839,7 @@ jQuery(document).ready(function(){
     return ((elemBottom <= docViewBottom) && (elemBottom >= docViewTop) || (elemTop <= docViewBottom) && (elemTop >= docViewTop));
   }
 
-  jQuery("#postane_message_container").scroll(function(){
+  jQuery("#postane_message_container").scroll(function() {
     jQuery(".postane_message_not_read").each(function() {
       var dis = jQuery(this);
 
@@ -864,11 +864,11 @@ jQuery(document).ready(function(){
     });
   });
 
-  jQuery("#postane_messages_participants_button").click(function(){
+  jQuery("#postane_messages_participants_button").click(function() {
     jQuery("#postane_participants_container").slideToggle(200);
   });
 
-  jQuery("#postane_messages_quit_button").click(function(){
+  jQuery("#postane_messages_quit_button").click(function() {
     if (window.confirm("Konuşmadan ayrılmak istediğinize emin misiniz?")) {
       var thread_id = jQuery("#postane_messages_title").attr("data-thread-id");
       var data = {
@@ -889,7 +889,7 @@ jQuery(document).ready(function(){
     }
   });
 
-  jQuery("#postane_messages_addparticipant_button").click(function(){
+  jQuery("#postane_messages_addparticipant_button").click(function() {
     jQuery("#postane_add_participant_container").slideToggle();
   });
 
@@ -951,10 +951,10 @@ jQuery(document).ready(function(){
     dis.remove();
   });
 
-  jQuery("#postane_new_participants_send").click(function(){
+  jQuery("#postane_new_participants_send").click(function() {
     var thread_id = jQuery("#postane_messages_title").attr("data-thread-id");
     var participants = [];
-    jQuery(".postane_new_existing_participant").each(function(){
+    jQuery(".postane_new_existing_participant").each(function() {
       participants.push(jQuery(this).html());
     });
 
@@ -1130,8 +1130,8 @@ jQuery(document).ready(function(){
     reset_message_screen();
     load_messages(parseInt(t_id));
 
-    jQuery("#postane_threads").fadeOut(50, function(){
-      jQuery("#postane_messages").fadeIn(50, function(){
+    jQuery("#postane_threads").fadeOut(50, function() {
+      jQuery("#postane_messages").fadeIn(50, function() {
         message_container_scroll_to_bottom();
         jQuery("#postane_back").show();
       });
@@ -1142,7 +1142,7 @@ jQuery(document).ready(function(){
     e.stopPropagation();
   });
 
-  jQuery("#postane_loading").click(function(){
+  jQuery("#postane_loading").click(function() {
     jQuery("#postane_back").click();
   });
 
