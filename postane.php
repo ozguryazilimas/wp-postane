@@ -52,7 +52,9 @@ function postane_activate_plugin() {
     DEFAULT CHARACTER SET = utf8
     COLLATE = utf8_turkish_ci;
   ";
+
   $wpdb->query($sql);
+
   $sql = "
     CREATE TABLE IF NOT EXISTS `$postane_messages` (
       `id` INT NOT NULL AUTO_INCREMENT,
@@ -142,9 +144,10 @@ function postane_activate_plugin() {
 register_activation_hook(__FILE__,'postane_activate_plugin');
 
 function postane_ajax() {
-  if(!is_user_logged_in()) {
+  if (!is_user_logged_in()) {
     wp_die();
   }
+
   $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read', 'autocomplete_username', 'send_email', 'unsend_email');
   $action = isset($_POST['postane_action']) ? $_POST['postane_action'] : '';
 
@@ -155,12 +158,12 @@ function postane_ajax() {
   }
 
   $user_id = get_current_user_id();
-  
+
   switch ($action) {
     case '':
       break;
     case 'send_email':
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
@@ -168,7 +171,7 @@ function postane_ajax() {
       echo json_encode($ret);
       break;
     case 'unsend_email':
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
@@ -176,14 +179,15 @@ function postane_ajax() {
       echo json_encode($ret);
       break;
     case 'autocomplete_username':
-      if(!isset($query_vars['postane_autocomplete_input'])) {
+      if (!isset($query_vars['postane_autocomplete_input'])) {
         wp_die();
       }
+
       $ret = postane_autocomplete($query_vars['postane_autocomplete_input']);
       echo json_encode($ret);
       break;
     case 'delete_message': // makes a single message invisible to user.
-      if(!isset($query_vars['postane_message_id'])) {
+      if (!isset($query_vars['postane_message_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_ID_ERROR));
         wp_die();
       }
@@ -191,7 +195,7 @@ function postane_ajax() {
       echo json_encode($ret);
       break;
     case 'delete_all_messages': // makes every message in thread invisible to user.
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
@@ -205,31 +209,36 @@ function postane_ajax() {
       echo json_encode(array("success" => array('current_time' => $current_time)));
       break;
     case 'add_message':
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_message_content']) || empty($query_vars['postane_message_content'])) {
+
+      if (!isset($query_vars['postane_message_content']) || empty($query_vars['postane_message_content'])) {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_CONTENT_ERROR));
         wp_die();
       }
+
       $message_content = $query_vars['postane_message_content'];
       $ret = postane_add_message($user_id, $query_vars['postane_thread_id'], $message_content);
       echo json_encode($ret);
       break;
     case 'create_thread': // creates thread
-      if(!isset($query_vars['postane_thread_title']) || empty($query_vars['postane_thread_title'])) {
+      if (!isset($query_vars['postane_thread_title']) || empty($query_vars['postane_thread_title'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_TITLE_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_message_content']) || empty($query_vars['postane_message_content'])) {
+
+      if (!isset($query_vars['postane_message_content']) || empty($query_vars['postane_message_content'])) {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_CONTENT_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_participants']) || empty($query_vars['postane_participants'])) {
+
+      if (!isset($query_vars['postane_participants']) || empty($query_vars['postane_participants'])) {
         echo json_encode(array("error" => PostaneLang::NO_PARTICIPANTS_ERROR));
         wp_die();
       }
+
       $thread_title = $query_vars['postane_thread_title'];
       $thread_title = str_replace('<br>', '', $thread_title);
       $thread_title = str_replace('<br/>', '', $thread_title);
@@ -239,87 +248,101 @@ function postane_ajax() {
       echo json_encode($ret);
       break;
     case 'edit_message': // edit message
-      if(!isset($query_vars['postane_message_id']) || empty($query_vars['postane_message_id'])) {
+      if (!isset($query_vars['postane_message_id']) || empty($query_vars['postane_message_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_ID_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_message_content']) || empty($query_vars['postane_message_content'])) {
+
+      if (!isset($query_vars['postane_message_content']) || empty($query_vars['postane_message_content'])) {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_CONTENT_ERROR));
         wp_die();
       }
+
       $message_content = $query_vars['postane_message_content'];
       $ret = postane_edit_message($user_id, $query_vars['postane_message_id'], $message_content);
       echo json_encode($ret);
       break;
     case 'quit_thread': // deletes user from thread and unrelates every message of thread from user
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
+
       $ret = postane_quit_thread($user_id, $query_vars['postane_thread_id']);
       echo json_encode($ret);
       break;
     case 'mark_message_read': // makes message 'read' for user
-      if(!isset($query_vars['postane_message_id'])) {
+      if (!isset($query_vars['postane_message_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_MESSAGE_ID_ERROR));
         wp_die();
       }
+
       $ret = postane_mark_message_read($user_id, $query_vars['postane_message_id']);
       echo json_encode($ret);
       break;
     case 'mark_thread_read': // makes all messages of thread 'read' for user
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
+
       $ret = postane_mark_thread_read($user_id, $query_vars['postane_thread_id']);
       echo json_encode($ret);
       break;
     case 'get_threads': // gets all threads user can see
-      if(!isset($query_vars['postane_step'])) {
+      if (!isset($query_vars['postane_step'])) {
         echo json_encode(array("error" => PostaneLang::NO_STEP_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_exclusion_list'])) {
+
+      if (!isset($query_vars['postane_exclusion_list'])) {
         echo json_encode(array("error" => PostaneLang::NO_EXCLUSION_LIST_ERROR));
         wp_die();
       }
+
       $ret = postane_get_threads($user_id, $query_vars['postane_exclusion_list'], $query_vars['postane_step']);
       echo json_encode(array("success" => $ret));
       break;
     case 'get_messages': // gets all messages of threads user can see
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_step'])) {
+
+      if (!isset($query_vars['postane_step'])) {
         echo json_encode(array("error" => PostaneLang::NO_STEP_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_exclusion_list'])) {
+
+      if (!isset($query_vars['postane_exclusion_list'])) {
         echo json_encode(array("error" => PostaneLang::NO_EXCLUSION_LIST_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_max_time'])) {
+
+      if (!isset($query_vars['postane_max_time'])) {
         echo json_encode(array("error" => PostaneLang::NO_MAX_TIME_ERROR));
         wp_die();
       }
+
       $ret = postane_get_messages($user_id, $query_vars['postane_thread_id'], $query_vars['postane_exclusion_list'], $query_vars['postane_step'], $query_vars['postane_max_time']);
       echo json_encode($ret);
       break;
     case 'get_messages_async':
-      if(!isset($query_vars['postane_thread_id'])) {
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_exclusion_list'])) {
+
+      if (!isset($query_vars['postane_exclusion_list'])) {
         echo json_encode(array("error" => PostaneLang::NO_EXCLUSION_LIST_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_min_time'])) {
+
+      if (!isset($query_vars['postane_min_time'])) {
         echo json_encode(array("error" => PostaneLang::NO_MIN_TIME_ERROR));
         wp_die();
       }
+
       $ret = postane_get_messages_async($user_id, $query_vars['postane_thread_id'], $query_vars['postane_exclusion_list'], $query_vars['postane_min_time']);
       echo json_encode($ret);
       break;
@@ -328,28 +351,33 @@ function postane_ajax() {
     case 'god_mode_get_messages': // god mode.get all messages of any thread (only administrators according to wordpress core can do this)
       break;
     case 'add_participants': // adds participants to existing thread (only admins of thread can do this)
-      if(!isset($query_vars['postane_participants']) || empty($query_vars['postane_participants'])) {
+      if (!isset($query_vars['postane_participants']) || empty($query_vars['postane_participants'])) {
         echo json_encode(array("error" => PostaneLang::NO_PARTICIPANTS_ERROR));
         wp_die();
       }
-      if(!isset($query_vars['postane_thread_id'])) {
+
+      if (!isset($query_vars['postane_thread_id'])) {
         echo json_encode(array("error" => PostaneLang::NO_THREAD_ID_ERROR));
         wp_die();
       }
+
       $ret = postane_add_participants($user_id, $query_vars['postane_thread_id'], $query_vars['postane_participants']);
       echo json_encode($ret);
       break;
     case 'user_exists':
-      if(!isset($query_vars['postane_username'])) {
+      if (!isset($query_vars['postane_username'])) {
         echo json_encode(array("error" => PostaneLang::NO_USERNAME_ERROR));
         wp_die();
       }
+
       $ret = postane_user_exists($query_vars['postane_username']);
+
       if ($ret) {
         echo json_encode(array("success" => $ret));
       } else {
         echo json_encode(array("error" => $ret));
       }
+
       break;
   }
 
@@ -359,10 +387,12 @@ add_action('wp_ajax_postane', 'postane_ajax');
 
 
 function postane_entry($attr) {
-  if(!is_user_logged_in())
+  if (!is_user_logged_in())
     return;
+
   global $wp_query;
-  if(!isset($_GET['postane_god_mode'])) {
+
+  if (!isset($_GET['postane_god_mode'])) {
     wp_enqueue_script("postane_js", plugin_dir_url(__FILE__) . 'postane.js');
     wp_enqueue_script("jquery-ui-tooltip");
     wp_enqueue_script("jquery-ui-autocomplete");
@@ -454,42 +484,51 @@ function postane_entry($attr) {
         </div>
       ';
     }
-    echo ' 
+    echo '
         </div>
     ';
   } else {
-    if(!current_user_can('administrator')) {
+    if (!current_user_can('administrator')) {
       return;
     }
+
     $godmode_actions = array('postane_list_threads', 'postane_show_thread');
-    if(!isset($_GET['postane_action'])){
+
+    if (!isset($_GET['postane_action'])){
       $_GET['postane_action'] = 'postane_list_threads';
     }
-    if(!in_array($_GET['postane_action'], $godmode_actions)) {
+
+    if (!in_array($_GET['postane_action'], $godmode_actions)) {
       return;
     }
+
     wp_enqueue_style("postane_godmode_style", plugin_dir_url(__FILE__) . "postane_godmode.css");
-    if($_GET['postane_action'] == 'postane_list_threads') {
+
+    if ($_GET['postane_action'] == 'postane_list_threads') {
       $all_threads = postane_godmode_get_all_threads();
       $page_link = get_permalink($post->ID);
       echo "<div id='postane_godmode_return_postane'>
               <a href='$page_link'>Postane'ye geri dön</a>
-            </div>";
-      if(!empty($all_threads)) {
+              </div>";
+
+      if (!empty($all_threads)) {
         echo "<table id='postane_godmode_thread_table'>";
         echo "<tr><th>Başlık</th><th>Kim kime?</th><th>Son mesaj zamanı</th>";
         $godmode_thread_base = $page_link . "?postane_god_mode&postane_action=postane_show_thread&postane_thread_id=";
-        foreach($all_threads as $thread) {
+
+        foreach ($all_threads as $thread) {
           $title = $thread['thread_title'];
           $participants = $thread['participants'];
           $time = $thread['thread_last_message_time'];
           $thread_id = $thread['thread_id'];
           $thread_link = $godmode_thread_base . $thread_id;
+
           echo "<tr>";
           echo "<td><a href='$thread_link'>$title</a></td>";
           echo "<td>";
           $p_count = count($participants);
-          for($i=0; $i<$p_count; $i++) {
+
+          for ($i=0; $i<$p_count; $i++) {
             $link = $participants[$i]['link'];
             echo "<div class='postane_godmode_thread_table_participant'>";
             echo "<a href= '$link'>";
@@ -503,12 +542,14 @@ function postane_entry($attr) {
               echo ",";
             }
           }
+
           echo "</td>";
           echo "<td class='postane_godmode_time_column'>";
           echo $time;
           echo "</td>";
           echo "</tr>";
         }
+
         echo "</table>";
       }
     } else if ($_GET['postane_action'] == 'postane_show_thread') {
@@ -520,6 +561,7 @@ function postane_entry($attr) {
       $message_writers = $mass_info['participants_for_message_info'];
       $messages = $mass_info['message_info'];
       $page_link = get_permalink($post->ID);
+
       echo "<div id='postane_godmode_return_postane'>
               <a href='$page_link?postane_god_mode'>Konuşma listesine geri dön.</a>
             </div>";
@@ -528,12 +570,15 @@ function postane_entry($attr) {
                Başlık: $thread_title
               </div>
               <div id='postane_godmode_thread_info_participants'>Kim kime: ";
+
       $p_count = count($participants);
-      $i=0;
-      foreach($participants as $key => $part) {
+      $i = 0;
+
+      foreach ($participants as $key => $part) {
         $name = $part['display_name'];
         $avatar = $part['avatar'];
         $link = $part['author_url'];
+
         echo "
           <div class='postane_godmode_thread_info_participant'>
             <a href='$link'>
@@ -547,20 +592,25 @@ function postane_entry($attr) {
               </div>
             </a>
           </div>
-        ";
-        if($i != $p_count-1) {
+          ";
+
+        if ($i != $p_count-1) {
           echo ',';
         }
+
         $i++;
       }
+
       echo   "</div>";
       echo "<div id='postane_godmode_thread_info_messages'>";
-      foreach($messages as $message) {
+
+      foreach ($messages as $message) {
         $content = $message['message_content'];
         $author = $message_writers[$message['user_id']];
         $name = $author['display_name'];
         $avatar = $author['avatar'];
         $time = ($message['edited']==1 ? ("düzenlendi, ".$message['edit_time']) : $message['message_creation_time']);
+
         echo "<div class='postane_godmode_thread_info_message'>
                 <div class='postane_godmode_thread_info_author'>
                   <div class='postane_godmode_thread_info_author_avatar'>
@@ -580,6 +630,7 @@ function postane_entry($attr) {
                 </div>
               </div>";
       }
+
       echo "</div>";
       echo "
             </div>";

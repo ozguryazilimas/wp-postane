@@ -1,7 +1,6 @@
 <?php
 class PostaneLang {
 
-
   /* ERRORS */
   const NO_THREAD_TITLE_ERROR = "Lütfen özel mesaj başlığı giriniz.";
   const NO_MESSAGE_CONTENT_ERROR = "Lütfen mesaj içeriği giriniz.";
