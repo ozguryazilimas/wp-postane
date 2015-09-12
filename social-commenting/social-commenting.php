@@ -115,7 +115,7 @@ function sc_load_subscribe_button($content, $id) {
               <div class='sc_minus sc_display' title='Bu yazıyı takip ediyorsunuz.'/>
                 <img src='$plugin_dir/img/minus.png'/>
               </div>
-              <div class='sc_plus' title='Bu yazıyı takip etmiyorsunuz.'>
+              <div class='sc_plus' title='Bu yazıyı takip etmiyorsunuz. Takip etmek için tıklayınız.'>
                 <img src='$plugin_dir/img/plus.png'/>
                 </div>
             </div>" . $content;
@@ -124,7 +124,7 @@ function sc_load_subscribe_button($content, $id) {
               <div class='sc_minus'/>
                 <img src='$plugin_dir/img/minus.png' title='Bu yazıyı takip ediyorsunuz.'/>
               </div>
-              <div class='sc_plus sc_display' title='Bu yazıyı takip etmiyorsunuz.'>
+              <div class='sc_plus sc_display' title='Bu yazıyı takip etmiyorsunuz. Takip etmek için tıklayınız.'>
                 <img src='$plugin_dir/img/plus.png'/>
                 </div>
             </div>" . $content;
