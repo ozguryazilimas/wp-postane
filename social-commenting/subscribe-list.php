@@ -12,6 +12,7 @@ get_sidebar();
           Hepsini okundu olarak işaretle
         </div>
       </div>
+      <br>
 <?php
 
 global $wpdb;
@@ -71,7 +72,7 @@ foreach ($res as $key) {
            <div title='Yazıya yeni yorum geldiğinde e-posta almak için tıklayınız.' data-postid='$post_id' class='sc_subscribe_list_email_ok ".($email_subscribed ? "" : "sc_subscribe_list_display" )."'>kapalı</div>
            <div title='Yazıya yeni yorum geldiğinde e-posta almak istemiyorsanız tıklayınız.' data-postid='$post_id' class='sc_subscribe_list_email_no ".($email_subscribed ? "sc_subscribe_list_display" : "" )."'>açık</div>
            <div title='Yazıyı takibi bırakmak için tıklayınız.' class='sc_subscribe_list_unsubscribe' data-postid='$post_id'>
-            Takibi bırak.
+            takibi bırak.
           </div>
         </div>
     ";
