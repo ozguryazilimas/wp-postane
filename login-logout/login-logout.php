@@ -84,7 +84,10 @@ class WP_Widget_Login_Logout extends WP_Widget {
 		} else {
 			echo '"item_logout">';
 			$current_user = wp_get_current_user();
-			$rows = $wpdb->get_results('SELECT count(*) as unread_msg_count from ' . $wpdb->prefix . 'cpm_meta where user_id='.$current_user->ID.' and opened=0', ARRAY_A);
+			$postane_threads = $wpdb->prefix . 'postane_threads';
+			$postane_user_thread = $wpdb->prefix . 'postane_user_thread';
+			$current_uid = $current_user->ID;
+			$rows = $wpdb->get_results("SELECT count(*) as unread_msg_count from $postane_threads INNER JOIN $postane_user_thread ON $postane_user_thread.thread_id=$postane_threads.id where $postane_user_thread.user_id=$current_uid AND $postane_user_thread.last_read_time < $postane_threads.last_message_time", ARRAY_A);
 
 			$unread_message_count = 0;			
 			foreach ( $rows as $row ) {
