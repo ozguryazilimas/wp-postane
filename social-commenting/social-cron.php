@@ -11,12 +11,13 @@ $wp_blog_path = array(
   '/var/www/test.22dakika.org/wp-blog-header.php'
 );
 
-foreach($wp_blog_path as $incpath) {
+foreach ($wp_blog_path as $incpath) {
   if (file_exists($incpath)) {
-  require($incpath);
-  break;
+    require($incpath);
+    break;
   }
 }
+
 function sc_username_max_words() {
   global $wpdb;
   $users_table = $wpdb->prefix."users";
@@ -46,38 +47,44 @@ function sc_get_mention_list($content) {
   $max_number_of_words = sc_username_max_words();
 
   $mention_list = array();
-  
+
   $content_length = strlen($content);
   $loc = stripos($content, $initiator);
 
-  while($loc !== false) {
+  while ($loc !== false) {
     $current_user = null;
-    if($loc == 0 || $content[$loc-1] == ' ' || ctype_punct($content[$loc-1])) {
+
+    if ($loc == 0 || $content[$loc-1] == ' ' || ctype_punct($content[$loc-1])) {
       $word_count=1;
       $last_word = '';
       $s_index = $loc;
-      while($word_count <= $max_number_of_words) {
+
+      while ($word_count <= $max_number_of_words) {
         if ($content[$s_index] == $initiator) {
           $s_index++;
-          for(; $s_index < $content_length && $content[$s_index] != ' '; $s_index++) {
+
+          for (; $s_index < $content_length && $content[$s_index] != ' '; $s_index++) {
             $last_word .= $content[$s_index];
           } 
         } else if ($content[$s_index] == ' ') {
           $s_index++;
           $last_word .= ' ';
-          for(; $s_index < $content_length && $content[$s_index] != ' '; $s_index++) {
+
+          for (; $s_index < $content_length && $content[$s_index] != ' '; $s_index++) {
             $last_word .= $content[$s_index];
           }
         } else {
           break;
         }
-        if(sc_user_exists($last_word)) {
+
+        if (sc_user_exists($last_word)) {
           $current_user = $last_word;
         }
       }
       $word_count++;
     }
-    if($current_user !== null) {
+
+    if ($current_user !== null) {
       $mention_list[] = $current_user;
     }
     $loc = stripos($content, $initiator,$loc+1);
@@ -92,9 +99,11 @@ function sc_get_post_subscribers_for_email($post_id) {
   $sql = "SELECT user_id FROM $table_name WHERE post_id=%d AND send_mail=1";
   $res = $wpdb->get_results($wpdb->prepare($sql,$post_id),"ARRAY_N");
   $ret_arr = array();
-  foreach($res as $key) {
+
+  foreach ($res as $key) {
     $ret_arr[] = $key[0];
   }
+
   return $ret_arr;
 }
 
@@ -112,28 +121,30 @@ foreach ($results as $res) {
   $post = get_post($comment->comment_post_ID);
   $mention_mail_list = array();
   $comment_link = get_comment_link($comment_id);
-  if(isset($subscriber_mail_array[$post->ID])) {
+
+  if (isset($subscriber_mail_array[$post->ID])) {
     $subscriber_mail_array[$post->ID]['comment_count']++;
   } else {
     $subscriber_mail_array[$post->ID] = array('comment_count' => 1, 'post_title' => $post->post_title, 'comment_link' => $comment_link, 'comment_author' => $comment->user_id);
   }
   $mention_list = sc_get_mention_list($comment->comment_content);
 
-  foreach($mention_list as $key) {
+  foreach ($mention_list as $key) {
     $user_id = sc_get_userid($key);
     $single = true;
     $applicable = get_user_meta($user_id, "sc_mention_mail",$single);
 
-    if($applicable == "true" && ($user_id != $current_user_id)) {
+    if ($applicable == "true" && ($user_id != $current_user_id)) {
       $mention_mail_list[] = $user_id;
     }
   }
 
 
-  if(!empty($mention_mail_list)) {
+  if (!empty($mention_mail_list)) {
     $content = '" '.$post->post_title.' " başlıklı yazının yorumlarından birinde '.$comment->comment_author." sizi andı.<br/>Yoruma gitmek için tıklayınız: <a href='$comment_link'>".$comment_link."</a>";
-    foreach($mention_mail_list as $u_id) {
-      if(!isset($mail_contents[$u_id])) {
+
+    foreach ($mention_mail_list as $u_id) {
+      if (!isset($mail_contents[$u_id])) {
         $mail_contents[$u_id] = array($content);
       } else {
         $mail_contents[$u_id][] = $content;
@@ -142,12 +153,13 @@ foreach ($results as $res) {
   }
 }
 
-foreach($subscriber_mail_array as $post_id => $r_array) {
+foreach ($subscriber_mail_array as $post_id => $r_array) {
   $subscriber_list = sc_get_post_subscribers_for_email($post_id);
   $content = '" '.$r_array['post_title'].' " başlıklı yazının altında '.$r_array['comment_count'].' yeni yorum var.<br/>Okumadığınız yorumlara gitmek için tıklayınız: <a href="'.$r_array['comment_link'].'">'.$r_array['comment_link'].'</a>';
-  foreach($subscriber_list as $u_id) {
-    if($u_id != $r_array['comment_author']) {
-      if(!isset($mail_contents[$u_id])) {
+
+  foreach ($subscriber_list as $u_id) {
+    if ($u_id != $r_array['comment_author']) {
+      if (!isset($mail_contents[$u_id])) {
         $mail_contents[$u_id] = array($content);
       } else {
         $mail_contents[$u_id][] = $content;
@@ -166,6 +178,7 @@ foreach ($mail_contents as $u_id => $content_array) {
   $email=$udata->user_email;
   $uname=$udata->display_name;
   $content = "Merhaba $uname,<br/><br/>";
+
   foreach ($content_array as $cont) {
     $content .= $cont;
     $content .= "<br/><br/>";
@@ -174,4 +187,5 @@ foreach ($mail_contents as $u_id => $content_array) {
 }
 
 $wpdb->query("DELETE FROM $plugin_table");
+
 ?>

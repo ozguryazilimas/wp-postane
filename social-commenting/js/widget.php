@@ -8,7 +8,7 @@ jQuery(document).ready(function(){
     var dis = jQuery(this);
     var parent = dis.parent(".sc_widget_email_me");
     var post_id = parent.attr("data-post-id");
-  
+
     var data = {
       'action': 'sc_get_email',
       'post_id': post_id
@@ -26,7 +26,7 @@ jQuery(document).ready(function(){
     var dis = jQuery(this);
     var parent = dis.parent(".sc_widget_email_me");
     var post_id = parent.attr("data-post-id");
-  
+
     var data = {
       'action': 'sc_dont_get_email',
       'post_id': post_id

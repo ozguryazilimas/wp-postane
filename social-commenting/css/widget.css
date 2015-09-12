@@ -56,10 +56,11 @@
   padding-left:3px;
   padding-right:3px;
 }
+
 .sc_widget_title_div:hover {
   background-color: #E34E00;
-  
 }
+
 .sc_widget_display {
   display:block !important;
 }
@@ -83,3 +84,4 @@
 .sc_widget_more_button:hover {
   background-color : #5a0856;
 }
+
