@@ -33,24 +33,17 @@ function sc_activate_plugin() {
 }
 register_activation_hook(__FILE__,'sc_activate_plugin');
 
-
-
-
 function sc_uninstall_plugin() {
   global $wpdb;
   $table_name = $wpdb->prefix . "sc_subscribe";
   $sql="DROP TABLE $table_name";
   $wpdb->query($sql);
-  
+
   $table_name = $wpdb->prefix . "sc_mail_queue";
   $sql = "DROP TABLE $table_name";
   $wpdb->query($sql);
 }
 register_uninstall_hook(__FILE__, "sc_uninstall_plugin");
-
-
-
-
 
 function sc_mention_mail_profile_setting() {
   $single = true;
@@ -59,8 +52,8 @@ function sc_mention_mail_profile_setting() {
         <table class="form-table">
           <tbody>
             <tr class="user-description-wrap">
-	            <th><label for="description">Yorumlarda mention aldığımda mail gelsin.</label></th>
-	            <td><input <?php if($checked == "true") echo "checked"; ?> name="sc_mention" id="sc_mention" type="checkbox" value="ok"/></td>
+              <th><label for="description">Yorumlarda mention aldığımda mail gelsin.</label></th>
+              <td><input <?php if($checked == "true") echo "checked"; ?> name="sc_mention" id="sc_mention" type="checkbox" value="ok"/></td>
             </tr>
           </tbody>
         </table>
@@ -68,8 +61,6 @@ function sc_mention_mail_profile_setting() {
 }
 add_action('show_user_profile','sc_mention_mail_profile_setting');
 add_action('edit_user_profile','sc_mention_mail_profile_setting');
-
-
 
 function sc_profile_update($user_id) {
   $new_status = $_POST['sc_mention'];
@@ -81,8 +72,6 @@ function sc_profile_update($user_id) {
 }
 add_action('profile_update','sc_profile_update');
 
-
-
 function sc_new_comment($comment_id) {
   global $wpdb;
   $plugin_table = $wpdb->prefix . "sc_mail_queue";
@@ -90,7 +79,6 @@ function sc_new_comment($comment_id) {
   $wpdb->query($sql);
 }
 add_action("comment_post","sc_new_comment");
-
 
 function sc_user_subscribed($user_id,$post_id) {
   global $wpdb;
@@ -101,7 +89,7 @@ function sc_user_subscribed($user_id,$post_id) {
 }
 
 function sc_load_subscribe_button($content, $id) {
-  if(in_the_loop() && !is_page() && is_single() && !empty($GLOBALS['post']) && get_the_ID() == $GLOBALS['post']->ID) {
+  if (in_the_loop() && !is_page() && is_single() && !empty($GLOBALS['post']) && get_the_ID() == $GLOBALS['post']->ID) {
     $plugin_dir = plugin_dir_url(__FILE__);
     wp_enqueue_script("sc_subscribe_button_js",$plugin_dir . "js/subscribe.php?sc_url=" . admin_url('admin-ajax.php'));
     wp_enqueue_style("sc_subscribe_button_css",$plugin_dir . "css/subscribe.css");
@@ -135,7 +123,6 @@ function sc_load_subscribe_button($content, $id) {
 
 add_filter("the_content","sc_load_subscribe_button", 10, 2);
 
-
 function sc_subscribe($user_id, $post_id) {
   global $wpdb;
   $table_name = $wpdb->prefix . "sc_subscribe";
@@ -146,6 +133,7 @@ function sc_subscribe($user_id, $post_id) {
 function sc_subscribe_ajax() {
   $post_id = (int)$_POST['post_id'];
   $user_id = get_current_user_id();
+
   if (!sc_user_subscribed($user_id, $post_id)){
     sc_subscribe($user_id, $post_id);
   }
@@ -165,6 +153,7 @@ function sc_unsubscribe($user_id, $post_id) {
 function sc_unsubscribe_ajax() {
   $post_id = (int)$_POST['post_id'];
   $user_id = get_current_user_id();
+
   if (sc_user_subscribed($user_id, $post_id)) {
     sc_unsubscribe($user_id, $post_id);
   }
@@ -173,7 +162,6 @@ function sc_unsubscribe_ajax() {
 }
 add_action('wp_ajax_sc_unsubscribe','sc_unsubscribe_ajax');
 add_action('wp_ajax_nopriv_sc_unsubscribe','sb_unsubscribe_ajax');
-
 
 function sc_user_email($user_id, $post_id) {
   global $wpdb;
@@ -201,27 +189,27 @@ class sc_Widget extends WP_Widget {
     $plugin_table = $wpdb->prefix . "sc_subscribe";
 
     $post_count = $instance['count'];
-    
 
     echo $args['before_widget'];
     echo $args['before_title'];
     echo $instance['title'];
     echo $args['after_title'];
 
-
     $user_id = get_current_user_id();
     $post_count++;
     $sql = "(SELECT DISTINCT(A.ID) as ID FROM (SELECT $posts_table.ID as ID FROM $posts_table INNER JOIN $comments_table ON $comments_table.comment_post_ID = $posts_table.ID WHERE $posts_table.ID IN (SELECT post_id FROM $plugin_table WHERE user_id=$user_id) ORDER BY $comments_table.comment_date DESC) as A LIMIT $post_count) UNION (SELECT DISTINCT(post_id) AS ID FROM $plugin_table WHERE post_id NOT IN (SELECT DISTINCT($posts_table.ID) as ID FROM $posts_table INNER JOIN $comments_table ON $comments_table.comment_post_ID = $posts_table.ID WHERE $posts_table.ID IN (SELECT post_id FROM $plugin_table WHERE user_id=$user_id)) AND user_id=$user_id LIMIT $post_count)";
     $post_count--;
-    $res = $wpdb->get_results($sql, "ARRAY_A");   //print_r($res); 
+    $res = $wpdb->get_results($sql, "ARRAY_A");   //print_r($res);
     echo "<table class='sc_widget_post_list'>";
-    $top=1;
+    $top = 1;
     $need_all_button = false;
+
     foreach ($res as $key) {
-      if($top > $post_count) {
+      if ($top > $post_count) {
         $need_all_button = true;
         break;
       }
+
       $post = get_post($key['ID']);
       $sql = "SELECT COUNT(*) as c FROM $posts_table INNER JOIN $comments_table ON $posts_table.ID = $comments_table.comment_post_ID WHERE $posts_table.ID = ".$key['ID']." AND $comments_table.comment_date > (SELECT last_read_time FROM $plugin_table WHERE $plugin_table.user_id=$user_id AND $plugin_table.post_id=".$key['ID'].")";
 
@@ -235,10 +223,11 @@ class sc_Widget extends WP_Widget {
       $first_unread_comment_id = $wpdb->get_row($sql)->ID;
       $first_unread_comment_link = null;
 
-      if($first_unread_comment_id != NULL)
+      if ($first_unread_comment_id != NULL) {
         $first_unread_comment_link = get_comment_link($first_unread_comment_id);
-      else
+      } else {
         $first_unread_comment_link = get_permalink($key['ID']);
+      }
 
       echo "<tr class='sc_widget_post'>
               <td class='sc_widget_post_title'>
@@ -254,9 +243,12 @@ class sc_Widget extends WP_Widget {
             </tr>";
       $top++;
     }
+
     echo "</table>";
-    if($need_all_button) {
+
+    if ($need_all_button) {
       $url = get_site_url() . "/sc_subscribed";
+
       echo "<a href='$url'>
         <div class='sc_widget_more_button'>
           Devamı...
@@ -271,24 +263,24 @@ class sc_Widget extends WP_Widget {
         ";
     }
 
-
-
     echo $args['after_widget'];
   }
+
   public function form($instance) {
     $title = empty($instance['title']) ? __("Takip ettiğiniz yazılar","text-domain") : $instance['title'];
     $count = empty($instance['count']) ? 10 : $instance['count'];
     ?>
       <p>
-		  <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Başlık:' ); ?></label> 
-		  <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-		  </p>
+        <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Başlık:' ); ?></label> 
+        <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+      </p>
       <p>
-		  <label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Gösterilecek maximum yazı adedi:' ); ?></label> 
-		  <input size="3" id="<?php echo $this->get_field_id( 'count' ); ?>" name="<?php echo $this->get_field_name( 'count' ); ?>" type="text" value="<?php echo esc_attr( $count ); ?>">
-		  </p>
+        <label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Gösterilecek maximum yazı adedi:' ); ?></label> 
+        <input size="3" id="<?php echo $this->get_field_id( 'count' ); ?>" name="<?php echo $this->get_field_name( 'count' ); ?>" type="text" value="<?php echo esc_attr( $count ); ?>">
+      </p>
     <?php
   }
+
   public function update($new_instance, $old_instance) {
     $instance = array();
     $instance['title'] = empty($new_instance['title']) ? (empty($old_instance['title']) ? __("Takip ettiğiniz yazılar",'text-domain') : $old_instance['title']) : $new_instance['title'];
@@ -306,7 +298,8 @@ add_action("widgets_init","sc_init_widget");
 function sc_update_last_read_time($post_id) {
   global $wpdb;
   $user_id = get_current_user_id();
-  if(sc_user_subscribed($user_id, $post_id)) {
+
+  if (sc_user_subscribed($user_id, $post_id)) {
     $plugin_table = $wpdb->prefix . "sc_subscribe";
     $sql = "UPDATE $plugin_table SET last_read_time=NOW() WHERE user_id=$user_id AND post_id=$post_id";
     $wpdb->query($sql);
@@ -318,7 +311,8 @@ function sc_get_email_ajax() {
   global $wpdb;
   $post_id = (int) $_POST['post_id'];
   $user_id = get_current_user_id();
-  if(sc_user_subscribed($user_id,$post_id)) {
+
+  if (sc_user_subscribed($user_id,$post_id)) {
     $plugin_table = $wpdb->prefix . "sc_subscribe";
     $sql = "UPDATE $plugin_table SET send_mail=1 WHERE user_id=$user_id AND post_id=$post_id";
     $wpdb->query($sql);
@@ -334,11 +328,13 @@ function sc_dont_get_email_ajax() {
   global $wpdb;
   $post_id = (int) $_POST['post_id'];
   $user_id = get_current_user_id();
-  if(sc_user_subscribed($user_id,$post_id)) {
+
+  if (sc_user_subscribed($user_id,$post_id)) {
     $plugin_table = $wpdb->prefix . "sc_subscribe";
     $sql = "UPDATE $plugin_table SET send_mail=0 WHERE user_id=$user_id AND post_id=$post_id";
     $wpdb->query($sql);
   }
+
   echo "done";
   wp_die();
 }
@@ -362,6 +358,7 @@ add_action("wp_ajax_nopriv_sc_mark_as_read","sc_mark_as_read_ajax");
 
 function sc_page_load() {
   global $wp_query;
+
   if ($wp_query->query_vars['name'] == 'sc_subscribed') {
     wp_enqueue_style("sc_list_page_css",plugin_dir_url(__FILE__) . "css/list.css");
     wp_enqueue_script("sc_list_page_js",plugin_dir_url(__FILE__) . "js/list.php?sc_url=" . admin_url('admin-ajax.php'));
