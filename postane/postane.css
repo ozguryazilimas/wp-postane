@@ -1,94 +1,104 @@
+
 #postane {
-  width:90%;
-  border:10px solid #44749d;
-  padding:10px;
-  min-height:560px;
-  background-color:#ddd;
+  width: 90%;
+  border: 10px solid #44749d;
+  padding: 10px;
+  min-height: 560px;
+  background-color: #ddd;
 }
+
 #postane_thread_container {
   height: 400px;
-  overflow-y:scroll;
-  margin-bottom:10px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
   padding: 5px;
 }
+
 #postane_message_container {
   height: 350px;
-  overflow-y:scroll;
+  overflow-y: scroll;
   padding: 5px;
   margin-bottom: 10px;
 }
 
 #postane_back img {
-  height:40px;
+  height: 40px;
 }
+
 #postane_loading img {
-  width:100px;
+  width: 100px;
 }
+
 #postane p {
   margin: 0;
 }
+
 #postane img {
   margin: 0;
   box-shadow: none;
 }
+
 #postane_back {
-  display:inline-block;
+  display: inline-block;
   margin-top: 20px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 #postane_godmode_button {
-  text-align:center;
+  text-align: center;
   margin-top: 20px;
   cursor: pointer;
   background-color: #44749d;
-  padding:5px 10px;
+  padding: 5px 10px;
   font-weight: bold;
 }
 
 #postane_godmode_button a{
-  color:white;
-  text-decoration:none;
+  color: white;
+  text-decoration: none;
 }
 
 #postane_godmode_button a:hover {
-  text-decoration:underline;
+  text-decoration: underline;
 }
+
 #postane_loading {
   text-align: center;
 }
+
 #postane_threads {
-  position:relative;
+  position: relative;
 }
+
 #postane_loading img {
   display: inline-block;
 }
+
 #postane_threads_topmenu {
-  padding:5px;
+  padding: 5px;
   background-color: #44749d;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
 
 #postane_new_thread_toggle{
   cursor: pointer;
   width: 100%;
-  text-align:center;
+  text-align: center;
   color: white;
   font-size: 20px;
 }
 
 #postane_new_thread_toggle img{
   display: inline-block;
-  width:30px;
+  width: 30px;
 }
 
 #postane_new_thread {
-  display:none;
+  display: none;
   background-color: #44749d;
-  color:white;
-  padding:5px;
+  color: white;
+  padding: 5px;
 }
-
 
 .postane_thread {
   cursor: pointer;
@@ -96,38 +106,40 @@
   padding: 3px 10px;
   margin-bottom: 5px;
 }
+
 .postane_thread:hover {
   background-color: #44749d;
   color: white;
 }
 
 .postane_thread_buttons_div {
-  float:right;
+  float: right;
 }
+
 .postane_thread_buttons_div div {
   width: 20px;
   display: inline-block;
-  padding:2px;
+  padding: 2px;
 }
 
 .postane_thread_buttons_div div:hover {
-  background-color:#33638c;
+  background-color: #33638c;
 }
 
 .postane_thread_title {
-  display:inline-block;
-  width:80%;
+  display: inline-block;
+  width: 80%;
 }
 
 .postane_thread_buttons_div {
-  display:inline-block;
-  height:20px;
+  display: inline-block;
+  height: 20px;
 }
 
 .postane_thread_date {
-  text-align:right;
-  font-size:12px;
-  font-style:italic;
+  text-align: right;
+  font-size: 12px;
+  font-style: italic;
 }
 
 .postane_thread_unread {
@@ -136,115 +148,116 @@
 
 #postane_new_thread_title {
   cursor: text;
-  min-height:30px;
-  background-color:white;
-  color:black;
-  border:1px solid #fff;
-  margin-bottom:10px;
+  min-height: 30px;
+  background-color: white;
+  color: black;
+  border: 1px solid #fff;
+  margin-bottom: 10px;
 }
 #postane_new_participant {
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
 #postane_new_participant,
 #postane_new_thread_participants {
   cursor: text;
-  height:30px;
-  width:200px;
-  background-color:white;
-  color:black;
-  border:1px solid #fff;
-  margin-bottom:5px;
+  height: 30px;
+  width: 200px;
+  background-color: white;
+  color: black;
+  border: 1px solid #fff;
+  margin-bottom: 5px;
 }
 
 #postane_new_thread_message {
   cursor: text;
-  min-height:100px;
-  background-color:white;
-  color:black;
-  border:1px solid #fff;
-  margin-bottom:10px;
+  min-height: 100px;
+  background-color: white;
+  color: black;
+  border: 1px solid #fff;
+  margin-bottom: 10px;
 }
 
 #postane_new_message {
   cursor: text;
-  min-height:50px;
+  min-height: 50px;
   background-color: white;
-  color:black;
+  color: black;
   border: 1px solid #fff;
 }
 
 #postane_new_participants_send,
 .postane_messages_edit_action_button,
 #postane_new_message_send {
-  display:inline-block;
+  display: inline-block;
   cursor: pointer;
-  border:2px solid #c6d4e1;
+  border: 2px solid #c6d4e1;
   background-color: #44749d;
-  color:white;
-  padding:3px 7px;
+  color: white;
+  padding: 3px 7px;
 }
 
 #postane_new_message_send {
-  float:right;
+  float: right;
 }
 
 #postane_new_participants_send:hover,
 .postane_messages_edit_action_button:hover,
 #postane_new_message_send:hover {
   background-color: #4ecdc4;
-  border:2px solid #556270;
+  border: 2px solid #556270;
 }
 
 .postane_messages_cancel_edit_button {
   cursor: pointer;
   margin-left: 7px;
-  display:inline-block;
-  color:#4ecdc4;
+  display: inline-block;
+  color: #4ecdc4;
 }
 
 .postane_messages_cancel_edit_button:hover {
   color: #556270;
 }
+
 #postane_new_thread_send {
   cursor: pointer;
   display: inline-block;
-  border:2px solid #c6d4e1;
+  border: 2px solid #c6d4e1;
   background-color: #44749d;
-  color:white;
-  padding:3px 7px;
+  color: white;
+  padding: 3px 7px;
 }
 
 #postane_new_thread_send:hover {
   background-color: #4ecdc4;
-  border:2px solid #556270;
+  border: 2px solid #556270;
 }
 
 #postane_new_participant_list,
 #postane_new_thread_participant_list {
   display: none;
-  background-color:#44749d;
+  background-color: #44749d;
   padding: 5px 10px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
 .postane_new_existing_participant,
 .postane_existing_participant {
-  display:inline-block;
-  font-size:12px;
-  background-color:#0f0;
-  color:black;
+  display: inline-block;
+  font-size: 12px;
+  background-color: #0f0;
+  color: black;
   margin: 5px;
-  padding:3px 5px;
+  padding: 3px 5px;
 }
 
 .postane_new_nonexisting_participant,
 .postane_nonexisting_participant {
-  display:inline-block;
-  font-size:12px;
-  background-color:#f00;
-  color:white;
+  display: inline-block;
+  font-size: 12px;
+  background-color: #f00;
+  color: white;
   margin: 5px;
-  padding:3px 5px;
+  padding: 3px 5px;
 }
 
 .postane_new_existing_participant:hover,
@@ -257,29 +270,30 @@
 #postane_error {
   font-size: 15px;
   background-color: #f00;
-  text-align:center;
+  text-align: center;
   color: white;
 }
 
 #postane_success {
   font-size: 15px;
   background-color: #0f0;
-  text-align:center;
+  text-align: center;
 }
+
 #postane_message_more_button,
 #postane_thread_more_button {
-  cursor:pointer;
-  text-align:center;
-  background-color:#44749d;
-  color:white;
-  border:1px solid #44749d;
+  cursor: pointer;
+  text-align: center;
+  background-color: #44749d;
+  color: white;
+  border: 1px solid #44749d;
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
 #postane_message_more_button,
 #postane_thread_more_button:hover {
-  border:1px solid #ebe7e0;
+  border: 1px solid #ebe7e0;
   background-color: #5585ae;
 }
 
@@ -291,29 +305,29 @@
 }
 
 #postane_messages_buttons {
-  display:inline-block;
+  display: inline-block;
   float: right;
 }
 
 #postane_messages_addparticipant_button,
 #postane_messages_quit_button,
 #postane_messages_participants_button {
-  display:inline-block;
+  display: inline-block;
   cursor: pointer;
   width: 25px;
 }
 
 #postane_messages_title {
-  display:inline-block;
+  display: inline-block;
 }
 
 
 .postane_message_left {
-  padding:0;
+  padding: 0;
 }
 
 .postane_message_right {
-  padding:0;
+  padding: 0;
 }
 
 .postane_message_top_div {
@@ -321,35 +335,35 @@
 }
 
 .postane_user_avatar {
-  display:inline-block;
-  margin:0;
+  display: inline-block;
+  margin: 0;
   margin-right: 10px;
-  width:35px;
+  width: 35px;
 }
 
 .postane_user_avatar img {
-  display:block;
-  margin:0;
-  padding:0;
-  width:35px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 35px;
 }
 
 .postane_username {
-  display:inline-block;
-  position:relative;
-  top:-12px;
-  margin:0;
+  display: inline-block;
+  position: relative;
+  top: -12px;
+  margin: 0;
 }
 
 .postane_message {
-  background-color:white;
+  background-color: white;
   padding: 5px 10px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
 .postane_message_date {
-  font-size:10px;
-  text-align:right;
+  font-size: 10px;
+  text-align: right;
   font-style: italic;
 }
 
@@ -357,14 +371,14 @@
 .postane_messages_edit_button {
   margin-right: 10px;
   cursor: pointer;
-  display:inline-block;
-  float:right;
+  display: inline-block;
+  float: right;
   font-style: italic;
 }
 
 .postane_messages_delete_button:hover,
 .postane_messages_edit_button:hover {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 .postane_message_content[contenteditable="true"] {
@@ -375,6 +389,7 @@
 .postane_messages_edit_action_button {
   
 }
+
 .postane_message_marked_read,
 .postane_message_not_read {
   background-color: #eee;
@@ -383,8 +398,8 @@
 #postane_add_participant_container,
 #postane_participants_container {
   background-color: #44749d;
-  color:white;
-  margin:10px 5px;
+  color: white;
+  margin: 10px 5px;
 }
 
 #postane_add_participant_container {
@@ -393,8 +408,8 @@
 
 .postane_messages_participants_avatar_column,
 .postane_messages_participant_admin_column {
-  padding:5px 10px;
-  width:20px;
+  padding: 5px 10px;
+  width: 20px;
   margin: 0 10px;
 }
 
@@ -406,57 +421,57 @@
   background-color: white;
   color: #44749d;
 }
+
 .postane_messages_participant_table {
-  width:100%;
+  width: 100%;
 }
 
 .postane_messages_participant_table a {
-  color:white;
-  text-decoration:none;
+  color: white;
+  text-decoration: none;
 }
 
 .postane_messages_participant_table a:hover {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
-
 .postane_messages_participant_table .avatar {
-  width:20px;
+  width: 20px;
 }
 
 .postane_messages_participant_admin_image {
-  width:20px;
+  width: 20px;
 }
 
 .postane_tooltip {
-  display:inline-block;
+  display: inline-block;
   padding: 3px 7px;
-  font-size:12px;
-  color:white;
+  font-size: 12px;
+  color: white;
   background: #44749d;
   border: 2px solid white;
 }
 
 #postane_message_email {
-  font-size:11px;
+  font-size: 11px;
 }
 
 #postane_email_checkbox {
-  height:25px;
+  height: 25px;
   background-color: black;
   margin-left: 5px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .postane_threads_avatar {
-  display:inline-block;
+  display: inline-block;
   height: 15px;
   width: 15px;
   margin-left: 5px;
 }
 
 .postane_threads_avatar img {
-  height:15px;
+  height: 15px;
   width: 15px;
 }
 
@@ -465,16 +480,16 @@
 }
 
 .postane_threads_username a {
-  color:black;
-  text-decoration:none;
+  color: black;
+  text-decoration: none;
 }
 
 .postane_threads_username a:hover {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 .postane_thread:hover .postane_threads_username a {
-  color:white;
+  color: white;
 }
 
 .postane_threads_participant {
@@ -484,9 +499,10 @@
 .postane_threads_participant_list {
   margin-top: 5px;
   font-style: italic;
-  font-size:90%;
+  font-size: 90%;
 }
 
 #postane_loading {
   cursor: pointer;
 }
+
