@@ -568,5 +568,6 @@
 
 #postane_loading {
   cursor: pointer;
+  padding-bottom: 4px;
 }
 
