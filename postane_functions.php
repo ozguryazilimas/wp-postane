@@ -84,6 +84,7 @@ function postane_delete_all_messages($user_id, $thread_id) {
 
   return array("success" => true);
 }
+
 function postane_create_thread($user_id, $thread_title, $first_message, $participants) {
   if (!is_array($participants)) {
     return array("error" => PostaneLang::NO_PARTICIPANTS_ERROR);
@@ -318,6 +319,7 @@ function postane_get_messages($user_id, $thread_id, $exclusion_list, $step, $max
   $sql = "SELECT $users.display_name, $users.ID as user_id FROM $users WHERE $users.ID IN (SELECT DISTINCT(user_id) FROM $postane_messages WHERE $postane_messages.thread_id = %d)";
   $participant_for_message_info = $wpdb->get_results($wpdb->prepare($sql, $thread_id), 'ARRAY_A');
   $participants_for_message_info = array();
+
   foreach($participant_for_message_info as $info) {
     $avatar_url = get_avatar($info['user_id']);
     $author_url = get_site_url() . '/?author=' . $info['user_id'];
@@ -757,6 +759,7 @@ function postane_setup_query($arr) {
       }
     }
   }
+
   return $query_vars;
 }
 ?>
