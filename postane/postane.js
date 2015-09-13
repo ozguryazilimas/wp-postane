@@ -468,7 +468,7 @@ jQuery(document).ready(function() {
     if (current_thread_id != null) {
       load_messages_async(current_thread_id);
     }
-  },4000);
+  }, 30000);
 
 
   function load_messages(thread_id) {
