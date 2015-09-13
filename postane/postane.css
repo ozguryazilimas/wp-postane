@@ -1,14 +1,16 @@
 
 #postane {
-  width: 90%;
-  border: 10px solid #44749d;
+  width: auto;
+  border: 3px solid #44749d;
   padding: 10px;
   min-height: 560px;
-  background-color: #ddd;
+  // background-color: #ddd;
+  background-color: #F2F7FC;
+  border-radius: 10px;
 }
 
 #postane_thread_container {
-  height: 400px;
+  height: 460px;
   overflow-y: scroll;
   margin-bottom: 10px;
   padding: 5px;
@@ -33,9 +35,12 @@
   margin: 0;
 }
 
+#postane_notification img {
+  box-shadow: none;
+}
+
 #postane img {
   margin: 0;
-  box-shadow: none;
 }
 
 #postane_back {
@@ -48,9 +53,16 @@
   text-align: center;
   margin-top: 20px;
   cursor: pointer;
-  background-color: #44749d;
+  // background-color: #44749d;
+  background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
   padding: 5px 10px;
   font-weight: bold;
+  box-shadow: 2px 2px 4px #3D3D3D;
+  border-radius: 4px;
+}
+
+#postane_godmode_button:hover {
+  background: linear-gradient(#44749D, #2F516E) repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 
 #postane_godmode_button a{
@@ -75,17 +87,27 @@
 }
 
 #postane_threads_topmenu {
-  padding: 5px;
-  background-color: #44749d;
+  // padding: 5px;
+  // background-color: #44749d;
   margin-bottom: 20px;
 }
 
-#postane_new_thread_toggle{
+#postane_new_thread_toggle {
   cursor: pointer;
-  width: 100%;
+  // width: 100%;
+  // background-color: #44749d;
+  background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
   text-align: center;
   color: white;
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 4px;
+  box-shadow: 2px 2px 4px #3D3D3D;
+  border-radius: 10px 10px 0 0;
+}
+
+#postane_new_thread_toggle:hover {
+  background: linear-gradient(#44749D, #2F516E) repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 
 #postane_new_thread_toggle img{
@@ -95,9 +117,12 @@
 
 #postane_new_thread {
   display: none;
-  background-color: #44749d;
+  // background-color: #44749d;
+  background: linear-gradient(#44749D, #5897CC) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
-  padding: 5px;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 2px 2px 4px #3D3D3D;
 }
 
 .postane_thread {
@@ -105,10 +130,14 @@
   border-bottom: 2px solid #44749d;
   padding: 3px 10px;
   margin-bottom: 5px;
+  border-radius: 15px;
 }
 
 .postane_thread:hover {
-  background-color: #44749d;
+  // background-color: #44749d;
+  // background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  // background: linear-gradient(#44749D, #5897CC) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background: linear-gradient(#44749D, #5897CC) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
 }
 
@@ -117,9 +146,10 @@
 }
 
 .postane_thread_buttons_div div {
-  width: 20px;
+  width: 18px;
   display: inline-block;
   padding: 2px;
+  margin: 0 4px;
 }
 
 .postane_thread_buttons_div div:hover {
@@ -146,6 +176,19 @@
   background-color: #c6d4e1;
 }
 
+.postane_thread_quit_thread img,
+.postane_thread_remove_messages img {
+  // background-color: #44749b;
+  background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  padding: 2px 4px;
+  // box-shadow: 2px 2px 2px #2C2C2C;
+}
+
+.postane_thread_quit_thread img:hover,
+.postane_thread_remove_messages img:hover {
+  background: linear-gradient(#44749D, #2F516E) repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
 #postane_new_thread_title {
   cursor: text;
   min-height: 30px;
@@ -153,10 +196,13 @@
   color: black;
   border: 1px solid #fff;
   margin-bottom: 10px;
+  border-radius: 5px;
 }
+
 #postane_new_participant {
   margin-bottom: 20px;
 }
+
 #postane_new_participant,
 #postane_new_thread_participants {
   cursor: text;
@@ -166,6 +212,7 @@
   color: black;
   border: 1px solid #fff;
   margin-bottom: 5px;
+  border-radius: 5px;
 }
 
 #postane_new_thread_message {
@@ -175,6 +222,7 @@
   color: black;
   border: 1px solid #fff;
   margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 #postane_new_message {
@@ -190,10 +238,14 @@
 #postane_new_message_send {
   display: inline-block;
   cursor: pointer;
-  border: 2px solid #c6d4e1;
-  background-color: #44749d;
+  // border: 2px solid #c6d4e1;
+  border: 1px solid #556270;
+  // background-color: #44749d;
+  background: linear-gradient(#44749D, #2F516E) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
-  padding: 3px 7px;
+  padding: 3px 30px;
+  margin: 0 10px;
+  border-radius: 10px;
 }
 
 #postane_new_message_send {
@@ -203,8 +255,9 @@
 #postane_new_participants_send:hover,
 .postane_messages_edit_action_button:hover,
 #postane_new_message_send:hover {
-  background-color: #4ecdc4;
-  border: 2px solid #556270;
+  // background-color: #4ecdc4;
+  // border: 2px solid #556270;
+  background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 
 .postane_messages_cancel_edit_button {
@@ -221,15 +274,20 @@
 #postane_new_thread_send {
   cursor: pointer;
   display: inline-block;
-  border: 2px solid #c6d4e1;
-  background-color: #44749d;
+  // border: 2px solid #c6d4e1;
+  border: 1px solid #556270;
+  // background-color: #44749d;
+  background: linear-gradient(#44749D, #2F516E) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
-  padding: 3px 7px;
+  padding: 3px 30px;
+  border-radius: 10px;
+  margin: 0 10px;
 }
 
 #postane_new_thread_send:hover {
-  background-color: #4ecdc4;
-  border: 2px solid #556270;
+  // background-color: #4ecdc4;
+  background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  // border: 2px solid #556270;
 }
 
 #postane_new_participant_list,
@@ -302,6 +360,7 @@
   color: white;
   padding: 5px 10px;
   margin-bottom: 5px;
+  border-radius: 8px;
 }
 
 #postane_messages_buttons {
@@ -393,6 +452,11 @@
 .postane_message_marked_read,
 .postane_message_not_read {
   background-color: #eee;
+}
+
+.postane_participant_new_array_element,
+.postane_participant_array_element {
+  border-radius: 7px;
 }
 
 #postane_add_participant_container,
