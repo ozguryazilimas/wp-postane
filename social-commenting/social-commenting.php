@@ -52,7 +52,7 @@ function sc_mention_mail_profile_setting() {
         <table class="form-table">
           <tbody>
             <tr class="user-description-wrap">
-              <th><label for="description">Yorumlarda mention aldığımda mail gelsin.</label></th>
+              <th><label for="description">Yorumlarda mention aldığımda e-posta gelsin.</label></th>
               <td><input <?php if($checked == "true") echo "checked"; ?> name="sc_mention" id="sc_mention" type="checkbox" value="ok"/></td>
             </tr>
           </tbody>
@@ -237,8 +237,8 @@ class sc_Widget extends WP_Widget {
                 $comment_count
               </td>
               <td class='sc_widget_email_me' data-post-id='".$key['ID']."'>
-                <img  title='Bu yazıya gelen yorumlarda mail almak için tıklayın.' alt='Bu yazıya gelen yorumlarda mail almak için tıklayın.' class='sc_widget_email_ok ". ($email_subscribed ? '':'sc_widget_display') ."' src='".plugin_dir_url(__FILE__)."img/email-ok.png'/>
-                <img title='Bu yazıya gelen yorumlarda mail almayı iptal etmek için tıklayın.' alt='Bu yazıya gelen yorumlarda mail almayı iptal etmek için tıklayın.' class='sc_widget_email_no ". ($email_subscribed ? 'sc_widget_display':'') ."' src='".plugin_dir_url(__FILE__)."img/email-no.png'/>
+                <img  title='Bu yazıya gelen yorumlarda e-posta almak için tıklayın.' alt='Bu yazıya gelen yorumlarda e-posta almak için tıklayın.' class='sc_widget_email_ok ". ($email_subscribed ? '':'sc_widget_display') ."' src='".plugin_dir_url(__FILE__)."img/email-ok.png'/>
+                <img title='Bu yazıya gelen yorumlarda e-posta almayı iptal etmek için tıklayın.' alt='Bu yazıya gelen yorumlarda e-posta almayı iptal etmek için tıklayın.' class='sc_widget_email_no ". ($email_subscribed ? 'sc_widget_display':'') ."' src='".plugin_dir_url(__FILE__)."img/email-no.png'/>
               </td>
             </tr>";
       $top++;
