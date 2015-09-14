@@ -230,7 +230,9 @@
   min-height: 50px;
   background-color: white;
   color: black;
-  border: 1px solid #fff;
+  border: 1px solid #B0C4DE;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 #postane_new_participants_send,
