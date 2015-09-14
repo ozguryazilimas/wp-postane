@@ -53,7 +53,7 @@ function sc_mention_mail_profile_setting() {
           <tbody>
             <tr class="user-description-wrap">
               <th><label for="description">Yorumlarda mention aldığımda e-posta gelsin.</label></th>
-              <td><input <?php if($checked == "true") echo "checked"; ?> name="sc_mention" id="sc_mention" type="checkbox" value="ok"/></td>
+              <td><input <?php if($checked !== "false") echo "checked"; ?> name="sc_mention" id="sc_mention" type="checkbox" value="ok"/></td>
             </tr>
           </tbody>
         </table>
@@ -65,9 +65,9 @@ add_action('edit_user_profile','sc_mention_mail_profile_setting');
 function sc_profile_update($user_id) {
   $new_status = $_POST['sc_mention'];
   if ($new_status == "ok") {
-    update_user_meta($user_id, "sc_mention_mail", "true");
-  } else {
     delete_user_meta($user_id, "sc_mention_mail");
+  } else {
+    update_user_meta($user_id, "sc_mention_mail", "false");
   }
 }
 add_action('profile_update','sc_profile_update');

@@ -134,7 +134,7 @@ foreach ($results as $res) {
     $single = true;
     $applicable = get_user_meta($user_id, "sc_mention_mail",$single);
 
-    if ($applicable == "true" && ($user_id != $current_user_id)) {
+    if ($applicable !== "false" && ($user_id != $current_user_id)) {
       $mention_mail_list[] = $user_id;
     }
   }
