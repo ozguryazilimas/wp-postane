@@ -148,7 +148,7 @@ function postane_ajax() {
     wp_die();
   }
 
-  $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read', 'autocomplete_username', 'send_email', 'unsend_email');
+  $actions = array('', 'add_message', 'create_thread', 'edit_message', 'get_threads', 'get_messages', 'user_exists', 'get_messages_async', 'get_current_time', 'mark_message_read', 'add_participants', 'quit_thread', 'delete_all_messages', 'delete_message', 'mark_thread_read', 'autocomplete_username', 'send_email', 'unsend_email', 'unread_thread_count');
   $action = isset($_POST['postane_action']) ? $_POST['postane_action'] : '';
 
   $query_vars = postane_setup_query($_POST);
@@ -161,6 +161,10 @@ function postane_ajax() {
 
   switch ($action) {
     case '':
+      break;
+    case 'unread_thread_count':
+      $ret = postane_get_unread_thread_count($user_id);
+      echo json_encode($ret);
       break;
     case 'send_email':
       if (!isset($query_vars['postane_thread_id'])) {

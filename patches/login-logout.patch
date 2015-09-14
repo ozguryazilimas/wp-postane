@@ -1,5 +1,5 @@
 diff --git a/login-logout/login-logout.php b/login-logout/login-logout.php
-index f7328b2..4c0e5e1 100644
+index f7328b2..2312465 100644
 --- a/login-logout/login-logout.php
 +++ b/login-logout/login-logout.php
 @@ -17,6 +17,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
@@ -19,7 +19,7 @@ index f7328b2..4c0e5e1 100644
  		} else {
  			$wrap_before = '<ul class="wrap_login_logout">';
  			$wrap_after = '</ul>';
-@@ -70,32 +71,52 @@ class WP_Widget_Login_Logout extends WP_Widget {
+@@ -70,32 +71,79 @@ class WP_Widget_Login_Logout extends WP_Widget {
  			if ( is_user_logged_in() ){
  				$current_user = wp_get_current_user();
  				$username = $current_user->display_name;
@@ -57,8 +57,35 @@ index f7328b2..4c0e5e1 100644
 +				$unread_str = ' <span class="blink">(' . $unread_message_count . ')</span>';
 +				$unread_class = 'kabartmatozu_color_red';
 +			}			
-+			
-+			echo '<a class="kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
++			echo "
++				<script>
++					jQuery(document).ready(function(){
++						jQuery('div').delegate('.postane_thread_unread', 'click', function() {
++							setTimeout(function(){
++								var data = {
++									'action' : 'postane',
++									'postane_action' : 'unread_thread_count'
++								};
++								jQuery.post(ajaxurl, data, function(data) {
++									var result = JSON.parse(data);
++									if(typeof result['success'] != 'undefined') {
++										var count = result['success']['count'];
++										var button = jQuery('.login_logout_postane_button');
++										if(count == 0) {
++											button.removeClass('kabartmatozu_color_red');
++											button.html('postane');
++										} else {
++											button.addClass('kabartmatozu_color_red');
++											button.html('postane <span class=\"blink\">(' + count + ')</span>');
++										}
++									}
++								});
++							},2000);
++						});
++					});
++				</script>
++			";
++			echo '<a class="login_logout_postane_button kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
 +				' <a class="kabartmatozu" href="' . esc_url( wp_logout_url( $logout_redirect_to ) ) . '">' . $logout_text . '</a>';
  		}
  		echo $item_after;
@@ -78,7 +105,7 @@ index f7328b2..4c0e5e1 100644
  			}
  		}
  		
-@@ -258,4 +279,4 @@ if ( ! function_exists( 'login_logout_unqprfx_plugin_meta' ) ) :
+@@ -258,4 +306,4 @@ if ( ! function_exists( 'login_logout_unqprfx_plugin_meta' ) ) :
  		return $links;
  	}
  	add_filter( 'plugin_row_meta', 'login_logout_unqprfx_plugin_meta', 10, 2 );

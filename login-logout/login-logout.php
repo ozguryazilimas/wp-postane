@@ -101,8 +101,35 @@ class WP_Widget_Login_Logout extends WP_Widget {
 				$unread_str = ' <span class="blink">(' . $unread_message_count . ')</span>';
 				$unread_class = 'kabartmatozu_color_red';
 			}			
-			
-			echo '<a class="kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
+			echo "
+				<script>
+					jQuery(document).ready(function(){
+						jQuery('div').delegate('.postane_thread_unread', 'click', function() {
+							setTimeout(function(){
+								var data = {
+									'action' : 'postane',
+									'postane_action' : 'unread_thread_count'
+								};
+								jQuery.post(ajaxurl, data, function(data) {
+									var result = JSON.parse(data);
+									if(typeof result['success'] != 'undefined') {
+										var count = result['success']['count'];
+										var button = jQuery('.login_logout_postane_button');
+										if(count == 0) {
+											button.removeClass('kabartmatozu_color_red');
+											button.html('postane');
+										} else {
+											button.addClass('kabartmatozu_color_red');
+											button.html('postane <span class=\"blink\">(' + count + ')</span>');
+										}
+									}
+								});
+							},2000);
+						});
+					});
+				</script>
+			";
+			echo '<a class="login_logout_postane_button kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
 				' <a class="kabartmatozu" href="' . esc_url( wp_logout_url( $logout_redirect_to ) ) . '">' . $logout_text . '</a>';
 		}
 		echo $item_after;
