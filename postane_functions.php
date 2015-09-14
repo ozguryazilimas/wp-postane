@@ -694,6 +694,15 @@ function postane_get_all_messages($thread_id) {
   return array('thread_info' => $thread_info, 'participant_info' => $participants_info, 'message_info' => $messages, 'participants_for_message_info' => $participants_for_message_info);
 }
 
+function postane_get_unread_thread_count($user_id) {
+  global $wpdb;
+  $users = $wpdb->users;
+  global $postane_threads;
+  global $postane_user_thread;
+  $res = $wpdb->get_var("SELECT count(*) from $postane_threads INNER JOIN $postane_user_thread ON $postane_user_thread.thread_id=$postane_threads.id where $postane_user_thread.user_id=$user_id AND $postane_user_thread.last_read_time < $postane_threads.last_message_time");
+
+  return array("success" => array("count" => $res));
+}
 
 function postane_setup_query($arr) {
   $query_var_types = array(
