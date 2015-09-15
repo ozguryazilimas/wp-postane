@@ -3,7 +3,7 @@
 Plugin Name: Ugurcum
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: This plugin displays a list of multimedia files in a fancy way. Allows addition for logged in users, and modification for admin users.
-Version: 0.9.1
+Version: 1.0.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
@@ -89,10 +89,10 @@ function ugurcum_update_db_check() {
 
 function ugurcum_add_assets() {
   // enqueue WordPress CSS hook
-  wp_register_script('jquery_datatables_js', '//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js');
+  wp_register_script('jquery_datatables_js', '//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js');
   wp_enqueue_script('jquery_datatables_js');
 
-  wp_register_style('jquery_datatables_css', '//cdn.datatables.net/1.10.4/css/jquery.dataTables.css');
+  wp_register_style('jquery_datatables_css', '//cdn.datatables.net/1.10.9/css/jquery.dataTables.css');
   wp_enqueue_style('jquery_datatables_css');
 
   wp_enqueue_style('ugurcum', get_option('siteurl') . '/wp-content/plugins/ugurcum/css/ugurcum.css');
