@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: captcha 4.1.0\n"
+"Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-07 12:35+0300\n"
-"PO-Revision-Date: 2015-08-07 12:35+0300\n"
-"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-09-17 12:13+0300\n"
+"PO-Revision-Date: 2015-09-17 12:13+0300\n"
+"Last-Translator: bestwebsoft.com <plugins@bestwebsoft.com>\n"
 "Language-Team: Luc Capronnier <lcapronnier@yahoo.com>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -13,445 +13,532 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: whitelist.php:40
-msgid "Search results for"
-msgstr ""
+#: whitelist.php:58
+msgid "For IP addresses from the whitelist CAPTCHA will not be displayed"
+msgstr "Pour les adresses IP se trouvant dans la liste blanche, le captcha ne sera pas affiché"
 
-#: whitelist.php:45
+#: whitelist.php:62
 msgid "Add IP to whitelist"
+msgstr "Ajouter une adresse IP à la liste blanche"
+
+#: whitelist.php:67
+msgid "My IP"
 msgstr ""
 
-#: whitelist.php:49 whitelist.php:58
+#: whitelist.php:74
+#: whitelist.php:84
 msgid "Allowed formats:"
-msgstr ""
+msgstr "Formats autorisés&nbsp;:"
 
-#: whitelist.php:56
+#: whitelist.php:75
+msgid "Allowed diapason:"
+msgstr "Plage autorisée&nbsp;:"
+
+#: whitelist.php:82
 msgid "Reason"
-msgstr ""
+msgstr "Réseaux"
 
-#: whitelist.php:58
-msgid "Allowed separators: a comma"
-msgstr ""
+#: whitelist.php:85
+msgid "Allowed separators for IPs: a comma"
+msgstr "Séparateurs autorisés pour les adresses IP&nbsp;: virgule"
 
-#: whitelist.php:58
+#: whitelist.php:85
+#: whitelist.php:86
 msgid "semicolon"
-msgstr ""
+msgstr "point-virgule"
 
-#: whitelist.php:58
+#: whitelist.php:85
 msgid "ordinary space, tab, new line or carriage return"
-msgstr ""
+msgstr "espace, tabulation, nouvelle ligne ou retour à la ligne"
 
-#: whitelist.php:65 captcha.php:391
-msgid "Unlock premium options by upgrading to a PRO version."
+#: whitelist.php:86
+msgid "Allowed separators for reasons: a comma"
+msgstr "Séparateurs autorisés pour les réseaux&nbsp;: virgule"
+
+#: whitelist.php:86
+msgid "tab, new line or carriage return"
+msgstr "tabulation, nouvelle ligne ou retour à la ligne"
+
+#: whitelist.php:93
+#: captcha.php:482
+#, fuzzy
+msgid "Unlock premium options by upgrading to Pro version"
 msgstr "Déploquer les options premium en migrant vers la version PRO."
 
-#: whitelist.php:66 captcha.php:392
+#: whitelist.php:95
+#: captcha.php:484
 msgid "Learn More"
 msgstr "En savoir plus"
 
-#: whitelist.php:68 captcha.php:395
-msgid "Go"
-msgstr "Passez"
-
-#: whitelist.php:74
+#: whitelist.php:101
 msgid "Search IP"
-msgstr ""
+msgstr "Recherche de l'adresse IP"
 
-#: whitelist.php:105
+#: whitelist.php:132
+msgid "Nothing found"
+msgstr "Vide"
+
+#: whitelist.php:132
 msgid "No IP in whitelist"
-msgstr ""
+msgstr "Pas d'adresse dans la liste blanche"
 
-#: whitelist.php:111
+#: whitelist.php:139
 msgid "IP address"
+msgstr "Adresse IP"
+
+#: whitelist.php:140
+msgid "Date added"
 msgstr ""
 
-#: whitelist.php:112
-msgid "Diapason from"
-msgstr ""
-
-#: whitelist.php:113
-msgid "Diapason till"
-msgstr ""
-
-#: whitelist.php:164 whitelist.php:175
+#: whitelist.php:189
+#: whitelist.php:200
 msgid "Remove from whitelist"
-msgstr ""
+msgstr "Supprimer l'adresse de la liste"
 
-#: whitelist.php:225
-msgid "Some errors occured. IP not saved in database."
-msgstr ""
-
-#: whitelist.php:241
+#: whitelist.php:266
 msgid "IP added in database successfully"
-msgstr ""
+msgstr "L'adresse IP a été ajoutée à la liste"
 
-#: whitelist.php:243 whitelist.php:259 whitelist.php:266
+#: whitelist.php:268
+#: whitelist.php:283
+#: whitelist.php:290
 msgid "Some errors occured"
-msgstr ""
+msgstr "Des erreurs sont apparues"
 
-#: whitelist.php:245
+#: whitelist.php:270
 msgid "IP is allready in database"
-msgstr ""
+msgstr "L'adresse IP est déjà dans la liste"
 
-#: whitelist.php:249
+#: whitelist.php:273
 msgid "Invalid IP. See allowed formats"
-msgstr ""
+msgstr "Adresse IP invalide. Regardez les formats authorisés"
 
-#: whitelist.php:257 whitelist.php:264
+#: whitelist.php:281
+#: whitelist.php:288
 msgid "One IP was deleted successfully"
-msgstr ""
+msgstr "Une adresse IP a été supprimée avec succès"
 
-#: captcha.php:31 captcha.php:303
+#: whitelist.php:292
+msgid "You have not entered any value"
+msgstr "Vous n'avez pas saisi de valeur"
+
+#: whitelist.php:295
+msgid "You have not enterd any value in to the search form"
+msgstr "Vous n'avez pas saisie de texte dans le formulaire de recherche"
+
+#: whitelist.php:297
+msgid "Search results for"
+msgstr "Résultat de la recherche pour"
+
+#: captcha.php:33
+#: captcha.php:377
 msgid "Captcha Settings"
 msgstr "Options du Captcha"
 
-#: captcha.php:31
+#: captcha.php:33
 msgid "Captcha"
 msgstr "Captcha"
 
-#: captcha.php:128
+#: captcha.php:148
 msgid "Please enter a CAPTCHA value."
 msgstr "Merci de compléter le CAPTCHA."
 
-#: captcha.php:129
+#: captcha.php:149
 msgid "Please enter a valid CAPTCHA value."
 msgstr "Merci de compléter le CAPTCHA."
 
-#: captcha.php:217
+#: captcha.php:154
+#, fuzzy
+msgid "You are in the white list"
+msgstr "Pas d'adresse dans la liste blanche"
+
+#: captcha.php:290
 msgid "Login form"
 msgstr "Formulaire de connexion"
 
-#: captcha.php:218 captcha.php:368
+#: captcha.php:291
+#: captcha.php:459
 msgid "Registration form"
 msgstr "Formulaire d'enregistrement"
 
-#: captcha.php:219
+#: captcha.php:292
 msgid "Reset Password form"
 msgstr "Formulaire de mot de passe perdu"
 
-#: captcha.php:220 captcha.php:369
+#: captcha.php:293
+#: captcha.php:460
 msgid "Comments form"
 msgstr "Formulaire des commentaires"
 
-#: captcha.php:223
-#, fuzzy
+#: captcha.php:296
 msgid "in Comments form for registered users"
-msgstr ""
-"Cacher le CAPTCHA dans les commentaires pour les utilisateurs enregistrés"
+msgstr "dans le formulaire de commentaires pour les utilisateurs connectés"
 
-#: captcha.php:224
-msgid "for whitelisted IPs"
-msgstr ""
-
-#: captcha.php:228
+#: captcha.php:300
 msgid "Plus (&#43;)"
 msgstr "Plus (&#43;)"
 
-#: captcha.php:228
+#: captcha.php:300
 msgid "Plus"
 msgstr "Plus"
 
-#: captcha.php:229
+#: captcha.php:301
 msgid "Minus (&minus;)"
 msgstr "Moins (&minus;)"
 
-#: captcha.php:229
+#: captcha.php:301
 msgid "Minus"
 msgstr "Moins"
 
-#: captcha.php:230
+#: captcha.php:302
 msgid "Multiplication (&times;)"
 msgstr "Multiplication (&times;)"
 
-#: captcha.php:230
+#: captcha.php:302
 msgid "Multiply"
 msgstr "Multiplie (&times;)"
 
-#: captcha.php:235
+#: captcha.php:307
 msgid "Numbers"
 msgstr "Nombres"
 
-#: captcha.php:236
+#: captcha.php:308
 msgid "Words"
 msgstr "Mots"
 
-#: captcha.php:281
-msgid ""
-"Please select one item in the block Arithmetic and Complexity for CAPTCHA"
-msgstr ""
-"Merci de choisir au moins un élément dans la catégorie mathématique et un "
-"dans la catégorie compléxité pour le CAPTCHA"
+#: captcha.php:354
+msgid "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
+msgstr "Merci de choisir au moins un élément dans la catégorie mathématique et un dans la catégorie compléxité pour le CAPTCHA"
 
-#: captcha.php:285
+#: captcha.php:358
 msgid "Settings saved."
 msgstr "Options enregistrées."
 
-#: captcha.php:292
+#: captcha.php:365
 msgid "All plugin settings were restored."
-msgstr ""
+msgstr "Toutes les valeurs par défaut des paramètres de l'extension ont été remises."
 
-#: captcha.php:305
+#: captcha.php:379
 msgid "How to Use Step-by-step Instruction"
-msgstr ""
+msgstr "Mode d'emploi pas à pas pour la mise en oeuvre"
 
-#: captcha.php:308 captcha.php:1355 captcha.php:1368
+#: captcha.php:382
+#: captcha.php:1433
+#: captcha.php:1446
 msgid "Settings"
 msgstr "Réglages"
 
-#: captcha.php:309
+#: captcha.php:383
 msgid "Whitelist"
-msgstr ""
+msgstr "Liste blanche"
 
-#: captcha.php:310 captcha.php:1369
+#: captcha.php:384
+#: captcha.php:1447
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:311
+#: captcha.php:385
 msgid "Go PRO"
 msgstr "Choisir la version PRO"
 
-#: captcha.php:313
+#: captcha.php:387
 msgid "Notice:"
-msgstr "Avertissement :"
+msgstr "Avertissement&nbsp;:"
 
-#: captcha.php:313
-msgid ""
-"The plugin's settings have been changed. In order to save them please don't "
-"forget to click the 'Save Changes' button."
-msgstr ""
-"Les paramètres de cette extensions ont été changés. Afin de pouvoir les "
-"enregistrer, merci de cliquer sur le bouton 'Enregistrer les modifications'."
-"\""
+#: captcha.php:387
+msgid "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button."
+msgstr "Les paramètres de cette extensions ont été changés. Afin de pouvoir les enregistrer, merci de cliquer sur le bouton 'Enregistrer les modifications'.\""
 
-#: captcha.php:323 captcha.php:355 captcha.php:364 captcha.php:367
-msgid "Enable CAPTCHA for:"
-msgstr "Activer le CAPTCHA pour :"
+#: captcha.php:397
+#: captcha.php:447
+#: captcha.php:455
+#: captcha.php:458
+#, fuzzy
+msgid "Enable CAPTCHA for"
+msgstr "Activer le CAPTCHA pour&nbsp;:"
 
-#: captcha.php:325 captcha.php:426 captcha.php:428
+#: captcha.php:399
+#: captcha.php:521
+#: captcha.php:523
 msgid "Arithmetic actions for CAPTCHA"
 msgstr "Opérations arithmétiques  pour le CAPTCHA"
 
-#: captcha.php:336
-#, fuzzy
-msgid "Contact Form"
-msgstr "Formulaire de contact"
+#: captcha.php:424
+msgid "Activate"
+msgstr "Activer"
 
-#: captcha.php:339
-msgid "Activate contact form"
-msgstr "Activer le formulaire de contact"
+#: captcha.php:434
+msgid "Download"
+msgstr "Télécharger"
 
-#: captcha.php:342
-msgid "Download contact form"
-msgstr "Télécharger le formulaire de contact"
-
-#: captcha.php:345
+#: captcha.php:438
 msgid "If you would like to add Captcha to a custom form, please see"
-msgstr ""
-"Si vous voulez ajouter le Captcha à un formulaire, merci de consulter la"
+msgstr "Si vous voulez ajouter le Captcha à un formulaire, merci de consulter la"
 
-#: captcha.php:370
+#: captcha.php:461
 msgid "\"Create a Group\" form"
 msgstr "Formulaire pour \"Créer un groupe\""
 
-#: captcha.php:376
-msgid "Enable CAPTCHA:"
-msgstr "Activer le CAPTCHA pour :"
-
-#: captcha.php:384
-msgid "If you upgrade to Pro version all your settings will be saved."
-msgstr ""
-"Si vous passez à la version Pro, tous ces paramètres seront enregistrés."
-
-#: captcha.php:402
+#: captcha.php:467
 #, fuzzy
-msgid "Hide CAPTCHA"
-msgstr "Activer le CAPTCHA pour :"
+msgid "Enable CAPTCHA"
+msgstr "Activer le CAPTCHA pour&nbsp;:"
 
-#: captcha.php:409
+#: captcha.php:475
+msgid "If you upgrade to Pro version all your settings will be saved."
+msgstr "Si vous passez à la version Pro, tous ces paramètres seront enregistrés."
+
+#: captcha.php:490
+msgid "Hide CAPTCHA"
+msgstr "Cacher le captcha"
+
+#: captcha.php:497
 msgid "Title for CAPTCHA in the form"
 msgstr "Le titre du CAPTCHA dans les formulaires"
 
-#: captcha.php:413
+#: captcha.php:501
 msgid "Required symbol"
 msgstr "Symbol obligatoire"
 
-#: captcha.php:419
+#: captcha.php:507
 msgid "Error messages"
-msgstr "Messages d'erreur"
+msgstr "Message d'erreur"
 
-#: captcha.php:421
+#: captcha.php:509
 msgid "If CAPTCHA field is empty"
 msgstr "Si le champ CAPTCHA est vide"
 
-#: captcha.php:422
+#: captcha.php:510
 msgid "If CAPTCHA is incorrect"
 msgstr "Si le CAPTCHA est incorrect"
 
-#: captcha.php:439 captcha.php:441
+#: captcha.php:514
+msgid "Display for whitelisted IP"
+msgstr ""
+
+#: captcha.php:517
+msgid "If the IP is in the whitelist, then the indicated message will be displayed instead of the captcha."
+msgstr ""
+
+#: captcha.php:534
+#: captcha.php:536
 msgid "CAPTCHA complexity level"
 msgstr "Niveau de compléxité du CAPTCHA"
 
-#: captcha.php:454
+#: captcha.php:549
 msgid "Save Changes"
-msgstr "Savegarder les modifications"
+msgstr "Enregistrer les modifications"
 
-#: captcha.php:530 captcha.php:545 captcha.php:547 captcha.php:554
-#: captcha.php:730 captcha.php:738 captcha.php:754 captcha.php:762
+#: captcha.php:626
+#: captcha.php:641
+#: captcha.php:643
+#: captcha.php:650
+#: captcha.php:827
+#: captcha.php:835
+#: captcha.php:852
+#: captcha.php:860
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: captcha.php:671 captcha.php:791
+#: captcha.php:759
+#: captcha.php:765
+#: captcha.php:881
+#: captcha.php:889
 msgid "Error"
 msgstr "Erreur"
 
-#: captcha.php:671 captcha.php:791
+#: captcha.php:759
+#: captcha.php:765
+#: captcha.php:881
+#: captcha.php:889
 msgid "Click the BACK button on your browser, and try again."
-msgstr ""
-"Appuyez sur le bouton retour de votre navigateur et essayez de nouveau."
+msgstr "Appuyez sur le bouton retour de votre navigateur et essayez de nouveau."
 
-#: captcha.php:815 captcha.php:1121
+#: captcha.php:913
+#: captcha.php:1217
 msgid "zero"
 msgstr "null"
 
-#: captcha.php:816 captcha.php:1122 captcha.php:1312
+#: captcha.php:914
+#: captcha.php:1218
+#: captcha.php:1390
 msgid "one"
 msgstr "un"
 
-#: captcha.php:817 captcha.php:1123
+#: captcha.php:915
+#: captcha.php:1219
 msgid "two"
 msgstr "deux"
 
-#: captcha.php:818 captcha.php:1124
+#: captcha.php:916
+#: captcha.php:1220
 msgid "three"
 msgstr "trois"
 
-#: captcha.php:819 captcha.php:1125
+#: captcha.php:917
+#: captcha.php:1221
 msgid "four"
 msgstr "quatre"
 
-#: captcha.php:820 captcha.php:1126
+#: captcha.php:918
+#: captcha.php:1222
 msgid "five"
 msgstr "cinq"
 
-#: captcha.php:821 captcha.php:1127 captcha.php:1312
+#: captcha.php:919
+#: captcha.php:1223
+#: captcha.php:1390
 msgid "six"
 msgstr "six"
 
-#: captcha.php:822 captcha.php:1128 captcha.php:1300 captcha.php:1306
+#: captcha.php:920
+#: captcha.php:1224
+#: captcha.php:1378
+#: captcha.php:1384
 msgid "seven"
 msgstr "sept"
 
-#: captcha.php:823 captcha.php:1129 captcha.php:1303
+#: captcha.php:921
+#: captcha.php:1225
+#: captcha.php:1381
 msgid "eight"
 msgstr "huit"
 
-#: captcha.php:824 captcha.php:1130
+#: captcha.php:922
+#: captcha.php:1226
 msgid "nine"
 msgstr "neuf"
 
-#: captcha.php:827 captcha.php:1133
+#: captcha.php:925
+#: captcha.php:1229
 msgid "eleven"
 msgstr "onze"
 
-#: captcha.php:828 captcha.php:1134
+#: captcha.php:926
+#: captcha.php:1230
 msgid "twelve"
 msgstr "douze"
 
-#: captcha.php:829 captcha.php:1135
+#: captcha.php:927
+#: captcha.php:1231
 msgid "thirteen"
 msgstr "treize"
 
-#: captcha.php:830 captcha.php:1136
+#: captcha.php:928
+#: captcha.php:1232
 msgid "fourteen"
 msgstr "quatorze"
 
-#: captcha.php:831 captcha.php:1137
+#: captcha.php:929
+#: captcha.php:1233
 msgid "fifteen"
 msgstr "quinze"
 
-#: captcha.php:832 captcha.php:1138
+#: captcha.php:930
+#: captcha.php:1234
 msgid "sixteen"
 msgstr "seize"
 
-#: captcha.php:833 captcha.php:1139
+#: captcha.php:931
+#: captcha.php:1235
 msgid "seventeen"
 msgstr "dix-sept"
 
-#: captcha.php:834 captcha.php:1140
+#: captcha.php:932
+#: captcha.php:1236
 msgid "eighteen"
 msgstr "dix-huit"
 
-#: captcha.php:835 captcha.php:1141
+#: captcha.php:933
+#: captcha.php:1237
 msgid "nineteen"
 msgstr "dix-neuf"
 
-#: captcha.php:838 captcha.php:1144
+#: captcha.php:936
+#: captcha.php:1240
 msgid "ten"
 msgstr "dix"
 
-#: captcha.php:839 captcha.php:1145
+#: captcha.php:937
+#: captcha.php:1241
 msgid "twenty"
 msgstr "vingt"
 
-#: captcha.php:840 captcha.php:1146
+#: captcha.php:938
+#: captcha.php:1242
 msgid "thirty"
 msgstr "trente"
 
-#: captcha.php:841 captcha.php:1147
+#: captcha.php:939
+#: captcha.php:1243
 msgid "forty"
 msgstr "quarante"
 
-#: captcha.php:842 captcha.php:1148
+#: captcha.php:940
+#: captcha.php:1244
 msgid "fifty"
 msgstr "cinquante"
 
-#: captcha.php:843 captcha.php:1149
+#: captcha.php:941
+#: captcha.php:1245
 msgid "sixty"
 msgstr "soixante"
 
-#: captcha.php:844 captcha.php:1150
+#: captcha.php:942
+#: captcha.php:1246
 msgid "seventy"
 msgstr "soixante-dix"
 
-#: captcha.php:845 captcha.php:1151
+#: captcha.php:943
+#: captcha.php:1247
 msgid "eighty"
 msgstr "quatre-vingt"
 
-#: captcha.php:846 captcha.php:1152
+#: captcha.php:944
+#: captcha.php:1248
 msgid "ninety"
 msgstr "quatre-vingt-dix"
 
-#: captcha.php:933 captcha.php:1239
+#: captcha.php:1031
+#: captcha.php:1336
 msgid "and"
 msgstr "et"
 
-#: captcha.php:1007
+#: captcha.php:1105
 msgid "Encryption password is not set"
 msgstr "Le mot de passe de cryptage n'est pas défini"
 
-#: captcha.php:1027
+#: captcha.php:1125
 msgid "Decryption password is not set"
 msgstr "Le mot de passe de décryptage n'est pas défini"
 
-#: captcha.php:1370
+#: captcha.php:1448
 msgid "Support"
 msgstr "Support"
 
-#~ msgid "Register form"
-#~ msgstr "Formulaire d'enregistrement"
+#~ msgid "Activate contact form"
+#~ msgstr "Activer le formulaire de contact"
 
-#~ msgid "Lost password form"
-#~ msgstr "Formulaire de mot de passe perdu"
+#~ msgid "Contact Form"
+#~ msgstr "Formulaire de contact"
 
-#~ msgid "powered by"
-#~ msgstr "propulsé par"
+#~ msgid "Download contact form"
+#~ msgstr "Télécharger le formulaire de contact"
 
-#~ msgid "Subscriber"
-#~ msgstr "Abonner"
+#~ msgid "Go"
+#~ msgstr "Passez"
+
+#~ msgid "Diapason from"
+#~ msgstr "Borne inférieure"
+
+#~ msgid "Diapason till"
+#~ msgstr "Borne supérieure"
 
 #~ msgid "requires"
 #~ msgstr "requis"
@@ -601,8 +688,38 @@ msgstr "Support"
 #~ "(votre nom d'utilisateur est l'adresse e-mail que vous avez donné lors de "
 #~ "l'achat de l'extension)."
 
-#~ msgid "Activate"
-#~ msgstr "Activer"
+#~ msgid "or"
+#~ msgstr "ou"
+
+#~ msgid "Start Your Free %s-Day Trial Now"
+#~ msgstr "Commencer votre période d'essai gratuire de %s jours"
+
+#~ msgid ""
+#~ "In order to continue using the plugin it is necessary to buy a %s license."
+#~ msgstr ""
+#~ "Afin de continuer à utiliser l'extension, il est nécessaire d'acheter une "
+#~ "licence %s."
+
+#~ msgid "After that you can activate it by entering your license key."
+#~ msgstr ""
+#~ " Après, vous pouvez activer cette extension en donnant votre clé de "
+#~ "licence."
+
+#~ msgid ""
+#~ "Unfortunately, you have exceeded the number of available tries per day."
+#~ msgstr "Désoler mais vous avez dépassé le nombre d'essai de la journée."
+
+#~ msgid ""
+#~ "Congratulations! The PRO license of the plugin is successfully activated."
+#~ msgstr ""
+#~ "Félicitations! La version PRO de cette extension a été téléchargée et "
+#~ "activée avec succès."
+
+#~ msgid "Wrong license key."
+#~ msgstr "Clé de licence incorrecte."
+
+#~ msgid "This license key is bind to another site."
+#~ msgstr "La clé de licence correspond à un autre site."
 
 #~ msgid ""
 #~ "This license key is valid, but Your license has expired. If you want to "
@@ -617,11 +734,21 @@ msgstr "Support"
 #~ "Désoler mais vous avez dépassé le nombre d'essai de la journée. Merci de "
 #~ "télécharger l'extension manuellement."
 
-#~ msgid "The license key is valid. Your license will expire on"
-#~ msgstr "La clé de licence est valide. Votre licence se termine le "
+#~ msgid ""
+#~ "Unfortunately, the PRO Trial licence was already installed to this "
+#~ "domain. The PRO Trial license can be installed only once."
+#~ msgstr ""
+#~ "Une licence a déjà été installée sur ce domaine. La licence d'évaluation "
+#~ "ne peut-être installée qu'une seule fois."
+
+#~ msgid "The PRO Trial license key is valid."
+#~ msgstr "La clé de licence d'évaluation est valide."
 
 #~ msgid "The license key is valid."
 #~ msgstr "La clé de licence est valide."
+
+#~ msgid "Your license will expire on"
+#~ msgstr "Votre licence se termine le "
 
 #~ msgid "Please, enter your license key"
 #~ msgstr "Merci de saisir votre clé de liecence"
@@ -647,23 +774,28 @@ msgstr "Support"
 #~ msgid "Check license key"
 #~ msgstr "Vérifier la clé de licence"
 
-#~ msgid ""
-#~ "WARNING: We have noticed illegal use of our plugin by you. We strongly "
-#~ "recommend you to solve the problem within 24 hours, otherwise the plugin "
-#~ "will be deactivated. Please go to your personal"
-#~ msgstr ""
-#~ "AVERTISSEMENT : Nous avons détecté une utilisation abusive de notre "
-#~ "extension. Nous vous recommandons de résoudre ce problème dans les 24 "
-#~ "heures, sinon l'extension sera rendue inactive. Merci de vous rendre dans "
-#~ "votre espace personel"
+#~ msgid "WARNING: Illegal use notification"
+#~ msgstr "AVERTISSEMENT&nbsp;: Notification d'utilisation abusive"
 
 #~ msgid ""
-#~ "(your username is the email you specify when purchasing the product), "
-#~ "where you can make the necessary changes."
+#~ "You can use one license of the Pro plugin for one domain only. Please "
+#~ "check and edit your license or domain if necessary using you personal "
+#~ "Client Area. We strongly recommend you to solve the problem within 24 "
+#~ "hours, otherwise the Pro plugin will be deactivated."
 #~ msgstr ""
-#~ "(votre nom d'utilisateur est l'adresse e-mail que vous avez donné lors de "
-#~ "l'achat de l'extension), où vous pourrez faire les modifications "
-#~ "nécessaires."
+#~ "Vous ne pouvez utilisez qu'une licence de la version Pro de l'extension "
+#~ "pour un seul domaine. Merci de vérifier et de modifier votre licence ou "
+#~ "votre domaine si nécessaire en utilisant votre zone client. Nous vous "
+#~ "recommandons de résoudre ce problème dans les 24 heures, sinon "
+#~ "l'extension sera rendue inactive."
+
+#~ msgid ""
+#~ "Notice: Your PRO Trial license has expired. To continue using the plugin "
+#~ "you should buy a PRO license"
+#~ msgstr ""
+#~ "Information&nbsp;: Votre licence est terminée. Pour continuer à disposer "
+#~ "du support rapide et des mises à jour de l'extension vous devez acheter "
+#~ "cette extension."
 
 #~ msgid ""
 #~ "Your license has expired. To continue getting top-priority support and "
@@ -674,6 +806,19 @@ msgstr "Support"
 
 #~ msgid "Learn more"
 #~ msgstr "En savoir plus"
+
+#~ msgid "Notice: You are using the PRO Trial license of %s plugin."
+#~ msgstr ""
+#~ "Information&nbsp;: Vous utilisez la version d'évaluation PRO de "
+#~ "l'extension %s."
+
+#~ msgid "Notice: You are using the PRO Trial license of plugin."
+#~ msgstr ""
+#~ "Information&nbsp;: Vous utilisez la version d'évaluation PRO de "
+#~ "l'extension."
+
+#~ msgid "The PRO Trial license will expire on"
+#~ msgstr "La clé de licence est valide. Votre licence se termine le "
 
 #~ msgid "You license for"
 #~ msgstr "Votre licence pour"
@@ -686,6 +831,21 @@ msgstr "Support"
 
 #~ msgid "Close"
 #~ msgstr "Fermer"
+
+#~ msgid "Restore all plugin settings to defaults"
+#~ msgstr "Remettre les valeurs par défaut des paramètres de l'extension"
+
+#~ msgid "Restore settings"
+#~ msgstr "Remettre les paramètres"
+
+#~ msgid "Are you sure you want to restore all settings by default?"
+#~ msgstr "Etes vous sûr de vouloir remettre toutes les valeurs par défaut ?"
+
+#~ msgid "Yes, restore all settings"
+#~ msgstr "Oui, remettre les valeurs par défaut"
+
+#~ msgid "No, go back to the settings page"
+#~ msgstr "Non, retourner à la page des paramètres"
 
 #~ msgid "Not set"
 #~ msgstr "Non défini"
@@ -870,6 +1030,26 @@ msgstr "Support"
 #~ msgid "Send to custom email &#187;"
 #~ msgstr "Envoyer à un e-mail spécifique &#187;"
 
+#~ msgid "Register form"
+#~ msgstr "Formulaire d'enregistrement"
+
+#~ msgid "Lost password form"
+#~ msgstr "Formulaire de mot de passe perdu"
+
+#~ msgid "powered by"
+#~ msgstr "propulsé par"
+
+#~ msgid "Subscriber"
+#~ msgstr "Abonner"
+
+#~ msgid ""
+#~ "(your username is the email you specify when purchasing the product), "
+#~ "where you can make the necessary changes."
+#~ msgstr ""
+#~ "(votre nom d'utilisateur est l'adresse e-mail que vous avez donné lors de "
+#~ "l'achat de l'extension), où vous pourrez faire les modifications "
+#~ "nécessaires."
+
 #~ msgid "Go!"
 #~ msgstr "Allez!"
 
@@ -916,9 +1096,6 @@ msgstr "Support"
 
 #~ msgid "Free plugins"
 #~ msgstr "Extensions gratuites"
-
-#~ msgid "Download"
-#~ msgstr "Télécharger"
 
 #~ msgid "Install now from wordpress.org"
 #~ msgstr "Installer maintenant depuis wordpress.org"

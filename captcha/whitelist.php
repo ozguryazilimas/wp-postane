@@ -36,6 +36,23 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 		 */
 		function display_content() {
 			global $wp_version;
+			if ( isset( $_SERVER ) ) {
+				$sever_vars = array( 'HTTP_X_REAL_IP', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' );
+				foreach ( $sever_vars as $var ) {
+					if ( isset( $_SERVER[ $var ] ) && ! empty( $_SERVER[ $var ] ) ) {
+						if ( filter_var( $_SERVER[ $var ], FILTER_VALIDATE_IP ) ) {
+							$my_ip = $_SERVER[ $var ];
+							break;
+						} else { /* if proxy */
+							$ip_array = explode( ',', $_SERVER[ $var ] );
+							if ( is_array( $ip_array ) && ! empty( $ip_array ) && filter_var( $ip_array[0], FILTER_VALIDATE_IP ) ) {
+								$my_ip = $ip_array[0];
+								break;
+							}
+						}
+					}
+				}
+			}
 			$this->display_notices(); 
 			$this->prepare_items(); ?>
 			<p><strong><?php _e( 'For IP addresses from the whitelist CAPTCHA will not be displayed', $this->textdomain ); ?></strong></p>
@@ -43,11 +60,19 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 				<div style="margin: 10px 0;">
 					<input type="text" maxlength="31" name="cptch_add_to_whitelist" />
 					<input type="submit" class="button-secondary" value="<?php _e( 'Add IP to whitelist', $this->textdomain ) ?>" />
+					<?php if ( isset( $my_ip ) ) { ?>
+						<br />
+						<label>
+							<input type="checkbox" name="cptch_add_to_whitelist_my_ip" value="1" /> 
+							<?php _e( 'My IP', $this->textdomain ); ?>									
+							<input type="hidden" name="cptch_add_to_whitelist_my_ip_value" value="<?php echo $my_ip; ?>" />
+						</label>
+					<?php } ?>					
 					<?php wp_nonce_field( $this->basename, 'captcha_nonce_name' ); ?>
 				</div>
 				<div style="margin: 10px 0;">
-					<span class="cptch_span" style="line-height: 2;"><?php _e( "Allowed formats:", $this->textdomain ); ?><code>192.168.0.1</code></span><br />
-					<span class="cptch_span" style="line-height: 2;"><?php _e( "Allowed diapason:", $this->textdomain ); ?>&nbsp;<code>0.0.0.0 - 255.255.255.255</code></span><br />
+					<span class="bws_info" style="line-height: 2;"><?php _e( "Allowed formats:", $this->textdomain ); ?><code>192.168.0.1</code></span><br />
+					<span class="bws_info" style="line-height: 2;"><?php _e( "Allowed diapason:", $this->textdomain ); ?>&nbsp;<code>0.0.0.0 - 255.255.255.255</code></span><br />
 				</div>
 				<div class="bws_pro_version_bloc">
 					<div class="bws_pro_version_table_bloc">
@@ -55,20 +80,19 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 						<table class="form-table bws_pro_version">
 							<tr>
 								<td valign="top"><?php _e( 'Reason', $this->textdomain ); ?>
-									<input type="text" style="margin: 10px 0;"/><br />
-									<span class="cptch_span" style="line-height: 2;"><?php _e( "Allowed formats:", $this->textdomain ); ?>&nbsp;<code>192.168.0.1, 192.168.0., 192.168., 192., 192.168.0.1/8, 123.126.12.243-185.239.34.54</code></span><br />
-									<span class="cptch_span" style="line-height: 2;"><?php _e( "Allowed separators for IPs: a comma", $this->textdomain ); ?> (<code>,</code>), <?php _e( 'semicolon', $this->textdomain ); ?> (<code>;</code>), <?php _e( 'ordinary space, tab, new line or carriage return', $this->textdomain ); ?></span><br />
-									<span class="cptch_span" style="line-height: 2;"><?php _e( "Allowed separators for reasons: a comma", $this->textdomain ); ?> (<code>,</code>), <?php _e( 'semicolon', $this->textdomain ); ?> (<code>;</code>), <?php _e( 'tab, new line or carriage return', $this->textdomain ); ?></span>
+									<input disabled type="text" style="margin: 10px 0;"/><br />
+									<span class="bws_info" style="line-height: 2;"><?php _e( "Allowed formats:", $this->textdomain ); ?>&nbsp;<code>192.168.0.1, 192.168.0., 192.168., 192., 192.168.0.1/8, 123.126.12.243-185.239.34.54</code></span><br />
+									<span class="bws_info" style="line-height: 2;"><?php _e( "Allowed separators for IPs: a comma", $this->textdomain ); ?> (<code>,</code>), <?php _e( 'semicolon', $this->textdomain ); ?> (<code>;</code>), <?php _e( 'ordinary space, tab, new line or carriage return', $this->textdomain ); ?></span><br />
+									<span class="bws_info" style="line-height: 2;"><?php _e( "Allowed separators for reasons: a comma", $this->textdomain ); ?> (<code>,</code>), <?php _e( 'semicolon', $this->textdomain ); ?> (<code>;</code>), <?php _e( 'tab, new line or carriage return', $this->textdomain ); ?></span>
 								</td>
 							</tr>
 						</table>
 					</div>
 					<div class="bws_pro_version_tooltip">
 						<span class="bws_info">
-							<?php _e( 'Unlock premium options by upgrading to PRO version.', $this->textdomain ); ?>
-							<a href="http://bestwebsoft.com/products/captcha/buy/?k=9701bbd97e61e52baa79c58c3caacf6d&pn=75&v=<?php echo $this->version; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Captcha Pro"><?php _e( "Learn More", $this->textdomain ); ?></a>
+							<?php _e( 'Unlock premium options by upgrading to Pro version', $this->textdomain ); ?>
 						</span>
-						<a class="bws_button" href="http://bestwebsoft.com/products/captcha/buy/?k=9701bbd97e61e52baa79c58c3caacf6d&pn=75&v=<?php echo $this->version; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Captcha Pro"><?php _e( 'Go', $this->textdomain ); ?> <strong>PRO</strong></a>
+						<a class="bws_button" href="http://bestwebsoft.com/products/captcha/buy/?k=9701bbd97e61e52baa79c58c3caacf6d&pn=75&v=<?php echo $this->version; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Captcha Pro"><?php _e( "Learn More", $this->textdomain ); ?></a>
 						<div class="clear"></div>
 					</div>
 				</div>
@@ -111,10 +135,9 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 
 		function get_columns() {
 			$columns = array(
-				'cb'      => '<input type="checkbox" />',
-				'ip'      => __( 'IP address', $this->textdomain ),
-				'ip_from' => __( 'Diapason from', $this->textdomain ),
-				'ip_to'   => __( 'Diapason till', $this->textdomain ),
+				'cb'		=> '<input type="checkbox" />',
+				'ip'		=> __( 'IP address', $this->textdomain ),
+				'add_time'	=> __( 'Date added', $this->textdomain )
 			);
 			return $columns;
 		}
@@ -125,8 +148,7 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 		function get_sortable_columns() {
 			$sortable_columns = array(
 				'ip'      => array( 'ip', true ),
-				'ip_from' => array( 'ip_from', false ),
-				'ip_to'   => array( 'ip_to', false )
+				'add_time' => array( 'add_time', false )
 			);
 			return $sortable_columns;
 		}
@@ -139,8 +161,7 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 		function column_default( $item, $column_name ) {
 			switch ( $column_name ) {
 				case 'ip':
-				case 'ip_from':
-				case 'ip_to':
+				case 'add_time':
 					return $item[ $column_name ];
 				default:
 					/* Show whole array for bugfix */
@@ -191,12 +212,6 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 			$order    = isset( $_REQUEST['order'] ) ? $_REQUEST['order'] : 'ASC';
 			if ( isset( $_GET['orderby'] ) && in_array( $_GET['orderby'], array_keys( $this->get_sortable_columns() ) ) && 'ip' != $_GET['orderby'] ) {
 				switch ( $_GET['orderby'] ) {
-					case 'ip_from':
-						$order_by = 'ip_from_int';
-						break;
-					case 'ip_to':
-						$order_by = 'ip_to_int';
-						break;
 					default:
 						$order_by = $_GET['orderby'];
 						break;
@@ -210,7 +225,7 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 				$ip = stripslashes( esc_html( trim( $_REQUEST['s'] ) ) );
 				if ( '' != $ip ) {
 					$ip_int = sprintf( '%u', ip2long( $ip ) );
-					$query_where = 0 == $ip_int ? "`ip` LIKE '%" . $ip . "%' OR `ip_to` LIKE '%" . $ip . "%' OR `ip_from` LIKE '%" . $ip . "%'" : "( `ip_from_int` <= " . $ip_int . " AND `ip_to_int` >= " . $ip_int . " )";
+					$query_where = 0 == $ip_int ? "`ip` LIKE '%" . $ip . "%'" : "( `ip_from_int` <= " . $ip_int . " AND `ip_to_int` >= " . $ip_int . " )";
 					$sql_query .= "WHERE " . $query_where;
 				}
 			}
@@ -228,21 +243,23 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 			if ( ! $bulk_action )
 				$bulk_action = isset( $_REQUEST['action2'] ) && 'cptch_remove' == $_REQUEST['action2'] ? true : false;
 			/* Add IP in to database */
-			if ( isset( $_POST['cptch_add_to_whitelist'] ) && ( ! empty( $_POST['cptch_add_to_whitelist'] ) ) && check_admin_referer( $this->basename, 'captcha_nonce_name' ) ) {
-				$valid_ip = filter_var( stripslashes( esc_html( trim( $_REQUEST['cptch_add_to_whitelist'] ) ) ), FILTER_VALIDATE_IP );
+			if ( isset( $_POST['cptch_add_to_whitelist'] ) && ( ! empty( $_POST['cptch_add_to_whitelist'] ) || isset( $_POST['cptch_add_to_whitelist_my_ip'] ) ) && check_admin_referer( $this->basename, 'captcha_nonce_name' ) ) {
+				$add_ip = isset( $_POST['cptch_add_to_whitelist_my_ip'] ) ? $_POST['cptch_add_to_whitelist_my_ip_value'] : $_POST['cptch_add_to_whitelist'];
+
+				$valid_ip = filter_var( stripslashes( esc_html( trim( $add_ip ) ) ), FILTER_VALIDATE_IP );
 				if ( $valid_ip ) {
 					$ip_int = sprintf( '%u', ip2long( $valid_ip ) );
 					$id = $wpdb->get_var( "SELECT `id` FROM " . $wpdb->prefix . "cptch_whitelist WHERE ( `ip_from_int` <= " . $ip_int . " AND `ip_to_int` >= " . $ip_int . " ) OR `ip` LIKE '" . $valid_ip . "' LIMIT 1;" );
 					/* check if IP already in database */
 					if ( is_null( $id ) ) {
+						$time         = date( 'Y-m-d H:i:s', current_time( 'timestamp' ) );
 						$wpdb->insert( 
 							$wpdb->prefix . "cptch_whitelist", 
 							array( 
 								'ip'          => $valid_ip,
-								'ip_from'     => $valid_ip,
-								'ip_to'       => $valid_ip,
 								'ip_from_int' => $ip_int,
-								'ip_to_int'   => $ip_int
+								'ip_to_int'   => $ip_int,
+								'add_time'    => $time
 							)
 						);
 						if ( ! $wpdb->last_error )

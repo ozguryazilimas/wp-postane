@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-18 12:01+0300\n"
-"PO-Revision-Date: 2015-08-18 12:02+0300\n"
-"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-09-17 12:17+0300\n"
+"PO-Revision-Date: 2015-09-17 12:19+0300\n"
+"Last-Translator: bestwebsoft.com <plugins@bestwebsoft.com>\n"
 "Language-Team: bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
@@ -16,445 +16,521 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: whitelist.php:41
+#: whitelist.php:58
 msgid "For IP addresses from the whitelist CAPTCHA will not be displayed"
-msgstr ""
-"Для IP-адрес, що знаходяться у білому списку, CAPTCHA не буде відображатися"
+msgstr "Для IP-адрес, що знаходяться у білому списку, CAPTCHA не буде відображатися"
 
-#: whitelist.php:45
+#: whitelist.php:62
 msgid "Add IP to whitelist"
 msgstr "Додати IP до білого списку"
 
-#: whitelist.php:49 whitelist.php:59
+#: whitelist.php:67
+msgid "My IP"
+msgstr "Мій IP"
+
+#: whitelist.php:74
+#: whitelist.php:84
 msgid "Allowed formats:"
 msgstr "Доступні формати:"
 
-#: whitelist.php:50
+#: whitelist.php:75
 msgid "Allowed diapason:"
 msgstr "Достіпні діапазони:"
 
-#: whitelist.php:57
+#: whitelist.php:82
 msgid "Reason"
 msgstr "Причина"
 
-#: whitelist.php:60
+#: whitelist.php:85
 msgid "Allowed separators for IPs: a comma"
 msgstr "Доступні роздільники для IP: кома"
 
-#: whitelist.php:60 whitelist.php:61
+#: whitelist.php:85
+#: whitelist.php:86
 msgid "semicolon"
 msgstr "крапка з комою"
 
-#: whitelist.php:60
+#: whitelist.php:85
 msgid "ordinary space, tab, new line or carriage return"
 msgstr "звичайний пробіл, табуляція, новий рядок або повернення каретки"
 
-#: whitelist.php:61
+#: whitelist.php:86
 msgid "Allowed separators for reasons: a comma"
 msgstr "Доступні роздільики для причин: кома"
 
-#: whitelist.php:61
+#: whitelist.php:86
 msgid "tab, new line or carriage return"
 msgstr "табуляція, новий рядок або повернення каретки"
 
-#: whitelist.php:68 captcha.php:417
-msgid "Unlock premium options by upgrading to PRO version."
-msgstr "Зробити доступними преміум-опції, перейшовши на PRO версію."
+#: whitelist.php:93
+#: captcha.php:482
+msgid "Unlock premium options by upgrading to Pro version"
+msgstr "Зробити доступними преміум-опції, перейшовши на Pro версію"
 
-#: whitelist.php:69 captcha.php:418
+#: whitelist.php:95
+#: captcha.php:484
 msgid "Learn More"
 msgstr "Докладніше"
 
-#: whitelist.php:71 captcha.php:421
-msgid "Go"
-msgstr "Перейти"
-
-#: whitelist.php:77
+#: whitelist.php:101
 msgid "Search IP"
 msgstr "Шукати IP"
 
-#: whitelist.php:108
+#: whitelist.php:132
 msgid "Nothing found"
 msgstr "Нічого не знайдено"
 
-#: whitelist.php:108
+#: whitelist.php:132
 msgid "No IP in whitelist"
 msgstr "Список IP порожній"
 
-#: whitelist.php:115
+#: whitelist.php:139
 msgid "IP address"
 msgstr "IP адрес"
 
-#: whitelist.php:116
-msgid "Diapason from"
-msgstr "Діапазон від"
+#: whitelist.php:140
+msgid "Date added"
+msgstr "Дата додавання"
 
-#: whitelist.php:117
-msgid "Diapason till"
-msgstr "Діапазон до"
-
-#: whitelist.php:168 whitelist.php:179
+#: whitelist.php:189
+#: whitelist.php:200
 msgid "Remove from whitelist"
 msgstr "Видалити"
 
-#: whitelist.php:249
+#: whitelist.php:266
 msgid "IP added in database successfully"
 msgstr "IP успішно додано"
 
-#: whitelist.php:251 whitelist.php:266 whitelist.php:273
+#: whitelist.php:268
+#: whitelist.php:283
+#: whitelist.php:290
 msgid "Some errors occured"
 msgstr "Де-які помилки трапились"
 
-#: whitelist.php:253
+#: whitelist.php:270
 msgid "IP is allready in database"
 msgstr "IP уже додано"
 
-#: whitelist.php:256
+#: whitelist.php:273
 msgid "Invalid IP. See allowed formats"
 msgstr "Помилковий IP. Дивись доступні формати"
 
-#: whitelist.php:271
+#: whitelist.php:288
 msgid "One IP was deleted successfully"
 msgstr "IP було видалено успішно"
 
-#: whitelist.php:275
+#: whitelist.php:292
 msgid "You have not entered any value"
 msgstr "Ви не ввели ні якого значення"
 
-#: whitelist.php:278
+#: whitelist.php:295
 msgid "You have not enterd any value in to the search form"
 msgstr "Ви не ввели ні якого значення в форму коментарів"
 
-#: whitelist.php:280
+#: whitelist.php:297
 msgid "Search results for"
 msgstr "Результати пошуку для"
 
-#: captcha.php:31 captcha.php:326
+#: captcha.php:33
+#: captcha.php:377
 msgid "Captcha Settings"
 msgstr "Установки Captcha"
 
-#: captcha.php:31
+#: captcha.php:33
 msgid "Captcha"
 msgstr "Captcha"
 
-#: captcha.php:127
+#: captcha.php:148
 msgid "Please enter a CAPTCHA value."
 msgstr "Будь ласка, введіть значення CAPTCHA."
 
-#: captcha.php:128
+#: captcha.php:149
 msgid "Please enter a valid CAPTCHA value."
 msgstr "Будь ласка, введіть корректне значення CAPTCHA."
 
-#: captcha.php:241
+#: captcha.php:154
+msgid "You are in the white list"
+msgstr "Ви знаходитесь в білому списку"
+
+#: captcha.php:290
 msgid "Login form"
 msgstr "Форма логіну"
 
-#: captcha.php:242 captcha.php:394
+#: captcha.php:291
+#: captcha.php:459
 msgid "Registration form"
 msgstr "Форма реєстрації"
 
-#: captcha.php:243
+#: captcha.php:292
 msgid "Reset Password form"
 msgstr "Форма відновлення пароля"
 
-#: captcha.php:244 captcha.php:395
+#: captcha.php:293
+#: captcha.php:460
 msgid "Comments form"
 msgstr "Форма коментарів"
 
-#: captcha.php:247
+#: captcha.php:296
 msgid "in Comments form for registered users"
 msgstr "у формі коментарів для зареєстрованих користувачів"
 
-#: captcha.php:251
+#: captcha.php:300
 msgid "Plus (&#43;)"
 msgstr "Плюс (&#43;)"
 
-#: captcha.php:251
+#: captcha.php:300
 msgid "Plus"
 msgstr "Плюс (&#43;)"
 
-#: captcha.php:252
+#: captcha.php:301
 msgid "Minus (&minus;)"
 msgstr "Мінус (&minus;)"
 
-#: captcha.php:252
+#: captcha.php:301
 msgid "Minus"
 msgstr "Мінус (&minus;)"
 
-#: captcha.php:253
+#: captcha.php:302
 msgid "Multiplication (&times;)"
 msgstr "Множення (&times;)"
 
-#: captcha.php:253
+#: captcha.php:302
 msgid "Multiply"
 msgstr "Помножити"
 
-#: captcha.php:258
+#: captcha.php:307
 msgid "Numbers"
 msgstr "Цифри"
 
-#: captcha.php:259
+#: captcha.php:308
 msgid "Words"
 msgstr "Слова"
 
-#: captcha.php:303
-msgid ""
-"Please select one item in the block Arithmetic and Complexity for CAPTCHA"
-msgstr ""
-"Будь ласка, виберіть 1 пункт з блоку Арифметичні дії та Складність для "
-"CAPTCHA"
+#: captcha.php:354
+msgid "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
+msgstr "Будь ласка, виберіть 1 пункт з блоку Арифметичні дії та Складність для CAPTCHA"
 
-#: captcha.php:307
+#: captcha.php:358
 msgid "Settings saved."
 msgstr "Опції збережено."
 
-#: captcha.php:314
+#: captcha.php:365
 msgid "All plugin settings were restored."
 msgstr "Всі налаштування плагіну були відновлені."
 
-#: captcha.php:328
+#: captcha.php:379
 msgid "How to Use Step-by-step Instruction"
 msgstr "Інструкція з використання"
 
-#: captcha.php:331 captcha.php:1347 captcha.php:1360
+#: captcha.php:382
+#: captcha.php:1433
+#: captcha.php:1446
 msgid "Settings"
 msgstr "Установки"
 
-#: captcha.php:332
+#: captcha.php:383
 msgid "Whitelist"
 msgstr "Білий список"
 
-#: captcha.php:333 captcha.php:1361
+#: captcha.php:384
+#: captcha.php:1447
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:334
+#: captcha.php:385
 msgid "Go PRO"
 msgstr "Перейти на Pro версію"
 
-#: captcha.php:336
+#: captcha.php:387
 msgid "Notice:"
 msgstr "Нагадування:"
 
-#: captcha.php:336
-msgid ""
-"The plugin's settings have been changed. In order to save them please don't "
-"forget to click the 'Save Changes' button."
-msgstr ""
-"Налаштування плагіну було змінено. Для того, щоб зберегти ці зміни, не "
-"забудьте натиснути кнопку \"Зберегти зміни\"."
+#: captcha.php:387
+msgid "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button."
+msgstr "Налаштування плагіну було змінено. Для того, щоб зберегти ці зміни, не забудьте натиснути кнопку \"Зберегти зміни\"."
 
-#: captcha.php:346 captcha.php:381 captcha.php:390 captcha.php:393
-msgid "Enable CAPTCHA for:"
-msgstr "Відображати CAPTCHA для:"
+#: captcha.php:397
+#: captcha.php:447
+#: captcha.php:455
+#: captcha.php:458
+msgid "Enable CAPTCHA for"
+msgstr "Відображати CAPTCHA для"
 
-#: captcha.php:348 captcha.php:452 captcha.php:454
+#: captcha.php:399
+#: captcha.php:521
+#: captcha.php:523
 msgid "Arithmetic actions for CAPTCHA"
 msgstr "Арифметичні дії для CAPTCHA"
 
-#: captcha.php:359
-msgid "Activate contact form"
-msgstr "Активувати contact form"
+#: captcha.php:424
+msgid "Activate"
+msgstr "Активувати"
 
-#: captcha.php:362 captcha.php:367
-msgid "Contact Form"
-msgstr "Contact form"
+#: captcha.php:434
+msgid "Download"
+msgstr "Завантажити"
 
-#: captcha.php:365
-msgid "Download contact form"
-msgstr "Завантажити contact form"
-
-#: captcha.php:371
+#: captcha.php:438
 msgid "If you would like to add Captcha to a custom form, please see"
 msgstr "Якщо ви хочете пристосувати плагін для окремої власної форми, дивіться"
 
-#: captcha.php:396
+#: captcha.php:461
 msgid "\"Create a Group\" form"
 msgstr "Форма \"Створити групу\""
 
-#: captcha.php:402
-msgid "Enable CAPTCHA:"
-msgstr "Відображати CAPTCHA для:"
+#: captcha.php:467
+msgid "Enable CAPTCHA"
+msgstr "Відображати CAPTCHA"
 
-#: captcha.php:410
+#: captcha.php:475
 msgid "If you upgrade to Pro version all your settings will be saved."
 msgstr "Якщо ви перейдете на Pro версію, усі установки будуть збережені."
 
-#: captcha.php:428
+#: captcha.php:490
 msgid "Hide CAPTCHA"
 msgstr "Приховати CAPTCHA"
 
-#: captcha.php:435
+#: captcha.php:497
 msgid "Title for CAPTCHA in the form"
 msgstr "Заголовок для CAPTCHA у формі"
 
-#: captcha.php:439
+#: captcha.php:501
 msgid "Required symbol"
 msgstr "Необхідний символ"
 
-#: captcha.php:445
+#: captcha.php:507
 msgid "Error messages"
 msgstr "Повідомлення про помилку"
 
-#: captcha.php:447
+#: captcha.php:509
 msgid "If CAPTCHA field is empty"
 msgstr "Якщо значення CAPTCHA не введено"
 
-#: captcha.php:448
+#: captcha.php:510
 msgid "If CAPTCHA is incorrect"
 msgstr "Якщо значення CAPTCHA введено некоректно"
 
-#: captcha.php:465 captcha.php:467
+#: captcha.php:514
+msgid "Display for whitelisted IP"
+msgstr "Показати для IP у білому списку"
+
+#: captcha.php:517
+msgid "If the IP is in the whitelist, then the indicated message will be displayed instead of the captcha."
+msgstr "Якщо IP у білому списоку, то вказане повідомлення буде відображатися замість капчі."
+
+#: captcha.php:534
+#: captcha.php:536
 msgid "CAPTCHA complexity level"
 msgstr "Рівень складності CAPTCHA"
 
-#: captcha.php:480
+#: captcha.php:549
 msgid "Save Changes"
 msgstr "Зберегти зміни"
 
-#: captcha.php:552 captcha.php:567 captcha.php:569 captcha.php:576
-#: captcha.php:747 captcha.php:755 captcha.php:772 captcha.php:780
+#: captcha.php:626
+#: captcha.php:641
+#: captcha.php:643
+#: captcha.php:650
+#: captcha.php:827
+#: captcha.php:835
+#: captcha.php:852
+#: captcha.php:860
 msgid "ERROR"
 msgstr "ПОМИЛКА"
 
-#: captcha.php:685 captcha.php:691 captcha.php:801 captcha.php:809
+#: captcha.php:759
+#: captcha.php:765
+#: captcha.php:881
+#: captcha.php:889
 msgid "Error"
 msgstr "Помилка"
 
-#: captcha.php:685 captcha.php:691 captcha.php:801 captcha.php:809
+#: captcha.php:759
+#: captcha.php:765
+#: captcha.php:881
+#: captcha.php:889
 msgid "Click the BACK button on your browser, and try again."
 msgstr "Натисніть НАЗАД у браузері та спробуйте ще раз."
 
-#: captcha.php:833 captcha.php:1136
+#: captcha.php:913
+#: captcha.php:1217
 msgid "zero"
 msgstr "нуль"
 
-#: captcha.php:834 captcha.php:1137 captcha.php:1304
+#: captcha.php:914
+#: captcha.php:1218
+#: captcha.php:1390
 msgid "one"
 msgstr "один"
 
-#: captcha.php:835 captcha.php:1138
+#: captcha.php:915
+#: captcha.php:1219
 msgid "two"
 msgstr "два"
 
-#: captcha.php:836 captcha.php:1139
+#: captcha.php:916
+#: captcha.php:1220
 msgid "three"
 msgstr "три"
 
-#: captcha.php:837 captcha.php:1140
+#: captcha.php:917
+#: captcha.php:1221
 msgid "four"
 msgstr "чотири"
 
-#: captcha.php:838 captcha.php:1141
+#: captcha.php:918
+#: captcha.php:1222
 msgid "five"
 msgstr "п'ять"
 
-#: captcha.php:839 captcha.php:1142 captcha.php:1304
+#: captcha.php:919
+#: captcha.php:1223
+#: captcha.php:1390
 msgid "six"
 msgstr "шість"
 
-#: captcha.php:840 captcha.php:1143 captcha.php:1292 captcha.php:1298
+#: captcha.php:920
+#: captcha.php:1224
+#: captcha.php:1378
+#: captcha.php:1384
 msgid "seven"
 msgstr "сім"
 
-#: captcha.php:841 captcha.php:1144 captcha.php:1295
+#: captcha.php:921
+#: captcha.php:1225
+#: captcha.php:1381
 msgid "eight"
 msgstr "вісім"
 
-#: captcha.php:842 captcha.php:1145
+#: captcha.php:922
+#: captcha.php:1226
 msgid "nine"
 msgstr "дев'ять"
 
-#: captcha.php:845 captcha.php:1148
+#: captcha.php:925
+#: captcha.php:1229
 msgid "eleven"
 msgstr "одинадцять"
 
-#: captcha.php:846 captcha.php:1149
+#: captcha.php:926
+#: captcha.php:1230
 msgid "twelve"
 msgstr "дванадцять"
 
-#: captcha.php:847 captcha.php:1150
+#: captcha.php:927
+#: captcha.php:1231
 msgid "thirteen"
 msgstr "тринадцять"
 
-#: captcha.php:848 captcha.php:1151
+#: captcha.php:928
+#: captcha.php:1232
 msgid "fourteen"
 msgstr "чотирнадцять"
 
-#: captcha.php:849 captcha.php:1152
+#: captcha.php:929
+#: captcha.php:1233
 msgid "fifteen"
 msgstr "п'ятнадцять"
 
-#: captcha.php:850 captcha.php:1153
+#: captcha.php:930
+#: captcha.php:1234
 msgid "sixteen"
 msgstr "шістнадцять"
 
-#: captcha.php:851 captcha.php:1154
+#: captcha.php:931
+#: captcha.php:1235
 msgid "seventeen"
 msgstr "сімнадцять"
 
-#: captcha.php:852 captcha.php:1155
+#: captcha.php:932
+#: captcha.php:1236
 msgid "eighteen"
 msgstr "вісімнадцять"
 
-#: captcha.php:853 captcha.php:1156
+#: captcha.php:933
+#: captcha.php:1237
 msgid "nineteen"
 msgstr "дев'ятнадцять"
 
-#: captcha.php:856 captcha.php:1159
+#: captcha.php:936
+#: captcha.php:1240
 msgid "ten"
 msgstr "десять"
 
-#: captcha.php:857 captcha.php:1160
+#: captcha.php:937
+#: captcha.php:1241
 msgid "twenty"
 msgstr "двадцять"
 
-#: captcha.php:858 captcha.php:1161
+#: captcha.php:938
+#: captcha.php:1242
 msgid "thirty"
 msgstr "тридцять"
 
-#: captcha.php:859 captcha.php:1162
+#: captcha.php:939
+#: captcha.php:1243
 msgid "forty"
 msgstr "сорок"
 
-#: captcha.php:860 captcha.php:1163
+#: captcha.php:940
+#: captcha.php:1244
 msgid "fifty"
 msgstr "п'ятдесят"
 
-#: captcha.php:861 captcha.php:1164
+#: captcha.php:941
+#: captcha.php:1245
 msgid "sixty"
 msgstr "шістдесят"
 
-#: captcha.php:862 captcha.php:1165
+#: captcha.php:942
+#: captcha.php:1246
 msgid "seventy"
 msgstr "сімдесят"
 
-#: captcha.php:863 captcha.php:1166
+#: captcha.php:943
+#: captcha.php:1247
 msgid "eighty"
 msgstr "вісімдесят"
 
-#: captcha.php:864 captcha.php:1167
+#: captcha.php:944
+#: captcha.php:1248
 msgid "ninety"
 msgstr "дев'яносто"
 
-#: captcha.php:951 captcha.php:1255
+#: captcha.php:1031
+#: captcha.php:1336
 msgid "and"
 msgstr "і"
 
-#: captcha.php:1025
+#: captcha.php:1105
 msgid "Encryption password is not set"
 msgstr "Пароль для шифрування не встановлено"
 
-#: captcha.php:1045
+#: captcha.php:1125
 msgid "Decryption password is not set"
 msgstr "Пароль для дешифрування не встановлено"
 
-#: captcha.php:1362
+#: captcha.php:1448
 msgid "Support"
 msgstr "Підтримка"
 
-#~ msgid "for whitelisted IPs"
-#~ msgstr "для IP із білого листа"
+#~ msgid "Go"
+#~ msgstr "Перейти"
+
+#~ msgid "Diapason from"
+#~ msgstr "Діапазон від"
+
+#~ msgid "Diapason till"
+#~ msgstr "Діапазон до"
+
+#~ msgid "Activate contact form"
+#~ msgstr "Активувати contact form"
+
+#~ msgid "Contact Form"
+#~ msgstr "Contact form"
+
+#~ msgid "Download contact form"
+#~ msgstr "Завантажити contact form"
 
 #~ msgid "Some errors occured. IP not saved in database."
 #~ msgstr "Трапились де-які помилки . IP не збережено."
