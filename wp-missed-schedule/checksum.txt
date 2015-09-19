@@ -1,4 +1,4 @@
-WP Missed Schedule - Build 2015-08-25 (Version 2014.1231.2014) Checksum
+WP Missed Schedule - Build 2015-09-15 (Version 2014.1231.2015) Checksum
 
 -------------------------- Tags Branche 2014 --------------------------
 
@@ -9,10 +9,10 @@ humans.txt                     B23DC35E29428A33E6B8F86B6B7E96706997B741
 index.php                      C1F5BD88927AABB87A0E99889A16E69C7C4C5780
 keybit.txt                     FBE04369B6316C2D32562B10398C60D7461AEC7B
 license.txt                    4CC77B90AF91E615A64AE04893FDFFA7939DB84C
-readme.txt                     617924BA02985EE4F7AA71EABEE1E883A9B41FB4
-uninstall.php                  CAD4AFD8E1623596F9240567BFBD6EE1D6331D26
-wp-missed-schedule.php         65D8DB09CD7FA691E14EEDAB4996FEB3A1B3C485
+readme.txt                     3DD47DE9BD74F00F997BC319AF4F8ACD22448D79
+uninstall.php                  8B4AB61FF5FB14E995A4CEAD0D626564067ECF69
+wp-missed-schedule.php         CEC8D763422B054D70F79B2F585762D34DEAA965
 
 /languages/
 
-wp-missed-schedule.pot         002B192AEE2EF7657DD59B140AC74F0F7E3D5F6A
+wp-missed-schedule.pot         5C4561ADCCF99948758422683CC690A9A4469114

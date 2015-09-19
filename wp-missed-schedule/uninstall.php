@@ -4,18 +4,17 @@
 	 * @package     WordPress Plugin
 	 * @subpackage  WP Missed Schedule
 	 * @description Uninstall Module
-	 * @status      Stable Code in Becoming!
-	 * @todolist    Extend Multisite Support - WordPress 4.4+ Compatibility
+	 * @status      Stable
+	 * @todolist    Code in Becoming!
+	 * @license     GPLv2 or later
 	 *
+	 * @humans      //humanstxt.org/Standard.html
 	 * @indentation //www.gnu.org/prep/standards/standards.html
 	 * @license     //www.gnu.org/licenses/gpl-2.0.html
-	 * @link        //wordpress.org/plugins/global-admin-bar-hide-or-remove/
+	 * @link        //wordpress.org/plugins/wp-missed-schedule/
 	 *
-	 * @branche 2014
-	 * @since   2014.1231.2
-	 * @version 2014.1231.2014
-	 * @build   2015-08-25
-	 * @author  sLa NGjI's @ slangji.wordpress.com
+	 * @build  2015-09-15
+	 * @author sLa NGjI's @ slangji.wordpress.com
 	 *
 	 * @since  WordPress 2.7+
 	 * @tested WordPress 4.4+
@@ -34,27 +33,15 @@
 			'simpul_missed_schedule',
 			'wpt_scheduled_check',
 			'wp_missed_schedule',
-			'wp_missed_schedule_beta',
-			'wp_missed_schedule_dev',
-			'wp_missed_schedule_gold',
-			'wp_missed_schedule_pro',
 			'wp_scheduled_missed',
-			'wp_scheduled_missed_beta',
-			'wp_scheduled_missed_dev',
-			'wp_scheduled_missed_gold',
-			'wp_scheduled_missed_pro',
 			'wp_scheduled_missed_options',
-			'wp_scheduled_missed_options_beta',
-			'wp_scheduled_missed_options_dev',
-			'wp_scheduled_missed_options_gold',
-			'wp_scheduled_missed_options_pro' 
 	);
 
 	global $wp_version;
 
 	if ( $wp_version >= 3.0 )
 		{
-			if ( !is_multisite() )
+			if ( ! is_multisite() )
 				{
 					foreach ( $option_names as $option_name )
 						{
