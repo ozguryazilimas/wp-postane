@@ -1,24 +1,28 @@
 <?php
+if ( ! defined( 'WP_ADMIN_UI_EXPORT_DIR' ) ) {
+	define( 'WP_ADMIN_UI_EXPORT_DIR', WP_CONTENT_DIR . '/exports' );
+}
+
 global $wpdb;
-if(!is_object($wpdb))
-{
-    ob_start();
-    if(file_exists(realpath('../../../../wp-load.php')))
-        require_once(realpath('../../../../wp-load.php'));
-    else
-        require_once(realpath('../../../wp-load.php'));
-    ob_end_clean();
+
+if ( ! is_object( $wpdb ) ) {
+	wp_die( 'Access denied' );
 }
 // FOR EXPORTS ONLY
-if(isset($_GET['download']) && !isset($_GET['page']) && is_user_logged_in() && isset($_GET['_wpnonce']) && false === wp_verify_nonce($_GET['_wpnonce'], 'wp-admin-ui-export'))
-{
+if ( isset( $_GET['download'] ) && isset( $_GET['_wpnonce'] ) && false !== wp_verify_nonce( $_GET['_wpnonce'], 'wp-admin-ui-export' ) ) {
     do_action('wp_admin_ui_export_download');
-    $file = WP_CONTENT_DIR.'/exports/'.str_replace('/','',$_GET['export']);
-    if(!isset($_GET['export'])||empty($_GET['export'])||!file_exists($file))
-        die('File not found.');
+    $file = WP_ADMIN_UI_EXPORT_DIR.'/'.str_replace(array('/','..'),'',$_GET['export']);
+    $file = realpath( $file );
+
+	if ( ! isset( $_GET['export'] ) || empty( $_GET['export'] ) || ! file_exists( $file ) ) {
+		wp_die( 'File not found.' );
+	}
+
     // required for IE, otherwise Content-disposition is ignored
-    if(ini_get('zlib.output_compression'))
+	if ( ini_get( 'zlib.output_compression' ) ) {
         ini_set('zlib.output_compression','Off');
+	}
+
     header("Pragma: public"); // required
     header("Expires: 0");
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -34,7 +38,7 @@ if(isset($_GET['download']) && !isset($_GET['page']) && is_user_logged_in() && i
 /**
  * Admin UI class for WordPress plugins
  *
- * Creates a UI for any plugn screens within WordPress
+ * Creates a UI for any plugin screens within WordPress
  *
  * NOTE: If you are including this class code in a plugin,
  * consider renaming the class to avoid conflicts with other plugins.
@@ -44,7 +48,7 @@ if(isset($_GET['download']) && !isset($_GET['page']) && is_user_logged_in() && i
  *
  * @package Admin UI for Plugins
  *
- * @version 1.9.2
+ * @version 1.9.6
  * @author Scott Kingsley Clark
  * @link http://scottkclark.com/
  *
@@ -110,7 +114,7 @@ class WP_Admin_UI
     var $related = array();
 
     // export related
-    var $export_dir = false;
+    var $exported_file = false;
     var $export_url = false;
     var $export_type = false;
     var $export_delimiter = false;
@@ -119,30 +123,36 @@ class WP_Admin_UI
     {
         do_action('wp_admin_ui_pre_init',$options);
         $options = $this->do_hook('options',$options);
-        $this->base_url = WP_CONTENT_URL.str_replace(WP_CONTENT_DIR,'',__FILE__);
-        $this->export_dir = WP_CONTENT_DIR.'/exports';
-        $this->export_url = $this->base_url.'?download=1&_wpnonce='.wp_create_nonce('wp-admin-ui-export').'&export=';
+        $this->base_url = plugins_url( 'Admin.class.php', __FILE__  );
+        $this->export_url = admin_url( 'admin-ajax.php' ) . '?action=wp_admin_ui_export&download=1&_wpnonce='.wp_create_nonce('wp-admin-ui-export').'&export=';
         $this->assets_url = str_replace('/Admin.class.php','',$this->base_url).'/assets';
         if(false!==$this->get_var('id'))
-            $this->id = $_GET['id'];
+            $this->id = sanitize_text_field( $_GET['id'] );
         if(false!==$this->get_var('action',false,array('add','edit','duplicate','view','delete','manage','reorder','export')))
-            $this->action = $_GET['action'];
+            $this->action = sanitize_text_field( $_GET['action'] );
         if(false!==$this->get_var('do',false,array('save','create')))
-            $this->do = $_GET['do'];
+            $this->do = sanitize_text_field( $_GET['do'] );
         if(false!==$this->get_var('search_query'))
-            $this->search_query = $_GET['search_query'];
+            $this->search_query = sanitize_text_field( $_GET['search_query'] );
         if(false!==$this->get_var('pg'))
-            $this->page = $_GET['pg'];
+            $this->page = absint( $_GET['pg'] );
         if(false!==$this->get_var('limit'))
-            $this->limit = $_GET['limit'];
-        if(false!==$this->get_var('order'))
-            $this->order = $_GET['order'];
+            $this->limit = absint( $_GET['limit'] );
+        if(false!==$this->get_var('order')) {
+	        $order = sanitize_text_field( $_GET[ 'order' ] );
+	        $order = preg_replace( "/([- ])/", "_", trim( $order ) );
+		    $order = preg_replace( "/([^0-9a-z_])/", "", strtolower( $order ) );
+		    $order = preg_replace( "/(_){2,}/", "_", $order );
+
+	        $this->order = $order;
+        }
         if(false!==$this->get_var('order_dir',false,array('ASC','DESC')))
-            $this->order_dir = $_GET['order_dir'];
+            $this->order_dir = ('ASC'==$_GET['order_dir']?'ASC':'DESC');
         if(false!==$this->get_var('action',false,'export')&&false!==$this->get_var('export_type',false,array('csv','tsv','pipe','custom','xml','json')))
             $this->export_type = $_GET['export_type'];
         if(false!==$this->get_var('action',false,'export')&&'custom'==$this->export_type&&false!==$this->get_var('export_delimiter'))
             $this->export_delimiter = $_GET['export_delimiter'];
+
         if(false!==$options&&!empty($options))
         {
             if(!is_array($options))
@@ -518,7 +528,7 @@ class WP_Admin_UI
         if(false!==$this->css)
         {
 ?>
-    <link  type="text/css" rel="stylesheet" href="<?php echo $this->css; ?>" />
+    <link  type="text/css" rel="stylesheet" href="<?php echo esc_url( $this->css ); ?>" />
 <?php
         }
         if(isset($this->custom[$this->action])&&function_exists("{$this->custom[$this->action]}"))
@@ -583,8 +593,8 @@ class WP_Admin_UI
         $this->do_hook('add');
 ?>
 <div class="wrap">
-    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo $this->icon; ?>);"<?php } ?>><br /></div>
-    <h2><?php echo $this->heading['add']; ?> <?php echo $this->item; ?> <small>(<a href="<?php echo $this->var_update(array('action'=>'manage','id'=>'')); ?>">&laquo; Back to Manage</a>)</small></h2>
+    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo esc_url( $this->icon ); ?>);"<?php } ?>><br /></div>
+    <h2><?php echo esc_html( $this->heading['add'] ); ?> <?php echo $this->item; ?> <small>(<a href="<?php echo esc_url( $this->var_update(array('action'=>'manage','id'=>'')) ); ?>">&laquo; Back to Manage</a>)</small></h2>
 <?php $this->form(1); ?>
 </div>
 <?php
@@ -598,8 +608,8 @@ class WP_Admin_UI
             call_user_func( $this->custom['edit'], $this, $duplicate);
 ?>
 <div class="wrap">
-    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo $this->icon; ?>);"<?php } ?>><br /></div>
-    <h2><?php echo ($duplicate?$this->heading['duplicate']:$this->heading['edit']); ?> <?php echo $this->item; ?> <small>(<a href="<?php echo $this->var_update(array('action'=>'manage','id'=>'')); ?>">&laquo; Back to Manage</a>)</small></h2>
+    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo esc_url( $this->icon ); ?>);"<?php } ?>><br /></div>
+    <h2><?php echo esc_html($duplicate?$this->heading['duplicate']:$this->heading['edit']); ?> <?php echo $this->item; ?> <small>(<a href="<?php echo esc_url( $this->var_update(array('action'=>'manage','id'=>'')) ); ?>">&laquo; Back to Manage</a>)</small></h2>
 <?php $this->form(0,$duplicate); ?>
 </div>
 <?php
@@ -631,7 +641,7 @@ class WP_Admin_UI
             }
         }
 ?>
-    <form method="post" action="<?php echo $this->var_update($vars); ?>" class="wp_admin_ui">
+    <form method="post" action="<?php echo esc_url( $this->var_update($vars) ); ?>" class="wp_admin_ui">
         <table class="form-table">
 <?php
         foreach($this->form_columns as $column=>$attributes)
@@ -648,13 +658,13 @@ class WP_Admin_UI
                 continue;
 ?>
     <tr valign="top">
-        <th scope="row"><label for="admin_ui_<?php echo $column; ?>"><?php echo $attributes['label']; ?></label></th>
+        <th scope="row"><label for="admin_ui_<?php echo esc_attr( $column ); ?>"><?php echo esc_html( $attributes['label'] ); ?></label></th>
         <td>
 <?php
             if(!empty($attributes['comments'])&&!empty($attributes['comments_top']))
             {
 ?>
-            <span class="description"><?php echo $attributes['comments']; ?></span>
+            <span class="description"><?php echo wp_kses_post( $attributes['comments'] ); ?></span>
 <?php
                 if($attributes['type']!='desc'||$attributes['type']!='code')
                     echo "<br />";
@@ -675,7 +685,7 @@ class WP_Admin_UI
             if(false!==$attributes['readonly'])
             {
 ?>
-            <div id="admin_ui_<?php echo $column; ?>"><?php echo $this->row[$column]; ?></div>
+            <div id="admin_ui_<?php echo esc_attr( $column ); ?>"><?php echo esc_html( $this->row[$column] ); ?></div>
 <?php
             }
             else
@@ -683,34 +693,34 @@ class WP_Admin_UI
                 if($attributes['type']=='bool')
                 {
 ?>
-            <input type="checkbox" name="<?php echo $column; ?>" id="admin_ui_<?php echo $column; ?>" value="1"<?php echo $selected; ?> />
+            <input type="checkbox" name="<?php echo esc_attr( $column ); ?>" id="admin_ui_<?php echo esc_attr( $column ); ?>" value="1"<?php echo $selected; ?> />
 <?php
                 }
                 elseif($attributes['type']=='password')
                 {
 ?>
-            <input type="password" name="<?php echo $column; ?>" id="admin_ui_<?php echo $column; ?>" value="<?php echo $this->row[$column]; ?>" class="regular-text" />
+            <input type="password" name="<?php echo esc_attr( $column ); ?>" id="admin_ui_<?php echo esc_attr( $column ); ?>" value="<?php echo esc_attr( $this->row[$column] ); ?>" class="regular-text" />
 <?php
                 }
                 elseif($attributes['type']=='desc'||$attributes['type']=='code')
                 {
 ?>
-            <textarea name="<?php echo $column; ?>" id="admin_ui_<?php echo $column; ?>" rows="10" cols="50"><?php echo $this->row[$column]; ?></textarea>
+            <textarea name="<?php echo esc_attr( $column ); ?>" id="admin_ui_<?php echo esc_attr( $column ); ?>" rows="10" cols="50"><?php echo esc_textarea( $this->row[$column] ); ?></textarea>
 <?php
                 }
                 elseif($attributes['type']=='related'&&false!==$attributes['related'])
                 {
                     if(!is_array($attributes['related']))
                     {
-                        $related = $wpdb->get_results('SELECT id,`'.(string) $attributes['related_field'].'` FROM '.(string) $attributes['related'].(!empty($attributes['related_sql'])?' '.(string) $attributes['related_sql']:''));
+                        $related = $wpdb->get_results('SELECT id,`'.$this->sanitize( (string) $attributes['related_field'] ).'` FROM '.(string) $attributes['related'].(!empty($attributes['related_sql'])?' '.(string) $attributes['related_sql']:''));
 ?>
-            <select name="<?php echo $column; ?><?php echo (false!==$attributes['related_multiple']?'[]':''); ?>" id="admin_ui_<?php echo $column; ?>"<?php echo (false!==$attributes['related_multiple']?' size="10" style="height:auto;" MULTIPLE':''); ?>>
+            <select name="<?php echo esc_attr( $column ); ?><?php echo (false!==$attributes['related_multiple']?'[]':''); ?>" id="admin_ui_<?php echo esc_attr( $column ); ?>"<?php echo (false!==$attributes['related_multiple']?' size="10" style="height:auto;" MULTIPLE':''); ?>>
 <?php
                         $selected_options = explode(',',$this->row[$column]);
                         foreach($related as $option)
                         {
 ?>
-                <option value="<?php echo $option->id; ?>"<?php echo (in_array($option->id,$selected_options)?' SELECTED':''); ?>><?php echo $option->$attributes['related_field']; ?></option>
+                <option value="<?php echo esc_attr( $option->id ); ?>"<?php echo (in_array($option->id,$selected_options)?' SELECTED':''); ?>><?php echo esc_html( $option->$attributes['related_field'] ); ?></option>
 <?php
                         }
 ?>
@@ -721,13 +731,13 @@ class WP_Admin_UI
                     {
                         $related = $attributes['related'];
 ?>
-            <select name="<?php echo $column; ?><?php echo (false!==$attributes['related_multiple']?'[]':''); ?>" id="admin_ui_<?php echo $column; ?>"<?php echo (false!==$attributes['related_multiple']?' size="10" style="height:auto;" MULTIPLE':''); ?>>
+            <select name="<?php echo esc_attr( $column ); ?><?php echo (false!==$attributes['related_multiple']?'[]':''); ?>" id="admin_ui_<?php echo esc_attr( $column ); ?>"<?php echo (false!==$attributes['related_multiple']?' size="10" style="height:auto;" MULTIPLE':''); ?>>
 <?php
                         $selected_options = explode(',',$this->row[$column]);
                         foreach($related as $option_id=>$option)
                         {
 ?>
-                <option value="<?php echo $option_id; ?>"<?php echo (in_array($option_id,$selected_options)?' SELECTED':''); ?>><?php echo $option; ?></option>
+                <option value="<?php echo esc_attr( $option_id ); ?>"<?php echo (in_array($option_id,$selected_options)?' SELECTED':''); ?>><?php echo esc_html( $option ); ?></option>
 <?php
                         }
 ?>
@@ -738,7 +748,7 @@ class WP_Admin_UI
                 else
                 {
 ?>
-            <input type="text" name="<?php echo $column; ?>" id="admin_ui_<?php echo $column; ?>" value="<?php echo $this->row[$column]; ?>" class="regular-text" />
+            <input type="text" name="<?php echo esc_attr( $column ); ?>" id="admin_ui_<?php echo esc_attr( $column ); ?>" value="<?php echo esc_attr( $this->row[$column] ); ?>" class="regular-text" />
 <?php
                 }
             }
@@ -747,7 +757,7 @@ class WP_Admin_UI
                 if($attributes['type']!='desc'||$attributes['type']!='code')
                     echo "<br />";
 ?>
-            <span class="description"><?php echo $attributes['comments']; ?></span>
+            <span class="description"><?php echo wp_kses_post( $attributes['comments'] ); ?></span>
 <?php
             }
 ?>
@@ -758,7 +768,7 @@ class WP_Admin_UI
 ?>
         </table>
         <p class="submit">
-            <input type="submit" name="Submit" class="button-primary" value="<?php echo $submit; ?>" />
+            <input type="submit" name="Submit" class="button-primary" value="<?php echo esc_attr( $submit ); ?>" />
         </p>
     </form>
 <?php
@@ -777,8 +787,8 @@ class WP_Admin_UI
             return $this->error("<strong>Error:</strong> $this->item not found.");
 ?>
 <div class="wrap">
-    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo $this->icon; ?>);"<?php } ?>><br /></div>
-    <h2><?php echo $this->heading['view']; ?> <?php echo $this->item; ?> <small>(<a href="<?php echo $this->var_update(array('action'=>'manage','id'=>'')); ?>">&laquo; Back to Manage</a>)</small></h2>
+    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo esc_url( $this->icon ); ?>);"<?php } ?>><br /></div>
+    <h2><?php echo esc_html( $this->heading['view'] ); ?> <?php echo esc_html( $this->item ); ?> <small>(<a href="<?php echo esc_url( $this->var_update(array('action'=>'manage','id'=>'')) ); ?>">&laquo; Back to Manage</a>)</small></h2>
     <table class="form-table">
 <?php
         foreach($this->view_columns as $column=>$attributes)
@@ -793,7 +803,7 @@ class WP_Admin_UI
                 continue;
 ?>
         <tr valign="top">
-            <th scope="row"><label for="admin_ui_<?php echo $column; ?>"><?php echo $attributes['label']; ?></label></th>
+            <th scope="row"><label for="admin_ui_<?php echo esc_attr( $column ); ?>"><?php echo esc_html( $attributes['label'] ); ?></label></th>
             <td>
 <?php
             if(false!==$attributes['custom_view']&&function_exists("{$attributes['custom_view']}"))
@@ -826,10 +836,10 @@ class WP_Admin_UI
                     $this->row[$column] = array();
                     if(!is_array($attributes['related']))
                     {
-                        $related = $wpdb->get_results('SELECT `id`,`'.(string) $attributes['related_field'].'` FROM '.(string) $attributes['related'].' WHERE `id` IN ('.(string) $old_value.')'.(!empty($attributes['related_sql'])?' '.(string) $attributes['related_sql']:''));
+                        $related = $wpdb->get_results('SELECT `id`,`'.$this->sanitize( (string) $attributes['related_field'] ).'` FROM '.(string) $attributes['related'].' WHERE `id` IN ('.$this->sanitize( (string) $old_value ).')'.(!empty($attributes['related_sql'])?' '.(string) $attributes['related_sql']:''));
                         foreach($related as $option)
                         {
-                            $this->row[$column][] = $option->$attributes['related_field'];
+                            $this->row[$column][] = esc_html( $option->$attributes['related_field'] );
                         }
                     }
                     else
@@ -840,7 +850,7 @@ class WP_Admin_UI
                         {
                             if(in_array($option_id,$selected_options))
                             {
-                                $this->row[$column][] = $option;
+                                $this->row[$column][] = esc_html( $option );
                             }
                         }
                     }
@@ -852,12 +862,12 @@ class WP_Admin_UI
                 }
             }
 ?>
-            <div id="admin_ui_<?php echo $column; ?>"><?php echo $this->row[$column]; ?></div>
+            <div id="admin_ui_<?php echo esc_attr( $column ); ?>"><?php echo wp_kses_post( $this->row[$column] ); ?></div>
 <?php
             if(!empty($attributes['comments'])&&false===$attributes['comments_top'])
             {
 ?>
-            <span class="description"><?php echo $attributes['comments']; ?></span>
+            <span class="description"><?php echo wp_kses_post( $attributes['comments'] ); ?></span>
 <?php
             }
 ?>
@@ -962,7 +972,7 @@ class WP_Admin_UI
             }
             if(isset($attributes['custom_save'])&&false!==$attributes['custom_save']&&function_exists("{$attributes['custom_save']}"))
                 $value = $attributes['custom_save']($value,$column,$attributes,$this);
-            $column_sql[] = "`$column`=$vartype";
+            $column_sql[] = "`" . $this->sanitize( $column ) . "`=$vartype";
             $values[] = $value;
             $data[$column] = $value;
         }
@@ -1043,8 +1053,8 @@ class WP_Admin_UI
                     }
                 }
                 if (empty($column_data) && !empty($selected_options)) {
-                    $limited = " WHERE `{$attributes['related_id']}` IN ('" . implode("', '", $selected_options) . "')";
-                    $related = $wpdb->get_results('SELECT `'.$attributes['related_id'].'`,`'.$attributes['related_field'].'` FROM '.$attributes['related'].(!empty($attributes['related_sql'])?' '.$attributes['related_sql']:$limited));
+                    $limited = " WHERE `" . $this->sanitize( $attributes['related_id'] ) . "` IN ('" . implode("', '", $this->sanitize( $selected_options )) . "')";
+                    $related = $wpdb->get_results('SELECT `'.$this->sanitize( $attributes['related_id'] ).'`,`'.$attributes['related_field'].'` FROM '.$attributes['related'].(!empty($attributes['related_sql'])?' '.$attributes['related_sql']:$limited));
                     foreach($related as $option)
                         if(in_array($option->{$attributes['related_id']}, $selected_options)) {
                             $column_data[$option->{$attributes['related_id']}] = $option->{$attributes['related_field']};
@@ -1073,8 +1083,8 @@ class WP_Admin_UI
         if(false!==$attributes['custom_relate'])
         {
             $table = $attributes['custom_relate'];
-            $on = $field_name;
-            $is = $value;
+            $on = $this->sanitize( $field_name );
+            $is = $this->sanitize( $value );
             $what = array('name');
             if(is_array($table))
             {
@@ -1137,26 +1147,26 @@ class WP_Admin_UI
             return call_user_func( $this->custom['export'],$this);
         if(empty($this->full_data))
             $this->get_data(true);
-        $dir = dirname($this->export_dir);
-        if(!file_exists($this->export_dir))
+        $dir = dirname(WP_ADMIN_UI_EXPORT_DIR);
+        if(!file_exists(WP_ADMIN_UI_EXPORT_DIR))
         {
-            if(!$wp_filesystem->is_writable($dir)||!($dir = $wp_filesystem->mkdir($this->export_dir)))
+            if(!$wp_filesystem->is_writable($dir)||!($dir = $wp_filesystem->mkdir(WP_ADMIN_UI_EXPORT_DIR)))
             {
-                $this->error("<strong>Error:</strong> Your export directory (<strong>$this->export_dir</strong>) did not exist and couldn&#8217;t be created by the web server. Check the directory permissions and try again.");
+                $this->error("<strong>Error:</strong> Your export directory (<strong>" . WP_ADMIN_UI_EXPORT_DIR . "</strong>) did not exist and couldn&#8217;t be created by the web server. Check the directory permissions and try again.");
                 return false;
             }
         }
-        if(!$wp_filesystem->is_writable($this->export_dir))
+        if(!$wp_filesystem->is_writable(WP_ADMIN_UI_EXPORT_DIR))
         {
-            $this->error("<strong>Error:</strong> Your export directory (<strong>$this->export_dir</strong>) needs to be writable for this plugin to work. Double-check it and try again.");
+            $this->error("<strong>Error:</strong> Your export directory (<strong>" . WP_ADMIN_UI_EXPORT_DIR . "</strong>) needs to be writable for this plugin to work. Double-check it and try again.");
             return false;
         }
         if(isset($_GET['remove_export']))
         {
-            $this->do_hook('pre_remove_export',$this->export_dir.'/'.str_replace('/','',$_GET['remove_export']));
-            if($wp_filesystem->exists($this->export_dir.'/'.str_replace('/','',$_GET['remove_export'])))
+            $this->do_hook('pre_remove_export',WP_ADMIN_UI_EXPORT_DIR.'/'.str_replace('/','',$_GET['remove_export']));
+            if($wp_filesystem->exists(WP_ADMIN_UI_EXPORT_DIR.'/'.str_replace('/','',$_GET['remove_export'])))
             {
-                $remove = @unlink($this->export_dir.'/'.str_replace('/','',$_GET['remove_export']));
+                $remove = @unlink(WP_ADMIN_UI_EXPORT_DIR.'/'.str_replace('/','',$_GET['remove_export']));
                 if($remove)
                 {
                     $this->do_hook('post_remove_export',$_GET['remove_export'],true);
@@ -1166,7 +1176,7 @@ class WP_Admin_UI
                 else
                 {
                     $this->do_hook('post_remove_export',$_GET['remove_export'],false);
-                    $this->error("<strong>Error:</strong> Your export directory (<strong>$this->export_dir</strong>) needs to be writable for this plugin to work. Double-check it and try again.");
+                    $this->error("<strong>Error:</strong> Your export directory (<strong>" . WP_ADMIN_UI_EXPORT_DIR . "</strong>) needs to be writable for this plugin to work. Double-check it and try again.");
                     return false;
                 }
             }
@@ -1180,8 +1190,9 @@ class WP_Admin_UI
         {
             if($this->export_type=='csv')
             {
-                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_h-i-sa').'.csv';
-                $fp = fopen($this->export_dir.'/'.$export_file,'a+');
+                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_H-i-s').'_'.wp_generate_password(5,false).'.csv';
+	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'csv', $this->export_type, $this );
+                $fp = fopen(WP_ADMIN_UI_EXPORT_DIR.'/'.$export_file,'a+');
                 $head = array();
                 $first = true;
                 foreach($this->export_columns as $key=>$attributes)
@@ -1224,8 +1235,9 @@ class WP_Admin_UI
             }
             elseif($this->export_type=='tsv')
             {
-                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_h-i-sa').'.tsv';
-                $fp = fopen($this->export_dir.'/'.$export_file,'a+');
+                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_H-i-s').'_'.wp_generate_password(5,false).'.tsv';
+	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'tsv', $this->export_type, $this->items, $this );
+                $fp = fopen(WP_ADMIN_UI_EXPORT_DIR.'/'.$export_file,'a+');
                 $head = array();
                 $first = true;
                 foreach($this->export_columns as $key=>$attributes)
@@ -1268,8 +1280,9 @@ class WP_Admin_UI
             }
             elseif($this->export_type=='pipe')
             {
-                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_h-i-sa').'.txt';
-                $fp = fopen($this->export_dir.'/'.$export_file,'a+');
+                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_H-i-s').'_'.wp_generate_password(5,false).'.txt';
+	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'txt', $this->export_type, $this->items, $this );
+                $fp = fopen(WP_ADMIN_UI_EXPORT_DIR.'/'.$export_file,'a+');
                 $head = array();
                 $first = true;
                 foreach($this->export_columns as $key=>$attributes)
@@ -1312,8 +1325,9 @@ class WP_Admin_UI
             }
             elseif($this->export_type=='custom')
             {
-                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_h-i-sa').'.txt';
-                $fp = fopen($this->export_dir.'/'.$export_file,'a+');
+                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_H-i-s').'_'.wp_generate_password(5,false).'.txt';
+	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'txt', $this->export_type, $this->items, $this );
+                $fp = fopen(WP_ADMIN_UI_EXPORT_DIR.'/'.$export_file,'a+');
                 $head = array();
                 $first = true;
                 foreach($this->export_columns as $key=>$attributes)
@@ -1356,8 +1370,9 @@ class WP_Admin_UI
             }
             elseif($this->export_type=='xml')
             {
-                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_h-i-sa').'.xml';
-                $fp = fopen($this->export_dir.'/'.$export_file,'a+');
+                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_H-i-s').'_'.wp_generate_password(5,false).'.xml';
+	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'xml', $this->export_type, $this->items, $this );
+                $fp = fopen(WP_ADMIN_UI_EXPORT_DIR.'/'.$export_file,'a+');
                 $head = '<'.'?'.'xml version="1.0" encoding="'.get_bloginfo('charset').'" '.'?'.'>'."\r\n<items count=\"".count($this->full_data)."\">\r\n";
                 $head = substr($head,0,-1);
                 fwrite($fp,$head);
@@ -1388,8 +1403,9 @@ class WP_Admin_UI
             }
             elseif($this->export_type=='json')
             {
-                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_h-i-sa').'.json';
-                $fp = fopen($this->export_dir.'/'.$export_file,'a+');
+                $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_H-i-s').'_'.wp_generate_password(5,false).'.json';
+	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'json', $this->export_type, $this->items, $this );
+                $fp = fopen(WP_ADMIN_UI_EXPORT_DIR.'/'.$export_file,'a+');
                 $data = array('items'=>array('count'=>count($this->full_data),'item'=>array()));
                 foreach($this->full_data as $item)
                 {
@@ -1420,6 +1436,9 @@ class WP_Admin_UI
                 return false;
             }
         }
+
+	    $this->exported_file = $export_file;
+
         $this->do_hook('post_export',$export_file);
     }
     function get_row ($id=false)
@@ -1438,6 +1457,8 @@ class WP_Admin_UI
         $row = $this->do_hook('get_row',$row,$id);
         if(!empty($row))
             $this->row = $row;
+
+	    return $row;
     }
     function get_data ($full=false)
     {
@@ -1498,7 +1519,7 @@ class WP_Admin_UI
         }
         if(is_array($totals))
             $calc_found_sql .= ' '.implode(',',$totals).', ';
-        $sql = preg_replace('/ SELECT /'," SELECT {$calc_found_sql} ", preg_replace('/ SELECT SQL_CALC_FOUND_ROWS /',' SELECT ',$sql, 1), 1);
+        $sql = preg_replace('/ SELECT /i'," SELECT {$calc_found_sql} ", preg_replace('/ SELECT SQL_CALC_FOUND_ROWS /i',' SELECT ',$sql, 1), 1);
         $wheresql = $havingsql = $ordersql = $limitsql = '';
         $other_sql = $having_sql = array();
         if ($full || false !== $this->sql_count)
@@ -1668,7 +1689,7 @@ class WP_Admin_UI
         {
             $start = ($this->page-1)*$this->limit;
             $end = ($this->page-1)*$this->limit+$this->limit;
-            $limitsql .= $start.','.$end;
+            $limitsql .= (int) $start.','. (int) $end;
         }
         else
             $sql = str_replace (' LIMIT %%LIMIT%% ','',$sql);
@@ -1779,9 +1800,9 @@ class WP_Admin_UI
             $sql_count = str_replace('  ',' ',$sql_count);
         }
         if (current_user_can('manage_options') && isset($_GET['debug']) && 1 == $_GET['debug'])
-            echo "<textarea cols='130' rows='30'>$sql</textarea>";
+            echo "<textarea cols='130' rows='30'>" . esc_textarea( $sql ) . "</textarea>";
         if(false!==$this->default_none&&false===$this->search_query&&false===$full&&empty($wheresql)&&empty($havingsql))
-            return;
+            return false;
         $results = $wpdb->get_results($sql,ARRAY_A);
         if (current_user_can('manage_options') && isset($_GET['debug']) && 1 == $_GET['debug'])
             $wpdb->show_errors = true;
@@ -1809,14 +1830,17 @@ class WP_Admin_UI
         }
         if(empty($this->columns))
             $this->catch_columns($full);
-        if($full)
-            return;
-        if (false !== $this->sql_count)
+        if($full) {
+	        return $results;
+        }
+        if (false !== $this->sql_count && ! empty( $sql_count ))
             $wpdb->query($sql_count);
         $total = @current($wpdb->get_col("SELECT FOUND_ROWS()"));
         $total = $this->do_hook('get_data_total',$total,$full);
         if(is_numeric($total))
             $this->total = $total;
+
+        return $results;
     }
     function manage ($reorder=0)
     {
@@ -1826,8 +1850,8 @@ class WP_Admin_UI
             return call_user_func( $this->custom['manage'],$this,$reorder);
 ?>
 <div class="wrap">
-    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo $this->icon; ?>);"<?php } ?>><br /></div>
-    <h2><?php echo ($reorder==0||false===$this->reorder?$this->heading['manage']:$this->heading['reorder']); ?> <?php echo $this->items; if($reorder==1&&false!==$this->reorder){ ?> <small>(<a href="<?php echo $this->var_update(array('action'=>'manage','id'=>'')); ?>">&laquo; Back to Manage</a>)</small><?php } ?></h2>
+    <div id="icon-edit-pages" class="icon32"<?php if(false!==$this->icon){ ?> style="background-position:0 0;background-image:url(<?php echo esc_url( $this->icon ); ?>);"<?php } ?>><br /></div>
+    <h2><?php echo ($reorder==0||false===$this->reorder?$this->heading['manage']:$this->heading['reorder']); ?> <?php echo esc_html( $this->items ); if($reorder==1&&false!==$this->reorder){ ?> <small>(<a href="<?php echo esc_url( $this->var_update(array('action'=>'manage','id'=>'')) ); ?>">&laquo; Back to Manage</a>)</small><?php } ?></h2>
 <?php
         if(isset($this->custom['header'])&&function_exists("{$this->custom['header']}"))
             echo call_user_func( $this->custom['header'],$this);
@@ -1883,7 +1907,7 @@ jQuery(document).ready(function(){
                 {
                     if(!is_array($this->search_columns[$filter]['related']))
                     {
-                        $related = $wpdb->get_results('SELECT `'.$this->search_columns[$filter]['related_id'].'`,`'.$this->search_columns[$filter]['related_field'].'` FROM '.$this->search_columns[$filter]['related'].(!empty($this->search_columns[$filter]['related_sql'])?' '.$this->search_columns[$filter]['related_sql']:''));
+                        $related = $wpdb->get_results('SELECT `'.$this->sanitize( $this->search_columns[$filter]['related_id'] ).'`,`'.$this->sanitize( $this->search_columns[$filter]['related_field'] ).'` FROM '.$this->search_columns[$filter]['related'].(!empty($this->search_columns[$filter]['related_sql'])?' '.$this->search_columns[$filter]['related_sql']:''));
 ?>
             <label for="admin_ui_filter_<?php echo $filter; ?>"><?php echo $this->search_columns[$filter]['filter_label']; ?>:</label>
             <select name="filter_<?php echo $filter; ?><?php echo (false!==$this->search_columns[$filter]['related_multiple']?'[]':''); ?>" id="admin_ui_filter_<?php echo $filter; ?>"<?php echo (false!==$this->search_columns[$filter]['related_multiple']?' size="10" style="height:auto;" MULTIPLE':''); ?>>
@@ -1977,7 +2001,7 @@ jQuery(document).ready(function(){
 ?>
         <div class="tablenav-pages">
             Show per page:<?php $this->limit(); ?> &nbsp;|&nbsp;
-<?php $this->pagination(); ?>
+<?php $this->pagination( true ); ?>
         </div>
 <?php
         }
@@ -2118,7 +2142,7 @@ jQuery(document).ready(function(){
 table.widefat.fixed tbody.sortable tr { height:50px; }
 .dragme {
     background: url(<?php echo $this->assets_url; ?>/move.png) no-repeat;
-    background-position:8px 5px;
+    background-position:8px 8px;
     cursor:pointer;
 }
 .dragme strong { margin-left:30px; }
@@ -2132,7 +2156,7 @@ table.widefat.fixed tbody.sortable tr { height:50px; }
         if(false===$this->$column_index||empty($this->$column_index))
             return $this->error('<strong>Error:</strong> Invalid Configuration - Missing "columns" definition.');
 ?>
-<table class="widefat page fixed admin_ui_table" cellspacing="0"<?php echo ($reorder==1&&$this->reorder?' id="admin_ui_reorder"':''); ?>>
+<table class="widefat page fixed admin_ui_table wp-list-table" cellspacing="0"<?php echo ($reorder==1&&$this->reorder?' id="admin_ui_reorder"':''); ?>>
     <thead>
         <tr>
 <?php
@@ -2356,81 +2380,71 @@ jQuery(document).ready(function(){
 </script>
 <?php
     }
-    function pagination ()
-    {
+
+    /**
+     * @param bool $header
+     *
+     * @return mixed
+     */
+    public function pagination ( $header = false ) {
         $this->do_hook('pagination');
         if(isset($this->custom['pagination'])&&function_exists("{$this->custom['pagination']}"))
             return call_user_func( $this->custom['pagination'],$this);
+
         $page = $this->page;
         $rows_per_page = $this->limit;
         $total_rows = $this->total;
         $total_pages = ceil($total_rows / $rows_per_page);
-        $request_uri = $this->var_update(array('pg'=>''),array('limit','order','order_dir','search_query')).'&';
-        $begin = ($rows_per_page*$page)-($rows_per_page-1);
-        $end = ($total_pages==$page?$total_rows:($rows_per_page*$page));
+
+        $request_uri = $this->var_update(array('pg'=>''),array('limit','order','order_dir','search_query'));
+
+        $append = false;
+
+        if ( false !== strpos( $request_uri, '?' ) )
+            $append = true;
+
+        if ( $header || 1 != $total_rows ) {
+            $singular_label = strtolower( $this->item );
+            $plural_label = strtolower( $this->items );
 ?>
-			<span class="displaying-num">Displaying <?php if($total_rows<1){ echo 0; } else { echo $begin; ?>&#8211;<?php echo $end; } ?> of <?php echo $total_rows; ?></span>
-<?php
-        if (1 < $page)
-        {
-?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo $page-1; ?>" class="prev page-numbers">&laquo;</a>
-            <a href="<?php echo $request_uri; ?>pg=1" class="page-numbers">1</a>
-<?php
-        }
-        if (1 < ($page - 100))
-        {
-?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo ($page - 100); ?>" class="page-numbers"><?php echo ($page - 100); ?></a>
+        <span class="displaying-num"><?php echo number_format_i18n( $total_rows ) . ' ' . _n( $singular_label, $plural_label, $total_rows ) ?></span>
 <?php
         }
-        if (1 < ($page - 10))
-        {
+
+		if ( 1 < $total_pages ) {
 ?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo ($page - 10); ?>" class="page-numbers"><?php echo ($page - 10); ?></a>
+		<a class="first-page<?php echo ( 1 < $this->page ) ? '' : ' disabled'; ?>" title="<?php _e( 'Go to the first page' ); ?>" href="<?php echo $request_uri . ( $append ? '&' : '?' ) . 'pg' . '=1'; ?>">&laquo;</a>
+		<a class="prev-page<?php echo ( 1 < $this->page ) ? '' : ' disabled'; ?>" title="<?php _e( 'Go to the previous page' ); ?>" href="<?php echo $request_uri . ( $append ? '&' : '?' ) . 'pg' . '=' . max( $this->page - 1, 1 ); ?>">&lsaquo;</a>
 <?php
-        }
-        for ($i = 2; $i > 0; $i--)
-        {
-            if (1 < ($page - $i))
-            {
+			if ( true == $header ) {
 ?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo ($page - $i); ?>" class="page-numbers"><?php echo ($page - $i); ?></a>
+			<span class="paging-input"><input class="current-page" title="<?php _e( 'Current page' ); ?>" type="text" name="pg<?php echo $this->num; ?>" value="<?php echo $this->page; ?>" size="<?php echo strlen( $total_pages ); ?>"> <?php _e( 'of' ); ?> <span class="total-pages"><?php echo $total_pages; ?></span></span>
+			<script>
+
+				jQuery( document ).ready( function ( $ ) {
+					var pageInput = $( 'input.current-page' );
+					var currentPage = pageInput.val();
+					pageInput.closest( 'form' ).submit( function ( e ) {
+						if ( (1 > $( 'select[name="action"]' ).length || $( 'select[name="action"]' ).val() == -1) && (1 > $( 'select[name="action_bulk"]' ).length || $( 'select[name="action_bulk"]' ).val() == -1) && pageInput.val() == currentPage ) {
+							pageInput.val( '1' );
+        }
+					} );
+				} );
+			</script>
 <?php
            }
-    }
+			else {
 ?>
-            <span class="page-numbers current"><?php echo $page; ?></span>
-<?php
-        for ($i = 1; $i < 3; $i++)
-        {
-            if ($total_pages > ($page + $i))
-            {
-?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo ($page + $i); ?>" class="page-numbers"><?php echo ($page + $i); ?></a>
+			<span class="paging-input"><?php echo $this->page; ?> <?php _e( 'of' ); ?> <span class="total-pages"><?php echo number_format_i18n( $total_pages ); ?></span></span>
 <?php
             }
-        }
-        if ($total_pages > ($page + 10))
-        {
 ?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo ($page + 10); ?>" class="page-numbers"><?php echo ($page + 10); ?></a>
+		<a class="next-page<?php echo ( $this->page < $total_pages ) ? '' : ' disabled'; ?>" title="<?php _e( 'Go to the next page' ); ?>" href="<?php echo $request_uri . ( $append ? '&' : '?' ) . 'pg' . '=' . min( $this->page + 1, $total_pages ); ?>">&rsaquo;</a>
+		<a class="last-page<?php echo ( $this->page < $total_pages ) ? '' : ' disabled'; ?>" title="<?php _e( 'Go to the last page' ); ?>'" href="<?php echo $request_uri . ( $append ? '&' : '?' ) . 'pg' . '=' . $total_pages; ?>">&raquo;</a>
 <?php
-        }
-        if ($total_pages > ($page + 100))
-        {
-?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo ($page + 100); ?>" class="page-numbers"><?php echo ($page + 100); ?></a>
-<?php
-        }
-        if ($page < $total_pages)
-        {
-?>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo $total_pages; ?>" class="page-numbers"><?php echo $total_pages; ?></a>
-            <a href="<?php echo $request_uri; ?>pg=<?php echo $page+1; ?>" class="next page-numbers">&raquo;</a>
-<?php
-        }
+		}
     }
+
     function limit ($options=false)
     {
         $this->do_hook('limit',$options);

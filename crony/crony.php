@@ -3,14 +3,14 @@
 Plugin Name: Crony Cronjob Manager
 Plugin URI: http://scottkclark.com/
 Description: Create and Manage Cronjobs in WP by loading Scripts via URLs, including Scripts, running Functions, and/or running PHP code. This plugin utilizes the wp_cron API.
-Version: 0.4.4
+Version: 0.4.6
 Author: Scott Kingsley Clark
 Author URI: http://scottkclark.com/
 */
 
 global $wpdb;
 define('CRONY_TBL', $wpdb->prefix . 'crony_');
-define('CRONY_VERSION', '044');
+define('CRONY_VERSION', '046');
 define('CRONY_URL', WP_PLUGIN_URL . '/crony');
 define('CRONY_DIR', WP_PLUGIN_DIR . '/crony');
 
@@ -131,7 +131,6 @@ function crony_menu ()
     add_submenu_page('crony', 'View Schedule', 'View Schedule', $has_full_access ? 'read' : 'crony_view', 'crony-view', 'crony_view');
     add_submenu_page('crony', 'View Logs', 'View Logs', $has_full_access ? 'read' : 'crony_view_logs', 'crony-logs', 'crony_view_logs');
     add_submenu_page('crony', 'Settings', 'Settings', $has_full_access ? 'read' : 'crony_settings', 'crony-settings', 'crony_settings');
-    add_submenu_page('crony', 'About', 'About', $has_full_access ? 'read' : $min_cap, 'crony-about', 'crony_about');
 }
 function crony_get_capabilities ($caps)
 {
@@ -284,7 +283,7 @@ jQuery(function() {
 });
 </script>
 <?php } ?>
-<input type="text" name="<?php echo $column; ?>" value="<?php echo $obj->row[$column]; ?>" class="regular-text date" />
+<input type="text" name="<?php echo esc_attr( $column ); ?>" value="<?php echo esc_attr( $obj->row[$column] ); ?>" class="regular-text date" />
 <?php
 }
 function crony_view ()
@@ -364,15 +363,15 @@ function crony_view ()
             {
 ?>
             <tr>
-                <th scope="row"><?php echo $function; ?></th>
-                <td><?php echo ($event['schedule']?$schedules[$event['schedule']]['display']:'<em>One-off event</em>'); ?></td>
+                <th scope="row"><?php echo esc_html( $function ); ?></th>
+                <td><?php echo ($event['schedule']?esc_html($schedules[$event['schedule']]['display']):'<em>One-off event</em>'); ?></td>
                 <td><?php echo get_date_from_gmt(date_i18n('Y-m-d H:i:s', $timestamp, true), 'M j, Y @ h:ia'); ?></td>
                 <td>
 <?php
                 if ('crony' == $function && !empty($event['args'])) {
                     $crony_id = (int) $event['args'][0];
 ?>
-                    <a href="admin.php?page=crony&action=edit&id=<?php echo $crony_id; ?>"><?php echo crony_get_job_name($crony_id); ?></a>
+                    <a href="admin.php?page=crony&action=edit&id=<?php echo (int) $crony_id; ?>"><?php echo esc_html( crony_get_job_name($crony_id) ); ?></a>
 <?php
                 }
                 elseif(!empty($event['args']))
@@ -383,7 +382,7 @@ function crony_view ()
                     foreach($event['args'] as $arg=>$val)
                     {
 ?>
-                        <li><strong>[Arg <?php echo $arg; ?>]:</strong> <?php echo $val; ?></li>
+                        <li><strong>[Arg <?php echo esc_html( $arg ); ?>]:</strong> <?php echo esc_html( $val ); ?></li>
 <?php
                     }
 ?>
@@ -398,7 +397,7 @@ function crony_view ()
                 </td>
                 <td>
                     <input type="button" class="button" value=" Remove " onclick="crony_remove_job(this);" />
-                    <input type="hidden" class="crony-identifier" value="<?php echo $timestamp.':'.$function.':'.$key; ?>" />
+                    <input type="hidden" class="crony-identifier" value="<?php echo esc_attr( $timestamp.':'.$function.':'.$key ); ?>" />
                 </td>
             </tr>
 <?php
@@ -432,8 +431,8 @@ function crony_view ()
     {
 ?>
             <tr>
-                <th scope="row"><?php echo $schedule['display']; ?></th>
-                <td><?php echo human_time_diff(0,$schedule['interval']); ?></td>
+                <th scope="row"><?php echo esc_html( $schedule['display'] ); ?></th>
+                <td><?php echo human_time_diff(0,(int)$schedule['interval']); ?></td>
             </tr>
 <?php
     }
@@ -461,46 +460,10 @@ function crony_cronjob_output ($output)
 {
     if(0<strlen($output))
     {
-        return '<textarea rows="10" cols="50">'.$output.'</textarea>';
+        return '<textarea rows="10" cols="50">'.esc_textarea( $output ).'</textarea>';
     }
     return 'N/A';
 }
-function crony_about ()
-{
-?>
-<div class="wrap">
-    <div id="icon-edit-pages" class="icon32" style="background-position:0 0;background-image:url(<?php echo CRONY_URL; ?>/assets/icons/32.png);"><br /></div>
-    <h2>About the Crony Cronjob Manager plugin</h2>
-    <div style="height:20px;"></div>
-    <link type="text/css" rel="stylesheet" href="<?php echo CRONY_URL; ?>/assets/admin.css" />
-    <table class="form-table about">
-        <tr valign="top">
-            <th scope="row">About the Plugin Author</th>
-            <td><a href="http://scottkclark.com/">Scott Kingsley Clark</a>
-                <span class="description">Scott specializes in WordPress and Pods CMS Framework development using PHP, MySQL, and AJAX. Scott is also the lead developer of the <a href="http://podsframework.org/">Pods Framework</a> plugin and has a creative outlet in music with his <a href="http://softcharisma.com/">Soft Charisma</a></span></td>
-        </tr>
-        <tr valign="top">
-            <th scope="row">Features</th>
-            <td>
-                <ul>
-                    <li><strong>Administration</strong>
-                        <ul>
-                            <li>Create and Manage Custom Cronjobs</li>
-                            <li>View Custom Cronjob Activity Log</li>
-                            <li>View and Remove Existing Cronjobs</li>
-                            <li>View Available Cronjob Schedules and Intervals</li>
-                            <li>Admin.Class.php - A class for plugins to manage data using the WordPress UI appearance</li>
-                        </ul>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    </table>
-    <div style="height:50px;"></div>
-</div>
-<?php
-}
-
 function crony_get_job_name ($id) {
     global $wpdb;
     $row = @current($wpdb->get_results('SELECT `name` FROM `' . CRONY_TBL . 'jobs` WHERE `id`=' . $wpdb->_real_escape($id), ARRAY_A));

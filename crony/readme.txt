@@ -2,15 +2,13 @@
 Contributors: sc0ttkclark
 Donate link: http://scottkclark.com/
 Tags: cron, wp_cron, cronjob, cron job, automatic, scheduler
-Requires at least: 3.0
-Tested up to: 4.1.1
-Stable tag: 0.4.4
+Requires at least: 3.8
+Tested up to: 4.3
+Stable tag: 0.4.6
 
-THIS IS A BETA VERSION - Currently in development - Create and Manage Cronjobs in WP by loading Scripts via URLs, including Scripts, running Functions, and/or running PHP code. This plugin utilizes the wp_cron API.
+Create and Manage Cronjobs in WP by loading Scripts via URLs, including Scripts, running Functions, and/or running PHP code. This plugin utilizes the wp_cron API.
 
 == Description ==
-
-**THIS IS A BETA VERSION - Currently in development**
 
 Create and Manage Cronjobs in WP by loading Scripts via URLs, including Scripts, running Functions, and/or running PHP code. This plugin utilizes the wp_cron API.
 
@@ -27,6 +25,12 @@ As you receive visitors on your site, WordPress checks your database to see if a
 Cronjobs configured on a server run on their intervals automatically, while wp_cron() jobs run only after being triggered from a visitor to your site.
 
 == Changelog ==
+
+= 0.4.6 =
+* Escaping fixes for WP_Admin_UI (reported by Sathish Kumar from cybersecurity works)
+
+= 0.4.5 =
+* Security fix for orderby handling
 
 = 0.4.4 =
 * Fixes for DB tables and reinstalling (when DB tables don't exist but Crony was installed before)
@@ -79,47 +83,6 @@ Cronjobs configured on a server run on their intervals automatically, while wp_c
 
 = 0.1 =
 * First official release to the public as a plugin
-
-== Upgrade Notice ==
-
-= 0.4.0 =
-* Added Settings area to reset Crony, or empty Crony Logs
-* Added URL to load a script / page from, uses wp_remote_post, where the script include only uses include_once
-* Bug fixes for WP Admin UI
-* Bug fix for schedule running, previously was assuming current timezone for everything but WP runs cron under GMT timestamps
-
-= 0.3.1 =
-* Bug fix for dates in Log
-
-= 0.3.0 =
-* Added Cronjob Activity Log
-* Added View / Remove Existing Cronjobs (external to Crony) and Available Cronjob Schedules
-* Bug fixes
-* PHP must now be init with an opening PHP tag for Custom PHP (migrated existing Cronjob code for you)
-
-= 0.1.6 =
-* Bug fix, the dates saved didn't include times
-
-= 0.1.5 =
-* Bug fix, the menu access was incorrect
-
-= 0.1.4 =
-* Bug fix, the column width was off in Firefox in Manage screens
-
-= 0.1.3 =
-* Bug fix, the SQL was not installed correctly in 0.1.2
-* Added option for E-mail Notifications
-* Added Last Run tracking and Ability to set Next Run date
-
-= 0.1.2 =
-* Bug fix, the wp_cron jobs were not removed on save, scheduling over previous versions of the same job
-* Updated Admin.class.php with latest bug fixes / features
-
-= 0.1.1 =
-* Bug fix, the db table was created without an essential field, this version will fix that
-
-= 0.1 =
-You aren't using the real plugin, upgrade and you enjoy what you originally downloaded this for!
 
 == Installation ==
 
