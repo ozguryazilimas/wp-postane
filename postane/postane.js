@@ -374,14 +374,14 @@ jQuery(document).ready(function() {
 
   jQuery("#postane_new_thread_message").keydown(function(e){
     if (e.keyCode == 13) {
-      document.execCommand('insertHTML', false, '<br/><br/>');
+      document.execCommand('insertHTML', false, '<br><br>');
       return false;
     }
   });
 
   jQuery("#postane_thread_message").keydown(function(e){
     if (e.keyCode == 13) {
-      document.execCommand('insertHTML', false, '<br/><br/>');
+      document.execCommand('insertHTML', false, '<br><br>');
       return false;
     }
   });
