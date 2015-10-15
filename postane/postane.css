@@ -4,7 +4,6 @@
   border: 3px solid #44749d;
   padding: 10px;
   min-height: 560px;
-  // background-color: #ddd;
   background-color: #F2F7FC;
   border-radius: 10px;
 }
@@ -53,7 +52,6 @@
   text-align: center;
   margin-top: 20px;
   cursor: pointer;
-  // background-color: #44749d;
   background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
   padding: 5px 10px;
   font-weight: bold;
@@ -87,15 +85,11 @@
 }
 
 #postane_threads_topmenu {
-  // padding: 5px;
-  // background-color: #44749d;
   margin-bottom: 20px;
 }
 
 #postane_new_thread_toggle {
   cursor: pointer;
-  // width: 100%;
-  // background-color: #44749d;
   background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
   text-align: center;
   color: white;
@@ -117,7 +111,6 @@
 
 #postane_new_thread {
   display: none;
-  // background-color: #44749d;
   background: linear-gradient(#44749D, #5897CC) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
   padding: 10px;
@@ -134,9 +127,6 @@
 }
 
 .postane_thread:hover {
-  // background-color: #44749d;
-  // background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
-  // background: linear-gradient(#44749D, #5897CC) repeat scroll 0 0 rgba(0, 0, 0, 0);
   background: linear-gradient(#44749D, #5897CC) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
 }
@@ -178,10 +168,8 @@
 
 .postane_thread_quit_thread img,
 .postane_thread_remove_messages img {
-  // background-color: #44749b;
   background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
   padding: 2px 4px;
-  // box-shadow: 2px 2px 2px #2C2C2C;
 }
 
 .postane_thread_quit_thread img:hover,
@@ -240,9 +228,7 @@
 #postane_new_message_send {
   display: inline-block;
   cursor: pointer;
-  // border: 2px solid #c6d4e1;
   border: 1px solid #556270;
-  // background-color: #44749d;
   background: linear-gradient(#44749D, #2F516E) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
   padding: 3px 30px;
@@ -257,8 +243,6 @@
 #postane_new_participants_send:hover,
 .postane_messages_edit_action_button:hover,
 #postane_new_message_send:hover {
-  // background-color: #4ecdc4;
-  // border: 2px solid #556270;
   background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 
@@ -276,9 +260,7 @@
 #postane_new_thread_send {
   cursor: pointer;
   display: inline-block;
-  // border: 2px solid #c6d4e1;
   border: 1px solid #556270;
-  // background-color: #44749d;
   background: linear-gradient(#44749D, #2F516E) repeat scroll 0 0 rgba(0, 0, 0, 0);
   color: white;
   padding: 3px 30px;
@@ -287,9 +269,7 @@
 }
 
 #postane_new_thread_send:hover {
-  // background-color: #4ecdc4;
   background: linear-gradient(#2F516E, #44749D) repeat scroll 0 0 rgba(0, 0, 0, 0);
-  // border: 2px solid #556270;
 }
 
 #postane_new_participant_list,
@@ -445,10 +425,6 @@
 .postane_message_content[contenteditable="true"] {
   margin-top: 3px;
   border: 1px solid #44749d;
-}
-
-.postane_messages_edit_action_button {
-  
 }
 
 .postane_message_marked_read,
