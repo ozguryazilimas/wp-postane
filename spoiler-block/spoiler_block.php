@@ -139,7 +139,7 @@ function ispiyon_shortcode_button() {
   if (wp_script_is('quicktags')) {
     ?>
     <script type="text/javascript">
-      QTags.addButton('ispiyon_qtag','ispiyon','[ispiyon]','[/ispiyon]');
+      QTags.addButton('ispiyon_qtag','ispiyon','<span class="spoiler"><span class="hidden-content">','</span></span>');
     </script>
     <?php
   }
