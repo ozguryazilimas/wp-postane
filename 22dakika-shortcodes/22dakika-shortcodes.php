@@ -25,13 +25,16 @@ function dizi_shortcode_replace($content) {
   $dizi_list = json_decode(file_get_contents(plugin_dir_path(__FILE__) . "/dizi_listesi.json"), true);
   $start_pos = strpos($content, "[dizi]");
   $end_pos = strpos($content, "[/dizi]");
+  $replace_from = array("’", ' ', '&', '#038;');
+  $replace_to = array("'", '_', 'and', '');
 
   while ($start_pos !== false && $end_pos !== false) {
     $text_start = $start_pos + 6;
     $text_len = $end_pos - $text_start;
 
     $text = substr($content, $text_start, $text_len);
-    $index_text = strtolower($text);
+    $search_key = str_replace($replace_from, $replace_to, $text);
+    $index_text = strtolower($search_key);
 
     if (isset($dizi_list[$index_text])) {
       $content = substr($content,0,$start_pos) . "<a href='".$dizi_list[$index_text]['link']."'>".$text."</a>" . substr($content,$end_pos + 7);
@@ -50,13 +53,16 @@ function oyuncu_shortcode_replace($content) {
   $oyuncu_list = json_decode(file_get_contents(plugin_dir_path(__FILE__) . "/oyuncu_listesi.json"), true);
   $start_pos = strpos($content,"[oyuncu]");
   $end_pos = strpos($content,"[/oyuncu]");
+  $replace_from = array("’", ' ', '&', '#038;');
+  $replace_to = array("'", '_', 'and', '');
 
   while ($start_pos !== false && $end_pos !== false) {
     $text_start = $start_pos + 8;
     $text_len = $end_pos - $text_start;
 
     $text = substr($content, $text_start, $text_len);
-    $index_text = strtolower($text);
+    $search_key = str_replace($replace_from, $replace_to, $text);
+    $index_text = strtolower($search_key);
 
     if (isset($oyuncu_list[$index_text])) {
       $content = substr($content,0,$start_pos) . "<a href='".$oyuncu_list[$index_text]['link']."'>".$text."</a>" . substr($content,$end_pos + 9);

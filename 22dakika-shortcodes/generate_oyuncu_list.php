@@ -68,6 +68,8 @@ global $wpdb;
 $now = new DateTime();
 $now = $now->format('Y-m-d H:i:s');
 $date = get_option("oyuncu_listesi_son_tarih");
+$replace_from = array("’", ' ', '&', '#038;');
+$replace_to = array("'", '_', 'and', '');
 
 if (!$date) {
   add_option("oyuncu_listesi_son_tarih", $now,'','no');
@@ -103,7 +105,8 @@ if (file_exists($file_uri)) {
 }
 
 foreach ($oyuncu_listesi as $oyuncu) {
-  $oyuncu_index = strtolower($oyuncu);
+  $oyuncu_index_raw = strtolower($oyuncu);
+  $oyuncu_index = str_replace($replace_from, $replace_to, $oyuncu_index_raw);
 
   if (!isset($json_liste[$oyuncu_index])) {
     $query = str_replace(' ','+',$oyuncu_index);

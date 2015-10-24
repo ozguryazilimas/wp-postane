@@ -25,9 +25,10 @@ foreach($wp_blog_path as $incpath) {
 global $wpdb;
 
 $posts_table = $wpdb->prefix . "posts";
+$replace_from = array("’", ' ', '&', '#038;');
+$replace_to = array("'", '_', 'and', '');
 
 $sql = "SELECT post_content FROM $posts_table where post_type='page' and post_title='Dizi Listesi'";
-
 
 $post_content = $wpdb->get_row($sql)->post_content;
 
@@ -61,7 +62,9 @@ foreach($ul_list as $list) {
     }
 
     if ($link != NULL) {
-      $res_array[strtolower($a_elem->textContent)] = array('link' => $link,'name' => $a_elem->textContent);
+      $search_key_raw = strtolower($a_elem->textContent);
+      $search_key = str_replace($replace_from, $replace_to, $search_key_raw);
+      $res_array[$search_key] = array('link' => $link,'name' => $a_elem->textContent);
     }
 
     $child = $child->nextSibling;
