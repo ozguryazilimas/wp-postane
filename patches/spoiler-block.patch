@@ -37,3 +37,26 @@ diff -Nur spoiler-block/css/style.css spoiler-block.now/css/style.css
 +	display: none;
  }
 \ No newline at end of file
+diff --git a/spoiler-block/spoiler_block.php b/spoiler-block/spoiler_block.php
+index c5f33bb..5bc43b3 100644
+--- a/spoiler-block/spoiler_block.php
++++ b/spoiler-block/spoiler_block.php
+@@ -134,4 +134,16 @@ function spoiler_selected_message(){
+ }
+ 
+ add_action("wp_head","spoiler_selected_message");
+-?>
+\ No newline at end of file
++
++function ispiyon_shortcode_button() {
++  if (wp_script_is('quicktags')) {
++    ?>
++    <script type="text/javascript">
++      QTags.addButton('ispiyon_qtag','ispiyon','[ispiyon]','[/ispiyon]');
++    </script>
++    <?php
++  }
++}
++add_action('admin_print_footer_scripts', 'ispiyon_shortcode_button');
++
++?>
