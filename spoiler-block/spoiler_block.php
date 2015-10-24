@@ -134,4 +134,16 @@ function spoiler_selected_message(){
 }
 
 add_action("wp_head","spoiler_selected_message");
+
+function ispiyon_shortcode_button() {
+  if (wp_script_is('quicktags')) {
+    ?>
+    <script type="text/javascript">
+      QTags.addButton('ispiyon_qtag','ispiyon','[ispiyon]','[/ispiyon]');
+    </script>
+    <?php
+  }
+}
+add_action('admin_print_footer_scripts', 'ispiyon_shortcode_button');
+
 ?>
