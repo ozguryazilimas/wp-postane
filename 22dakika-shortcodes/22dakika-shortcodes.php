@@ -94,8 +94,8 @@ function yirmiiki_add_tinymce_button($buttons) {
 }
 
 function yirmiiki_shortcode_json_key($base_str) {
-  $replace_from = array("’", "'", "'", ' ', '&amp;', '&', '#038;');
-  $replace_to = array('_', '_', '_', '_', 'and', 'and', '');
+  $replace_from = array("’", "'", ' ', '&amp;', '&', '#038;');
+  $replace_to = array('_', '_', '_', 'and', 'and', '');
 
   $lower_str = strtolower($base_str);
   $search_key = str_replace($replace_from, $replace_to, $lower_str);
