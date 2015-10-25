@@ -34,9 +34,9 @@ function dizi_shortcode_replace($content) {
     $index_text = yirmiiki_shortcode_json_key($text);
 
     if (isset($dizi_list[$index_text])) {
-      $content = substr($content,0,$start_pos) . "<a href='".$dizi_list[$index_text]['link']."'>".$text."</a>" . substr($content,$end_pos + 7);
+      $content = substr($content,0,$start_pos) . "<a href='" . $dizi_list[$index_text]['link'] . "'>" . $text."</a>" . substr($content, $end_pos + 7);
     } else {
-      $content = substr($content,0,$start_pos) . "<a href='".get_site_url()."/dizi-listesi'>".$text."</a>" . substr($content,$end_pos + 7);
+      $content = substr($content,0,$start_pos) . "<a href='" . get_site_url()."/dizi-listesi'>" . $text . "</a>" . substr($content, $end_pos + 7);
     }
 
     $start_pos = strpos($content,"[dizi]", $start_pos + 1);
@@ -94,8 +94,8 @@ function yirmiiki_add_tinymce_button($buttons) {
 }
 
 function yirmiiki_shortcode_json_key($base_str) {
-  $replace_from = array("’", "'", ' ', '&amp;', '&', '#038;');
-  $replace_to = array('_', '_', '_', 'and', 'and', '');
+  $replace_from = array("’", "'", "’", '&#8216;', '&#8217;', ' ', '&amp;', '&#038;', '&');
+  $replace_to = array('_', '_', '_', '_', '_', '_', 'and', '', 'and');
 
   $lower_str = strtolower($base_str);
   $search_key = str_replace($replace_from, $replace_to, $lower_str);
