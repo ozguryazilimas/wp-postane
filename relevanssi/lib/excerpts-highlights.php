@@ -18,7 +18,7 @@ function relevanssi_do_excerpt($t_post, $query) {
 	if ($post != NULL) $old_global_post = $post;
 	$post = $t_post;
 
-	$remove_stopwords = false;
+	$remove_stopwords = true;
 	$terms = relevanssi_tokenize($query, $remove_stopwords, -1);
 
 	// These shortcodes cause problems with Relevanssi excerpts
@@ -60,7 +60,7 @@ function relevanssi_do_excerpt($t_post, $query) {
 			}
 		}
 	}
-	
+
 	$start = $excerpt_data[2];
 
 	$excerpt = $excerpt_data[0];	
@@ -113,7 +113,7 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 	$best_excerpt_term_hits = -1;
 	$excerpt = "";
 
-	$content = preg_replace('/\s+/', ' ', $content);
+	$content = preg_replace('/\s+/u', ' ', $content);
 	$content = " $content";
 
 	$phrases = relevanssi_extract_phrases(stripslashes($query));
@@ -131,89 +131,13 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 		$terms[$phrase] = 1;
 	}
 
+	// longest search terms first, because those are generally more significant
 	uksort($terms, 'relevanssi_strlen_sort');
 	
 	$start = false;
 	if ("chars" == $type) {
-		$term_positions = array();
-		foreach (array_keys($terms) as $term) {
-			$term = trim($term);
-			$term_key = $term;
-			get_option('relevanssi_fuzzy') != 'none' ? $term = "$term" : $term = " $term";
-
-			$pos = 0;
-			$n = 0;
-			while (false !== $pos) {
-				$pos = relevanssi_stripos($content, $term, $pos);
-				if (false !== $pos) {
-					$term_positions[$pos] = $term_key;
-					function_exists('mb_strlen') ? $pos = $pos + mb_strlen($term) : $pos = $pos + strlen(utf8_decode($term));
-				}
-			}
-		}
-		ksort($term_positions);
-		$positions = array_keys($term_positions);
-		$best_position = 0;
-		$best_position_hits = 0;
-		$quarter = floor($excerpt_length/4); // adjustment, so the excerpt doesn't start with the search term
-		for ($i = 0; $i < count($positions); $i++) {
-			$key = $positions[$i];
-			$orig_key = $key;
-			$key = $key - $quarter;
-			if ($key < 0) $key = 0;
-			
-			$j = $i + 1; 
-			
-			$this_excerpt_terms = array();
-			
-			if (isset($term_positions[$orig_key])) $this_excerpt_terms[$term_positions[$orig_key]] = true;
-			
-			while (isset($positions[$j])) {
-				if (isset($positions[$j])) {
-					$next_key = $positions[$j];
-				}
-				
-				if ($key + $excerpt_length > $next_key) {
-					$this_excerpt_terms[$term_positions[$next_key]] = true;
-				}
-				else {
-					break;		// farther than the excerpt length
-				}
-				$j++;
-			}
-
-			if (count($this_excerpt_terms) > $best_position_hits) {
-				$best_position_hits = count($this_excerpt_terms);
-				$best_position = $key;
-			}
-		}
-	
-		if ($best_position + $excerpt_length < strlen($content)) {
-			if (function_exists('mb_substr'))
-				$excerpt = mb_substr($content, $best_position, $excerpt_length);
-			else
-				$excerpt = substr($content, $best_position, $excerpt_length);
-		}
-		else {
-			$fixed_position = strlen($content) - $excerpt_length;
-			if ($fixed_position > 0) {
-				if (function_exists('mb_substr'))
-					$excerpt = mb_substr($content, $fixed_position, $excerpt_length);
-				else
-					$excerpt = substr($content, $fixed_position, $excerpt_length);			
-			}
-		}
-		
-		if ($best_position == 0) $start = true;
-		
-
-		if ("" == $excerpt) {
-			if (function_exists('mb_substr'))
-				$excerpt = mb_substr($content, 0, $excerpt_length);
-			else
-				$excerpt = substr($content, 0, $excerpt_length);
-			$start = true;
-		}
+		$prev_count = floor($excerpt_length / 2);
+		list($excerpt, $best_excerpt_term_hits, $start) = relevanssi_extract_relevant(array_keys($terms), $content, $excerpt_length, $prev_count);
 	}
 	else {
 		$words = explode(' ', $content);
@@ -230,51 +154,11 @@ function relevanssi_create_excerpt($content, $terms, $query) {
 
 			$excerpt_slice = " $excerpt_slice";
 			$term_hits = 0;
-			foreach (array_keys($terms) as $term) {
-				$term = " $term";
-				if (function_exists('mb_stripos')) {
-					$pos = ("" == $excerpt_slice) ? false : mb_stripos($excerpt_slice, $term);
-					// To avoid "empty haystack" warnings
-				}
-				else if (function_exists('mb_strpos')) {
-					$pos = mb_strpos($excerpt_slice, $term);
-					if (false === $pos) {
-						if (function_exists('mb_strtoupper') && function_exists('mb_strpos') && function_exists('mb_substr')) {
-							$titlecased = mb_strtoupper(mb_substr($term, 0, 1)) . mb_substr($term, 1);
-							$pos = mb_strpos($excerpt_slice, $titlecased);
-							if (false === $pos) {
-								$pos = mb_strpos($excerpt_slice, mb_strtoupper($term));
-							}
-						}
-						else {
-							$titlecased = strtoupper(substr($term, 0, 1)) . substr($term, 1);
-							$pos = strpos($excerpt_slice, $titlecased);
-							if (false === $pos) {
-								$pos = strpos($excerpt_slice, strtoupper($term));
-							}
-						}
-					}
-				}
-				else {
-					$pos = strpos($excerpt_slice, $term);
-					if (false === $pos) {
-						$titlecased = strtoupper(substr($term, 0, 1)) . substr($term, 1);
-						$pos = strpos($excerpt_slice, $titlecased);
-						if (false === $pos) {
-							$pos = strpos($excerpt_slice, strtoupper($term));
-						}
-					}
-				}
+			$count = relevanssi_count_matches(array_keys($terms), $excerpt_slice);
 			
-				if (false !== $pos) {
-					$term_hits++;
-					if (0 == $i) $start = true;
-
-					if ($term_hits > $best_excerpt_term_hits) {
-						$best_excerpt_term_hits = $term_hits;
-						$excerpt = $excerpt_slice;
-					}
-				}
+			if ($count > 0 && $count > $best_excerpt_term_hits) {
+				$best_excerpt_term_hits = $count;
+				$excerpt = $excerpt_slice;
 			}
 			
 			$i += $excerpt_length;
@@ -374,7 +258,8 @@ function relevanssi_highlight_terms($excerpt, $query) {
 
 	if ( function_exists('mb_internal_encoding') )
 		mb_internal_encoding("UTF-8");
-	
+
+	do_action('relevanssi_highlight_tokenize');	
 	$terms = array_keys(relevanssi_tokenize($query, $remove_stopwords = true, $min_word_length = -1));
 	
 	if (is_array($query)) $query = implode(' ', $query); // just in case
@@ -403,7 +288,9 @@ function relevanssi_highlight_terms($excerpt, $query) {
 		$excerpt = html_entity_decode($excerpt);
 	
 		if ($word_boundaries) {
-			get_option('relevanssi_fuzzy') != 'none' ? $regex = "/($pr_term)(?!(^&+)?(;))/iu" : $regex = "/(\b$pr_term|$pr_term\b)(?!(^&+)?(;))/iu";
+//			get_option('relevanssi_fuzzy') != 'none' ? $regex = "/($pr_term)(?!(^&+)?(;))/iu" : $regex = "/(\b$pr_term|$pr_term\b)(?!(^&+)?(;))/iu";
+			get_option('relevanssi_fuzzy') != 'none' ? $regex = "/(\b$pr_term|$pr_term\b)(?!(^&+)?(;))/iu" : $regex = "/(\b$pr_term\b)(?!(^&+)?(;))/iu";
+				
 			$excerpt = preg_replace($regex, $start_emp_token . '\\1' . $end_emp_token, $excerpt);
 			if (empty($excerpt)) $excerpt = preg_replace($regex, $start_emp_token . '\\1' . $end_emp_token, $undecoded_excerpt);
 		}
@@ -491,6 +378,120 @@ function relevanssi_remove_nested_highlights($s, $a, $b) {
 	$whole = implode('', $new_bits);
 	
 	return $whole;
+}
+
+/******
+ * This code originally written by Ben Boyter
+ * http://www.boyter.org/2013/04/building-a-search-result-extract-generator-in-php/
+ */
+
+// find the locations of each of the words
+// Nothing exciting here. The array_unique is required 
+// unless you decide to make the words unique before passing in
+function relevanssi_extract_locations($words, $fulltext) {
+    $locations = array();
+    foreach($words as $word) {
+        $wordlen = relevanssi_strlen($word);
+        $loc = relevanssi_stripos($fulltext, $word);
+        while($loc !== FALSE) {
+            $locations[] = $loc;
+            $loc = relevanssi_stripos($fulltext, $word, $loc + $wordlen);
+        }
+    }
+    $locations = array_unique($locations);
+    sort($locations);
+
+    return $locations;
+}
+
+function relevanssi_count_matches($words, $fulltext) {
+	$count = 0;
+	foreach( $words as $word ) {
+		if (get_option('relevanssi_fuzzy') == 'never') {
+			$pattern = '/([\s,\.:;]'.$word.'[\s,\.:;])/i';
+			if (preg_match($pattern, $fulltext, $matches, PREG_OFFSET_CAPTURE)) {
+				$count += count($matches) - 1;
+			}
+		}
+		else {
+			$pattern = '/([\s,\.:;]'.$word.')/i';
+			if (preg_match($pattern, $fulltext, $matches, PREG_OFFSET_CAPTURE)) {
+				$count += count($matches) - 1;
+			}
+			$pattern = '/('.$word.'[\s,\.:;])/i';
+			if (preg_match($pattern, $fulltext, $matches, PREG_OFFSET_CAPTURE)) {
+				$count += count($matches) - 1;
+			}
+		}
+	}
+
+	return $count;
+}
+
+// Work out which is the most relevant portion to display
+// This is done by looping over each match and finding the smallest distance between two found 
+// strings. The idea being that the closer the terms are the better match the snippet would be. 
+// When checking for matches we only change the location if there is a better match. 
+// The only exception is where we have only two matches in which case we just take the 
+// first as will be equally distant.
+function relevanssi_determine_snip_location($locations, $prevcount) {
+    // If we only have 1 match we dont actually do the for loop so set to the first
+    $startpos = $locations[0];  
+    $loccount = count($locations);
+    $smallestdiff = PHP_INT_MAX;    
+
+    // If we only have 2 skip as its probably equally relevant
+    if(count($locations) > 2) {
+        // skip the first as we check 1 behind
+        for($i=1; $i < $loccount; $i++) { 
+            if($i == $loccount-1) { // at the end
+                $diff = $locations[$i] - $locations[$i-1];
+            }
+            else {
+                $diff = $locations[$i+1] - $locations[$i];
+            }
+
+            if($smallestdiff > $diff) {
+                $smallestdiff = $diff;
+                $startpos = $locations[$i];
+            }
+        }
+    }
+
+    $startpos = $startpos > $prevcount ? $startpos - $prevcount : 0;
+    return $startpos;
+}
+
+// 1/6 ratio on prevcount tends to work pretty well and puts the terms
+// in the middle of the extract
+function relevanssi_extract_relevant($words, $fulltext, $rellength=300, $prevcount=50) {
+
+    $textlength = mb_strlen($fulltext);
+    if($textlength <= $rellength) {
+        return $fulltext;
+    }
+
+    $locations = relevanssi_extract_locations($words, $fulltext);
+    $startpos  = relevanssi_determine_snip_location($locations,$prevcount);
+
+    // if we are going to snip too much...
+    if($textlength-$startpos < $rellength) {
+        $startpos = $startpos - ($textlength-$startpos)/2;
+    }
+
+    $reltext = mb_substr($fulltext, $startpos, $rellength);
+    
+    // check to ensure we dont snip the last word if thats the match
+    if( $startpos + $rellength < $textlength) {
+        $reltext = mb_substr($reltext, 0, mb_strrpos($reltext, " ")); // remove last word
+    }
+
+	$start = false;
+    if($startpos == 0) $start = true;
+
+	$besthits = count(relevanssi_extract_locations($words, $reltext)); 
+
+    return array($reltext, $besthits, $start);
 }
 
 ?>

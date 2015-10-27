@@ -376,6 +376,8 @@ function relevanssi_search($args) {
 	$comment_matches = array();
 	$link_matches = array();
 	$body_matches = array();
+	$category_matches = array();
+	$taxonomy_matches = array();
 	$scores = array();
 	$term_hits = array();
 
@@ -627,6 +629,8 @@ function relevanssi_search($args) {
 				isset($title_matches[$match->doc]) ? $title_matches[$match->doc] += $match->title : $title_matches[$match->doc] = $match->title;
 				isset($link_matches[$match->doc]) ? $link_matches[$match->doc] += $match->link : $link_matches[$match->doc] = $match->link;
 				isset($tag_matches[$match->doc]) ? $tag_matches[$match->doc] += $match->tag : $tag_matches[$match->doc] = $match->tag;
+				isset($category_matches[$match->doc]) ? $category_matches[$match->doc] += $match->category : $category_matches[$match->doc] = $match->category;
+				isset($taxonomy_matches[$match->doc]) ? $taxonomy_matches[$match->doc] += $match->taxonomy : $taxonomy_matches[$match->doc] = $match->taxonomy;
 				isset($comment_matches[$match->doc]) ? $comment_matches[$match->doc] += $match->comment : $comment_matches[$match->doc] = $match->comment;
 	
 				isset($relevanssi_post_types[$match->doc]) ? $type = $relevanssi_post_types[$match->doc] : $type = null;
@@ -693,9 +697,23 @@ function relevanssi_search($args) {
 				// doc didn't match all terms, so it's discarded
 				continue;
 			}
-
-			$hits[intval($i)] = relevanssi_get_post($doc);
-			$hits[intval($i)]->relevance_score = round($weight, 2);
+			
+			if (!empty($fields)) {
+				if ($fields == 'ids') {
+					$hits[intval($i)] = $doc;
+				}
+				if ($fields == 'id=>parent') {
+					$object = new StdClass();
+					$object->ID = $doc;
+					$object->post_parent = wp_get_post_parent_id($doc);
+					
+					$hits[intval($i)] = $object;
+				}
+			}
+			else {
+				$hits[intval($i)] = relevanssi_get_post($doc);
+				$hits[intval($i)]->relevance_score = round($weight, 2);
+			}
 			$i++;
 		}
 	}
@@ -727,7 +745,8 @@ function relevanssi_search($args) {
 		relevanssi_object_sort($hits, $orderby, $order);
 
 	$return = array('hits' => $hits, 'body_matches' => $body_matches, 'title_matches' => $title_matches,
-		'tag_matches' => $tag_matches, 'comment_matches' => $comment_matches, 'scores' => $scores,
+		'tag_matches' => $tag_matches, 'category_matches' => $category_matches, 'taxonomy_matches' => $taxonomy_matches, 
+		'comment_matches' => $comment_matches, 'scores' => $scores,
 		'term_hits' => $term_hits, 'query' => $q, 'link_matches' => $link_matches);
 
 	return $return;
@@ -978,8 +997,8 @@ function relevanssi_do_query(&$query) {
 
 		$expost = get_option("relevanssi_exclude_posts");
 	
-		if (is_admin()) {
-			// in admin search, search everything
+		// In admin (and when not AJAX), search everything
+		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 			$excat = null;
 			$extag = null;
 			$expost = null;
@@ -994,6 +1013,16 @@ function relevanssi_do_query(&$query) {
 		
 		isset($query->query_vars['orderby']) ? $orderby = $query->query_vars['orderby'] : $orderby = null;
 		isset($query->query_vars['order']) ? $order = $query->query_vars['order'] : $order = null;
+
+		$fields = "";
+		if (!empty($query->query_vars['fields'])) {
+			if ($query->query_vars['fields'] == 'ids') {
+				$fields = 'ids';
+			}
+			if ($query->query_vars['fields'] == 'id=>parent') {
+				$fields = 'id=>parent';
+			}
+		}
 		
 		// Add synonyms
 		// This is done here so the new terms will get highlighting
@@ -1017,7 +1046,8 @@ function relevanssi_do_query(&$query) {
 			'search_blogs' => $search_blogs,
 			'author' => $author,
 			'orderby' => $orderby,
-			'order' => $order);
+			'order' => $order,
+			'fields' => $fields);
 	
 		$return = relevanssi_search($search_params);
 	}
@@ -1100,16 +1130,23 @@ function relevanssi_do_query(&$query) {
 		}
 		// OdditY end <-
 		
-		if ('on' == $make_excerpts) {			
+		if ('on' == $make_excerpts && empty($fields)) {
 			$post->original_excerpt = $post->post_excerpt;
 			$post->post_excerpt = relevanssi_do_excerpt($post, $q);
 		}
 			
-		if ('on' == get_option('relevanssi_show_matches')) {
-			$post->post_excerpt .= relevanssi_show_matches($return, $post->ID);
+		if ('on' == get_option('relevanssi_show_matches') && empty($fields)) {
+			$post_id = $post->ID;
+			if ($post->post_type == 'user') {
+				$post_id = "u_" . $post->user_id;
+			}
+			else if (isset($post->term_id)) {
+				$post_id = '**' . $post->post_type . '**' . $post->term_id;
+			}
+			$post->post_excerpt .= relevanssi_show_matches($return, $post_id);
 		}
 		
-		if (isset($return['scores'][$post->ID])) $post->relevance_score = round($return['scores'][$post->ID], 2);
+		if (empty($fields) && isset($return['scores'][$post->ID])) $post->relevance_score = round($return['scores'][$post->ID], 2);
 		
 		$posts[] = $post;
 	}

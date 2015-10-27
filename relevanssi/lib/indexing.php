@@ -313,7 +313,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	$index_titles = true;
 	if (apply_filters('relevanssi_index_titles', $index_titles)) {
 		$filtered_title = apply_filters('relevanssi_post_title_before_tokenize', $post->post_title, $post);
-		$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title));
+		$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID));
 
 		if (count($titles) > 0) {
 			foreach ($titles as $title => $count) {
@@ -361,6 +361,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 				remove_shortcode('product_categories');		// A problematic WooCommerce shortcode
 				remove_shortcode('recent_products');		// A problematic WooCommerce shortcode
 				remove_shortcode('php');					// PHP Code for Posts
+				remove_shortcode('watupro');				// Watu PRO doesn't co-operate
 								
 				$post_before_shortcode = $post;
 				$contents = do_shortcode($contents);
@@ -530,6 +531,7 @@ function relevanssi_update_child_posts($new_status, $old_status, $post) {
           || (in_array($post->post_type, array('attachment', 'revision')))) {
         return;
     }
+   
     $q = "SELECT * FROM $wpdb->posts WHERE post_parent=$post->ID AND post_type!='revision'";
     $child_posts = $wpdb->get_results($q);
     if ($child_posts) {

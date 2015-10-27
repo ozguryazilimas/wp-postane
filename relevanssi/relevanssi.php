@@ -3,7 +3,7 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.4.2
+Version: 3.5
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
@@ -58,7 +58,7 @@ require_once('lib/excerpts-highlights.php');
 require_once('lib/shortcodes.php');
 require_once('lib/common.php');
 
-function relevanssi_didyoumean($query, $pre, $post, $n = 5) {
+function relevanssi_didyoumean($query, $pre, $post, $n = 5, $echo = true) {
 	global $wpdb, $relevanssi_variables, $wp_query;
 	
 	$total_results = $wp_query->found_posts;	
@@ -87,14 +87,14 @@ function relevanssi_didyoumean($query, $pre, $post, $n = 5) {
 	}
 	
 	if ($distance > 0) {
-
  		$url = get_bloginfo('url');
 		$url = esc_attr(add_query_arg(array(
 			's' => urlencode($closest)
 
 			), $url ));
 		$url = apply_filters('relevanssi_didyoumean_url', $url);
-		echo "$pre<a href='$url'>$closest</a>$post";
+		$result = apply_filters('relevanssi_didyoumean_suggestion', "$pre<a href='$url'>$suggestion</a>$post");
+		if ($echo) echo $result;
  	}
  
 
@@ -250,7 +250,7 @@ function _relevanssi_install() {
 	add_option('relevanssi_highlight_comments', 'off');
 	add_option('relevanssi_index_comments', 'none');	//added by OdditY
 	add_option('relevanssi_show_matches', '');
-	add_option('relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %tags% in tags, %comments% in comments. Score: %score%)');
+	add_option('relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %category% in categories, %tags% in tags, %taxonomy% in other taxonomies, %comments% in comments. Score: %score%)');
 	add_option('relevanssi_fuzzy', 'sometimes');
 	add_option('relevanssi_indexed', '');
 	add_option('relevanssi_expand_shortcodes', 'on');

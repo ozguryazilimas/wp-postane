@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 3.3
-Tested up to: 4.2
-Stable tag: 3.4.2
+Tested up to: 4.3.1
+Stable tag: 3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,19 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.5 =
+* Tokenizer was using `strlen()` and not `mb_strlen()`, so word lengths were not calculated properly. If your site uses non-ASCII alphabet, rebuilding the index is a good idea.
+* Small improvement to WPML multilanguage filtering.
+* `relevanssi_the_title()` got a new parameter: if you don't want to echo the title, you can use it like `relevanssi_the_title(false)` to make it return the title.
+* Relevanssi had `the_title` filter hook calls that were missing the second parameter; that's now fixed.
+* The excerpt-building algorithm is completely rewritten based on work by Ben Boyter (http://www.boyter.org/).
+* The `[watupro]` shortcode didn't work with Relevanssi, so Relevanssi will now bypass it.
+* The plugin i18n features have been improved slightly.
+* New filter: `relevanssi_didyoumean_suggestion` lets you modify the Did you mean? suggestion before it's displayed.
+* `relevanssi_didyoumean()` has a new parameter: you can now choose whether the result is echoed out (the default value) or just returned.
+* In the search results breakdown, you can now use %categories% and %taxonomies% to show the number of matches in categories and taxonomies other than tags and cats, respectively.
+* Relevanssi supports `fields` parameter (both `ids` and `id=>parent`) to return only post IDs or post IDs and post parents.
 
 = 3.4.2 =
 * Empty lines on synonym settings caused problems. Fixed that.
@@ -1077,6 +1090,9 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.5 =
+* Improved excerpt-building, several bug fixes, couple of small updates.
 
 = 3.4.2 =
 * Better emoji support in WP 4.2, fixed issues with synonyms.

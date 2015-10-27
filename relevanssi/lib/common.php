@@ -15,7 +15,7 @@ function relevanssi_wpml_filter($data) {
 
 			if (function_exists('icl_object_id') && !function_exists('pll_is_translated_post_type')) {
 				if ($sitepress->is_translated_post_type($hit->post_type)) {
-					if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE)) $filtered_hits[] = $hit;
+					if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, $sitepress->get_current_language())) $filtered_hits[] = $hit;
 				}
 				else {
 					$filtered_hits[] = $hit;
@@ -355,7 +355,7 @@ function relevanssi_strip_invisibles($text) {
 }
 
 function relevanssi_strlen_sort($a, $b) {
-	return strlen($b) - strlen($a);
+	return relevanssi_strlen($b) - relevanssi_strlen($a);
 }
 
 function relevanssi_get_custom_fields() {
@@ -387,7 +387,12 @@ function relevanssi_mb_trim($string) {
 } 
 
 function relevanssi_remove_punct($a) {
-		$a = strip_tags($a);
+		$a = preg_replace ('/<[^>]*>/', ' ', $a); 
+    
+	    $a = str_replace("\r", '', $a);    // --- replace with empty space
+	    $a = str_replace("\n", ' ', $a);   // --- replace with space
+	    $a = str_replace("\t", ' ', $a);   // --- replace with space		
+		
 		$a = stripslashes($a);
 
 		$a = str_replace('ß', 'ss', $a);
@@ -493,7 +498,8 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 	while ($t !== false) {
 		$t = strval($t);
 		$accept = true;
-		if (strlen($t) < $min_word_length) {
+		
+		if (relevanssi_strlen($t) < $min_word_length) {
 			$t = strtok("\n\t  ");
 			continue;
 		}
@@ -638,13 +644,9 @@ function relevanssi_add_synonyms($q) {
 /* Helper function that does mb_stripos, falls back to mb_strpos and mb_strtoupper
  * if that cannot be found, and falls back to just strpos if even that is not possible.
  */
-function relevanssi_stripos($content, $term, $offset) {
-	if (function_exists('mb_strlen')) {
-		if ($offset > mb_strlen($content)) return false;
-	}
-	else {
-		if ($offset > strlen($content)) return false;
-	}
+function relevanssi_stripos($content, $term, $offset = 0) {
+	if ($offset > relevanssi_strlen($content)) return false;
+
 	if (function_exists('mb_stripos')) {
 		$pos = ("" == $content) ? false : mb_stripos($content, $term, $offset);
 	}
@@ -682,16 +684,17 @@ function relevanssi_close_tags($html) {
 
 /* Prints out post title with highlighting.
  */
-function relevanssi_the_title() {
+function relevanssi_the_title($echo = true) {
 	global $post;
 	if (empty($post->post_highlighted_title)) $post->post_highlighted_title = $post->post_title;
-	echo $post->post_highlighted_title;
+	if ($echo) echo $post->post_highlighted_title;
+	return $post->post_highlighted_title;
 }
 
 /* Returns the post title with highlighting.
  */
 function relevanssi_get_the_title($post_id) {
-	$post = get_post($post_id);
+	$post = relevanssi_get_post($post_id);
 	if (empty($post->post_highlighted_title)) $post->post_highlighted_title = $post->post_title;
 	return $post->post_highlighted_title;
 }
@@ -704,4 +707,12 @@ function relevanssi_update_doc_count( $values, $post ) {
 	}
 	return $values;
 }
+
+/* Uses mb_strlen() if available, otherwise falls back to strlen().
+*/
+function relevanssi_strlen($s) {
+	if ( function_exists( 'mb_strlen' ) ) return mb_strlen( $s );
+	return strlen( $s );
+}
+
 ?>

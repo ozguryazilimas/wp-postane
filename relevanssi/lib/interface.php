@@ -108,7 +108,7 @@ function relevanssi_search_stats() {
 		relevanssi_query_log();
 	}
 	else {
-		echo "<p>Enable query logging to see stats here.</p>";
+		echo "<p>" . __('Enable query logging to see stats here.', 'relevanssi') . "</p>";
 	}
 	
 	echo "</div>";
@@ -123,7 +123,7 @@ function relevanssi_truncate_logs() {
 	$query = "TRUNCATE " . $relevanssi_variables['log_table'];
 	$wpdb->query($query);
 	
-	echo "<div id='relevanssi-warning' class='updated fade'>Logs clear!</div>";
+	echo "<div id='relevanssi-warning' class='updated fade'>" . __('Logs clear!', 'relevanssi') . "</div>";
 }
 
 function update_relevanssi_options() {
@@ -856,9 +856,9 @@ function relevanssi_options_form() {
 
 	<h3><?php _e('Quick tools', 'relevanssi') ?></h3>
 	<p>
-	<input type='submit' name='submit' value='<?php esc_attr(_e('Save options', 'relevanssi')); ?>' class='button-primary' />
-	<input type="submit" name="index" value="<?php esc_attr(_e('Build the index', 'relevanssi')); ?>" class='button-primary' />
-	<input type="submit" name="index_extend" value="<?php esc_attr(_e('Continue indexing', 'relevanssi')); ?>" class='button-secondary' />, <?php _e('add', 'relevanssi'); ?> <input type="text" size="4" name="relevanssi_index_limit" value="<?php echo $index_limit ?>" /> <?php _e('documents.', 'relevanssi'); ?></p>
+	<input type='submit' name='submit' value='<?php esc_attr_e('Save options', 'relevanssi'); ?>' class='button-primary' />
+	<input type="submit" name="index" value="<?php esc_attr_e('Build the index', 'relevanssi'); ?>" class='button-primary' />
+	<input type="submit" name="index_extend" value="<?php esc_attr_e('Continue indexing', 'relevanssi'); ?>" class='button-secondary' />, <?php _e('add', 'relevanssi'); ?> <input type="text" size="4" name="relevanssi_index_limit" value="<?php echo $index_limit ?>" /> <?php _e('documents.', 'relevanssi'); ?></p>
 
 <?php
 	if (empty($index_post_types)) {
@@ -1175,7 +1175,7 @@ function relevanssi_options_form() {
 	<br />
 	<br />
 	
-	<input type='submit' name='submit' value='<?php esc_attr(_e('Save the options', 'relevanssi')); ?>' class='button button-primary' />
+	<input type='submit' name='submit' value='<?php esc_attr_e('Save the options', 'relevanssi'); ?>' class='button button-primary' />
 
 	<h3 id="indexing"><?php _e('Indexing options', 'relevanssi'); ?></h3>
 
@@ -1321,9 +1321,9 @@ EOH;
 
 <?php if (function_exists('relevanssi_form_index_taxonomies')) relevanssi_form_index_taxonomies($index_taxonomies, $index_terms); ?>
 
-	<input type='submit' name='index' value='<?php esc_attr(_e("Save indexing options, erase index and rebuild the index", 'relevanssi')); ?>' class='button button-primary' />
+	<input type='submit' name='index' value='<?php esc_attr_e("Save indexing options, erase index and rebuild the index", 'relevanssi'); ?>' class='button button-primary' />
 
-	<input type='submit' name='index_extend' value='<?php esc_attr(_e("Continue indexing", 'relevanssi')); ?>' class='button' />
+	<input type='submit' name='index_extend' value='<?php esc_attr_e("Continue indexing", 'relevanssi'); ?>' class='button' />
 
 	<h3 id="synonyms"><?php _e("Synonyms", "relevanssi"); ?></h3>
 	
@@ -1333,7 +1333,7 @@ EOH;
 
 <?php if (function_exists('relevanssi_form_index_synonyms')) relevanssi_form_index_synonyms($index_synonyms); ?>	
 
-	<input type='submit' name='submit' value='<?php esc_attr(_e('Save the options', 'relevanssi')); ?>' class='button' />
+	<input type='submit' name='submit' value='<?php esc_attr_e('Save the options', 'relevanssi'); ?>' class='button' />
 
 	<h3 id="stopwords"><?php _e("Stopwords", "relevanssi"); ?></h3>
 	
@@ -1357,7 +1357,7 @@ function relevanssi_show_stopwords() {
 	_e("<p>Enter a word here to add it to the list of stopwords. The word will automatically be removed from the index, so re-indexing is not necessary. You can enter many words at the same time, separate words with commas.</p>", 'relevanssi');
 
 ?><label for="addstopword"><p><?php _e("Stopword(s) to add: ", 'relevanssi'); ?><textarea name="addstopword" id="addstopword" rows="2" cols="40"></textarea>
-<input type="submit" value="<?php esc_attr(_e("Add", 'relevanssi')); ?>" class='button' /></p></label>
+<input type="submit" value="<?php esc_attr_e("Add", 'relevanssi'); ?>" class='button' /></p></label>
 <?php
 
 	_e("<p>Here's a list of stopwords in the database. Click a word to remove it from stopwords. Removing stopwords won't automatically return them to index, so you need to re-index all posts after removing stopwords to get those words back to index.", 'relevanssi');
@@ -1386,7 +1386,7 @@ function relevanssi_show_stopwords() {
 	echo "</ul>";
 	
 ?>
-<p><input type="submit" name="removeallstopwords" value="<?php esc_attr(_e('Remove all stopwords', 'relevanssi')); ?>" class='button' /></p>
+<p><input type="submit" name="removeallstopwords" value="<?php esc_attr_e('Remove all stopwords', 'relevanssi'); ?>" class='button' /></p>
 <?php
 
 	$exportlist = htmlspecialchars(implode(", ", $exportlist));

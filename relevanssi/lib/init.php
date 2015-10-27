@@ -38,7 +38,7 @@ function relevanssi_init() {
 		function relevanssi_warning() {
 			RELEVANSSI_PREMIUM ? $plugin = 'relevanssi-premium' : $plugin = 'relevanssi';
 			echo "<div id='relevanssi-warning' class='update-nag'><p><strong>"
-			   . __('You do not have an index! Remember to build the index (click the "Build the index" button), otherwise searching won\'t work.')
+			   . __('You do not have an index! Remember to build the index (click the "Build the index" button), otherwise searching won\'t work.', 'relevanssi')
 			   . "</strong></p></div>";
 		}
 		if ( 'options-general.php' == $pagenow and isset( $_GET['page'] ) and plugin_basename($relevanssi_variables['file']) == $_GET['page'] ) {
@@ -54,8 +54,7 @@ function relevanssi_init() {
 	if (!function_exists('mb_internal_encoding')) {
 		function relevanssi_mb_warning() {
 			echo "<div id='relevanssi-warning' class='error'><p><strong>"
-			   . "Multibyte string functions are not available. Relevanssi may not work well without them. "
-			   . "Please install (or ask your host to install) the mbstring extension."
+			   . __("Multibyte string functions are not available. Relevanssi may not work well without them. Please install (or ask your host to install) the mbstring extension.", 'relevanssi')
 			   . "</strong></p></div>";
 		}
 		if ( 'options-general.php' == $pagenow and isset( $_GET['page'] ) and plugin_basename($relevanssi_variables['file']) == $_GET['page'] )
