@@ -155,6 +155,9 @@ function postane_create_thread($user_id, $thread_title, $first_message, $partici
     $sql = "UPDATE $postane_threads SET $postane_threads.last_message_time = (SELECT message_creation_time FROM $postane_messages WHERE $postane_messages.id = $message_id) WHERE $postane_threads.id = (SELECT thread_id FROM $postane_messages WHERE $postane_messages.id = $message_id)";
   $wpdb->query($sql);
 
+  $sql = "UPDATE $postane_user_thread SET last_read_time = NOW() + INTERVAL 5 SECOND WHERE thread_id = %d AND user_id = $user_id";
+  $wpdb->query($wpdb->prepare($sql, $thread_id));
+
   return array("success" => true);
 }
 
@@ -550,6 +553,9 @@ function postane_add_message($user_id, $thread_id, $message_content) {
       $wpdb->query($sql);
     }
   }
+
+  $sql = "UPDATE $postane_user_thread SET last_read_time = NOW() + INTERVAL 5 SECOND WHERE thread_id = %d AND user_id = $user_id";
+  $wpdb->query($wpdb->prepare($sql, $thread_id));
 
   $print_content = apply_filters('the_content', $message_content);
   $avatar = get_avatar($user_id);
