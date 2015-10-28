@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TinyMCE Advanced\n"
 "POT-Creation-Date: 2015-09-15 10:42-0800\n"
-"PO-Revision-Date: 2015-09-15 10:44-0800\n"
+"PO-Revision-Date: 2015-09-15 10:45-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: en_US\n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,171 +20,176 @@ msgstr ""
 
 #: ../tadv_admin.php:125
 msgid "Default settings restored."
-msgstr "تمت استعادة الاعدادات الافتراضية."
+msgstr "Standardinställningar återställda."
 
 #: ../tadv_admin.php:137
 msgid "TinyMCE Advanced Settings Export"
-msgstr "TinyMCE Advanced تصدير اعدادات"
+msgstr "TinyMCE Avancerad Inställningsexport"
 
 #: ../tadv_admin.php:141
 msgid "The settings are exported as a JSON encoded string."
-msgstr "الاعدادات قد تم تصديرها JSON كسلسلة مشفرة."
+msgstr "Inställningarna exporteras som en JSON-kodad sträng."
 
 #: ../tadv_admin.php:142
 msgid ""
 "Please copy the content and save it in a <b>text</b> (.txt) file, using a "
 "plain text editor like Notepad."
 msgstr ""
-"الرجاء انسخ المحتوى وواحفظه في ملف<b>.txt</b> , استخدم محرر بسيط مثل نوتباد."
+"Vänligen kopiera innehållet och spara det i en <b>text</b>-fil (.txt), genom "
+"en ren texteditor såsom Anteckningar."
 
 #: ../tadv_admin.php:143
 msgid ""
 "It is important that the export is not changed in any way, no spaces, line "
 "breaks, etc."
 msgstr ""
-"من المهم ان لايتم تعديل التصدير بأي طريقة , لامسافات , خطوط فارغة , الخ"
+"Det är viktigt att exporten inte ändras på något sätt, inga mellanrum eller "
+"radbrytningar etc."
 
 #: ../tadv_admin.php:148
 msgid "Select All"
-msgstr "تحديد الكل"
+msgstr "Välj allt"
 
 #: ../tadv_admin.php:150 ../tadv_admin.php:176
 msgid "Back to Editor Settings"
-msgstr "العودة الى اعدادات الحرر"
+msgstr "Tillbaka till redigerarinställningar"
 
 #: ../tadv_admin.php:162
 msgid "TinyMCE Advanced Settings Import"
-msgstr "TinyMCE Advanced إستيراد إعدادات"
+msgstr "TinyMCE Avancerad Inställningsimport"
 
 #: ../tadv_admin.php:165
 msgid ""
 "The settings are imported from a JSON encoded string. Please paste the "
 "exported string in the text area below."
 msgstr ""
-"الاعدادات مستوردة من  JSON سلسلة مشفرة ,الرجاء الصاق السلسلة المصدرة في "
-"منطقة النص ادناه."
+"Inställningarna importeras från en JSON-kodad sträng. Vänligen klistra in "
+"den exporterade strängen i textfältet nedan."
 
 #: ../tadv_admin.php:170
 msgid "Verify"
-msgstr "تحقق"
+msgstr "Jämför"
 
 #: ../tadv_admin.php:171
 msgid "Import"
-msgstr "إستيراد"
+msgstr "Importera"
 
 #: ../tadv_admin.php:201
 msgid "Importing of settings failed."
-msgstr "إستيراد الاعدادات فشل."
+msgstr "Import av inställningar misslyckades."
 
 #: ../tadv_admin.php:227
 msgid "ERROR: All toolbars are empty. Default settings loaded."
-msgstr "خطأ: جميع الاشرطة فارغة. الاعدادات الافتراضية ارجعت."
+msgstr "FEL: Alla verktygsfält är tomma. Ursprungsinställningar inladdade."
 
 #: ../tadv_admin.php:239
 msgid "Editor Settings"
-msgstr "إعدادات المحرر"
+msgstr "Redigerarinställningar"
 
 #: ../tadv_admin.php:246
 msgid "Settings saved."
-msgstr "الاعدادات حفظت."
+msgstr "Inställningar sparade."
 
 #: ../tadv_admin.php:255 ../tadv_admin.php:509
 msgid "Save Changes"
-msgstr "حفظ التغييرات"
+msgstr "Spara ändringar"
 
 #: ../tadv_admin.php:260
 msgid ""
 "New in TinyMCE 4.0/WordPress 3.9 is the editor menu. When it is enabled, "
 "most buttons are also available as menu items."
 msgstr ""
-"جديد قائمة المحرر في TinyMCE 4.0/WordPress 3.9 , عند تفعيلها , اغلب الازرار "
-"متاحة في القائمة."
+"Nytt i TinyMCE 4.0/WordPress 3.9 är redigerarmenyn. När den är aktiverad "
+"blir de flesta knapparna också tillgängliga som menyval."
 
 #: ../tadv_admin.php:264
 msgid "Enable the editor menu."
-msgstr "تفعيل قائمة المحرر."
+msgstr "Aktivera redigerarmenyn."
 
 #: ../tadv_admin.php:376
 msgid ""
 "Drag buttons from the unused buttons below and drop them in the toolbars "
 "above, or drag the buttons in the toolbars to rearrange them."
 msgstr ""
-"اسحب الازرار من منطقة الازرار الغير مستخدمة في الاسفل وافلتها في الشريط "
-"العلوي , او اسحب الازرار من الشريط لاعادة ترتيبهم."
+"Dra knappar från de oanvända knapparna nedan och släpp dem i verktygsfälten "
+"ovan, eller dra knapparna i verktygsfältet för att arrangera om dem."
 
 #: ../tadv_admin.php:379
 msgid "Unused Buttons"
-msgstr "الازرار الغير مستخدمة"
+msgstr "Oanvända knappar"
 
 #: ../tadv_admin.php:420
 msgid "Also enable:"
-msgstr "فعل ايضا:"
+msgstr "Aktivera också:"
 
 #: ../tadv_admin.php:423
 msgid "List Style Options"
-msgstr "قائمة خيارات الشكل"
+msgstr "Liststil-tillval"
 
 #: ../tadv_admin.php:428
 msgid "Context Menu"
-msgstr "حالة القائمة"
+msgstr "Sammanhangsmeny"
 
 #: ../tadv_admin.php:433
 msgid "Link (replaces the Insert/Edit Link dialog)"
-msgstr "رابط (استبدال المدرج/تعديل رابط الحوار)"
+msgstr "Länk (ersätter dialogfönstret Infoga/redigera länk)"
 
 #: ../tadv_admin.php:443
 msgid "Advanced Options"
-msgstr "خيارات متقدمة"
+msgstr "Avancerade tillval"
 
 #: ../tadv_admin.php:451
 msgid "Import editor-style.css."
-msgstr "استيراد ملفeditor-style.css."
+msgstr "Importera editor-style.css."
 
 #: ../tadv_admin.php:453
 msgid "It seems your theme does not support customised styles for the editor."
-msgstr "يبدو ان قالبك لايدعم الستايل المخصص للمحرر."
+msgstr ""
+"Det verkar som att ditt tema inte stöder anpassade stilar för redigeraren."
 
 #: ../tadv_admin.php:454
 msgid ""
 "You can create a CSS file named <code>editor-style.css</code> and upload it "
 "to your theme's directory."
 msgstr ""
-"تستطيع انشاء ملف CSS بأسم <code>editor-style.css</code> ورفعه الى مسار الثيم "
-"الخاص بك."
+"Du kan skapa en CSS-fil namngiven <code>editor-style.css</code> och ladda "
+"upp till ditt temas mapp."
 
 #: ../tadv_admin.php:455
 msgid "After that, enable this setting."
-msgstr "بعد ذلك, فعل هذا"
+msgstr "Efteråt, aktivera denna inställning."
 
 #: ../tadv_admin.php:464
 msgid ""
 "Load the CSS classes used in editor-style.css and replace the Formats button "
 "and sub-menu."
 msgstr ""
-"استخدم كلاسات css المستخدمة في ملف editor-style.css , و استبدل زر الصيغ "
-"والقائمة الفرعية."
+"Ladda CSS-klasser från editor-style.css och ersätt Formaterings-knapp och "
+"undermeny."
 
 #: ../tadv_admin.php:469
 msgid ""
 "Stop removing the &lt;p&gt; and &lt;br /&gt; tags when saving and show them "
 "in the Text editor"
-msgstr "ايقاف حذف وسم &lt;p&gt; و &lt;br /&gt; عند الحفظ وعرضهم في محرر النصوص"
+msgstr ""
+"Sluta ta bort &lt;p&gt; och &lt;br /&gt;-taggar vid sparande och visa dem i "
+"textredigeraren"
 
-# تحتاج مراجعة
 #: ../tadv_admin.php:471
 msgid ""
 "This will make it possible to use more advanced coding in the HTML editor "
 "without the back-end filtering affecting it much."
 msgstr ""
-"هذه سوف تتيح لك استخدام HTML اكثر تقدما بدون فلاتر ومؤثرات برمجية كثيرة."
+"Detta möjliggör mer avancerad kodning i HTML-redigeraren utan att backend-"
+"filtrering påverkar så mycket."
 
 #: ../tadv_admin.php:472
 msgid ""
 "However it may behave unexpectedly in rare cases, so test it thoroughly "
 "before enabling it permanently."
 msgstr ""
-"على اية حال انه تصرف مفاجئ في حالات نادرة , لذا قم بتجربته بشكل كامل قبل "
-"تضمينه."
+"Ändå kan det uppföra sig oväntat i särskilda fall, så testa noggrant innan "
+"du aktiverar det permanent."
 
 #: ../tadv_admin.php:473
 msgid ""
@@ -192,59 +197,62 @@ msgid ""
 "do not use empty lines, line breaks inside HTML tags or multiple &lt;br /"
 "&gt; tags."
 msgstr ""
-"الخطوط الفارغة في محرر HTML سوف تؤثر في الاخراج . لذا لاتستخدم خطوط فارغة "
-"داخل وسوم HTML او تعدد وسوم &lt;br /&gt; ."
+"Radbrytningar i HTML-redigeraren skulle fortfarande påverka utmatningen så "
+"använd i synnerhet inte några tomma rader, radbrytningar inuti HTML-taggar "
+"eller flera &lt;br /&gt;-taggar."
 
 #: ../tadv_admin.php:479
 msgid "Replace font size settings"
-msgstr " استبداال خيارات حجم الخط"
+msgstr "Ersätt textstorleksinställningar"
 
 #: ../tadv_admin.php:480
 msgid ""
 "Replaces the size setting available for fonts with: 8px 10px 12px 14px 16px "
 "20px 24px 28px 32px 36px."
 msgstr ""
-"استبدل خيار حجم الخطوط مع :8px 10px 12px 14px 16px 20px 24px 28px 32px 36px."
+"Ersätter storleksinställningen för teckensnitt med: 8px 10px 12px 14px 16px "
+"20px 24px 28px 32px 36px."
 
 #: ../tadv_admin.php:485
 msgid "Enable pasting of image source"
-msgstr "تفعيل اللصق بمصدر الصورة"
+msgstr "Aktivera inklistring av bildkällor"
 
 #: ../tadv_admin.php:487
 msgid ""
 "Works only in Firefox and Safari. These browsers support pasting of images "
 "directly in the editor and convert them to base64 encoded text."
 msgstr ""
-"تعمل فقط على فايرفوكس و سفاري. هؤلاء المتصفحات يدعمون لصق الصور مباشرة في "
-"المحرر و تحويلها الى base64 نص مشفر."
+"Fungerar enbart med Firefox och Safari. Dessa webbläsare stöder inklistring "
+"av bilder direkt i redigeraren och konverterar dem till base64-kodad text."
 
 #: ../tadv_admin.php:488
 msgid ""
 "This is not acceptable for larger images like photos or graphics, but may be "
 "useful in some cases for very small images like icons, not larger than 2-3KB."
 msgstr ""
-"هذه غير متوافقة للصور الكبير مثل الصور الفوتوغرافية , ولكنها مفيدة لالصور "
-"الصغيرة كالايقونات , ليست اكبر من 2-3 كيلوبايت"
+"Detta är inte acceptabelt för större bilder som foton eller grafik, men kan "
+"vara användbart i vissa fall för väldigt små bilder såsom ikoner, inte "
+"större än 2-3kB."
 
 #: ../tadv_admin.php:489
 msgid "These images will not be available in the Media Library."
-msgstr "لن تكون هذه الصور متاحة في مكتبة الوسائط."
+msgstr "Dessa bilder kommer inte att finnas i Mediabiblioteket."
 
 #: ../tadv_admin.php:495
 msgid "Administration"
-msgstr "الادارة"
+msgstr "Administration"
 
 #: ../tadv_admin.php:497
 msgid "Export Settings"
-msgstr "تصدير الاعدادات"
+msgstr "Exportera inställningar"
 
 #: ../tadv_admin.php:498
 msgid "Import Settings"
-msgstr "استيراد الاعدادات"
+msgstr "Importera inställningar"
 
 #: ../tadv_admin.php:508
 msgid "Restore Default Settings"
-msgstr "استعادة الاعدادات الافتراضية"
+msgstr "Återställ ursprungsinställningar"
 
 #: ../tadv_admin.php:514
 msgid ""
@@ -252,8 +260,9 @@ msgid ""
 "button rows. It will only work when it is in the first row and there are "
 "buttons in the second row."
 msgstr ""
-"زر شريط التبديل يعرض او يخفي صف الازرار الثاني ,الثالث وصاعدا. سيعمل فقط "
-"عندما يكون في اول صف و الازرار في ثاني صف."
+"[Växla verktygsfält]-knappen visar eller gömmer den andra, tredje och fjärde "
+"knappraden. Det fungerar endast när knappen finns på den första raden och "
+"det finns knappar i den andra raden."
 
 #: ../tinymce-advanced.php:180
 #, php-format
@@ -261,8 +270,8 @@ msgid ""
 "TinyMCE Advanced requires WordPress version %1$s or newer. It appears that "
 "you are running %2$s. This can make the editor unstable."
 msgstr ""
-"TinyMCE Advanced requires WordPress version %1$s or newer. It appears that "
-"you are running %2$s. This can make the editor unstable."
+"Detta tillägg kräver WordPress version %1$s eller nyare. Det verkar som att "
+"du kör %2$s. Detta kan göra redigeraren instabil."
 
 #: ../tinymce-advanced.php:187
 #, php-format
@@ -270,25 +279,27 @@ msgid ""
 "Please upgrade your WordPress installation or download an <a href=\"%s"
 "\">older version of the plugin</a>."
 msgstr ""
-"Please upgrade your WordPress installation or download an <a href=\"%s"
-"\">older version of the plugin</a>."
+"Vänligen uppgradera din WordPress-installation eller ladda hem en <a href="
+"\"%s\">äldre version av tillägget</a>."
 
 #~ msgid "Markdown typing support (text pattern plugin)"
-#~ msgstr "دعم تنسيق الكتابة ( اضافة اسلوب النص )"
+#~ msgstr "Stöd för att skriva Markdown (tillägg för textflöde)"
 
 #~ msgid ""
 #~ "This plugin matches special patterns while you type and applies formats "
 #~ "or executes commands on the matched text."
-#~ msgstr "هذه الاضافة "
+#~ msgstr ""
+#~ "Detta tillägg matchar speciella mönster medan du skriver och applicerar "
+#~ "formatering eller utför kommandon utifrån matchad text."
 
 #~ msgid ""
 #~ "The default patterns are the same as the markdown syntax so you can type "
 #~ "<code># text</code> to create a header, <code>1. text</code> to create a "
 #~ "list, <code>**text**</code> to make it bold, etc."
 #~ msgstr ""
-#~ "الاساليب الافتراضية هي نفسها الموجودة في markdown syntax لذا يمكنك كتابة "
-#~ "<code># text</code> لإنشاء هيدر , <code>1. text</code> لإنشاء قائمة ,"
-#~ "<code>**text**</code> لجعله سميك , الخ"
+#~ "Standardmönster är samma som markdown-syntax så att du kan skriva <code># "
+#~ "text</code> för att skapa en rubrik, <code>1. text</code> för att skapa "
+#~ "en lista, <code>**text**</code> för fet stil etc."
 
 #~ msgid "More information"
-#~ msgstr "معلومات اكثر"
+#~ msgstr "Mer information"
