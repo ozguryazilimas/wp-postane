@@ -104,6 +104,10 @@ function postane_create_thread($user_id, $thread_title, $first_message, $partici
     return array("error" => PostaneLang::NO_LEGIT_PARTICIPANTS);
   }
 
+  if (strlen($first_message) > 4900) {
+    return array("error" => PostaneLang::MESSAGE_TOO_LONG);
+  }
+
   global $wpdb;
   global $postane_threads;
   global $postane_messages;
@@ -166,6 +170,10 @@ function postane_edit_message($user_id, $message_id, $new_content) {
 
   if ($count === 0) {
     return array("error" => PostaneLang::UNAUTHORIZED_MESSAGE_EDIT);
+  }
+
+  if (strlen($new_content) > 4900) {
+    return array("error" => PostaneLang::MESSAGE_TOO_LONG);
   }
 
   $sql = "UPDATE $postane_messages SET message_content = '%s',edited = 1,edit_time = CURRENT_TIMESTAMP WHERE id = %d AND user_id = $user_id";
@@ -513,6 +521,10 @@ function postane_add_message($user_id, $thread_id, $message_content) {
 
   if ($res == 0) {
     return array("error" => PostaneLang::NO_SUCH_THREAD_ERROR);
+  }
+
+  if (strlen($message_content) > 4900) {
+    return array("error" => PostaneLang::MESSAGE_TOO_LONG);
   }
 
   $sql = "INSERT INTO $postane_messages (thread_id,user_id,message_content) VALUES (%d, $user_id, '%s')";

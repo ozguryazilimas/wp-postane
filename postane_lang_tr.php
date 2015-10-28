@@ -21,5 +21,6 @@ class PostaneLang {
   const NO_AUTHORIZATION = "Yetkiniz yok.";
   const ALREADY_RECEIVING_MAILS = ".";
   const ALREADY_NOTRECEIVING_MAILS = "./";
+  const MESSAGE_TOO_LONG = "Mesaj çok uzun, lütfen mesajınızı bölerek yollayın.";
 }
 ?>
