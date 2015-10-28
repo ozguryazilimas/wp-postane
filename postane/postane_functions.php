@@ -319,7 +319,7 @@ function postane_get_messages($user_id, $thread_id, $exclusion_list, $step, $max
   }
 
   for ($i=0; $i < count($messages); $i++) {
-    $messages[$i]['message_content'] = apply_filters('the_content', $messages[$i]['message_content']);
+    $messages[$i]['message_content'] = make_clickable(apply_filters('the_content', $messages[$i]['message_content']));
     $messages[$i]['can_edit'] = ($messages[$i]['user_id'] == $user_id);
   }
   $messages = array_values($messages);
@@ -405,7 +405,7 @@ function postane_get_messages_async($user_id, $thread_id, $exclusion_list, $min_
   }
 
   for ($i=0; $i < count($messages); $i++) {
-     $messages[$i]['message_content'] = apply_filters('the_content', $messages[$i]['message_content']);
+     $messages[$i]['message_content'] = make_clickable(apply_filters('the_content', $messages[$i]['message_content']));
      $messages[$i]['can_edit'] = ($messages[$i]['user_id'] == $user_id);
   }
   $messages = array_values($messages);
@@ -685,7 +685,7 @@ function postane_get_all_messages($thread_id) {
   }
 
   for ($i=0; $i < count($messages); $i++) {
-     $messages[$i]['message_content'] = apply_filters('the_content', $messages[$i]['message_content']);
+     $messages[$i]['message_content'] = make_clickable(apply_filters('the_content', $messages[$i]['message_content']));
   }
   $messages = array_values($messages);
 
