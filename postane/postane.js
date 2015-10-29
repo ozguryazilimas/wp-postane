@@ -972,6 +972,7 @@ jQuery(document).ready(function() {
         jQuery("#postane_new_participant_list").html('');
         new_participant_array = [''];
         jQuery("#postane_add_participant_container").slideUp(300);
+        load_messages(thread_id);
         postane_announce_success();
       } else {
         postane_announce_error(result["error"]);
