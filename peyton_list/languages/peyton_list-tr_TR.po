@@ -1,0 +1,114 @@
+# Copyright (C) 2015,
+# This file is distributed under the same license as Peyton List package.
+#
+# Onur Küçük <onur@ozguryazilim.com.tr>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-21 22:00+0300\n"
+"PO-Revision-Date: 2014-12-28 19:12+0300\n"
+"Last-Translator: Onur Küçük <onur@ozguryazilim.com.tr>\n"
+"Language-Team: \n"
+"Language: Turkish \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Vim 7.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#: includes/peyton_list_common.php:77
+msgid "Title can not be blank"
+msgstr "Dizi boş olamaz"
+
+#: includes/peyton_list_common.php:82
+msgid "This record was already added"
+msgstr "Bu girdi daha önce eklendi"
+
+#: includes/peyton_list_common.php:205
+msgid "Add New Entry"
+msgstr "Yeni Girdi Ekle"
+
+#: includes/peyton_list_common.php:223 includes/peyton_list_common.php:336
+#: includes/peyton_list_common.php:363
+msgid "Title"
+msgstr "Dizi"
+
+#: includes/peyton_list_common.php:232 includes/peyton_list_common.php:306
+#: includes/peyton_list_common.php:337 includes/peyton_list_common.php:364
+msgid "Category"
+msgstr "Kategori"
+
+#: includes/peyton_list_common.php:255 includes/peyton_list_common.php:318
+#: includes/peyton_list_common.php:338 includes/peyton_list_common.php:365
+msgid "Status"
+msgstr "Tanıtım"
+
+#: includes/peyton_list_common.php:278 includes/peyton_list_common.php:366
+msgid "Link"
+msgstr "Bağlantı"
+
+#: includes/peyton_list_common.php:289 includes/peyton_list_common.php:367
+msgid "Add"
+msgstr "Ekle"
+
+#: includes/peyton_list_common.php:308 includes/peyton_list_common.php:320
+msgid "All"
+msgstr "Hepsi"
+
+#: includes/peyton_list_common.php:356
+msgid "No results found"
+msgstr "Sonuç bulunamadı"
+
+#: includes/peyton_list_common.php:357
+msgid "Search"
+msgstr "Ara"
+
+#: includes/peyton_list_common.php:358
+msgid "First"
+msgstr "İlk"
+
+#: includes/peyton_list_common.php:359
+msgid "Last"
+msgstr "Son"
+
+#: includes/peyton_list_common.php:360
+msgid "Next"
+msgstr "Sonraki"
+
+#: includes/peyton_list_common.php:361
+msgid "Previous"
+msgstr "Önceki"
+
+#: includes/peyton_list_common.php:362
+msgid "_TOTAL_ total"
+msgstr "Toplam _TOTAL_"
+
+#: includes/peyton_list_common.php:368
+msgid "Update"
+msgstr "Güncelle"
+
+#: includes/peyton_list_common.php:369
+msgid "Delete"
+msgstr "Sil"
+
+#: includes/peyton_list_common.php:370
+msgid "Created by"
+msgstr "Oluşturan"
+
+#: includes/peyton_list_common.php:371
+msgid "Created at"
+msgstr "Oluşturulma zamanı"
+
+#: includes/peyton_list_common.php:372
+msgid "Updated by"
+msgstr "Güncelleyen"
+
+#: includes/peyton_list_common.php:373
+msgid "Updated at"
+msgstr "Güncelleme zamanı"
+
+
+

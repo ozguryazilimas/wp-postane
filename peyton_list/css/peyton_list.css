@@ -1,0 +1,142 @@
+
+#peyton_list_main_list_filter.dataTables_filter input[type="search"] {
+  border: 0 none;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  // color: #D7D7D7;
+  // font: bold 12px Arial,Helvetica,Sans-serif;
+  height: 21px;
+  margin-bottom: 1px;
+  padding: 3px 0 3px 35px;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.7s ease 0s;
+  width: 200px;
+  background-color: #E3E3E3;
+  color: grey;
+  font-weight: bold;
+}
+
+#peyton_list_main_list_filter.dataTables_filter input[type="search"]:focus {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+  margin-bottom: 1px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  background-color: #DDF0E9;
+  color: grey;
+  font-weight: bold;
+}
+
+form#peyton_list_add_entry select,
+form#peyton_list_inner_update_form select,
+select[name=peyton_list_main_list_length] {
+  padding: 3px 7px;
+}
+
+#peyton_list_main_list_length,
+#peyton_list_main_list_filter {
+  margin-bottom: 10px;
+}
+
+table#peyton_list_main_list > tbody td a,
+table#peyton_list_main_list > tbody td a:link,
+table#peyton_list_main_list > tbody td a:visited,
+table#peyton_list_main_list > tbody td a:hover,
+table#peyton_list_main_list > tbody td a:active {
+  display: block;
+  text-decoration: none;
+}
+
+
+table#peyton_list_main_list_selector,
+#peyton_list_add_entry_wrapper,
+#peyton_list_main_list_length,
+#peyton_list_main_list_filter,
+table#peyton_list_inner_update_table,
+table#peyton_list_main_list {
+  font-size: 14px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  margin-top: 20px;
+}
+
+table#peyton_list_main_list > tbody > tr.odd {
+  background-color: #F3F3F3;
+}
+
+table#peyton_list_main_list thead tr {
+  // background: linear-gradient(#FFF, #BCBCBC) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+  background: linear-gradient(#FFF, #DCDCDC) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+  color: #000;
+}
+
+input[name=peyton_list_inner_update_delete],
+input[name=peyton_list_inner_update_update] {
+  padding: 5px 10px;
+}
+
+input[name=peyton_list_inner_update_update] {
+  float: right;
+}
+
+#peyton_list_add_entry_wrapper {
+  display: none;
+}
+
+#peyton_list_toggle_link_form {
+  // float: right;
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+  // background-color: #E3E3E3;
+  font-size: 14px;
+  color: #000;
+  padding: 5px 10px;
+  margin: 0 20px 0 auto;
+  border: 2px solid #A2A2A2;
+  // box-shadow: 3px 3px #E2E2E2;
+  background: linear-gradient(#FFF, #DCDCDC) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+  // text-shadow: 2px 2px 0px #200020;
+  width: 150px;
+  text-align: center;
+}
+
+input[name=peyton_list_submit] {
+  text-align: center;
+  margin: 0 20px 0 auto;
+  padding: 5px 15px;
+  display: block;
+}
+
+#peyton_list_add_entry_wrapper {
+  padding: 5px 10px;
+  margin: 0 10px;
+  border: 2px solid #A2A2A2;
+  border-radius: 5px;
+  box-shadow: 3px 3px #E2E2E2;
+  background: linear-gradient(#FFF, #DCDCDC) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+form#peyton_list_add_entry table#peyton_list_submit td {
+  padding: 5px 10px;
+}
+
+#peyton_list_link_form_error {
+  display: block;
+  text-align: center;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+table#peyton_list_main_list_selector {
+  width: 90%;
+  margin: 15px auto 0 auto;
+}
+
+table#peyton_list_main_list_selector select {
+  font-size: 13px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  padding: 3px 7px;
+  margin: 0 7px;
+}
+
