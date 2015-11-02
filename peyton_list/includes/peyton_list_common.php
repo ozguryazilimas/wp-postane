@@ -14,7 +14,9 @@ function peyton_list_get_time() {
 function peyton_list_user_has_permission() {
   global $wp_query, $wpdb, $user_ID, $peyton_list_db_main;
 
-  return $user_ID != '' && current_user_can('edit_others_posts');
+  $has_perm = $user_ID && $user_ID != '' && current_user_can('edit_others_posts');
+
+  return $has_perm;
 }
 
 function peyton_list_similar_record($title) {
@@ -359,7 +361,7 @@ function peyton_list_datatable($has_perm, $open_form) {
       var dt_data;
       var peyton_list_table;
       var peyton_list_open_insert_form = ' . ($open_form ? 1 : 0) . ';
-      var peyton_list_user_has_permission = ' . $has_perm . ';
+      var peyton_list_user_has_permission = ' . ($has_perm ? 1 : 0) . ';
       var peyton_list_status = ' . json_encode($peyton_list_status) . ';
       var peyton_list_category = ' . json_encode($peyton_list_category) . ';
       var peyton_list_default_edit_str = peyton_list_user_has_permission ? "+" : "&nbsp;";

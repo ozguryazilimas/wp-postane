@@ -91,7 +91,7 @@ function peyton_list_format_peyton_list_table_form(d) {
 jQuery(document).ready(function() {
 
   peyton_list_table = jQuery('table#peyton_list_main_list').DataTable({
-    iDisplayLength: 50,
+    iDisplayLength: 100,
     lengthMenu: [[20, 50, 100, 250, -1], [20, 50, 100, 250, dt_str.all]],
     bPaginate: true,
     bSearchable: true,
