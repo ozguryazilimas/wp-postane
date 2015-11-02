@@ -193,5 +193,9 @@ jQuery(document).ready(function() {
     peyton_list_table.draw();
   });
 
+  if (peyton_list_open_insert_form) {
+    jQuery('a#peyton_list_toggle_link_form').click();
+  }
+
 });
 

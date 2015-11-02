@@ -303,9 +303,11 @@ function peyton_list_insert_form($formdata) {
     </div>';
 
   echo $output;
+
+  return ($error_msg != '');
 }
 
-function peyton_list_datatable() {
+function peyton_list_datatable($has_perm, $open_form) {
   global $peyton_list_status, $peyton_list_category;
 
   $output = '
@@ -356,7 +358,8 @@ function peyton_list_datatable() {
 
       var dt_data;
       var peyton_list_table;
-      var peyton_list_user_has_permission = ' . peyton_list_user_has_permission() . ';
+      var peyton_list_open_insert_form = ' . ($open_form ? 1 : 0) . ';
+      var peyton_list_user_has_permission = ' . $has_perm . ';
       var peyton_list_status = ' . json_encode($peyton_list_status) . ';
       var peyton_list_category = ' . json_encode($peyton_list_category) . ';
       var peyton_list_default_edit_str = peyton_list_user_has_permission ? "+" : "&nbsp;";
@@ -396,13 +399,15 @@ function peyton_list_datatable() {
 
 function peyton_list_main() {
   // var_dump($_POST);
+  $has_perm = peyton_list_user_has_permission();
+  $open_form = false;
 
-  if (peyton_list_user_has_permission()) {
+  if ($has_perm) {
     $formdata = peyton_list_process_post();
-    peyton_list_insert_form($formdata);
+    $open_form = peyton_list_insert_form($formdata);
   }
 
-  peyton_list_datatable();
+  peyton_list_datatable($has_perm, $open_form);
 }
 
 
