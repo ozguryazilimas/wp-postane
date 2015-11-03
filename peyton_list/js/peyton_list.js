@@ -7,11 +7,11 @@ jQuery.fn.dataTable.ext.search.push(
     var status_val = jQuery('select[name=peyton_list_main_list_selector_status]').val();
 
     if (category_val !== '0') {
-      category_matching = peyton_list_category[category_val] === data[2];
+      category_matching = category_val === data[2];
     }
 
     if (status_val !== '0') {
-      status_matching = peyton_list_status[status_val] === data[3];
+      status_matching = status_val === data[4];
     }
 
     return (category_matching && status_matching);
@@ -107,18 +107,30 @@ jQuery(document).ready(function() {
       },
       {
         data: "title",
-        width: "30%",
+        width: "50%",
         render: function(data, type, row, meta) {
           return '<a href="' + row.link + '">' + data + '</a>';
         }
       },
       {
-        data: "category_humanized",
-        width: "33%"
+        data: "category",
+        visible: false
       },
       {
-        data: "status_humanized",
-        width: "33%"
+        data: "category_humanized",
+        width: "30%"
+      },
+      {
+        data: "status",
+        visible: false
+      },
+      {
+        data: "status_image",
+        width: "15%",
+        render: function(data, type, row, meta) {
+          return '<img src="/wp-content/plugins/peyton_list/images/' + peyton_list_status_image[row.status] + '"' +
+            'class="peyton_list_status_image" title="' + peyton_list_status[row.status] + '" />';
+        }
       }
     ],
     language: {

@@ -54,6 +54,13 @@ $peyton_list_status = array(
 );
 global $peyton_list_status;
 
+$peyton_list_status_image = array(
+  1 => 'thumbs_up.svg',
+  2 => 'thumbs_side.svg',
+  3 => 'thumbs_down.svg'
+);
+global $peyton_list_status_image;
+
 
 // add css
 add_action('init', 'peyton_list_init');

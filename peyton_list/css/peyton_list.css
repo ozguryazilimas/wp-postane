@@ -140,3 +140,20 @@ table#peyton_list_main_list_selector select {
   margin: 0 7px;
 }
 
+img.peyton_list_status_image {
+  width: 24px;
+  height: 24px;
+  // display: inline !important;
+  border: none !important;
+  box-shadow: none !important;
+  // height: 1em !important;
+  // width: 1em !important;
+  // margin: 0 .07em !important;
+  margin: 0 auto !important;
+  // vertical-align: -0.1em !important;
+  background: none !important;
+  padding: 0 !important;
+  // vertical-align: -0.25em !important;
+  // font-size: 18px !important;
+}
+
