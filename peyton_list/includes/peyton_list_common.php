@@ -178,7 +178,7 @@ function peyton_list_get_links_raw() {
 }
 
 function peyton_list_prepare_for_dt($data) {
-  global $peyton_list_category, $peyton_list_status, $peyton_list_status_image;
+  global $peyton_list_category, $peyton_list_category_color, $peyton_list_status, $peyton_list_status_image;
 
   $ret = array(
     'id' => $data->id,
@@ -207,7 +207,7 @@ function peyton_list_get_links() {
 }
 
 function peyton_list_insert_form($formdata) {
-  global $peyton_list_category, $peyton_list_status, $peyton_list_status_image;
+  global $peyton_list_category, $peyton_list_category_color, $peyton_list_status, $peyton_list_status_image;
 
   $error_msg = $formdata['error_msg'];
   $data = ($error_msg == '' ? peyton_list_initial_data() : $formdata['data']);
@@ -311,7 +311,7 @@ function peyton_list_insert_form($formdata) {
 }
 
 function peyton_list_datatable($has_perm, $open_form) {
-  global $peyton_list_status, $peyton_list_status_image, $peyton_list_category;
+  global $peyton_list_status, $peyton_list_status_image, $peyton_list_category, $peyton_list_category_color;
 
   $output = '
     <table id="peyton_list_main_list_selector">
@@ -368,6 +368,7 @@ function peyton_list_datatable($has_perm, $open_form) {
       var peyton_list_status = ' . json_encode($peyton_list_status) . ';
       var peyton_list_status_image = ' . json_encode($peyton_list_status_image) . ';
       var peyton_list_category = ' . json_encode($peyton_list_category) . ';
+      var peyton_list_category_color = ' . json_encode($peyton_list_category_color) . ';
       var peyton_list_default_edit_str = peyton_list_user_has_permission ? "+" : "&nbsp;";
 
       var dt_str = {

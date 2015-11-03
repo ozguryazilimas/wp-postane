@@ -107,8 +107,9 @@ jQuery(document).ready(function() {
       },
       {
         data: "title",
-        width: "50%",
+        width: "55%",
         render: function(data, type, row, meta) {
+          // return '<a href="' + row.link + '" class="' + peyton_list_category_color[row.category] + '">' + data + '</a>';
           return '<a href="' + row.link + '">' + data + '</a>';
         }
       },
@@ -118,7 +119,11 @@ jQuery(document).ready(function() {
       },
       {
         data: "category_humanized",
-        width: "30%"
+        width: "25%",
+        render: function(data, type, row, meta) {
+          // return '<a href="' + row.link + '" class="' + peyton_list_category_color[row.category] + '">' + data + '</a>';
+          return '<span class="' + peyton_list_category_color[row.category] + '">' + data + '</span>';
+        }
       },
       {
         data: "status",

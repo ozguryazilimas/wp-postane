@@ -44,6 +44,7 @@ table#peyton_list_main_list > tbody td a:hover,
 table#peyton_list_main_list > tbody td a:active {
   display: block;
   text-decoration: none;
+  color: #343434;
 }
 
 
@@ -156,4 +157,42 @@ img.peyton_list_status_image {
   // vertical-align: -0.25em !important;
   // font-size: 18px !important;
 }
+
+.peyton_list_category_color_drama:link,
+.peyton_list_category_color_drama:visited,
+.peyton_list_category_color_drama {
+  color: #006803;
+}
+
+.peyton_list_category_color_komedi:link,
+.peyton_list_category_color_komedi:visited,
+.peyton_list_category_color_komedi {
+  color: #F06B00;
+}
+
+.peyton_list_category_color_komedi_drama:link,
+.peyton_list_category_color_komedi_drama:visited,
+.peyton_list_category_color_komedi_drama {
+  color: #C05800;
+}
+
+.peyton_list_category_color_animasyon:link,
+.peyton_list_category_color_animasyon:visited,
+.peyton_list_category_color_animasyon {
+  // color: #FFD200;
+  color: #20AADB;
+}
+
+.peyton_list_category_color_anime:link,
+.peyton_list_category_color_anime:visited,
+.peyton_list_category_color_anime {
+  color: #3366FF;
+}
+
+.peyton_list_category_color_reality:link,
+.peyton_list_category_color_reality:visited,
+.peyton_list_category_color_reality {
+  color: #000;
+}
+
 

@@ -47,6 +47,16 @@ $peyton_list_category = array(
 );
 global $peyton_list_category;
 
+$peyton_list_category_color = array(
+  1 => 'peyton_list_category_color_drama',
+  2 => 'peyton_list_category_color_komedi',
+  3 => 'peyton_list_category_color_komedi_drama',
+  4 => 'peyton_list_category_color_animasyon',
+  5 => 'peyton_list_category_color_anime',
+  6 => 'peyton_list_category_color_reality'
+);
+global $peyton_list_category_color;
+
 $peyton_list_status = array(
   1 => 'Tanıtımı Var',
   2 => 'Mini Tanıtım',
