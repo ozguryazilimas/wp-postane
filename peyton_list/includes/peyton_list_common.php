@@ -14,7 +14,7 @@ function peyton_list_get_time() {
 function peyton_list_user_has_permission() {
   global $wp_query, $wpdb, $user_ID, $peyton_list_db_main;
 
-  $has_perm = $user_ID && $user_ID != '' && current_user_can('edit_others_posts');
+  $has_perm = $user_ID && $user_ID != '' && (current_user_can('edit_others_posts') || current_user_can('edit_published_pages'));
 
   return $has_perm;
 }
