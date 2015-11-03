@@ -24,6 +24,9 @@ foreach($wp_blog_path as $incpath) {
 
 global $wpdb;
 
+$res_array = array();
+
+/*
 $posts_table = $wpdb->prefix . "posts";
 $sql = "SELECT post_content FROM $posts_table where post_type='page' and post_title='Dizi Listesi'";
 $post_content = $wpdb->get_row($sql)->post_content;
@@ -41,8 +44,6 @@ foreach ($list as $elem) {
   }
 }
 //print_r($ul_list);
-
-$res_array = array();
 
 foreach($ul_list as $list) {
   $child = $list->firstChild;
@@ -65,6 +66,23 @@ foreach($ul_list as $list) {
     $child = $child->nextSibling;
   }
 }
+ */
+
+$peyton_list_db = $wpdb->prefix . 'peyton_list';
+$sql_str = $wpdb->prepare("SELECT * FROM $peyton_list_db ORDER BY title");
+$data = $wpdb->get_results($sql_str);
+
+foreach($data as $k) {
+  if ($k->link != NULL && $k->link != '') {
+    $search_key = yirmiiki_shortcode_json_key($k->title);
+
+    $res_array[$search_key] = array(
+      'link' => $k->link,
+      'name' => $k->title
+    );
+  }
+}
+
 
 $file_uri = plugin_dir_path(__FILE__) . '/dizi_listesi.json';
 $fp = fopen($file_uri, 'w') or die('could not open file: ' . $file_uri);
