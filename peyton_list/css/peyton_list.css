@@ -40,13 +40,15 @@ select[name=peyton_list_main_list_length] {
 table#peyton_list_main_list > tbody td a,
 table#peyton_list_main_list > tbody td a:link,
 table#peyton_list_main_list > tbody td a:visited,
-table#peyton_list_main_list > tbody td a:hover,
 table#peyton_list_main_list > tbody td a:active {
   display: block;
   text-decoration: none;
   color: #343434;
 }
 
+table#peyton_list_main_list > tbody td a:hover {
+  color: #20AADB;
+}
 
 table#peyton_list_main_list_selector,
 #peyton_list_add_entry_wrapper,

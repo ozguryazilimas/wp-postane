@@ -184,6 +184,7 @@ function peyton_list_prepare_for_dt($data) {
     'id' => $data->id,
     'can_edit' => $data->can_edit == '1',
     'title' => $data->title,
+    'title_humanized' => '<a href="' . $data->link . '">' . $data->title . '</a>',
     'category' => $data->category,
     'category_humanized' => $peyton_list_category[$data->category],
     'status' => $data->status,
@@ -346,6 +347,7 @@ function peyton_list_datatable($has_perm, $open_form) {
     <table id="peyton_list_main_list">
       <thead>
         <tr>
+          <th>&nbsp;</th>
           <th>&nbsp;</th>
           <th>' . __('Title', 'peyton_list') . '</th>
           <th>&nbsp;</th>

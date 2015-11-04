@@ -1,4 +1,35 @@
 
+// sort by Turkish and some other language special letters
+jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+  "turkish-pre": function ( a ) {
+    var special_letters = {
+      "C": "ca", "c": "ca", "Ç": "cb", "ç": "cb",
+      "G": "ga", "g": "ga", "Ğ": "gb", "ğ": "gb",
+      "I": "ia", "ı": "ia", "İ": "ib", "i": "ib",
+      "O": "oa", "o": "oa", "Ö": "ob", "ö": "ob",
+      "S": "sa", "s": "sa", "Ş": "sb", "ş": "sb",
+      "U": "ua", "u": "ua", "Ü": "ub", "ü": "ub",
+      "A": "aa", "a": "aa", "Ä": "ab", "ä": "ab"
+    };
+
+    for (var val in special_letters) {
+      a = a.split(val).join(special_letters[val]).toLowerCase();
+    }
+
+    return a;
+  },
+
+  "turkish-asc": function (a, b) {
+    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+  },
+
+  "turkish-desc": function (a, b) {
+    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+  }
+});
+
+
+// add external filter
 jQuery.fn.dataTable.ext.search.push(
   function(settings, data, dataIndex) {
     var category_matching =  true;
@@ -7,11 +38,11 @@ jQuery.fn.dataTable.ext.search.push(
     var status_val = jQuery('select[name=peyton_list_main_list_selector_status]').val();
 
     if (category_val !== '0') {
-      category_matching = category_val === data[2];
+      category_matching = category_val === data[3];
     }
 
     if (status_val !== '0') {
-      status_matching = status_val === data[4];
+      status_matching = status_val === data[5];
     }
 
     return (category_matching && status_matching);
@@ -95,7 +126,7 @@ jQuery(document).ready(function() {
     lengthMenu: [[20, 50, 100, 250, -1], [20, 50, 100, 250, dt_str.all]],
     bPaginate: true,
     bSearchable: true,
-    order: [[1, 'asc']],
+    order: [[2, 'asc']],
     aaSorting: [],
     columns: [
       {
@@ -107,11 +138,13 @@ jQuery(document).ready(function() {
       },
       {
         data: "title",
-        width: "55%",
-        render: function(data, type, row, meta) {
-          // return '<a href="' + row.link + '" class="' + peyton_list_category_color[row.category] + '">' + data + '</a>';
-          return '<a href="' + row.link + '">' + data + '</a>';
-        }
+        sType: "turkish",
+        visible: false
+      },
+      {
+        data: "title_humanized",
+        orderData: 1,
+        width: "55%"
       },
       {
         data: "category",
@@ -132,6 +165,7 @@ jQuery(document).ready(function() {
       {
         data: "status_image",
         width: "15%",
+        orderData: 5,
         render: function(data, type, row, meta) {
           return '<img src="/wp-content/plugins/peyton_list/images/' + peyton_list_status_image[row.status] + '"' +
             'class="peyton_list_status_image" title="' + peyton_list_status[row.status] + '" />';
@@ -194,11 +228,13 @@ jQuery(document).ready(function() {
         row.child.hide();
         // tr.removeClass('shown');
         td.removeClass('shown');
+        td.html(peyton_list_default_edit_str);
       });
     } else {
       row.child(peyton_list_format_peyton_list_table_form(row.data()), 'no_padding').show();
       // tr.addClass('shown');
       td.addClass('shown');
+      td.html("-");
 
       jQuery('div.peyton_list_inner_update', row.child()).slideDown();
     }
