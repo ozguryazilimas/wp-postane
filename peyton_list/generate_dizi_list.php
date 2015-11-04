@@ -81,7 +81,7 @@ $insert_data = array();
 
 foreach($res_array as $search_key => $parsed_data) {
   $style = $parsed_data['style'];
-  $link_with_yazi = preg_replace('/https?:\/\/|www.|22dakika\.org/', '', $parsed_data['link']);
+  $link_with_yazi = preg_replace('/https?:\/\/|www.|22dakika\.org/i', '', $parsed_data['link']);
   $link = preg_replace('/\/yazi\//', '/', $link_with_yazi);
 
   $data = array(
