@@ -69,20 +69,29 @@ $now = new DateTime();
 $now = $now->format('Y-m-d H:i:s');
 $debug = in_array('-d', $argv);
 $dry_run = in_array('-n', $argv);
+$force = in_array('-f', $argv);
 
 
-/*
-$date = get_option("oyuncu_listesi_son_tarih");
+if (!$force) {
+  $date = get_option("oyuncu_listesi_son_tarih");
 
-if (!$date) {
-  add_option("oyuncu_listesi_son_tarih", $now,'','no');
-  $date = $now;
+  if (!$date) {
+    if (!$dry_run) {
+      add_option("oyuncu_listesi_son_tarih", $now,'','no');
+    }
+
+    $date = $now;
+  }
 }
- */
 
 $posts_table = $wpdb->prefix . "posts";
 // $sql = "SELECT post_content FROM $posts_table WHERE post_modified_gmt >= '$date'";
 $sql = "SELECT post_content FROM $posts_table WHERE post_content LIKE '%[oyuncu]%'";
+
+if (!$force) {
+  $sql .= " AND post_modified_gmt >= '$date'";
+}
+
 $post_list = $wpdb->get_results($sql);
 $oyuncu_listesi = array();
 
@@ -153,7 +162,9 @@ if ($dry_run) {
   fclose($fp);
 }
 
-// update_option("oyuncu_listesi_son_tarih", $now);
+if (!$force || !$dry_run) {
+  update_option("oyuncu_listesi_son_tarih", $now);
+}
 
 if ($debug) {
   $total = count($oyuncu_listesi_unique);
