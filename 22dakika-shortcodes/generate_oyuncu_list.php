@@ -67,15 +67,22 @@ function shorttag_generator_get_contents_for_browser($url) {
 global $wpdb;
 $now = new DateTime();
 $now = $now->format('Y-m-d H:i:s');
+$debug = in_array('-d', $argv);
+$dry_run = in_array('-n', $argv);
+
+
+/*
 $date = get_option("oyuncu_listesi_son_tarih");
 
 if (!$date) {
   add_option("oyuncu_listesi_son_tarih", $now,'','no');
   $date = $now;
 }
+ */
 
 $posts_table = $wpdb->prefix . "posts";
-$sql = "SELECT post_content FROM $posts_table WHERE post_modified_gmt >= '$date'";
+// $sql = "SELECT post_content FROM $posts_table WHERE post_modified_gmt >= '$date'";
+$sql = "SELECT post_content FROM $posts_table WHERE post_content LIKE '%[oyuncu]%'";
 $post_list = $wpdb->get_results($sql);
 $oyuncu_listesi = array();
 
@@ -102,25 +109,44 @@ if (file_exists($file_uri)) {
   fclose($fp);
 }
 
-foreach ($oyuncu_listesi as $oyuncu) {
+$oyuncu_listesi_unique = array_unique($oyuncu_listesi);
+
+if ($debug) {
+  echo "\n Found " . count($oyuncu_listesi_unique) . " oyuncu record\n";
+}
+
+foreach ($oyuncu_listesi_unique as $oyuncu) {
   $oyuncu_index = yirmiiki_shortcode_json_key($oyuncu);
 
   if (!isset($json_liste[$oyuncu_index])) {
-    $query = str_replace(' ','+',$oyuncu_index);
-    $imdb_response = json_decode(shorttag_generator_get_contents_for_browser("http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=$query"));
+    if ($debug) {
+      echo $oyuncu . "\n";
+    }
 
-    if (isset($imdb_response->name_popular) && strcasecmp($imdb_response->name_popular[0]->name,$oyuncu)==0 ) {
-      $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_popular[0]->id, 'name' => $imdb_response->name_popular[0]->name);
-    } elseif (isset($imdb_response->name_exact) && strcasecmp($imdb_response->name_exact[0]->name,$oyuncu)==0) {
-      $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_exact[0]->id, 'name' => $imdb_response->name_exact[0]->name);
+    if ($dry_run) {
+      echo "\n running in dry run mode, no call is done to imdb\n";
+    } else {
+      $query = str_replace(' ','+',$oyuncu_index);
+      $imdb_response = json_decode(shorttag_generator_get_contents_for_browser("http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=$query"));
+
+      if (isset($imdb_response->name_popular) && strcasecmp($imdb_response->name_popular[0]->name,$oyuncu)==0 ) {
+        $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_popular[0]->id, 'name' => $imdb_response->name_popular[0]->name);
+      } elseif (isset($imdb_response->name_exact) && strcasecmp($imdb_response->name_exact[0]->name,$oyuncu)==0) {
+        $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_exact[0]->id, 'name' => $imdb_response->name_exact[0]->name);
+      }
     }
   }
 }
 
-$fp = fopen($file_uri, 'w') or die('could not open file for writing: ' . $file_uri);
-fwrite($fp, json_encode($json_liste));
-fclose($fp);
+if ($dry_run) {
+  echo "\n running in dry run mode, no update is done to json\n";
+} else {
+  $fp = fopen($file_uri, 'w') or die('could not open file for writing: ' . $file_uri);
+  fwrite($fp, json_encode($json_liste));
+  fclose($fp);
+}
 
-update_option("oyuncu_listesi_son_tarih", $now);
+// update_option("oyuncu_listesi_son_tarih", $now);
+
 
 ?>
