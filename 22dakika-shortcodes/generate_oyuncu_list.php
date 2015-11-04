@@ -86,6 +86,10 @@ $sql = "SELECT post_content FROM $posts_table WHERE post_content LIKE '%[oyuncu]
 $post_list = $wpdb->get_results($sql);
 $oyuncu_listesi = array();
 
+if ($debug) {
+  echo "\n DB fetch finished, parsing content\n\n";
+}
+
 foreach ($post_list as $post) {
   $content = $post->post_content;
   $start_pos = strpos($content, "[oyuncu]");
@@ -112,11 +116,14 @@ if (file_exists($file_uri)) {
 $oyuncu_listesi_unique = array_unique($oyuncu_listesi);
 
 if ($debug) {
-  echo "\n Found " . count($oyuncu_listesi_unique) . " oyuncu record\n";
+  echo "Found " . count($oyuncu_listesi_unique) . " unique oyuncu record\n\n";
 }
+
+$original_has_url = count($json_liste);
 
 foreach ($oyuncu_listesi_unique as $oyuncu) {
   $oyuncu_index = yirmiiki_shortcode_json_key($oyuncu);
+  $oyuncu_imdb_str = strtolower($oyuncu);
 
   if (!isset($json_liste[$oyuncu_index])) {
     if ($debug) {
@@ -124,9 +131,9 @@ foreach ($oyuncu_listesi_unique as $oyuncu) {
     }
 
     if ($dry_run) {
-      echo "\n running in dry run mode, no call is done to imdb\n";
+      // echo "\n running in dry run mode, no call is done to imdb\n";
     } else {
-      $query = str_replace(' ','+',$oyuncu_index);
+      $query = str_replace(' ', '+', $oyuncu_imdb_str);
       $imdb_response = json_decode(shorttag_generator_get_contents_for_browser("http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=$query"));
 
       if (isset($imdb_response->name_popular) && strcasecmp($imdb_response->name_popular[0]->name,$oyuncu)==0 ) {
@@ -147,6 +154,14 @@ if ($dry_run) {
 }
 
 // update_option("oyuncu_listesi_son_tarih", $now);
+
+if ($debug) {
+  $total = count($oyuncu_listesi_unique);
+  $has_url = count($json_liste);
+  $remaining = $total - $has_url;
+
+  echo "\n Total: " . $total . " Old Has URL: " . $original_has_url . " New Has URL: " . $has_url . " Remaining: " . $remaining . "\n\n";
+}
 
 
 ?>
