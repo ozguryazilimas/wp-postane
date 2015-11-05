@@ -83,7 +83,7 @@ function peyton_list_format_peyton_list_table_form(d) {
             '<td>' +
               '<select name="peyton_list_inner_update[status]">';
 
-  jQuery.each(peyton_list_status, function(value, name) {
+  jQuery.each(peyton_list_status_editor, function(value, name) {
     var selected = '';
 
     if (d.status == value) {
@@ -132,7 +132,7 @@ jQuery(document).ready(function() {
       {
         data: null,
         defaultContent: peyton_list_default_edit_str,
-        width: "5%",
+        // width: "5%",
         orderable: false,
         class: "peyton_list_table_edit",
       },
@@ -143,8 +143,8 @@ jQuery(document).ready(function() {
       },
       {
         data: "title_humanized",
-        orderData: 1,
-        width: "55%"
+        // width: "55%",
+        orderData: 1
       },
       {
         data: "category",
@@ -152,7 +152,8 @@ jQuery(document).ready(function() {
       },
       {
         data: "category_humanized",
-        width: "25%",
+        // className: "dt-justified",
+        // width: "25%",
         render: function(data, type, row, meta) {
           // return '<a href="' + row.link + '" class="' + peyton_list_category_color[row.category] + '">' + data + '</a>';
           return '<span class="' + peyton_list_category_color[row.category] + '">' + data + '</span>';
@@ -164,7 +165,7 @@ jQuery(document).ready(function() {
       },
       {
         data: "status_image",
-        width: "15%",
+        // width: "15%",
         orderData: 5,
         render: function(data, type, row, meta) {
           return '<img src="/wp-content/plugins/peyton_list/images/' + peyton_list_status_image[row.status] + '"' +
@@ -196,7 +197,7 @@ jQuery(document).ready(function() {
   });
 
   jQuery('.dataTables_filter input').attr("placeholder", dt_str.search);
-  peyton_list_table.rows.add(dt_data).draw();
+  peyton_list_table.rows.add(dt_data).columns.adjust().draw();
 
   if (peyton_list_user_has_permission) {
     jQuery('a#peyton_list_toggle_link_form').on('click', function() {
@@ -243,7 +244,7 @@ jQuery(document).ready(function() {
   jQuery('select[name=peyton_list_main_list_selector_category], ' +
          'select[name=peyton_list_main_list_selector_status]').on('change', function(k) {
 
-    peyton_list_table.draw();
+    peyton_list_table.columns.adjust().draw();
   });
 
   if (peyton_list_open_insert_form) {

@@ -58,11 +58,18 @@ $peyton_list_category_color = array(
 global $peyton_list_category_color;
 
 $peyton_list_status = array(
+  1 => 'Tanıtım',
+  2 => 'Mini Tanıtım',
+  3 => 'Tanıtımsız'
+);
+global $peyton_list_status;
+
+$peyton_list_status_editor = array(
   1 => 'Tanıtımı Var',
   2 => 'Mini Tanıtım',
   3 => 'Tanıtımı Yok'
 );
-global $peyton_list_status;
+global $peyton_list_status_editor;
 
 $peyton_list_status_image = array(
   1 => 'thumbs_up.svg',

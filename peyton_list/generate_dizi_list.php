@@ -78,11 +78,13 @@ foreach($ul_list as $list) {
 }
 
 $insert_data = array();
+$regex_url = '/(https?:\/\/)?(www\.)?22dakika\.org/i';
+$regex_yazi = '/^\/yazi\//';
 
 foreach($res_array as $search_key => $parsed_data) {
   $style = $parsed_data['style'];
-  $link_with_yazi = preg_replace('/https?:\/\/|www.|22dakika\.org/i', '', $parsed_data['link']);
-  $link = preg_replace('/\/yazi\//', '/', $link_with_yazi);
+  $link_with_yazi = preg_replace($regex_url, '', $parsed_data['link']);
+  $link = preg_replace($regex_yazi, '/', $link_with_yazi);
 
   $data = array(
     'title' => $parsed_data['name'],

@@ -208,7 +208,7 @@ function peyton_list_get_links() {
 }
 
 function peyton_list_insert_form($formdata) {
-  global $peyton_list_category, $peyton_list_category_color, $peyton_list_status, $peyton_list_status_image;
+  global $peyton_list_category, $peyton_list_category_color, $peyton_list_status, $peyton_list_status_image, $peyton_list_status_editor;
 
   $error_msg = $formdata['error_msg'];
   $data = ($error_msg == '' ? peyton_list_initial_data() : $formdata['data']);
@@ -271,7 +271,7 @@ function peyton_list_insert_form($formdata) {
               <select name="peyton_list_add_entry[status]">
   ';
 
-  foreach($peyton_list_status as $value => $name) {
+  foreach($peyton_list_status_editor as $value => $name) {
     $selected = '';
 
     if ($error_msg != '' && $value == $data['status']) {
@@ -312,7 +312,7 @@ function peyton_list_insert_form($formdata) {
 }
 
 function peyton_list_datatable($has_perm, $open_form) {
-  global $peyton_list_status, $peyton_list_status_image, $peyton_list_category, $peyton_list_category_color;
+  global $peyton_list_status, $peyton_list_status_image, $peyton_list_category, $peyton_list_category_color, $peyton_list_status_editor;
 
   $output = '
     <table id="peyton_list_main_list_selector">
@@ -368,6 +368,7 @@ function peyton_list_datatable($has_perm, $open_form) {
       var peyton_list_open_insert_form = ' . ($open_form ? 1 : 0) . ';
       var peyton_list_user_has_permission = ' . ($has_perm ? 1 : 0) . ';
       var peyton_list_status = ' . json_encode($peyton_list_status) . ';
+      var peyton_list_status_editor = ' . json_encode($peyton_list_status_editor) . ';
       var peyton_list_status_image = ' . json_encode($peyton_list_status_image) . ';
       var peyton_list_category = ' . json_encode($peyton_list_category) . ';
       var peyton_list_category_color = ' . json_encode($peyton_list_category_color) . ';
