@@ -145,10 +145,34 @@ foreach ($oyuncu_listesi_unique as $oyuncu) {
       $query = str_replace(' ', '+', $oyuncu_imdb_str);
       $imdb_response = json_decode(shorttag_generator_get_contents_for_browser("http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q=$query"));
 
-      if (isset($imdb_response->name_popular) && strcasecmp($imdb_response->name_popular[0]->name,$oyuncu)==0 ) {
-        $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_popular[0]->id, 'name' => $imdb_response->name_popular[0]->name);
-      } elseif (isset($imdb_response->name_exact) && strcasecmp($imdb_response->name_exact[0]->name,$oyuncu)==0) {
-        $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/".$imdb_response->name_exact[0]->id, 'name' => $imdb_response->name_exact[0]->name);
+      if (isset($imdb_response->name_popular)) {
+        $cleaned_up_name = str_replace("&#x27;", "'", $imdb_response->name_popular[0]->name);
+
+        /*
+        if ($debug) {
+          echo "found imdb name_popular\n";
+          echo "  CN:" . $cleaned_up_name . "\n";
+          echo "  ON:" . $oyuncu . "\n";
+        }
+        */
+
+        // if (strcasecmp($cleaned_up_name, $oyuncu) == 0) {
+          $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/" . $imdb_response->name_popular[0]->id, 'name' => $imdb_response->name_popular[0]->name);
+        // }
+      } elseif (isset($imdb_response->name_exact)) {
+        $cleaned_up_name = str_replace("&#x27;", "'", $imdb_response->name_exact[0]->name);
+
+        /*
+        if ($debug) {
+          echo "found imdb name_popular\n";
+          echo "  CN:" . $cleaned_up_name . "\n";
+          echo "  ON:" . $oyuncu . "\n";
+        }
+        */
+
+        // if (strcasecmp($cleaned_up_name, $oyuncu) == 0) {
+          $json_liste[$oyuncu_index] = array('link' => "http://www.imdb.com/name/" . $imdb_response->name_exact[0]->id, 'name' => $imdb_response->name_exact[0]->name);
+        // }
       }
     }
   }
