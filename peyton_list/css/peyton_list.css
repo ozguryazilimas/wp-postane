@@ -197,4 +197,16 @@ img.peyton_list_status_image {
   color: #000;
 }
 
+.peyton_list_category_color_belgesel:link,
+.peyton_list_category_color_belgesel:visited,
+.peyton_list_category_color_belgesel {
+  color: #7C7C7C;
+}
+
+.peyton_list_category_color_yerli_dizi:link,
+.peyton_list_category_color_yerli_dizi:visited,
+.peyton_list_category_color_yerli_dizi {
+  color: #FF99D8;
+}
+
 

@@ -43,7 +43,9 @@ $peyton_list_category = array(
   3 => 'Komedi Drama',
   4 => 'Animasyon',
   5 => 'Anime',
-  6 => 'Reality'
+  6 => 'Reality',
+  7 => 'Belgesel',
+  8 => 'Yerli Dizi'
 );
 global $peyton_list_category;
 
@@ -53,7 +55,9 @@ $peyton_list_category_color = array(
   3 => 'peyton_list_category_color_komedi_drama',
   4 => 'peyton_list_category_color_animasyon',
   5 => 'peyton_list_category_color_anime',
-  6 => 'peyton_list_category_color_reality'
+  6 => 'peyton_list_category_color_reality',
+  7 => 'peyton_list_category_color_belgesel',
+  8 => 'peyton_list_category_color_yerli_dizi'
 );
 global $peyton_list_category_color;
 
