@@ -68,10 +68,10 @@ function peyton_list_insert_entry($data, $admin_override = false) {
   global $wp_query, $wpdb, $user_ID, $peyton_list_db_main;
 
   $error_msg = '';
-  $title = $data['title'];
-  $category = $data['category'];
-  $status = $data['status'];
-  $link = $data['link'];
+  $title = stripslashes_deep($data['title']);
+  $category = stripslashes_deep($data['category']);
+  $status = stripslashes_deep($data['status']);
+  $link = stripslashes_deep($data['link']);
   $current_time = peyton_list_get_time();
   $insert_user_id = $admin_override ? 1 : $user_ID;
 
@@ -90,12 +90,19 @@ function peyton_list_insert_entry($data, $admin_override = false) {
   }
 
   if ($error_msg == '') {
-    $sql_str = $wpdb->prepare("INSERT INTO $peyton_list_db_main
-      (title, category, status, link, created_by, created_at, updated_by, updated_at)
-      VALUES (%s, %d, %d, %s, %d, %s, %d, %s)",
-      $title, $category, $status, $link, $insert_user_id, $current_time, $insert_user_id, $current_time);
-
-    $success = $wpdb->query($sql_str);
+    $success = $wpdb->insert(
+      $peyton_list_db_main,
+      array(
+        'title' => $title,
+        'category' => $category,
+        'status' => $status,
+        'link' => $link,
+        'created_by' => $insert_user_id,
+        'created_at' => $current_time,
+        'updated_by' => $insert_user_id,
+        'updated_at' => $current_time
+      )
+    );
   }
 
   return $error_msg;
@@ -104,33 +111,27 @@ function peyton_list_insert_entry($data, $admin_override = false) {
 function peyton_list_update_entry($data) {
   global $wp_query, $wpdb, $user_ID, $peyton_list_db_main;
 
-  $entry_id = $data['id'];
-  $title = $data['title'];
-  $category = $data['category'];
-  $status = $data['status'];
-  $link = $data['link'];
+  $entry_id = stripslashes_deep($data['id']);
+  $title = stripslashes_deep($data['title']);
+  $category = stripslashes_deep($data['category']);
+  $status = stripslashes_deep($data['status']);
+  $link = stripslashes_deep($data['link']);
   $current_time = peyton_list_get_time();
 
-  $sql_str = $wpdb->prepare("UPDATE $peyton_list_db_main
-                             SET
-                               title = %s,
-                               category = %d,
-                               status = %d,
-                               link = %s,
-                               updated_by = %d,
-                               updated_at = %s
-                             WHERE
-                               id = %d
-                            ", $title,
-                               $category,
-                               $status,
-                               $link,
-                               $user_ID,
-                               $current_time,
-                               $entry_id
-                            );
-
-  $success = $wpdb->query($sql_str);
+  $success = $wpdb->update(
+    $peyton_list_db_main,
+    array(
+      'title' => $title,
+      'category' => $category,
+      'status' => $status,
+      'link' => $link,
+      'updated_by' => $user_ID,
+      'updated_at' => $current_time
+    ),
+    array(
+      'id' => $entry_id
+    )
+  );
 
   return $success;
 }
@@ -138,9 +139,7 @@ function peyton_list_update_entry($data) {
 function peyton_list_delete_link($link_id) {
   global $wp_query, $wpdb, $user_ID, $peyton_list_db_main;
 
-  $sql_str = "DELETE FROM $peyton_list_db_main WHERE id = $link_id";
-
-  $success = $wpdb->query($wpdb->prepare($sql_str));
+  $success = $wpdb->delete($peyton_list_db_main, array('id' => $link_id), array('%d'));
 
   return $success;
 }
