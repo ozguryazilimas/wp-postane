@@ -19,96 +19,109 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
-#: includes/peyton_list_common.php:77
+#: includes/peyton_list_common.php:69
 msgid "Title can not be blank"
 msgstr "Dizi boş olamaz"
 
-#: includes/peyton_list_common.php:82
+#: includes/peyton_list_common.php:74
 msgid "This record was already added"
 msgstr "Bu girdi daha önce eklendi"
 
-#: includes/peyton_list_common.php:205
+#: includes/peyton_list_common.php:220
 msgid "Add New Entry"
 msgstr "Yeni Girdi Ekle"
 
-#: includes/peyton_list_common.php:223 includes/peyton_list_common.php:336
-#: includes/peyton_list_common.php:363
+#: includes/peyton_list_common.php:238 includes/peyton_list_common.php:354
+#: includes/peyton_list_common.php:389
 msgid "Title"
 msgstr "Dizi"
 
-#: includes/peyton_list_common.php:232 includes/peyton_list_common.php:306
-#: includes/peyton_list_common.php:337 includes/peyton_list_common.php:364
+#: includes/peyton_list_common.php:247 includes/peyton_list_common.php:323
+#: includes/peyton_list_common.php:356 includes/peyton_list_common.php:390
 msgid "Category"
 msgstr "Kategori"
 
-#: includes/peyton_list_common.php:255 includes/peyton_list_common.php:318
-#: includes/peyton_list_common.php:338 includes/peyton_list_common.php:365
+#: includes/peyton_list_common.php:270 includes/peyton_list_common.php:335
+#: includes/peyton_list_common.php:358 includes/peyton_list_common.php:391
 msgid "Status"
 msgstr "Tanıtım"
 
-#: includes/peyton_list_common.php:278 includes/peyton_list_common.php:366
+#: includes/peyton_list_common.php:293 includes/peyton_list_common.php:392
 msgid "Link"
 msgstr "Bağlantı"
 
-#: includes/peyton_list_common.php:289 includes/peyton_list_common.php:367
+#: includes/peyton_list_common.php:304 includes/peyton_list_common.php:393
 msgid "Add"
 msgstr "Ekle"
 
-#: includes/peyton_list_common.php:308 includes/peyton_list_common.php:320
+#: includes/peyton_list_common.php:325 includes/peyton_list_common.php:337
+#: includes/peyton_list_common.php:381
 msgid "All"
 msgstr "Hepsi"
 
-#: includes/peyton_list_common.php:356
+#: includes/peyton_list_common.php:382
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
-#: includes/peyton_list_common.php:357
+#: includes/peyton_list_common.php:383
 msgid "Search"
 msgstr "Ara"
 
-#: includes/peyton_list_common.php:358
+#: includes/peyton_list_common.php:384
 msgid "First"
 msgstr "İlk"
 
-#: includes/peyton_list_common.php:359
+#: includes/peyton_list_common.php:385
 msgid "Last"
 msgstr "Son"
 
-#: includes/peyton_list_common.php:360
+#: includes/peyton_list_common.php:386
 msgid "Next"
 msgstr "Sonraki"
 
-#: includes/peyton_list_common.php:361
+#: includes/peyton_list_common.php:387
 msgid "Previous"
 msgstr "Önceki"
 
-#: includes/peyton_list_common.php:362
+#: includes/peyton_list_common.php:388
 msgid "_TOTAL_ total"
 msgstr "Toplam _TOTAL_"
 
-#: includes/peyton_list_common.php:368
+#: includes/peyton_list_common.php:394
 msgid "Update"
 msgstr "Güncelle"
 
-#: includes/peyton_list_common.php:369
+#: includes/peyton_list_common.php:395
 msgid "Delete"
 msgstr "Sil"
 
-#: includes/peyton_list_common.php:370
+#: includes/peyton_list_common.php:396 includes/peyton_list_common.php:397
 msgid "Created by"
 msgstr "Oluşturan"
 
-#: includes/peyton_list_common.php:371
+#: includes/peyton_list_common.php:398
 msgid "Created at"
 msgstr "Oluşturulma zamanı"
 
-#: includes/peyton_list_common.php:372
+#: includes/peyton_list_common.php:399 includes/peyton_list_common.php:400
 msgid "Updated by"
 msgstr "Güncelleyen"
 
-#: includes/peyton_list_common.php:373
+#: includes/peyton_list_common.php:401
 msgid "Updated at"
 msgstr "Güncelleme zamanı"
+
+#: includes/peyton_list_common.php:402
+msgid "Update failed"
+msgstr "Güncelleme başarısız oldu"
+
+#: includes/peyton_list_common.php:403
+msgid "Delete failed"
+msgstr "Silme başarısız oldu"
+
+#: includes/peyton_list_common.php:404
+msgid "Connection problem"
+msgstr "Başlantı problemi"
 
 
 
