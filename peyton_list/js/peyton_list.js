@@ -291,9 +291,9 @@ jQuery(document).ready(function() {
             }
 
             if (is_update) {
-              row.data(data.data).draw();
+              row.data(data.data).draw(false);
             } else {
-              row.remove().draw();
+              row.remove().draw(false);
             }
           } else {
             alert(failed_str);
