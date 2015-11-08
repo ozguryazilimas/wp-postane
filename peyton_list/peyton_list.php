@@ -3,7 +3,7 @@
 Plugin Name: Peyton List
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: This plugin lists whatever you like with ability to make a list with catgories and links. This is dedicated to the lovely Peyton List (the more beautiful one, with black hair).
-Version: 0.2.0
+Version: 0.8.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
