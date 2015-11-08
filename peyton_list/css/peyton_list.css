@@ -160,6 +160,22 @@ img.peyton_list_status_image {
   // font-size: 18px !important;
 }
 
+#peyton_list_intro {
+  font-size: 13px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  margin: 0 0 30px 0;
+}
+
+img.peyton_list_status_image_intro {
+  width: 40px;
+  height: 40px;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 8px;
+  background: none !important;
+  padding: 0 !important;
+}
+
 .peyton_list_category_color_drama:link,
 .peyton_list_category_color_drama:visited,
 .peyton_list_category_color_drama {

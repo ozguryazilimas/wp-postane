@@ -413,10 +413,51 @@ function peyton_list_datatable($has_perm, $open_form) {
   echo $output;
 }
 
+function peyton_list_intro() {
+  $output = '
+    <div id="peyton_list_intro">
+      <p>
+        Bu bölümde, <strong>22dakika</strong> \'da şimdiye kadar bahsi geçmiş dizileri ve tanıtım, mini tanıtım vb. bağlantılarını bulacaksınız. Yeni diziler zaman içerisinde eklenmektedir. Keyfini çıkarın.
+      </p>
+
+      <p>
+        Diziler hakkında bilgi almak için isimlerine tıklayınız. Eksik ya da hata gördüğünüzde <a href="/bunlari-biliyor-muydunuz-dizi-listesi-yeni-yuzuyle-karsinizda/">şu başlığın</a> altına yorum bırakabilirsiniz.
+      </p>
+
+      <table>
+        <tr>
+          <td>
+            <img src="/wp-content/plugins/peyton_list/images/thumbs_up.svg" class="peyton_list_status_image_intro" />
+          </td>
+          <td>
+            22dakika\'da tanıtımı olanlar
+          </td>
+          <td>
+            <img src="/wp-content/plugins/peyton_list/images/thumbs_side.svg" class="peyton_list_status_image_intro" />
+          </td>
+          <td>
+            22dakika\'daki tanıtımı mini olanlar
+          </td>
+          <td>
+            <img src="/wp-content/plugins/peyton_list/images/thumbs_down.svg" class="peyton_list_status_image_intro" />
+          </td>
+          <td>
+            22dakika\'da tanıtımı olmayanlar
+          </td>
+        </tr>
+      </table>
+    </div>
+  ';
+
+  echo $output;
+};
+
 function peyton_list_main() {
   // var_dump($_POST);
   $has_perm = peyton_list_user_has_permission();
   $open_form = false;
+
+  peyton_list_intro();
 
   if ($has_perm) {
     $formdata = peyton_list_process_post();
