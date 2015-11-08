@@ -1,4 +1,6 @@
 
+var peyton_list_latest_clicked;
+
 // sort by Turkish and some other language special letters
 jQuery.extend(jQuery.fn.dataTableExt.oSort, {
   "turkish-pre": function ( a ) {
@@ -50,20 +52,23 @@ jQuery.fn.dataTable.ext.search.push(
 );
 
 
-function peyton_list_format_peyton_list_table_form(d) {
+function peyton_list_format_peyton_list_table_form(row) {
+  var d = row.data();
+  var row_index = row.index();
+
   var ret = '' +
     '<div class="peyton_list_inner_update">' +
       '<form id="peyton_list_inner_update_form" name="peyton_list_inner_update" method="post">' +
-        '<input type="hidden" name="peyton_list_inner_update[id]" value="' + d.id + '" />' +
+        '<input type="hidden" name="id" value="' + d.id + '" />' +
         '<table id="peyton_list_inner_update_table">' +
           '<tr>' +
-            '<td><label for="peyton_list_inner_update[title]">' + dt_str['form_title'] + '</label></td>' +
-            '<td><input type="text" name="peyton_list_inner_update[title]" size="50" required="true" value="' + d.title + '" /></td>' +
+            '<td><label for="title">' + dt_str['form_title'] + '</label></td>' +
+            '<td><input type="text" name="title" size="50" required="true" value="' + d.title + '" /></td>' +
           '</tr>' +
           '<tr>' +
-            '<td><label for="peyton_list_inner_update[category]">' + dt_str['form_category'] + '</label></td>' +
+            '<td><label for="category">' + dt_str['form_category'] + '</label></td>' +
             '<td>' +
-              '<select name="peyton_list_inner_update[category]">';
+              '<select name="category">';
 
   jQuery.each(peyton_list_category, function(value, name) {
     var selected = '';
@@ -79,9 +84,9 @@ function peyton_list_format_peyton_list_table_form(d) {
             '</td>' +
           '</tr>' +
           '<tr>' +
-            '<td><label for="peyton_list_inner_update[status]">' + dt_str['form_status'] + '</label></td>' +
+            '<td><label for="status">' + dt_str['form_status'] + '</label></td>' +
             '<td>' +
-              '<select name="peyton_list_inner_update[status]">';
+              '<select name="status">';
 
   jQuery.each(peyton_list_status_editor, function(value, name) {
     var selected = '';
@@ -97,8 +102,8 @@ function peyton_list_format_peyton_list_table_form(d) {
             '</td>' +
           '</tr>' +
           '<tr>' +
-            '<td><label for="peyton_list_inner_update[link]">' + dt_str['form_link'] + '</label></td>' +
-            '<td><input type="text" name="peyton_list_inner_update[link]" size="50" value="' + d.link + '" /></td>' +
+            '<td><label for="link">' + dt_str['form_link'] + '</label></td>' +
+            '<td><input type="text" name="link" size="50" value="' + d.link + '" /></td>' +
           '</tr>';
 
   jQuery.each(['created_by_humanized', 'created_at', 'updated_by_humanized', 'updated_at'], function(ix, k) {
@@ -109,8 +114,8 @@ function peyton_list_format_peyton_list_table_form(d) {
   });
 
   ret +=  '<tr>' +
-            '<td><input type="submit" name="peyton_list_inner_update_delete" value="' + dt_str['form_delete'] + '"/></td>' +
-            '<td><input type="submit" name="peyton_list_inner_update_update" value="' + dt_str['form_update'] + '"/></td>' +
+            '<td><input type="submit" name="peyton_list_inner_update_delete" data-row_index="' + row_index + '" value="' + dt_str['form_delete'] + '"/></td>' +
+            '<td><input type="submit" name="peyton_list_inner_update_update" data-row_index="' + row_index + '" value="' + dt_str['form_update'] + '"/></td>' +
           '</tr>' +
         '</table>' +
       '</form>' +
@@ -232,13 +237,76 @@ jQuery(document).ready(function() {
         td.html(peyton_list_default_edit_str);
       });
     } else {
-      row.child(peyton_list_format_peyton_list_table_form(row.data()), 'no_padding').show();
+      row.child(peyton_list_format_peyton_list_table_form(row), 'no_padding').show();
       // tr.addClass('shown');
       td.addClass('shown');
       td.html("-");
 
       jQuery('div.peyton_list_inner_update', row.child()).slideDown();
     }
+  });
+
+  peyton_list_table.on('click', 'input[name=peyton_list_inner_update_update], input[name=peyton_list_inner_update_delete]', function() {
+    var current = jQuery(this);
+    peyton_list_latest_clicked = current;
+    var row_index = current.data('row_index');
+    var row = peyton_list_table.row(row_index);
+    var tr = jQuery(row.node());
+    var td = jQuery(tr.find('td.shown'));
+    var form = current.closest('form');
+    var form_data = form.serializeArray();
+    var ajax_data = {
+      action: 'peyton_list',
+      entry: {}
+    };
+    var failed_str;
+    var is_update = current.attr('name') === 'peyton_list_inner_update_update';
+
+    jQuery.each(form_data, function(ix, k) {
+      ajax_data.entry[k.name] = k.value;
+    });
+
+    if (is_update) {
+      ajax_data.peyton_list_action = 'update';
+      failed_str = dt_str['update_failed'];
+    } else {
+      ajax_data.peyton_list_action = 'delete';
+      failed_str = dt_str['delete_failed'];
+    }
+
+    jQuery.ajax({
+      url: peyton_list_ajax_url,
+      type: 'post',
+      dataType: 'json',
+      data: ajax_data,
+      success: function(data) {
+        if (typeof data !== 'undefined') {
+          if (data.success) {
+            if (row.child.isShown()) {
+              jQuery('div.peyton_list_inner_update', row.child()).slideUp(function () {
+                row.child.hide();
+                td.removeClass('shown');
+                td.html(peyton_list_default_edit_str);
+              });
+            }
+
+            if (is_update) {
+              row.data(data.data).draw();
+            } else {
+              row.remove().draw();
+            }
+          } else {
+            alert(failed_str);
+          }
+        }
+      },
+      error: function(message) {
+        console.log(message);
+        alert(dt_str['connection_problem']);
+      }
+    });
+
+    return false;
   });
 
   jQuery('select[name=peyton_list_main_list_selector_category], ' +

@@ -46,16 +46,6 @@ function peyton_list_process_post() {
     $error_msg = peyton_list_insert_entry($data);
   }
 
-  if (isset($_POST['peyton_list_inner_update_delete']) && isset($_POST['peyton_list_inner_update'])) {
-    $delete_id = $_POST['peyton_list_inner_update']['id'];
-    peyton_list_delete_link($delete_id);
-  }
-
-  if (isset($_POST['peyton_list_inner_update_update']) && isset($_POST['peyton_list_inner_update'])) {
-    $data = $_POST['peyton_list_inner_update'];
-    peyton_list_update_entry($data);
-  }
-
   $ret = array(
     'error_msg' => $error_msg,
     'data' => $data
@@ -136,7 +126,7 @@ function peyton_list_update_entry($data) {
   return $success;
 }
 
-function peyton_list_delete_link($link_id) {
+function peyton_list_delete_entry($link_id) {
   global $wp_query, $wpdb, $user_ID, $peyton_list_db_main;
 
   $success = $wpdb->delete($peyton_list_db_main, array('id' => $link_id), array('%d'));
@@ -144,7 +134,7 @@ function peyton_list_delete_link($link_id) {
   return $success;
 }
 
-function peyton_list_get_links_raw() {
+function peyton_list_get_entries_raw($entry_id = false) {
   global $wp_query, $wpdb, $user_ID, $peyton_list_db_main;
 
   if (peyton_list_user_has_permission()) {
@@ -153,27 +143,35 @@ function peyton_list_get_links_raw() {
     $can_edit_sql = 'SELECT 0';
   }
 
-  $sql_str = $wpdb->prepare("SELECT
-                             PL.id AS id,
-                             PL.title AS title,
-                             PL.category AS category,
-                             PL.status AS status,
-                             PL.link AS link,
-                             PL.created_by AS created_by,
-                             PL.created_at AS created_at,
-                             PL.updated_by AS updated_by,
-                             PL.updated_at AS updated_at,
-                             WPU1.user_nicename AS created_by_humanized,
-                             WPU2.user_nicename AS updated_by_humanized,
-                             ($can_edit_sql) AS can_edit
-                             FROM $peyton_list_db_main PL
-                             JOIN $wpdb->users WPU1
-                               ON WPU1.ID = PL.created_by
-                             JOIN $wpdb->users WPU2
-                               ON WPU2.ID = PL.updated_by
-                             ORDER BY PL.title");
+  if ($entry_id) {
+    $where_statement = 'WHERE PL.id = ' . $entry_id;
+  } else {
+    $where_statement = '';
+  }
 
-  return $wpdb->get_results($sql_str);
+  $sql_str = "SELECT
+              PL.id AS id,
+              PL.title AS title,
+              PL.category AS category,
+              PL.status AS status,
+              PL.link AS link,
+              PL.created_by AS created_by,
+              PL.created_at AS created_at,
+              PL.updated_by AS updated_by,
+              PL.updated_at AS updated_at,
+              WPU1.user_nicename AS created_by_humanized,
+              WPU2.user_nicename AS updated_by_humanized,
+              ($can_edit_sql) AS can_edit
+              FROM $peyton_list_db_main PL
+              JOIN $wpdb->users WPU1
+                ON WPU1.ID = PL.created_by
+              JOIN $wpdb->users WPU2
+                ON WPU2.ID = PL.updated_by
+              $where_statement
+              ORDER BY PL.title";
+
+  $sql_statement = $wpdb->prepare($sql_str);
+  return $wpdb->get_results($sql_statement);
 }
 
 function peyton_list_prepare_for_dt($data) {
@@ -201,9 +199,14 @@ function peyton_list_prepare_for_dt($data) {
   return $ret;
 }
 
-function peyton_list_get_links() {
-  $raw_data = peyton_list_get_links_raw();
+function peyton_list_get_entries($entry_id = false) {
+  $raw_data = peyton_list_get_entries_raw($entry_id);
   return array_map('peyton_list_prepare_for_dt', $raw_data);
+}
+
+function peyton_list_get_single_entry($entry_id) {
+  $results = peyton_list_get_entries($entry_id);
+  return $results[0];
 }
 
 function peyton_list_insert_form($formdata) {
@@ -363,6 +366,7 @@ function peyton_list_datatable($has_perm, $open_form) {
     //<![CDATA[
 
       var dt_data;
+      var peyton_list_ajax_url = "' . admin_url('admin-ajax.php') . '";
       var peyton_list_table;
       var peyton_list_open_insert_form = ' . ($open_form ? 1 : 0) . ';
       var peyton_list_user_has_permission = ' . ($has_perm ? 1 : 0) . ';
@@ -394,10 +398,13 @@ function peyton_list_datatable($has_perm, $open_form) {
         form_created_at: "' .  __('Created at', 'peyton_list') . '",
         form_updated_by: "' .  __('Updated by', 'peyton_list') . '",
         form_updated_by_humanized: "' .  __('Updated by', 'peyton_list') . '",
-        form_updated_at: "' .  __('Updated at', 'peyton_list') . '"
+        form_updated_at: "' .  __('Updated at', 'peyton_list') . '",
+        update_failed: "' .  __('Update failed', 'peyton_list') . '",
+        delete_failed: "' .  __('Delete failed', 'peyton_list') . '",
+        connection_problem: "' .  __('Connection problem', 'peyton_list') . '"
       };
 
-      dt_data = ' . json_encode(peyton_list_get_links()) . ';
+      dt_data = ' . json_encode(peyton_list_get_entries()) . ';
 
     //]]>
     </script>

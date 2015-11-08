@@ -145,5 +145,41 @@ function peyton_list_get_main_data() {
 
 add_shortcode('peyton_list', 'peyton_list_get_main_data');
 
+function peyton_list_ajax() {
+  $has_perm = peyton_list_user_has_permission();
+  $action = $_POST['peyton_list_action'];
+  $data = $_POST['entry'];
+
+  if (!$has_perm || !isset($data)) {
+    return;
+  }
+
+  switch ($action) {
+  case 'update':
+    $updated_data = array();
+    $success = peyton_list_update_entry($data);
+
+    if ($success) {
+      $updated_data = peyton_list_get_single_entry($data['id']);
+    }
+
+    echo json_encode(
+      array(
+        'success' => $success,
+        'data' => $updated_data
+      )
+    );
+    break;
+  case 'delete':
+    $delete_id = $data['id'];
+    $success = peyton_list_delete_entry($delete_id);
+
+    echo json_encode(array('success' => $success));
+    break;
+  }
+
+  wp_die();
+}
+add_action('wp_ajax_peyton_list', 'peyton_list_ajax');
 
 ?>
