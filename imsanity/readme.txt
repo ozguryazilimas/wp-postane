@@ -3,7 +3,7 @@ Contributors: verysimple
 Donate link: http://verysimple.com/products/imsanity/
 Tags: imsanity, image, images, automatic scale, automatic resize, image resizer, image scaler, automatic image resizer, auto image resize, auto image resizer, space saver, image shrinker, image skruncher, image cruncher
 Requires at least: 2.9
-Tested up to: 4.1.1
+Tested up to: 4.4
 Stable tag: trunk
 
 Imsanity automatically resizes huge image uploads.  Are contributors uploading
@@ -83,7 +83,16 @@ WordPress uses the GD library to handle the image manipulation.  GD can be insta
 various types of images.  If GD is not configured to handle a particular image type then you will get
 this message when you try to upload it.  For more info see http://php.net/manual/en/image.installation.php
 
-= 4. Why would I need this plugin? =
+= 4. How can I tell Imsanity to ingore a certain image so I can upload it without being resized? =
+
+You can re-name your file and add "-noresize" to the filename.  For example if your file is named
+"photo.jpg" you can rename it "photo-noresize.jpg" and Imsanity will ignore it, allowing you
+to upload the full-sized image.
+
+Optionally you can temporarily adjust the max image size settings and set them to a number that is
+higher than the resolution of the image you wish to upload
+
+= 5. Why would I need this plugin? =
 
 Photos taken on any modern camera and even most cellphones are too large for display full-size in a browser.
 In the case of modern DSLR cameras, the image sizes are intended for high-quality printing and are ridiculously
@@ -99,27 +108,33 @@ The size limit that imsanity uses is configurable.  The default value is large e
 the average vistors entire screen without scaling so it is still more than large enough for
 typical usage.
 
-= 5. Why would I NOT want to use this plugin? =
+= 6. Why would I NOT want to use this plugin? =
 
 You might not want to use Imsanity if you use WordPress as a stock art download
 site, provide high-res images for print or use WordPress as a high-res photo
 storage archive.  If you are doing any of these things then most likely
 you already have a good understanding of image resolution.
 
-= 6. Doesn't WordPress already automatically scale images? =
+= 7. Doesn't WordPress already automatically scale images? =
 
 When an image is uploaded WordPress keeps the original and, depending on the size of the original,
 will create up to 3 smaller sized copies of the file (Large, Medium, Thumbnail) which are intended
 for embedding on your pages.  Unless you have special photographic needs, the original usually sits
 there unused, but taking up disk quota.
 
-= 7. Why did you spell Insanity wrong and why does Imsanity girl want to cut me? =
+= 8. Why did you spell Insanity wrong and why does Imsanity girl want to cut me? =
 
 Imsanity is short for "Image Sanity Limit"  A sanity limit is a term for limiting something down to
 a size or value that is reasonable.  Imsanity girl cuts because you drive her insane by uploading
 unecessarily large images for no good reason.
 
-= 8. Where do I go for support? =
+= 9. How can I hide or remove the Imsanity logo image on the settings page? =
+
+If you prefer not to see the logo, add the following line to wp-config.php:
+
+define('IMSANITY_HIDE_LOGO',true);
+
+= 10. Where do I go for support? =
 
 Documentation is available on the plugin homepage at http://wordpress.org/tags/imsanity and questions may
 be posted on the support forum at http://wordpress.org/tags/imsanity
@@ -130,10 +145,19 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.3.5	 =
-* Add option to hide Imsanity girl logo image on settings screen
+= 2.3.6	 =
+* tested up to WP 4.4
+* if resized image is not smaller than original, then keep original
+* allow IMSANITY_AJAX_MAX_RECORDS to be overridden in wp-config.php
+* if png-to-jpg is enabled, replace png transparency with white
 
 == Changelog ==
+
+= 2.3.6	 =
+* tested up to WP 4.4
+* if resized image is not smaller than original, then keep original
+* allow IMSANITY_AJAX_MAX_RECORDS to be overridden in wp-config.php
+* if png-to-jpg is enabled, replace png transparency with white
 
 = 2.3.5	 =
 * Add option to hide Imsanity girl logo image on settings screen

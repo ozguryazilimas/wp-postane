@@ -4,11 +4,11 @@ Plugin Name: Imsanity
 Plugin URI: http://verysimple.com/products/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Jason Hinkle
-Version: 2.3.5
+Version: 2.3.6
 Author URI: http://verysimple.com/
 */
 
-define('IMSANITY_VERSION','2.3.5');
+define('IMSANITY_VERSION','2.3.6');
 define('IMSANITY_SCHEMA_VERSION','1.1');
 
 define('IMSANITY_DEFAULT_MAX_WIDTH',2048);
@@ -21,7 +21,7 @@ define('IMSANITY_SOURCE_POST',1);
 define('IMSANITY_SOURCE_LIBRARY',2);
 define('IMSANITY_SOURCE_OTHER',4);
 
-define('IMSANITY_AJAX_MAX_RECORDS',250);
+if (!defined('IMSANITY_AJAX_MAX_RECORDS')) define('IMSANITY_AJAX_MAX_RECORDS',250);
 
 /**
  * Load Translations
@@ -119,6 +119,13 @@ function imsanity_handle_upload($params)
 	// @TODO when uploads occur via RPC the image may not exist at this location
 	$oldPath = $params['file'];
 
+	// @HACK not currently working
+	// @see https://wordpress.org/support/topic/images-dont-resize-when-uploaded-via-mobile-device
+// 	if (!file_exists($oldPath)) {
+// 		$ud = wp_upload_dir();
+// 		$oldPath = $ud['path'] . DIRECTORY_SEPARATOR . $oldPath;
+// 	}
+	
 	if ( (!is_wp_error($params)) && file_exists($oldPath) && in_array($params['type'], array('image/png','image/gif','image/jpeg')))
 	{
 
@@ -155,19 +162,28 @@ function imsanity_handle_upload($params)
 			/* uncomment to debug error handling code: */
 			// $resizeResult = new WP_Error('invalid_image', __(print_r($_REQUEST)), $oldPath);
 
-			// regardless of success/fail we're going to remove the original upload
-			unlink($oldPath);
-
 			if (!is_wp_error($resizeResult))
 			{
 				$newPath = $resizeResult;
-
-				// remove original and replace with re-sized image
-				rename($newPath, $oldPath);
+				
+				if (filesize($newPath) <  filesize($oldPath)) {
+					// we saved some file space. remove original and replace with resized image
+					unlink($oldPath);
+					rename($newPath, $oldPath);
+				}
+				else {
+					// theresized image is actually bigger in filesize (most likely due to jpg quality).
+					// keep the old one and just get rid of the resized image
+					unlink($newPath);
+				}
 			}
 			else
 			{
 				// resize didn't work, likely because the image processing libraries are missing
+				
+				// remove the old image so we don't leave orphan files hanging around
+				unlink($oldPath);
+				
 				$params = wp_handle_upload_error( $oldPath ,
 					sprintf( __("Oh Snap! Imsanity was unable to resize this image "
 					. "for the following reason: '%s'
@@ -207,8 +223,13 @@ function imsanity_convert_to_jpg($type,$params)
 		if(!function_exists('imagecreatefrompng')) {
 			return wp_handle_upload_error( $params['file'],'imsanity_convert_to_jpg requires gd library enabled');
 		}
-		
+
 		$img = imagecreatefrompng($params['file']);
+		// convert png transparency to white
+		$bg = imagecreatetruecolor(imagesx($img), imagesy($img));
+		imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
+		imagealphablending($bg, TRUE);
+		imagecopy($bg, $img, 0, 0, 0, 0, imagesx($img), imagesy($img));
 
 	}
 	else {
@@ -245,11 +266,15 @@ function imsanity_convert_to_jpg($type,$params)
 	return $params;
 }
 
+
 /* add filters to hook into uploads */
 add_filter( 'wp_handle_upload', 'imsanity_handle_upload' );
 
 /* add filters/actions to customize upload page */
 add_action('post-upload-ui', 'imsanity_upload_ui');
+
+
+
 
 // TODO: if necessary to update the post data in the future...
 // add_filter( 'wp_update_attachment_metadata', 'imsanity_handle_update_attachment_metadata' );
