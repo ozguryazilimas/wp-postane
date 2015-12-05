@@ -30,6 +30,8 @@ $debug = in_array('-d', $argv);
 $dry_run = in_array('-n', $argv);
 $force = in_array('-f', $argv);
 $option_name = 'oyuncu_listesi_eksik_son_tarih';
+$posts = array();
+
 
 if (!$force) {
   $date = get_option($option_name);
@@ -44,7 +46,7 @@ if (!$force) {
 }
 
 $posts_table = $wpdb->prefix . "posts";
-$sql = "SELECT post_content FROM $posts_table WHERE post_content LIKE '%[oyuncu]%'";
+$sql = "SELECT ID,post_content FROM $posts_table WHERE post_content LIKE '%[oyuncu]%'";
 
 if (!$force) {
   $sql .= " AND post_modified_gmt >= '$date'";
@@ -55,6 +57,7 @@ $oyuncu_listesi = array();
 
 foreach ($post_list as $post) {
   $content = $post->post_content;
+  $id = $post->ID;
   $start_pos = strpos($content, "[oyuncu]");
   $end_pos = strpos($content, "[/oyuncu]");
 
@@ -62,8 +65,16 @@ foreach ($post_list as $post) {
     $oyuncu_name = substr($content,$start_pos + 8, $end_pos-$start_pos - 8);
     $oyuncu_listesi[] = $oyuncu_name;
 
-    $start_pos = strpos($content, "[oyuncu]",$end_pos+1);
-    $end_pos = strpos($content, "[/oyuncu]",$end_pos+1);
+    if (array_key_exists($oyuncu_name, $posts)) {
+      if (!array_key_exists($id, $posts[$oyuncu_name])) {
+        array_push($posts[$oyuncu_name], $id);
+      }
+    } else {
+      $posts[$oyuncu_name] = [$id];
+    }
+
+    $start_pos = strpos($content, "[oyuncu]", $end_pos + 1);
+    $end_pos = strpos($content, "[/oyuncu]", $end_pos + 1);
   }
 }
 
@@ -109,7 +120,13 @@ if (count($missing_oyuncu) > 0) {
 
 
   foreach ($missing_oyuncu as $k) {
-    $content .= ' ' . $k . '<br/><br/>';
+    $content .= ' * ' . $k . '<br/>';
+
+    foreach ($posts[$k] as $postid) {
+      $content .= '<a href="' . get_post_permalink($postid, true) . '">' . get_the_title($postid) . '</a><br/>';
+    }
+
+    $content .= '<br/>';
   }
 
   if ($debug) {
@@ -122,7 +139,7 @@ if (count($missing_oyuncu) > 0) {
 }
 
 
-if (!$force || !$dry_run) {
+if (!($force || $dry_run)) {
   update_option($option_name, $now);
 }
 
