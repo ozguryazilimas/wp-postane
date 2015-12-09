@@ -5,13 +5,14 @@
 Plugin Name:  Regenerate Thumbnails
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/regenerate-thumbnails/
 Description:  Allows you to regenerate all thumbnails after changing the thumbnail sizes.
-Version:      2.2.4
-Author:       Viper007Bond
+Version:      2.2.5
+Author:       Alex Mills (Viper007Bond)
 Author URI:   http://www.viper007bond.com/
+Text Domain:  regenerate-thumbnails
 
 **************************************************************************
 
-Copyright (C) 2008-2011 Viper007Bond
+Copyright (C) 2008-2016 Alex Mills (Viper007Bond)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,8 +35,7 @@ class RegenerateThumbnails {
 	// Plugin initialization
 	function RegenerateThumbnails() {
 		// Load up the localization file if we're using WordPress in a different language
-		// Place it in this plugin's "localization" folder and name it "regenerate-thumbnails-[value in wp-config].mo"
-		load_plugin_textdomain( 'regenerate-thumbnails', false, '/regenerate-thumbnails/localization' );
+		load_plugin_textdomain( 'regenerate-thumbnails' );
 
 		add_action( 'admin_menu',                              array( &$this, 'add_admin_menu' ) );
 		add_action( 'admin_enqueue_scripts',                   array( &$this, 'admin_enqueues' ) );
