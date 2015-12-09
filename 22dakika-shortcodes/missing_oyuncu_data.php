@@ -70,7 +70,7 @@ foreach ($post_list as $post) {
         array_push($posts[$oyuncu_name], $id);
       }
     } else {
-      $posts[$oyuncu_name] = [$id];
+      $posts[$oyuncu_name] = array($id);
     }
 
     $start_pos = strpos($content, "[oyuncu]", $end_pos + 1);
