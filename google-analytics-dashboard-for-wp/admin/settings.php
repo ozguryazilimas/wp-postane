@@ -71,7 +71,6 @@ final class GADWP_Settings {
 	}
 
 	private static function navigation_tabs( $tabs ) {
-		echo '<div id="icon-themes" class="icon32"><br></div>';
 		echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $name ) {
 			echo "<a class='nav-tab' id='tab-$tab' href='#top#gadwp-$tab'>$name</a>";
@@ -532,6 +531,9 @@ final class GADWP_Settings {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td colspan="2"><?php echo "<h2>" . __( "Cross-domain Tracking", 'google-analytics-dashboard-for-wp' ) . "</h2>"; ?></td>
+                                </tr>
+                                <tr>
                                     <td colspan="2" class="gadwp-settings-title">
                                         <div class="button-primary gadwp-settings-switchoo">
                                             <input type="checkbox" name="options[ga_crossdomain_tracking]" value="1" class="gadwp-settings-switchoo-checkbox" id="ga_crossdomain_tracking" <?php checked( $options['ga_crossdomain_tracking'], 1 ); ?>> <label class="gadwp-settings-switchoo-label" for="ga_crossdomain_tracking">
@@ -545,6 +547,21 @@ final class GADWP_Settings {
                                 <tr>
                                     <td class="gadwp-settings-title"><label for="ga_crossdomain_list"><?php _e("Cross Domains:", 'google-analytics-dashboard-for-wp'); ?></label></td>
                                     <td><input type="text" id="ga_crossdomain_list" name="options[ga_crossdomain_list]" value="<?php echo esc_attr($options['ga_crossdomain_list']); ?>" size="50"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><?php echo "<h2>" . __( "Cookie Customization", 'google-analytics-dashboard-for-wp' ) . "</h2>"; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="gadwp-settings-title"><label for="ga_cookiedomain"><?php _e("Cookie Domain:", 'google-analytics-dashboard-for-wp'); ?></label></td>
+                                    <td><input type="text" id="ga_cookiedomain" name="options[ga_cookiedomain]" value="<?php echo esc_attr($options['ga_cookiedomain']); ?>" size="50"></td>
+                                </tr>
+                                <tr>
+                                    <td class="gadwp-settings-title"><label for="ga_cookiename"><?php _e("Cookie Name:", 'google-analytics-dashboard-for-wp'); ?></label></td>
+                                    <td><input type="text" id="ga_cookiename" name="options[ga_cookiename]" value="<?php echo esc_attr($options['ga_cookiename']); ?>" size="50"></td>
+                                </tr>
+                                <tr>
+                                    <td class="gadwp-settings-title"><label for="ga_cookieexpires"><?php _e("Cookie Expires:", 'google-analytics-dashboard-for-wp'); ?></label></td>
+                                    <td><input type="text" id="ga_cookieexpires" name="options[ga_cookieexpires]" value="<?php echo esc_attr($options['ga_cookieexpires']); ?>" size="10"> seconds</td>
                                 </tr>
                             </table>
                         </div>
@@ -738,7 +755,7 @@ final class GADWP_Settings {
 							if ( ! $gadwp->config->options['ga_dash_tableid_jail'] ) {
 								$profile = GADWP_Tools::guess_default_domain( $profiles );
 								$gadwp->config->options['ga_dash_tableid_jail'] = $profile;
-								$gadwp->config->options['ga_dash_tableid'] = $profile;
+								//$gadwp->config->options['ga_dash_tableid'] = $profile;
 							}
 							$gadwp->config->set_plugin_options();
 							$options = self::update_options( 'general' );
@@ -1010,7 +1027,7 @@ final class GADWP_Settings {
 							if ( isset( $gadwp->config->options['ga_dash_tableid_jail'] ) && ! $gadwp->config->options['ga_dash_tableid_jail'] ) {
 								$profile = GADWP_Tools::guess_default_domain( $profiles );
 								$gadwp->config->options['ga_dash_tableid_jail'] = $profile;
-								$gadwp->config->options['ga_dash_tableid'] = $profile;
+								//$gadwp->config->options['ga_dash_tableid'] = $profile;
 							}
 							$gadwp->config->set_plugin_options( true );
 							$options = self::update_options( 'network' );
@@ -1047,7 +1064,7 @@ final class GADWP_Settings {
 						if ( isset( $gadwp->config->options['ga_dash_tableid_jail'] ) && ! $gadwp->config->options['ga_dash_tableid_jail'] ) {
 							$profile = GADWP_Tools::guess_default_domain( $profiles );
 							$gadwp->config->options['ga_dash_tableid_jail'] = $profile;
-							$gadwp->config->options['ga_dash_tableid'] = $profile;
+							//$gadwp->config->options['ga_dash_tableid'] = $profile;
 						}
 						$gadwp->config->set_plugin_options( true );
 						$options = self::update_options( 'network' );

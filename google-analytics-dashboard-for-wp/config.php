@@ -17,26 +17,13 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 		public $options;
 
 		public function __construct() {
-			// get plugin options
+			// Get plugin options
 			$this->get_plugin_options();
-			$this->last_requested_report();
+			// Automatic updates
 			add_filter( 'auto_update_plugin', array( $this, 'automatic_update' ), 10, 2 );
-		}
-
-		/*
-		 * Stores the last requested dimension and metric in cookies
-		 */
-		private function last_requested_report() {
-			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) { // Don't store queries while doing ajax
-				return;
-			}
-
-			if ( isset( $_REQUEST['gadwpperiod'] ) ) {
-				GADWP_Tools::set_cookie( 'default_dimension', $_REQUEST['gadwpperiod'] );
-			}
-
-			if ( isset( $_REQUEST['gadwpquery'] ) ) {
-				GADWP_Tools::set_cookie( 'default_metric', $_REQUEST['gadwpquery'] );
+			// Provide language packs for all available Network languages
+			if ( is_multisite() ) {
+				add_filter( 'plugins_update_check_locales', array( $this, 'translation_updates' ), 10, 1 );
 			}
 		}
 
@@ -62,6 +49,11 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 				return ( $this->get_major_version( GADWP_CURRENT_VERSION ) == $this->get_major_version( $item['new_version'] ) );
 			}
 			return $update;
+		}
+
+		public function translation_updates( $locales ) {
+			$languages = get_available_languages();
+			return array_values( $languages );
 		}
 
 		// Validates data before storing
@@ -113,6 +105,15 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 			}
 			if ( isset( $options['ga_aff_tracking'] ) ) {
 				$options['ga_aff_tracking'] = (int) $options['ga_aff_tracking'];
+			}
+			if ( isset( $options['ga_cookiedomain'] ) ) { // v4.9
+				$options['ga_cookiedomain'] = sanitize_text_field( $options['ga_cookiedomain'] );
+			}
+			if ( isset( $options['ga_cookiename'] ) ) { // v4.9
+				$options['ga_cookiename'] = sanitize_text_field( $options['ga_cookiename'] );
+			}
+			if ( isset( $options['ga_cookieexpires'] ) && $options['ga_cookieexpires'] ) { // v4.9
+				$options['ga_cookieexpires'] = (int) $options['ga_cookieexpires'];
 			}
 			if ( isset( $options['ga_event_affiliates'] ) ) {
 				if ( empty( $options['ga_event_affiliates'] ) ) {
@@ -181,12 +182,13 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 				$get_network_options = get_site_option( 'gadash_network_options' );
 				$network_options = (array) json_decode( $get_network_options );
 				if ( isset( $network_options['ga_dash_network'] ) && ( $network_options['ga_dash_network'] ) ) {
-					$network_options = (array) json_decode( $get_network_options );
 					if ( ! is_network_admin() && ! empty( $network_options['ga_dash_profile_list'] ) && isset( $network_options['ga_dash_tableid_network']->$blog_id ) ) {
 						$network_options['ga_dash_profile_list'] = array( 0 => GADWP_Tools::get_selected_profile( $network_options['ga_dash_profile_list'], $network_options['ga_dash_tableid_network']->$blog_id ) );
 						$network_options['ga_dash_tableid_jail'] = $network_options['ga_dash_profile_list'][0][1];
 					}
 					$this->options = array_merge( $this->options, $network_options );
+				} else {
+					$this->options['ga_dash_network'] = 0;
 				}
 			}
 		}
@@ -224,8 +226,6 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 				} else {
 					GADWP_Tools::delete_cache( 'gapi_errors' );
 				}
-				GADWP_Tools::unset_cookie( 'default_metric' );
-				GADWP_Tools::unset_cookie( 'default_dimension' );
 			}
 			if ( ! isset( $this->options['ga_enhanced_links'] ) ) {
 				$this->options['ga_enhanced_links'] = 0;
@@ -349,6 +349,10 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 				unset( $this->options['ga_tracking_code'] );
 				$flag = true;
 			}
+			if ( isset( $this->options['ga_dash_tableid'] ) ) { // v4.9
+				unset( $this->options['ga_dash_tableid'] );
+				$flag = true;
+			}
 			if ( isset( $this->options['ga_dash_frontend_keywords'] ) ) { // v4.8
 				unset( $this->options['ga_dash_frontend_keywords'] );
 				$flag = true;
@@ -364,6 +368,23 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 					$flag = true;
 				}
 			}
+			if ( ! isset( $this->options['ga_cookiedomain'] ) ) {
+				$this->options['ga_cookiedomain'] = '';
+				$flag = true;
+			}
+			if ( ! isset( $this->options['ga_cookiedomain'] ) ) { // v4.9
+				$this->options['ga_cookiedomain'] = '';
+				$flag = true;
+			}
+			if ( ! isset( $this->options['ga_cookiename'] ) ) { // v4.9
+				$this->options['ga_cookiename'] = '';
+				$flag = true;
+			}
+			if ( ! isset( $this->options['ga_cookieexpires'] ) ) { // v4.9
+				$this->options['ga_cookieexpires'] = '';
+				$flag = true;
+			}
+
 			if ( $flag ) {
 				$this->set_plugin_options( false );
 			}

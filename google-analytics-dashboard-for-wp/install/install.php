@@ -37,7 +37,6 @@ class GADWP_Install {
 			$options['ga_realtime_pages'] = 10;
 			$options['ga_dash_token'] = '';
 			$options['ga_dash_profile_list'] = array();
-			$options['ga_dash_tableid'] = '';
 			$options['ga_dash_frontend_keywords'] = 0;
 			$options['ga_tracking_code'] = '';
 			$options['ga_enhanced_links'] = 0;
@@ -60,6 +59,9 @@ class GADWP_Install {
 			$options['frontend_item_reports'] = 0;
 			$options['dashboard_widget'] = 1;
 			$options['api_backoff'] = 0;
+			$options['ga_cookiedomain'] = '';
+			$options['ga_cookiename'] = '';
+			$options['ga_cookieexpires'] = '';
 		} else {
 			$options = array();
 			$options['ga_dash_apikey'] = get_option( 'ga_dash_apikey' );
@@ -89,7 +91,6 @@ class GADWP_Install {
 			$options['ga_realtime_pages'] = get_option( 'ga_realtime_pages' );
 			$options['ga_dash_token'] = get_option( 'ga_dash_token' );
 			$options['ga_dash_profile_list'] = get_option( 'ga_dash_profile_list' );
-			$options['ga_dash_tableid'] = get_option( 'ga_dash_tableid' );
 			$options['ga_dash_frontend_keywords'] = 0;
 			$options['ga_enhanced_links'] = 0;
 			$options['ga_dash_remarketing'] = 0;
@@ -108,6 +109,9 @@ class GADWP_Install {
 			$options['frontend_item_reports'] = 0;
 			$options['dashboard_widget'] = 1;
 			$options['api_backoff'] = 0;
+			$options['ga_cookiedomain'] = '';
+			$options['ga_cookiename'] = '';
+			$options['ga_cookieexpires'] = '';
 
 			delete_option( 'ga_dash_apikey' );
 			delete_option( 'ga_dash_clientid' );
@@ -133,7 +137,6 @@ class GADWP_Install {
 			delete_option( 'ga_dash_token' );
 			delete_option( 'ga_dash_refresh_token' );
 			delete_option( 'ga_dash_profile_list' );
-			delete_option( 'ga_dash_tableid' );
 		}
 		add_option( 'gadash_options', json_encode( $options ) );
 	}

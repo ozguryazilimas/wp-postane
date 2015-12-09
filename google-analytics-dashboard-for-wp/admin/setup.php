@@ -90,10 +90,10 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 				$ed_bubble = '';
 			}
 
-			wp_enqueue_script( 'gadwp_backend_ui', plugins_url( 'js/ui.js', __FILE__ ), array( 'jquery' ), GADWP_CURRENT_VERSION, true );
+			wp_enqueue_script( 'gadwp-backend-ui', plugins_url( 'js/ui.js', __FILE__ ), array( 'jquery' ), GADWP_CURRENT_VERSION, true );
 
 			/* @formatter:off */
-			wp_localize_script( 'gadwp_backend_ui', 'gadwp_ui_data', array(
+			wp_localize_script( 'gadwp-backend-ui', 'gadwp_ui_data', array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'security' => wp_create_nonce( 'gadwp_dismiss_notices' ),
 				'ed_bubble' => $ed_bubble,
@@ -101,24 +101,116 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			);
 			/* @formatter:on */
 
+			if ( $this->gadwp->config->options['switch_profile'] && count($this->gadwp->config->options['ga_dash_profile_list']) > 1 ) {
+				$views = array();
+				foreach ( $this->gadwp->config->options['ga_dash_profile_list'] as $items ) {
+					if ( $items[3] ) {
+						$views[$items[1]] = esc_js( GADWP_Tools::strip_protocol( $items[3] ) ); //  . ' &#8658; ' . $items[0] );
+					}
+				}
+			} else {
+				$views = false;
+			}
+
 			/*
-			 * Dashboard Widgets Styles & Scripts
+			 * Main Dashboard Widgets Styles & Scripts
 			 */
 			$widgets_hooks = array( 'index.php' );
 
 			if ( in_array( $new_hook, $widgets_hooks ) ) {
 				if ( GADWP_Tools::check_roles( $this->gadwp->config->options['ga_dash_access_back'] ) && $this->gadwp->config->options['dashboard_widget'] ) {
 
-					wp_enqueue_style( 'gadwp-nprogress', GADWP_URL . 'tools/nprogress/nprogress.css', null, GADWP_CURRENT_VERSION );
+					if ( $this->gadwp->config->options['ga_target_geomap'] ) {
+						$country_codes = GADWP_Tools::get_countrycodes();
+						if ( isset( $country_codes[$this->gadwp->config->options['ga_target_geomap']] ) ){
+							$region = $this->gadwp->config->options['ga_target_geomap'];
+						} else {
+							$region = false;
+						}
+					} else {
+						$region = false;
+					}
 
-					wp_enqueue_script( 'gadwp-admin-widgets', plugins_url( 'js/widgets.js', __FILE__ ), array( 'jquery' ), GADWP_CURRENT_VERSION );
+					wp_enqueue_style( 'gadwp-nprogress', GADWP_URL . 'common/nprogress/nprogress.css', null, GADWP_CURRENT_VERSION );
+
+					wp_enqueue_style( 'gadwp-backend-item-reports', GADWP_URL . 'admin/css/admin-widgets.css', null, GADWP_CURRENT_VERSION );
+
+					wp_register_style( 'jquery-ui-tooltip-html', GADWP_URL . 'common/realtime/jquery.ui.tooltip.html.css' );
+
+					wp_enqueue_style( 'jquery-ui-tooltip-html' );
+
+					wp_register_script( 'jquery-ui-tooltip-html', GADWP_URL . 'common/realtime/jquery.ui.tooltip.html.js' );
 
 					if ( ! wp_script_is( 'googlejsapi' ) ) {
 						wp_register_script( 'googlejsapi', 'https://www.google.com/jsapi' );
-						wp_enqueue_script( 'googlejsapi' );
 					}
 
-					wp_enqueue_script( 'gadwp-nprogress', GADWP_URL . 'tools/nprogress/nprogress.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
+					wp_enqueue_script( 'gadwp-nprogress', GADWP_URL . 'common/nprogress/nprogress.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
+
+					wp_enqueue_script( 'gadwp-backend-dashboard-reports', GADWP_URL . 'common/js/reports.js', array( 'jquery', 'googlejsapi', 'gadwp-nprogress', 'jquery-ui-tooltip', 'jquery-ui-core', 'jquery-ui-position', 'jquery-ui-tooltip-html' ), GADWP_CURRENT_VERSION );
+
+					/* @formatter:off */
+					wp_localize_script( 'gadwp-backend-dashboard-reports', 'gadwp_item_data', array(
+						'ajaxurl' => admin_url( 'admin-ajax.php' ),
+						'security' => wp_create_nonce( 'gadwp_backend_item_reports' ),
+						'dateList' => array(
+							'realtime' => __( "Real-Time", 'google-analytics-dashboard-for-wp' ),
+							'today' => __( "Today", 'google-analytics-dashboard-for-wp' ),
+							'yesterday' => __( "Yesterday", 'google-analytics-dashboard-for-wp' ),
+							'7daysAgo' => sprintf( __( "Last %d Days", 'google-analytics-dashboard-for-wp' ), 7 ),
+							'14daysAgo' => sprintf( __( "Last %d Days", 'google-analytics-dashboard-for-wp' ), 14 ),
+							'30daysAgo' => sprintf( __( "Last %d Days", 'google-analytics-dashboard-for-wp' ), 30 ),
+							'90daysAgo' => sprintf( __( "Last %d Days", 'google-analytics-dashboard-for-wp' ), 90 ),
+							'365daysAgo' =>  sprintf( _n( "%s Year", "%s Years", 1, 'google-analytics-dashboard-for-wp' ), __('One', 'google-analytics-dashboard-for-wp') ),
+							'1095daysAgo' =>  sprintf( _n( "%s Year", "%s Years", 3, 'google-analytics-dashboard-for-wp' ), __('Three', 'google-analytics-dashboard-for-wp') ),
+						),
+						'reportList' => array(
+							'sessions' => __( "Sessions", 'google-analytics-dashboard-for-wp' ),
+							'users' => __( "Users", 'google-analytics-dashboard-for-wp' ),
+							'organicSearches' => __( "Organic", 'google-analytics-dashboard-for-wp' ),
+							'pageviews' => __( "Page Views", 'google-analytics-dashboard-for-wp' ),
+							'visitBounceRate' => __( "Bounce Rate", 'google-analytics-dashboard-for-wp' ),
+							'locations' => __( "Location", 'google-analytics-dashboard-for-wp' ),
+							'contentpages' =>  __( "Pages", 'google-analytics-dashboard-for-wp' ),
+							'referrers' => __( "Referrers", 'google-analytics-dashboard-for-wp' ),
+							'searches' => __( "Searches", 'google-analytics-dashboard-for-wp' ),
+							'trafficdetails' => __( "Traffic Details", 'google-analytics-dashboard-for-wp' )
+						),
+						'i18n' => array(
+							__( "A JavaScript Error is blocking plugin resources!", 'google-analytics-dashboard-for-wp' ), //0
+							__( "Traffic Mediums", 'google-analytics-dashboard-for-wp' ),
+							__( "Visitor Type", 'google-analytics-dashboard-for-wp' ),
+							__( "Social Networks", 'google-analytics-dashboard-for-wp' ),
+							__( "Search Engines", 'google-analytics-dashboard-for-wp' ),
+							__( "Sessions", 'google-analytics-dashboard-for-wp' ),
+							__( "Users", 'google-analytics-dashboard-for-wp' ),
+							__( "Page Views", 'google-analytics-dashboard-for-wp' ),
+							__( "Bounce Rate", 'google-analytics-dashboard-for-wp' ),
+							__( "Organic Search", 'google-analytics-dashboard-for-wp' ),
+							__( "Pages/Session", 'google-analytics-dashboard-for-wp' ),
+							__( "Invalid response, more details in JavaScript Console (F12).", 'google-analytics-dashboard-for-wp' ),
+							__( "Not enough data collected", 'google-analytics-dashboard-for-wp' ),
+							__( "This report is unavailable", 'google-analytics-dashboard-for-wp' ),
+							__( "report generated by", 'google-analytics-dashboard-for-wp' ), //14
+							__( "This plugin needs an authorization:", 'google-analytics-dashboard-for-wp' ) . ' <a href="' . menu_page_url( 'gadash_settings', false ) . '">' . __( "authorize the plugin", 'google-analytics-dashboard-for-wp' ) . '</a>.',
+						),
+						'i18n_realtime' => array(
+							__( "REFERRALS", 'google-analytics-dashboard-for-wp' ), //0
+							__( "KEYWORDS", 'google-analytics-dashboard-for-wp' ),
+							__( "SOCIAL", 'google-analytics-dashboard-for-wp' ),
+							__( "CAMPAIGN", 'google-analytics-dashboard-for-wp' ),
+							__( "DIRECT", 'google-analytics-dashboard-for-wp' ),
+							__( "NEW", 'google-analytics-dashboard-for-wp' ), //5
+						),
+						'realtime_maxpages' => $this->gadwp->config->options['ga_realtime_pages'],
+						'colorVariations' => GADWP_Tools::variations( $this->gadwp->config->options['ga_dash_style'] ),
+						'region' => $region,
+						'language' => get_bloginfo( 'language' ),
+						'viewList' => $views,
+						'scope' => 'admin-widgets',
+					)
+					);
+					/* @formatter:on */
 				}
 			}
 
@@ -129,17 +221,20 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			if ( in_array( $hook, $contentstats_hooks ) ) {
 				if ( GADWP_Tools::check_roles( $this->gadwp->config->options['ga_dash_access_back'] ) && $this->gadwp->config->options['backend_item_reports'] ) {
 
-					wp_enqueue_style( 'gadwp-nprogress', GADWP_URL . 'tools/nprogress/nprogress.css', null, GADWP_CURRENT_VERSION );
-
-					wp_enqueue_style( 'gadwp_backend_item_reports', GADWP_URL . 'admin/css/item-reports.css', null, GADWP_CURRENT_VERSION );
-
-					$country_codes = GADWP_Tools::get_countrycodes();
-
-					if ( $this->gadwp->config->options['ga_target_geomap'] && isset( $country_codes[$this->gadwp->config->options['ga_target_geomap']] ) ) {
-						$region = $this->gadwp->config->options['ga_target_geomap'];
+					if ( $this->gadwp->config->options['ga_target_geomap'] ) {
+						$country_codes = GADWP_Tools::get_countrycodes();
+						if ( isset( $country_codes[$this->gadwp->config->options['ga_target_geomap']] ) ){
+							$region = $this->gadwp->config->options['ga_target_geomap'];
+						} else {
+							$region = false;
+						}
 					} else {
 						$region = false;
 					}
+
+					wp_enqueue_style( 'gadwp-nprogress', GADWP_URL . 'common/nprogress/nprogress.css', null, GADWP_CURRENT_VERSION );
+
+					wp_enqueue_style( 'gadwp-backend-item-reports', GADWP_URL . 'admin/css/item-reports.css', null, GADWP_CURRENT_VERSION );
 
 					wp_enqueue_style( "wp-jquery-ui-dialog" );
 
@@ -147,12 +242,12 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 						wp_register_script( 'googlejsapi', 'https://www.google.com/jsapi' );
 					}
 
-					wp_enqueue_script( 'gadwp-nprogress', GADWP_URL . 'tools/nprogress/nprogress.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
+					wp_enqueue_script( 'gadwp-nprogress', GADWP_URL . 'common/nprogress/nprogress.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
 
-					wp_enqueue_script( 'gadwp_backend_item_reports', GADWP_URL . 'tools/js/item-reports.js', array( 'gadwp-nprogress', 'googlejsapi', 'jquery', 'jquery-ui-dialog' ), GADWP_CURRENT_VERSION );
+					wp_enqueue_script( 'gadwp-backend-item-reports', GADWP_URL . 'common/js/reports.js', array( 'gadwp-nprogress', 'googlejsapi', 'jquery', 'jquery-ui-dialog' ), GADWP_CURRENT_VERSION );
 
 					/* @formatter:off */
-					wp_localize_script( 'gadwp_backend_item_reports', 'gadwp_item_data', array(
+					wp_localize_script( 'gadwp-backend-item-reports', 'gadwp_item_data', array(
 						'ajaxurl' => admin_url( 'admin-ajax.php' ),
 						'security' => wp_create_nonce( 'gadwp_backend_item_reports' ),
 						'dateList' => array(
@@ -197,6 +292,7 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 						'colorVariations' => GADWP_Tools::variations( $this->gadwp->config->options['ga_dash_style'] ),
 						'region' => $region,
 						'language' => get_bloginfo( 'language' ),
+						'viewList' => false,
 						'scope' => 'admin-item',
 						)
 					);
@@ -234,13 +330,19 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 		 *  Add an admin notice after a manual or atuomatic update
 		 */
 		function admin_notice() {
+
+			$currentScreen = get_current_screen();
+
+			if ( ! current_user_can( 'manage_options' ) || $currentScreen->base != 'dashboard') {
+				return;
+			}
+
 			if ( get_option( 'gadwp_got_updated' ) ) :
 				?>
-<div id="gadwp-notice" class="notice is-dismissible">
-    <p><?php echo sprintf( __('Google Analytics Dashboard for WP has been updated to version %s.', 'google-analytics-dashboard-for-wp' ), GADWP_CURRENT_VERSION).' '.sprintf( __('For details, check out %1$s and %2$s.', 'google-analytics-dashboard-for-wp' ), sprintf(' <a href="https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_notice&utm_medium=link&utm_content=release_notice&utm_campaign=gadwp">%s</a> ', __('the documentation page', 'google-analytics-dashboard-for-wp') ), sprintf(' <a href="%1$s">%2$s</a>', esc_url( get_admin_url( null, 'admin.php?page=gadash_settings' ) ), __('the plugin&#39;s settings page', 'google-analytics-dashboard-for-wp') ) ); ?></p>
-</div>
-
-			<?php
+					<div id="gadwp-notice" class="notice is-dismissible">
+					    <p><?php echo sprintf( __('Google Analytics Dashboard for WP has been updated to version %s.', 'google-analytics-dashboard-for-wp' ), GADWP_CURRENT_VERSION).' '.sprintf( __('For details, check out %1$s and %2$s.', 'google-analytics-dashboard-for-wp' ), sprintf(' <a href="https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_notice&utm_medium=link&utm_content=release_notice&utm_campaign=gadwp">%s</a> ', __('the documentation page', 'google-analytics-dashboard-for-wp') ), sprintf(' <a href="%1$s">%2$s</a>', esc_url( get_admin_url( null, 'admin.php?page=gadash_settings' ) ), __('the plugin&#39;s settings page', 'google-analytics-dashboard-for-wp') ) ); ?></p>
+					</div>
+				<?php
 			endif;
 		}
 	}

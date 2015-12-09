@@ -3,8 +3,8 @@ Contributors: deconf
 Donate link: https://deconf.com/donate/
 Tags: google,analytics,google analytics,dashboard,analytics dashboard,google analytics dashboard,google analytics plugin,google analytics widget,tracking,universal google analytics,realtime,multisite,gadwp
 Requires at least: 3.5
-Tested up to: 4.3.1
-Stable tag: 4.8.3
+Tested up to: 4.4
+Stable tag: 4.9.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,7 +108,7 @@ You can submit pull requests, feature requests, translations or bug reports on [
 
 = Documentation, Tutorials and FAQ =
 
-For documentation, tutorials, FAQ and videos check out: [Google Analytics Dashboard for WP Documentation](https://deconf.com/google-analytics-dashboard-wordpress/).
+For documentation, tutorials, FAQ and videos check out: [Google Analytics Dashboard for WP documentation](https://deconf.com/google-analytics-dashboard-wordpress/).
 
 == Screenshots ==
 
@@ -124,7 +124,7 @@ For documentation, tutorials, FAQ and videos check out: [Google Analytics Dashbo
 
 == Localization ==
 
-You can help translating this plugin on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/google-analytics-dashboard-for-wp).
+You can translate this plugin on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/google-analytics-dashboard-for-wp).
 
 == License ==
 
@@ -132,7 +132,25 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 
 == Changelog ==
 
-= 4.8.3 = 
+= 4.9.0.1 =
+- Bug Fix: Pages report missing from admin dashboard widget
+- Bug Fix: Invalid response with a -31 error when using a certain combination of backend settings
+
+= 4.9 =
+- Bug Fix: add an unique class to jQuery UI Tooltips to avoid conflicts
+- Bug Fix: multiple CSS improvements
+- Bug Fix: invalid localized date formats
+- Bug Fix: switching between multisite modes doesn't propagate the new network status on all sites
+- Bug Fix: Location Settings ignored in posts/pages reports
+- Enhancement: unset cookies while revoking the authorization or clearing the cache 
+- Enhancement: no more page re-loads on admin dashboard widget when switching between reports
+- Enhancement: unified reporting system with real-time capabilities
+- Enhancement: new tracking options enabling you to customize cookieName, cookieDomain, cookieExpires; props by [Martins Sipenko](https://github.com/martinssipenko) 
+- Enhancement: display update notices only to admins and only on dashboard
+- Enhancement: force language packs updates for all available languages on a Network
+- Enhancement: added View switch capabilities
+
+= 4.8.3 =
 - Enhancement: switching to translate.wordpress.org, you can find [more details here](https://deconf.com/moving-translations-to-wordpress-org/)
 
 = 4.8.2.1 =
