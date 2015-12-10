@@ -23,16 +23,38 @@ input.cptch_settings_input {
 .cptch_how_to_use {
     float: right;
 }
+.cptch_limit_label {
+    display: block;
+}
+.cptch_images_example {
+    height: 33px;
+}
+.cptch_images_example .cptch_label {
+    position: relative;
+    left: 8px;
+    top: -6px;
+}
+.cptch_whitelist_buttons .alignleft {
+    margin-right: 10px;
+}
+.cptch_pro_block .bws_pro_version_tooltip {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    top: 5px;
+}
+#cptch_add_my_ip {
+    display: inline-block;
+    padding: 8px 0 5px;
+}
 /*
  * RTL styles
  */
 .rtl .cptch_how_to_use {
     float: left;
 }
-@media only screen and ( max-width: 480px ) {
-    .bws_help_box.cptch_thumb_block {
-        display: none;
-    }
+.rtl .cptch_block {
+    direction: rtl;
 }
 /*
 * frontend styles
@@ -51,4 +73,97 @@ form input.cptch_input {
     font-style: italic;
     color: #008000;
     font-weight: normal !important;
+}
+.cptch_block {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.cptch_title {
+    display: block;
+    word-wrap: break-word;
+    padding-bottom: 5px;
+    clear: both;
+}
+.cptch_wrap {
+    display: table-row !important;
+    position: relative;
+    clear: both;
+}
+.cptch_label,
+.cptch_reload_button_wrap {
+    display: table-cell;
+    margin: 5px 0;
+    vertical-align: middle;
+    line-height: 1;
+}
+.cptch_span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+}
+.cptch_img {
+    width: 40px;
+    max-width: 40px !important;
+    height: auto;
+    top: 0;
+    z-index: 2;
+}
+.cptch_reduce {
+    position: absolute;
+}
+.cptch_reload_button {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 15px;
+    font-size: 2rem;
+}
+.cptch_reload_button.cptch_active {
+    opacity: 0.7;
+}
+
+@media only screen and ( max-width: 782px ) {
+    #cptch_whitelist_search p.search-box {
+        position: static;
+    }
+    #cptch_whitelist .tablenav.top {
+        display: none;
+    }
+    .cptchpr_reload_button {
+        width: 48px;
+        height: 48px;
+        font-size: 48px;
+    }
+    .cptch_how_to_use {
+        float: none;
+        text-align: left;
+    }
+    .rtl .cptch_how_to_use {
+        text-align: right;
+    }
+}
+
+@media only screen and ( max-width: 480px ) {
+    .bws_help_box.cptch_thumb_block {
+        display: none;
+    }
+    #cptch_whitelist .bulkactions {
+        float: none;
+    }
+    #cptch_whitelist .tablenav-pages {
+        display: inline-block;
+        margin-bottom: 10px;
+        float: none;
+        clear: both;
+    }
+    #cptch_whitelist .tablenav-pages .displaying-num {
+        position: static;
+    }
+    .cptchpr_reload_button {
+        margin: 0;
+    }
+    #cptch_whitelist .column-add_time {
+        display: none;
+    }
 }

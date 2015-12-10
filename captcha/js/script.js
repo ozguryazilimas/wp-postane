@@ -9,5 +9,20 @@
 				$( 'input[name="cptch_add_to_whitelist"]' ).val( '' ).removeAttr( 'readonly' );
 			}
 		});
+
+		var limit_options = $( '.cptch_limt_options' );
+		$( 'input[name="cptch_use_time_limit"]' ).each( function() {
+			if ( ! $( this ).is( ':checked' ) )
+				limit_options.hide();
+		}).click( function() {
+			if ( $( this ).is( ':checked' ) )
+				limit_options.show();
+			else 
+				limit_options.hide();
+		});
+
+		$( '#cptch_use_la_whitelist' ).click( function() {
+			$( this ).closest( 'form' ).submit();
+		});
 	});
 })(jQuery);
