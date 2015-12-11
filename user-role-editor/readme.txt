@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 4.20.1
+Stable tag: 4.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,11 +71,16 @@ To read more about 'User Role Editor' visit [this page](http://www.shinephp.com/
 
 = Translations =
 
-Dear plugin User!
-If you wish to check available translations or help with translation visit this link
+If you wish to check available translations or help with plugin translation to your language visit this link
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog ==
+= [4.21] 11.12.2015 =
+* It's possible to switch off the update role confirmation (Settings - User Role Editor - General tab).
+* Standard JavaScript confirm box before role update was replaced with custom one to exclude 'Prevent this page from creating additional dialogs' option in the Google Chrome browser.
+* Fix: Removed hard coded folder name (user-role-editor) from the used paths.
+
+
 = [4.20.1] 15.11.2015 =
 * Fix: "Primary default role" drop-down menu was not shown at "Settings - User Role Editor - Default Roles" tab for WordPress single site installation.
 

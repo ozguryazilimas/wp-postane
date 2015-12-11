@@ -336,6 +336,11 @@ if ($this->multisite && !is_network_admin()) {
   </div>  
 </div>     
 
+<div id="ure_confirmation_dialog" class="ure-modal-dialog">
+  <div id="ure_cd_html" style="padding:10px;">    
+  </div>
+</div>
+
 <?php        
     do_action('ure_dialogs_html');
     }
@@ -1180,7 +1185,7 @@ if ($this->multisite && !is_network_admin()) {
         $onclick_for_admin = '';
         if (!( $this->multisite && is_super_admin() )) {  // do not limit SuperAdmin for multi-site
             if ($core && 'administrator' == $this->current_role) {
-                $onclick_for_admin = 'onclick="turn_it_back(this)"';
+                $onclick_for_admin = 'onclick="ure_turn_it_back(this)"';
             }
         }
 
@@ -1634,7 +1639,14 @@ if ($this->multisite && !is_network_admin()) {
             'delete_published_posts',
             'delete_others_posts'
         );
+        
         $post_types = get_post_types(array('_builtin'=>false), 'objects');
+        // do not forget attachment post type as it may use the own capabilities set
+        $attachment_post_type = get_post_type_object('attachment');
+        if ($attachment_post_type->cap->edit_posts!=='edit_posts') {
+            $post_types['attachment'] = $attachment_post_type;
+        }
+        
         foreach($post_types as $post_type) {            
             if (!isset($post_type->cap)) {
                 continue;
