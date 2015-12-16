@@ -336,15 +336,20 @@ if ($this->multisite && !is_network_admin()) {
   </div>  
 </div>     
 
-<div id="ure_confirmation_dialog" class="ure-modal-dialog">
-  <div id="ure_cd_html" style="padding:10px;">    
-  </div>
-</div>
-
 <?php        
-    do_action('ure_dialogs_html');
+        do_action('ure_dialogs_html');
     }
     // end of output_role_edit_dialogs()
+    
+    
+    protected function output_confirmation_dialog() {
+?>
+<div id="ure_confirmation_dialog" class="ure-modal-dialog">
+    <div id="ure_cd_html" style="padding:10px;"></div>
+</div>
+<?php
+    }
+    // end of output_confirmation_dialog()
     
 
     protected function show_editor() {
@@ -379,11 +384,12 @@ if ($this->multisite && !is_network_admin()) {
                 </div>      
             </form>		      
 <?php	
-	$this->advertise_pro_version();	
+    $this->advertise_pro_version();	
 	
-	if ($this->ure_object == 'role') {
+    if ($this->ure_object == 'role') {
         $this->output_role_edit_dialogs();
     }
+    $this->output_confirmation_dialog();
 ?>
         </div>          
     </div>
