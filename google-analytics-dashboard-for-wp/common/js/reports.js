@@ -1,14 +1,6 @@
 "use strict";
 
-jQuery( function () {
-	google.load( "visualization", "1", {
-		packages : [ "corechart", "table", "orgchart", "geochart" ],
-		'language' : gadwp_item_data.language,
-		'callback' : GADWPLoad
-	} );
-} );
-
-// Get the numeric ID
+//Get the numeric ID
 gadwp_item_data.getID = function ( item ) {
 	if ( gadwp_item_data.scope == 'admin-item' ) {
 		if ( typeof item.id == "undefined" ) {
@@ -507,7 +499,7 @@ jQuery.fn.extend( {
 				return ( "<p><center><strong>" + pagetitle + "</strong></center></p>" + tablerfr + tablekwd + tablescl + tablecpg + tabledrt );
 			},
 
-			rt_refresh : function ( ) {
+			rt_refresh : function () {
 				if ( reports.render.focusFlag ) {
 					post_data.from = false;
 					post_data.to = false;
@@ -799,7 +791,7 @@ jQuery.fn.extend( {
 					}
 				}
 				if ( period == 'realtime' ) {
-					
+
 					reports.render.focusFlag = 1;
 
 					jQuery( window ).bind( "focus", function ( event ) {
@@ -846,7 +838,7 @@ jQuery.fn.extend( {
 					tpl += '</div>';
 
 					jQuery( '#gadwp-reports' + slug ).html( tpl );
-					
+
 					reports.rt_refresh( reports.render.focusFlag );
 
 					reports.realtime_running = setInterval( reports.rt_refresh, 55000 );
@@ -1177,25 +1169,34 @@ jQuery.fn.extend( {
 	}
 } );
 
+google.load( "visualization", "1", {
+	packages : [ "corechart", "table", "orgchart" ],
+	'language' : gadwp_item_data.language,
+} );
+
+google.setOnLoadCallback( GADWPLoad );
+
 function GADWPLoad () {
-	if ( gadwp_item_data.scope == 'admin-widgets' ) {
-		jQuery( '#gadwp-window-1' ).gadwpItemReport( 1 );
-	} else {
-		jQuery( gadwp_item_data.getSelector( gadwp_item_data.scope ) ).click( function () {
-			if ( !jQuery( "#gadwp-window-" + gadwp_item_data.getID( this ) ).length > 0 ) {
-				jQuery( "body" ).append( '<div id="gadwp-window-' + gadwp_item_data.getID( this ) + '"></div>' );
-			}
-			jQuery( '#gadwp-window-' + gadwp_item_data.getID( this ) ).gadwpItemReport( gadwp_item_data.getID( this ) );
+	jQuery( function () {
+		if ( gadwp_item_data.scope == 'admin-widgets' ) {
+			jQuery( '#gadwp-window-1' ).gadwpItemReport( 1 );
+		} else {
+			jQuery( gadwp_item_data.getSelector( gadwp_item_data.scope ) ).click( function () {
+				if ( !jQuery( "#gadwp-window-" + gadwp_item_data.getID( this ) ).length > 0 ) {
+					jQuery( "body" ).append( '<div id="gadwp-window-' + gadwp_item_data.getID( this ) + '"></div>' );
+				}
+				jQuery( '#gadwp-window-' + gadwp_item_data.getID( this ) ).gadwpItemReport( gadwp_item_data.getID( this ) );
+			} );
+		}
+
+		// on window resize
+		jQuery( window ).resize( function () {
+			gadwp_item_data.responsiveDialog();
 		} );
-	}
 
-	// on window resize
-	jQuery( window ).resize( function () {
-		gadwp_item_data.responsiveDialog();
-	} );
-
-	// dialog width larger than viewport
-	jQuery( document ).on( "dialogopen", ".ui-dialog", function ( event, ui ) {
-		gadwp_item_data.responsiveDialog();
+		// dialog width larger than viewport
+		jQuery( document ).on( "dialogopen", ".ui-dialog", function ( event, ui ) {
+			gadwp_item_data.responsiveDialog();
+		} );
 	} );
 }
