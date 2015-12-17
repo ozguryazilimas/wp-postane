@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 16:00+0300\n"
-"PO-Revision-Date: 2015-12-10 16:00+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 14:02+0300\n"
+"PO-Revision-Date: 2015-12-16 14:02+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Roozbeh Jalali <rjalali@languageconnect.net>\n"
 "Language: tl\n"
 "MIME-Version: 1.0\n"
@@ -285,143 +285,143 @@ msgstr ""
 "Mali: Mali ang na-enter mong halaga ng CAPTCHA. I-click ang BACK na button "
 "sa iyong browser, at subukang muli."
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "sero"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "isa"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "dalawa"
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "tatlo"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "apat"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "lima"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "anim"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "pito"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "walo"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "siyam"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "labing-isa"
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "labing-dalawa"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "labing-tatlo"
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "labing-apat"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "labing-lima"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "labing-anim"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "labing-pito"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "labing-walo"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "labing-siyam"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "sampu"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "dalawampu"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "tatlumpu"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "apatnapu"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "limampu"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "animnapu"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "pitumpu"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "walumpu"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "siyamnapu"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "at"
 
-#: captcha.php:1499
+#: captcha.php:1500
 msgid "Encryption password is not set"
 msgstr "Hindi naka-set ang encryption password"
 
-#: captcha.php:1519
+#: captcha.php:1520
 msgid "Decryption password is not set"
 msgstr "Hindi naka-set ang decryption password"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Mga setting"
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Suporta"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

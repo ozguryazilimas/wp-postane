@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 15:58+0300\n"
-"PO-Revision-Date: 2015-12-10 15:58+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 13:59+0300\n"
+"PO-Revision-Date: 2015-12-16 13:59+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Psiete <psiete@gmail.com>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -287,143 +287,143 @@ msgstr ""
 "Error: S'ha introduït un valor CAPTCHA incorrecte. Feu clic al botó Enrere "
 "del navegador i torneu a intentar-ho."
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "zero"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "un"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "dues"
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "tres"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "quatre"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "cinc"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "sis"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "set"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "vuit"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "nou"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "onze"
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "dotze"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "tretze"
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "catorze"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "quinze"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "setze"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "disset"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "divuit"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "dinou"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "deu"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "vint"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "trenta"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "quaranta"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "cinquanta"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "seixanta"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "setanta"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "vuitanta"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "noranta"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "i"
 
-#: captcha.php:1499
+#: captcha.php:1500
 msgid "Encryption password is not set"
 msgstr "La contrasenya de xifratge no s'ha establert"
 
-#: captcha.php:1519
+#: captcha.php:1520
 msgid "Decryption password is not set"
 msgstr "La contrasenya de desxifrat no s'ha establert"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Configuració"
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Suport"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

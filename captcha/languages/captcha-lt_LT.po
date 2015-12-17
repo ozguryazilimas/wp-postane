@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 15:59+0300\n"
-"PO-Revision-Date: 2015-12-10 15:59+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 14:00+0300\n"
+"PO-Revision-Date: 2015-12-16 14:00+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Arnas <arnas.metal@gmail.com>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -296,145 +296,145 @@ msgid "Click the BACK button on your browser, and try again."
 msgstr ""
 "Klaida: Jūs neteisingai įvedėte saugos kodą! Prašome bandyti dar kartą."
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "nulis"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "vienas"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "du "
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "trys"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "keturi"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "penki"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "šeši"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "septyni"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "aštuoni"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "devyni"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "vienuolika"
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "dvylika"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "trylika"
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "keturiolika"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "penkiolika"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "šešiolika"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "septyniolika"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "aštuoniolika"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "devyniolika"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "dešimt"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "dvidešimt"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "trisdešimt"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "keturiasdešimt"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "pekiasdešimt"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "šešiasdešimt"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "septyniasdešimt"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "aštuoniasdešimt"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "devyniasdešimt"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "ir"
 
-#: captcha.php:1499
+#: captcha.php:1500
 #, fuzzy
 msgid "Encryption password is not set"
 msgstr "Dekodavimo slaptažodis nenustatytas"
 
-#: captcha.php:1519
+#: captcha.php:1520
 #, fuzzy
 msgid "Decryption password is not set"
 msgstr "Dekodavimo slaptažodis nenustatytas"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Nustatymai"
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "D.U.K."
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Pagalba"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

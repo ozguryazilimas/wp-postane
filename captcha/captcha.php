@@ -6,7 +6,7 @@ Description: Plugin Captcha intended to prove that the visitor is a human being 
 Author: BestWebSoft
 Text Domain: captcha
 Domain Path: /languages
-Version: 4.1.6
+Version: 4.1.7
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -1377,7 +1377,8 @@ if ( ! function_exists( 'cptch_get_image' ) ) {
 				$class = '';
 			}
 			$src = $upload_dir['basedir'] . '/bws_captcha_images/' . $current_image[1] . '/' . $current_image[0];
-			return '<img class="cptch_img ' . $class . '" src="data: ' . image_type_to_mime_type( exif_imagetype( $src ) ) . ';base64,'. base64_encode( file_get_contents( $src ) ) . '" />';
+			$image_data = getimagesize( $src );
+			return isset( $image_data['mime'] ) && ! empty( $image_data['mime'] ) ? '<img class="cptch_img ' . $class . '" src="data: ' . $image_data['mime'] . ';base64,'. base64_encode( file_get_contents( $src ) ) . '" />' :  cptch_generate_value( $value, $use_only_words );
 		} else {
 			return cptch_generate_value( $value, $use_only_words );
 		}

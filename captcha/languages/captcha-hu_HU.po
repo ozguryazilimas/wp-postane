@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 15:59+0300\n"
-"PO-Revision-Date: 2015-12-10 15:59+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 14:00+0300\n"
+"PO-Revision-Date: 2015-12-16 14:00+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Bőm Tamás <tamas.bem@gmail.com>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -278,143 +278,143 @@ msgstr "Hiba"
 msgid "Click the BACK button on your browser, and try again."
 msgstr "Nyomja meg a böngésző Vissza gombját, és próbálja újra."
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "nulla"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "egy"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "kettő"
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "három"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "négy"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "öt"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "hat"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "hét"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "nyolc"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "kilenc"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "tizenegy"
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "tizenkettő"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "tizenhárom"
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "tizrnnégy"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "tizenöt"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "tizenhat"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "tizenhét"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "tizennyolc"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "tizenkilenc"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "tíz"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "húsz(on)"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "harminc"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "negyven"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "ötven"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "hatvan"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "hetven"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "nyolcvan"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "kilencven"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "és"
 
-#: captcha.php:1499
+#: captcha.php:1500
 msgid "Encryption password is not set"
 msgstr "A kódoló jelszó nincs beállítva"
 
-#: captcha.php:1519
+#: captcha.php:1520
 msgid "Decryption password is not set"
 msgstr "A jelszó dekódoló nincs beállítva"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Beállítások"
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "GYIK"
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Támogatás"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

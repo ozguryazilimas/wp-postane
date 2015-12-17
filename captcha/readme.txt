@@ -4,7 +4,7 @@ Donate link: http://bestwebsoft.com/donate/
 Tags: add, anti, anti-spam, anti-spam security, antispam, antispam security, antispambot, arithmetic actions, blacklist, block spam, bot, bots, best captcha, best wordpress captcha, captcha, capcha, captha, catcha, captcha bank, captcha numbers, captcha plugin, captcha protection, captcha words, contact form with captcha, comment captcha, comment, comments, cpatcha, form, forms, form captcha, forgot password captcha, free, login, lost password, label, login captcha, match captcha, math actions, multiply, plugin, protect, protection, popular captcha, protection shield, register, registration, registration spam, register captcha, rest password captcha, registration captcha security, spam, secure, security, signup, signup spam, spam blocker, spam comments, spam filter, spambot, shield, simple captcha, spam control, spam protection, substract, text captcha, user registration spam, web form protection, wordpress captcha, wordpress protection, wordpress security loss password captcha, register captcha, wp captcha, wp plugin, wp plugins
 Requires at least: 3.8
 Tested up to: 4.4
-Stable tag: 4.1.6
+Stable tag: 4.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -187,6 +187,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 8. Contact form with Captcha.
 
 == Changelog ==
+
+= V4.1.7 - 17.12.2015 =
+* Bugfix : Bug with the definition of type of images has been fixed.
 
 = V4.1.6 - 10.12.2015 =
 * New : Ability to use images in Captcha.
@@ -548,6 +551,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Select functionality of mathematical actions and level of their difficulty are implemented.
 
 == Upgrade Notice ==
+
+= V4.1.7 =
+Bug with the definition of type of images has been fixed.
 
 = V4.1.6 =
 Ability to use images in Captcha. Ability to reload Captcha. Ability to load list of IP from whitelist of Limit Attempts by BestWebSoft plugin to Captcha whitelist. Ability to use whitelist of Limit Attempts by BestWebSoft plugin. Ability to set time limit, after which the Captcha can not be passed. Bug with Captcha reloading when forms data handled via ajax was fixed. XSS vulnerability with displaying search results for CAPTCHA whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). XSS vulnerability with user authentification was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). Structure of plugin`s settings page was updated. The French and Hungarian language files were updated.

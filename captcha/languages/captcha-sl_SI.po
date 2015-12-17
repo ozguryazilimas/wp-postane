@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 16:00+0300\n"
-"PO-Revision-Date: 2015-12-10 16:00+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 14:02+0300\n"
+"PO-Revision-Date: 2015-12-16 14:02+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Uroš Klopčič <uros.klopcic@gmail.com>\n"
 "Language: sr_RS\n"
 "MIME-Version: 1.0\n"
@@ -285,143 +285,143 @@ msgstr ""
 "Napaka: Vnesli ste napačno CAPTCHA vrednost. Vrnite se nazaj in poskušajte "
 "ponovno."
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "nič"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "ena"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "dva"
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "tri"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "štiri"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "pet"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "šest"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "sedem"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "osem"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "devet"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "enajst"
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "dvanajst"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "trinajst"
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "štirinajst"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "petnajst"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "šestnajst"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "sedemnajst"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "osemnajst"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "devetnajst"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "deset"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "dvajset"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "trideset"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "štirideset"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "petdeset"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "šestdeset"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "sedemdeset"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "osemdeset"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "devetdeset"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "in"
 
-#: captcha.php:1499
+#: captcha.php:1500
 msgid "Encryption password is not set"
 msgstr "Geslo za šifriranje ni določeno"
 
-#: captcha.php:1519
+#: captcha.php:1520
 msgid "Decryption password is not set"
 msgstr "Geslo za dešifriranje ni določeno"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Nastavitve"
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Podpora"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

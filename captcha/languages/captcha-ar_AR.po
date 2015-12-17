@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 15:57+0300\n"
-"PO-Revision-Date: 2015-12-10 15:58+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 13:58+0300\n"
+"PO-Revision-Date: 2015-12-16 13:58+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Albayan Design Hani Aladoli <info@albayan-design.com>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -293,145 +293,145 @@ msgstr ""
 "خطاء : لقد قمت بأدخال CAPTCHA  غير صحيح ’, اضغظ علي زر الرجوع في متصفحك "
 "والتجربة مرة اخري"
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "صفر"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "واحد"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "اتنان"
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "ثلاته"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "اربعه"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "خمسة"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "سته"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "سبعة"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "ثمانية"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "تسعة"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "احدي عشر "
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "اثني عشر"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "ثلاثة عشر "
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "اربعة عشر"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "خمسة عشر"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "ستة عشر"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "سبعة عشر"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "ثمانية عشر"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "تسعة عشر"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "عشرة"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "عشرون"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "ثلاثون"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "اربعون"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "خمسون"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "ستون"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "سبعون"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "ثمانون"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "تسعون"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "و"
 
-#: captcha.php:1499
+#: captcha.php:1500
 #, fuzzy
 msgid "Encryption password is not set"
 msgstr "لم يتم تعيين كلمة المرور من فك التشفير"
 
-#: captcha.php:1519
+#: captcha.php:1520
 #, fuzzy
 msgid "Decryption password is not set"
 msgstr "لم يتم تعيين كلمة المرور من فك التشفير"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "الاعدادت "
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "اسئلة واجوبة"
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "الدعم"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

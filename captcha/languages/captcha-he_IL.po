@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 15:59+0300\n"
-"PO-Revision-Date: 2015-12-10 15:59+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 14:00+0300\n"
+"PO-Revision-Date: 2015-12-16 14:00+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Sagive SEO <info@sagive.co.il>\n"
 "Language: he_IL\n"
 "MIME-Version: 1.0\n"
@@ -328,178 +328,178 @@ msgstr ""
 "שגיאה: הזנתם קוד אימות  שגוי. נא ללחוץ על כפתור אחורה בדפדפן ולנסות שוב."
 
 # @ captcha
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "אפס"
 
 # @ captcha
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "אחד"
 
 # @ captcha
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "שתיים"
 
 # @ captcha
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "שלוש"
 
 # @ captcha
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "ארבע"
 
 # @ captcha
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "חמש"
 
 # @ captcha
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "שש"
 
 # @ captcha
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "שבע"
 
 # @ captcha
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "שמונה"
 
 # @ captcha
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "תשע"
 
 # @ captcha
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "אחת עשרה"
 
 # @ captcha
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "שתיים עשרה"
 
 # @ captcha
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "שלוש עשרה"
 
 # @ captcha
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "ארבע עשרה"
 
 # @ captcha
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "חמש עשרה"
 
 # @ captcha
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "שש עשרה"
 
 # @ captcha
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "שבע עשרה"
 
 # @ captcha
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "שמונה עשרה"
 
 # @ captcha
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "תשע עשרה"
 
 # @ captcha
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "עשר"
 
 # @ captcha
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "עשרים"
 
 # @ captcha
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "שלושים"
 
 # @ captcha
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "ארבעים"
 
 # @ captcha
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "חמישים"
 
 # @ captcha
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "שישים"
 
 # @ captcha
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "שבעים"
 
 # @ captcha
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "שמונים"
 
 # @ captcha
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "תשעים"
 
 # @ captcha
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "ו"
 
 # @ captcha
-#: captcha.php:1499
+#: captcha.php:1500
 #, fuzzy
 msgid "Encryption password is not set"
 msgstr "סיסמת פענוח הקידוד איננה מוגדרת"
 
 # @ captcha
-#: captcha.php:1519
+#: captcha.php:1520
 #, fuzzy
 msgid "Decryption password is not set"
 msgstr "סיסמת פענוח הקידוד איננה מוגדרת"
 
 # @ captcha
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "הגדרות"
 
 # @ captcha
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "שאלות נפוצות"
 
 # @ captcha
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "תמיכה"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

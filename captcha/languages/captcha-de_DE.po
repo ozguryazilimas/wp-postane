@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 15:58+0300\n"
-"PO-Revision-Date: 2015-12-10 15:58+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 13:59+0300\n"
+"PO-Revision-Date: 2015-12-16 13:59+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Thomas Hartung <thartung@adipositas-mm.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -318,177 +318,177 @@ msgstr ""
 "\"ZURÜCK\"-Button in Ihrem Browser und versuchen Sie es erneut!"
 
 # @ captcha
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "null"
 
 # @ captcha
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "eins"
 
 # @ captcha
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "zwei"
 
 # @ captcha
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "drei"
 
 # @ captcha
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "vier"
 
 # @ captcha
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "fünf"
 
 # @ captcha
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "sechs"
 
 # @ captcha
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "sieben"
 
 # @ captcha
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "acht"
 
 # @ captcha
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "neun"
 
 # @ captcha
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "elf"
 
 # @ captcha
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "zwölf"
 
 # @ captcha
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "dreizehn"
 
 # @ captcha
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "vierzehn"
 
 # @ captcha
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "fünfzehn"
 
 # @ captcha
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "sechszehn"
 
 # @ captcha
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "siebzehn"
 
 # @ captcha
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "achtzehn"
 
 # @ captcha
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "neunzehn"
 
 # @ captcha
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "zehn"
 
 # @ captcha
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "zwanzig"
 
 # @ captcha
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "dreißig"
 
 # @ captcha
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "vierzig"
 
 # @ captcha
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "fünfzig"
 
 # @ captcha
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "sechzig"
 
 # @ captcha
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "siebzig"
 
 # @ captcha
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "achtzig"
 
 # @ captcha
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "neunzig"
 
 # @ captcha
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "und"
 
 # @ captcha
-#: captcha.php:1499
+#: captcha.php:1500
 msgid "Encryption password is not set"
 msgstr "Die Passwort-Verschlüsselung ist nicht aktiviert"
 
 # @ captcha
-#: captcha.php:1519
+#: captcha.php:1520
 msgid "Decryption password is not set"
 msgstr "Die Passwort-Entschlüsselung ist nicht aktiviert"
 
 # @ bestwebsoft
 # @ captcha
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Einstellungen"
 
 # @ captcha
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "Häufig gestellte Fragen (FAQ)"
 
 # @ captcha
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Unterstützung"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

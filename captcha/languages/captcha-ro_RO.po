@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 16:00+0300\n"
-"PO-Revision-Date: 2015-12-10 16:00+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 14:01+0300\n"
+"PO-Revision-Date: 2015-12-16 14:02+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Ciprian <cipibad@gmail.com>\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
@@ -293,144 +293,144 @@ msgstr ""
 "Eroare: Ati introdus CAPTCHA gresit. Apasati butonul \"Inapoi\" al "
 "browserului si incercati din nou."
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "zero"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "unu"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "doi"
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "trei"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "patru"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "cinci"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "sase"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "sapte"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "opt"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "noua"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "unsprezece"
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "doisprezece"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "treisprezece"
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "paisprezece"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "cincisprezece"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "saisprezece"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "saptesprezece"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "optsprezece"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "nouasprezece"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "zece"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "douazeci"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "treizeci"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "patruzeci"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "cincizeci"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "saizeci"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "saptezeci"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "optzeci"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "nouazeci"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "si"
 
-#: captcha.php:1499
+#: captcha.php:1500
 msgid "Encryption password is not set"
 msgstr "Parola pentru codare nu e setata"
 
-#: captcha.php:1519
+#: captcha.php:1520
 #, fuzzy
 msgid "Decryption password is not set"
 msgstr "Parola pentru decodare nu e setata"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Setari"
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "Intrebari frecvente (FAQ)"
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Suport"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""

@@ -79,6 +79,7 @@ form input.cptch_input {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    word-spacing: normal !important;
 }
 .cptch_title {
     display: block;

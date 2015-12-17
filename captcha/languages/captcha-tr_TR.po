@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 16:00+0300\n"
-"PO-Revision-Date: 2015-12-10 16:00+0300\n"
-"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"POT-Creation-Date: 2015-12-16 14:02+0300\n"
+"PO-Revision-Date: 2015-12-16 14:02+0300\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Can Atasever <webmaster@canatasever.com>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -285,143 +285,143 @@ msgstr ""
 "HATA: Yanlış CAPTCHA değeri girdiniz. Tarayıcınızın GERİ butonuna basın ve "
 "tekrar deneyin."
 
-#: captcha.php:1393
+#: captcha.php:1394
 msgid "zero"
 msgstr "sıfır"
 
-#: captcha.php:1394 captcha.php:1779
+#: captcha.php:1395 captcha.php:1780
 msgid "one"
 msgstr "bir"
 
-#: captcha.php:1395
+#: captcha.php:1396
 msgid "two"
 msgstr "iki"
 
-#: captcha.php:1396
+#: captcha.php:1397
 msgid "three"
 msgstr "üç"
 
-#: captcha.php:1397
+#: captcha.php:1398
 msgid "four"
 msgstr "dört"
 
-#: captcha.php:1398
+#: captcha.php:1399
 msgid "five"
 msgstr "beş"
 
-#: captcha.php:1399 captcha.php:1779
+#: captcha.php:1400 captcha.php:1780
 msgid "six"
 msgstr "altı"
 
-#: captcha.php:1400 captcha.php:1767 captcha.php:1773
+#: captcha.php:1401 captcha.php:1768 captcha.php:1774
 msgid "seven"
 msgstr "yedi"
 
-#: captcha.php:1401 captcha.php:1770
+#: captcha.php:1402 captcha.php:1771
 msgid "eight"
 msgstr "sekiz"
 
-#: captcha.php:1402
+#: captcha.php:1403
 msgid "nine"
 msgstr "dokuz"
 
-#: captcha.php:1405
+#: captcha.php:1406
 msgid "eleven"
 msgstr "onbir"
 
-#: captcha.php:1406
+#: captcha.php:1407
 msgid "twelve"
 msgstr "oniki"
 
-#: captcha.php:1407
+#: captcha.php:1408
 msgid "thirteen"
 msgstr "onüç"
 
-#: captcha.php:1408
+#: captcha.php:1409
 msgid "fourteen"
 msgstr "ondört"
 
-#: captcha.php:1409
+#: captcha.php:1410
 msgid "fifteen"
 msgstr "onbeş"
 
-#: captcha.php:1410
+#: captcha.php:1411
 msgid "sixteen"
 msgstr "onaltı"
 
-#: captcha.php:1411
+#: captcha.php:1412
 msgid "seventeen"
 msgstr "onyedi"
 
-#: captcha.php:1412
+#: captcha.php:1413
 msgid "eighteen"
 msgstr "onsekiz"
 
-#: captcha.php:1413
+#: captcha.php:1414
 msgid "nineteen"
 msgstr "ondokuz"
 
-#: captcha.php:1416
+#: captcha.php:1417
 msgid "ten"
 msgstr "on"
 
-#: captcha.php:1417
+#: captcha.php:1418
 msgid "twenty"
 msgstr "yirmi"
 
-#: captcha.php:1418
+#: captcha.php:1419
 msgid "thirty"
 msgstr "otuz"
 
-#: captcha.php:1419
+#: captcha.php:1420
 msgid "forty"
 msgstr "kırk"
 
-#: captcha.php:1420
+#: captcha.php:1421
 msgid "fifty"
 msgstr "elli"
 
-#: captcha.php:1421
+#: captcha.php:1422
 msgid "sixty"
 msgstr "altmış"
 
-#: captcha.php:1422
+#: captcha.php:1423
 msgid "seventy"
 msgstr "yetmiş"
 
-#: captcha.php:1423
+#: captcha.php:1424
 msgid "eighty"
 msgstr "seksen"
 
-#: captcha.php:1424
+#: captcha.php:1425
 msgid "ninety"
 msgstr "doksan"
 
-#: captcha.php:1433
+#: captcha.php:1434
 msgid "and"
 msgstr "ve"
 
-#: captcha.php:1499
+#: captcha.php:1500
 msgid "Encryption password is not set"
 msgstr "Şifreleme parolası ayarlanmadı"
 
-#: captcha.php:1519
+#: captcha.php:1520
 msgid "Decryption password is not set"
 msgstr "Şifre çözme parolası ayarlanmadı"
 
-#: captcha.php:1866 captcha.php:1879
+#: captcha.php:1867 captcha.php:1880
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: captcha.php:1880
+#: captcha.php:1881
 msgid "FAQ"
 msgstr "SSS"
 
-#: captcha.php:1881
+#: captcha.php:1882
 msgid "Support"
 msgstr "Destek"
 
-#: captcha.php:1911
+#: captcha.php:1912
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""
