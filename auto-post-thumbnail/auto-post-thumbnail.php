@@ -4,7 +4,7 @@
 Plugin Name: Auto Post Thumbnail
 Plugin URI: http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-thumbnail/
 Description: Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post (or any custom post type) only if Post Thumbnail is not set manually.
-Version: 3.3.3
+Version: 3.3.4
 Author: Aditya Mooley <adityamooley@sanisoft.com>, Tarique Sani <tarique@sanisoft.com>
 Author URI: http://www.sanisoft.com/blog/author/adityamooley/
 Modified by Dr. Tarique Sani <tarique@sanisoft.com> to make it work with Wordpress 3.4
@@ -195,12 +195,12 @@ function apt_admin_enqueues($hook_suffix) {
     }
 
     // WordPress 3.1 vs older version compatibility
-	if ( wp_script_is( 'jquery-ui-widget', 'registered' ) ) {
-		wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/jquery.ui.progressbar.min.js', __FILE__ ), array( 'jquery-ui-core', 'jquery-ui-widget' ), '1.7.2' );
-	}
-	else {
-		wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/ui.progressbar.js', __FILE__ ), array( 'jquery-ui-core' ), '1.7.2' );
-	}
+    if ( wp_script_is( 'jquery-ui-widget', 'registered' ) ) {
+        wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/jquery.ui.progressbar.min.js', __FILE__ ), array( 'jquery-ui-core', 'jquery-ui-widget' ), '1.7.2' );
+    }
+    else {
+        wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/ui.progressbar.js', __FILE__ ), array( 'jquery-ui-core' ), '1.7.2' );
+    }
 
     wp_enqueue_style( 'style', plugins_url( 'css/style.css', __FILE__ ) );
 
@@ -294,13 +294,18 @@ function apt_publish_post($post_id)
              * Look for this id in the IMG tag.
              */
             preg_match('/wp-image-([\d]*)/i', $image, $thumb_id);
-            $thumb_id = $thumb_id[1];
+            if($thumb_id){
+                $thumb_id = $thumb_id[1];
+            }
 
             // If thumb id is not found, try to look for the image in DB. Thanks to "Erwin Vrolijk" for providing this code.
             if (!$thumb_id) {
                 $image = substr($image, strpos($image, '"')+1);
                 $result = $wpdb->get_results("SELECT ID FROM {$wpdb->posts} WHERE guid = '".$image."'");
-                $thumb_id = $result[0]->ID;
+                if($result){
+                    $thumb_id = $result[0]->ID;
+                }
+                
             }
 
             // Ok. Still no id found. Some other way used to insert the image in post. Now we must fetch the image from URL and do the needful.
