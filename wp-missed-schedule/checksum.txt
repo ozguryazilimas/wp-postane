@@ -1,18 +1,25 @@
-WP Missed Schedule - Build 2015-09-15 (Version 2014.1231.2015) Checksum
+WP Missed Schedule Version 2014.1231.2015.4 Stable Build 2015-12-31 SHA1 Checksum
 
--------------------------- Tags Branche 2014 --------------------------
+-------------------------- Stable Tags Branche 2014 ---------------------------
 
-index.html                     7BFCA8C40496ED3D3847BC234BB62F1DE23D9AC7
-.htaccess                      F1299D142116E068A20C172769B1C76F0123370D
-gpl-2.0.txt                    4CC77B90AF91E615A64AE04893FDFFA7939DB84C
-humans.txt                     B23DC35E29428A33E6B8F86B6B7E96706997B741
-index.php                      C1F5BD88927AABB87A0E99889A16E69C7C4C5780
-keybit.txt                     FBE04369B6316C2D32562B10398C60D7461AEC7B
-license.txt                    4CC77B90AF91E615A64AE04893FDFFA7939DB84C
-readme.txt                     3DD47DE9BD74F00F997BC319AF4F8ACD22448D79
-uninstall.php                  8B4AB61FF5FB14E995A4CEAD0D626564067ECF69
-wp-missed-schedule.php         CEC8D763422B054D70F79B2F585762D34DEAA965
+index.html                             7BFCA8C40496ED3D3847BC234BB62F1DE23D9AC7
+.htaccess                              AA6545F56984A6AE31FDD844525D13729E8DA179
+beta-version-install-instructions.txt  B5C828A26C39A3522F8F86AF1D0DCACA7DE31B98
+dev-version-available-github-only.txt  9819905EEC0B0F3E2E08573AEBD0E7F4816363A1
+gpl-2.0.txt                            4CC77B90AF91E615A64AE04893FDFFA7939DB84C
+humans.txt                             4EDFB0DE14ADABA4568839831D50C8BCD96E6FA0
+index.php                              0B29370A812ADC51BEB260F3A548DF09B922E36D
+keybit.txt                             FBE04369B6316C2D32562B10398C60D7461AEC7B
+license.txt                            4CC77B90AF91E615A64AE04893FDFFA7939DB84C
+no-support-gived-on-forum.txt          AD0A5909DFBB6F0C60CA4EC04443C8742C0803D8
+readme.txt                             A843983F99E34D81305185B1046CF96A8CE494AC
+uninstall.php                          AE962EC9F3B6334D10FD518EC7EAE31533190AAC
+wp-missed-schedule.php                 39F365B8DBB0438F6F716C6DECEB8D59FF7ECDA8
 
 /languages/
 
-wp-missed-schedule.pot         5C4561ADCCF99948758422683CC690A9A4469114
+index.html                             7BFCA8C40496ED3D3847BC234BB62F1DE23D9AC7
+.htaccess                              517DC68D092F9E8DE15F816C55CC270E0CE2458E
+index.php                              0B29370A812ADC51BEB260F3A548DF09B922E36D
+how-to-translate-plugin.txt            8D17712841186C19DDC117977590FE17B5F23ACA
+wp-missed-schedule.pot                 4C1959123C7359B0800A9AB4C834D451D1E43FC2

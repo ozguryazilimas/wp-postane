@@ -1,0 +1,10 @@
+The development version of sLa NGjI's Team plugins is available only on GitHub!
+
+Developmental release, is developed @ github.com/sLaNGjI (membership required)
+
+This build, is not for production sites, or blogs, and no assistance was gived.
+
+You use, download, and install it, at your own risk, and the responsability
+derived to any type of damage or malfunctions, is not imputable to this Author.
+
+Thsnks.

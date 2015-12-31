@@ -4,25 +4,29 @@
 	 * @package     WordPress Plugin
 	 * @subpackage  WP Missed Schedule
 	 * @description Uninstall Module
-	 * @status      Stable
-	 * @todolist    Code in Becoming!
+	 * @status      Stable Tag
+	 * @development Code in Becoming!
 	 * @license     GPLv2 or later
 	 *
-	 * @humans      //humanstxt.org/Standard.html
-	 * @indentation //www.gnu.org/prep/standards/standards.html
-	 * @license     //www.gnu.org/licenses/gpl-2.0.html
-	 * @link        //wordpress.org/plugins/wp-missed-schedule/
+	 * @gnu         www.gnu.org/licenses/gpl-2.0.html
+	 * @humans      humanstxt.org/Standard.html
+	 * @indentation www.gnu.org/prep/standards/standards.html
 	 *
-	 * @build  2015-09-15
-	 * @author sLa NGjI's @ slangji.wordpress.com
+	 * @github      slangji.github.com/wp-missed-schedule
+	 * @website     slangji.wordpress.com/wp-missed-schedule
+	 * @wordpress   wordpress.org/plugins/wp-missed-schedule
 	 *
-	 * @since  WordPress 2.7+
-	 * @tested WordPress 4.4+
+	 * @author      sLa NGjI's @ slangji.wordpress.com
+	 * @contact     wordpress.org/plugins/contact
+	 * @donate      wordpress.org/plugins/donate
+	 * @support     wordpress.org/plugins/premium-support
+	 *
+	 * @build       2015-12-31
+	 * @requires    WordPress 2.7+
+	 * @since       WordPress 2.7+
+	 * @tested      WordPress 3.7+
+	 * @compatible  WordPress 4.5-alpha
 	 */
-
-	defined ( 'ABSPATH' ) OR exit;
-
-	defined ( 'WPINC' ) OR exit;
 
 	defined ( 'WP_UNINSTALL_PLUGIN' ) OR exit;
 

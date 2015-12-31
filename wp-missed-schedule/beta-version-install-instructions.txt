@@ -1,0 +1,14 @@
+How to test Beta version of this plugin?
+
+To try new changes, and features, you need:
+
+- Install and Activate stable copy of this plugin.
+- Install and Activate wordpress.org/plugins/plugin-beta-tester
+- After update it to Beta release when available.
+
+This build, is not for production sites, or blogs, and no assistance was gived.
+
+You use, download, and install it, at your own risk, and the responsability
+derived to any type of damage or malfunctions, is not imputable to this Author.
+
+Thanks.

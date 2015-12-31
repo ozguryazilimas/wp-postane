@@ -16,7 +16,6 @@ humans.txt - we are the humans behind code programming | sLaNGjIs Team
     Plugins:     slangji.wordpress.com/plugins
     Themes:      slangji.wordpress.com/themes
     FeedBurner:  feeds.feedburner.com/slangjis
-    Friendfeed:  friendfeed.com/slangjis
     Gravatar:    gravatar.com/slangjis
     WordPress:   wordpress.org/support/profile/slangjis
 

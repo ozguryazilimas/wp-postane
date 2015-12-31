@@ -1,74 +1,70 @@
-# Copyright (C) 2015 WP Missed Schedule
+# Copyright (C) WP Missed Schedule
 # This file is distributed under the same license as the WP Missed Schedule package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Missed Schedule 2014.1231.2015\n"
+"Project-Id-Version: WP Missed Schedule\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-missed-"
 "schedule\n"
-"POT-Creation-Date: 2015-09-15 00:00:00+00:00\n"
+"POT-Creation-Date: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: wp-missed-schedule.php:191
+#: wp-missed-schedule.php:205
 msgid ""
 "WP Missed Schedule requires WordPress 2.1+ or greater Activation Stopped"
 msgstr ""
 
-#: wp-missed-schedule.php:321 wp-missed-schedule.php:330
-#: wp-missed-schedule.php:345
+#: wp-missed-schedule.php:337 wp-missed-schedule.php:346
+#: wp-missed-schedule.php:361
 msgid "View Your Missed Scheduled Failed Future Posts"
 msgstr ""
 
-#: wp-missed-schedule.php:321 wp-missed-schedule.php:330
+#: wp-missed-schedule.php:337 wp-missed-schedule.php:346
 msgid "Missed"
 msgstr ""
 
-#: wp-missed-schedule.php:322 wp-missed-schedule.php:344
+#: wp-missed-schedule.php:338 wp-missed-schedule.php:360
 msgid "Requires WP Crontrol Plugin Activated"
 msgstr ""
 
-#: wp-missed-schedule.php:322 wp-missed-schedule.php:344
+#: wp-missed-schedule.php:338 wp-missed-schedule.php:360
 msgid "Cron"
 msgstr ""
 
-#: wp-missed-schedule.php:345
+#: wp-missed-schedule.php:361
 msgid "Miss"
 msgstr ""
 
-#: wp-missed-schedule.php:376
+#: wp-missed-schedule.php:392
 msgid "Offer a Beer to sLa"
 msgstr ""
 
-#: wp-missed-schedule.php:376
+#: wp-missed-schedule.php:392
 msgid "Donate"
 msgstr ""
 
-#: wp-missed-schedule.php:377
+#: wp-missed-schedule.php:393
 msgid "Bugfix and Suggestions"
 msgstr ""
 
-#: wp-missed-schedule.php:377
+#: wp-missed-schedule.php:393
 msgid "Contact"
 msgstr ""
 
-#: wp-missed-schedule.php:378
+#: wp-missed-schedule.php:394
 msgid "Visit other author plugins"
 msgstr ""
 
-#: wp-missed-schedule.php:378
+#: wp-missed-schedule.php:394
 msgid "Other"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "WP Missed Schedule"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "//slangji.wordpress.com/wp-missed-schedule/"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -77,16 +73,9 @@ msgid ""
 "Future Posts</code> Scheduled <code>Virtual Cron Job</code>: find only all "
 "that match this problem, re-publish correctly 10 items each session, every "
 "10 minutes, the others on next sessions, for no waste resources, until no "
-"longer exist. The configuration of this plugin is Automatic! Free (UNIX "
-"STYLE) Stable Branche 2014 - Version 2014.1231 - Revision 3 - Build "
-"2015-09-15 - <a title=\"Try New Stable Beta Version Branche 2015\" href=\"//"
-"slangji.wordpress.com/wp-missed-schedule-beta/\">Beta Branche 2015</a>"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "sLa NGjI's"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "//slangji.wordpress.com/"
+"longer exist. The configuration of this plugin is Automatic! Cron link "
+"requires <a title=\"WP Crontrol plugin active is required for Cron Link\" "
+"href=\"//wordpress.org/plugins/wp-crontrol/\">WP Crontrol</a> activated and "
+"WP 2.7+ or later. <a title=\"Try New Stable Beta Version Branche 2015\" href="
+"\"//slangji.wordpress.com/wp-missed-schedule-beta/\">Beta Branche 2015</a> - "
 msgstr ""

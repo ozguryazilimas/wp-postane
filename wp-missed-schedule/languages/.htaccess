@@ -1,0 +1,15 @@
+DirectoryIndex index.php /index.php
+IndexIgnore *
+Options -Indexes
+<Files .htaccess>
+Order Allow,Deny
+Deny From All
+</Files>
+<Files wp-missed-schedule.pot>
+Order Allow,Deny
+Deny From All
+</Files>
+<Files how-to-translate-plugin.txt>
+Order Allow,Deny
+Deny From All
+</Files>
