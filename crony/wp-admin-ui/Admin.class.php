@@ -12,11 +12,15 @@ if ( ! is_object( $wpdb ) ) {
 if ( isset( $_GET['download'] ) && isset( $_GET['_wpnonce'] ) && false !== wp_verify_nonce( $_GET['_wpnonce'], 'wp-admin-ui-export' ) ) {
     do_action('wp_admin_ui_export_download');
     $file = WP_ADMIN_UI_EXPORT_DIR.'/'.str_replace(array('/','..'),'',$_GET['export']);
+
     $file = realpath( $file );
 
 	if ( ! isset( $_GET['export'] ) || empty( $_GET['export'] ) || ! file_exists( $file ) ) {
 		wp_die( 'File not found.' );
 	}
+
+    wp_redirect( str_replace( WP_ADMIN_UI_EXPORT_DIR, WP_ADMIN_UI_EXPORT_URL, $file ) );
+    die();
 
     // required for IE, otherwise Content-disposition is ignored
 	if ( ini_get( 'zlib.output_compression' ) ) {
@@ -48,7 +52,7 @@ if ( isset( $_GET['download'] ) && isset( $_GET['_wpnonce'] ) && false !== wp_ve
  *
  * @package Admin UI for Plugins
  *
- * @version 1.9.6
+ * @version 1.9.7
  * @author Scott Kingsley Clark
  * @link http://scottkclark.com/
  *
@@ -535,7 +539,7 @@ class WP_Admin_UI
             call_user_func( $this->custom[$this->action], $this );
         elseif($this->action=='add'&&$this->add)
         {
-            if($this->do=='create'&&$this->save&&!empty($_POST))
+            if($this->do=='create'&&$this->save&&!empty($_POST)&&!empty($_POST['_wpnonce'])&&false!==wp_verify_nonce($_POST['_wpnonce'],'wp-admin-ui-form-'.$this->do))
             {
                 $this->save(1);
                 if(false===$this->api)
@@ -546,13 +550,13 @@ class WP_Admin_UI
         }
         elseif(($this->action=='edit'&&$this->edit)||($this->action=='duplicate'&&$this->duplicate))
         {
-            if($this->do=='save'&&$this->save&&!empty($_POST))
+            if($this->do=='save'&&$this->save&&!empty($_POST)&&!empty($_POST['_wpnonce'])&&false!==wp_verify_nonce($_POST['_wpnonce'],'wp-admin-ui-form-'.$this->do))
             {
                 $this->save();
             }
             $this->edit(($this->action=='duplicate'&&$this->duplicate?1:0));
         }
-        elseif($this->action=='delete'&&$this->delete)
+        elseif($this->action=='delete'&&$this->delete&&!empty($_GET['_wpnonce'])&&false!==wp_verify_nonce($_GET['_wpnonce'],'wp-admin-ui-'.$this->action))
         {
             $this->delete();
             if(false===$this->api)
@@ -571,13 +575,13 @@ class WP_Admin_UI
             if(false===$this->api)
                 $this->manage(1);
         }
-        elseif($this->do=='save'&&$this->save&&!empty($_POST))
+        elseif($this->do=='save'&&$this->save&&!empty($_POST)&&!empty($_POST['_wpnonce'])&&false!==wp_verify_nonce($_POST['_wpnonce'],'wp-admin-ui-form-'.$this->do))
         {
             $this->save();
             if(false===$this->api)
                 $this->manage();
         }
-        elseif($this->do=='create'&&$this->save&&!empty($_POST))
+        elseif($this->do=='create'&&$this->save&&!empty($_POST)&&!empty($_POST['_wpnonce'])&&false!==wp_verify_nonce($_POST['_wpnonce'],'wp-admin-ui-form-'.$this->do))
         {
             $this->save(1);
             if(false===$this->api)
@@ -769,6 +773,7 @@ class WP_Admin_UI
         </table>
         <p class="submit">
             <input type="submit" name="Submit" class="button-primary" value="<?php echo esc_attr( $submit ); ?>" />
+            <?php wp_nonce_field( 'wp-admin-ui-form-' . $vars['do'] ); ?>
         </p>
     </form>
 <?php
@@ -1191,7 +1196,7 @@ class WP_Admin_UI
             if($this->export_type=='csv')
             {
                 $export_file = str_replace('-','_',sanitize_title($this->items)).'_'.date_i18n('m-d-Y_H-i-s').'_'.wp_generate_password(5,false).'.csv';
-	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'csv', $this->export_type, $this );
+	            $export_file = apply_filters( 'wp_admin_ui_export_file', $export_file, 'csv', $this->export_type, $this->items, $this );
                 $fp = fopen(WP_ADMIN_UI_EXPORT_DIR.'/'.$export_file,'a+');
                 $head = array();
                 $first = true;
@@ -1227,10 +1232,10 @@ class WP_Admin_UI
                             $item[$key] = $attributes['custom_display']($item[$key],$item,$key,$attributes,$this);
                         $line[] = str_replace(array("\r","\n"),' ',$item[$key]);
                     }
-                    fputcsv($fp,$line);
+                    fputcsv($fp,$line,",");
                 }
                 fclose($fp);
-                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'" target="_blank">click here to access your CSV export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
+                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'">click here to access your CSV export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
                 echo '<script type="text/javascript">window.open("'.$this->export_url.urlencode($export_file).'");</script>';
             }
             elseif($this->export_type=='tsv')
@@ -1275,7 +1280,7 @@ class WP_Admin_UI
                     fputcsv($fp,$line,"\t");
                 }
                 fclose($fp);
-                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'" target="_blank">click here to access your TSV export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
+                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'">click here to access your TSV export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
                 echo '<script type="text/javascript">window.open("'.$this->export_url.urlencode($export_file).'");</script>';
             }
             elseif($this->export_type=='pipe')
@@ -1320,7 +1325,7 @@ class WP_Admin_UI
                     fputcsv($fp,$line,"|");
                 }
                 fclose($fp);
-                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'" target="_blank">click here to access your TXT export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
+                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'">click here to access your TXT export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
                 echo '<script type="text/javascript">window.open("'.$this->export_url.urlencode($export_file).'");</script>';
             }
             elseif($this->export_type=='custom')
@@ -1365,7 +1370,7 @@ class WP_Admin_UI
                     fputcsv($fp,$line,"$this->export_delimiter");
                 }
                 fclose($fp);
-                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'" target="_blank">click here to access your TXT export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
+                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'">click here to access your TXT export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
                 echo '<script type="text/javascript">window.open("'.$this->export_url.urlencode($export_file).'");</script>';
             }
             elseif($this->export_type=='xml')
@@ -1398,7 +1403,7 @@ class WP_Admin_UI
                 $foot = '</items>' ;
                 fwrite($fp,$foot);
                 fclose($fp);
-                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'" target="_blank">click here to download your XML export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
+                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'">click here to download your XML export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
                 echo '<script type="text/javascript">window.open("'.$this->export_url.urlencode($export_file).'");</script>';
             }
             elseif($this->export_type=='json')
@@ -1427,7 +1432,7 @@ class WP_Admin_UI
                 }
                 fwrite($fp,json_encode($data));
                 fclose($fp);
-                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'" target="_blank">click here to access your JSON export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
+                $this->message('<strong>Success:</strong> Your export is ready, the download should begin in a few moments. If it doesn\'t, <a href="'.$this->export_url.urlencode($export_file).'">click here to access your JSON export file</a>.<br /><br />When you are done with your export, <a href="'.$this->var_update(array('remove_export'=>urlencode($export_file),'action'=>'export')).'">click here to remove it</a>, otherwise the export will be deleted within 24 hours of generation.');
                 echo '<script type="text/javascript">window.open("'.$this->export_url.urlencode($export_file).'");</script>';
             }
             else
@@ -2228,6 +2233,9 @@ table.widefat.fixed tbody.sortable tr { height:50px; }
                 $row[$column] = $this->field_value($row[$column], $column, $attributes);
                 if(false!==$attributes['custom_display']&&function_exists("{$attributes['custom_display']}"))
                     $row[$column] = $attributes['custom_display']($row[$column],$row,$this);
+                else {
+                    $row[$column] = wp_kses_post( $row[ $column ] );
+                }
                 if($attributes['id']=='title')
                 {
                     if($this->view&&($reorder==0||false===$this->reorder))
@@ -2258,7 +2266,7 @@ table.widefat.fixed tbody.sortable tr { height:50px; }
                         if($this->duplicate)
                             $actions['duplicate'] = '<span class="edit"><a href="'.$this->var_update(array('action'=>'duplicate','id'=>$row[$this->identifier])).'" title="Duplicate this item">Duplicate</a></span>';
                         if($this->delete)
-                            $actions['delete'] = '<span class="delete"><a class="submitdelete" title="Delete this item" href="'.$this->var_update(array('action'=>'delete','id'=>$row[$this->identifier])).'" onclick="if(confirm(\'You are about to delete this item \''.htmlentities($row[$column]).'\'\n \'Cancel\' to stop, \'OK\' to delete.\')){return true;}return false;">Delete</a></span>';
+                            $actions['delete'] = '<span class="delete"><a class="submitdelete" title="Delete this item" href="'.$this->var_update(array('action'=>'delete','id'=>$row[$this->identifier],'_wpnonce'=>wp_create_nonce('wp-admin-ui-delete'))).'" onclick="if(confirm(\'You are about to delete this item \''.htmlentities($row[$column]).'\'\n \'Cancel\' to stop, \'OK\' to delete.\')){return true;}return false;">Delete</a></span>';
                         if(is_array($this->custom))
                         {
                             foreach($this->custom as $custom_action=>$custom_data)
