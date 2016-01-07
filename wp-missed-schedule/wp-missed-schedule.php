@@ -2,15 +2,13 @@
 /*
 Plugin Name: WP Missed Schedule
 Plugin URI: //slangji.wordpress.com/wp-missed-schedule/
-Description: WordPress Plugin WP Missed Schedule Fix Schedules Failed Future Posts Scheduled Virtual Cron Job: find only all that match this problem, re-publish correctly 10 items each session, every 10 minutes, the others on next sessions, for no waste resources, until no longer exist. The configuration of this plugin is Automatic! Cron link requires <a title="WP Crontrol plugin active is required for Cron Link" href="//wordpress.org/plugins/wp-crontrol/">WP Crontrol</a> activated and WP 2.7+ or later. <a title="Test New Stable Beta Version Branche 2015" href="//slangji.wordpress.com/wp-missed-schedule-beta/">Beta Branche 2015</a> - Free (UNIX STYLE) Stable Branche 2014 - Version 2014.1231 - Revision 2015 - Update 4 - Build 2015-12-31
+Description: WordPress Plugin WP Missed Schedule Fix Schedules Failed Future Posts Scheduled Virtual Cron Job: find only all that match this problem, re-publish correctly 10 items each session, every 10 minutes, the others on next sessions, for no waste resources, until no longer exist. The configuration of this plugin is Automatic! Cron link requires <a title="WP Crontrol plugin active is required for Cron Link" href="//wordpress.org/plugins/wp-crontrol/">WP Crontrol</a> activated and WP 2.7+ or later. <a title="Test New Beta Version Branche 2015" href="//slangji.wordpress.com/wp-missed-schedule-beta/">Beta Branche 2015</a> - Free (UNIX STYLE) Stable Branche 2014 - Version 2014.1231 - Revision 2016 - Update 0 - Build 2016-01-06
 Author: sLaNGjIs
-Author URI: //slangji.wordpress.com/
-Version: 2014.1231.2015.4
-Network: true
-Text Domain: wp-missed-schedule
-Domain Path: /languages
+Author URI: //slangji.wordpress.com/plugins/
+Version: 2014.1231.2016.0
 License: GPLv2 or later
 License URI: //www.gnu.org/licenses/gpl-2.0.html
+Network: true
  *
  * Requires at least 2.1
  * Tested up to 4.5
@@ -94,7 +92,7 @@ License URI: //www.gnu.org/licenses/gpl-2.0.html
  * This uses (or it parts) code derived from:
  *
  * wp-header-footer-login-log.php by sLaNGjIs <slangjis [at] googlemail [dot] com>
- * Copyright (C) 2007-2016 [sLaNGjIs](//slangji.wordpress.com/) (email: <slangjis [at] googlemail [dot] com>)
+ * Copyright (C) 2007-2009 [sLaNGjIs](//slangji.wordpress.com/) (email: <slangjis [at] googlemail [dot] com>)
  *
  * according to the terms of the GNU General Public License version 2 (or later).
  *
@@ -170,11 +168,11 @@ License URI: //www.gnu.org/licenses/gpl-2.0.html
 	 * @tested      3.7+
 	 * @compatible  4.5-alpha
 	 * @branche     2014
-	 * @revision    2015
-	 * @update      4
+	 * @revision    2016
+	 * @update      0
 	 * @release     2014.1231
-	 * @version     2014.1231.2015.4
-	 * @build       2015-12-31
+	 * @version     2014.1231.2016.0
+	 * @build       2016-01-06
 	 * @license     GPLv2 or later
 	 * @indentation GNU style coding standard
 	 * @keybit      eLCQM540z78BbFMtmFXj3lC62b79H8651411574J4YQCb3g46FsK338kT29FPANa8
@@ -209,7 +207,7 @@ License URI: //www.gnu.org/licenses/gpl-2.0.html
 					add_action( 'admin_init', 'wpms_psd', 0 );
 				}
 
-			wp_die( __( 'This plugin requires WordPress 2.1+ or greater Activation Stopped', 'wp-missed-schedule' ) );
+			wp_die( __( 'This plugin requires WordPress 2.1+ or greater: Activation Stopped.' ) );
 				exit;
 		}
 	else
@@ -260,15 +258,6 @@ License URI: //www.gnu.org/licenses/gpl-2.0.html
 				}
 		}
 	add_action( 'activated_plugin', 'wpms_1st', 0 );
-
-	function wpms_languages()
-		{
-			if ( ! current_user_can( 'activate_plugins' ) )
-				return;
-
-			load_plugin_textdomain( 'wp-missed-schedule', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-		}
-	add_action( 'plugins_loaded', 'wpms_languages', 0 );
 
 	define( 'WPMS_OPTION', 'wp_scheduled_missed' );
 
@@ -341,8 +330,8 @@ SQL;
 
 							if ( $wp_version >= 2.7 )
 								{
-									$wpms_settings_action_links_1 = '<a title="'. __( 'View Your Missed Scheduled Failed Future Posts', 'wp-missed-schedule' ) .'" href="edit.php?post_status=future&post_type=post">'. __( 'Miss', 'wp-missed-schedule' ) .'</a>';
-									$wpms_settings_action_links_2 = '<a title="'. __( 'Requires WP Crontrol Plugin Activated', 'wp-missed-schedule' ) .'" href="tools.php?page=crontrol_admin_manage_page">'. __( 'Cron', 'wp-missed-schedule' ) .'</a>';
+									$wpms_settings_action_links_1 = '<a title="'. __( 'View Your Missed Scheduled Failed Future Posts' ) .'" href="edit.php?post_status=future&post_type=post">'. __( 'Miss' ) .'</a>';
+									$wpms_settings_action_links_2 = '<a title="'. __( 'Requires WP Crontrol Plugin Activated' ) .'" href="tools.php?page=crontrol_admin_manage_page">'. __( 'Cron' ) .'</a>';
 
 									array_unshift( $links, $wpms_settings_action_links_1 );
 									array_unshift( $links, $wpms_settings_action_links_2 );
@@ -350,7 +339,7 @@ SQL;
 
 							if ( ( $wp_version >= 2.5 ) and ( $wp_version < 2.7 ) )
 								{
-									$wpms_settings_action_links_1 = '<a title="'. __( 'View Your Missed Scheduled Failed Future Posts', 'wp-missed-schedule' ) .'" href="edit.php?post_status=future&post_type=post">'. __( 'Miss', 'wp-missed-schedule' ) .'</a>';
+									$wpms_settings_action_links_1 = '<a title="'. __( 'View Your Missed Scheduled Failed Future Posts' ) .'" href="edit.php?post_status=future&post_type=post">'. __( 'Miss' ) .'</a>';
 
 									array_unshift( $links, $wpms_settings_action_links_1 );
 								}
@@ -364,8 +353,8 @@ SQL;
 		{
 			function wpms_pral( $links )
 				{
-					$links[] = '<a title="'. __( 'Requires WP Crontrol Plugin Activated', 'wp-missed-schedule' ) .'" href="tools.php?page=crontrol_admin_manage_page">'. __( 'Cron', 'wp-missed-schedule' ) .'</a>';
-					$links[] = '<a title="'. __( 'View Your Missed Scheduled Failed Future Posts', 'wp-missed-schedule' ) .'" href="edit.php?post_status=future&post_type=post">'. __( 'Miss', 'wp-missed-schedule' ) .'</a>';
+					$links[] = '<a title="'. __( 'Requires WP Crontrol Plugin Activated' ) .'" href="tools.php?page=crontrol_admin_manage_page">'. __( 'Cron' ) .'</a>';
+					$links[] = '<a title="'. __( 'View Your Missed Scheduled Failed Future Posts' ) .'" href="edit.php?post_status=future&post_type=post">'. __( 'Miss' ) .'</a>';
 						return $links;
 				}
 
@@ -396,9 +385,8 @@ SQL;
 
 					if ( $file == plugin_basename( __FILE__ ) )
 						{
-							$links[] = '<a title="'. __( 'Offer a Beer to sLa', 'wp-missed-schedule' ) .'" href="//slangji.wordpress.com/donate/">'. __( 'Donate', 'wp-missed-schedule' ) .'</a>';
-							$links[] = '<a title="'. __( 'Bugfix and Suggestions', 'wp-missed-schedule' ) .'" href="//slangji.wordpress.com/contact/">'. __( 'Contact', 'wp-missed-schedule' ) .'</a>';
-							$links[] = '<a title="'. __( 'Visit other author plugins', 'wp-missed-schedule' ) .'" href="//slangji.wordpress.com/plugins/">'. __( 'Other', 'wp-missed-schedule' ) .'</a>';
+							$links[] = '<a title="'. __( 'Offer a Beer to sLa' ) .'" href="//slangji.wordpress.com/donate/">'. __( 'Donate' ) .'</a>';
+							$links[] = '<a title="'. __( 'Bugfix and Suggestions' ) .'" href="//slangji.wordpress.com/contact/">'. __( 'Contact' ) .'</a>';
 						}
 					return $links;
 				}

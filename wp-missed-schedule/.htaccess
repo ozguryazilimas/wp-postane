@@ -9,11 +9,19 @@ Deny From All
 Order Allow,Deny
 Deny From All
 </Files>
+<Files changelog.txt>
+Order Allow,Deny
+Deny From All
+</Files>
 <Files dev-version-available-github-only.txt>
 Order Allow,Deny
 Deny From All
 </Files>
 <Files gpl-2.0.txt>
+Order Allow,Deny
+Deny From All
+</Files>
+<Files how-to-translate-this-plugin.txt>
 Order Allow,Deny
 Deny From All
 </Files>

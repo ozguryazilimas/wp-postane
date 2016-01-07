@@ -4,7 +4,6 @@
 	 * @package     WordPress Plugin
 	 * @subpackage  WP Missed Schedule
 	 * @description Uninstall Module
-	 * @status      Stable Tag
 	 * @development Code in Becoming!
 	 * @license     GPLv2 or later
 	 *
@@ -12,16 +11,17 @@
 	 * @humans      humanstxt.org/Standard.html
 	 * @indentation www.gnu.org/prep/standards/standards.html
 	 *
-	 * @github      slangji.github.com/wp-missed-schedule
+	 * @github      github.com/sLaNGjI/wp-missed-schedule
 	 * @website     slangji.wordpress.com/wp-missed-schedule
 	 * @wordpress   wordpress.org/plugins/wp-missed-schedule
 	 *
-	 * @author      sLa NGjI's @ slangji.wordpress.com
-	 * @contact     wordpress.org/plugins/contact
-	 * @donate      wordpress.org/plugins/donate
-	 * @support     wordpress.org/plugins/premium-support
+	 * @author      sLaNGjIs @ slangji.wordpress.com
+	 * @contact     slangji.wordpress.com/contact
+	 * @donate      slangji.wordpress.com/donate
+	 * @support     slangji.wordpress.com/support
+	 * @translation slangji.wordpress.com/translations
 	 *
-	 * @build       2015-12-31
+	 * @build       2016-01-06
 	 * @requires    WordPress 2.7+
 	 * @since       WordPress 2.7+
 	 * @tested      WordPress 3.7+

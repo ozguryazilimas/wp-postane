@@ -1,9 +1,0 @@
-=== How To Translate This WordPress Plugin with GlotPress? ===
-
-== Who translates this plugin? How can I get involved? ==
-
-Anyone can help by suggesting [GlotPress Translations](//translate.wordpress.org/projects/wp-plugins/wp-missed-schedule/). After you've suggested a new translation, a validator will review it. They will then approve, reject, or change your suggestions. Once your changes get approved, they are automatically shipped to all users using your language.
-
-= How does GlotPress translations work? =
-
-You can find detailed [GlotPress Documentation](//en.support.wordpress.com/glotpress/). If I want to change translations locally, where can I download the .PO file for my language? You'll find options to create a .PO file and export translations at the bottom of each language page.
