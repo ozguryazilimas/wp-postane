@@ -313,7 +313,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	$index_titles = true;
 	if (apply_filters('relevanssi_index_titles', $index_titles)) {
 		$filtered_title = apply_filters('relevanssi_post_title_before_tokenize', $post->post_title, $post);
-		$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID));
+		$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID), apply_filters('relevanssi_remove_stopwords_in_titles', true));
 
 		if (count($titles) > 0) {
 			foreach ($titles as $title => $count) {
@@ -362,6 +362,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 				remove_shortcode('recent_products');		// A problematic WooCommerce shortcode
 				remove_shortcode('php');					// PHP Code for Posts
 				remove_shortcode('watupro');				// Watu PRO doesn't co-operate
+				remove_shortcode('starbox');				// Starbox shortcode breaks Relevanssi
 								
 				$post_before_shortcode = $post;
 				$contents = do_shortcode($contents);

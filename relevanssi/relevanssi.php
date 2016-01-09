@@ -3,12 +3,12 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.5
+Version: 3.5.2
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
 
-/*  Copyright 2015 Mikko Saari  (email: mikko@mikkosaari.fi)
+/*  Copyright 2016 Mikko Saari  (email: mikko@mikkosaari.fi)
 
     This file is part of Relevanssi, a search plugin for WordPress.
 
@@ -93,11 +93,11 @@ function relevanssi_didyoumean($query, $pre, $post, $n = 5, $echo = true) {
 
 			), $url ));
 		$url = apply_filters('relevanssi_didyoumean_url', $url);
-		$result = apply_filters('relevanssi_didyoumean_suggestion', "$pre<a href='$url'>$suggestion</a>$post");
+		$result = apply_filters('relevanssi_didyoumean_suggestion', "$pre<a href='$url'>$closest</a>$post");
 		if ($echo) echo $result;
  	}
  
-
+ 	return $result;
 }
 
 function relevanssi_check_old_data() {

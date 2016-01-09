@@ -65,6 +65,7 @@ function relevanssi_search($args) {
 	
 	if (is_array($tax_query)) {
 		foreach ($tax_query as $row) {
+			$using_term_tax_id = false;
 			if ($row['field'] == 'slug') {
 				$slug = $row['terms'];
 				$numeric_slugs = array();
@@ -130,12 +131,36 @@ function relevanssi_search($args) {
 					$term_tax_id = $id_term_tax_id;
 				}
 			}
-			
+			if ($row['field'] == 'term_taxonomy_id') {
+				$using_term_tax_id = true;
+				$id = $row['terms'];
+				$term_tax_id = $id;
+				if (is_array($id)) {
+					$numeric_values = array();
+					foreach ($id as $t_id) {
+						if (is_numeric($t_id)) $numeric_values[] = $t_id;
+					}
+					$term_tax_id = implode(',', $numeric_values);
+				}
+			}
+
 			if (!isset($row['include_children']) || $row['include_children'] == true) {
-				if (!is_array($term_id)) {
-					$term_id = array($term_id);
+				if (!$using_term_tax_id) {
+					if (!is_array($term_id)) {
+						$term_id = array($term_id);
+					}
+				}
+				else {
+					if (!is_array($term_tax_id)) {
+						$term_tax_id = array($term_tax_id);
+						$term_id = $term_tax_id;
+					}
 				}
 				foreach ($term_id as $t_id) {
+					if ($using_term_tax_id) {
+						$t_term = get_term_by('term_taxonomy_id', $t_id, $row['taxonomy']);
+						$t_id = $t_term->ID;
+					}
 					$kids = get_term_children($t_id, $row['taxonomy']);
 					foreach ($kids as $kid) {
 						$term = get_term_by('id', $kid, $row['taxonomy']);
@@ -328,7 +353,7 @@ function relevanssi_search($args) {
 		$query_restrictions .= $postex;
 	}
 
-	$remove_stopwords = true;
+	$remove_stopwords = apply_filters('relevanssi_remove_stopwords_in_titles', true);
 	if (function_exists('wp_encode_emoji')) $q = wp_encode_emoji($q);
 	$phrases = relevanssi_recognize_phrases($q);
 
@@ -356,10 +381,10 @@ function relevanssi_search($args) {
 
 	if ($negative_terms) {	
 		$terms = array_diff($terms, $negative_terms);
-		if (count($terms) < 1) {
+/*		if (count($terms) < 1) {
 			return $hits;
 		}
-	}
+*/	}
 	
 	// Go get the count from the options table, but keep running the full query if it's not available
 	$D = get_option('relevanssi_doc_count');
@@ -478,6 +503,11 @@ function relevanssi_search($args) {
 	else {
 		$o_term_cond = " relevanssi.term = '#term#' ";
 	}
+	
+	if (count($terms) < 1) {
+		$o_term_cond = " relevanssi.term = relevanssi.term ";
+		$terms[] = "term";
+	}
 
 	$post_type_weights = get_option('relevanssi_post_type_weights');
 	if (function_exists('relevanssi_get_recency_bonus')) {
@@ -499,7 +529,6 @@ function relevanssi_search($args) {
 	do {
 		foreach ($terms as $term) {
 			$term = trim($term);	// numeric search terms will start with a space
-			if (strlen($term) < $min_length) continue;
 			$term = esc_sql($term);
 
 			if (strpos($o_term_cond, 'LIKE') !== false) {

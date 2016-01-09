@@ -392,7 +392,7 @@ function relevanssi_extract_locations($words, $fulltext) {
     $locations = array();
     foreach($words as $word) {
         $wordlen = relevanssi_strlen($word);
-        $loc = relevanssi_stripos($fulltext, $word);
+        $loc = relevanssi_stripos($fulltext, $word, 0);
         while($loc !== FALSE) {
             $locations[] = $loc;
             $loc = relevanssi_stripos($fulltext, $word, $loc + $wordlen);
@@ -435,6 +435,8 @@ function relevanssi_count_matches($words, $fulltext) {
 // The only exception is where we have only two matches in which case we just take the 
 // first as will be equally distant.
 function relevanssi_determine_snip_location($locations, $prevcount) {
+    if (!is_array($locations)) return 0;
+
     // If we only have 1 match we dont actually do the for loop so set to the first
     $startpos = $locations[0];  
     $loccount = count($locations);
@@ -466,9 +468,14 @@ function relevanssi_determine_snip_location($locations, $prevcount) {
 // in the middle of the extract
 function relevanssi_extract_relevant($words, $fulltext, $rellength=300, $prevcount=50) {
 
-    $textlength = mb_strlen($fulltext);
+	if (function_exists('mb_strlen')) {
+	    $textlength = mb_strlen($fulltext);
+	}
+	else {
+	    $textlength = strlen($fulltext);
+	}
     if($textlength <= $rellength) {
-        return $fulltext;
+        return array($fulltext, 1, 0);
     }
 
     $locations = relevanssi_extract_locations($words, $fulltext);
@@ -479,11 +486,21 @@ function relevanssi_extract_relevant($words, $fulltext, $rellength=300, $prevcou
         $startpos = $startpos - ($textlength-$startpos)/2;
     }
 
-    $reltext = mb_substr($fulltext, $startpos, $rellength);
-    
+	if (function_exists('mb_substr')) {
+	    $reltext = mb_substr($fulltext, $startpos, $rellength);
+	}
+	else {
+	    $reltext = substr($fulltext, $startpos, $rellength);
+	}    
+
     // check to ensure we dont snip the last word if thats the match
     if( $startpos + $rellength < $textlength) {
-        $reltext = mb_substr($reltext, 0, mb_strrpos($reltext, " ")); // remove last word
+		if (function_exists('mb_substr') && function_exists('mb_strrpos')) {
+	        $reltext = mb_substr($reltext, 0, mb_strrpos($reltext, " ")); // remove last word
+	    }
+	    else {
+    	    $reltext = substr($reltext, 0, strrpos($reltext, " ")); // remove last word
+    	}
     }
 
 	$start = false;
