@@ -76,7 +76,7 @@ function peyton_list_insert_entry($data, $admin_override = false) {
   }
 
   if ($link == '') {
-    $link = '/dizi-listesi/';
+    $link = '/peyton/';
   }
 
   if ($error_msg == '') {

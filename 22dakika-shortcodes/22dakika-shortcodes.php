@@ -36,7 +36,7 @@ function dizi_shortcode_replace($content) {
     if (isset($dizi_list[$index_text])) {
       $content = substr($content,0,$start_pos) . "<a href='" . $dizi_list[$index_text]['link'] . "'>" . $text."</a>" . substr($content, $end_pos + 7);
     } else {
-      $content = substr($content,0,$start_pos) . "<a href='" . get_site_url()."/dizi-listesi'>" . $text . "</a>" . substr($content, $end_pos + 7);
+      $content = substr($content,0,$start_pos) . "<a href='" . get_site_url() . "/peyton'>" . $text . "</a>" . substr($content, $end_pos + 7);
     }
 
     $start_pos = strpos($content,"[dizi]", $start_pos + 1);
