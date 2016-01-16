@@ -355,7 +355,10 @@ abstract class YARPP_Cache {
                     break;
 			}
 		}
-	
+		else {
+			$lang = 'en_US';
+		}	
+		
 		$words_file = YARPP_DIR.'/lang/words-'.$lang.'.php';
 		if (file_exists($words_file)) include($words_file);
 		if (!isset($overusedwords)) $overusedwords = array();

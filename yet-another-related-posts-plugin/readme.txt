@@ -5,8 +5,8 @@ Author URI: http://www.yarpp.com/
 Plugin URI: http://www.yarpp.com/
 Tags: feeds, pages, posts, related, rss, yarpp, ads, multisite, multilingual, thumbnails, related posts, related content
 Requires at least: 3.3
-Tested up to: 4.2.2
-Stable tag: 4.2.5
+Tested up to: 4.4
+Stable tag: 4.3.1
 License: GPLv2 or later
 
 Display a list of related posts on your site based on a powerful unique algorithm. Earn money by including sponsored content!
@@ -14,21 +14,20 @@ Display a list of related posts on your site based on a powerful unique algorith
 == Description ==
 
 Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post types related to the current entry, introducing your readers to other relevant content on your site.
-[(See current offers and promotions for YARPP Pro users.)](http://www.yarpp.com/offers)
 
-**NEW!** Now you can mix and match **YARPP Basic** and **YARPP Pro** to get the best of both features, beneath articles or in the sidebar! Use the combination that works best for you.
+Now you can mix and match **YARPP Basic** and **YARPP Pro** to get the best of both features, beneath articles or in the sidebar! Use the combination that works best for you.
 
-**Enable YARPP Pro for Powerful Enhancements**
+**YARPP Pro for Sponsored Content**
 -----------------------------------------
-* **Customize thumbnail layout** through the user interface.
-* **Pull related content from multiple sites**.
+* Create a **variety of native units**, including Content Recommendation or In Feed display
 * **Make money by displaying sponsored content**, at the bottom of your posts, in the sidebar, or both.
 * **Easily promote your product or service** on thousands of blogs and websites.
-* **Get detailed reporting** about your related content list.
+* Advertisers are now able to bid by CPC and/or CPM
+* Support for more granular advertiser targeting such as IAB category and geo-targeting by DMA
 
 [Learn more about the new YARPP Pro enhancements!](http://www.yarpp.com)
 
-**Keep YARPP Basic for Standard Features**
+**YARPP Basic for Standard Features**
 -------------------------------------------
 * **Thumbnail or list view** of related content.
 * **Related posts, pages, and custom post types.**
@@ -66,7 +65,7 @@ YARPP allows the advanced user with knowledge of PHP to customize the display of
 
 Below are Frequently Asked Questions about YARPP basic. For questions about the new YARPP Pro enhancements, please visit the [YARPP Pro FAQ](http://www.yarpp.com/faq).
 
-If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/yet-another-related-posts-plugin). We'd also appreciate if you would help us improve YARPP by [answering a few survey questions](http://www.surveymonkey.com/s/Z278L88). Thanks for your feedback!
+If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/yet-another-related-posts-plugin).
 
 = Many pages list "no related posts." =
 
@@ -297,6 +296,11 @@ YARPP is currently localized in the following languages:
 * Uzbek (`uz_UZ`) by Ali Safarov of [comfi.com](http://www.comfi.com/)
 
 == Changelog ==
+
+= 4.3.1 =
+* Tested on WordPress 4.4.
+* Fix $lang missing error in YARPP_Cache.php
+* Fix WP_Widget deprecation PHP error
 
 = 4.2.5 =
 * Tested on WordPress 4.2.2.

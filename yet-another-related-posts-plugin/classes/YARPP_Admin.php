@@ -303,13 +303,6 @@ class YARPP_Admin {
 
         } else {
 
-            $out .=
-                '<p>'.
-                'We would really appreciate your input to help us continue to <a href="http://www.yarpp.com" target="_blank">improve the product</a>. We are primarily looking '.
-                'for country, domain, and date installed information. Please help us make YARPP better by providing this information and by filling '.
-                'out our quick, 5 question survey: <a href="http://www.surveymonkey.com/s/Z278L88" target="_blank">http://www.surveymonkey.com/s/Z278L88</a>'.
-                '</p>';
-
             $out .= '</p><p>';
             if($optinAction !== 'disable'){
                 $out .= $this->the_donothing_button('No, thanks').'&nbsp;&nbsp;';
