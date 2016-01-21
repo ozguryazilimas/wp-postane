@@ -46,8 +46,8 @@ function _mw_adminimize_remove_my_account() {
 function _mw_adminimize_add_logout( $wp_admin_bar ) {
 
 	$user_id                    = get_current_user_id();
-	$_mw_adminimize_ui_redirect = _mw_adminimize_get_option_value( '_mw_adminimize_ui_redirect' );
-	if ( '1' === $_mw_adminimize_ui_redirect ) {
+	$_mw_adminimize_ui_redirect = (int) _mw_adminimize_get_option_value( '_mw_adminimize_ui_redirect' );
+	if ( 1 === $_mw_adminimize_ui_redirect ) {
 		$redirect = '&amp;redirect_to=' . get_option( 'siteurl' );
 	} else {
 		$redirect = '';
@@ -61,7 +61,7 @@ function _mw_adminimize_add_logout( $wp_admin_bar ) {
 		array(
 			'id'     => 'mw-account',
 			'parent' => 'top-secondary',
-			'title'  => __( 'Log Out' ),
+			'title'  => esc_attr__( 'Log Out' ),
 			'href'   => wp_logout_url() . $redirect,
 		)
 	);
@@ -71,8 +71,8 @@ function _mw_adminimize_add_user_logout( $wp_admin_bar ) {
 
 	$user_id                    = get_current_user_id();
 	$current_user               = wp_get_current_user();
-	$_mw_adminimize_ui_redirect = _mw_adminimize_get_option_value( '_mw_adminimize_ui_redirect' );
-	if ( '1' === $_mw_adminimize_ui_redirect ) {
+	$_mw_adminimize_ui_redirect = (int) _mw_adminimize_get_option_value( '_mw_adminimize_ui_redirect' );
+	if ( 1 === $_mw_adminimize_ui_redirect ) {
 		$redirect = '&amp;redirect_to=' . get_option( 'siteurl' );
 	} else {
 		$redirect = '';
@@ -88,7 +88,7 @@ function _mw_adminimize_add_user_logout( $wp_admin_bar ) {
 		array(
 			'id'     => 'mw-account',
 			'parent' => 'top-secondary',
-			'title'  => $user_info . ' ' . __( 'Log Out' ),
+			'title'  => $user_info . ' ' . esc_attr__( 'Log Out' ),
 			'href'   => wp_logout_url() . $redirect,
 		)
 	);
@@ -112,7 +112,7 @@ function _mw_adminimize_set_menu_option_33() {
 		);
 	}
 
-	$_mw_adminimize_user_info   = _mw_adminimize_get_option_value( '_mw_adminimize_user_info' );
+	$_mw_adminimize_user_info   = (int) _mw_adminimize_get_option_value( '_mw_adminimize_user_info' );
 	// change user-info
 	switch ( $_mw_adminimize_user_info ) {
 		case 1:
@@ -160,7 +160,7 @@ function _mw_adminimize_remove_admin_bar() {
 	foreach ( $user_roles as $role ) {
 		$user = wp_get_current_user();
 		if ( is_array( $user->roles ) && in_array( $role, $user->roles ) ) {
-			if ( current_user_can( $role )
+			if ( _mw_adminimize_current_user_has_role( $role )
 				&& isset( $disabled_global_option_[ $role ] )
 				&& is_array( $disabled_global_option_[ $role ] )
 			) {
@@ -221,7 +221,7 @@ function _mw_adminimize_remove_admin_bar() {
  */
 function _mw_adminimize_restore_links() {
 
-	$_mw_adminimize_user_info = _mw_adminimize_get_option_value( '_mw_adminimize_user_info' );
+	$_mw_adminimize_user_info = (int) _mw_adminimize_get_option_value( '_mw_adminimize_user_info' );
 	?>
 	<style type="text/css">
 		#mw_adminimize_admin_bar {
@@ -253,7 +253,7 @@ function _mw_adminimize_restore_links() {
 		}
 	</style>
 	<div id="mw_adminimize_admin_bar">
-		<?php echo '<a id="mw_title" href="' . home_url() . '" title="' . __(
+		<?php echo '<a id="mw_title" href="' . home_url() . '" title="' . esc_attr__(
 				get_bloginfo( 'name' )
 			) . '" target="_blank">' . get_bloginfo( 'name' ) . '</a>';
 		?>
@@ -261,7 +261,7 @@ function _mw_adminimize_restore_links() {
 			<?php
 			wp_get_current_user();
 			$current_user = wp_get_current_user();
-			if ( empty( $_mw_adminimize_user_info ) || 0 == $_mw_adminimize_user_info || 3 == $_mw_adminimize_user_info ) {
+			if ( empty( $_mw_adminimize_user_info ) || 0 === $_mw_adminimize_user_info || 3 === $_mw_adminimize_user_info ) {
 				if ( ! ( $current_user instanceof WP_User ) ) {
 					return;
 				}
@@ -271,17 +271,17 @@ function _mw_adminimize_restore_links() {
 					if ( ! is_network_admin() ) {
 						echo '| <a href="' . network_admin_url() . '" title="' . esc_attr__(
 								'Network Admin'
-							) . '">' . __( 'Network Admin' ) . '</a>';
+							) . '">' . esc_attr__( 'Network Admin' ) . '</a>';
 					} else {
 						echo '| <a href="' . get_dashboard_url( get_current_user_id() ) . '" title="' . esc_attr__(
 								'Site Admin'
-							) . '">' . __( 'Site Admin' ) . '</a>';
+							) . '">' . esc_attr__( 'Site Admin' ) . '</a>';
 					}
 				}
 			}
 
 			if ( empty( $_mw_adminimize_user_info ) || 0 == $_mw_adminimize_user_info || 2 == $_mw_adminimize_user_info || 3 == $_mw_adminimize_user_info ) {
-				?>  | <?php echo '<a href="' . wp_logout_url() . '" title="' . esc_attr__( 'Log Out' ) . '">' . __(
+				?>  | <?php echo '<a href="' . wp_logout_url() . '" title="' . esc_attr__( 'Log Out' ) . '">' . esc_attr__(
 						'Log Out'
 					) . '</a>';
 			}

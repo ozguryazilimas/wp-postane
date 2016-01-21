@@ -9,19 +9,59 @@ if ( ! function_exists( 'add_action' ) ) {
 	die( "Hi there!  I'm just a part of plugin, not much I can do when called directly." );
 }
 
-// Need only on admin area
-if ( ! is_admin() )
-	return NULL;
+/**
+ * Recursive search in array.
+ *
+ * @param $needle
+ * @param $haystack
+ *
+ * @return bool
+ */
+function _mw_adminimize_recursive_in_array( $needle, $haystack ) {
+
+	if ( '' === $haystack ) {
+		return FALSE;
+	}
+
+	if ( ! $haystack ) {
+		return FALSE;
+	}
+
+	foreach ( $haystack as $stalk ) {
+		if ( $needle === $stalk
+			|| ( is_array( $stalk )
+				&& _mw_adminimize_recursive_in_array( $needle, $stalk )
+			)
+		) {
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+/**
+ * Check if array contains all array values from another array.
+ *
+ * @param $array1
+ * @param $array2
+ *
+ * @return bool
+ */
+function _mw_adminimize_in_arrays( $array1, $array2 ) {
+
+	return (bool) count( array_intersect( $array1, $array2 ) );
+}
 
 // fix some badly enqueued scripts with no sense of HTTPS
 // Kudos to http://snippets.webaware.com.au/snippets/cleaning-up-wordpress-plugin-script-and-stylesheet-loads-over-ssl/
-add_action( 'wp_print_scripts', 'enqueueScriptsFix', 100 );
-add_action( 'wp_print_styles', 'enqueueStylesFix', 100 );
+add_action( 'wp_print_scripts', '_mw_adminimize_enqueueScriptsFix', 100 );
+add_action( 'wp_print_styles', '_mw_adminimize_enqueueStylesFix', 100 );
 
 /**
  * force plugins to load scripts with SSL if page is SSL
  */
-function enqueueScriptsFix() {
+function _mw_adminimize_enqueueScriptsFix() {
 
 	if ( ! is_admin() ) {
 		if ( ! empty( $_SERVER[ 'HTTPS' ] ) ) {
@@ -38,7 +78,7 @@ function enqueueScriptsFix() {
 /**
  * force plugins to load styles with SSL if page is SSL
  */
-function enqueueStylesFix() {
+function _mw_adminimize_enqueueStylesFix() {
 
 	if ( ! is_admin() ) {
 		if ( ! empty( $_SERVER[ 'HTTPS' ] ) ) {
@@ -50,4 +90,21 @@ function enqueueStylesFix() {
 			}
 		}
 	}
+}
+
+/**
+ * Check the role with the current user data.
+ *
+ * @param string $role
+ *
+ * @return bool
+ */
+function _mw_adminimize_current_user_has_role( $role ) {
+
+	$user = wp_get_current_user();
+	if ( in_array( $role, (array) $user->roles ) ) {
+		return TRUE;
+	}
+
+	return FALSE;
 }
