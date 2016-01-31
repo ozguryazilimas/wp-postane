@@ -1,7 +1,8 @@
 <?php
 /**
- * Author: Alin Marcu
+ * Author: Alin Marcu 
  * Author URI: https://deconf.com
+ * Copyright 2013 Alin Marcu 
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -18,7 +19,7 @@ if ( ! class_exists( 'GADWP_Frontend_Item_Reports' ) ) {
 
 		public function __construct() {
 			$this->gadwp = GADWP();
-
+			
 			add_action( 'admin_bar_menu', array( $this, 'custom_adminbar_node' ), 999 );
 		}
 

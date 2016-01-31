@@ -1,7 +1,8 @@
 <?php
 /**
- * Author: Alin Marcu
+ * Author: Alin Marcu 
  * Author URI: https://deconf.com
+ * Copyright 2013 Alin Marcu 
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -32,17 +33,17 @@ $create_options .= '}';
 
 $options = "'auto'";
 $optionsArray = array();
-if ( !empty( $this->gadwp->config->options['ga_cookiedomain'] ) ) {
-    $optionsArray['cookieDomain'] = $this->gadwp->config->options['ga_cookiedomain'];
+if ( ! empty( $this->gadwp->config->options['ga_cookiedomain'] ) ) {
+	$optionsArray['cookieDomain'] = $this->gadwp->config->options['ga_cookiedomain'];
 }
-if ( !empty( $this->gadwp->config->options['ga_cookiename'] ) ) {
-    $optionsArray['cookieName'] = $this->gadwp->config->options['ga_cookiename'];
+if ( ! empty( $this->gadwp->config->options['ga_cookiename'] ) ) {
+	$optionsArray['cookieName'] = $this->gadwp->config->options['ga_cookiename'];
 }
-if ( !empty( $this->gadwp->config->options['ga_cookieexpires'] ) ) {
-    $optionsArray['cookieExpires'] = (int) $this->gadwp->config->options['ga_cookieexpires'];
+if ( ! empty( $this->gadwp->config->options['ga_cookieexpires'] ) ) {
+	$optionsArray['cookieExpires'] = (int) $this->gadwp->config->options['ga_cookieexpires'];
 }
-if (!empty($optionsArray)) {
-    $options = json_encode($optionsArray);
+if ( ! empty( $optionsArray ) ) {
+	$options = json_encode( $optionsArray );
 }
 ?>
   ga('create', '<?php echo esc_html($profile[2]); ?>', <?php echo $options; ?><?php	if ($create_options != '{}') {?>, <?php echo $create_options; }?>);

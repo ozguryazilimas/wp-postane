@@ -1,7 +1,8 @@
 <?php
 /**
- * Author: Alin Marcu
+ * Author: Alin Marcu 
  * Author URI: https://deconf.com
+ * Copyright 2013 Alin Marcu 
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -19,12 +20,8 @@ if ( ! class_exists( 'GADWP_Tracking' ) ) {
 		public function __construct() {
 			$this->gadwp = GADWP();
 			
-			add_action( 'wp_head', array( 
-				$this, 
-				'tracking_code' ), 99 );
-			add_action( 'wp_enqueue_scripts', array( 
-				$this, 
-				'load_scripts' ) );
+			add_action( 'wp_head', array( $this, 'tracking_code' ), 99 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'load_scripts' ) );
 		}
 
 		public function load_scripts() {

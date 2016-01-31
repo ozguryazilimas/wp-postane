@@ -1,3 +1,10 @@
+/**
+ * Author: Alin Marcu 
+ * Author URI: https://deconf.com
+ * Copyright 2013 Alin Marcu 
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ */
 #gadwp {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -61,4 +68,8 @@
 	padding: 10px 0 0 0;
 	float: left;
 	font-style: italic;
+}
+
+.widget_gadwp-frontwidget-report h2.widget-title {
+	margin-bottom: 0px;
 }

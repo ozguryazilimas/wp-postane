@@ -4,7 +4,7 @@
  * Plugin URI: https://deconf.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: Alin Marcu
- * Version: 4.9.1.2
+ * Version: 4.9.2
  * Author URI: https://deconf.com
  * Text Domain: google-analytics-dashboard-for-wp
  * Domain Path: /languages
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 // Plugin Version
 if ( ! defined( 'GADWP_CURRENT_VERSION' ) ) {
-	define( 'GADWP_CURRENT_VERSION', '4.9.1.2' );
+	define( 'GADWP_CURRENT_VERSION', '4.9.2' );
 }
 
 if ( ! class_exists( 'GADWP_Manager' ) ) {
@@ -28,6 +28,8 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 		public $config = null;
 
 		public $frontend_actions = null;
+
+		public $common_actions = null;
 
 		public $backend_actions = null;
 
@@ -177,9 +179,7 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 						 * Load Backend ajax actions
 						 */
 						include_once ( GADWP_DIR . 'admin/ajax-actions.php' );
-						include_once ( GADWP_DIR . 'admin/ajax-actions-ui.php' );
 						self::$instance->backend_actions = new GADWP_Backend_Ajax();
-						new GADWP_UI_Ajax();
 					}
 
 					/*
@@ -187,30 +187,35 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 					 */
 					include_once ( GADWP_DIR . 'front/ajax-actions.php' );
 					self::$instance->frontend_actions = new GADWP_Frontend_Ajax();
-				} else
-					if ( GADWP_Tools::check_roles( self::$instance->config->options['ga_dash_access_back'] ) ) {
+
+					/*
+					 * Load Common ajax actions
+					 */
+					include_once ( GADWP_DIR . 'common/ajax-actions.php' );
+					self::$instance->common_actions = new GADWP_Common_Ajax();
+				} else if ( GADWP_Tools::check_roles( self::$instance->config->options['ga_dash_access_back'] ) ) {
+					/*
+					 * Load Backend Setup
+					 */
+					include_once ( GADWP_DIR . 'admin/setup.php' );
+					self::$instance->backend_setup = new GADWP_Backend_Setup();
+
+					if ( self::$instance->config->options['dashboard_widget'] ) {
 						/*
-						 * Load Backend Setup
+						 * Load Backend Widget
 						 */
-						include_once ( GADWP_DIR . 'admin/setup.php' );
-						self::$instance->backend_setup = new GADWP_Backend_Setup();
-
-						if ( self::$instance->config->options['dashboard_widget'] ) {
-							/*
-							 * Load Backend Widget
-							 */
-							include_once ( GADWP_DIR . 'admin/widgets.php' );
-							self::$instance->backend_widgets = new GADWP_Backend_Widgets();
-						}
-
-						if ( self::$instance->config->options['backend_item_reports'] ) {
-							/*
-							 * Load Backend Item Reports
-							 */
-							include_once ( GADWP_DIR . 'admin/item-reports.php' );
-							self::$instance->backend_item_reports = new GADWP_Backend_Item_Reports();
-						}
+						include_once ( GADWP_DIR . 'admin/widgets.php' );
+						self::$instance->backend_widgets = new GADWP_Backend_Widgets();
 					}
+
+					if ( self::$instance->config->options['backend_item_reports'] ) {
+						/*
+						 * Load Backend Item Reports
+						 */
+						include_once ( GADWP_DIR . 'admin/item-reports.php' );
+						self::$instance->backend_item_reports = new GADWP_Backend_Item_Reports();
+					}
+				}
 			} else {
 				if ( GADWP_Tools::check_roles( self::$instance->config->options['ga_dash_access_front'] ) ) {
 					/*

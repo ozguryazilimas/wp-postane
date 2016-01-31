@@ -1,8 +1,8 @@
 <?php
-
 /**
  * Author: Alin Marcu
  * Author URI: https://deconf.com
+ * Copyright 2013 Alin Marcu
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -17,8 +17,8 @@ final class GADWP_Frontend_Widget extends WP_Widget {
 
 	public function __construct() {
 		$this->gadwp = GADWP();
-
-		parent::__construct( 'gadash_frontend_widget', __( 'Google Analytics Dashboard', 'google-analytics-dashboard-for-wp' ), array( 'description' => __( "Will display your google analytics stats in a widget", 'google-analytics-dashboard-for-wp' ) ) );
+		
+		parent::__construct( 'gadwp-frontwidget-report', __( 'Google Analytics Dashboard', 'google-analytics-dashboard-for-wp' ), array( 'description' => __( "Will display your google analytics stats in a widget", 'google-analytics-dashboard-for-wp' ) ) );
 		// Frontend Styles
 		if ( is_active_widget( false, false, $this->id_base, true ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_styles_scripts' ) );
@@ -26,9 +26,13 @@ final class GADWP_Frontend_Widget extends WP_Widget {
 	}
 
 	public function load_styles_scripts() {
+		$lang = get_bloginfo( 'language' );
+		$lang = explode( '-', $lang );
+		$lang = $lang[0];
+		
 		wp_enqueue_style( 'gadwp-front-widget', GADWP_URL . 'front/css/widgets.css', null, GADWP_CURRENT_VERSION );
 		wp_enqueue_script( 'gadwp-front-widget', GADWP_URL . 'front/js/widgets.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
-		wp_enqueue_script( 'gadwp-jsapi', 'https://www.google.com/jsapi' );
+		wp_enqueue_script( 'googlejsapi', 'https://www.google.com/jsapi?autoload=%7B%22modules%22%3A%5B%7B%22name%22%3A%22visualization%22%2C%22version%22%3A%221%22%2C%22language%22%3A%22' . $lang . '%22%2C%22packages%22%3A%5B%22corechart%22%2C%20%22table%22%2C%20%22orgchart%22%2C%20%22geochart%22%5D%7D%5D%7D%27', array(), null );
 	}
 
 	public function widget( $args, $instance ) {
@@ -39,7 +43,7 @@ final class GADWP_Frontend_Widget extends WP_Widget {
 		if ( ! empty( $widget_title ) ) {
 			echo $args['before_title'] . $widget_title . $args['after_title'];
 		}
-
+		
 		if ( isset( $this->gadwp->config->options['ga_dash_style'] ) ) {
 			$css = "colors:['" . $this->gadwp->config->options['ga_dash_style'] . "','" . GADWP_Tools::colourVariator( $this->gadwp->config->options['ga_dash_style'], - 20 ) . "'],";
 			$color = $this->gadwp->config->options['ga_dash_style'];
@@ -54,7 +58,7 @@ final class GADWP_Frontend_Widget extends WP_Widget {
 					  fractionDigits: 2
 					});
 
-					formatter.format(data, 1);	";
+					formatter.format(data, 1);";
 		} else {
 			$formater = '';
 		}
@@ -84,50 +88,59 @@ final class GADWP_Frontend_Widget extends WP_Widget {
 				echo '<div id="gadwp-widget"><div id="gadwp-widgettotals"></div></div>';
 				break;
 		}
-		echo '<script type="text/javascript">
-			jQuery( function () {
-				jQuery.post("' . admin_url( 'admin-ajax.php' ) . '", {action: "gadash_get_frontendwidget_data",gadash_number: "' . $this->number . '",gadash_optionname: "' . $this->option_name . '"}, function(response){
-				    if (!jQuery.isNumeric(response) && jQuery.isArray(response)){
-				        if (jQuery("#gadwp-widgetchart")[0]){
-				           gadash_widgetsessions=response[0];
-						   google.setOnLoadCallback(ga_dash_drawfwidgetsessions(gadash_widgetsessions));
-				        }
-				        if (jQuery("#gadwp-widgettotals")[0]){
-						   ga_dash_drawtotalsstats(response[1]);
-				        }
-					}else{
-				        jQuery("#gadwp-widgetchart").css({"background-color":"#F7F7F7","height":"auto","padding-top":"50px","padding-bottom":"50px","color":"#000","text-align":"center"});
-				        jQuery("#gadwp-widgetchart").html("' . __( "This report is unavailable", 'google-analytics-dashboard-for-wp' ) . ' ("+response+")");
-                    }
-				});});';
-		echo 'google.load("visualization", "1", {packages:["corechart"], "language" : "'. get_bloginfo( 'language' ) . '"});
-					function ga_dash_drawfwidgetsessions(response) {
-    					var data = google.visualization.arrayToDataTable(response);
-    					var options = {
-    					  legend: {position: "none"},
-    					  pointSize: 3,' . $css . '
-    					  title: "' . $title . '",
-    					  titlePosition: "in",
-    					  chartArea: {width: "95%",height:"75%"},
-    					  hAxis: { textPosition: "none"},
-    					  vAxis: { textPosition: "none", minValue: 0, gridlines: {color: "transparent"}, baselineColor: "transparent"}
-    				 	}
-    					var chart = new google.visualization.AreaChart(document.getElementById("gadwp-widgetchart"));
-    					' . $formater . '
-    					chart.draw(data, options);
-				   }
-    			   function ga_dash_drawtotalsstats(response) {
-    					if (response == null){
-    					    response = 0;
-                        }
-                        jQuery("#gadwp-widgettotals").html("<div class=\"gadwp-left\">' . __( "Period:", 'google-analytics-dashboard-for-wp' ) . '</div> <div class=\"gadwp-right\">' . $periodtext . '</div><div class=\"gadwp-left\">' . __( "Sessions:", 'google-analytics-dashboard-for-wp' ) . '</div> <div class=\"gadwp-right\">"+response+"</div>");
-                   }';
-		echo '</script>';
-		if ( $instance['give_credits'] == 1 )
-			echo '<div style="text-align:right;width:100%;font-size:0.8em;clear:both;margin-right:5px;">' . __( 'generated by', 'google-analytics-dashboard-for-wp' ) . ' <a href="https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_report&utm_medium=link&utm_content=front_widget&utm_campaign=gadwp" rel="nofollow" style="text-decoration:none;font-size:1em;">GADWP</a>&nbsp;</div>';
+		?>
+<script type="text/javascript">
+	jQuery( function () {
+		jQuery.post("<?php echo admin_url( 'admin-ajax.php' ); ?>", {action: "ajax_frontwidget_report", gadwp_number: "<?php echo $this->number; ?>", gadwp_optionname: "<?php  echo $this->option_name; ?>" }, function(response){
+			if (!jQuery.isNumeric(response) && jQuery.isArray(response)){
+				if (jQuery("#gadwp-widgetchart")[0]){
+					gadwpFrontWidgetData = response[0];
+					gadwp_drawFrontWidgetChart(gadwpFrontWidgetData);
+				}
+				if (jQuery("#gadwp-widgettotals")[0]){
+					gadwp_drawFrontWidgetTotals(response[1]);
+				}
+			}else{
+				jQuery("#gadwp-widgetchart").css({"background-color":"#F7F7F7","height":"auto","padding-top":"50px","padding-bottom":"50px","color":"#000","text-align":"center"});
+				jQuery("#gadwp-widgetchart").html("<?php __( "This report is unavailable", 'google-analytics-dashboard-for-wp' ); ?> ("+response+")");
+			}
+		});
+	});
+	function gadwp_drawFrontWidgetChart(response) {
+		var data = google.visualization.arrayToDataTable(response);
+		var options = {
+			legend: { position: "none" },
+			pointSize: "3, <?php echo $css; ?>",
+			title: "<?php echo $title; ?>",
+			titlePosition: "in",
+			chartArea: { width: "95%", height: "75%" },
+			hAxis: { textPosition: "none"},
+			vAxis: { textPosition: "none", minValue: 0, gridlines: { color: "transparent" }, baselineColor: "transparent"}
+		}
+		var chart = new google.visualization.AreaChart(document.getElementById("gadwp-widgetchart"));
+		<?php echo $formater; ?>
+		chart.draw(data, options);
+	}
+	function gadwp_drawFrontWidgetTotals(response) {
+		if (response == null){
+			response = 0;
+		}
+		jQuery("#gadwp-widgettotals").html('<div class="gadwp-left"><?php _e( "Period:", 'google-analytics-dashboard-for-wp' ); ?></div> <div class="gadwp-right"><?php echo $periodtext; ?> </div><div class="gadwp-left"><?php _e( "Sessions:", 'google-analytics-dashboard-for-wp' ); ?></div> <div class="gadwp-right">'+response+'</div>');
+	}
+</script>
+<?php
+		if ( $instance['give_credits'] == 1 ) :
+			?>
+<div style="text-align: right; width: 100%; font-size: 0.8em; clear: both; margin-right: 5px;"><?php _e( 'generated by', 'google-analytics-dashboard-for-wp' ); ?> <a href="https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_report&utm_medium=link&utm_content=front_widget&utm_campaign=gadwp" rel="nofollow" style="text-decoration: none; font-size: 1em;">GADWP</a>&nbsp;
+</div>
+
+		<?php
+		endif;
 		$widget_content = ob_get_contents();
-		ob_end_clean();
-		echo apply_filters( 'widget_html_content', $widget_content );
+		if ( ob_get_length() ) {
+			ob_end_clean();
+		}
+		echo $widget_content;
 		echo $args['after_widget'];
 		echo "\n<!-- END GADWP Widget -->\n";
 	}
@@ -139,7 +152,7 @@ final class GADWP_Frontend_Widget extends WP_Widget {
 		$give_credits = ( isset( $instance['give_credits'] ) ? $instance['give_credits'] : 1 );
 		$anonim = ( isset( $instance['anonim'] ) ? $instance['anonim'] : 0 );
 		/* @formatter:off */
-		?>
+?>
 <p>
     <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( "Title:",'google-analytics-dashboard-for-wp' ); ?></label> <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $widget_title ); ?>">
 </p>
