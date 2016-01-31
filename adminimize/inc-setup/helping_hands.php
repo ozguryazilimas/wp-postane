@@ -53,53 +53,6 @@ function _mw_adminimize_in_arrays( $array1, $array2 ) {
 	return (bool) count( array_intersect( $array1, $array2 ) );
 }
 
-// Fix some badly enqueued scripts with no sense of HTTPS.
-// Kudos to http://snippets.webaware.com.au/snippets/cleaning-up-wordpress-plugin-script-and-stylesheet-loads-over-ssl/
-add_action( 'wp_print_scripts', '_mw_adminimize_enqueueScriptsFix', 100 );
-add_action( 'wp_print_styles', '_mw_adminimize_enqueueStylesFix', 100 );
-
-/**
- * Force plugins to load scripts with SSL if page is SSL.
- */
-function _mw_adminimize_enqueueScriptsFix() {
-
-	if ( is_admin() ) {
-		return;
-	}
-
-	$https_values = array( NULL, 'off' );
-	if ( ! isset( $_SERVER[ 'HTTPS' ] ) || in_array( $_SERVER[ 'HTTPS' ], $https_values ) ) {
-		return;
-	}
-
-	foreach ( (array) $GLOBALS[ 'wp_scripts' ]->registered as $script ) {
-		if ( FALSE !== stripos( $script->src, 'http://', 0 ) ) {
-			$script->src = str_replace( 'http://', 'https://', $script->src );
-		}
-	}
-}
-
-/**
- * Force plugins to load styles with SSL if page is SSL.
- */
-function _mw_adminimize_enqueueStylesFix() {
-
-	if ( is_admin() ) {
-		return;
-	}
-
-	$https_values = array( NULL, 'off' );
-	if ( ! isset( $_SERVER[ 'HTTPS' ] ) || in_array( $_SERVER[ 'HTTPS' ], $https_values ) ) {
-		return;
-	}
-
-	foreach ( (array) $GLOBALS[ 'wp_styles' ]->registered as $script ) {
-		if ( FALSE !== stripos( $script->src, 'http://', 0 ) ) {
-			$script->src = str_replace( 'http://', 'https://', $script->src );
-		}
-	}
-}
-
 /**
  * Check the role with the current user data.
  *
@@ -110,9 +63,33 @@ function _mw_adminimize_enqueueStylesFix() {
 function _mw_adminimize_current_user_has_role( $role ) {
 
 	$user = wp_get_current_user();
-	if ( in_array( $role, (array) $user->roles ) ) {
+	if ( in_array( $role, (array) $user->roles, FALSE ) ) {
 		return TRUE;
 	}
 
 	return FALSE;
+}
+
+/**
+ * Simple helper to debug to the console of the browser.
+ * Set WP_DEBUG_DISPLAY in your wp-config.php to true for view debug messages inside the console.
+ *
+ * @param string $description
+ * @param string | array | object
+ */
+function _mw_adminimize_debug( $description = '' , $data ) {
+
+	if ( defined( WP_DEBUG_DISPLAY ) && ! WP_DEBUG_DISPLAY ) {
+		return;
+	}
+
+	if ( '' === $description ) {
+		$description = 'Debug in Console via Adminimize Plugin:';
+	}
+
+	$output  = 'console.info(' . json_encode( $description ) . ');';
+	$output .= 'console.log(' . json_encode( $data ) . ');';
+	$output  = sprintf( '<script>%s</script>', $output );
+
+	echo $output;
 }

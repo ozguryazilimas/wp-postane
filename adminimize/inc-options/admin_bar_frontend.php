@@ -48,11 +48,11 @@ if ( ! isset( $user_roles_names ) ) {
 				<tr>
 					<td><?php esc_attr_e( 'Select all', 'adminimize' ); ?></td>
 					<?php
-					foreach ( $user_roles_names as $role_name ) {
+					foreach ( $user_roles_names as $role_slug => $role_name ) {
 						$role_name = strtolower( $role_name );
 						echo '<td class="num">';
-						echo '<input id="select_all" class="admin_bar_frontend_' . $role_name
-							. '" type="checkbox" name="mw_adminimize_select_all' . $role_name . '" value="" />';
+						echo '<input id="select_all" class="admin_bar_frontend_' . $role_slug
+							. '" type="checkbox" value="" />';
 						echo '</td>' . "\n";
 					} ?>
 				</tr>
@@ -120,7 +120,7 @@ if ( ! isset( $user_roles_names ) ) {
 				} else {
 					$message = '<span style="font-size: 35px;">&#x261D;</span>'
 						. esc_attr__(
-							'Display the front end include load or refresh of the site to get all items of the admin bar in the front end area.',
+							'You must open the front end of the site in this browser in order for the plugin to discover the Admin Bar items that are currently not visible.',
 							'adminimize'
 						);
 				}
