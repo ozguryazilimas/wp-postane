@@ -242,5 +242,3 @@ if ( ! class_exists( 'Cptch_package_loader' ) ) {
 		}
 	}
 }
-
-?>

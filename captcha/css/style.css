@@ -2,17 +2,15 @@
 * styles for settings page
 */
 .cptch_example_fields_actions {
-	float: left;
-    height: 18px;
+    min-height: 18px;
 	width: 140px;
 	position: relative;
-	top: -7px;
-	padding: 2px 0;
 }
 .cptch_example_fields_actions img {
 	position: relative;
-	width: 30px;
-	top: 6px;
+	max-width: 30px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .cptch_block {
 	direction: ltr;
@@ -25,14 +23,6 @@ input.cptch_settings_input {
 }
 .cptch_limit_label {
     display: block;
-}
-.cptch_images_example {
-    height: 33px;
-}
-.cptch_images_example .cptch_label {
-    position: relative;
-    left: 8px;
-    top: -6px;
 }
 .cptch_whitelist_buttons .alignleft {
     margin-right: 10px;
@@ -95,7 +85,7 @@ form input.cptch_input {
 .cptch_label,
 .cptch_reload_button_wrap {
     display: table-cell;
-    margin: 5px 0;
+    margin: 5px 0 !important;
     vertical-align: middle;
     line-height: 1;
 }
@@ -111,17 +101,17 @@ form input.cptch_input {
     top: 0;
     z-index: 2;
 }
-.cptch_reduce {
-    position: absolute;
-}
 .cptch_reload_button {
     width: 2rem;
     height: 2rem;
     margin: 0 15px;
-    font-size: 2rem;
+    font-size: 2rem;   
+    vertical-align: text-bottom; 
 }
-.cptch_reload_button.cptch_active {
-    opacity: 0.7;
+.cptch_reload_button:before {
+    width: 2rem;
+    height: 2rem;
+    vertical-align: text-bottom;
 }
 
 @media only screen and ( max-width: 782px ) {

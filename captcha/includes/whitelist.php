@@ -6,11 +6,11 @@
  * @version 1.0.2
  */
 
-if( ! class_exists( 'WP_List_Table' ) ) {
-	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-}
-
 if ( ! class_exists( 'Cptch_Whitelist' ) ) {
+	if ( ! class_exists( 'WP_List_Table' ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+	}
+
 	class Cptch_Whitelist extends WP_List_Table {
 		var $basename;
 		var $la_info;
@@ -245,15 +245,18 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 			global $wpdb;
 			$per_page = 20;
 			$paged    = ( isset( $_REQUEST['paged'] ) && 1 < intval( $_REQUEST['paged'] ) ) ? $per_page * ( absint( intval( $_REQUEST['paged'] ) - 1 ) ) : 0;
-			$order    = isset( $_REQUEST['order'] ) ? $_REQUEST['order'] : 'ASC';
-			if ( isset( $_GET['orderby'] ) && in_array( $_GET['orderby'], array_keys( $this->get_sortable_columns() ) ) && 'ip' != $_GET['orderby'] ) {
+			$order 	  = ( isset( $_REQUEST['order'] ) && strtoupper( $_REQUEST['order'] ) == 'ASC' ) ? 'ASC' : 'DESC';
+			if ( isset( $_GET['orderby'] ) && in_array( $_GET['orderby'], array_keys( $this->get_sortable_columns() ) ) ) {
 				switch ( $_GET['orderby'] ) {
+					case 'ip':
+						$order_by = 'ip_from_int';
+						break;
 					default:
-						$order_by = $_GET['orderby'];
+						$order_by = esc_sql( $_GET['orderby'] );
 						break;
 				}
 			} else {
-				$order_by = 'ip_from_int';
+				$order_by = 'add_time';
 			}
 
 			$sql_query = "SELECT * FROM `" . $wpdb->prefix . "cptch_whitelist` ";

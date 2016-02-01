@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: add, anti, anti-spam, anti-spam security, antispam, antispam security, antispambot, arithmetic actions, blacklist, block spam, bot, bots, best captcha, best wordpress captcha, captcha, capcha, captha, catcha, captcha bank, captcha numbers, captcha plugin, captcha protection, captcha words, contact form with captcha, comment captcha, comment, comments, cpatcha, form, forms, form captcha, forgot password captcha, free, login, lost password, label, login captcha, match captcha, math actions, multiply, plugin, protect, protection, popular captcha, protection shield, register, registration, registration spam, register captcha, rest password captcha, registration captcha security, spam, secure, security, signup, signup spam, spam blocker, spam comments, spam filter, spambot, shield, simple captcha, spam control, spam protection, substract, text captcha, user registration spam, web form protection, wordpress captcha, wordpress protection, wordpress security loss password captcha, register captcha, wp captcha, wp plugin, wp plugins
 Requires at least: 3.8
-Tested up to: 4.4
-Stable tag: 4.1.7
+Tested up to: 4.4.1
+Stable tag: 4.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ This plugin allows you to implement super security captcha form into web forms.
 
 == Description ==
 
-The Captcha plugin allows you to implement a super security captcha form into web forms. It protects your website from spam by means of math logic, easily understood by human beings. You will not have to spend your precious time on annoying attempts to understand hard-to-read words, combinations of letters or pictures that make your eyes pop up. All you need is to do one of the three basic maths actions - add, subtract and multiply.
+The Captcha plugin adds a captcha form into web pages. This captcha can be used for login, registration, password recovery, comments forms. It protects your website from spammers by means of math logic, easily understandable by human beings. All you need is to do one of the three basic maths actions - add, subtract and multiply. You will not have to spend your precious time on annoying attempts to understand hard-to-read words, combinations of letters or surreal pictures.
 This captcha can be used for login, registration, password recovery, comments forms.
 There is also a premium version of the plugin, allowing compatibility with BuddyPress (Registration form, Comments form, "Create a Group" form) and Contact Form 7.
 
@@ -33,7 +33,7 @@ http://www.youtube.com/watch?v=jxrvHaCmQfg
 * You can use letters, numbers and images in captcha or just one of these three things - either letters, numbers or images.
 * The basic math actions are used - add, subtract, multiply.
 * Ability to hide Captcha for whitelisted IP.
-* Ability to set time limit, after which the Captcha can not be passed.
+* Ability to set time limit for Captcha completing.
 * Ability to reload Captcha.
 * You can add a label to display captcha in the form.
 * Ability to load whitelist of Limit Attempts by BestWebSoft plugin to whitelist of Captcha by BestWebSoft.
@@ -145,7 +145,7 @@ If the form is HTML you should insert the line with the PHP tags:
 
 `if( function_exists( 'cptch_check_custom_form' ) && cptch_check_custom_form() !== true ) echo "Please complete the CAPTCHA."`
 
-or
+ or 
 
 `<?php if( function_exists( 'cptch_check_custom_form' ) && cptch_check_custom_form() !== true ) echo "Please complete the CAPTCHA." ?>`
 
@@ -173,7 +173,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
 3. the version of your WordPress installation
-4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit" target="_blank">Instuction on System Status</a>
+4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit" target="_blank">Instruction on System Status</a>
 
 == Screenshots ==
 
@@ -188,6 +188,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V4.1.8 - 01.02.2016 =
+* Bugfix : Captcha's work in the multisite registration form has been fixed.
+* Bugfix : SQL injection vulnerability has been fixed (thanks to <a href="mailto:dennis.pellikaan@ncsc.nl">Dennis Pellikaan</a>, www.ncsc.nl).
+* Bugfix : The bug of displaying captha error when adding a new user in the multisite has been fixed.
+* Update : The French language file has been updated.
+
 = V4.1.7 - 17.12.2015 =
 * Bugfix : Bug with the definition of type of images has been fixed.
 
@@ -199,7 +205,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * New : Ability to set time limit, after which the Captcha can not be passed.
 * Bugfix : Bug with Captcha reloading when forms data handled via ajax was fixed.
 * Bugfix : XSS vulnerability with displaying search results for CAPTCHA whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>).
-* Bugfix : XSS vulnerability with user authentification was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>).
+* Bugfix : XSS vulnerability with user authentication was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>).
 * Update : Structure of plugin`s settings page was updated.
 * Update : The French and Hungarian language files were updated.
 
@@ -552,11 +558,14 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Upgrade Notice ==
 
+= V4.1.8 =
+Captcha's work in the multisite registration form was fixed. SQL injection vulnerability was fixed. The bug of displaying captha error when adding a new user in the multisite is fixed. The French language file is updated.
+
 = V4.1.7 =
 Bug with the definition of type of images has been fixed.
 
 = V4.1.6 =
-Ability to use images in Captcha. Ability to reload Captcha. Ability to load list of IP from whitelist of Limit Attempts by BestWebSoft plugin to Captcha whitelist. Ability to use whitelist of Limit Attempts by BestWebSoft plugin. Ability to set time limit, after which the Captcha can not be passed. Bug with Captcha reloading when forms data handled via ajax was fixed. XSS vulnerability with displaying search results for CAPTCHA whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). XSS vulnerability with user authentification was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). Structure of plugin`s settings page was updated. The French and Hungarian language files were updated.
+Ability to use images in Captcha. Ability to reload Captcha. Ability to load list of IP from whitelist of Limit Attempts by BestWebSoft plugin to Captcha whitelist. Ability to use whitelist of Limit Attempts by BestWebSoft plugin. Ability to set time limit, after which the Captcha can not be passed. Bug with Captcha reloading when forms data handled via ajax was fixed. XSS vulnerability with displaying search results for CAPTCHA whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). XSS vulnerability with user authentication was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). Structure of plugin`s settings page was updated. The French and Hungarian language files were updated.
 
 = V4.1.5 =
 The whitelist functionality was expanded: Ability to add current IP to the whitelist. The whitelist functionality was expanded: If the IP is in the whitelist, then the indicated message will be displayed instead of the captcha. We updated all functionality for wordpress 4.3.1. The French language file is updated. We fixed SQL injection vulnerability.

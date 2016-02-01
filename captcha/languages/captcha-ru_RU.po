@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Captcha Plus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-16 14:02+0300\n"
-"PO-Revision-Date: 2015-12-16 14:02+0300\n"
+"POT-Creation-Date: 2016-01-28 09:52+0300\n"
+"PO-Revision-Date: 2016-01-28 09:52+0300\n"
 "Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: bestwebsoft.com <http://support.bestwebsoft.com>\n"
 "Language: ru_RU\n"
@@ -18,7 +18,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: captcha.php:33 captcha.php:491
+#: captcha.php:33 captcha.php:497
 msgid "Captcha Settings"
 msgstr "Настройки Captcha"
 
@@ -42,216 +42,216 @@ msgstr "Лимит Времени истёк. Пожалуйста, введит
 msgid "You are in the white list"
 msgstr "Вы в белом списке"
 
-#: captcha.php:368
+#: captcha.php:369
 msgid "Login form"
 msgstr "Форма логина"
 
-#: captcha.php:369 includes/pro_banners.php:48
+#: captcha.php:370 includes/pro_banners.php:48
 msgid "Registration form"
 msgstr "Форма регистрации"
 
-#: captcha.php:370
+#: captcha.php:371
 msgid "Reset Password form"
 msgstr "Форма восстановления пароля"
 
-#: captcha.php:371 includes/pro_banners.php:49
+#: captcha.php:372 includes/pro_banners.php:49
 msgid "Comments form"
 msgstr "Форма комментариев"
 
-#: captcha.php:374
+#: captcha.php:375
 msgid "in Comments form for registered users"
 msgstr "в форме комментариев WordPress для зарегистрированных пользователей"
 
-#: captcha.php:378
+#: captcha.php:379
 msgid "Plus (&#43;)"
 msgstr "Плюс (&#43;)"
 
-#: captcha.php:378
+#: captcha.php:379
 msgid "Plus"
 msgstr "Плюс"
 
-#: captcha.php:379
+#: captcha.php:380
 msgid "Minus (&minus;)"
 msgstr "Минус (&minus;)"
 
-#: captcha.php:379
+#: captcha.php:380
 msgid "Minus"
 msgstr "Минус"
 
-#: captcha.php:380
+#: captcha.php:381
 msgid "Multiplication (&times;)"
 msgstr "Умножение (&times;)"
 
-#: captcha.php:380
+#: captcha.php:381
 msgid "Multiply"
 msgstr "Умножить"
 
-#: captcha.php:385
+#: captcha.php:386
 msgid "Numbers"
 msgstr "Цифры"
 
-#: captcha.php:386
+#: captcha.php:387
 msgid "Words"
 msgstr "Слова"
 
-#: captcha.php:387
+#: captcha.php:388
 msgid "Images"
 msgstr "Изображения"
 
-#: captcha.php:455
+#: captcha.php:435
 msgid ""
 "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
 msgstr ""
 "Пожалуйста, выберите 1 пункт из блока Арифметические дейтсвия и Сложность "
 "для CAPTCHA"
 
-#: captcha.php:458
+#: captcha.php:441
 msgid "Please select one item in the block Enable image packages"
 msgstr "Пожалуйста, выберите 1 пункт из блока Включить пакеты изображений"
 
-#: captcha.php:464
+#: captcha.php:470
 msgid "Settings saved."
 msgstr "Настройки сохранены."
 
-#: captcha.php:476
+#: captcha.php:482
 msgid "All plugin settings were restored."
 msgstr "Все настройки плагина восстановлены."
 
-#: captcha.php:493
+#: captcha.php:499
 msgid "How to Use Step-by-step Instruction"
 msgstr "Инструкция по использованию"
 
-#: captcha.php:496
+#: captcha.php:502
 msgid "Basic"
 msgstr "Базовые"
 
-#: captcha.php:497
+#: captcha.php:503
 msgid "Advanced"
 msgstr "Расширенные"
 
-#: captcha.php:498
+#: captcha.php:504
 msgid "Whitelist"
 msgstr "Белый список"
 
-#: captcha.php:499
+#: captcha.php:505
 msgid "Go PRO"
 msgstr "Перейти на PRO-версию"
 
-#: captcha.php:514 captcha.php:517 includes/pro_banners.php:36
+#: captcha.php:521 captcha.php:524 includes/pro_banners.php:36
 #: includes/pro_banners.php:44 includes/pro_banners.php:47
 msgid "Enable CAPTCHA for"
 msgstr "Отображать CAPTCHA для"
 
-#: captcha.php:518
+#: captcha.php:525
 msgid "WordPress default"
 msgstr "стандартных форм Wordpress"
 
-#: captcha.php:524
+#: captcha.php:531
 msgid "This option is available only for main blog"
 msgstr "Эта опция доступна только для главного блога"
 
-#: captcha.php:539
+#: captcha.php:546
 msgid "Plugins"
 msgstr "форм плагинов"
 
-#: captcha.php:546 captcha.php:552
+#: captcha.php:553 captcha.php:559
 msgid "You should"
 msgstr "Вы должны"
 
-#: captcha.php:546 includes/whitelist.php:399
+#: captcha.php:553 includes/whitelist.php:402
 msgid "activate"
 msgstr "активировать"
 
-#: captcha.php:546
+#: captcha.php:553
 msgid "for network"
 msgstr "для сети"
 
-#: captcha.php:546 captcha.php:554
+#: captcha.php:553 captcha.php:561
 msgid "to use this functionality"
 msgstr "чтобы использовать этот функционал"
 
-#: captcha.php:553
+#: captcha.php:560
 msgid "download"
 msgstr "скачать"
 
-#: captcha.php:566
+#: captcha.php:573
 msgid "If you would like to add Captcha to a custom form, please see"
 msgstr "Если вы хотите добавить Captcha в кастомную форму, смотрите"
 
-#: captcha.php:575
+#: captcha.php:581
 msgid "Hide CAPTCHA"
 msgstr "Скрыть CAPTCHA"
 
-#: captcha.php:582
+#: captcha.php:588
 msgid "Title"
 msgstr "Заголовок"
 
-#: captcha.php:586
+#: captcha.php:592
 msgid "Required symbol"
 msgstr "Символ для отображения обязательных полей"
 
-#: captcha.php:592
+#: captcha.php:598
 msgid "Show \"Reload\" button"
 msgstr "Показать кнопку \"Перезагрузить\""
 
-#: captcha.php:598
+#: captcha.php:604
 msgid "Arithmetic actions"
 msgstr "Арифметические действия"
 
-#: captcha.php:601
+#: captcha.php:607
 msgid "Arithmetic actions for CAPTCHA"
 msgstr "Арифметические действия для CAPTCHA"
 
-#: captcha.php:613 captcha.php:615
+#: captcha.php:619 captcha.php:621
 msgid "Complexity"
 msgstr "Уровень сложности"
 
-#: captcha.php:630
+#: captcha.php:637
 msgid "Enable image packages"
 msgstr "Включить пакеты изображений"
 
-#: captcha.php:640
+#: captcha.php:647
 msgid "Enlarge images on mouseover"
 msgstr "Увеличивать изображения при наведении мышью"
 
-#: captcha.php:651
+#: captcha.php:657
 msgid "Enable time limit"
 msgstr "Включить ограничение по времени"
 
-#: captcha.php:657
+#: captcha.php:663
 msgid "Set time limit"
 msgstr "Установить ограничение по времени"
 
-#: captcha.php:660
+#: captcha.php:666
 msgid "seconds"
 msgstr "секунды"
 
-#: captcha.php:666
+#: captcha.php:672
 msgid "Notification messages"
 msgstr "Сообщения"
 
-#: captcha.php:668 captcha.php:961 captcha.php:967 captcha.php:1163
-#: captcha.php:1179
+#: captcha.php:674 captcha.php:967 captcha.php:973 captcha.php:1174
+#: captcha.php:1190
 msgid "Error"
 msgstr "Ошибка"
 
-#: captcha.php:669
+#: captcha.php:675
 msgid "If CAPTCHA field is empty"
 msgstr "Если CAPTCHA не заполнена"
 
-#: captcha.php:670
+#: captcha.php:676
 msgid "If CAPTCHA is incorrect"
 msgstr "Если CAPTCHA заполнена некорректно"
 
-#: captcha.php:671
+#: captcha.php:677
 msgid "If time limit is exhausted"
 msgstr "Если лимит времени исчерпан"
 
-#: captcha.php:672
+#: captcha.php:678
 msgid "Info"
 msgstr "Информационные"
 
-#: captcha.php:673
+#: captcha.php:679
 msgid ""
 "If the user IP is added to the whitelist (this message will be displayed "
 "instead of CAPTCHA)."
@@ -259,158 +259,158 @@ msgstr ""
 "Если IP в белом списоке, то указанное сообщение будет отображаться вместо "
 "капчи."
 
-#: captcha.php:679
+#: captcha.php:686
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: captcha.php:818 captcha.php:825 captcha.php:840 captcha.php:842
-#: captcha.php:850 captcha.php:1054 captcha.php:1062 captcha.php:1078
-#: captcha.php:1082 captcha.php:1091 captcha.php:1113 captcha.php:1123
-#: captcha.php:1138 captcha.php:1141 captcha.php:1149
+#: captcha.php:824 captcha.php:831 captcha.php:846 captcha.php:848
+#: captcha.php:856 captcha.php:1060 captcha.php:1068 captcha.php:1084
+#: captcha.php:1088 captcha.php:1097 captcha.php:1121 captcha.php:1131
+#: captcha.php:1149 captcha.php:1152 captcha.php:1160
 msgid "ERROR"
 msgstr "Ошибка"
 
-#: captcha.php:961 captcha.php:967 captcha.php:1163 captcha.php:1179
+#: captcha.php:967 captcha.php:973 captcha.php:1174 captcha.php:1190
 msgid "Click the BACK button on your browser, and try again."
 msgstr "Нажмите НАЗАД в браузере и попробуйте еще раз."
 
-#: captcha.php:1394
+#: captcha.php:1405
 msgid "zero"
 msgstr "ноль"
 
-#: captcha.php:1395 captcha.php:1780
+#: captcha.php:1406 captcha.php:1791
 msgid "one"
 msgstr "один"
 
-#: captcha.php:1396
+#: captcha.php:1407
 msgid "two"
 msgstr "два"
 
-#: captcha.php:1397
+#: captcha.php:1408
 msgid "three"
 msgstr "три"
 
-#: captcha.php:1398
+#: captcha.php:1409
 msgid "four"
 msgstr "четыре"
 
-#: captcha.php:1399
+#: captcha.php:1410
 msgid "five"
 msgstr "пять"
 
-#: captcha.php:1400 captcha.php:1780
+#: captcha.php:1411 captcha.php:1791
 msgid "six"
 msgstr "шесть"
 
-#: captcha.php:1401 captcha.php:1768 captcha.php:1774
+#: captcha.php:1412 captcha.php:1779 captcha.php:1785
 msgid "seven"
 msgstr "семь"
 
-#: captcha.php:1402 captcha.php:1771
+#: captcha.php:1413 captcha.php:1782
 msgid "eight"
 msgstr "восемь"
 
-#: captcha.php:1403
+#: captcha.php:1414
 msgid "nine"
 msgstr "девять"
 
-#: captcha.php:1406
+#: captcha.php:1417
 msgid "eleven"
 msgstr "одиннадцать"
 
-#: captcha.php:1407
+#: captcha.php:1418
 msgid "twelve"
 msgstr "двенадцать"
 
-#: captcha.php:1408
+#: captcha.php:1419
 msgid "thirteen"
 msgstr "тринадцать"
 
-#: captcha.php:1409
+#: captcha.php:1420
 msgid "fourteen"
 msgstr "четырнадцать"
 
-#: captcha.php:1410
+#: captcha.php:1421
 msgid "fifteen"
 msgstr "пятнадцать"
 
-#: captcha.php:1411
+#: captcha.php:1422
 msgid "sixteen"
 msgstr "шестнадцать"
 
-#: captcha.php:1412
+#: captcha.php:1423
 msgid "seventeen"
 msgstr "семнадцать"
 
-#: captcha.php:1413
+#: captcha.php:1424
 msgid "eighteen"
 msgstr "восемнадцать"
 
-#: captcha.php:1414
+#: captcha.php:1425
 msgid "nineteen"
 msgstr "девятнадцать"
 
-#: captcha.php:1417
+#: captcha.php:1428
 msgid "ten"
 msgstr "десять"
 
-#: captcha.php:1418
+#: captcha.php:1429
 msgid "twenty"
 msgstr "двадцать"
 
-#: captcha.php:1419
+#: captcha.php:1430
 msgid "thirty"
 msgstr "тридцать"
 
-#: captcha.php:1420
+#: captcha.php:1431
 msgid "forty"
 msgstr "сорок"
 
-#: captcha.php:1421
+#: captcha.php:1432
 msgid "fifty"
 msgstr "пятьдесят"
 
-#: captcha.php:1422
+#: captcha.php:1433
 msgid "sixty"
 msgstr "шестьдесят"
 
-#: captcha.php:1423
+#: captcha.php:1434
 msgid "seventy"
 msgstr "семьдесят"
 
-#: captcha.php:1424
+#: captcha.php:1435
 msgid "eighty"
 msgstr "восемьдесят"
 
-#: captcha.php:1425
+#: captcha.php:1436
 msgid "ninety"
 msgstr "девяносто"
 
-#: captcha.php:1434
+#: captcha.php:1445
 msgid "and"
 msgstr "и"
 
-#: captcha.php:1500
+#: captcha.php:1511
 msgid "Encryption password is not set"
 msgstr "Пароль для шифрования не установлен"
 
-#: captcha.php:1520
+#: captcha.php:1531
 msgid "Decryption password is not set"
 msgstr "Пароль для дешифровки не установлен"
 
-#: captcha.php:1867 captcha.php:1880
+#: captcha.php:1878 captcha.php:1891
 msgid "Settings"
 msgstr "Настройки"
 
-#: captcha.php:1881
+#: captcha.php:1892
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:1882
+#: captcha.php:1893
 msgid "Support"
 msgstr "Поддержка"
 
-#: captcha.php:1912
+#: captcha.php:1923
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr "Попробуйте новую %s: теперь с изображениями!"
@@ -485,24 +485,24 @@ msgstr "Дата добавления"
 msgid "Remove from whitelist"
 msgstr "Удалить"
 
-#: includes/whitelist.php:307
+#: includes/whitelist.php:310
 msgid "IP added to the whitelist successfully"
 msgstr "IP успешно добавлен в белый список"
 
-#: includes/whitelist.php:309 includes/whitelist.php:331
-#: includes/whitelist.php:343
+#: includes/whitelist.php:312 includes/whitelist.php:334
+#: includes/whitelist.php:346
 msgid "Some errors occured"
 msgstr "Возникли некоторые ошибки"
 
-#: includes/whitelist.php:311
+#: includes/whitelist.php:314
 msgid "IP is already in the whitelist"
 msgstr "IP уже в белом списке"
 
-#: includes/whitelist.php:314
+#: includes/whitelist.php:317
 msgid "Invalid IP. See allowed formats"
 msgstr "Неверный IP. Смотите доступные форматы"
 
-#: includes/whitelist.php:325 includes/whitelist.php:337
+#: includes/whitelist.php:328 includes/whitelist.php:340
 #, php-format
 msgid "One IP was deleted successfully"
 msgid_plural "%s IPs were deleted successfully"
@@ -510,41 +510,41 @@ msgstr[0] "%s IP был успешно удалён"
 msgstr[1] "%s IP были успешно удалены"
 msgstr[2] "%s IP были успешно удалены"
 
-#: includes/whitelist.php:346
+#: includes/whitelist.php:349
 msgid "You have not entered any value"
 msgstr "Вы не ввели ни какой IP"
 
-#: includes/whitelist.php:349
+#: includes/whitelist.php:352
 msgid "You have not entered any value in to the search form"
 msgstr "Вы не ввели никакого значения в форму поиска"
 
-#: includes/whitelist.php:351
+#: includes/whitelist.php:354
 msgid "Search results for"
 msgstr "Результаты поиска для"
 
-#: includes/whitelist.php:365
+#: includes/whitelist.php:368
 msgid "IP-address(es) successfully copied to the whitelist"
 msgstr "IP-адрес(а) успешно скопированы в белый список"
 
-#: includes/whitelist.php:390
+#: includes/whitelist.php:393
 msgid "use"
 msgstr "использовать"
 
-#: includes/whitelist.php:390
+#: includes/whitelist.php:393
 msgid "whitelist of"
 msgstr "Белый список плагина"
 
-#: includes/whitelist.php:398 includes/whitelist.php:406
+#: includes/whitelist.php:401 includes/whitelist.php:409
 #, php-format
 msgid "use whitelist of %s"
 msgstr "использовать белый список плагина %s"
 
-#: includes/whitelist.php:399
+#: includes/whitelist.php:402
 #, php-format
 msgid "you should %s to use this functionality"
 msgstr "Вам необходимо %s для того, чтобы использовать этот функционал"
 
-#: includes/whitelist.php:407
+#: includes/whitelist.php:410
 #, php-format
 msgid "you should instal %s to use this functionality"
 msgstr ""

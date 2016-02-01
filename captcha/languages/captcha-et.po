@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-16 13:59+0300\n"
-"PO-Revision-Date: 2015-12-16 13:59+0300\n"
+"POT-Creation-Date: 2016-01-28 09:50+0300\n"
+"PO-Revision-Date: 2016-01-28 09:50+0300\n"
 "Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Ahto Tanner <x@moonsoftware.com>\n"
 "Language: et\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: captcha.php:33 captcha.php:491
+#: captcha.php:33 captcha.php:497
 msgid "Captcha Settings"
 msgstr "CAPTCHA seaded"
 
@@ -43,382 +43,382 @@ msgstr "Palun sisesta õige vastus matemaatilisele tehtele."
 msgid "You are in the white list"
 msgstr ""
 
-#: captcha.php:368
+#: captcha.php:369
 msgid "Login form"
 msgstr "Sisselogimisvormil"
 
-#: captcha.php:369 includes/pro_banners.php:48
+#: captcha.php:370 includes/pro_banners.php:48
 msgid "Registration form"
 msgstr "Registreerimisvormil"
 
-#: captcha.php:370
+#: captcha.php:371
 msgid "Reset Password form"
 msgstr "Parooli nullimise vormil"
 
-#: captcha.php:371 includes/pro_banners.php:49
+#: captcha.php:372 includes/pro_banners.php:49
 msgid "Comments form"
 msgstr "Kommentaarivormil"
 
-#: captcha.php:374
+#: captcha.php:375
 #, fuzzy
 msgid "in Comments form for registered users"
 msgstr "Peida CAPTCHA registreeritud kasutajate kommentaarivormidel"
 
-#: captcha.php:378
+#: captcha.php:379
 msgid "Plus (&#43;)"
 msgstr "Liitmine (&#43;)"
 
-#: captcha.php:378
+#: captcha.php:379
 msgid "Plus"
 msgstr "Liitmine"
 
-#: captcha.php:379
+#: captcha.php:380
 msgid "Minus (&minus;)"
 msgstr "Lahutamine (&minus;)"
 
-#: captcha.php:379
+#: captcha.php:380
 msgid "Minus"
 msgstr "Lahutamine"
 
-#: captcha.php:380
+#: captcha.php:381
 msgid "Multiplication (&times;)"
 msgstr "Korrutamine (&times;)"
 
-#: captcha.php:380
+#: captcha.php:381
 msgid "Multiply"
 msgstr "Korrutamine"
 
-#: captcha.php:385
+#: captcha.php:386
 msgid "Numbers"
 msgstr "Numbrid"
 
-#: captcha.php:386
+#: captcha.php:387
 msgid "Words"
 msgstr "Sõnad"
 
-#: captcha.php:387
+#: captcha.php:388
 msgid "Images"
 msgstr ""
 
-#: captcha.php:455
+#: captcha.php:435
 msgid ""
 "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
 msgstr "Palun vali vähemalt üks matemaatiline tehe ja raskusaste"
 
-#: captcha.php:458
+#: captcha.php:441
 #, fuzzy
 msgid "Please select one item in the block Enable image packages"
 msgstr "Palun vali vähemalt üks matemaatiline tehe ja raskusaste"
 
-#: captcha.php:464
+#: captcha.php:470
 msgid "Settings saved."
 msgstr "Seaded salvestatud."
 
-#: captcha.php:476
+#: captcha.php:482
 msgid "All plugin settings were restored."
 msgstr ""
 
-#: captcha.php:493
+#: captcha.php:499
 msgid "How to Use Step-by-step Instruction"
 msgstr ""
 
-#: captcha.php:496
+#: captcha.php:502
 msgid "Basic"
 msgstr ""
 
-#: captcha.php:497
+#: captcha.php:503
 msgid "Advanced"
 msgstr ""
 
-#: captcha.php:498
+#: captcha.php:504
 msgid "Whitelist"
 msgstr ""
 
-#: captcha.php:499
+#: captcha.php:505
 msgid "Go PRO"
 msgstr "PRO versioon"
 
-#: captcha.php:514 captcha.php:517 includes/pro_banners.php:36
+#: captcha.php:521 captcha.php:524 includes/pro_banners.php:36
 #: includes/pro_banners.php:44 includes/pro_banners.php:47
 #, fuzzy
 msgid "Enable CAPTCHA for"
 msgstr "Aktiveeri CAPTCHA"
 
-#: captcha.php:518
+#: captcha.php:525
 msgid "WordPress default"
 msgstr ""
 
-#: captcha.php:524
+#: captcha.php:531
 msgid "This option is available only for main blog"
 msgstr ""
 
-#: captcha.php:539
+#: captcha.php:546
 #, fuzzy
 msgid "Plugins"
 msgstr "Pluginate lehekülg"
 
-#: captcha.php:546 captcha.php:552
+#: captcha.php:553 captcha.php:559
 msgid "You should"
 msgstr ""
 
-#: captcha.php:546 includes/whitelist.php:399
+#: captcha.php:553 includes/whitelist.php:402
 msgid "activate"
 msgstr ""
 
-#: captcha.php:546
+#: captcha.php:553
 msgid "for network"
 msgstr ""
 
-#: captcha.php:546 captcha.php:554
+#: captcha.php:553 captcha.php:561
 msgid "to use this functionality"
 msgstr ""
 
-#: captcha.php:553
+#: captcha.php:560
 msgid "download"
 msgstr ""
 
-#: captcha.php:566
+#: captcha.php:573
 msgid "If you would like to add Captcha to a custom form, please see"
 msgstr "Kui soovid CAPTCHA't kasutada mõnel kohandatud vormil palun vaata"
 
-#: captcha.php:575
+#: captcha.php:581
 #, fuzzy
 msgid "Hide CAPTCHA"
 msgstr "Aktiveeri CAPTCHA:"
 
-#: captcha.php:582
+#: captcha.php:588
 msgid "Title"
 msgstr ""
 
-#: captcha.php:586
+#: captcha.php:592
 msgid "Required symbol"
 msgstr "Nõutav sümbol"
 
-#: captcha.php:592
+#: captcha.php:598
 msgid "Show \"Reload\" button"
 msgstr ""
 
-#: captcha.php:598
+#: captcha.php:604
 #, fuzzy
 msgid "Arithmetic actions"
 msgstr "Vali kasutajale nähtavad matemaatilised tehted"
 
-#: captcha.php:601
+#: captcha.php:607
 msgid "Arithmetic actions for CAPTCHA"
 msgstr "Vali kasutajale nähtavad matemaatilised tehted"
 
-#: captcha.php:613 captcha.php:615
+#: captcha.php:619 captcha.php:621
 msgid "Complexity"
 msgstr ""
 
-#: captcha.php:630
+#: captcha.php:637
 msgid "Enable image packages"
 msgstr ""
 
-#: captcha.php:640
+#: captcha.php:647
 msgid "Enlarge images on mouseover"
 msgstr ""
 
-#: captcha.php:651
+#: captcha.php:657
 msgid "Enable time limit"
 msgstr ""
 
-#: captcha.php:657
+#: captcha.php:663
 msgid "Set time limit"
 msgstr ""
 
-#: captcha.php:660
+#: captcha.php:666
 msgid "seconds"
 msgstr ""
 
-#: captcha.php:666
+#: captcha.php:672
 msgid "Notification messages"
 msgstr ""
 
-#: captcha.php:668 captcha.php:961 captcha.php:967 captcha.php:1163
-#: captcha.php:1179
+#: captcha.php:674 captcha.php:967 captcha.php:973 captcha.php:1174
+#: captcha.php:1190
 msgid "Error"
 msgstr ""
 
-#: captcha.php:669
+#: captcha.php:675
 #, fuzzy
 msgid "If CAPTCHA field is empty"
 msgstr "Matemaatilise tehte vastus oli vale."
 
-#: captcha.php:670
+#: captcha.php:676
 #, fuzzy
 msgid "If CAPTCHA is incorrect"
 msgstr "Matemaatilise tehte vastus oli vale."
 
-#: captcha.php:671
+#: captcha.php:677
 msgid "If time limit is exhausted"
 msgstr ""
 
-#: captcha.php:672
+#: captcha.php:678
 msgid "Info"
 msgstr ""
 
-#: captcha.php:673
+#: captcha.php:679
 msgid ""
 "If the user IP is added to the whitelist (this message will be displayed "
 "instead of CAPTCHA)."
 msgstr ""
 
-#: captcha.php:679
+#: captcha.php:686
 msgid "Save Changes"
 msgstr "Salvesta muudatused"
 
-#: captcha.php:818 captcha.php:825 captcha.php:840 captcha.php:842
-#: captcha.php:850 captcha.php:1054 captcha.php:1062 captcha.php:1078
-#: captcha.php:1082 captcha.php:1091 captcha.php:1113 captcha.php:1123
-#: captcha.php:1138 captcha.php:1141 captcha.php:1149
+#: captcha.php:824 captcha.php:831 captcha.php:846 captcha.php:848
+#: captcha.php:856 captcha.php:1060 captcha.php:1068 captcha.php:1084
+#: captcha.php:1088 captcha.php:1097 captcha.php:1121 captcha.php:1131
+#: captcha.php:1149 captcha.php:1152 captcha.php:1160
 msgid "ERROR"
 msgstr "VIGA"
 
-#: captcha.php:961 captcha.php:967 captcha.php:1163 captcha.php:1179
+#: captcha.php:967 captcha.php:973 captcha.php:1174 captcha.php:1190
 #, fuzzy
 msgid "Click the BACK button on your browser, and try again."
 msgstr ""
 "Viga: Sisestasid vale matemaatilise tehte vastuse. Palun mine eelmisele "
 "lehele tagasi ja paranda viga."
 
-#: captcha.php:1394
+#: captcha.php:1405
 msgid "zero"
 msgstr "null"
 
-#: captcha.php:1395 captcha.php:1780
+#: captcha.php:1406 captcha.php:1791
 msgid "one"
 msgstr "üks"
 
-#: captcha.php:1396
+#: captcha.php:1407
 msgid "two"
 msgstr "kaks"
 
-#: captcha.php:1397
+#: captcha.php:1408
 msgid "three"
 msgstr "kolm"
 
-#: captcha.php:1398
+#: captcha.php:1409
 msgid "four"
 msgstr "neli"
 
-#: captcha.php:1399
+#: captcha.php:1410
 msgid "five"
 msgstr "viis"
 
-#: captcha.php:1400 captcha.php:1780
+#: captcha.php:1411 captcha.php:1791
 msgid "six"
 msgstr "kuus"
 
-#: captcha.php:1401 captcha.php:1768 captcha.php:1774
+#: captcha.php:1412 captcha.php:1779 captcha.php:1785
 msgid "seven"
 msgstr "seitse"
 
-#: captcha.php:1402 captcha.php:1771
+#: captcha.php:1413 captcha.php:1782
 msgid "eight"
 msgstr "kaheksa"
 
-#: captcha.php:1403
+#: captcha.php:1414
 msgid "nine"
 msgstr "üheksa"
 
-#: captcha.php:1406
+#: captcha.php:1417
 msgid "eleven"
 msgstr "üketeist"
 
-#: captcha.php:1407
+#: captcha.php:1418
 msgid "twelve"
 msgstr "kaksteist"
 
-#: captcha.php:1408
+#: captcha.php:1419
 msgid "thirteen"
 msgstr "kolmteist"
 
-#: captcha.php:1409
+#: captcha.php:1420
 msgid "fourteen"
 msgstr "neliteist"
 
-#: captcha.php:1410
+#: captcha.php:1421
 msgid "fifteen"
 msgstr "viisteist"
 
-#: captcha.php:1411
+#: captcha.php:1422
 msgid "sixteen"
 msgstr "kuusteist"
 
-#: captcha.php:1412
+#: captcha.php:1423
 msgid "seventeen"
 msgstr "seitseteist"
 
-#: captcha.php:1413
+#: captcha.php:1424
 msgid "eighteen"
 msgstr "kaheksateist"
 
-#: captcha.php:1414
+#: captcha.php:1425
 msgid "nineteen"
 msgstr "üheksateist"
 
-#: captcha.php:1417
+#: captcha.php:1428
 msgid "ten"
 msgstr "kümme"
 
-#: captcha.php:1418
+#: captcha.php:1429
 msgid "twenty"
 msgstr "kakskümmend"
 
-#: captcha.php:1419
+#: captcha.php:1430
 msgid "thirty"
 msgstr "kolmkümmend"
 
-#: captcha.php:1420
+#: captcha.php:1431
 msgid "forty"
 msgstr "nelikümmend"
 
-#: captcha.php:1421
+#: captcha.php:1432
 msgid "fifty"
 msgstr "viiskümmend"
 
-#: captcha.php:1422
+#: captcha.php:1433
 msgid "sixty"
 msgstr "kuuskümmend"
 
-#: captcha.php:1423
+#: captcha.php:1434
 msgid "seventy"
 msgstr "seitsekümmend"
 
-#: captcha.php:1424
+#: captcha.php:1435
 msgid "eighty"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1425
+#: captcha.php:1436
 msgid "ninety"
 msgstr "üheksakümmend"
 
-#: captcha.php:1434
+#: captcha.php:1445
 msgid "and"
 msgstr "ja"
 
-#: captcha.php:1500
+#: captcha.php:1511
 msgid "Encryption password is not set"
 msgstr "Krüpteerimisparool on määramata"
 
-#: captcha.php:1520
+#: captcha.php:1531
 msgid "Decryption password is not set"
 msgstr "Dekrüpteerimisparool on määramata"
 
-#: captcha.php:1867 captcha.php:1880
+#: captcha.php:1878 captcha.php:1891
 msgid "Settings"
 msgstr "Seaded"
 
-#: captcha.php:1881
+#: captcha.php:1892
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:1882
+#: captcha.php:1893
 msgid "Support"
 msgstr "Tugi"
 
-#: captcha.php:1912
+#: captcha.php:1923
 #, php-format
 msgid "Try New %s: with Pictures Now!"
 msgstr ""
@@ -490,62 +490,62 @@ msgstr ""
 msgid "Remove from whitelist"
 msgstr ""
 
-#: includes/whitelist.php:307
+#: includes/whitelist.php:310
 msgid "IP added to the whitelist successfully"
 msgstr ""
 
-#: includes/whitelist.php:309 includes/whitelist.php:331
-#: includes/whitelist.php:343
+#: includes/whitelist.php:312 includes/whitelist.php:334
+#: includes/whitelist.php:346
 msgid "Some errors occured"
 msgstr ""
 
-#: includes/whitelist.php:311
+#: includes/whitelist.php:314
 msgid "IP is already in the whitelist"
 msgstr ""
 
-#: includes/whitelist.php:314
+#: includes/whitelist.php:317
 msgid "Invalid IP. See allowed formats"
 msgstr ""
 
-#: includes/whitelist.php:337
+#: includes/whitelist.php:340
 msgid "One IP was deleted successfully"
 msgstr ""
 
-#: includes/whitelist.php:346
+#: includes/whitelist.php:349
 msgid "You have not entered any value"
 msgstr ""
 
-#: includes/whitelist.php:349
+#: includes/whitelist.php:352
 msgid "You have not entered any value in to the search form"
 msgstr ""
 
-#: includes/whitelist.php:351
+#: includes/whitelist.php:354
 msgid "Search results for"
 msgstr ""
 
-#: includes/whitelist.php:365
+#: includes/whitelist.php:368
 msgid "IP-address(es) successfully copied to the whitelist"
 msgstr ""
 
-#: includes/whitelist.php:390
+#: includes/whitelist.php:393
 msgid "use"
 msgstr ""
 
-#: includes/whitelist.php:390
+#: includes/whitelist.php:393
 msgid "whitelist of"
 msgstr ""
 
-#: includes/whitelist.php:398 includes/whitelist.php:406
+#: includes/whitelist.php:401 includes/whitelist.php:409
 #, php-format
 msgid "use whitelist of %s"
 msgstr ""
 
-#: includes/whitelist.php:399
+#: includes/whitelist.php:402
 #, php-format
 msgid "you should %s to use this functionality"
 msgstr ""
 
-#: includes/whitelist.php:407
+#: includes/whitelist.php:410
 #, php-format
 msgid "you should instal %s to use this functionality"
 msgstr ""

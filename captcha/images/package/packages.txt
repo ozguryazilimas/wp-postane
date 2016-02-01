@@ -117,6 +117,7 @@
 
 #package: roman_bw
 #name: Roman ( black numbers - white background )
+#disabled:
 1.png 1
 2.png 2
 3.png 3
@@ -129,6 +130,7 @@
 
 #package: roman_wb
 #name: Roman ( white numbers - black background )
+#disabled:
 1.png 1
 2.png 2
 3.png 3

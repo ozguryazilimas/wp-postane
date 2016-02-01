@@ -96,4 +96,3 @@ if ( ! function_exists( 'cptch_whitelist_banner' ) ) {
 		</table>
 	<?php }
 }
-?>
