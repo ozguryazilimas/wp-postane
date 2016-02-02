@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.4.1
-Stable tag: 4.23
+Stable tag: 4.23.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,7 +76,7 @@ If you wish to check available translations or help with plugin translation to y
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog ==
-= [4.23.1] 01.02.2016 =
+= [4.23.1] 02.02.2016 =
 * Fix: 'get_called_class()' function call was excluded for the compatibility with PHP 5.2.*
 * Fix: ure-users.js was loaded not only to the 'Users' page.
 

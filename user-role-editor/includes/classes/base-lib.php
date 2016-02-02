@@ -9,11 +9,11 @@
  */
 
 /**
- * This class contains general stuff for usage at WordPress plugins
+ * This class contains general stuff for usage at WordPress plugins and must be extended by child class
  */
-class URE_Base_Lib {
+abstract class URE_Base_Lib {
 
-    private static $instance = null; // object exemplar reference  
+    protected static $instance = null; // object exemplar reference  
     protected $options_id = ''; // identifire to save/retrieve plugin options to/from wp_option DB table
     protected $options = array(); // plugin options data
     public $multisite = false;
@@ -22,6 +22,13 @@ class URE_Base_Lib {
     protected $main_blog_id = 0;
 
     
+    abstract public static function get_instance($options_id = '');
+    
+/**
+ * Every child class should override get_instance() method with its own version for compatibility purpose.
+ * We do not use the only get_instance() method at the base class for the compatibility with PHP 5.2, 
+ * as get_called_class() function and 'late static binding' is available for PHP 5.3+ only. 
+ * 
     public static function get_instance($options_id = '') {
 
         $class = get_called_class();
@@ -36,6 +43,8 @@ class URE_Base_Lib {
         return self::$instance;
     }
     // end of get_instance()
+ 
+ **/    
     
 
     /**

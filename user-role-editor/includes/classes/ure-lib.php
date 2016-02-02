@@ -63,6 +63,21 @@ class Ure_Lib extends URE_Base_Lib {
     // end of __construct()
 
     
+    public static function get_instance($options_id = '') {
+        
+        if (self::$instance === null) {
+            if (empty($options_id)) {
+                throw new Exception('URE_Lib::get_inctance() - Error: plugin options ID string is required');
+            }
+            // new static() will work too
+            self::$instance = new URE_Lib($options_id);
+        }
+
+        return self::$instance;
+    }
+    // end of get_instance()
+    
+    
     protected function upgrade() {
         
         $ure_version = $this->get_option('ure_version', '0');

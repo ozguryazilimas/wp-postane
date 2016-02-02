@@ -220,6 +220,10 @@ class User_Role_Editor {
       if ( stripos($_SERVER['REQUEST_URI'], 'wp-admin/users.php')===false ) {
             return;
       }
+      if (isset($_GET['page'])) {
+          return;
+      }
+
       wp_enqueue_style('wp-jquery-ui-dialog');
       wp_enqueue_style('ure-admin-css', URE_PLUGIN_URL . 'css/ure-admin.css', array(), false, 'screen');
       
@@ -231,6 +235,9 @@ class User_Role_Editor {
   
       if ( stripos($_SERVER['REQUEST_URI'], 'wp-admin/users.php')===false ) {
             return;
+      }      
+      if (isset($_GET['page'])) {
+          return;
       }
       
       wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core','jquery-ui-button', 'jquery') );

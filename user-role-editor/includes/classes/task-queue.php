@@ -26,11 +26,9 @@ class URE_Task_Queue {
     
     
     public static function get_instance() {
-        
-        $class = get_called_class();
-        if (self::$instance===null) {
-            // new static() will work too
-            self::$instance = new $class();
+                
+        if (self::$instance===null) {        
+            self::$instance = new URE_Task_Queue();
         }
         
         return self::$instance;
