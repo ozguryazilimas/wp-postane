@@ -3,12 +3,12 @@
 Plugin Name: White Label CMS
 Plugin URI: http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Description:  A plugin that allows you to brand WordPress CMS as your own
-Version: 1.5.4
+Version: 1.5.5
 Author: www.videousermanuals.com
 Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 */
 
-define('WLCMS','1.5.4');
+define('WLCMS','1.5.5');
 
 if ( ! defined('ABSPATH') ) {
         die('Please do not load this file directly.');
@@ -73,8 +73,8 @@ function wlcms_dashboard_mod()
                 echo '<style type="text/css">#wpbody-content .wrap h2 { visibility: hidden; }</style>
                         <script type="text/javascript">
                                 jQuery(document).ready(function($) {
-                                        $("#wpbody-content .wrap h2:eq(0)").html("'.$val.'");
-                                        $("#wpbody-content .wrap h2").css("visibility","visible");
+                                        $("#wpbody-content .wrap h1:eq(0)").html("'.$val.'");
+                                        // $("#wpbody-content .wrap h1").css("visibility","visible");
                                 });
                         </script>';
                         
@@ -98,7 +98,7 @@ function wlcms_dashboard_mod()
                             jQuery(document).ready(function($) {';
 			if ( version_compare( $wp_version, '3.8-beta', '>=' ) )
                 {
-					echo '$(".index-php #wpbody-content .wrap h2:eq(0)").prepend("<span id=\"wlcms_dashboard_logo\"><img src=\"'.$background.'\" alt=\"\" /></span>");
+					echo '$(".index-php #wpbody-content .wrap h1:eq(0)").prepend("<span id=\"wlcms_dashboard_logo\"><img src=\"'.$background.'\" alt=\"\" /></span>");
 						  $("#wlcms_dashboard_logo").css({"visibility":"visible", "display": "block", "float" : "left", "margin": "-2px 8px 0px 0px"});';
 				}else{
 					echo '$("#icon-index").html("<img src=\"'.$background.'\" alt=\"\" />");
@@ -697,6 +697,11 @@ function wlcmsImport()
             && is_uploaded_file($_FILES['wlcms_import']['tmp_name'])):
 
         $import = file_get_contents($_FILES['wlcms_import']['tmp_name']);
+        
+        // Clean up the serialise data first
+        $import = str_replace( "\r\n", "\n", $import );
+        $import = str_replace( "\r", "\n", $import );
+        
         $import = unserialize($import);
 
         if( ! is_array($import) )

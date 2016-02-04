@@ -3,7 +3,7 @@
  
 <div class="wlcms_opts" style="position:relative;">
 	<div id="wlcms-sidebar" style="position: absolute; top: 0; right: 0; background-color:#FFFFFF; width: 250px; border: 1px solid #ccc; padding: 20px;">
-		<img src="<?php echo plugins_url('images/better-ebooks-ad.png', dirname(__FILE__)); ?>" alt="Better WordPress For Clients" title="Better WordPress For Clients" />
+		<img src="<?php echo plugins_url('images/better-ebooks-ad.jpg', dirname(__FILE__)); ?>" alt="Better WordPress For Clients" title="Better WordPress For Clients" />
 		<form method="post" accept-charset="UTF-8" onsubmit="return quickValidate()"  action="https://sk199.infusionsoft.com/app/form/process/9168d81810d0fec71af66450f00861f4" target="_blank" name="Better WP ClickFunnels">
 		<div style="display: none;">
 			<input name="inf_form_xid" type="hidden" value="9168d81810d0fec71af66450f00861f4" />
@@ -642,10 +642,19 @@ jQuery(document).ready(function($) {
 		return false;
 		});
 
-		window.send_to_editor = function(html) {
-		imgurl = jQuery('img',html).attr('src');
-		jQuery('#'+formField).val(imgurl);
-		tb_remove();
+		window.send_to_editor = function(html) {            
+            var imgurl = '';
+            
+            // Parse out the image source
+            var regex = /<img[^>]+src=['"](.*?)['"]/i;
+            var matches = regex.exec( html );
+            if ( matches.length >= 2 ) {
+                imgurl = matches[ 1 ];
+            }
+
+    		jQuery('#'+formField).val(imgurl);
+    		tb_remove();
+            
 		}
 
 
