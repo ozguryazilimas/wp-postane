@@ -19,7 +19,7 @@ class WP_Fluxophy_Widget extends WP_Widget {
   function widget($args, $instance) {
     global $wpdb;
 
-    $cache = wp_cache_get('widget_flıxophy', 'widget');
+    $cache = wp_cache_get('widget_fluxophy', 'widget');
 
     if (!is_array($cache)) {
       $cache = array();
