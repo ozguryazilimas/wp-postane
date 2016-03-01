@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_action' ) ) {
 		<h3 class="hndle" id="uninstall"><?php esc_attr_e( 'Uninstall Options', 'adminimize' ) ?></h3>
 		<div class="inside">
 
-			<p><?php esc_attr_e(
+			<p><?php _e(
 					'Use this option for clean your database from all entries of this plugin. When you deactivate the plugin, the deinstall of the plugin <strong>clean not</strong> all entries in the database.',
 					'adminimize'
 				); ?></p>
@@ -24,11 +24,11 @@ if ( ! function_exists( 'add_action' ) ) {
 			); ?>">
 				<?php wp_nonce_field( 'mw_adminimize_nonce' ); ?>
 				<p id="submitbutton">
-					<input type="submit" name="_mw_adminimize_deinstall" value="<?php esc_attr_e(
+					<input type="submit" name="_mw_adminimize_uninstall" value="<?php esc_attr_e(
 						'Delete Options', 'adminimize'
 					); ?> &raquo;" class="button-secondary" />
-					<input type="checkbox" name="_mw_adminimize_deinstall_yes" value="_mw_adminimize_deinstall" />
-					<input type="hidden" name="_mw_adminimize_action" value="_mw_adminimize_deinstall" />
+					<input type="checkbox" name="_mw_adminimize_uninstall_yes" value="_mw_adminimize_uninstall" />
+					<input type="hidden" name="_mw_adminimize_action" value="_mw_adminimize_uninstall" />
 				</p>
 			</form>
 			<p>

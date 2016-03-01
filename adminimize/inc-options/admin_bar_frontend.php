@@ -13,6 +13,10 @@ if ( ! isset( $wp_admin_bar ) ) {
 	$wp_admin_bar = '';
 }
 
+if ( ! isset( $user_roles ) ) {
+	$user_roles = _mw_adminimize_get_all_user_roles();
+}
+
 if ( ! isset( $user_roles_names ) ) {
 	$user_roles_names = _mw_adminimize_get_all_user_roles_names();
 }
@@ -48,8 +52,7 @@ if ( ! isset( $user_roles_names ) ) {
 				<tr>
 					<td><?php esc_attr_e( 'Select all', 'adminimize' ); ?></td>
 					<?php
-					foreach ( $user_roles_names as $role_slug => $role_name ) {
-						$role_name = strtolower( $role_name );
+					foreach ( $user_roles as $role_slug ) {
 						echo '<td class="num">';
 						echo '<input id="select_all" class="admin_bar_frontend_' . $role_slug
 							. '" type="checkbox" value="" />';
@@ -85,12 +88,10 @@ if ( ! isset( $user_roles_names ) ) {
 							$value->title = '<b><i>' . esc_attr__( 'No Title!', 'adminimize' ) . '</i></b>';
 						}
 
-						$item_class   = ' class="form-invalid"';
 						$item_string  = '&bull; ';
 						$before_title = '<b>';
 						$after_title  = '</b> <small>' . esc_attr__( 'Group', 'adminimize' ) . '</small>';
 						if ( $is_parent ) {
-							$item_class  = '';
 							$item_string = '&mdash; ';
 							$before_title = '';
 							$after_title  = '';
@@ -105,7 +106,7 @@ if ( ! isset( $user_roles_names ) ) {
 							) ? ' checked="checked"' : '';
 						}
 
-						echo '<tr' . $item_class . '>' . "\n";
+						echo '<tr>' . "\n";
 						echo '<td>'. $before_title . $item_string . strip_tags( $value->title, '<strong><b><em><i>' )
 							. $after_title . ' <span>(' . $key . ')</span> </td>' . "\n";
 						foreach ( $user_roles as $role ) {
@@ -117,13 +118,13 @@ if ( ! isset( $user_roles_names ) ) {
 						echo '</tr>' . "\n";
 						$x ++;
 					}
-				} else {
-					$message = '<span style="font-size: 35px;">&#x261D;</span>'
-						. esc_attr__(
-							'You must open the front end of the site in this browser in order for the plugin to discover the Admin Bar items that are currently not visible.',
-							'adminimize'
-						);
 				}
+				$message = '<span style="font-size: 35px;">&#x261D;</span>'
+					. esc_attr__(
+						'You must open the front end of the site in this browser in order for the plugin to discover the Admin Bar items that are currently not visible.',
+						'adminimize'
+					);
+
 				?>
 				</tbody>
 			</table>

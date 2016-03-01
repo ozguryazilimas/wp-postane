@@ -18,7 +18,16 @@ if ( ! function_exists( 'add_action' ) ) {
 		<div class="inside">
 			<br class="clear" />
 
-			<table summary="config_menu" class="widefat">
+			<table summary="config_menu" class="widefat config_menu">
+				<colgroup>
+					<?php
+					$col = 0;
+					foreach ( $user_roles_names as $role_name ) {
+						echo '<col class="col' . $col . '">' . "\n";
+						$col ++;
+					}
+					?>
+				</colgroup>
 				<thead>
 				<tr>
 					<th><?php esc_attr_e( 'Menu options - Menu, Submenu', 'adminimize' ); ?></th>
@@ -32,16 +41,14 @@ if ( ! function_exists( 'add_action' ) ) {
 				<tr>
 					<td><?php esc_attr_e( 'Select all', 'adminimize' ); ?></td>
 					<?php
-					foreach ( $user_roles_names as $role_name ) {
-						$role_name = strtolower( $role_name );
-						$role_name = preg_replace( '/[^a-z0-9]+/', '', $role_name );
+					foreach ( $user_roles as $role_slug ) {
 						echo '<td class="num">';
 						echo '<span class="form-invalid">';
-						echo '<input id="select_all" class="menu_options_' . $role_name
-							. '" type="checkbox" name="" value="" />';
+						echo '<input id="select_all" class="menu_options_' . $role_slug
+							 . '" type="checkbox" name="" value="" />';
 						echo '</span>';
-						echo '<input id="select_all" class="submenu_options_' . $role_name
-							. '" type="checkbox" name="" value="" />';
+						echo '<input id="select_all" class="submenu_options_' . $role_slug
+							 . '" type="checkbox" name="" value="" />';
 						echo '</td>' . "\n";
 					} ?>
 				</tr>
@@ -79,8 +86,8 @@ if ( ! function_exists( 'add_action' ) ) {
 				// print menu, submenu
 				if ( isset( $wp_menu ) && '' !== $wp_menu ) {
 
-					$i     = 0;
-					$x     = 0;
+					$i = 0;
+					$x = 0;
 
 					$users = array(
 						0 => 'Profile',
@@ -89,16 +96,15 @@ if ( ! function_exists( 'add_action' ) ) {
 						3 => '',
 						4 => 'menu-top',
 						5 => 'menu-users',
-						6 => 'div'
+						6 => 'div',
 					);
 
 					foreach ( $wp_menu as $key => $item ) {
 
-						_mw_adminimize_debug( 'Adminimize Menu Settings: Menu Item Key', $key );
-						_mw_adminimize_debug( 'Adminimize Menu Settings: Menu Item', $item );
+						$menu_slug = $item[ 2 ];
 
 						// non checked items
-						if ( $item[ 2 ] === 'options-general.php' ) {
+						if ( $menu_slug === 'options-general.php' ) {
 							$disabled_item_adm_hint = '<abbr title="' . esc_attr__(
 									'After activate the check box it heavy attitudes will change.', 'adminimize'
 								) . '" style="cursor:pointer;"> ! </acronym>';
@@ -107,7 +113,7 @@ if ( ! function_exists( 'add_action' ) ) {
 							$disabled_item_adm_hint = '';
 						}
 
-						if ( '' !== $item[ 2 ] ) {
+						if ( '' !== $menu_slug ) {
 
 							if ( 'wp-menu-separator' === $item[ 4 ] ) {
 								$item[ 0 ] = 'Separator';
@@ -118,28 +124,29 @@ if ( ! function_exists( 'add_action' ) ) {
 								// checkbox checked
 								$checked_user_role_[ $role ] = '';
 								if ( isset( $disabled_menu_[ $role ] )
-									// @since 2015-11-11
-									// Switch to the key and url of menu item.
-									&& _mw_adminimize_in_arrays( array( $key, $item[ 2 ] ), $disabled_menu_[ $role ] )
+									 && in_array( $menu_slug, $disabled_menu_[ $role ], FALSE )
 								) {
 									$checked_user_role_[ $role ] = ' checked="checked"';
 								}
 							}
 
+							if ( ! $item[ 0 ] ) {
+								$item[ 0 ] = '<b><i>' . esc_attr__( 'No Title!', 'adminimize' ) . '</i></b>';
+							}
+
 							echo '<tr class="form-invalid">' . "\n";
 							echo "\t";
-							echo '<th>';
+							echo '<td>';
 							echo '<b>&bull; ' . $item[ 0 ] . '</b> <small>' . esc_attr__(
 									'Group', 'adminimize'
 								) . '</small>';
-							echo '<span>'
-								. $key . '('
-								. preg_replace(
-									"#[%2].*#",
-									'...',
-									htmlentities( $item[ 2 ] )
-								) . ')</span>';
-							echo '</th>';
+							echo '<span>('
+								 . preg_replace(
+									 '#[%2].*#',
+									 '...',
+									 htmlentities( $menu_slug )
+								 ) . ')</span>';
+							echo '</td>';
 
 							foreach ( $user_roles as $role ) {
 								if ( $role !== 'administrator' ) { // only admin disable items
@@ -148,52 +155,54 @@ if ( ! function_exists( 'add_action' ) ) {
 								}
 								/**
 								 * Switch to key of each Menu item
-								 * @since 2016-01-29
 								 *
-								 * Use $key instead of htmlentities( $item[ 2 ] ) in the input field below, attribute value
+								 * @since 2016-01-29
+								 *        Use $key instead of htmlentities( $item[ 2 ] ) in the input field below, attribute value
 								 */
 								echo "\t" . '<td class="num">' . $disabled_item_adm_hint . '<input id="check_menu'
-									. $role . $x . '" class="menu_options_'
-									. preg_replace( '/[^a-z0-9]+/', '', $role ) . '" type="checkbox"'
-									. $disabled_item_adm . $checked_user_role_[ $role ]
-									. ' name="mw_adminimize_disabled_menu_' . $role . '_items[]" value="'
-									. $key . '" />' . $disabled_item_adm_hint . '</td>' . "\n";
+									 . $role . $x . '" class="menu_options_'
+									 . preg_replace( '/[^a-z0-9]+/', '', $role ) . '" type="checkbox"'
+									 . $disabled_item_adm . $checked_user_role_[ $role ]
+									 . ' name="mw_adminimize_disabled_menu_' . $role . '_items[]" value="'
+									 . $menu_slug . '" />' . $disabled_item_adm_hint . '</td>' . "\n";
 							}
 							echo '</tr>';
 
 							// Only for user smaller administrator, change user-Profile-File.
-							if ( 'users.php' === $item[ 2 ] ) {
+							if ( 'users.php' === $menu_slug ) {
 								$x ++;
-								echo '<tr class="form-invalid">' . "\n";
+								echo '<tr>' . "\n";
 								echo "\t" . '<th>' . esc_attr__( 'Profile' ) . ' <span>(profile.php)</span> </th>';
 								foreach ( $user_roles as $role ) {
 									echo "\t" . '<td class="num"><input disabled="disabled" id="check_menu'
-										. $role . $x . '" class="menu_options_'
-										. preg_replace( '/[^a-z0-9]+/', '', $role )
-										. '" type="checkbox"' . $checked_user_role_[ $role ]
-										. ' name="mw_adminimize_disabled_menu_' . $role
-										. '_items[]" value="profile.php" /></td>' . "\n";
+										 . $role . $x . '" class="menu_options_'
+										 . preg_replace( '/[^a-z0-9]+/', '', $role )
+										 . '" type="checkbox"' . $checked_user_role_[ $role ]
+										 . ' name="mw_adminimize_disabled_menu_' . $role
+										 . '_items[]" value="profile.php" /></td>' . "\n";
 								}
 								echo '</tr>';
 							}
 
 							$x ++;
 
-							if ( ! isset( $wp_submenu[ $item[ 2 ] ] ) ) {
+							if ( ! isset( $wp_submenu[ $menu_slug ] ) ) {
 								continue;
 							}
 
 							// Loop about Sub Menu items.
-							foreach ( $wp_submenu[ $item[ 2 ] ] as $subkey => $subitem ) {
+							foreach ( $wp_submenu[ $menu_slug ] as $subkey => $subitem ) {
+								$submenu_slug = $subitem[ 2 ];
 
 								// Special solutions for the Adminimize link, that it not works on settings site.
-								if ( $subitem[ 2 ] === 'adminimize/adminimize.php' ) {
+								if ( strtolower( $submenu_slug ) === 'adminimize/adminimize.php' ) {
 									//$disabled_subitem_adm = ' disabled="disabled"';
 									$disabled_subitem_adm_hint = '<abbr title="'
-										. esc_attr__(
-											'After activate the check box it heavy attitudes will change.', 'adminimize'
-										)
-										. '" style="cursor:pointer;"> ! </acronym>';
+																 . esc_attr__(
+																	 'After activate the check box it heavy attitudes will change.',
+																	 'adminimize'
+																 )
+																 . '" style="cursor:pointer;"> ! </acronym>';
 								} else {
 									$disabled_subitem_adm      = '';
 									$disabled_subitem_adm_hint = '';
@@ -204,23 +213,22 @@ if ( ! function_exists( 'add_action' ) ) {
 									// checkbox checked
 									$checked_user_role_[ $role ] = '';
 									if ( isset( $disabled_submenu_[ $role ] )
-										// @since 2015-11-11
-										// Switch to custom key and url of menu item.
-										&& _mw_adminimize_in_arrays(
-											array( $item[ 2 ] . '__' . $subkey, $subitem[ 2 ] ),
-											$disabled_submenu_[ $role ]
-										)
+										 // @since 2015-11-11
+										 // Switch to custom key and url-slug of menu item.
+										 && _mw_adminimize_in_arrays(
+											 array( $menu_slug . '__' . $subkey, $submenu_slug ),
+											 $disabled_submenu_[ $role ]
+										 )
 									) {
 										$checked_user_role_[ $role ] = ' checked="checked"';
 									}
 								}
-								echo '<td> &mdash; ' . $subitem[ 0 ] . ' <span>['
-									. $subkey . ']('
-									. preg_replace(
-										"#[%2].*#",
-										'...',
-										htmlentities( $subitem[ 2 ] )
-									) . ')</span> </td>' . "\n";
+								echo '<td> &mdash; ' . $subitem[ 0 ] . ' <span>(Slug: '
+									 . preg_replace(
+										 '#[%2].*#',
+										 '...',
+										 htmlentities( $submenu_slug )
+									 ) . ')[__' . $subkey . ']</span> </td>' . "\n";
 
 								foreach ( $user_roles as $role ) {
 									if ( $role !== 'administrator' ) { // only admin disable items
@@ -228,11 +236,10 @@ if ( ! function_exists( 'add_action' ) ) {
 										$disabled_subitem_adm_hint = '';
 									}
 									echo '<td class="num">' . $disabled_subitem_adm_hint . '<input id="check_menu' . $role . $x
-										. '" class="submenu_options_'
-										. preg_replace( '/[^a-z0-9]+/', '', $role ) . '" type="checkbox"'
-										. $disabled_subitem_adm . $checked_user_role_[ $role ]
-										. ' name="mw_adminimize_disabled_submenu_' . $role . '_items[]" value="'
-										. $item[ 2 ] . '__' . $subkey . '" />' . $disabled_subitem_adm_hint . '</td>' . "\n";
+										 . '" class="submenu_options_' . $role . '" type="checkbox"'
+										 . $disabled_subitem_adm . $checked_user_role_[ $role ]
+										 . ' name="mw_adminimize_disabled_submenu_' . $role . '_items[]" value="'
+										 . $menu_slug . '__' . $subkey . '" />' . $disabled_subitem_adm_hint . '</td>' . "\n";
 								}
 								echo '</tr>' . "\n";
 								$x ++;
@@ -266,4 +273,3 @@ if ( ! function_exists( 'add_action' ) ) {
 		</div>
 	</div>
 </div>
-		

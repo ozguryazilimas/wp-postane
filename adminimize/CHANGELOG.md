@@ -1,3 +1,21 @@
+## 1.10.1 (2016-02-29)
+* Fix the Removing of Admin Color Scheme Select on the profile page.
+* Back-end options are also excluded on the settings page.
+* Add new settings area for options of the plugin self.
+* The support for multiple roles is now optional.
+* The support for bbPress is now active and optional.
+
+## 1.10.0 (2016-02-21)
+* Rewrite the Admin Bar settings, simplify the source and new hook to get and render the Admin Bar.
+* Change settings screen for custom post type.
+* Fix "select all" on Admin Bar settings.
+* Fix exclude settings page for pages, there is the current screen not existent.
+* Improve the exclude settings page function for hooks, there fired before `get_current_screen`.
+* Remove more legacy code before WP 3.3.
+* Change removal of Menu and Submenu items to WP core functions, possible to non support older WP Versions.
+* Supports multiple roles on "Menu Options" and "Global Options".
+* Add possibility to hide Admin Notices globally, new setting point in "Global Options".
+
 ## 1.9.2 (2016-01-30)
 * Change get role name, return now a array with slug and name to fix "Select All" function for custom roles.
 * Change Menu Items to Key value, not the id. Makes possible to hide also menu items, there have a stupid menu entry.

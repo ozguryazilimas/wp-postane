@@ -33,6 +33,12 @@ if ( _mw_adminimize_is_active_on_multisite() ) {
 				</tr>
 
 				<tr>
+					<td class="row-title"><a href="#self-settings"><?php esc_attr_e(
+								'Plugin Settings', 'adminimize'
+							); ?></a></td>
+				</tr>
+
+				<tr>
 					<td class="row-title"><a href="#admin_bar_options"><?php esc_attr_e(
 								'Admin Bar Back end Options', 'adminimize'
 							); ?></a></td>
@@ -80,7 +86,7 @@ if ( _mw_adminimize_is_active_on_multisite() ) {
 					foreach ( get_post_types( $args ) as $post_type ) {
 						$post_type_object = get_post_type_object( $post_type );
 						?>
-						<tr class="form-invalid">
+						<tr>
 							<td class="row-title">
 								<a href="#config_edit_<?php echo $post_type; ?>">
 									<?php esc_attr_e( 'Write options', 'adminimize' );
@@ -133,7 +139,7 @@ if ( _mw_adminimize_is_active_on_multisite() ) {
 </div>
 
 <div id="poststuff" class="ui-sortable meta-box-sortables">
-	<div id="about" class="postbox ">
+	<div id="about" class="postbox">
 		<div class="handlediv" title="<?php esc_attr_e( 'Click to toggle' ); ?>"><br /></div>
 		<h3 class="hndle" id="about-sidebar"><?php esc_attr_e( 'About the plugin', 'adminimize' ) ?></h3>
 
@@ -178,7 +184,7 @@ if ( _mw_adminimize_is_active_on_multisite() ) {
 					<span>
 				</li>
 			</ul>
-			<div class="form-invalid" style="padding:.3em 1em;">
+			<div style="padding:.3em 1em;">
 				<p>
 					<span style="font-size: 35px; float: left; margin: -5px 3px 0 0;">&#x261D;</span><strong>
 					<?php esc_attr_e(

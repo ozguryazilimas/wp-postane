@@ -18,6 +18,15 @@ if ( ! function_exists( 'add_action' ) ) {
 			<br class="clear" />
 
 			<table summary="config_nav_menu" class="widefat">
+				<colgroup>
+					<?php
+					$col = 0;
+					foreach ( $user_roles_names as $role_name ) {
+						echo '<col class="col' . $col . '">' . "\n";
+						$col ++;
+					}
+					?>
+				</colgroup>
 				<thead>
 				<tr>
 					<th><?php esc_attr_e( 'Option', 'adminimize' ); ?></th>
@@ -30,11 +39,9 @@ if ( ! function_exists( 'add_action' ) ) {
 				<tr>
 					<td><?php esc_attr_e( 'Select all', 'adminimize' ); ?></td>
 					<?php
-					foreach ( $user_roles_names as $role_name ) {
-						$role_name = strtolower( $role_name );
-						$role_name = preg_replace( '/[^a-z0-9]+/', '', $role_name );
+					foreach ( $user_roles as $role_slug ) {
 						echo '<td class="num">';
-						echo '<input id="select_all" class="wp_nav_menu_options_' . $role_name
+						echo '<input id="select_all" class="wp_nav_menu_options_' . $role_slug
 							. '" type="checkbox" name="" value="" />';
 						echo '</td>' . "\n";
 					} ?>

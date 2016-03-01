@@ -79,7 +79,7 @@ function _mw_adminimize_current_user_has_role( $role ) {
  */
 function _mw_adminimize_debug( $description = '' , $data ) {
 
-	if ( defined( WP_DEBUG_DISPLAY ) && ! WP_DEBUG_DISPLAY ) {
+	if ( ! defined( 'WP_DEBUG_DISPLAY' ) || ( defined( 'WP_DEBUG_DISPLAY' ) && ! WP_DEBUG_DISPLAY ) ) {
 		return;
 	}
 
@@ -92,4 +92,18 @@ function _mw_adminimize_debug( $description = '' , $data ) {
 	$output  = sprintf( '<script>%s</script>', $output );
 
 	echo $output;
+}
+
+/**
+ * Return duplicate items from array.
+ *
+ * @param $array
+ *
+ * @return array
+ */
+function _mw_adminimize_get_duplicate( $array ) {
+
+	return array_unique(
+		array_diff_assoc( $array, array_unique( $array ) )
+	);
 }
