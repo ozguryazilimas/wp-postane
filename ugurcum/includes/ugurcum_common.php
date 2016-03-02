@@ -2,10 +2,10 @@
 
 
 class WP_Ugurcum_Widget extends WP_Widget {
-  function WP_Ugurcum_Widget() {
+  function __construct() {
     $widget_ops = array('classname' => 'wp_uw_widget', 'description' => __('Play it Sam', 'ugurcum'));
     $control_ops = array('width' => 350);
-    $this->WP_Widget('ugurcum', __('Ugurcum', 'ugurcum'), $widget_ops, $control_ops);
+    parent::__construct('ugurcum', __('Ugurcum', 'ugurcum'), $widget_ops, $control_ops);
   }
 
   function widget($args, $instance) {
