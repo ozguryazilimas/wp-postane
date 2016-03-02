@@ -1,7 +1,17 @@
-diff -Nur save-grab/grab-and-save.php save-grab.now/grab-and-save.php
---- save-grab/grab-and-save.php	2013-01-07 17:42:16.000000000 +0200
-+++ save-grab.now/grab-and-save.php	2013-05-08 22:19:41.995000042 +0300
-@@ -60,7 +60,7 @@
+diff --git a/save-grab/grab-and-save.php b/save-grab/grab-and-save.php
+index f645f36..f9d8c06 100644
+--- a/save-grab/grab-and-save.php
++++ b/save-grab/grab-and-save.php
+@@ -12,7 +12,7 @@ class GrabAndSave {
+ 
+ 	var $imageName;
+ 
+-	function GrabAndSave(){$this->__construct();}
++	// function GrabAndSave(){$this->__construct();}
+ 		
+ 	function __construct(){
+ 		global $wp_version;
+@@ -60,7 +60,7 @@ class GrabAndSave {
  
  	
  	function build_tab($tabs) {
@@ -10,7 +20,7 @@ diff -Nur save-grab/grab-and-save.php save-grab.now/grab-and-save.php
  		return $this->array_insert($tabs, $newtab, 2);
  		//return array_merge($tabs,$newtab);
  	}
-@@ -144,11 +144,10 @@
+@@ -144,11 +144,10 @@ class GrabAndSave {
  		}
  		?>
  		<form action="" method="post" id="image-form" class="media-upload-form type-form">
@@ -25,7 +35,7 @@ diff -Nur save-grab/grab-and-save.php save-grab.now/grab-and-save.php
  		</div>
  		
  		</form>
-@@ -157,11 +156,6 @@
+@@ -157,11 +156,6 @@ class GrabAndSave {
  		if ( $attach_id )  {
  			$this->media_upload_type_form("image", $errors, $attach_id);
  		}
@@ -37,7 +47,7 @@ diff -Nur save-grab/grab-and-save.php save-grab.now/grab-and-save.php
  	}
  	
  	
-@@ -219,4 +213,4 @@
+@@ -219,4 +213,4 @@ class GrabAndSave {
  }
  
  new GrabAndSave();
