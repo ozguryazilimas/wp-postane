@@ -3,7 +3,7 @@
 Plugin Name: Fluxophy
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: This plugin fetches external JSON sources and displays them in a widget. For example, you can show facebook feeds with URL http://www.facebook.com/feeds/page.php?format=json&id=YOUR_ID
-Version: 2.0.0
+Version: 2.1.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2

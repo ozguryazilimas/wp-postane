@@ -2,9 +2,9 @@
 Contributors:
 Donate link:
 Tags: fluxophy, json, stream, feed, widget, facebook, external source
-Requires at least: 3.3.1
-Tested up to: 4.2.4
-Stable tag: 2.0.0
+Requires at least: 4.3.1
+Tested up to: 4.4.2
+Stable tag: 2.1.0
 
 This plugin fetches external JSON sources and displays them in a widget
 

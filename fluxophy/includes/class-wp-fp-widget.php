@@ -9,11 +9,10 @@
  */
 
 class WP_Fluxophy_Widget extends WP_Widget {
-
-  function WP_Fluxophy_Widget() {
+  function __construct() {
     $widget_ops = array('classname' => 'wp-fp-widget', 'description' => __('Fetches data from external URL and shows as a nice list', 'fluxophy'));
     $control_ops = array('width' => 350);
-    $this->WP_Widget('fluxophy', 'Fluxophy', $widget_ops, $control_ops);
+    parent::__construct('fluxophy', 'Fluxophy', $widget_ops, $control_ops);
   }
 
   function widget($args, $instance) {
