@@ -9,7 +9,7 @@ Author URI: http://julienappert.com
 */
 class WPEditableComments{
 
-	function WPEditableComments(){$this->__construct();}
+	// function WPEditableComments(){$this->__construct();}
 		
 	function __construct(){
 		add_action('init', array(&$this, 'init'));
