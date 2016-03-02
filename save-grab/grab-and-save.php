@@ -12,7 +12,7 @@ class GrabAndSave {
 
 	var $imageName;
 
-	function GrabAndSave(){$this->__construct();}
+	// function GrabAndSave(){$this->__construct();}
 		
 	function __construct(){
 		global $wp_version;
