@@ -164,7 +164,7 @@ class W3_ObjectCache {
                   !in_array($group, $this->nonpersistent_groups) &&
                     $this->_check_can_cache_runtime($group)) {
             $cache = $this->_get_cache(null, $group);
-            $v = $cache->get($key);
+            $v = $cache->get($key, $group);
             if (is_array($v) && $v['content'] != null)
                 $value = $v['content'];
             else
@@ -251,7 +251,7 @@ class W3_ObjectCache {
 
             $v = array('content' => $data);
             return $cache->set($key, $v,
-                ($expire ? $expire : $this->_lifetime));
+                ($expire ? $expire : $this->_lifetime), $group);
         }
 
         return true;
@@ -277,7 +277,7 @@ class W3_ObjectCache {
         if ($this->_caching && !in_array($group, $this->nonpersistent_groups)) {
             $cache = $this->_get_cache(null, $group);
 
-            return $cache->delete($key);
+            return $cache->delete($key, $group);
         }
 
         return true;
