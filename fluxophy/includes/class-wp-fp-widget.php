@@ -190,7 +190,12 @@ function fluxophy_display_data($source_url, $display_count, $picture_url, $accou
 
 function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
   $output = '';
-  $request_result = fluxophy_get_contents_for_browser($source_url);
+  $request_result = get_transient('fluxophy_facebook_response');
+
+  if (false === $request_result) {
+    $request_result = fluxophy_get_contents_for_browser($source_url);
+    set_transient('fluxophy_facebook_response', $request_result, 1800);
+  }
 
   if ($request_result) {
     $received = json_decode($request_result);
