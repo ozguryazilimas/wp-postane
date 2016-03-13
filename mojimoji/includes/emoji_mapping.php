@@ -2180,7 +2180,7 @@ $MOJIMOJI_ALL_ASCII = array(
 );
 
 $MOJIMOJI_CATEGORY_MAP = array(
-  'people' => [
+  'people' => array(
     ':grinning:',
     ':grimacing:',
     ':grin:',
@@ -2385,8 +2385,8 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':dark_sunglasses:',
     ':ring:',
     ':closed_umbrella:'
-  ],
-  'nature' => [
+  ),
+  'nature' => array(
     ':dog:',
     ':cat:',
     ':mouse:',
@@ -2534,8 +2534,8 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':droplet:',
     ':sweat_drops:',
     ':ocean:'
-  ],
-  'food' => [
+  ),
+  'food' => array(
     ':green_apple:',
     ':apple:',
     ':pear:',
@@ -2603,8 +2603,8 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':baby_bottle:',
     ':fork_and_knife:',
     ':fork_knife_plate:'
-  ],
-  'activity' => [
+  ),
+  'activity' => array(
     ':soccer:',
     ':basketball:',
     ':football:',
@@ -2708,7 +2708,7 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':horse_racing_tone4:',
     ':horse_racing_tone5:'
   ],
-  'travel' => [
+  'travel' => array(
     ':red_car:',
     ':taxi:',
     ':blue_car:',
@@ -2824,8 +2824,8 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':synagogue:',
     ':kaaba:',
     ':shinto_shrine:'
-  ],
-  'objects' => [
+  ),
+  'objects' => array(
     ':watch:',
     ':iphone:',
     ':calling:',
@@ -3004,8 +3004,8 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':paintbrush:',
     ':mag:',
     ':mag_right:'
-  ],
-  'symbols' => [
+  ),
+  'symbols' => array(
     ':heart:',
     ':yellow_heart:',
     ':green_heart:',
@@ -3276,7 +3276,7 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':clock1230:',
     ':eye_in_speech_bubble:'
   ],
-  'flags' => [
+  'flags' => array(
     ':flag_ac:',
     ':flag_af:',
     ':flag_al:',
@@ -3534,8 +3534,8 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':flag_ss:',
     ':flag_tc:',
     ':flag_mf:'
-  ],
-  'modifier' => [
+  ),
+  'modifier' => array(
     ':raised_hands_tone1:',
     ':raised_hands_tone2:',
     ':raised_hands_tone3:',
@@ -3816,7 +3816,7 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':spy_tone3:',
     ':spy_tone4:',
     ':spy_tone5:'
-  ]
+  )
 );
 
 function mojimoji_all_emojies() {
