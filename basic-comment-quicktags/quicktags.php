@@ -97,20 +97,53 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
                 $this->add_scripts();
             }
         }
-		function echo_smiley_box() {
-      global $wpsmiliestrans;
-      echo '<div id="smiley_container">';
-      $done = array();
-      foreach ($wpsmiliestrans as $smiley => $draw) {
-        if (array_search($draw, $done) === false) {
-          array_push($done, $draw);
-          echo '<span class="smiley_smiley" onclick="smiley_insert(\''.$smiley.'\')">';
-          echo convert_smilies($smiley);
-          echo '</span>';
+
+        function echo_smiley_box() {
+          global $wpsmiliestrans, $mojimoji_category_map, $mojimoji_categories;
+
+          echo '<script type="text/javascript">';
+          echo '  var ajaxurl = "' . admin_url('admin-ajax.php') . '";';
+          echo '</script>';
+          echo '<div id="smiley_container">';
+          echo '<ul id="smiley_tab_navigation">';
+
+          foreach ($mojimoji_categories as $category => $category_smiley) {
+            $additional_class = '';
+
+            if ('people' === $category) {
+              $additional_class = 'active';
+            }
+
+            echo '<lu id="smiley_tab_header_' . $category . '" class="smiley_tab_header ' . $additional_class . '" onclick="smiley_tab_clicked(\'' . $category . '\')">';
+            echo convert_smilies($category_smiley);
+            echo '</lu>';
+          }
+
+          echo '</ul>';
+
+          foreach ($mojimoji_categories as $category => $category_smiley) {
+            $additional_style = '';
+
+            if ('people' !== $category) {
+              $additional_style = 'display: none;';
+            }
+
+            echo '<div id="smiley_tab_content_' . $category . '" class="smiley_tab_content" style="' . $additional_style . '">';
+
+            /*
+            foreach ($mojimoji_category_map[$category] as $smiley) {
+              echo '<span class="smiley_smiley" onclick="smiley_insert(\''.$smiley.'\')">';
+              echo convert_smilies($smiley);
+              echo '</span>';
+            }
+             */
+
+            echo '</div>';
+          }
+
+          echo '</div>';
         }
-      }
-      echo '</div>';
-    }
+
 		function admin_init(){
 		
 			register_setting(
