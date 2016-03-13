@@ -1,8 +1,8 @@
 diff --git a/basic-comment-quicktags/quicktags.css b/basic-comment-quicktags/quicktags.css
-index bb9feac..ddefcdc 100644
+index bb9feac..6b851c8 100644
 --- a/basic-comment-quicktags/quicktags.css
 +++ b/basic-comment-quicktags/quicktags.css
-@@ -60,4 +60,20 @@
+@@ -60,4 +60,79 @@
  
  .quicktags-toolbar input[value="b"] {
  	font-weight: bold
@@ -12,30 +12,89 @@ index bb9feac..ddefcdc 100644
 +
 +#smiley_container {
 +  display:none;
-+  margin-bottom:5px;
++  margin-bottom: 5px;
 +}
 +
-+.smiley_smiley:hover {
++/*
++#smiley_container .smiley_smiley:hover {
 +  cursor: pointer;
 +  border: 1px solid #ddd;
 +  background-color: #eee;
 +}
 +
-+.smiley_smiley:active,
-+.smiley_smiley:focus {
++#smiley_container .smiley_smiley:active,
++#smiley_container .smiley_smiley:focus {
 +  background-color:#444;
 +}
++
++#smiley_container .smiley_tab_header {
++  display: flex;
++}
++*/
++
++#smiley_container ul#smiley_tab_navigation  {
++  // display: table;
++  display: inline-flex;
++  width: 100%;
++  cursor: pointer;
++}
++
++#smiley_container ul#smiley_tab_navigation lu.smiley_tab_header {
++  // display: table-cell;
++  display: block;
++  margin: 0 auto;
++  padding: 4px 15px;
++  border: 1px solid #FFF;
++}
++
++#smiley_container .smiley_tab_content {
++  padding-top: 10px;
++  // border: 1px solid #d3d3d3;
++  // border-radius: 5px;
++}
++
++#smiley_container ul#smiley_tab_navigation lu.smiley_tab_header:hover,
++#smiley_container ul#smiley_tab_navigation lu.smiley_tab_header.active {
++  // border: 1px solid #d3d3d3;
++  border: 1px solid #d5d8df;
++  // border-bottom: 1px solid #eaeaea;
++  border-bottom: 1px solid #f3f7ff;
++  border-radius: 5px 5px 0 0;
++}
++
++#smiley_container .smiley_tab_content,
++#smiley_container ul#smiley_tab_navigation lu.smiley_tab_header:hover,
++#smiley_container ul#smiley_tab_navigation lu.smiley_tab_header.active {
++  // background-color: #eaeaea;
++  background-color: #f3f7ff;
++}
++
++#smiley_container ul#smiley_tab_navigation img.wp-smiley {
++  font-size: 32px !important;
++}
++
++#smiley_container .smiley_tab_content img.wp-smiley:hover {
++  // font-size: 48px !important;
++  border: 1px solid black !important;
++}
++
++#smiley_container .smiley_tab_content img.wp-smiley {
++  border: 1px solid transparent !important;
++  font-size: 32px !important;
++  margin: 4px !important;
++}
++
 diff --git a/basic-comment-quicktags/quicktags.js b/basic-comment-quicktags/quicktags.js
-index bf15aae..31c2853 100644
+index bf15aae..389bc33 100644
 --- a/basic-comment-quicktags/quicktags.js
 +++ b/basic-comment-quicktags/quicktags.js
-@@ -16,6 +16,34 @@
+@@ -16,6 +16,59 @@
        id: "posttext",
        buttons: "link,em,strong"
      });
 -    QTags.addButton('quote','quote','<blockquote>','</blockquote>','quote');
-+   // QTags.addButton('image','resim','[resim]','[/resim]','I','');
-+        QTags.addButton( 'tag', 'resim', prompt_image );
++    // QTags.addButton('image','resim','[resim]','[/resim]','I','');
++    QTags.addButton( 'tag', 'resim', prompt_image );
 +    function prompt_image(e, c, ed) {
 +        prmt = prompt('Resim adresini girin:');
 +        if ( prmt === null ) return;
@@ -44,7 +103,7 @@ index bf15aae..31c2853 100644
 +        QTags.TagButton.prototype.callback.call(this, e, c, ed);
 +    }
 +    QTags.addButton("ispiyon","ispiyon","[ispiyon]","[/ispiyon]","ispiyon","");
-+    
++
 +    QTags.addButton("smiley_button","smiley",toggle_smiley_menu);
 +
 +    var smiley_element = jQuery('#smiley_container');
@@ -54,21 +113,46 @@ index bf15aae..31c2853 100644
 +        smiley_element.css('display','none');
 +      } else {
 +        smiley_element.css('display','block');
++        smiley_tab_clicked('people');
 +      }
 +    }
 +
 +    function smiley_insert(str) {
-+      box=jQuery("#comment");
-+      box.val(box.val()+" "+str+" ");
++      box = jQuery("#comment");
++      box.val(box.val() + ' ' + str + ' ');
 +      box.focus();
 +    }
++
++    var basic_comment_quicktags_emoji_categories = [];
++
++    function smiley_tab_clicked(category) {
++      jQuery('.smiley_tab_header').removeClass('active');
++      jQuery('#smiley_tab_header_' + category).addClass('active');
++      jQuery('.smiley_tab_content').hide();
++
++      var data = {
++        action: 'mojimoji',
++        category: category
++      }
++
++      if (jQuery.inArray(category, basic_comment_quicktags_emoji_categories) > -1) {
++        jQuery('#smiley_tab_content_' + category).show();
++      } else {
++        jQuery.post(ajaxurl, data, function(response) {
++          jQuery('#smiley_tab_content_' + category).html(response);
++          jQuery('#smiley_tab_content_' + category).show();
++          basic_comment_quicktags_emoji_categories.push(category);
++        });
++      }
++    }
++
 +
  //   });
 -// })(jQuery);
 \ No newline at end of file
 +// })(jQuery);
 diff --git a/basic-comment-quicktags/quicktags.php b/basic-comment-quicktags/quicktags.php
-index a1acf5e..b571f17 100644
+index a1acf5e..eb08f91 100644
 --- a/basic-comment-quicktags/quicktags.php
 +++ b/basic-comment-quicktags/quicktags.php
 @@ -58,6 +58,7 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
@@ -79,29 +163,62 @@ index a1acf5e..b571f17 100644
  			}
  			
  			add_action( 'admin_init', array( $this, 'admin_init'));
-@@ -96,7 +97,20 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
+@@ -96,7 +97,53 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
                  $this->add_scripts();
              }
          }
 -			
-+		function echo_smiley_box() {
-+      global $wpsmiliestrans;
-+      echo '<div id="smiley_container">';
-+      $done = array();
-+      foreach ($wpsmiliestrans as $smiley => $draw) {
-+        if (array_search($draw, $done) === false) {
-+          array_push($done, $draw);
-+          echo '<span class="smiley_smiley" onclick="smiley_insert(\''.$smiley.'\')">';
-+          echo convert_smilies($smiley);
-+          echo '</span>';
++
++        function echo_smiley_box() {
++          global $wpsmiliestrans, $mojimoji_category_map, $mojimoji_categories;
++
++          echo '<script type="text/javascript">';
++          echo '  var ajaxurl = "' . admin_url('admin-ajax.php') . '";';
++          echo '</script>';
++          echo '<div id="smiley_container">';
++          echo '<ul id="smiley_tab_navigation">';
++
++          foreach ($mojimoji_categories as $category => $category_smiley) {
++            $additional_class = '';
++
++            if ('people' === $category) {
++              $additional_class = 'active';
++            }
++
++            echo '<lu id="smiley_tab_header_' . $category . '" class="smiley_tab_header ' . $additional_class . '" onclick="smiley_tab_clicked(\'' . $category . '\')">';
++            echo convert_smilies($category_smiley);
++            echo '</lu>';
++          }
++
++          echo '</ul>';
++
++          foreach ($mojimoji_categories as $category => $category_smiley) {
++            $additional_style = '';
++
++            if ('people' !== $category) {
++              $additional_style = 'display: none;';
++            }
++
++            echo '<div id="smiley_tab_content_' . $category . '" class="smiley_tab_content" style="' . $additional_style . '">';
++
++            /*
++            foreach ($mojimoji_category_map[$category] as $smiley) {
++              echo '<span class="smiley_smiley" onclick="smiley_insert(\''.$smiley.'\')">';
++              echo convert_smilies($smiley);
++              echo '</span>';
++            }
++             */
++
++            echo '</div>';
++          }
++
++          echo '</div>';
 +        }
-+      }
-+      echo '</div>';
-+    }
++
  		function admin_init(){
  		
  			register_setting(
-@@ -170,4 +184,4 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
+@@ -170,4 +217,4 @@ if (!class_exists('BasicCommentsQuicktagsHELF')) {
  //instantiate the class
  if (class_exists('BasicCommentsQuicktagsHELF')) {
  	new BasicCommentsQuicktagsHELF();
