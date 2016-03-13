@@ -2707,7 +2707,7 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':horse_racing_tone3:',
     ':horse_racing_tone4:',
     ':horse_racing_tone5:'
-  ],
+  ),
   'travel' => array(
     ':red_car:',
     ':taxi:',
@@ -3275,7 +3275,7 @@ $MOJIMOJI_CATEGORY_MAP = array(
     ':clock1130:',
     ':clock1230:',
     ':eye_in_speech_bubble:'
-  ],
+  ),
   'flags' => array(
     ':flag_ac:',
     ':flag_af:',
