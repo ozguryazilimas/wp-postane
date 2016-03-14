@@ -1,0 +1,29 @@
+diff --git a/pending-submission-notifications/pending-submission-notifications.php b/pending-submission-notifications/pending-submission-notifications.php
+index 59fedcb..e794485 100644
+--- a/pending-submission-notifications/pending-submission-notifications.php
++++ b/pending-submission-notifications/pending-submission-notifications.php
+@@ -56,7 +56,7 @@ add_action('transition_post_status','pending_submission_send_email', 10, 3 );
+ function pending_submission_send_email( $new_status, $old_status, $post ) {
+ 
+ // Notifiy Admin that Contributor has writen a post
+-if ($new_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
++if ($old_status != 'pending' && $new_status == 'pending') {
+ 	$pending_submission_email = get_option('pending_submission_notification_admin_email');
+ 	$admins = (empty($pending_submission_email)) ? get_option('admin_email') : $pending_submission_email;
+ 	$url = get_permalink($post->ID);
+@@ -79,11 +79,10 @@ if ($new_status == 'pending' && user_can($post->post_author, 'edit_posts') && !u
+ else if ($old_status == 'pending' && $new_status == 'publish' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
+     $username = get_userdata($post->post_author);
+     $url = get_permalink($post->ID);
+-	$subject = "Your submission is now live:" . " " . $post->post_title;
+-	$message = '"' . $post->post_title . '"' . " was just published!. \r\n";
+-	$message .= $url;
++	$subject = '[' . get_option('blogname') . '] ' . $post->post_title . ' onaylandı';
++    $message="{$username->display_name},\n\nGönderdiğiniz yazı " . $url . " adresinde yayına alındı.\n\nÇok çok teşekkür ederiz. \n\n";
+ 	$result = wp_mail($username->user_email, $subject, $message);
+ 	}
+ }
+ 
+-?>
+\ No newline at end of file
++?>
