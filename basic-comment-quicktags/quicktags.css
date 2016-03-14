@@ -101,6 +101,8 @@
 
 #smiley_container .smiley_tab_content {
   padding-top: 10px;
+  overflow-y: scroll;
+  max-height: 300px;
   // border: 1px solid #d3d3d3;
   // border-radius: 5px;
 }
