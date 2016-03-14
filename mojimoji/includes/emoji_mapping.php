@@ -3846,7 +3846,7 @@ function mojimoji_categories() {
     'travel' => ':rocket:',
     'objects' => ':tv:',
     'symbols' => ':cupid:',
-    'flags' => ':flags:',
+    // 'flags' => ':flags:',
     'modifier' => ':hand_splayed_tone2:'
   );
 
