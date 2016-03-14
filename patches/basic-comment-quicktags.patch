@@ -1,8 +1,8 @@
 diff --git a/basic-comment-quicktags/quicktags.css b/basic-comment-quicktags/quicktags.css
-index bb9feac..6b851c8 100644
+index bb9feac..c6c49f5 100644
 --- a/basic-comment-quicktags/quicktags.css
 +++ b/basic-comment-quicktags/quicktags.css
-@@ -60,4 +60,79 @@
+@@ -60,4 +60,81 @@
  
  .quicktags-toolbar input[value="b"] {
  	font-weight: bold
@@ -49,6 +49,8 @@ index bb9feac..6b851c8 100644
 +
 +#smiley_container .smiley_tab_content {
 +  padding-top: 10px;
++  overflow-y: scroll;
++  max-height: 300px;
 +  // border: 1px solid #d3d3d3;
 +  // border-radius: 5px;
 +}
