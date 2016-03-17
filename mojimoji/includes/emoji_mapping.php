@@ -2052,12 +2052,12 @@ $MOJIMOJI_ALL_SHORTCODES = array(
 $MOJIMOJI_ALL_ASCII = array(
   '<3' => '2764.png',
   '</3' => '1f494.png',
-  ':\')' => '1f602.png',
+  ':\')' => '1f622.png',
   ':\'-)' => '1f602.png',
   ':D' => '1f603.png',
   ':-D' => '1f603.png',
   '=D' => '1f603.png',
-  ':)' => '1f604.png',
+  ':)' => '1f642.png',
   ':-)' => '1f604.png',
   '=]' => '1f604.png',
   '=)' => '1f604.png',
@@ -2092,7 +2092,7 @@ $MOJIMOJI_ALL_ASCII = array(
   'x-p' => '1f61c.png',
   '>:[' => '1f61e.png',
   ':-(' => '1f61e.png',
-  ':(' => '1f61e.png',
+  ':(' => '1f641.png',
   ':-[' => '1f61e.png',
   ':[' => '1f61e.png',
   '=(' => '1f61e.png',
@@ -2132,7 +2132,7 @@ $MOJIMOJI_ALL_ASCII = array(
   'O:3' => '1f607.png',
   'B-)' => '1f60e.png',
   'B)' => '1f60e.png',
-  '8)' => '1f60e.png',
+  // '8)' => '1f60e.png',
   '8-)' => '1f60e.png',
   'B-D' => '1f60e.png',
   '8-D' => '1f60e.png',
@@ -2176,7 +2176,8 @@ $MOJIMOJI_ALL_ASCII = array(
   '=x' => '1f636.png',
   ':x' => '1f636.png',
   ':-x' => '1f636.png',
-  '=#' => '1f636.png'
+  '=#' => '1f636.png',
+  ':|' => '1f610.png'
 );
 
 $MOJIMOJI_CATEGORY_MAP = array(
