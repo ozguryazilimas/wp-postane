@@ -14,9 +14,9 @@ class URE_User_Other_Roles {
     protected $lib = null;
     
     
-    function __construct(Ure_Lib $lib) {
+    function __construct() {
     
-        $this->lib = $lib;
+        $this->lib = URE_Lib::get_instance();
         $this->set_hooks();
     }
     // end of $lib

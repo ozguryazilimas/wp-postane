@@ -32,7 +32,7 @@ class User_Role_Editor {
             $this->lib = URE_Lib::get_instance('user_role_editor');
         }
 
-        $this->user_other_roles = new URE_User_Other_Roles($this->lib);
+        $this->user_other_roles = new URE_User_Other_Roles();
         
         if ($this->lib->is_pro()) {
          $this->ure_hook_suffixes = array('settings_page_settings-user-role-editor-pro', 'users_page_users-user-role-editor-pro');         
@@ -313,9 +313,9 @@ class User_Role_Editor {
 
         if ($screen->base == 'user-edit' || $screen->base == 'user-edit-network') { // editing a user profile
             if (!is_super_admin($current_user->ID) && is_super_admin($profileuser->ID)) { // trying to edit a superadmin while himself is less than a superadmin
-                wp_die(esc_html__('You do not have permission to edit this user.'));
+                wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
             } elseif (!( is_user_member_of_blog($profileuser->ID, get_current_blog_id()) && is_user_member_of_blog($current_user->ID, get_current_blog_id()) )) { // editing user and edited user aren't members of the same blog
-                wp_die(esc_html__('You do not have permission to edit this user.'));
+                wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
             }
         }
     }

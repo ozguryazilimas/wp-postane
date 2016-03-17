@@ -673,14 +673,10 @@ if ($this->multisite && !is_network_admin()) {
     }
     // end of editor_init0()
 
-
+    
     public function editor_init1() {
 
-        if (!isset($this->roles) || !$this->roles) {
-            // get roles data from database
-            $this->roles = $this->get_user_roles();
-        }
-
+        $this->roles = $this->get_user_roles();
         $this->init_full_capabilities();
         if (empty($this->role_additional_options)) {
             $this->role_additional_options = URE_Role_Additional_Options::get_instance($this);
@@ -785,7 +781,7 @@ if ($this->multisite && !is_network_admin()) {
     public function get_user_roles() {
 
         global $wp_roles;
-
+        
         if (!isset($wp_roles)) {
             $wp_roles = new WP_Roles();
         }                
@@ -1735,7 +1731,7 @@ if ($this->multisite && !is_network_admin()) {
     
     
     protected function init_full_capabilities() {
-        
+                
         $this->built_in_wp_caps = $this->get_built_in_wp_caps();
         $this->full_capabilities = array();
         $this->add_roles_caps();
@@ -2450,6 +2446,33 @@ if ($this->multisite && !is_network_admin()) {
 
     
     /**
+     * Returns administrator role ID
+     * 
+     * @return string
+     */        
+    protected function get_admin_role() {
+        
+        if (isset($this->roles['administrator'])) {
+            $admin_role_id = 'administrator';
+        } else {        
+            // go through all roles and select one with max quant of capabilities included
+            $max_caps = -1;
+            $admin_role_id = '';
+            foreach(array_keys($this->roles) as $role_id) {
+                $caps = count($this->roles[$role_id]['capabilities']);
+                if ($caps>$max_caps) {
+                    $max_caps = $caps;
+                    $admin_role_id = $role_id;
+                }
+            }
+        }        
+        
+        return $admin_role_id;
+    }
+    // end get_admin_role()
+    
+    
+    /**
      * Add new capability
      * 
      * @global WP_Roles $wp_roles
@@ -2462,31 +2485,29 @@ if ($this->multisite && !is_network_admin()) {
             return esc_html__('Insufficient permissions to work with User Role Editor','user-role-editor');
         }
         $mess = '';
-        if (isset($_POST['capability_id']) && $_POST['capability_id']) {
-            $user_capability = $_POST['capability_id'];
-            // sanitize user input for security
-            $valid_name = preg_match('/[A-Za-z0-9_\-]*/', $user_capability, $match);
-            if (!$valid_name || ($valid_name && ($match[0] != $user_capability))) { // some non-alphanumeric charactes found!    
-                return 'Error! ' . esc_html__('Error: Capability name must contain latin characters and digits only!', 'user-role-editor');
-                ;
-            }
-
-            if ($user_capability) {
-                $user_capability = strtolower($user_capability);
-                if (!isset($wp_roles)) {
-                    $wp_roles = new WP_Roles();
-                }
-                $wp_roles->use_db = true;
-                $administrator = $wp_roles->get_role('administrator');
-                if (!$administrator->has_cap($user_capability)) {
-                    $wp_roles->add_cap('administrator', $user_capability);
-                    $mess = sprintf(esc_html__('Capability %s is added successfully', 'user-role-editor'), $user_capability);
-                } else {
-                    $mess = sprintf('Error! ' . esc_html__('Capability %s exists already', 'user-role-editor'), $user_capability);
-                }
-            }
+        if (!isset($_POST['capability_id']) || empty($_POST['capability_id'])) {
+            return 'Wrong Request';
+        }
+        
+        $user_capability = $_POST['capability_id'];
+        // sanitize user input for security
+        $valid_name = preg_match('/[A-Za-z0-9_\-]*/', $user_capability, $match);
+        if (!$valid_name || ($valid_name && ($match[0] != $user_capability))) { // some non-alphanumeric charactes found!    
+            return esc_html__('Error: Capability name must contain latin characters and digits only!', 'user-role-editor');
         }
 
+        $user_capability = strtolower($user_capability);                
+        $this->get_user_roles();
+        $this->init_full_capabilities();
+        if (!isset($this->full_capabilities[$user_capability])) {
+            $admin_role = $this->get_admin_role();            
+            $wp_roles->use_db = true;
+            $wp_roles->add_cap($admin_role, $user_capability);
+            $mess = sprintf(esc_html__('Capability %s is added successfully', 'user-role-editor'), $user_capability);
+        } else {
+            $mess = sprintf(esc_html__('Capability %s exists already', 'user-role-editor'), $user_capability);
+        }
+        
         return $mess;
     }
     // end of add_new_capability()
