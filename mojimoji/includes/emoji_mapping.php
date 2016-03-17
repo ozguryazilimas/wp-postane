@@ -2052,6 +2052,7 @@ $MOJIMOJI_ALL_SHORTCODES = array(
 $MOJIMOJI_ALL_ASCII = array(
   '<3' => '2764.png',
   '</3' => '1f494.png',
+  ":&#8217;)" => '1f622.png',
   ':\')' => '1f622.png',
   ':\'-)' => '1f602.png',
   ':D' => '1f603.png',
