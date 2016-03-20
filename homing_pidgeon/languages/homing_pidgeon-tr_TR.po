@@ -74,5 +74,5 @@ msgid ""
 msgstr ""
 "Yazınız %s adresinde yayına alındı.\n"
 "\n"
-"Çok çok teşekkür ederiz."
+"Katkınız için teşekkür ederiz."
 
