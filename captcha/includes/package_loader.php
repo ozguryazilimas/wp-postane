@@ -17,7 +17,13 @@ if ( ! class_exists( 'Cptch_package_loader' ) ) {
 		 * Constructor of class
 		 */
 		function __construct() {
-			$upload_dir            = wp_upload_dir();
+			if ( is_multisite() ) {
+				switch_to_blog( 1 );
+				$upload_dir = wp_upload_dir();
+				restore_current_blog();
+			} else {
+				$upload_dir = wp_upload_dir();
+			}
 			$this->upload_dir      = $upload_dir['basedir'] . '/bws_captcha_images';
 			$this->error           = '';
 			if( ! file_exists( $this->upload_dir ) ) {

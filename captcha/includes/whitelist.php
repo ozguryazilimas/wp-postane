@@ -325,8 +325,8 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 					$list   = implode( ',', $_REQUEST['id'] );
 					$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cptch_whitelist` WHERE `id` IN (" . $list . ");" );
 					if ( ! $wpdb->last_error ) {
-						$message = sprintf( _n( "One IP was deleted successfully", "%s IPs were deleted successfully", $result, 'captcha' ), $result );
-						if( ! is_null( $wpdb->get_var( "SELECT `id` FROM `{$wpdb->prefix}cptch_whitelist` LIMIT 1" ) ) ) {
+						$message = sprintf( _n( "%s IP was deleted successfully", "%s IPs were deleted successfully", $result, 'captcha' ), $result );
+						if ( ! is_null( $wpdb->get_var( "SELECT `id` FROM `{$wpdb->prefix}cptch_whitelist` LIMIT 1" ) ) ) {
 							$cptch_options['whitelist_is_empty'] = false;
 							update_option( 'cptch_options', $cptch_options );
 						}
@@ -374,10 +374,10 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 				update_option( 'cptch_options', $cptch_options );
 			}
 			if ( ! empty( $message ) ) { ?>
-				<div class="updated fade"><p><strong><?php echo $message; ?>.</strong></p></div>
+				<div class="updated fade below-h2"><p><strong><?php echo $message; ?>.</strong></p></div>
 			<?php }
 			if ( ! empty( $error ) ) { ?>
-				<div class="error"><p><strong><?php echo $error; ?>.</strong></p></div>
+				<div class="error below-h2"><p><strong><?php echo $error; ?>.</strong></p></div>
 			<?php }
 		}
 

@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: add, anti, anti-spam, anti-spam security, antispam, antispam security, antispambot, arithmetic actions, blacklist, block spam, bot, bots, best captcha, best wordpress captcha, captcha, capcha, captha, catcha, captcha bank, captcha numbers, captcha plugin, captcha protection, captcha words, contact form with captcha, comment captcha, comment, comments, cpatcha, form, forms, form captcha, forgot password captcha, free, login, lost password, label, login captcha, match captcha, math actions, multiply, plugin, protect, protection, popular captcha, protection shield, register, registration, registration spam, register captcha, rest password captcha, registration captcha security, spam, secure, security, signup, signup spam, spam blocker, spam comments, spam filter, spambot, shield, simple captcha, spam control, spam protection, substract, text captcha, user registration spam, web form protection, wordpress captcha, wordpress protection, wordpress security loss password captcha, register captcha, wp captcha, wp plugin, wp plugins
 Requires at least: 3.8
-Tested up to: 4.4.1
-Stable tag: 4.1.8
+Tested up to: 4.4.2
+Stable tag: 4.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,12 +39,14 @@ http://www.youtube.com/watch?v=jxrvHaCmQfg
 * Ability to load whitelist of Limit Attempts by BestWebSoft plugin to whitelist of Captcha by BestWebSoft.
 * Ability to use whitelist of Limit Attempts by BestWebSoft plugin.
 
+If you have a feature, suggestion or idea you'd like to see in the plugin, we'd love to hear about it! <a href="http://support.bestwebsoft.com/hc/en-us/requests/new" target="_blank">Suggest a Feature</a>
+
 = Recommended Plugins =
 
 The author of the Captcha also recommends the following plugins:
 
 *  <a href="http://wordpress.org/plugins/limit-attempts/">Limit Attempts</a> - This plugin allows you to limit users' attempts to log in to your website, as well as create and edit black- and whitelists. This way, you will be able to manage access to your website and its content and protect it from spam and unwanted visitors.
-There is also a premium version of the plugin - <a href="http://bestwebsoft.com/products/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2">Limited Attempts Pro</a>, with more useful features available. With the pro version, you recieve a possibility to add ranges of IP addresses or IP masks to black- and whitelists. Also, it is compatible with Captcha Pro plugin, so all functionality of Limit Attempts Pro can be apllied to all forms when Captcha Pro is activated.
+There is also a premium version of the plugin - <a href="http://bestwebsoft.com/products/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2">Limited Attempts Pro</a>, with more useful features available. With the pro version, you recieve a possibility to add ranges of IP addresses or IP masks to black- and whitelists. Also, it is compatible with Captcha Pro plugin, so all functionality of Limit Attempts Pro can be applied to all forms when Captcha Pro is activated.
 * <a href="http://wordpress.org/plugins/updater/">Updater</a> - This plugin updates WordPress core and the plugins to the recent versions. You can also use the auto mode or manual mode for updating and set email notifications.
 There is also a premium version of the plugin <a href="http://bestwebsoft.com/products/updater/?k=0864088de1701a5e104ffb77c6d7011c">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
 
@@ -112,7 +114,7 @@ http://www.youtube.com/watch?v=jsvc8FxxEnk
 
 == Frequently Asked Questions ==
 
-= Missing CAPTCHA on the comment form? = 
+= Missing Captcha on the comment form? = 
 
 You might have a theme where comments.php is not coded properly. 
 
@@ -158,14 +160,6 @@ It depends on the comments form. If the hook call by means of which captcha work
 Please find the file 'comments.php' in the theme and change position of the line `do_action( 'comment_form_after_fields' );` or any similar line - place it under the Submit button.
 In case there is no such hook in the comments file of your theme, then, unfortunately, this option is not available.
 
-= How to change a captcha title =
-
-You should go to the Settings page and change the value in the 'Title for CAPTCHA in the form' field.
-
-= During the settings saving I get the error: 'Please select one item in the block Arithmetic and Complexity for CAPTCHA'. What is this? =
-
-For stable work of the Captcha plugin you should select at least one item in the 'Arithmetic actions for CAPTCHA' block and select 'CAPTCHA complexity level' on the Settings page, because math expression should consist of at least 1 math sign and parts of math expression should be displayed like words or numbers or both of them.
-
 = I have some problems with the plugin's work. What Information should I provide to receive proper support? =
 
 Please make sure that the problem hasn't been discussed yet on our forum (<a href="http://support.bestwebsoft.com" target="_blank">http://support.bestwebsoft.com</a>). If no, please provide the following data along with your problem's description:
@@ -188,9 +182,13 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V4.1.9 - 28.03.2016 =
+* Bugfix : Lower-case equivalents for all numbers have been changed.
+* New : Ability to add custom styles.
+
 = V4.1.8 - 01.02.2016 =
 * Bugfix : Captcha's work in the multisite registration form has been fixed.
-* Bugfix : SQL injection vulnerability has been fixed (thanks to <a href="mailto:dennis.pellikaan@ncsc.nl">Dennis Pellikaan</a>, www.ncsc.nl).
+* Bugfix : SQL injection vulnerability has been fixed (thanks to www.ncsc.nl).
 * Bugfix : The bug of displaying captha error when adding a new user in the multisite has been fixed.
 * Update : The French language file has been updated.
 
@@ -204,7 +202,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * New : Ability to use whitelist of Limit Attempts by BestWebSoft plugin.
 * New : Ability to set time limit, after which the Captcha can not be passed.
 * Bugfix : Bug with Captcha reloading when forms data handled via ajax was fixed.
-* Bugfix : XSS vulnerability with displaying search results for CAPTCHA whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>).
+* Bugfix : XSS vulnerability with displaying search results for Captcha whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>).
 * Bugfix : XSS vulnerability with user authentication was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>).
 * Update : Structure of plugin`s settings page was updated.
 * Update : The French and Hungarian language files were updated.
@@ -286,7 +284,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Update : The French language file is updated.
 
 = V3.9.6 - 12.02.2014 =
-* Bugfix : Comflict with plugin Limit Login Attempts is fixed (a false login when logging out of the WP backend).
+* Bugfix : Conflict with plugin Limit Login Attempts is fixed (a false login when logging out of the WP backend).
 * Bugfix : We fixed displaying captcha in contact form.
 
 = V3.9.5 - 03.02.2014 =
@@ -558,6 +556,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Upgrade Notice ==
 
+= V4.1.9 =
+Lower-case equivalents for all numbers have been changed. Ability to add custom styles.
+
 = V4.1.8 =
 Captcha's work in the multisite registration form was fixed. SQL injection vulnerability was fixed. The bug of displaying captha error when adding a new user in the multisite is fixed. The French language file is updated.
 
@@ -565,7 +566,7 @@ Captcha's work in the multisite registration form was fixed. SQL injection vulne
 Bug with the definition of type of images has been fixed.
 
 = V4.1.6 =
-Ability to use images in Captcha. Ability to reload Captcha. Ability to load list of IP from whitelist of Limit Attempts by BestWebSoft plugin to Captcha whitelist. Ability to use whitelist of Limit Attempts by BestWebSoft plugin. Ability to set time limit, after which the Captcha can not be passed. Bug with Captcha reloading when forms data handled via ajax was fixed. XSS vulnerability with displaying search results for CAPTCHA whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). XSS vulnerability with user authentication was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). Structure of plugin`s settings page was updated. The French and Hungarian language files were updated.
+Ability to use images in Captcha. Ability to reload Captcha. Ability to load list of IP from whitelist of Limit Attempts by BestWebSoft plugin to Captcha whitelist. Ability to use whitelist of Limit Attempts by BestWebSoft plugin. Ability to set time limit, after which the Captcha can not be passed. Bug with Captcha reloading when forms data handled via ajax was fixed. XSS vulnerability with displaying search results for Captcha whitelist was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). XSS vulnerability with user authentication was fixed (thanks to <a href="mailto:colette@wordfence.com">Colette Chamberland</a>). Structure of plugin`s settings page was updated. The French and Hungarian language files were updated.
 
 = V4.1.5 =
 The whitelist functionality was expanded: Ability to add current IP to the whitelist. The whitelist functionality was expanded: If the IP is in the whitelist, then the indicated message will be displayed instead of the captcha. We updated all functionality for wordpress 4.3.1. The French language file is updated. We fixed SQL injection vulnerability.
@@ -625,7 +626,7 @@ We fixed error related to custom plugins folder.
 Plugin optimization is done. The French language file is updated.
 
 = V3.9.6 =
-Comflict with plugin Limit Login Attempts is fixed (a false login when logging out of the WP backend). We fixed displaying captcha in contact form.
+Conflict with plugin Limit Login Attempts is fixed (a false login when logging out of the WP backend). We fixed displaying captcha in contact form.
 
 = V3.9.5 =
 We updated all functionality for wordpress 3.8.1. Changed filter for captcha in the login form.
@@ -721,7 +722,7 @@ The English language is updated in the plugin.
 The bug related to add Captcha in Contact Form for multisiting was fixed.
 
 = V3.1 =
-The Bulgarian language file ix added to the plugin.
+The Bulgarian language file is added to the plugin.
 
 = V3.0 =
 Display bug was fixed.
