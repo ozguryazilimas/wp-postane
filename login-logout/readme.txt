@@ -3,18 +3,19 @@ Contributors: webvitaly
 Donate link: http://web-profile.com.ua/donate/
 Tags: login, logout, widget, meta, sidebar, admin, register
 Requires at least: 3.0
-Tested up to: 4.5
-Stable tag: 3.4
+Tested up to: 5.0
+Stable tag: 3.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Widget with login, logout, admin and register links. Replacement of the default Meta widget
+Widget with login, logout, admin and register links. Replacement of the default Meta widget.
 
 == Description ==
 
-> [WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly) |
-> [Login-Logout](http://web-profile.com.ua/wordpress/plugins/login-logout/ "Plugin page") |
-> [Donate](http://web-profile.com.ua/donate/ "Support the development")
+> **[Speedup WordPress](http://codecanyon.net/item/silver-bullet-pro/15171769?ref=webvitalii "Speedup and protect WordPress in a smart way")** |
+> **[Login-Logout](http://web-profile.com.ua/wordpress/plugins/login-logout/ "Plugin page")** |
+> **[Donate](http://web-profile.com.ua/donate/ "Support the development")** |
+> **[GitHub](https://github.com/webvitalii/login-logout "Fork")**
 
 "Login-Logout" plugin adds widget with login or logout link. Also can be shown register or site-admin link. It is the replacement of the default Meta widget.
 
@@ -28,10 +29,9 @@ Widget with login, logout, admin and register links. Replacement of the default 
 * site admin (if checkbox is active);
 
 
-= Useful plugins: =
-* ["Anti-spam" - block spam in comments](http://wordpress.org/plugins/anti-spam/ "no spam, no captcha")
-* ["Security-protection" - blocks brute-force attacks](http://wordpress.org/plugins/security-protection/ "stops brute-force attacks")
-* [WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly)
+= Useful: =
+* **[Silver Bullet Pro - Speedup and protect WordPress in a smart way](http://codecanyon.net/item/silver-bullet-pro/15171769?ref=webvitalii "Speedup and protect WordPress in a smart way")**
+* **[Anti-spam Pro - Block spam in comments](http://codecanyon.net/item/antispam-pro/6491169?ref=webvitalii "Block spam in comments")**
 
 
 == Screenshots ==
@@ -42,6 +42,14 @@ Widget with login, logout, admin and register links. Replacement of the default 
 4. Widget output when user is logged in and inline option is on
 
 == Changelog ==
+
+= 3.6 - 2016-03-22 =
+* Bugfixing
+
+= 3.5 - 2016-03-21 =
+* Bugfixing
+* Code refactoring
+* Added LOGIN_LOGOUT_PLUGIN_VERSION constant
 
 = 3.4 - 2015-09-09 =
 * Added 'https' support. Thanks to Sven
