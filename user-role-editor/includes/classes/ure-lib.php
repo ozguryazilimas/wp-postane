@@ -384,7 +384,7 @@ if ($this->multisite && !is_network_admin()) {
 ?>
 <div class="wrap">
 		  <div id="ure-icon" class="icon32"><br/></div>
-    <h2><?php _e('User Role Editor', 'user-role-editor'); ?></h2>
+    <h1><?php _e('User Role Editor', 'user-role-editor'); ?></h1>
     <div id="ure_container" style="min-width: <?php echo $container_width;?>px;">
         <div class="ure-sidebar" >
             <?php

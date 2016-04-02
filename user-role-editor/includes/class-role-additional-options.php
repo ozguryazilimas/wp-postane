@@ -90,7 +90,7 @@ class URE_Role_Additional_Options {
             }
             foreach(array_keys($this->active_items[$role]) as $item_id) {
                 if (isset($this->items[$item_id])) {
-                    add_action($this->items[$item_id]->hook, $this->items[$item_id]->routine);
+                    add_action($this->items[$item_id]->hook, $this->items[$item_id]->routine, 99);
                 }
             }            
         }

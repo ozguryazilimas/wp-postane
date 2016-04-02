@@ -206,11 +206,7 @@ class User_Role_Editor {
         &nbsp;&nbsp;<input type="button" name="move_from_no_role" id="move_from_no_role" class="button"
                         value="Without role (<?php echo $users_quant;?>)" onclick="ure_move_users_from_no_role_dialog()">
         <div id="move_from_no_role_dialog" class="ure-dialog">
-            <div id="move_from_no_role_content" style="padding: 10px;">
-                To: <select name="ure_new_role" id="ure_new_role">
-                    <option value="no_rights">No rights</option>
-                </select><br>    
-            </div>                
+            <div id="move_from_no_role_content" style="padding: 10px;"></div>                
         </div>
 <?php        
       }
@@ -249,6 +245,7 @@ class User_Role_Editor {
       wp_localize_script( 'ure-users-js', 'ure_users_data', array(
         'wp_nonce' => wp_create_nonce('user-role-editor'),
         'move_from_no_role_title' => esc_html__('Change role for users without role', 'user-role-editor'),
+        'to' => esc_html__('To:', 'user-role-editor'),  
         'no_rights_caption' => esc_html__('No rights', 'user-role-editor'),  
         'provide_new_role_caption' => esc_html__('Provide new role', 'user-role-editor')
               ));
