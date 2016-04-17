@@ -3827,7 +3827,7 @@ function mojimoji_all_emojies() {
   // return array_slice($MOJIMOJI_ALL_SHORTCODES, 300);
   // return $MOJIMOJI_ALL_ASCII;
   // WP does a reverse on emoji matchers
-  return array_merge($MOJIMOJI_ALL_ASCII, $MOJIMOJI_ALL_SHORTCODES);
+  return array_merge((array)$MOJIMOJI_ALL_ASCII, (array)$MOJIMOJI_ALL_SHORTCODES);
   // return array_merge($MOJIMOJI_ALL_SHORTCODES, $MOJIMOJI_ALL_ASCII);
 }
 
