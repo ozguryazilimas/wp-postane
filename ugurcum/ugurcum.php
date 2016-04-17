@@ -31,7 +31,8 @@ $wp_uw = new WP_Ugurcum_Widget();
 $ugurcum_db_version = "1.0";
 global $ugurcum_db_version;
 
-global $wpdb;
+global $wpdb, $ugurcum_db_main, $ugurcum_db_user_reads;
+
 $ugurcum_db_main = $wpdb->prefix . "ugurcum";
 $ugurcum_db_user_reads = $wpdb->prefix . "ugurcum_user_reads";
 
