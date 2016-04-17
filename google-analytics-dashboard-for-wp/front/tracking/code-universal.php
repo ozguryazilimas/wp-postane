@@ -1,8 +1,8 @@
 <?php
 /**
- * Author: Alin Marcu 
+ * Author: Alin Marcu
  * Author URI: https://deconf.com
- * Copyright 2013 Alin Marcu 
+ * Copyright 2013 Alin Marcu
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -86,6 +86,22 @@ if ( $this->gadwp->config->options['ga_category_dimindex'] && is_category() ) {
 	?>
   ga('set', 'dimension<?php echo (int)$this->gadwp->config->options ['ga_category_dimindex']; ?>', '<?php echo esc_attr(single_tag_title()); ?>');
 <?php
+}
+if ( $this->gadwp->config->options['ga_tag_dimindex'] && is_single() ) {
+	global $post;
+	$post_tags_list = '';
+	$post_tags_array = get_the_tags( $post->ID );
+	if ( $post_tags_array ) {
+		foreach ( $post_tags_array as $tag ) {
+			$post_tags_list .= $tag->name . ', ';
+		}
+	}
+	$post_tags_list = rtrim( $post_tags_list, ', ' );
+	if ( $post_tags_list ) {
+	?>
+  ga('set', 'dimension<?php echo (int)$this->gadwp->config->options ['ga_tag_dimindex']; ?>', '<?php echo esc_attr($post_tags_list); ?>');
+<?php
+	}
 }
 if ( $this->gadwp->config->options['ga_category_dimindex'] && is_single() ) {
 	global $post;

@@ -1,5 +1,9 @@
-/**
- * Author: Alin Marcu Author URI: https://deconf.com Copyright 2013 Alin Marcu License: GPLv2 or later License URI: http://www.gnu.org/licenses/gpl-2.0.html
+/*-
+ * Author: Alin Marcu 
+ * Author URI: https://deconf.com 
+ * Copyright 2013 Alin Marcu 
+ * License: GPLv2 or later 
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 "use strict";
@@ -363,7 +367,7 @@ jQuery.fn.extend( {
 						height : '80%'
 					},
 					title : title,
-					pieSliceText: 'value',
+					pieSliceText : 'value',
 					colors : gadwpItemData.colorVariations
 				};
 				chart = new google.visualization.PieChart( document.getElementById( 'gadwp-' + id + slug ) );
@@ -689,6 +693,17 @@ jQuery.fn.extend( {
 				if ( response == '-24' ) {
 					jQuery( "#gadwp-status" + slug ).html( gadwpItemData.i18n[ 15 ] );
 				} else {
+					jQuery( "#gadwp-reports" + slug ).css( {
+						"background-color" : "#F7F7F7",
+						"height" : "auto",
+						"margin-top" : "10px",
+						"padding-top" : "50px",
+						"padding-bottom" : "50px",
+						"color" : "#000",
+						"text-align" : "center"
+					} );
+					jQuery( "#gadwp-reports" + slug ).html ( response );
+					jQuery( "#gadwp-reports" + slug ).show();
 					jQuery( "#gadwp-status" + slug ).html( gadwpItemData.i18n[ 11 ] );
 					console.log( "\n********************* GADWP Log ********************* \n\n" + response );
 					postData = {
@@ -1028,7 +1043,7 @@ jQuery.fn.extend( {
 	}
 } );
 
-jQuery( function () {
+jQuery( document ).ready( function () {
 	if ( gadwpItemData.scope == 'admin-widgets' ) {
 		jQuery( '#gadwp-window-1' ).gadwpItemReport( 1 );
 	} else {
