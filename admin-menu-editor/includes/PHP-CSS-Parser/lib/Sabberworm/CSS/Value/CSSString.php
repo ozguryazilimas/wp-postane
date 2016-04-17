@@ -2,7 +2,7 @@
 
 namespace Sabberworm\CSS\Value;
 
-class String extends PrimitiveValue {
+class CSSString extends PrimitiveValue {
 
 	private $sString;
 
@@ -19,9 +19,13 @@ class String extends PrimitiveValue {
 	}
 
 	public function __toString() {
+		return $this->render(new \Sabberworm\CSS\OutputFormat());
+	}
+
+	public function render(\Sabberworm\CSS\OutputFormat $oOutputFormat) {
 		$sString = addslashes($this->sString);
 		$sString = str_replace("\n", '\A', $sString);
-		return '"' . $sString . '"';
+		return $oOutputFormat->getStringQuotingType() . $sString . $oOutputFormat->getStringQuotingType();
 	}
 
 }
