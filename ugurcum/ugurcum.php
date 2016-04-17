@@ -28,8 +28,8 @@ License: GPL2
 require_once(dirname(__FILE__) . '/includes/ugurcum_common.php');
 $wp_uw = new WP_Ugurcum_Widget();
 
-$ugurcum_db_version = "1.0";
 global $ugurcum_db_version;
+$ugurcum_db_version = "1.0";
 
 global $wpdb, $ugurcum_db_main, $ugurcum_db_user_reads;
 
