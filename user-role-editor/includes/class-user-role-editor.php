@@ -136,7 +136,7 @@ class User_Role_Editor {
                 add_filter('map_meta_cap', array($this, 'restore_users_edit_caps'), 1, 4);
                 remove_all_filters('enable_edit_any_user_configuration');
                 add_filter('enable_edit_any_user_configuration', '__return_true');
-                add_filter('admin_head', array($this, 'edit_user_permission_check'), 1, 4);
+                add_action('admin_head', array($this, 'edit_user_permission_check'), 1);
                 if ($pagenow == 'user-new.php') {
                     add_filter('site_option_site_admins', array($this, 'allow_add_user_as_superadmin'));
                 }
@@ -297,24 +297,33 @@ class User_Role_Editor {
      * (code is provided by http://wordpress.org/support/profile/sjobidoo)
      * 
      */
-    function edit_user_permission_check() {
+    public function edit_user_permission_check() {
         global $current_user, $profileuser;
 
+        wp_get_current_user();
+        if ($current_user->ID===0) {
+            return;
+        }
         if (is_super_admin()) { // Superadmin may do all
             return;
         }
-        
+                        
         $screen = get_current_screen();
-
-        get_currentuserinfo();
-
-        if ($screen->base == 'user-edit' || $screen->base == 'user-edit-network') { // editing a user profile
-            if (!is_super_admin($current_user->ID) && is_super_admin($profileuser->ID)) { // trying to edit a superadmin while himself is less than a superadmin
-                wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
-            } elseif (!( is_user_member_of_blog($profileuser->ID, get_current_blog_id()) && is_user_member_of_blog($current_user->ID, get_current_blog_id()) )) { // editing user and edited user aren't members of the same blog
-                wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
-            }
+        if (empty($screen)) {
+            return;
         }
+        
+        if ($screen->base !== 'user-edit' && $screen->base !== 'user-edit-network') { 
+            return;
+        }
+        
+        // editing a user profile
+        if (!is_super_admin($current_user->ID) && is_super_admin($profileuser->ID)) { // trying to edit a superadmin while himself is less than a superadmin
+            wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
+        } elseif (!( is_user_member_of_blog($profileuser->ID, get_current_blog_id()) && is_user_member_of_blog($current_user->ID, get_current_blog_id()) )) { // editing user and edited user aren't members of the same blog
+            wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
+        }
+
     }
     // end of edit_user_permission_check()
     

@@ -1967,7 +1967,8 @@ if ($this->multisite && !is_network_admin()) {
      * @return boolean
      */
     protected function update_roles() {
-
+        global $wp_roles;
+        
         if ($this->multisite && is_super_admin() && $this->apply_to_all) {  // update Role for the all blogs/sites in the network (permitted to superadmin only)
             if (!$this->multisite_update_roles()) {
                 return false;
@@ -1978,6 +1979,9 @@ if ($this->multisite && !is_network_admin()) {
             }
         }
 
+        // refresh global $wp_roles
+        $wp_roles = new WP_Roles();
+        
         return true;
     }
     // end of update_roles()
