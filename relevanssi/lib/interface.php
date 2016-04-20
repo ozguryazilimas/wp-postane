@@ -437,7 +437,8 @@ function relevanssi_query_log() {
 
 	echo '<h3>' . __("Common Queries", 'relevanssi') . '</h3>';
 
-	$lead = __("Here you can see the 20 most common user search queries, how many times those 
+	$limit = apply_filters('relevanssi_user_searches_limit', 20);
+	$lead = __("Here you can see the $limit most common user search queries, how many times those 
 		queries were made and how many results were found for those queries.", 'relevanssi');
 
 	echo "<p>$lead</p>";
@@ -508,13 +509,15 @@ function relevanssi_date_queries($d, $title, $version = 'good') {
 	global $wpdb, $relevanssi_variables;
 	$log_table = $relevanssi_variables['log_table'];
 	
+	$limit = apply_filters('relevanssi_user_searches_limit', 20);
+	
 	if ($version == 'good')
 		$queries = $wpdb->get_results("SELECT COUNT(DISTINCT(id)) as cnt, query, hits
 		  FROM $log_table
 		  WHERE TIMESTAMPDIFF(DAY, time, NOW()) <= $d
 		  GROUP BY query
 		  ORDER BY cnt DESC
-		  LIMIT 20");
+		  LIMIT $limit");
 	
 	if ($version == 'bad')
 		$queries = $wpdb->get_results("SELECT COUNT(DISTINCT(id)) as cnt, query, hits
@@ -523,7 +526,7 @@ function relevanssi_date_queries($d, $title, $version = 'good') {
 		    AND hits = 0
 		  GROUP BY query
 		  ORDER BY cnt DESC
-		  LIMIT 20");
+		  LIMIT $limit");
 
 	if (count($queries) > 0) {
 		echo "<table class='widefat'><thead><tr><th colspan='3'>$title</th></tr></thead><tbody><tr><th>" . __('Query', 'relevanssi') . "</th><th>#</th><th>" . __('Hits', 'relevanssi') . "</th></tr>";
@@ -1221,6 +1224,17 @@ function relevanssi_options_form() {
 EOH;
 		}
 	?>
+	<tr style="display:none">
+		<td>
+			Helpful little control field
+		</td>
+		<td>
+			<input type='checkbox' name='relevanssi_index_type_bogus' id='relevanssi_index_type_bogus' checked="checked" />
+		</td>
+		<td>
+			This is our little secret, just for you and me
+		</td>
+	</tr>
 	</table>
 	
 	<br /><br />

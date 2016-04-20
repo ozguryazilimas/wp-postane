@@ -311,14 +311,16 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	}
 
 	$index_titles = true;
-	if (apply_filters('relevanssi_index_titles', $index_titles)) {
-		$filtered_title = apply_filters('relevanssi_post_title_before_tokenize', $post->post_title, $post);
-		$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID), apply_filters('relevanssi_remove_stopwords_in_titles', true));
-
-		if (count($titles) > 0) {
-			foreach ($titles as $title => $count) {
-				$n++;
-				isset($insert_data[$title]['title']) ? $insert_data[$title]['title'] += $count : $insert_data[$title]['title'] = $count;
+	if (!empty($post->post_title)) {
+		if (apply_filters('relevanssi_index_titles', $index_titles)) {
+			$filtered_title = apply_filters('relevanssi_post_title_before_tokenize', $post->post_title, $post);
+			$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID), apply_filters('relevanssi_remove_stopwords_in_titles', true));
+	
+			if (count($titles) > 0) {
+				foreach ($titles as $title => $count) {
+					$n++;
+					isset($insert_data[$title]['title']) ? $insert_data[$title]['title'] += $count : $insert_data[$title]['title'] = $count;
+				}
 			}
 		}
 	}
@@ -363,7 +365,26 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 				remove_shortcode('php');					// PHP Code for Posts
 				remove_shortcode('watupro');				// Watu PRO doesn't co-operate
 				remove_shortcode('starbox');				// Starbox shortcode breaks Relevanssi
-								
+				remove_shortcode('cfdb-save-form-post');	// Contact Form DB
+				remove_shortcode('cfdb-datatable');	
+				remove_shortcode('cfdb-table');	
+				remove_shortcode('cfdb-json');
+				remove_shortcode('cfdb-value');
+				remove_shortcode('cfdb-count');
+				remove_shortcode('cfdb-html');
+				remove_shortcode('woocommerce_cart');		// WooCommerce
+				remove_shortcode('woocommerce_checkout');
+				remove_shortcode('woocommerce_order_tracking');
+				remove_shortcode('woocommerce_my_account');
+				remove_shortcode('woocommerce_edit_account');
+				remove_shortcode('woocommerce_change_password');
+				remove_shortcode('woocommerce_view_order');
+				remove_shortcode('woocommerce_logout');
+				remove_shortcode('woocommerce_pay');
+				remove_shortcode('woocommerce_thankyou');
+				remove_shortcode('woocommerce_lost_password');
+				remove_shortcode('woocommerce_edit_address');
+				
 				$post_before_shortcode = $post;
 				$contents = do_shortcode($contents);
 				$post = $post_before_shortcode;

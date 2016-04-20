@@ -23,6 +23,7 @@ function relevanssi_do_excerpt($t_post, $query) {
 
 	// These shortcodes cause problems with Relevanssi excerpts
 	remove_shortcode('layerslider');
+	remove_shortcode('responsive-flipbook');
 	
 	$content = apply_filters('relevanssi_pre_excerpt_content', $post->post_content, $post, $query);
 	$content = apply_filters('the_content', $content);
@@ -74,7 +75,7 @@ function relevanssi_do_excerpt($t_post, $query) {
 
 	$highlight = get_option('relevanssi_highlight');
 	if ("none" != $highlight) {
-		if (!is_admin()) {
+		if ( !is_admin() || ( defined( 'DOING_AJAX' ) || DOING_AJAX ) ) {
 			$query = relevanssi_add_synonyms($query);
 			$excerpt = relevanssi_highlight_terms($excerpt, $query);
 		}
@@ -435,10 +436,10 @@ function relevanssi_count_matches($words, $fulltext) {
 // The only exception is where we have only two matches in which case we just take the 
 // first as will be equally distant.
 function relevanssi_determine_snip_location($locations, $prevcount) {
-    if (!is_array($locations)) return 0;
+    if (!is_array($locations) || empty($locations)) return 0;
 
     // If we only have 1 match we dont actually do the for loop so set to the first
-    $startpos = $locations[0];  
+    $startpos = $locations[0]; 
     $loccount = count($locations);
     $smallestdiff = PHP_INT_MAX;    
 

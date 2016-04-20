@@ -23,8 +23,7 @@ function relevanssi_wpml_filter($data) {
 			}
 			elseif (function_exists('icl_object_id') && function_exists('pll_is_translated_post_type')) {
 				if (pll_is_translated_post_type($hit->post_type)) {
-					global $polylang;
-					if ($polylang->model->get_post_language($hit->ID)->slug == ICL_LANGUAGE_CODE) {
+					if (PLL()->model->get_post_language($hit->ID)->slug == ICL_LANGUAGE_CODE) {
 						$filtered_hits[] = $hit;
 					}
 					else if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE)) {
@@ -91,10 +90,12 @@ function relevanssi_object_sort(&$data, $key, $dir = 'desc') {
 }
 
 function relevanssi_show_matches($data, $hit) {
-	isset($data['body_matches'][$hit]) ? $body = $data['body_matches'][$hit] : $body = "";
-	isset($data['title_matches'][$hit]) ? $title = $data['title_matches'][$hit] : $title = "";
-	isset($data['tag_matches'][$hit]) ? $tag = $data['tag_matches'][$hit] : $tag = "";
-	isset($data['comment_matches'][$hit]) ? $comment = $data['comment_matches'][$hit] : $comment = "";
+	isset($data['body_matches'][$hit]) ? $body = $data['body_matches'][$hit] : $body = 0;
+	isset($data['title_matches'][$hit]) ? $title = $data['title_matches'][$hit] : $title = 0;
+	isset($data['tag_matches'][$hit]) ? $tag = $data['tag_matches'][$hit] : $tag = 0;
+	isset($data['category_matches'][$hit]) ? $category = $data['category_matches'][$hit] : $category = 0;
+	isset($data['taxonomy_matches'][$hit]) ? $taxonomy = $data['taxonomy_matches'][$hit] : $taxonomy = 0;
+	isset($data['comment_matches'][$hit]) ? $comment = $data['comment_matches'][$hit] : $comment = 0;
 	isset($data['scores'][$hit]) ? $score = round($data['scores'][$hit], 2) : $score = 0;
 	isset($data['term_hits'][$hit]) ? $term_hits_a = $data['term_hits'][$hit] : $term_hits_a = array();
 	arsort($term_hits_a);
@@ -106,8 +107,8 @@ function relevanssi_show_matches($data, $hit) {
 	}
 	
 	$text = get_option('relevanssi_show_matches_text');
-	$replace_these = array("%body%", "%title%", "%tags%", "%comments%", "%score%", "%terms%", "%total%");
-	$replacements = array($body, $title, $tag, $comment, $score, $term_hits, $total_hits);
+	$replace_these = array("%body%", "%title%", "%tags%", "%categories%", "%taxonomies%", "%comments%", "%score%", "%terms%", "%total%");
+	$replacements = array($body, $title, $tag, $category, $taxonomy, $comment, $score, $term_hits, $total_hits);
 	
 	$result = " " . str_replace($replace_these, $replacements, $text);
 	
@@ -138,7 +139,7 @@ function relevanssi_update_log($query, $hits) {
 	    }
 	}	
 	
-	get_option('relevanssi_log_queries_with_ip') == "on" ? $ip = $_SERVER['REMOTE_ADDR'] : $ip = '';
+	get_option('relevanssi_log_queries_with_ip') == "on" ? $ip = apply_filters('relevanssi_remote_addr', $_SERVER['REMOTE_ADDR']) : $ip = '';
 	$q = $wpdb->prepare("INSERT INTO " . $relevanssi_variables['log_table'] . " (query, hits, user_id, ip, time) VALUES (%s, %d, %d, %s, NOW())", $query, intval($hits), $user->ID, $ip);
 	$wpdb->query($q);
 }
@@ -171,8 +172,13 @@ function relevanssi_default_post_ok($post_ok, $doc) {
 		else {
 			// Basic WordPress version
 			$type = relevanssi_get_post_type($doc);
-			$cap = 'read_private_' . $type . 's';
-			$cap = apply_filters('relevanssi_private_cap', $cap);
+			if (isset($GLOBALS['wp_post_types'][$type]->cap->read_private_posts)) {
+				$cap = $GLOBALS['wp_post_types'][$type]->cap->read_private_posts;
+			}
+			else {
+				// guessing here
+				$cap = 'read_private_' . $type . 's';
+			}
 			if (current_user_can($cap)) {
 				$post_ok = true;
 			}

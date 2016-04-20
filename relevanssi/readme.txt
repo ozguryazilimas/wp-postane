@@ -2,9 +2,9 @@
 Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
-Requires at least: 3.3
-Tested up to: 4.4.1
-Stable tag: 3.5.2
+Requires at least: 4.0
+Tested up to: 4.5
+Stable tag: 3.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,13 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.5.3 =
+* New filter `relevanssi_user_searches_limit` to adjust the number of user searches shown in the logs.
+* Old data check is only done on Relevanssi settings page, not on all admin pages. That should improve admin performance.
+* Fixed a fatal error when searching includes private posts.
+* New filter: `relevanssi_remote_addr` can be used to modify the IP address logged to Relevanssi logs.
+* Blocked CFDB and WooCommerce shortcodes that are causing problems with Relevanssi.
 
 = 3.5.2 =
 * Added correct support for `term_taxonomy_id` in the `fields` parameter in tax_queries.

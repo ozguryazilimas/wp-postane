@@ -440,16 +440,30 @@ function relevanssi_search($args) {
 	}
 	
 	if ($post_type) {
-		// the -1 is there to get user profiles and category pages
-		$query_restrictions .= " AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
-			WHERE posts.post_type IN ($post_type))) OR (doc = -1))";
+		global $wp_query;
+		if ($wp_query->is_admin) {
+			$query_restrictions .= " AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
+				WHERE posts.post_type IN ($post_type))))";
+		}
+		else {
+			$query_restrictions .= " AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
+				WHERE posts.post_type IN ($post_type))) OR (doc = -1))";
+			// the -1 is there to get user profiles and category pages
+		}
 		// Clean: $post_type is escaped
 	}
 
 	if ($post_status) {
-		// the -1 is there to get user profiles and category pages
-		$query_restrictions .= " AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
-			WHERE posts.post_status IN ($post_status))) OR (doc = -1))";
+		global $wp_query;
+		if ($wp_query->is_admin) {
+			$query_restrictions .= " AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
+				WHERE posts.post_status IN ($post_status))))";
+		}
+		else {
+			// the -1 is there to get user profiles and category pages
+			$query_restrictions .= " AND ((relevanssi.doc IN (SELECT DISTINCT(posts.ID) FROM $wpdb->posts AS posts
+				WHERE posts.post_status IN ($post_status))) OR (doc = -1))";
+		}
 		// Clean: $post_status is escaped
 	}
 	
@@ -552,7 +566,6 @@ function relevanssi_search($args) {
 			// Clean: $query_restrictions is escaped, $term_cond is escaped
 			
 			$query = apply_filters('relevanssi_query_filter', $query);
-
 			$matches = $wpdb->get_results($query);
 			
 			if (count($matches) < 1) {
@@ -794,7 +807,12 @@ function relevanssi_do_query(&$query) {
 	else
 		$q = trim(stripslashes(strtolower($query->query_vars["s"])));
 
-	if (isset($query->query_vars['searchblogs'])) {
+	$search_multisite = false;
+	if (isset($query->query_vars['searchblogs']) && (string) get_current_blog_id() != $query->query_vars['searchblogs']) {
+		$search_multisite =	true;
+	}
+		
+	if (isset($query->query_vars['searchblogs']) && $search_multisite) {
 		$multi_args['search_blogs'] = $query->query_vars['searchblogs'];
 		$multi_args['q'] = $q;
 
