@@ -7,13 +7,13 @@
  * Description: Visually compresses the administrative meta-boxes so that more admin page content can be initially seen. The plugin that lets you hide 'unnecessary' items from the WordPress administration menu, for all roles of your install. You can also hide post meta controls on the edit-area to simplify the interface. It is possible to simplify the admin in different for all roles.
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de/
- * Version:     1.10.2
+ * Version:     1.10.3
  * License:     GPLv3+
  *
  * @package WordPress
  * @author  Frank Bültge <frank@bueltge.de>
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @version 2016-03-10
+ * @version 2016-05-10
  */
 
 /**
@@ -115,7 +115,7 @@ function _mw_adminimize_exclude_settings_page() {
 	}
 
 	// Don't filter on settings page
-	return strpos( $screen, 'adminimize' );
+	return FALSE !== strpos( $screen, 'adminimize' );
 }
 
 /**
@@ -620,20 +620,6 @@ function _mw_adminimize_set_menu_option() {
 		$mw_adminimize_menu    = _mw_adminimize_get_duplicate( $mw_adminimize_menu );
 		$mw_adminimize_submenu = _mw_adminimize_get_duplicate( $mw_adminimize_submenu );
 	}
-
-	/*
-	// Define custom slugs.
-	// Default menu slug as Administrator => Custom value
-	$custom_menu = array(
-		'vc-general' => 'vc-welcome'
-	);
-	// Custom Fall Backs for stupid plugins.
-	foreach ( $custom_menu as $slug => $custom_slug ) {
-		if ( in_array( $slug, $mw_adminimize_menu, FALSE ) ) {
-			$mw_adminimize_menu[] = $custom_slug;
-		}
-	}
-	*/
 
 	// Fallback on users.php on all user roles smaller admin.
 	if ( in_array( 'users.php', $mw_adminimize_menu, FALSE ) ) {
@@ -1233,11 +1219,14 @@ function _mw_adminimize_update_option( $options ) {
 		return FALSE;
 	}
 
+	// Kill the cache for the settings page.
+	wp_cache_delete( 'mw_adminimize' );
 	if ( _mw_adminimize_is_active_on_multisite() ) {
 		update_site_option( 'mw_adminimize', $options );
 	} else {
 		update_option( 'mw_adminimize', $options );
 	}
+	wp_cache_add( 'mw_adminimize', $options );
 
 	return TRUE;
 }
