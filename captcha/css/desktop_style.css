@@ -32,11 +32,12 @@
 	-ms-transform: scale(3, 3);
 	transform: scale(3, 3);
 }
-.cptch_reload_button:hover,
-.cptch_reload_button.cptch_active {
-	cursor: pointer;
+.cptch_reload_button:hover {
+	cursor:pointer;
 	opacity: 0.7;
-	
+}
+.cptch_reload_button.cptch_active {
+	opacity: 0.7;
 	-webkit-animation: cptch_rotation 800ms infinite linear;
 	animation: cptch_rotation 800ms infinite linear;
 }

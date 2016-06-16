@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-10 15:48+0300\n"
-"PO-Revision-Date: 2016-03-10 15:48+0300\n"
+"POT-Creation-Date: 2016-06-06 17:24+0300\n"
+"PO-Revision-Date: 2016-06-06 17:24+0300\n"
 "Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Ahto Tanner <x@moonsoftware.com>\n"
 "Language: et\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: captcha.php:33 captcha.php:442
+#: captcha.php:33 captcha.php:469
 msgid "Captcha Settings"
 msgstr "CAPTCHA seaded"
 
@@ -43,963 +43,1040 @@ msgstr "Palun sisesta õige vastus matemaatilisele tehtele."
 msgid "You are in the white list"
 msgstr ""
 
-#: captcha.php:314
+#: captcha.php:203
+#, fuzzy
+msgid "Time limit is exhausted. Please reload CAPTCHA."
+msgstr "Palun sisesta õige vastus matemaatilisele tehtele."
+
+#: captcha.php:310
 msgid "Login form"
 msgstr "Sisselogimisvormil"
 
-#: captcha.php:315
+#: captcha.php:311
 msgid "Registration form"
 msgstr "Registreerimisvormil"
 
-#: captcha.php:316
+#: captcha.php:312
 msgid "Reset Password form"
 msgstr "Parooli nullimise vormil"
 
-#: captcha.php:317
+#: captcha.php:313
 msgid "Comments form"
 msgstr "Kommentaarivormil"
 
-#: captcha.php:320
+#: captcha.php:316
 #, fuzzy
 msgid "in Comments form for registered users"
 msgstr "Peida CAPTCHA registreeritud kasutajate kommentaarivormidel"
 
-#: captcha.php:324
+#: captcha.php:320
 msgid "Plus (&#43;)"
 msgstr "Liitmine (&#43;)"
 
-#: captcha.php:324
+#: captcha.php:320
 msgid "Plus"
 msgstr "Liitmine"
 
-#: captcha.php:325
+#: captcha.php:321
 msgid "Minus (&minus;)"
 msgstr "Lahutamine (&minus;)"
 
-#: captcha.php:325
+#: captcha.php:321
 msgid "Minus"
 msgstr "Lahutamine"
 
-#: captcha.php:326
+#: captcha.php:322
 msgid "Multiplication (&times;)"
 msgstr "Korrutamine (&times;)"
 
-#: captcha.php:326
+#: captcha.php:322
 msgid "Multiply"
 msgstr "Korrutamine"
 
-#: captcha.php:331
+#: captcha.php:327
 msgid "Numbers"
 msgstr "Numbrid"
 
-#: captcha.php:332
+#: captcha.php:328
 msgid "Words"
 msgstr "Sõnad"
 
-#: captcha.php:333
+#: captcha.php:329
 msgid "Images"
 msgstr ""
 
-#: captcha.php:380
+#: captcha.php:406
 msgid ""
 "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
 msgstr "Palun vali vähemalt üks matemaatiline tehe ja raskusaste"
 
-#: captcha.php:386
+#: captcha.php:412
 #, fuzzy
 msgid "Please select one item in the block Enable image packages"
 msgstr "Palun vali vähemalt üks matemaatiline tehe ja raskusaste"
 
-#: captcha.php:415
+#: captcha.php:442
 msgid "Settings saved."
 msgstr "Seaded salvestatud."
 
-#: captcha.php:427
+#: captcha.php:454
 msgid "All plugin settings were restored."
 msgstr ""
 
-#: captcha.php:444
+#: captcha.php:471
 msgid "How to Use Step-by-step Instruction"
 msgstr ""
 
-#: captcha.php:447
+#: captcha.php:474
 msgid "Basic"
 msgstr ""
 
-#: captcha.php:448
+#: captcha.php:475
 msgid "Advanced"
 msgstr ""
 
-#: captcha.php:449
+#: captcha.php:476
+msgid "This setting is available in Pro version"
+msgstr ""
+
+#: captcha.php:476
+msgid "Packages"
+msgstr ""
+
+#: captcha.php:477
 msgid "Whitelist"
 msgstr ""
 
-#: captcha.php:450
+#: captcha.php:478
 msgid "Custom code"
 msgstr ""
 
-#: captcha.php:451
+#: captcha.php:479
 msgid "Go PRO"
 msgstr "PRO versioon"
 
-#: captcha.php:467 captcha.php:470 includes/pro_banners.php:36
-#: includes/pro_banners.php:39
+#: captcha.php:495 captcha.php:498 includes/pro_banners.php:38
+#: includes/pro_banners.php:41
 #, fuzzy
 msgid "Enable CAPTCHA for"
 msgstr "Aktiveeri CAPTCHA"
 
-#: captcha.php:471
+#: captcha.php:499
 msgid "WordPress default"
 msgstr ""
 
-#: captcha.php:477
+#: captcha.php:505
 msgid "This option is available only for main blog"
 msgstr ""
 
-#: captcha.php:492
+#: captcha.php:520
 #, fuzzy
 msgid "Plugins"
 msgstr "Pluginate lehekülg"
 
-#: captcha.php:499 captcha.php:505
+#: captcha.php:527 captcha.php:533
 msgid "You should"
 msgstr ""
 
-#: captcha.php:499 includes/whitelist.php:402
+#: captcha.php:527 includes/whitelist.php:444
 msgid "activate"
 msgstr ""
 
-#: captcha.php:499
+#: captcha.php:527
 msgid "for network"
 msgstr ""
 
-#: captcha.php:499 captcha.php:507
+#: captcha.php:527 captcha.php:535
 msgid "to use this functionality"
 msgstr ""
 
-#: captcha.php:506
+#: captcha.php:534
 msgid "download"
 msgstr ""
 
-#: captcha.php:519
+#: captcha.php:547
 msgid "If you would like to add Captcha to a custom form, please see"
 msgstr "Kui soovid CAPTCHA't kasutada mõnel kohandatud vormil palun vaata"
 
-#: captcha.php:527
+#: captcha.php:555
 #, fuzzy
 msgid "Hide CAPTCHA"
 msgstr "Aktiveeri CAPTCHA:"
 
-#: captcha.php:534
+#: captcha.php:562
 msgid "Title"
 msgstr ""
 
-#: captcha.php:538
+#: captcha.php:566
 msgid "Required symbol"
 msgstr "Nõutav sümbol"
 
-#: captcha.php:544
+#: captcha.php:572
 msgid "Show \"Reload\" button"
 msgstr ""
 
-#: captcha.php:550
+#: captcha.php:578
 #, fuzzy
 msgid "Arithmetic actions"
 msgstr "Vali kasutajale nähtavad matemaatilised tehted"
 
-#: captcha.php:553
+#: captcha.php:581
 msgid "Arithmetic actions for CAPTCHA"
 msgstr "Vali kasutajale nähtavad matemaatilised tehted"
 
-#: captcha.php:565 captcha.php:567
+#: captcha.php:593 captcha.php:595
 msgid "Complexity"
 msgstr ""
 
-#: captcha.php:583
+#: captcha.php:618
 msgid "Enable image packages"
 msgstr ""
 
-#: captcha.php:593
+#: captcha.php:635
 msgid "Enlarge images on mouseover"
 msgstr ""
 
-#: captcha.php:603
+#: captcha.php:645
 msgid "Enable time limit"
 msgstr ""
 
-#: captcha.php:609
+#: captcha.php:651
 msgid "Set time limit"
 msgstr ""
 
-#: captcha.php:612
+#: captcha.php:654
 msgid "seconds"
 msgstr ""
 
-#: captcha.php:618
+#: captcha.php:660
 msgid "Notification messages"
 msgstr ""
 
-#: captcha.php:620 captcha.php:915 captcha.php:921 captcha.php:1122
-#: captcha.php:1138
+#: captcha.php:663 captcha.php:969 captcha.php:975 captcha.php:1176
+#: captcha.php:1192
 msgid "Error"
 msgstr ""
 
-#: captcha.php:621
-#, fuzzy
-msgid "If CAPTCHA field is empty"
-msgstr "Matemaatilise tehte vastus oli vale."
-
-#: captcha.php:622
-#, fuzzy
-msgid "If CAPTCHA is incorrect"
-msgstr "Matemaatilise tehte vastus oli vale."
-
-#: captcha.php:623
-msgid "If time limit is exhausted"
+#: captcha.php:665
+msgid ""
+"This messages will be displayed, if the CAPTCHA answer has not passed the "
+"verification"
 msgstr ""
 
-#: captcha.php:624
+#: captcha.php:668
+#, fuzzy
+msgid "If the CAPTCHA field is empty"
+msgstr "Matemaatilise tehte vastus oli vale."
+
+#: captcha.php:669
+#, fuzzy
+msgid "If the CAPTCHA is incorrect"
+msgstr "Matemaatilise tehte vastus oli vale."
+
+#: captcha.php:670
+msgid "If the time limit is exhausted"
+msgstr ""
+
+#: captcha.php:672
 msgid "Info"
 msgstr ""
 
-#: captcha.php:625
-msgid ""
-"If the user IP is added to the whitelist (this message will be displayed "
-"instead of CAPTCHA)."
+#: captcha.php:674
+msgid "This messages will be displayed inside of the CAPTCHA"
 msgstr ""
 
-#: captcha.php:632
+#: captcha.php:677
+msgid ""
+"If the user IP is added to the whitelist (this message will be displayed "
+"instead of the CAPTCHA)"
+msgstr ""
+
+#: captcha.php:678
+#, fuzzy
+msgid ""
+"If the time limit is exhausted (this message will be displayed above the "
+"CAPTCHA)"
+msgstr "Palun sisesta õige vastus matemaatilisele tehtele."
+
+#: captcha.php:685
 msgid "Save Changes"
 msgstr "Salvesta muudatused"
 
-#: captcha.php:772 captcha.php:779 captcha.php:794 captcha.php:796
-#: captcha.php:804 captcha.php:1008 captcha.php:1016 captcha.php:1032
-#: captcha.php:1036 captcha.php:1045 captcha.php:1069 captcha.php:1079
-#: captcha.php:1097 captcha.php:1100 captcha.php:1108
+#: captcha.php:826 captcha.php:833 captcha.php:848 captcha.php:850
+#: captcha.php:858 captcha.php:1062 captcha.php:1070 captcha.php:1086
+#: captcha.php:1090 captcha.php:1099 captcha.php:1123 captcha.php:1133
+#: captcha.php:1151 captcha.php:1154 captcha.php:1162
 msgid "ERROR"
 msgstr "VIGA"
 
-#: captcha.php:915 captcha.php:921 captcha.php:1122 captcha.php:1138
+#: captcha.php:969 captcha.php:975 captcha.php:1176 captcha.php:1192
 #, fuzzy
 msgid "Click the BACK button on your browser, and try again."
 msgstr ""
 "Viga: Sisestasid vale matemaatilise tehte vastuse. Palun mine eelmisele "
 "lehele tagasi ja paranda viga."
 
-#: captcha.php:1352
+#: captcha.php:1550
 msgid "zero"
 msgstr "null"
 
-#: captcha.php:1353 captcha.php:1806
+#: captcha.php:1551 captcha.php:1889
 msgid "one"
 msgstr "üks"
 
-#: captcha.php:1354
+#: captcha.php:1552
 msgid "two"
 msgstr "kaks"
 
-#: captcha.php:1355
+#: captcha.php:1553
 msgid "three"
 msgstr "kolm"
 
-#: captcha.php:1356
+#: captcha.php:1554
 msgid "four"
 msgstr "neli"
 
-#: captcha.php:1357
+#: captcha.php:1555
 msgid "five"
 msgstr "viis"
 
-#: captcha.php:1358 captcha.php:1806
+#: captcha.php:1556 captcha.php:1889
 msgid "six"
 msgstr "kuus"
 
-#: captcha.php:1359 captcha.php:1794 captcha.php:1800
+#: captcha.php:1557 captcha.php:1877 captcha.php:1883
 msgid "seven"
 msgstr "seitse"
 
-#: captcha.php:1360 captcha.php:1797
+#: captcha.php:1558 captcha.php:1880
 msgid "eight"
 msgstr "kaheksa"
 
-#: captcha.php:1361
+#: captcha.php:1559
 msgid "nine"
 msgstr "üheksa"
 
-#: captcha.php:1363
+#: captcha.php:1561
 msgid "ten"
 msgstr "kümme"
 
-#: captcha.php:1364
+#: captcha.php:1562
 msgid "eleven"
 msgstr "üketeist"
 
-#: captcha.php:1365
+#: captcha.php:1563
 msgid "twelve"
 msgstr "kaksteist"
 
-#: captcha.php:1366
+#: captcha.php:1564
 msgid "thirteen"
 msgstr "kolmteist"
 
-#: captcha.php:1367
+#: captcha.php:1565
 msgid "fourteen"
 msgstr "neliteist"
 
-#: captcha.php:1368
+#: captcha.php:1566
 msgid "fifteen"
 msgstr "viisteist"
 
-#: captcha.php:1369
+#: captcha.php:1567
 msgid "sixteen"
 msgstr "kuusteist"
 
-#: captcha.php:1370
+#: captcha.php:1568
 msgid "seventeen"
 msgstr "seitseteist"
 
-#: captcha.php:1371
+#: captcha.php:1569
 msgid "eighteen"
 msgstr "kaheksateist"
 
-#: captcha.php:1372
+#: captcha.php:1570
 msgid "nineteen"
 msgstr "üheksateist"
 
-#: captcha.php:1374
+#: captcha.php:1572
 msgid "twenty"
 msgstr "kakskümmend"
 
-#: captcha.php:1375
+#: captcha.php:1573
 #, fuzzy
 msgid "twenty one"
 msgstr "kakskümmend"
 
-#: captcha.php:1376
+#: captcha.php:1574
 #, fuzzy
 msgid "twenty two"
 msgstr "kakskümmend"
 
-#: captcha.php:1377
+#: captcha.php:1575
 #, fuzzy
 msgid "twenty three"
 msgstr "kakskümmend"
 
-#: captcha.php:1378
+#: captcha.php:1576
 #, fuzzy
 msgid "twenty four"
 msgstr "kakskümmend"
 
-#: captcha.php:1379
+#: captcha.php:1577
 #, fuzzy
 msgid "twenty five"
 msgstr "kakskümmend"
 
-#: captcha.php:1380
+#: captcha.php:1578
 #, fuzzy
 msgid "twenty six"
 msgstr "kakskümmend"
 
-#: captcha.php:1381
+#: captcha.php:1579
 #, fuzzy
 msgid "twenty seven"
 msgstr "kakskümmend"
 
-#: captcha.php:1382
+#: captcha.php:1580
 #, fuzzy
 msgid "twenty eight"
 msgstr "kakskümmend"
 
-#: captcha.php:1383
+#: captcha.php:1581
 #, fuzzy
 msgid "twenty nine"
 msgstr "kakskümmend"
 
-#: captcha.php:1385
+#: captcha.php:1583
 msgid "thirty"
 msgstr "kolmkümmend"
 
-#: captcha.php:1386
+#: captcha.php:1584
 #, fuzzy
 msgid "thirty one"
 msgstr "kolmkümmend"
 
-#: captcha.php:1387
+#: captcha.php:1585
 #, fuzzy
 msgid "thirty two"
 msgstr "kolmkümmend"
 
-#: captcha.php:1388
+#: captcha.php:1586
 #, fuzzy
 msgid "thirty three"
 msgstr "kolmteist"
 
-#: captcha.php:1389
+#: captcha.php:1587
 #, fuzzy
 msgid "thirty four"
 msgstr "kolmkümmend"
 
-#: captcha.php:1390
+#: captcha.php:1588
 #, fuzzy
 msgid "thirty five"
 msgstr "kolmkümmend"
 
-#: captcha.php:1391
+#: captcha.php:1589
 #, fuzzy
 msgid "thirty six"
 msgstr "kolmkümmend"
 
-#: captcha.php:1392
+#: captcha.php:1590
 #, fuzzy
 msgid "thirty seven"
 msgstr "kolmteist"
 
-#: captcha.php:1393
+#: captcha.php:1591
 #, fuzzy
 msgid "thirty eight"
 msgstr "kolmkümmend"
 
-#: captcha.php:1394
+#: captcha.php:1592
 #, fuzzy
 msgid "thirty nine"
 msgstr "kolmkümmend"
 
-#: captcha.php:1396
+#: captcha.php:1594
 msgid "forty"
 msgstr "nelikümmend"
 
-#: captcha.php:1397
+#: captcha.php:1595
 #, fuzzy
 msgid "forty one"
 msgstr "nelikümmend"
 
-#: captcha.php:1398
+#: captcha.php:1596
 #, fuzzy
 msgid "forty two"
 msgstr "nelikümmend"
 
-#: captcha.php:1399
+#: captcha.php:1597
 #, fuzzy
 msgid "forty three"
 msgstr "kolm"
 
-#: captcha.php:1400
+#: captcha.php:1598
 #, fuzzy
 msgid "forty four"
 msgstr "nelikümmend"
 
-#: captcha.php:1401
+#: captcha.php:1599
 #, fuzzy
 msgid "forty five"
 msgstr "nelikümmend"
 
-#: captcha.php:1402
+#: captcha.php:1600
 #, fuzzy
 msgid "forty six"
 msgstr "nelikümmend"
 
-#: captcha.php:1403
+#: captcha.php:1601
 #, fuzzy
 msgid "forty seven"
 msgstr "seitse"
 
-#: captcha.php:1404
+#: captcha.php:1602
 #, fuzzy
 msgid "forty eight"
 msgstr "kaheksa"
 
-#: captcha.php:1405
+#: captcha.php:1603
 #, fuzzy
 msgid "forty nine"
 msgstr "nelikümmend"
 
-#: captcha.php:1407
+#: captcha.php:1605
 msgid "fifty"
 msgstr "viiskümmend"
 
-#: captcha.php:1408
+#: captcha.php:1606
 #, fuzzy
 msgid "fifty one"
 msgstr "viiskümmend"
 
-#: captcha.php:1409
+#: captcha.php:1607
 #, fuzzy
 msgid "fifty two"
 msgstr "viiskümmend"
 
-#: captcha.php:1410
+#: captcha.php:1608
 #, fuzzy
 msgid "fifty three"
 msgstr "viisteist"
 
-#: captcha.php:1411
+#: captcha.php:1609
 #, fuzzy
 msgid "fifty four"
 msgstr "viiskümmend"
 
-#: captcha.php:1412
+#: captcha.php:1610
 #, fuzzy
 msgid "fifty five"
 msgstr "viiskümmend"
 
-#: captcha.php:1413
+#: captcha.php:1611
 #, fuzzy
 msgid "fifty six"
 msgstr "viiskümmend"
 
-#: captcha.php:1414
+#: captcha.php:1612
 #, fuzzy
 msgid "fifty seven"
 msgstr "viisteist"
 
-#: captcha.php:1415
+#: captcha.php:1613
 #, fuzzy
 msgid "fifty eight"
 msgstr "kaheksa"
 
-#: captcha.php:1416
+#: captcha.php:1614
 #, fuzzy
 msgid "fifty nine"
 msgstr "viiskümmend"
 
-#: captcha.php:1418
+#: captcha.php:1616
 msgid "sixty"
 msgstr "kuuskümmend"
 
-#: captcha.php:1419
+#: captcha.php:1617
 #, fuzzy
 msgid "sixty one"
 msgstr "kuuskümmend"
 
-#: captcha.php:1420
+#: captcha.php:1618
 #, fuzzy
 msgid "sixty two"
 msgstr "kuuskümmend"
 
-#: captcha.php:1421
+#: captcha.php:1619
 #, fuzzy
 msgid "sixty three"
 msgstr "kuusteist"
 
-#: captcha.php:1422
+#: captcha.php:1620
 #, fuzzy
 msgid "sixty four"
 msgstr "kuuskümmend"
 
-#: captcha.php:1423
+#: captcha.php:1621
 #, fuzzy
 msgid "sixty five"
 msgstr "kuuskümmend"
 
-#: captcha.php:1424
+#: captcha.php:1622
 #, fuzzy
 msgid "sixty six"
 msgstr "kuuskümmend"
 
-#: captcha.php:1425
+#: captcha.php:1623
 #, fuzzy
 msgid "sixty seven"
 msgstr "kuusteist"
 
-#: captcha.php:1426
+#: captcha.php:1624
 #, fuzzy
 msgid "sixty eight"
 msgstr "kaheksa"
 
-#: captcha.php:1427
+#: captcha.php:1625
 #, fuzzy
 msgid "sixty nine"
 msgstr "kuuskümmend"
 
-#: captcha.php:1429
+#: captcha.php:1627
 msgid "seventy"
 msgstr "seitsekümmend"
 
-#: captcha.php:1430
+#: captcha.php:1628
 #, fuzzy
 msgid "seventy one"
 msgstr "seitsekümmend"
 
-#: captcha.php:1431
+#: captcha.php:1629
 #, fuzzy
 msgid "seventy two"
 msgstr "seitsekümmend"
 
-#: captcha.php:1432
+#: captcha.php:1630
 #, fuzzy
 msgid "seventy three"
 msgstr "seitseteist"
 
-#: captcha.php:1433
+#: captcha.php:1631
 #, fuzzy
 msgid "seventy four"
 msgstr "seitsekümmend"
 
-#: captcha.php:1434
+#: captcha.php:1632
 #, fuzzy
 msgid "seventy five"
 msgstr "seitsekümmend"
 
-#: captcha.php:1435
+#: captcha.php:1633
 #, fuzzy
 msgid "seventy six"
 msgstr "seitsekümmend"
 
-#: captcha.php:1436
+#: captcha.php:1634
 #, fuzzy
 msgid "seventy seven"
 msgstr "seitseteist"
 
-#: captcha.php:1437
+#: captcha.php:1635
 #, fuzzy
 msgid "seventy eight"
 msgstr "seitsekümmend"
 
-#: captcha.php:1438
+#: captcha.php:1636
 #, fuzzy
 msgid "seventy nine"
 msgstr "seitsekümmend"
 
-#: captcha.php:1440
+#: captcha.php:1638
 msgid "eighty"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1441
+#: captcha.php:1639
 #, fuzzy
 msgid "eighty one"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1442
+#: captcha.php:1640
 #, fuzzy
 msgid "eighty two"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1443
+#: captcha.php:1641
 #, fuzzy
 msgid "eighty three"
 msgstr "kaheksateist"
 
-#: captcha.php:1444
+#: captcha.php:1642
 #, fuzzy
 msgid "eighty four"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1445
+#: captcha.php:1643
 #, fuzzy
 msgid "eighty five"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1446
+#: captcha.php:1644
 #, fuzzy
 msgid "eighty six"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1447
+#: captcha.php:1645
 #, fuzzy
 msgid "eighty seven"
 msgstr "kaheksateist"
 
-#: captcha.php:1448
+#: captcha.php:1646
 #, fuzzy
 msgid "eighty eight"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1449
+#: captcha.php:1647
 #, fuzzy
 msgid "eighty nine"
 msgstr "kaheksakümmend"
 
-#: captcha.php:1451
+#: captcha.php:1649
 msgid "ninety"
 msgstr "üheksakümmend"
 
-#: captcha.php:1452
+#: captcha.php:1650
 #, fuzzy
 msgid "ninety one"
 msgstr "üheksakümmend"
 
-#: captcha.php:1453
+#: captcha.php:1651
 #, fuzzy
 msgid "ninety two"
 msgstr "üheksakümmend"
 
-#: captcha.php:1454
+#: captcha.php:1652
 #, fuzzy
 msgid "ninety three"
 msgstr "üheksateist"
 
-#: captcha.php:1455
+#: captcha.php:1653
 #, fuzzy
 msgid "ninety four"
 msgstr "üheksakümmend"
 
-#: captcha.php:1456
+#: captcha.php:1654
 #, fuzzy
 msgid "ninety five"
 msgstr "üheksakümmend"
 
-#: captcha.php:1457
+#: captcha.php:1655
 #, fuzzy
 msgid "ninety six"
 msgstr "üheksakümmend"
 
-#: captcha.php:1458
+#: captcha.php:1656
 #, fuzzy
 msgid "ninety seven"
 msgstr "üheksateist"
 
-#: captcha.php:1459
+#: captcha.php:1657
 #, fuzzy
 msgid "ninety eight"
 msgstr "üheksakümmend"
 
-#: captcha.php:1460
+#: captcha.php:1658
 #, fuzzy
 msgid "ninety nine"
 msgstr "üheksakümmend"
 
-#: captcha.php:1526
+#: captcha.php:1724
 msgid "Encryption password is not set"
 msgstr "Krüpteerimisparool on määramata"
 
-#: captcha.php:1546
+#: captcha.php:1744
 msgid "Decryption password is not set"
 msgstr "Dekrüpteerimisparool on määramata"
 
-#: captcha.php:1902 captcha.php:1915
+#: captcha.php:2004 captcha.php:2017
 msgid "Settings"
 msgstr "Seaded"
 
-#: captcha.php:1916
+#: captcha.php:2018
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:1917
+#: captcha.php:2019
 msgid "Support"
 msgstr "Tugi"
 
-#: captcha.php:1949
-#, php-format
-msgid "Try New %s: with Pictures Now!"
-msgstr ""
-
-#: includes/package_loader.php:27 includes/package_loader.php:139
-msgid ""
-"Can not load images in to the \"uploads\" folder. Please, check your "
-"permissions."
-msgstr ""
-
-#: includes/package_loader.php:39
-msgid "File packages.txt not found. Package not saved."
-msgstr ""
-
-#: includes/package_loader.php:45
-msgid "Can not read data from packages.txt. Packages not saved."
-msgstr ""
-
-#: includes/package_loader.php:167
-msgid "Package successfully loaded."
-msgstr ""
-
-#: includes/pro_banners.php:17
-msgid "This options is available in Pro version of plugin"
-msgstr ""
-
-#: includes/pro_banners.php:19
-msgid "Close"
-msgstr ""
-
-#: includes/pro_banners.php:24
-#, fuzzy
-msgid "Unlock premium options by upgrading to Pro version"
-msgstr "Tee täiendavad seaded kättesaadavaks PRO versioonile üle minnes."
-
-#: includes/pro_banners.php:25
-msgid "Learn More"
-msgstr "Loe edasi"
-
-#: includes/pro_banners.php:42
-#, fuzzy
-msgid "Buddypress Registration form"
-msgstr "Registreerimisvormil"
-
-#: includes/pro_banners.php:43
-#, fuzzy
-msgid "Buddypress Comments form"
-msgstr "Kommentaarivormil"
-
-#: includes/pro_banners.php:44
-#, fuzzy
-msgid "Buddypress \"Create a Group\" form"
-msgstr "Vormil \"Create a Group\""
-
-#: includes/pro_banners.php:51
-msgid "If you upgrade to Pro version all your settings will be saved."
-msgstr "Neid täiendavaid seadeid saad kasutada PRO versioonile üle minnes."
-
-#: includes/pro_banners.php:62
-msgid "Use several packages at the same time"
-msgstr ""
-
-#: includes/pro_banners.php:65
-msgid ""
-"If this option is enabled, CAPTCHA will be use pictures from different "
-"packages at the same time"
-msgstr ""
-
-#: includes/pro_banners.php:76
-msgid "Reason"
-msgstr ""
-
-#: includes/pro_banners.php:78
-msgid "Allowed formats"
-msgstr ""
-
-#: includes/pro_banners.php:79
-msgid "Allowed separators for IPs: a comma"
-msgstr ""
-
-#: includes/pro_banners.php:79 includes/pro_banners.php:80
-msgid "semicolon"
-msgstr ""
-
-#: includes/pro_banners.php:79
-msgid "ordinary space, tab, new line or carriage return"
-msgstr ""
-
-#: includes/pro_banners.php:80
-msgid "Allowed separators for reasons: a comma"
-msgstr ""
-
-#: includes/pro_banners.php:80
-msgid "tab, new line or carriage return"
-msgstr ""
-
-#: includes/whitelist.php:70
+#: includes/whitelist.php:76
 msgid "For IP addresses from the whitelist CAPTCHA will not be displayed"
 msgstr ""
 
-#: includes/whitelist.php:82
+#: includes/whitelist.php:88
 #, php-format
 msgid ""
 "With this option, CAPTCHA will not be displayed for IP-addresses from the "
 "whitelist of %s"
 msgstr ""
 
-#: includes/whitelist.php:93 includes/whitelist.php:129
+#: includes/whitelist.php:99 includes/whitelist.php:135
 msgid "Add IP to whitelist"
 msgstr ""
 
-#: includes/whitelist.php:96
+#: includes/whitelist.php:102
 msgid "Load IP to whitelist"
 msgstr ""
 
-#: includes/whitelist.php:99
+#: includes/whitelist.php:105
 #, php-format
 msgid ""
 "By click on this button, all IP-addresses from the whitelist of %s will be "
 "loaded to the whitelist of %s"
 msgstr ""
 
-#: includes/whitelist.php:108
+#: includes/whitelist.php:114
 #, fuzzy
 msgid "Save changes"
 msgstr "Salvesta muudatused"
 
-#: includes/whitelist.php:125
+#: includes/whitelist.php:131
 msgid "My IP"
 msgstr ""
 
-#: includes/whitelist.php:133
+#: includes/whitelist.php:139
 msgid "Allowed formats:"
 msgstr ""
 
-#: includes/whitelist.php:134
+#: includes/whitelist.php:140
 msgid "Allowed diapason:"
 msgstr ""
 
-#: includes/whitelist.php:140
+#: includes/whitelist.php:146
 msgid "Search IP"
 msgstr ""
 
-#: includes/whitelist.php:172
+#: includes/whitelist.php:202
 msgid "Nothing found"
 msgstr ""
 
-#: includes/whitelist.php:172
+#: includes/whitelist.php:202
 msgid "No IP in whitelist"
 msgstr ""
 
-#: includes/whitelist.php:179
+#: includes/whitelist.php:209
 msgid "IP address"
 msgstr ""
 
-#: includes/whitelist.php:180
+#: includes/whitelist.php:210
 msgid "Date added"
 msgstr ""
 
-#: includes/whitelist.php:229 includes/whitelist.php:238
+#: includes/whitelist.php:264 includes/whitelist.php:273
 msgid "Remove from whitelist"
 msgstr ""
 
-#: includes/whitelist.php:310
+#: includes/whitelist.php:352
 msgid "IP added to the whitelist successfully"
 msgstr ""
 
-#: includes/whitelist.php:312 includes/whitelist.php:334
-#: includes/whitelist.php:346
+#: includes/whitelist.php:354 includes/whitelist.php:376
+#: includes/whitelist.php:388
 msgid "Some errors occured"
 msgstr ""
 
-#: includes/whitelist.php:314
+#: includes/whitelist.php:356
 msgid "IP is already in the whitelist"
 msgstr ""
 
-#: includes/whitelist.php:317
+#: includes/whitelist.php:359
 msgid "Invalid IP. See allowed formats"
 msgstr ""
 
-#: includes/whitelist.php:340
+#: includes/whitelist.php:382
 msgid "One IP was deleted successfully"
 msgstr ""
 
-#: includes/whitelist.php:349
+#: includes/whitelist.php:391
 msgid "You have not entered any value"
 msgstr ""
 
-#: includes/whitelist.php:352
+#: includes/whitelist.php:394
 msgid "You have not entered any value in to the search form"
 msgstr ""
 
-#: includes/whitelist.php:354
+#: includes/whitelist.php:396
 msgid "Search results for"
 msgstr ""
 
-#: includes/whitelist.php:368
+#: includes/whitelist.php:410
 msgid "IP-address(es) successfully copied to the whitelist"
 msgstr ""
 
-#: includes/whitelist.php:393
+#: includes/whitelist.php:435
 msgid "use"
 msgstr ""
 
-#: includes/whitelist.php:393
+#: includes/whitelist.php:435
 msgid "whitelist of"
 msgstr ""
 
-#: includes/whitelist.php:401 includes/whitelist.php:409
+#: includes/whitelist.php:443 includes/whitelist.php:451
 #, php-format
 msgid "use whitelist of %s"
 msgstr ""
 
-#: includes/whitelist.php:402
+#: includes/whitelist.php:444
 #, php-format
 msgid "you should %s to use this functionality"
 msgstr ""
 
-#: includes/whitelist.php:410
+#: includes/whitelist.php:452
 #, php-format
-msgid "you should instal %s to use this functionality"
+msgid "you should install %s to use this functionality"
+msgstr ""
+
+#: includes/pro_banners.php:17
+msgid "This options is available in Pro version of plugin"
+msgstr ""
+
+#: includes/pro_banners.php:20
+msgid "Close"
+msgstr ""
+
+#: includes/pro_banners.php:26
+#, fuzzy
+msgid "Unlock premium options by upgrading to Pro version"
+msgstr "Tee täiendavad seaded kättesaadavaks PRO versioonile üle minnes."
+
+#: includes/pro_banners.php:27
+msgid "Learn More"
+msgstr "Loe edasi"
+
+#: includes/pro_banners.php:44
+#, fuzzy
+msgid "Buddypress Registration form"
+msgstr "Registreerimisvormil"
+
+#: includes/pro_banners.php:45
+#, fuzzy
+msgid "Buddypress Comments form"
+msgstr "Kommentaarivormil"
+
+#: includes/pro_banners.php:46
+#, fuzzy
+msgid "Buddypress \"Create a Group\" form"
+msgstr "Vormil \"Create a Group\""
+
+#: includes/pro_banners.php:47
+#, fuzzy
+msgid "WooCommerce login form"
+msgstr "Kommentaarivormil"
+
+#: includes/pro_banners.php:48
+#, fuzzy
+msgid "WooCommerce Register form"
+msgstr "Registreerimisvormil"
+
+#: includes/pro_banners.php:49
+#, fuzzy
+msgid "WooCommerce Lost Password form"
+msgstr "Kaotatud parooli vormil"
+
+#: includes/pro_banners.php:50
+msgid "WooCommerce Checkout Billing form"
+msgstr ""
+
+#: includes/pro_banners.php:56
+msgid "If you upgrade to Pro version all your settings will be saved."
+msgstr "Neid täiendavaid seadeid saad kasutada PRO versioonile üle minnes."
+
+#: includes/pro_banners.php:67
+msgid "Use several packages at the same time"
+msgstr ""
+
+#: includes/pro_banners.php:70
+msgid ""
+"If this option is enabled, CAPTCHA will be use pictures from different "
+"packages at the same time"
+msgstr ""
+
+#: includes/pro_banners.php:81
+msgid "Reason"
+msgstr ""
+
+#: includes/pro_banners.php:83
+msgid "Allowed formats"
+msgstr ""
+
+#: includes/pro_banners.php:84
+msgid "Allowed separators for IPs: a comma"
+msgstr ""
+
+#: includes/pro_banners.php:84 includes/pro_banners.php:85
+msgid "semicolon"
+msgstr ""
+
+#: includes/pro_banners.php:84
+msgid "ordinary space, tab, new line or carriage return"
+msgstr ""
+
+#: includes/pro_banners.php:85
+msgid "Allowed separators for reasons: a comma"
+msgstr ""
+
+#: includes/pro_banners.php:85
+msgid "tab, new line or carriage return"
+msgstr ""
+
+#: includes/pro_banners.php:104
+msgid "If the package already exists"
+msgstr ""
+
+#: includes/pro_banners.php:106
+msgid "Skip it"
+msgstr ""
+
+#: includes/pro_banners.php:107
+msgid "Update the existed one"
+msgstr ""
+
+#: includes/pro_banners.php:108
+#, fuzzy
+msgid "Save it as new"
+msgstr "Salvesta muudatused"
+
+#: includes/pro_banners.php:111
+msgid "Install Now"
+msgstr ""
+
+#: includes/pro_banners.php:112
+msgid "Browse packages"
+msgstr ""
+
+#: includes/pro_banners.php:123 includes/pro_banners.php:200
+msgid "Package"
+msgstr ""
+
+#: includes/pro_banners.php:126 includes/pro_banners.php:203
+msgid "Date"
+msgstr ""
+
+#: includes/package_loader.php:33 includes/package_loader.php:145
+msgid ""
+"Can not load images in to the \"uploads\" folder. Please, check your "
+"permissions."
+msgstr ""
+
+#: includes/package_loader.php:45
+msgid "File packages.txt not found. Package not saved."
+msgstr ""
+
+#: includes/package_loader.php:51
+msgid "Can not read data from packages.txt. Packages not saved."
+msgstr ""
+
+#: includes/package_loader.php:173
+msgid "Package successfully loaded."
 msgstr ""
 
 #~ msgid "and"
@@ -1037,12 +1114,6 @@ msgstr ""
 
 #~ msgid "Download contact form"
 #~ msgstr "Lae kontaktivorm alla"
-
-#~ msgid "Register form"
-#~ msgstr "Registreerimisvormil"
-
-#~ msgid "Lost password form"
-#~ msgstr "Kaotatud parooli vormil"
 
 #~ msgid "requires"
 #~ msgstr "vajab"

@@ -1,24 +1,23 @@
 === Captcha by BestWebSoft ===
 Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
-Tags: add, anti, anti-spam, anti-spam security, antispam, antispam security, antispambot, arithmetic actions, blacklist, block spam, bot, bots, best captcha, best wordpress captcha, captcha, capcha, captha, catcha, captcha bank, captcha numbers, captcha plugin, captcha protection, captcha words, contact form with captcha, comment captcha, comment, comments, cpatcha, form, forms, form captcha, forgot password captcha, free, login, lost password, label, login captcha, match captcha, math actions, multiply, plugin, protect, protection, popular captcha, protection shield, register, registration, registration spam, register captcha, rest password captcha, registration captcha security, spam, secure, security, signup, signup spam, spam blocker, spam comments, spam filter, spambot, shield, simple captcha, spam control, spam protection, substract, text captcha, user registration spam, web form protection, wordpress captcha, wordpress protection, wordpress security loss password captcha, register captcha, wp captcha, wp plugin, wp plugins
+Tags: captcha, capcha, security, spam blocker, simple captcha, antispam, protection, text captcha, captcha numbers, captcha plugin, web form protection, captcha protection
 Requires at least: 3.8
-Tested up to: 4.4.2
-Stable tag: 4.1.9
+Tested up to: 4.5.2
+Stable tag: 4.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin allows you to implement super security captcha form into web forms. 
+This plugin allows you to implement super security captcha form into web forms.
 
 == Description ==
 
-The Captcha plugin adds a captcha form into web pages. This captcha can be used for login, registration, password recovery, comments forms. It protects your website from spammers by means of math logic, easily understandable by human beings. All you need is to do one of the three basic maths actions - add, subtract and multiply. You will not have to spend your precious time on annoying attempts to understand hard-to-read words, combinations of letters or surreal pictures.
-This captcha can be used for login, registration, password recovery, comments forms.
+Captcha by BestWebSoft plugin adds a captcha form into web pages. This captcha can be used for login, registration, password recovery, comments forms. It protects your website from spammers by means of math logic, easily understandable by human beings. All you need is to do one of the three basic maths actions - add, subtract and multiply. You will not have to spend your precious time on annoying attempts to understand hard-to-read words, combinations of letters or surreal pictures.
 There is also a premium version of the plugin, allowing compatibility with BuddyPress (Registration form, Comments form, "Create a Group" form) and Contact Form 7.
 
-http://www.youtube.com/watch?v=jxrvHaCmQfg
+http://www.youtube.com/watch?v=nlcCKSxu_Kk
 
-<a href="http://www.youtube.com/watch?v=jsvc8FxxEnk" target="_blank">Captcha by BestWebSoft Video instruction on Installation</a>
+<a href="https://www.youtube.com/watch?v=qsfLTcSo5Ok" target="_blank">Captcha by BestWebSoft Video instruction on Installation</a>
 
 <a href="http://wordpress.org/plugins/captcha/faq/" target="_blank">Captcha by BestWebSoft FAQ</a>
 
@@ -96,10 +95,10 @@ If you would like to create your own language pack or update the existing one, y
 
 = Technical support =
 
-Dear users, our plugins are available for free download. If you have any questions or recommendations regarding the functionality of our plugins (existing options, new options, current issues), please feel free to contact us. Please note that we accept requests in English only. All messages in another languages won't be accepted.
+Dear users, our plugins are available for free download. If you have any questions or recommendations regarding the functionality of our plugins (existing options, new options, current issues), please feel free to contact us. Please note that we accept requests in English only. All messages in other languages won't be accepted.
 
 If you notice any bugs in the plugins, you can notify us about it and we'll investigate and fix the issue then. Your request should contain URL of the website, issues description and WordPress admin panel credentials.
-Moreover we can customize the plugin according to your requirements. It's a paid service (as a rule it costs $40, but the price can vary depending on the amount of the necessary changes and their complexity). Please note that we could also include this or that feature (developed for you) in the next release and share with the other users then. 
+Moreover we can customize the plugin according to your requirements. It's a paid service (as a rule it costs $40, but the price can vary depending on the amount of the necessary changes and their complexity). Please note that we could also include this or that feature (developed for you) in the next release and share with the other users then.
 We can fix some things for free for the users who provide translation of our plugin into their native language (this should be a new translation of a certain plugin, you can check available translations on the official plugin page).
 
 == Installation ==
@@ -114,16 +113,16 @@ http://www.youtube.com/watch?v=jsvc8FxxEnk
 
 == Frequently Asked Questions ==
 
-= Missing Captcha on the comment form? = 
+= Missing Captcha on the comment form? =
 
-You might have a theme where comments.php is not coded properly. 
+You might have a theme where comments.php is not coded properly.
 
-Wopdpress version matters. 
+Wopdpress version matters.
 
-(WP2 series) Your theme must have a tag `<?php do_action('comment_form', $post->ID); ?>` inside the file `/wp-content/themes/[your_theme]/comments.php`. 
+(WP2 series) Your theme must have a tag `<?php do_action('comment_form', $post->ID); ?>` inside the file `/wp-content/themes/[your_theme]/comments.php`.
 Most WP2 themes already have it. The best place to put this tag is before the comment textarea, you can move it up if it is below the comment textarea.
 
-(WP3 series) WP3 has a new function comment_form inside of `/wp-includes/comment-template.php`. 
+(WP3 series) WP3 has a new function comment_form inside of `/wp-includes/comment-template.php`.
 Your theme is probably not up-to-date to call that function from comments.php.
 WP3 theme does not need the code line `do_action('comment_form'`... inside of `/wp-content/themes/[your_theme]/comments.php`.
 Instead it uses a new function call inside of comments.php: `<?php comment_form(); ?>`
@@ -135,7 +134,7 @@ inside of `/wp-content/themes/[your_theme]/comments.php` (please check the Twent
 1. Install the Captcha plugin and activate it.
 2. Open the file with the form (where you would like to add captcha to).
 3. Find a place to insert the code for the captcha output.
-4. Insert the necessary lines: 
+4. Insert the necessary lines:
 
 `if( function_exists( 'cptch_display_captcha_custom' ) ) { echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />"; echo cptch_display_captcha_custom() } ;`
 
@@ -143,11 +142,11 @@ If the form is HTML you should insert the line with the PHP tags:
 
 `<?php if( function_exists( 'cptch_display_captcha_custom' ) ) { echo "<input type='hidden' name='cntctfrm_contact_action' value='true' />"; echo cptch_display_captcha_custom(); } ?>`
 
-5. Then you should add the lines to the function of the entered data checking  
+5. Then you should add the lines to the function of the entered data checking
 
 `if( function_exists( 'cptch_check_custom_form' ) && cptch_check_custom_form() !== true ) echo "Please complete the CAPTCHA."`
 
- or 
+ or
 
 `<?php if( function_exists( 'cptch_check_custom_form' ) && cptch_check_custom_form() !== true ) echo "Please complete the CAPTCHA." ?>`
 
@@ -171,16 +170,22 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Screenshots ==
 
-1. Captcha Basic Settings page.
-2. Captcha Advanced Settings page.
-3. Captcha Whitelist.
-4. Login form with Captcha.
-5. Registration form with Captcha.
-6. Lost password form with Captcha.
-7. Comments form with Captcha.
-8. Contact form with Captcha.
+1. Login form with Captcha.
+2. Registration form with Captcha.
+3. Lost password form with Captcha.
+4. Comments form with Captcha.
+5. Contact form with Captcha.
+6. Captcha Basic Settings page.
+7. Captcha Advanced Settings page.
+8. Captcha Whitelist.
 
 == Changelog ==
+
+= V4.2.0 - 15.06.2016 =
+* NEW : A notice about Captcha's time limit expiration has been added.
+* Update : The appearance of the "Enable image packages" settings block has been updated.
+* Update : The French file has been updated.
+* Bugfix : The bug with the displaying of the whitelist pagination has been fixed.
 
 = V4.1.9 - 28.03.2016 =
 * Bugfix : Lower-case equivalents for all numbers have been changed.
@@ -299,7 +304,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Update : We updated all functionality for wordpress 3.8.
 
 = V3.9.2 - 10.12.2013 =
-* NEW : A notice when changing settings on the plugin's settings page was added. 
+* NEW : A notice when changing settings on the plugin's settings page was added.
 * Update : We updated all functionality for wordpress 3.8-RC1.
 
 = V3.9.1 - 29.11.2013 =
@@ -311,7 +316,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Update : BWS plugins section is updated.
 
 = V3.8.9 - 15.11.2013 =
-* Update : The French language file is updated. 
+* Update : The French language file is updated.
 * NEW : The Indonesian language file is added to the plugin.
 
 = V3.8.8 - 05.11.2013 =
@@ -328,7 +333,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Update : We updated all functionality for wordpress 3.7.
 
 = V3.8.5 - 17.10.2013 =
-* Update : The Italian language file is updated. 
+* Update : The Italian language file is updated.
 * NEW : The Catalan language file is added to the plugin.
 
 = V3.8.4 - 8.10.2013 =
@@ -337,13 +342,13 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 = V3.8.3 - 1.10.2013 =
 * Update : The Brazilian Portuguese language file is updated.
-* Update : The Ukrainian language file is updated. 
+* Update : The Ukrainian language file is updated.
 
 = V3.8.2 - 23.09.2013 =
 * Bugfix : Captcha protection is improved by changing hidden values in every session.
 
 = V3.8.1 - 13.09.2013 =
-* Update : The French language file is updated. 
+* Update : The French language file is updated.
 * Update : We updated all functionality for wordpress 3.6.1.
 
 = V3.8.0 - 06.09.2013 =
@@ -393,7 +398,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Update : BWS plugins section is updated.
 
 = V3.5 - 07.05.2013 =
-* Update : The Bulgarian language file is updated in the plugin. 
+* Update : The Bulgarian language file is updated in the plugin.
 * Update : The Brazilian Portuguese language file is updated in the plugin.
 
 = V3.4 - 18.04.2013 =
@@ -422,7 +427,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Update : We updated all functionality for wordpress 3.5.1.
 
 = V2.4.1 - 02.01.2013 =
-* Bugfix : call_user_func_array() bug is fixed. 
+* Bugfix : call_user_func_array() bug is fixed.
 
 = V2.4 - 21.12.2012 =
 * NEW : Romanian and Serbian and Slovak language files are added to the plugin.
@@ -433,11 +438,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Chinese and Greek language files are added to the plugin.
 
 = V2.33 - 25.07.2012 =
-* Bugfix : Change settings bug was fixed. 
+* Bugfix : Change settings bug was fixed.
 
 = V2.32 - 24.07.2012 =
 * NEW : Arabic, Hungarian, Japanese language files are added to the plugin.
-* Bugfix : Cross Site Request Forgery bug was fixed. 
+* Bugfix : Cross Site Request Forgery bug was fixed.
 
 = V2.31 - 10.07.2012 =
 * NEW : Vietnamese language file is added to the plugin.
@@ -501,15 +506,15 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Bugfix : Impossible math operation bug was fixed.
 
 = V2.12 - 29.12.2011 =
-* Changed : BWS plugins section. 
+* Changed : BWS plugins section.
 * Bugfix : Displaying of numerals was fixed in the Dutch language
 
 = V2.11 - 27.12.2011 =
-* NEW : Danish language files are added to the plugin. 
-* Changed : All words were added to language file. 
+* NEW : Danish language files are added to the plugin.
+* Changed : All words were added to language file.
 
 = V2.10 - 07.12.2011 =
-* Bugfix : The bug of the captcha label section is fixed in this version. 
+* Bugfix : The bug of the captcha label section is fixed in this version.
 
 = V2.09 - 07.12.2011 =
 * Changed : +, -, * are changed to HTML Entity.
@@ -521,12 +526,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Language files are added to the plugin.
 
 = V2.06 - 22.08.2011 =
-* Changed : BWS Plugin's menu section was fixed and right now it is consisted of 3 parts: activated, installed and recommended plugins. 
-* Bugfix : Positioning bug in admin menu is fixed. 
+* Changed : BWS Plugin's menu section was fixed and right now it is consisted of 3 parts: activated, installed and recommended plugins.
+* Bugfix : Positioning bug in admin menu is fixed.
 
 = V2.05 =
-* Changed : BWS Plugin's menu section was fixed and right now it is consisted from 2 parts: installed and recommended plugins. 
-* Bugfix : Icons displaying is fixed. 
+* Changed : BWS Plugin's menu section was fixed and right now it is consisted from 2 parts: installed and recommended plugins.
+* Bugfix : Icons displaying is fixed.
 * Bugfix : Misalignment of math transaction is fixed.
 
 = V2.04 =
@@ -555,6 +560,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Select functionality of mathematical actions and level of their difficulty are implemented.
 
 == Upgrade Notice ==
+
+= V4.2.0 =
+A notice about Captcha's time limit expiration has been added. The appearance of the "Enable image packages" settings block has been updated. The French file has been updated. The bug with the displaying of the whitelist pagination has been fixed.
 
 = V4.1.9 =
 Lower-case equivalents for all numbers have been changed. Ability to add custom styles.
@@ -665,7 +673,7 @@ The Italian language file is updated. The Catalan language file is added to the 
 The duplicate style is removed. BWS plugins section is updated.
 
 = V3.8.3 =
-The Brazilian Portuguese language file is updated. The Ukrainian language file is updated. 
+The Brazilian Portuguese language file is updated. The Ukrainian language file is updated.
 
 = V3.8.2 =
 Captcha protection is improved by changing hidden values in every session.
@@ -737,7 +745,7 @@ The Estonian language file is added to the plugin.
 The Lithuanian language file was is to the plugin. We updated all functionality for wordpress 3.5.1.
 
 = V2.4.1 =
-call_user_func_array() bug was fixed. 
+call_user_func_array() bug was fixed.
 
 = V2.4 =
 Romanian and Serbian and Slovak language files are added to the plugin. We updated the coding logic of Captcha. We updated all functionality for wordpress 3.5.
@@ -746,10 +754,10 @@ Romanian and Serbian and Slovak language files are added to the plugin. We updat
 Chinese and Greek language files are added to the plugin.
 
 = V2.33 =
-Change settings bug was fixed. 
+Change settings bug was fixed.
 
 = V2.32 =
-Arabic, Hungarian, Japanese language files are added to the plugin. Cross Site Request Forgery bug was fixed. 
+Arabic, Hungarian, Japanese language files are added to the plugin. Cross Site Request Forgery bug was fixed.
 
 = V2.31 =
 Vietnamese language file is added to the plugin. We updated Hebrew language file. We updated all functionality for wordpress 3.4.1.
