@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: captcha 4.1.9\n"
+"Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-06 17:24+0300\n"
-"PO-Revision-Date: 2016-06-06 17:24+0300\n"
+"POT-Creation-Date: 2016-07-04 10:34+0300\n"
+"PO-Revision-Date: 2016-07-04 10:34+0300\n"
 "Last-Translator: Luc Capronnier <lcapronnier@yahoo.com>\n"
 "Language-Team: Luc Capronnier <lcapronnier@yahoo.com>\n"
 "Language: fr_FR\n"
@@ -42,7 +42,6 @@ msgid "You are in the white list"
 msgstr "Vous êtes dans la liste blanche"
 
 #: captcha.php:203
-#, fuzzy
 msgid "Time limit is exhausted. Please reload CAPTCHA."
 msgstr "Le temps imparti est dépassé. Merci de saisir de nouveau le CAPTCHA."
 
@@ -111,8 +110,7 @@ msgstr ""
 
 #: captcha.php:412
 msgid "Please select one item in the block Enable image packages"
-msgstr ""
-"Merci de choisir au moins un élément dans la liste des ensembles d'images"
+msgstr "Merci de choisir au moins un élément dans la liste des packs d'images"
 
 #: captcha.php:442
 msgid "Settings saved."
@@ -136,13 +134,12 @@ msgid "Advanced"
 msgstr "Avancées"
 
 #: captcha.php:476
-#, fuzzy
 msgid "This setting is available in Pro version"
 msgstr "Cette fonction est disponible dans le version Pro de cette extension"
 
 #: captcha.php:476
 msgid "Packages"
-msgstr ""
+msgstr "Packs"
 
 #: captcha.php:477
 msgid "Whitelist"
@@ -228,7 +225,7 @@ msgstr "Complexité"
 
 #: captcha.php:618
 msgid "Enable image packages"
-msgstr "Activer les ensembles d'images"
+msgstr "Activer les packs d'images"
 
 #: captcha.php:635
 msgid "Enlarge images on mouseover"
@@ -260,19 +257,18 @@ msgid ""
 "This messages will be displayed, if the CAPTCHA answer has not passed the "
 "verification"
 msgstr ""
+"Ces messages seront affichés si la réponse au CAPTCHA ne passe pas les "
+"vérifications"
 
 #: captcha.php:668
-#, fuzzy
 msgid "If the CAPTCHA field is empty"
 msgstr "Si le champ CAPTCHA est vide"
 
 #: captcha.php:669
-#, fuzzy
 msgid "If the CAPTCHA is incorrect"
 msgstr "Si le CAPTCHA est incorrect"
 
 #: captcha.php:670
-#, fuzzy
 msgid "If the time limit is exhausted"
 msgstr "Si la limite de temps est dépassée"
 
@@ -281,14 +277,10 @@ msgid "Info"
 msgstr "Info"
 
 #: captcha.php:674
-#, fuzzy
 msgid "This messages will be displayed inside of the CAPTCHA"
-msgstr ""
-"Si l'adresse IP est dans la liste blanche (ce message sera affiché en lieu "
-"et place du CAPTCHA)."
+msgstr "Ce message sera affiché dans le CAPTCHA"
 
 #: captcha.php:677
-#, fuzzy
 msgid ""
 "If the user IP is added to the whitelist (this message will be displayed "
 "instead of the CAPTCHA)"
@@ -297,13 +289,12 @@ msgstr ""
 "et place du CAPTCHA)."
 
 #: captcha.php:678
-#, fuzzy
 msgid ""
 "If the time limit is exhausted (this message will be displayed above the "
 "CAPTCHA)"
 msgstr ""
-"Si l'adresse IP est dans la liste blanche (ce message sera affiché en lieu "
-"et place du CAPTCHA)."
+"Si la limite de temps est dépassée (ce message sera affiché au dessus du "
+"CAPTCHA)"
 
 #: captcha.php:685
 msgid "Save Changes"
@@ -325,7 +316,7 @@ msgstr ""
 msgid "zero"
 msgstr "null"
 
-#: captcha.php:1551 captcha.php:1889
+#: captcha.php:1551 captcha.php:1886
 msgid "one"
 msgstr "un"
 
@@ -345,15 +336,15 @@ msgstr "quatre"
 msgid "five"
 msgstr "cinq"
 
-#: captcha.php:1556 captcha.php:1889
+#: captcha.php:1556 captcha.php:1886
 msgid "six"
 msgstr "six"
 
-#: captcha.php:1557 captcha.php:1877 captcha.php:1883
+#: captcha.php:1557 captcha.php:1874 captcha.php:1880
 msgid "seven"
 msgstr "sept"
 
-#: captcha.php:1558 captcha.php:1880
+#: captcha.php:1558 captcha.php:1877
 msgid "eight"
 msgstr "huit"
 
@@ -729,17 +720,160 @@ msgstr "Le mot de passe de cryptage n'est pas défini"
 msgid "Decryption password is not set"
 msgstr "Le mot de passe de décryptage n'est pas défini"
 
-#: captcha.php:2004 captcha.php:2017
+#: captcha.php:2001 captcha.php:2014
 msgid "Settings"
 msgstr "Réglages"
 
-#: captcha.php:2018
+#: captcha.php:2015
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:2019
+#: captcha.php:2016
 msgid "Support"
 msgstr "Support"
+
+#: includes/package_loader.php:33 includes/package_loader.php:145
+msgid ""
+"Can not load images in to the \"uploads\" folder. Please, check your "
+"permissions."
+msgstr ""
+"Impossible de charger les images dans le répertoire \"uploads\". Merci de "
+"vérifier les permissions."
+
+#: includes/package_loader.php:45
+msgid "File packages.txt not found. Package not saved."
+msgstr "Le fichier packages.txt n'a pas été trouvé. Pack non enregistré."
+
+#: includes/package_loader.php:51
+msgid "Can not read data from packages.txt. Packages not saved."
+msgstr ""
+"Impossible de lire les informations du fichier packages.txt. Le pack n'est "
+"pas enregistré."
+
+#: includes/package_loader.php:173
+msgid "Package successfully loaded."
+msgstr "Pack chargé avec succès."
+
+#: includes/pro_banners.php:17
+msgid "This options is available in Pro version of plugin"
+msgstr "Cette fonction est disponible dans le version Pro de cette extension"
+
+#: includes/pro_banners.php:20
+msgid "Close"
+msgstr "Fermer"
+
+#: includes/pro_banners.php:26
+msgid "Unlock premium options by upgrading to Pro version"
+msgstr "Débloquer les options premium en migrant vers la version PRO."
+
+#: includes/pro_banners.php:27
+msgid "Learn More"
+msgstr "En savoir plus"
+
+#: includes/pro_banners.php:44
+msgid "Buddypress Registration form"
+msgstr "Formulaire d'enregistrement pour Buddypress"
+
+#: includes/pro_banners.php:45
+msgid "Buddypress Comments form"
+msgstr "Formulaire des commentaires pour Buddypress"
+
+#: includes/pro_banners.php:46
+msgid "Buddypress \"Create a Group\" form"
+msgstr "Formulaire pour \"Créer un groupe\" avec Buddypress"
+
+#: includes/pro_banners.php:47
+msgid "WooCommerce login form"
+msgstr "Formulaire de connexion de WooCommerce"
+
+#: includes/pro_banners.php:48
+msgid "WooCommerce Register form"
+msgstr "Formulaire d'enregistrement de WooCommerce"
+
+#: includes/pro_banners.php:49
+msgid "WooCommerce Lost Password form"
+msgstr "Formulaire de mot de passe perdu de WooCommerce"
+
+#: includes/pro_banners.php:50
+msgid "WooCommerce Checkout Billing form"
+msgstr "Formulaire de paiement de WooCommerce"
+
+#: includes/pro_banners.php:56
+msgid "If you upgrade to Pro version all your settings will be saved."
+msgstr ""
+"Si vous passez à la version Pro, tous ces paramètres seront enregistrés."
+
+#: includes/pro_banners.php:67
+msgid "Use several packages at the same time"
+msgstr "Utiliser plusieurs packs en même temps"
+
+#: includes/pro_banners.php:70
+msgid ""
+"If this option is enabled, CAPTCHA will be use pictures from different "
+"packages at the same time"
+msgstr ""
+"Si cette option est activé, CAPTCHA utilisera plusieurs packs d'images en "
+"même temps"
+
+#: includes/pro_banners.php:81
+msgid "Reason"
+msgstr "Raison"
+
+#: includes/pro_banners.php:83
+msgid "Allowed formats"
+msgstr "Formats autorisés"
+
+#: includes/pro_banners.php:84
+msgid "Allowed separators for IPs: a comma"
+msgstr "Séparateurs autorisés pour les adresses IP&nbsp;: virgule"
+
+#: includes/pro_banners.php:84 includes/pro_banners.php:85
+msgid "semicolon"
+msgstr "point-virgule"
+
+#: includes/pro_banners.php:84
+msgid "ordinary space, tab, new line or carriage return"
+msgstr "espace, tabulation, nouvelle ligne ou retour à la ligne"
+
+#: includes/pro_banners.php:85
+msgid "Allowed separators for reasons: a comma"
+msgstr "Séparateurs autorisés pour les réseaux&nbsp;: virgule"
+
+#: includes/pro_banners.php:85
+msgid "tab, new line or carriage return"
+msgstr "tabulation, nouvelle ligne ou retour à la ligne"
+
+#: includes/pro_banners.php:104
+msgid "If the package already exists"
+msgstr "Si le pack existe déjà"
+
+#: includes/pro_banners.php:106
+msgid "Skip it"
+msgstr "Ignorer"
+
+#: includes/pro_banners.php:107
+msgid "Update the existed one"
+msgstr "Mettre à jour pour la version existante"
+
+#: includes/pro_banners.php:108
+msgid "Save it as new"
+msgstr "L'enregistrer comme nouveau"
+
+#: includes/pro_banners.php:111
+msgid "Install Now"
+msgstr "Installer maintenant"
+
+#: includes/pro_banners.php:112
+msgid "Browse packages"
+msgstr "Explorer les packs"
+
+#: includes/pro_banners.php:123 includes/pro_banners.php:200
+msgid "Package"
+msgstr "Pack"
+
+#: includes/pro_banners.php:126 includes/pro_banners.php:203
+msgid "Date"
+msgstr "Date"
 
 #: includes/whitelist.php:76
 msgid "For IP addresses from the whitelist CAPTCHA will not be displayed"
@@ -874,160 +1008,9 @@ msgid "you should %s to use this functionality"
 msgstr "vous devriez %s pour utiliser cette fonctionnalité"
 
 #: includes/whitelist.php:452
-#, fuzzy, php-format
+#, php-format
 msgid "you should install %s to use this functionality"
 msgstr "vous devriez installer %s pour utiliser cette fonctionnalité"
-
-#: includes/pro_banners.php:17
-msgid "This options is available in Pro version of plugin"
-msgstr "Cette fonction est disponible dans le version Pro de cette extension"
-
-#: includes/pro_banners.php:20
-msgid "Close"
-msgstr "Fermer"
-
-#: includes/pro_banners.php:26
-msgid "Unlock premium options by upgrading to Pro version"
-msgstr "Débloquer les options premium en migrant vers la version PRO."
-
-#: includes/pro_banners.php:27
-msgid "Learn More"
-msgstr "En savoir plus"
-
-#: includes/pro_banners.php:44
-msgid "Buddypress Registration form"
-msgstr "Formulaire d'enregistrement pour Buddypress"
-
-#: includes/pro_banners.php:45
-msgid "Buddypress Comments form"
-msgstr "Formulaire des commentaires pour Buddypress"
-
-#: includes/pro_banners.php:46
-msgid "Buddypress \"Create a Group\" form"
-msgstr "Formulaire pour \"Créer un groupe\" avec Buddypress"
-
-#: includes/pro_banners.php:47
-#, fuzzy
-msgid "WooCommerce login form"
-msgstr "Formulaire des commentaires"
-
-#: includes/pro_banners.php:48
-#, fuzzy
-msgid "WooCommerce Register form"
-msgstr "Formulaire d'enregistrement"
-
-#: includes/pro_banners.php:49
-#, fuzzy
-msgid "WooCommerce Lost Password form"
-msgstr "Formulaire de mot de passe perdu"
-
-#: includes/pro_banners.php:50
-msgid "WooCommerce Checkout Billing form"
-msgstr ""
-
-#: includes/pro_banners.php:56
-msgid "If you upgrade to Pro version all your settings will be saved."
-msgstr ""
-"Si vous passez à la version Pro, tous ces paramètres seront enregistrés."
-
-#: includes/pro_banners.php:67
-msgid "Use several packages at the same time"
-msgstr "Utiliser plusieurs ensembles en même temps"
-
-#: includes/pro_banners.php:70
-msgid ""
-"If this option is enabled, CAPTCHA will be use pictures from different "
-"packages at the same time"
-msgstr ""
-"Si cette option est activé, CAPTCHA utilisera plusieurs ensembles d'images "
-"en même temps"
-
-#: includes/pro_banners.php:81
-msgid "Reason"
-msgstr "Raison"
-
-#: includes/pro_banners.php:83
-msgid "Allowed formats"
-msgstr "Formats autorisés"
-
-#: includes/pro_banners.php:84
-msgid "Allowed separators for IPs: a comma"
-msgstr "Séparateurs autorisés pour les adresses IP&nbsp;: virgule"
-
-#: includes/pro_banners.php:84 includes/pro_banners.php:85
-msgid "semicolon"
-msgstr "point-virgule"
-
-#: includes/pro_banners.php:84
-msgid "ordinary space, tab, new line or carriage return"
-msgstr "espace, tabulation, nouvelle ligne ou retour à la ligne"
-
-#: includes/pro_banners.php:85
-msgid "Allowed separators for reasons: a comma"
-msgstr "Séparateurs autorisés pour les réseaux&nbsp;: virgule"
-
-#: includes/pro_banners.php:85
-msgid "tab, new line or carriage return"
-msgstr "tabulation, nouvelle ligne ou retour à la ligne"
-
-#: includes/pro_banners.php:104
-msgid "If the package already exists"
-msgstr ""
-
-#: includes/pro_banners.php:106
-msgid "Skip it"
-msgstr ""
-
-#: includes/pro_banners.php:107
-#, fuzzy
-msgid "Update the existed one"
-msgstr "Mettre à jour pour la version %s"
-
-#: includes/pro_banners.php:108
-#, fuzzy
-msgid "Save it as new"
-msgstr "Enregistrer les modifications"
-
-#: includes/pro_banners.php:111
-msgid "Install Now"
-msgstr "Installer maintenant"
-
-#: includes/pro_banners.php:112
-msgid "Browse packages"
-msgstr ""
-
-#: includes/pro_banners.php:123 includes/pro_banners.php:200
-msgid "Package"
-msgstr ""
-
-#: includes/pro_banners.php:126 includes/pro_banners.php:203
-msgid "Date"
-msgstr ""
-
-#: includes/package_loader.php:33 includes/package_loader.php:145
-msgid ""
-"Can not load images in to the \"uploads\" folder. Please, check your "
-"permissions."
-msgstr ""
-"Impossible de charger les images dans le répertoire \"uploads\". Merci de "
-"vérifier les permissions."
-
-#: includes/package_loader.php:45
-msgid "File packages.txt not found. Package not saved."
-msgstr "Le fichier packages.txt n'a pas été trouvé. Ensemble non enregistré."
-
-#: includes/package_loader.php:51
-msgid "Can not read data from packages.txt. Packages not saved."
-msgstr ""
-"Impossible de lire les informations du fichier packages.txt. L'ensemble "
-"n'est pas enregistré."
-
-#: includes/package_loader.php:173
-msgid "Package successfully loaded."
-msgstr "Ensemble chargé avec succès."
-
-#~ msgid "Try New %s: with Pictures Now!"
-#~ msgstr "Essayer la nouvelle %s: avec des images maintenant !"
 
 #~ msgid "Not set"
 #~ msgstr "Non défini"
@@ -1170,29 +1153,8 @@ msgstr "Ensemble chargé avec succès."
 #~ msgid "Install now"
 #~ msgstr "Installer maintenant"
 
-#~ msgid "Try again"
-#~ msgstr "Essayer de nouveau"
-
-#~ msgid "Preview &#8220;%s&#8221;"
-#~ msgstr "Pré-visualiser &#8220;%s&#8221;"
-
-#~ msgid "Install %s"
-#~ msgstr "Installer %s"
-
-#~ msgid "Update"
-#~ msgstr "Mettre à jour"
-
-#~ msgid "Preview %s"
-#~ msgstr "Pré-visualiser %s"
-
-#~ msgid "Preview"
-#~ msgstr "Pré-visualiser"
-
 #~ msgid "By %s"
 #~ msgstr "Par %s"
-
-#~ msgid "Details"
-#~ msgstr "Détails"
 
 #~ msgid "Already Installed"
 #~ msgstr "Déjà installé"
@@ -1263,6 +1225,9 @@ msgstr "Ensemble chargé avec succès."
 
 #~ msgid "If there is something wrong about it, please contact us"
 #~ msgstr "Si vous avez une question, n'hésitez pas à nous contacter"
+
+#~ msgid "Donations play an important role in supporting great projects"
+#~ msgstr "Les dons jouent un rôle important dans le support des projets."
 
 #~ msgid "Check premium options on the plugin settings page!"
 #~ msgstr ""
@@ -1341,8 +1306,8 @@ msgstr "Ensemble chargé avec succès."
 #~ msgstr "Merci de saisir votre clé de licence"
 
 #~ msgid ""
-#~ "Congratulations! The Pro version of the plugin is successfully download "
-#~ "and activated."
+#~ "Congratulations! Pro version of the plugin is successfully installed and "
+#~ "activated."
 #~ msgstr ""
 #~ "Félicitations! La version PRO de cette extension a été téléchargée et "
 #~ "activée avec succès."
@@ -1359,24 +1324,19 @@ msgstr "Ensemble chargé avec succès."
 #~ msgid "Show Pro features"
 #~ msgstr "Voir les fonctionnalités PRO"
 
-#~ msgid "You can download and activate"
-#~ msgstr "Vous pouvez télécharger et activer la version "
+#~ msgid "Enter your license key to install and activate"
+#~ msgstr "Saisir votre clé de licence pour installer et activer"
 
-#~ msgid "version of this plugin by entering Your license key."
-#~ msgstr " de cette extension en donnant votre clé de licence."
+#~ msgid "version of the plugin."
+#~ msgstr "version de cette extension."
 
-#~ msgid ""
-#~ "You can find your license key on your personal page Client area, by "
-#~ "clicking on the link"
+#~ msgid "License key can be found in the"
+#~ msgstr "La clé de licence peut être trouvée dans"
+
+#~ msgid "(your username is the email address specified during the purchase)."
 #~ msgstr ""
-#~ "Vous pouvez trouver votre clé de licence sur votre page personnelle dans "
-#~ "la zone cliente en cliquant sur le lien"
-
-#~ msgid ""
-#~ "(your username is the email you specify when purchasing the product)."
-#~ msgstr ""
-#~ "(votre nom d'utilisateur est l'adresse e-mail que vous avez donné lors de "
-#~ "l'achat de l'extension)."
+#~ "(votre nom d'utilisateur est l'adresse e-mail que vous avez donnée lors "
+#~ "de l'achat de l'extension)."
 
 #~ msgid "or"
 #~ msgstr "ou"
@@ -1454,12 +1414,12 @@ msgstr "Ensemble chargé avec succès."
 #~ "web."
 
 #~ msgid ""
-#~ "(your username is the email you specify when purchasing the product). If "
+#~ "(your username is the email address specified during the purchase). If "
 #~ "necessary, please submit \"Lost your password?\" request."
 #~ msgstr ""
-#~ "(votre nom d'utilisateur est l'adresse e-mail que vous avez donné lors de "
-#~ "l'achat de l'extension). Si nécessaire, utilisez la fonction de demande "
-#~ "de mot de passe perdu."
+#~ "(votre nom d'utilisateur est l'adresse e-mail que vous avez donnée lors "
+#~ "de l'achat de l'extension). Si nécessaire, utilisez la fonction de "
+#~ "demande de mot de passe perdu."
 
 #~ msgid "Check license key"
 #~ msgstr "Vérifier la clé de licence"
@@ -1635,6 +1595,43 @@ msgstr "Ensemble chargé avec succès."
 #~ msgstr ""
 #~ "Vous devez rendre ce fichier modifiable avant de pouvoir enregistrer vos "
 #~ "modifications. Regarder %s du Codex %s pour plus d'informations."
+
+#~ msgid "Try New %s: with Pictures Now!"
+#~ msgstr "Essayer la nouvelle %s: avec des images maintenant !"
+
+#~ msgid "Try again"
+#~ msgstr "Essayer de nouveau"
+
+#~ msgid "Preview &#8220;%s&#8221;"
+#~ msgstr "Pré-visualiser &#8220;%s&#8221;"
+
+#~ msgid "Install %s"
+#~ msgstr "Installer %s"
+
+#~ msgid "Update"
+#~ msgstr "Mettre à jour"
+
+#~ msgid "Preview %s"
+#~ msgstr "Pré-visualiser %s"
+
+#~ msgid "Preview"
+#~ msgstr "Pré-visualiser"
+
+#~ msgid "Details"
+#~ msgstr "Détails"
+
+#~ msgid "You can download and activate"
+#~ msgstr "Vous pouvez télécharger et activer la version "
+
+#~ msgid "version of this plugin by entering Your license key."
+#~ msgstr " de cette extension en donnant votre clé de licence."
+
+#~ msgid ""
+#~ "You can find your license key on your personal page Client area, by "
+#~ "clicking on the link"
+#~ msgstr ""
+#~ "Vous pouvez trouver votre clé de licence sur votre page personnelle dans "
+#~ "la zone cliente en cliquant sur le lien"
 
 #~ msgid "and"
 #~ msgstr "et"

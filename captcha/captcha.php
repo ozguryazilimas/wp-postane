@@ -2,11 +2,11 @@
 /*
 Plugin Name: Captcha by BestWebSoft
 Plugin URI: http://bestwebsoft.com/products/
-Description: Plugin Captcha intended to prove that the visitor is a human being and not a spam robot. Plugin asks the visitor to answer a math question.
+Description: #1 super security anti-spam captcha plugin for Wordpress forms.
 Author: BestWebSoft
 Text Domain: captcha
 Domain Path: /languages
-Version: 4.2.0
+Version: 4.2.1
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -30,7 +30,7 @@ License: GPLv2 or later
 if ( ! function_exists( 'cptch_admin_menu' ) ) {
 	function cptch_admin_menu() {
 		bws_general_menu();
-		$settings_page = add_submenu_page( 'bws_plugins', __( 'Captcha Settings', 'captcha' ), __( 'Captcha', 'captcha' ), 'manage_options', "captcha.php", 'cptch_settings_page' );
+		$settings_page = add_submenu_page( 'bws_panel', __( 'Captcha Settings', 'captcha' ), __( 'Captcha', 'captcha' ), 'manage_options', "captcha.php", 'cptch_settings_page' );
 		add_action( "load-{$settings_page}", 'cptch_add_tabs' );
 	}
 }
