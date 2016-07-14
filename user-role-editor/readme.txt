@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 4.5.1
-Stable tag: 4.25.2
+Tested up to: 4.5.3
+Stable tag: 4.26.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,17 @@ If you wish to check available translations or help with plugin translation to y
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog ==
+
+= [4.26.1] 14.07.2016 =
+* Fix: some bugs, like 'undefined property' notices, etc.
+
+= [4.26] 14.07.2016 =
+* New: User capabilities were groupd by functionality for more convenience.
+* Update: URE_KEY_CAPABILITY constant was changed from 'ure_edit_roles' to 'ure_manage_options'. To make possible for non-admin users access to the User Role Editor without access to the 'administrator' role and users with 'administrator' role.
+* Update: User receives full access to User Role Editor under WordPress multisite if he has 'manage_network_plugins' capability instead of 'manager_network_users' as earlier. This allows to give user ability to edit network users without giving him access to the User Role Editor.
+* Update: Multisite: use WordPress's global $current_site->blog_id to define main blog ID instead of selecting the 1st one from the sorted list of blogs.
+* Update: use WP transients at URE_Lib::_get_post_types() to reduce response time.
+* Update: various internal optimizations.
 
 = [4.25.2] 03.05.2016 =
 * Update: Enhanced inner processing of available custom post types list.
