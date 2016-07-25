@@ -243,15 +243,7 @@ class URE_Capabilities_Groups_Manager {
     // end of get_woocommerce_capabilities()
     
     
-    public function get_cap_groups($cap_id, $built_in_wp_caps=null) {
-        
-        if (empty($built_in_wp_caps)) {
-            $built_in_wp_caps = $this->get_built_in_wp_caps();
-        }
-        
-        if (isset($built_in_wp_caps[$cap_id])) {
-            return $built_in_wp_caps[$cap_id];
-        }
+    private function get_groups_for_custom_cap($cap_id) {
         
         $wc_caps = $this->get_woocommerce_capabilities();
         $groups = array();
@@ -266,11 +258,31 @@ class URE_Capabilities_Groups_Manager {
         
         if (empty($groups)) {
             $groups = array('custom');
+        }                
+        
+        return $groups;
+    }
+    // end of get_groups_for_custom_cap()
+    
+    
+    public function get_cap_groups($cap_id, $built_in_wp_caps=null) {
+        
+        if (empty($built_in_wp_caps)) {
+            $built_in_wp_caps = $this->get_built_in_wp_caps();
         }
+        
+        if (isset($built_in_wp_caps[$cap_id])) {
+            $groups = $built_in_wp_caps[$cap_id];            
+        } else {
+            $groups = $this->get_groups_for_custom_cap($cap_id);
+        }
+         
         $groups = apply_filters('ure_custom_capability_groups', $groups, $cap_id);
+        
+        $groups[] = 'all'; // Every capability belongs to the 'all' group
         
         return $groups;
     }
     // end of get_cap_groups()
 }
-// end of class URE_Capabilities_Groups
+// end of class URE_Capabilities_Groups_Manager

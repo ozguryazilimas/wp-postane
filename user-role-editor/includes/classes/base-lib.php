@@ -54,7 +54,7 @@ class URE_Base_Lib {
     public function get($property_name) {
         
         if (!property_exists($this, $property_name)) {
-            syslog(LOG_ERR, 'URE_Lib class does not have such property '. $property_name);
+            syslog(LOG_ERR, 'Lib class does not have such property '. $property_name);
         }
         
         return $this->$property_name;

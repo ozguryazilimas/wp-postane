@@ -351,7 +351,8 @@ if ($multisite && !is_network_admin()) {
         }
         if ($multisite && $active_for_network && !is_network_admin() && is_main_site(get_current_blog_id()) && is_super_admin()) {
             $hint = esc_html__('If checked, then apply action to ALL sites of this Network');
-            if ($this->apply_to_all) {
+            $apply_to_all = $this->lib->get('apply_to_all');
+            if ($apply_to_all) {
                 $checked = 'checked="checked"';
                 $fontColor = 'color:#FF0000;';
             } else {
