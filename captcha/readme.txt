@@ -4,7 +4,7 @@ Donate link: http://bestwebsoft.com/donate/
 Tags: captcha, capcha, security, spam blocker, simple captcha, antispam, protection, text captcha, captcha numbers, captcha plugin, web form protection, captcha protection
 Requires at least: 3.8
 Tested up to: 4.5.3
-Stable tag: 4.2.1
+Stable tag: 4.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -134,7 +134,7 @@ Donations play an important role in supporting open-source projects. We greatly 
 
 1. Upload the `captcha` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin via the 'Plugins' menu in WordPress.
-3. Plugin settings are located in "BWS Plugins" > "Captcha".
+3. Plugin settings are located in "BWS Panel" > "Captcha".
 
 [View a Step-by-step Instruction on Captcha Installation](https://docs.google.com/document/d/1DN2yYCvDyK2LqmbWw6xmUNLbb0awOVDZ_dOgIXod-Jw/edit).
 
@@ -209,6 +209,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 8. Captcha Whitelist.
 
 == Changelog ==
+
+= V4.2.2 - 15.07.2016 =
+* Update : BWS panel section was updated.
 
 = V4.2.1 - 04.07.2016 =
 * Update : The French file has been updated.
@@ -593,6 +596,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 * Select functionality of mathematical actions and level of their difficulty are implemented.
 
 == Upgrade Notice ==
+
+= V4.2.2 =
+Usability improved.
 
 = V4.2.1 =
 The French file has been updated. BWS panel section was updated.

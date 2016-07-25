@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Captcha by BestWebSoft
-Plugin URI: http://bestwebsoft.com/products/
+Plugin URI: http://bestwebsoft.com/products/captcha/
 Description: #1 super security anti-spam captcha plugin for Wordpress forms.
 Author: BestWebSoft
 Text Domain: captcha
 Domain Path: /languages
-Version: 4.2.1
+Version: 4.2.2
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
