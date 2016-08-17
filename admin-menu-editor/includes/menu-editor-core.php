@@ -20,6 +20,11 @@ require $thisDirectory . '/module.php';
 
 class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	const WPML_CONTEXT = 'admin-menu-editor menu texts';
+
+	const VERBOSITY_LOW = 1;
+	const VERBOSITY_NORMAL = 2;
+	const VERBOSITY_VERBOSE = 5;
+
 	/**
 	 * @var string The heading tag to use for admin pages.
 	 */
@@ -149,6 +154,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//This usually applies to new items added by other plugins and, in Multisite, items that exist on
 			//the current site but did not exist on the site where the user last edited the menu configuration.
 			'unused_item_position' => 'relative', //"relative" or "bottom".
+
+			//Verbosity level of menu permission errors.
+			'error_verbosity' => self::VERBOSITY_NORMAL,
 		);
 		$this->serialize_with_json = false; //(Don't) store the options in JSON format
 
@@ -447,7 +455,20 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			if ( !$this->user_can_access_current_page() ) {
 				$this->log_security_note('DENY access.');
 				$message = 'You do not have sufficient permissions to access this admin page.';
-				if ( $this->options['security_logging_enabled'] ) {
+
+				if ( ($this->options['error_verbosity'] >= self::VERBOSITY_NORMAL) ) {
+					$current_item = $this->get_current_menu_item();
+					if ( isset($current_item, $current_item['access_decision_reason']) ) {
+						$message .= sprintf(
+							'<p>Reason: %s</p>',
+							htmlentities($current_item['access_decision_reason'])
+						);
+					}
+				}
+
+				if ($this->options['security_logging_enabled']
+					|| ($this->options['error_verbosity'] >= self::VERBOSITY_VERBOSE)
+				) {
 					$message .= '<p><strong>Admin Menu Editor security log</strong></p>';
 					$message .= $this->get_formatted_security_log();
 				}
@@ -642,6 +663,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		//Lodash library
 		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash.min.js', $this->plugin_file));
+		//Knockout
+		wp_register_auto_versioned_script('knockout', plugins_url('js/knockout.js', $this->plugin_file));
 
 		//Move admin notices (e.g. "Settings saved") below editor tabs.
 		//This is a separate script because it has to run after common.js which is loaded in the page footer.
@@ -715,14 +738,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		foreach($logins_to_include as $login) {
 			$user = get_user_by('login', $login);
 			if ( !empty($user) ) {
-				$users[$login] = array(
-					'user_login' => $user->get('user_login'),
-					'id' => $user->ID,
-					'roles' => !empty($user->roles) ? (array)($user->roles) : array(),
-					'capabilities' => $this->castValuesToBool($user->caps),
-					'display_name' => $user->display_name,
-					'is_super_admin' => is_multisite() && is_super_admin($user->ID),
-				);
+				$users[$login] = $this->user_to_property_map($user);
 			}
 		}
 
@@ -763,17 +779,12 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//Remove the default jQuery Form plugin to prevent conflicts with our custom version.
 		wp_dequeue_script('jquery-form');
 
-		$showExtraIcons = (boolean)$this->options['show_extra_icons'];
-		if ( isset($_COOKIE['ame-show-extra-icons']) && is_numeric($_COOKIE['ame-show-extra-icons']) ) {
-			$showExtraIcons = intval($_COOKIE['ame-show-extra-icons']) > 0;
-		}
-
 		//The editor will need access to some of the plugin data and WP data.
 		$script_data = array(
 			'imagesUrl' => plugins_url('images', $this->plugin_file),
 			'adminAjaxUrl' => admin_url('admin-ajax.php'),
 			'hideAdvancedSettings' => (boolean)$this->options['hide_advanced_settings'],
-			'showExtraIcons' => $showExtraIcons,
+			'showExtraIcons' => true, //No longer used.
 			'submenuIconsEnabled' => $this->options['submenu_icons_enabled'],
 
 			'hideAdvancedSettingsNonce' => wp_create_nonce('ws_ame_save_screen_options'),
@@ -815,6 +826,24 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		);
 		$script_data = apply_filters('admin_menu_editor-script_data', $script_data);
 		wp_localize_script('menu-editor', 'wsEditorData', $script_data);
+	}
+
+	/**
+	 * Convert a WP_User instance to an associative array with the keys defined
+	 * in the AmeUserPropertyMap interface in actor-manager.ts.
+	 *
+	 * @param WP_User $user
+	 * @return array
+	 */
+	public function user_to_property_map($user) {
+		return array(
+			'user_login' => $user->get('user_login'),
+			'id' => $user->ID,
+			'roles' => !empty($user->roles) ? (array)($user->roles) : array(),
+			'capabilities' => $this->castValuesToBool($user->caps),
+			'display_name' => $user->display_name,
+			'is_super_admin' => is_multisite() && is_super_admin($user->ID),
+		);
 	}
 
 	/**
@@ -1588,8 +1617,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$item = ameMenuItem::apply_defaults($item);
 		$item = ameMenuItem::apply_filters($item, $item_type, $parent_file); //may cause side-effects
 
+		//Store the hierarchical menu title for errors and debugging messages.
+		$item['full_title'] = $item['menu_title'];
+		if ( isset($parent, $parent['menu_title']) ) {
+			$item['full_title'] = $parent['menu_title'] . ' → ' . $item['full_title'];
+		}
+
 		$item = $this->set_final_menu_capability($item, $parent);
-		if ( !$this->options['security_logging_enabled'] ) {
+		if ( !$this->should_store_security_log() ) {
 			unset($item['access_check_log']); //Throw away the log to conserve memory.
 		}
 		$this->add_access_lookup($item, $item_type);
@@ -1668,6 +1703,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			str_repeat('=', 79),
 			'Figuring out what capability the user will need to access this item...'
 		);
+		$debug_title = ameMenuItem::get($item, 'full_title', ameMenuItem::get($item, 'menu_title', '[untitled menu]'));
 
 		//The user can configure the plugin to automatically hide all submenu items if the parent menu is hidden.
 		//This is the opposite of how WordPress usually handles submenu permissions, so it's optional.
@@ -1699,6 +1735,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//Check if the current user can access this menu.
 		$user_has_access = true;
 		$cap_to_use = '';
+
+		$user_has_default_cap = null;
+		$reason = isset($item['access_decision_reason']) ? $item['access_decision_reason'] : null;
+
 		if ( !empty($item['access_level']) ) {
 			$cap_to_use = $item['access_level'];
 
@@ -1720,6 +1760,16 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 					htmlentities($cap_to_use),
 					$user_has_cap ? 'HAS' : 'DOES NOT have'
 				);
+
+				$user_has_default_cap = $user_has_cap;
+				if ( is_null($reason) ) {
+					$reason = sprintf(
+						'The current user %1$s the "%2$s" capability that is required to access the "%3$s" menu item.',
+						$user_has_cap ? 'has' : 'doesn\'t have',
+						$cap_to_use,
+						$debug_title
+					);
+				}
 			}
 
 			$user_has_access = $user_has_access && $user_has_cap;
@@ -1729,6 +1779,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		if ( !empty($item['extra_capability']) ) {
+			$had_access_before_extra_cap = $user_has_access;
+
 			$user_has_cap = $this->current_user_can($item['extra_capability']);
 			$user_has_access = $user_has_access && $user_has_cap;
 			$cap_to_use = $item['extra_capability'];
@@ -1738,8 +1790,33 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				htmlentities($cap_to_use),
 				$user_has_cap ? 'HAS' : 'DOES NOT have'
 			);
+
+			//Provide a more detailed reason for situations where the extra cap disagrees.
+			if ( !$user_has_access ) {
+				if ( $had_access_before_extra_cap && !$user_has_cap ) {
+					$reason = sprintf(
+						'The current user doesn\'t have the extra capability "%1$s" that is required to access the "%2$s" menu item.',
+						$item['extra_capability'],
+						$debug_title
+					);
+				} else if ( $user_has_cap && !$user_has_default_cap && !is_null($user_has_default_cap) ) {
+					//Note: Will this ever show up? If the user doesn't have the required cap,
+					//WordPress won't even register the menu. AME won't be able to identify the menu for that user.
+					$reason = sprintf(
+						'The current user has the extra capability "%1$s". However, they don\'t ' .
+						'have the "%2$s" capability that is also required to access "%3$s".',
+						$item['extra_capability'],
+						$item['access_level'],
+						$debug_title
+					);
+				}
+			}
 		} else {
 			$item['access_check_log'][] = 'No "extra capability" set.';
+		}
+
+		if ( !is_null($reason) ) {
+			$item['access_decision_reason'] = $reason;
 		}
 
 		$capability = $user_has_access ? $cap_to_use : 'do_not_allow';
@@ -1935,6 +2012,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				}
 			}
 
+			//How verbose "access denied" errors should be.
+			if ( !empty($this->post['error_verbosity']) ) {
+				$error_verbosity = intval($this->post['error_verbosity']);
+				$valid_verbosity_levels = array(self::VERBOSITY_LOW, self::VERBOSITY_NORMAL, self::VERBOSITY_VERBOSE);
+				if ( in_array($error_verbosity, $valid_verbosity_levels) ) {
+					$this->options['error_verbosity'] = $error_verbosity;
+				}
+			}
 
 			$this->save_options();
 			wp_redirect(add_query_arg('updated', 1, $this->get_settings_page_url()));
@@ -2008,7 +2093,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * This includes the page heading and tab list.
 	 */
 	public function display_settings_page_header() {
-		echo '<div class="wrap">';
+		$wrap_classes = array('wrap');
+		if ( $this->is_pro_version() ) {
+			$wrap_classes[] = 'ame-is-pro-version';
+		} else {
+			$wrap_classes[] = 'ame-is-free-version';
+		}
+
+		echo '<div class="', implode(' ', $wrap_classes), '">';
 		printf(
 			'<%1$s id="ws_ame_editor_heading">%2$s</%1$s>',
 			self::$admin_heading_tag,
@@ -2669,7 +2761,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		return substr($string, -$len) === $suffix;
 	}
 
-	private function castValuesToBool($capabilities) {
+	public function castValuesToBool($capabilities) {
 		if ( !is_array($capabilities) ) {
 			if ( empty($capabilities) ) {
 				$capabilities = array();
@@ -2802,7 +2894,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * Get one of the plugin configuration values.
 	 *
 	 * @param string $name Option name.
-	 * @return mixed
+	 * @return mixed|null
 	 */
 	public function get_plugin_option($name) {
 		if ( array_key_exists($name, $this->options) ) {
@@ -2828,7 +2920,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * @param string|array $message The message to add tot he log, or an array of messages.
 	 */
 	private function log_security_note($message) {
-		if ( !$this->options['security_logging_enabled'] ) {
+		if ( !$this->should_store_security_log() ) {
 			return;
 		}
 		if ( is_array($message) ) {
@@ -2836,6 +2928,13 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		} else {
 			$this->security_log[] = $message;
 		}
+	}
+
+	private function should_store_security_log() {
+		return (
+			$this->options['security_logging_enabled']
+			|| ($this->options['error_verbosity'] >= self::VERBOSITY_VERBOSE)
+		);
 	}
 
 	/**

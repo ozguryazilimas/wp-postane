@@ -9,13 +9,6 @@ $is_second_toolbar_visible = isset($_COOKIE['ame-show-second-toolbar']) && (intv
 $is_compact_layout_enabled = isset($_COOKIE['ame-compact-layout']) && (intval($_COOKIE['ame-compact-layout']) === 1);
 $is_multisite = is_multisite();
 
-$wrap_classes = array('wrap');
-if ( $is_pro_version ) {
-	$wrap_classes[] = 'ame-is-pro-version';
-} else {
-	$wrap_classes[] = 'ame-is-free-version';
-}
-
 $icons = array(
 	'cut' => '/gnome-icon-theme/edit-cut-blue.png',
 	'copy' => '/gion/edit-copy.png',
@@ -68,7 +61,7 @@ if ( !empty($_GET['message']) ){
 
 include dirname(__FILE__) . '/../modules/access-editor/access-editor-template.php';
 $extrasDirectory = dirname(__FILE__) . '/../extras';
-if ( apply_filters('admin_menu_editor_is_pro', false) ) {
+if ( $is_pro_version ) {
 	include $extrasDirectory . '/menu-color-dialog.php';
 	include $extrasDirectory . '/copy-permissions-dialog.php';
 }
@@ -342,21 +335,36 @@ function ame_output_sort_buttons($icons) {
 ?>
 
 <!-- Menu icon selector widget -->
-<?php $iconSelectorClass = $editor_data['show_extra_icons'] ? 'ws_with_more_icons' : ''; ?>
-<div id="ws_icon_selector" class="<?php echo $iconSelectorClass; ?>" style="display: none;">
+<div id="ws_icon_selector" class="ws_with_more_icons" style="display: none;">
+
+	<div id="ws_icon_source_tabs">
+	<ul class="ws_tool_tab_nav">
+		<?php
+		$iconSelectorTabs = apply_filters(
+			'admin_menu_editor-icon_selector_tabs',
+			array('ws_core_icons_tab' => 'Dashicons')
+		);
+		foreach($iconSelectorTabs as $id => $caption) {
+			printf('<li><a href="#%s">%s</a></li>', esc_attr($id), $caption);
+		}
+		?>
+	</ul>
+
 	<?php
 	//Let the user select a custom icon via the media uploader.
 	//We only support the new WP 3.5+ media API. Hence the function_exists() check.
 	if ( function_exists('wp_enqueue_media') ):
-	?>
+		?>
 		<input type="button" class="button"
-		   id="ws_choose_icon_from_media"
-		   title="Upload an image or choose one from your media library"
-		   value="Media Library">
+		       id="ws_choose_icon_from_media"
+		       title="Upload an image or choose one from your media library"
+		       value="Media Library">
 		<div class="clear"></div>
-	<?php
+		<?php
 	endif;
 	?>
+
+	<div class="ws_tool_tab" id="ws_core_icons_tab">
 
 	<?php
 	//The old "menu-icon-something" icons are only available in WP 3.8.x and below. Newer versions use Dashicons.
@@ -462,16 +470,13 @@ function ame_output_sort_buttons($icons) {
 		<img src="<?php echo esc_attr(admin_url('images/loading.gif')); ?>">
 	</div>
 
+		<div class="clear"></div>
+	</div>
 
-	<?php if ($editor_data['dashicons_available']): ?>
-		<!-- Only show this button on recent WP versions where Dashicons are included. -->
-		<input type="button" class="button"
-		   id="ws_show_more_icons"
-		   title="Toggle additional icons"
-		   value="<?php echo esc_attr($editor_data['show_extra_icons'] ? 'Less &#x25B2;' : 'More &#x25BC;'); ?>">
-	<?php endif; ?>
+		<?php do_action('admin_menu_editor-icon_selector'); ?>
 
-	<div class="clear"></div>
+	</div><!-- tab container -->
+
 </div>
 
 <span id="ws-ame-screen-meta-contents" style="display:none;">
@@ -482,14 +487,6 @@ function ame_output_sort_buttons($icons) {
 			}
 		?> /> Hide advanced options
 	</label><br>
-
-	<label for="ws-show-extra-icons">
-		<input type="checkbox" id="ws-show-extra-icons"<?php
-		if ( $this->options['show_extra_icons'] ){
-			echo ' checked="checked"';
-		}
-		?> /> Show extra menu icons
-	</label>
 </span>
 
 
@@ -555,12 +552,13 @@ function ame_output_sort_buttons($icons) {
 </div>
 
 <?php
-if ( apply_filters('admin_menu_editor_is_pro', false) ) {
+if ( $is_pro_version ) {
 	include $extrasDirectory . '/page-dropdown.php';
 }
 ?>
 
 
+<!--suppress JSUnusedLocalSymbols These variables are actually used by menu-editor.js -->
 <script type='text/javascript'>
 var defaultMenu = <?php echo $editor_data['default_menu_js']; ?>;
 var customMenu = <?php echo $editor_data['custom_menu_js']; ?>;

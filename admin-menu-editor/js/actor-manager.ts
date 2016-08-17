@@ -81,11 +81,23 @@ class AmeRole extends AmeBaseActor {
 	}
 }
 
+interface AmeUserPropertyMap {
+	user_login: string;
+	display_name: string;
+	capabilities: CapabilityMap;
+	roles : string[];
+	is_super_admin: boolean;
+	id?: number;
+	avatar_html?: string;
+}
+
 class AmeUser extends AmeBaseActor {
 	userLogin: string;
+	userId: number = 0;
 	roles: string[];
 	isSuperAdmin: boolean = false;
 	groupActors: string[];
+	avatarHTML: string = '';
 
 	protected actorTypeSpecificity = 10;
 
@@ -94,13 +106,15 @@ class AmeUser extends AmeBaseActor {
 		displayName: string,
 		capabilities: CapabilityMap,
 		roles: string[],
-		isSuperAdmin: boolean = false
+		isSuperAdmin: boolean = false,
+	    userId?: number
 	) {
 		super('user:' + userLogin, displayName, capabilities);
 
 		this.userLogin = userLogin;
 		this.roles = roles;
 		this.isSuperAdmin = isSuperAdmin;
+		this.userId = userId || 0;
 
 		if (this.isSuperAdmin) {
 			this.groupActors.push(AmeSuperAdmin.permanentActorId);
@@ -108,6 +122,23 @@ class AmeUser extends AmeBaseActor {
 		for (var i = 0; i < this.roles.length; i++) {
 			this.groupActors.push('role:' + this.roles[i]);
 		}
+	}
+
+	static createFromProperties(properties: AmeUserPropertyMap): AmeUser {
+		let user = new AmeUser(
+			properties.user_login,
+			properties.display_name,
+			properties.capabilities,
+			properties.roles,
+			properties.is_super_admin,
+			properties.hasOwnProperty('id') ? properties.id : null
+		);
+
+		if (properties.avatar_html) {
+			user.avatarHTML = properties.avatar_html;
+		}
+
+		return user;
 	}
 }
 
@@ -149,14 +180,8 @@ class AmeActorManager {
 			this.roles[role.name] = role;
 		});
 
-		AmeActorManager._.forEach(users, (userDetails) => {
-			var user = new AmeUser(
-				userDetails.user_login,
-				userDetails.display_name,
-				userDetails.capabilities,
-				userDetails.roles,
-				userDetails.is_super_admin
-			);
+		AmeActorManager._.forEach(users, (userDetails: AmeUserPropertyMap) => {
+			var user = AmeUser.createFromProperties(userDetails);
 			this.users[user.userLogin] = user;
 		});
 

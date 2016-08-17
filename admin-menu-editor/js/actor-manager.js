@@ -68,14 +68,17 @@ var AmeRole = (function (_super) {
 }(AmeBaseActor));
 var AmeUser = (function (_super) {
     __extends(AmeUser, _super);
-    function AmeUser(userLogin, displayName, capabilities, roles, isSuperAdmin) {
+    function AmeUser(userLogin, displayName, capabilities, roles, isSuperAdmin, userId) {
         if (isSuperAdmin === void 0) { isSuperAdmin = false; }
         _super.call(this, 'user:' + userLogin, displayName, capabilities);
+        this.userId = 0;
         this.isSuperAdmin = false;
+        this.avatarHTML = '';
         this.actorTypeSpecificity = 10;
         this.userLogin = userLogin;
         this.roles = roles;
         this.isSuperAdmin = isSuperAdmin;
+        this.userId = userId || 0;
         if (this.isSuperAdmin) {
             this.groupActors.push(AmeSuperAdmin.permanentActorId);
         }
@@ -83,6 +86,13 @@ var AmeUser = (function (_super) {
             this.groupActors.push('role:' + this.roles[i]);
         }
     }
+    AmeUser.createFromProperties = function (properties) {
+        var user = new AmeUser(properties.user_login, properties.display_name, properties.capabilities, properties.roles, properties.is_super_admin, properties.hasOwnProperty('id') ? properties.id : null);
+        if (properties.avatar_html) {
+            user.avatarHTML = properties.avatar_html;
+        }
+        return user;
+    };
     return AmeUser;
 }(AmeBaseActor));
 var AmeSuperAdmin = (function (_super) {
@@ -112,7 +122,7 @@ var AmeActorManager = (function () {
             _this.roles[role.name] = role;
         });
         AmeActorManager._.forEach(users, function (userDetails) {
-            var user = new AmeUser(userDetails.user_login, userDetails.display_name, userDetails.capabilities, userDetails.roles, userDetails.is_super_admin);
+            var user = AmeUser.createFromProperties(userDetails);
             _this.users[user.userLogin] = user;
         });
         if (this.isMultisite) {

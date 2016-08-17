@@ -471,7 +471,9 @@ var baseField = {
 	visible: true,
 
 	write: null,
-	display: null
+	display: null,
+
+	tooltip: null
 };
 
 /*
@@ -672,19 +674,49 @@ var knownMenuFields = {
 		}
 	}),
 
-	'extra_capability' : $.extend({}, baseField, {
+	'required_capability_read_only' : $.extend({}, baseField, {
 		caption: 'Required capability',
+		defaultValue: 'none',
+		type: 'text',
+		tooltip: "Only users who have this capability can see the menu. "+
+			"The capability can't be changed because it's usually hard-coded in WordPress or the plugin that created the menu."+
+			"<br><br>Use the \"Extra capability\" field to restrict access to this menu.",
+
+		visible: function(menuItem) {
+			//Show only in the free version, on non-custom menus.
+			return !wsEditorData.wsMenuEditorPro && (menuItem.template_id !== '');
+		},
+
+		display: function(menuItem, displayValue, input) {
+			input.prop('readonly', true);
+			return getFieldValue(menuItem, 'access_level', '');
+		},
+
+		write: function(menuItem, value) {
+			//The required capability is read-only. Ignore writes.
+		}
+	}),
+
+	'extra_capability' : $.extend({}, baseField, {
+		caption: 'Extra capability',
 		defaultValue: 'read',
 		type: 'text',
 		addDropdown: 'ws_cap_selector',
+		tooltip: function(menuItem) {
+			if (menuItem.template_id === '') {
+				return 'Only users who have this capability can see the menu.';
+			}
+			return 'An additional capability check that is applied on top of the required capability.';
+		},
 
 		display: function(menuItem) {
-			//Permissions display is a little complicated and could use improvement.
 			var requiredCap = getFieldValue(menuItem, 'access_level', '');
 			var extraCap = getFieldValue(menuItem, 'extra_capability', '');
 
+			//On custom menus, show the default required cap when no extra cap is selected.
+			//Otherwise there would be no visible capability requirements at all.
 			var displayValue = extraCap;
-			if ((extraCap === '') || (extraCap === null)) {
+			if ((menuItem.template_id === '') && (extraCap === '')) {
 				displayValue = requiredCap;
 			}
 
@@ -697,13 +729,6 @@ var knownMenuFields = {
 			//Reset to default if the user clears the input.
 			if (value === '') {
 				menuItem.extra_capability = null;
-				return;
-			}
-
-			//It would be redundant to set an extra_capability that it matches access_level.
-			var requiredCap = getFieldValue(menuItem, 'access_level', '');
-			var extraCap = getFieldValue(menuItem, 'extra_capability', '');
-			if (extraCap === '' && value === requiredCap) {
 				return;
 			}
 
@@ -797,17 +822,24 @@ var knownMenuFields = {
 			var imageIcon = selectButton.find('img');
 
 			var matches = cssClass.match(/\b(ame-)?menu-icon-([^\s]+)\b/);
-			var dashiconMatches = iconUrl && iconUrl.match(/^\s*(dashicons-[a-z0-9\-]+)/);
+			var iconFontMatches = iconUrl && iconUrl.match(/^\s*((dashicons|ame-fa)-[a-z0-9\-]+)/);
 
 			//Icon URL takes precedence over icon class.
-			if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' && !dashiconMatches ) {
+			if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' && !iconFontMatches ) {
 				//Regular image icon.
 				cssIcon.hide();
 				imageIcon.prop('src', iconUrl).show();
-			} else if ( dashiconMatches ) {
-				//Dashicon.
+			} else if ( iconFontMatches ) {
+				cssIcon.removeClass().addClass('icon16');
+				if ( iconFontMatches[2] === 'dashicons' ) {
+					//Dashicon.
+					cssIcon.addClass('dashicons ' + iconFontMatches[1]);
+				} else if ( iconFontMatches[2] === 'ame-fa' ) {
+					//FontAwesome icon.
+					cssIcon.addClass('ame-fa ' + iconFontMatches[1]);
+				}
 				imageIcon.hide();
-				cssIcon.removeClass().addClass('icon16 dashicons ' + dashiconMatches[1]).show();
+				cssIcon.show();
 			} else if ( matches ) {
 				//Other CSS-based icon.
 				imageIcon.hide();
@@ -1001,7 +1033,11 @@ function buildEditboxField(entry, field_name, field_settings){
 
 	var caption = '';
 	if (field_settings.standardCaption) {
-		caption = '<span class="ws_field_label_text">' + field_settings.caption + '</span><br>';
+		var tooltip = '';
+		if (field_settings.tooltip !== null) {
+			tooltip = ' <a class="ws_field_tooltip_trigger"><div class="dashicons dashicons-info"></div></a>';
+		}
+		caption = '<span class="ws_field_label_text">' + field_settings.caption + tooltip + '</span><br>';
 	}
 	var editField = $('<div>' + caption + '</div>')
 		.attr('class', className)
@@ -1216,6 +1252,9 @@ function updateItemEditor(containerNode) {
             isDefault = (getFieldValue(menuItem, 'extra_capability', '') === '')
 				&& isEmptyObject(menuItem.grant_access)
 				&& (!getFieldValue(menuItem, 'restrict_access_to_items', false));
+        } else if (fieldName === 'required_capability_read_only') {
+        	isDefault = true;
+	        hasADefaultValue = true;
         }
 
 		field.toggleClass('ws_has_no_default', !hasADefaultValue);
@@ -2372,6 +2411,9 @@ function ameOnDomReady() {
 	var iconSelector = $('#ws_icon_selector');
 	var currentIconButton = null; //Keep track of the last clicked icon button.
 
+	var iconSelectorTabs = iconSelector.find('#ws_icon_source_tabs');
+	iconSelectorTabs.tabs();
+
 	//When the user clicks one of the available icons, update the menu item.
 	iconSelector.on('click', '.ws_icon_option', function() {
 		var selectedIcon = $(this).addClass('ws_selected_icon');
@@ -2425,33 +2467,33 @@ function ameOnDomReady() {
 		//Highlight the currently selected icon.
 		iconSelector.find('.ws_selected_icon').removeClass('ws_selected_icon');
 
-		var expandSelector = false;
+		var selectedIcon = null;
 		var classMatches = cssClass.match(/\b(ame-)?menu-icon-([^\s]+)\b/);
-		//Dashicons are set via the icon URL field, but they are actually CSS-based.
-		var dashiconMatches = iconUrl && iconUrl.match('^\s*(dashicons-[a-z0-9\-]+)\s*$');
+		//Dashicons and FontAwesome icons are set via the icon URL field, but they are actually CSS-based.
+		var iconFontMatches = iconUrl && iconUrl.match('^\s*((?:dashicons|ame-fa)-[a-z0-9\-]+)\s*$');
 
-		if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' && !dashiconMatches ) {
+		if ( iconUrl && iconUrl !== 'none' && iconUrl !== 'div' && !iconFontMatches ) {
 			var currentIcon = iconSelector.find('.ws_icon_option img[src="' + iconUrl + '"]').first().closest('.ws_icon_option');
 			if ( currentIcon.length > 0 ) {
-				currentIcon.addClass('ws_selected_icon').show();
+				selectedIcon = currentIcon.addClass('ws_selected_icon').show();
 			} else {
 				//Display and highlight the custom image.
 				customImageOption.find('img').prop('src', iconUrl);
 				customImageOption.addClass('ws_selected_icon').show().data('icon-url', iconUrl);
+				selectedIcon = customImageOption;
 			}
-		} else if ( classMatches || dashiconMatches ) {
-			//Highlight the icon that corresponds to the current CSS class or Dashicon name.
-			var iconClass = dashiconMatches ? dashiconMatches[1] : ((classMatches[1] ? classMatches[1] : '') + 'icon-' + classMatches[2]);
-			var selectedIcon = iconSelector.find('.' + iconClass).closest('.ws_icon_option').addClass('ws_selected_icon');
-			//If the icon is one of those hidden by default, automatically expand the selector so it becomes visible.
-			if (selectedIcon.hasClass('ws_icon_extra')) {
-				expandSelector = true;
-			}
+		} else if ( classMatches || iconFontMatches ) {
+			//Highlight the icon that corresponds to the current CSS class or Dashicon/FontAwesome icon.
+			var iconClass = iconFontMatches ? iconFontMatches[1] : ((classMatches[1] ? classMatches[1] : '') + 'icon-' + classMatches[2]);
+			selectedIcon = iconSelector.find('.' + iconClass).closest('.ws_icon_option').addClass('ws_selected_icon');
 		}
 
-		expandSelector = expandSelector || (!!wsEditorData.showExtraIcons); //Second argument to toggleClass() must be a boolean, not just truthy/falsy.
-		iconSelector.toggleClass('ws_with_more_icons', expandSelector);
-		$('#ws_show_more_icons').val(expandSelector ? 'Less \u25B2' : 'More \u25BC');
+		//Activate the tab that contains the icon.
+		var activeTabId = selectedIcon.closest('.ws_tool_tab').prop('id'),
+			activeTabItem = iconSelectorTabs.find('a[href="#' + activeTabId + '"]').closest('li');
+		if (activeTabItem.length > 0) {
+			iconSelectorTabs.tabs('option', 'active', activeTabItem.index());
+		}
 
 		iconSelector.show();
 		iconSelector.position({ //Requires jQuery UI.
@@ -2527,16 +2569,6 @@ function ameOnDomReady() {
 
         frame.open();
 		iconSelector.hide();
-	});
-
-	//Show/hide additional icons.
-	$('#ws_show_more_icons').click(function() {
-		iconSelector.toggleClass('ws_with_more_icons');
-		wsEditorData.showExtraIcons = iconSelector.hasClass('ws_with_more_icons');
-		$(this).val(wsEditorData.showExtraIcons ? 'Less \u25B2' : 'More \u25BC');
-
-		//Remember the user's choice.
-		$.cookie('ame-show-extra-icons', wsEditorData.showExtraIcons ? '1' : '0', {expires: 90});
 	});
 
 	//Hide the icon selector if the user clicks outside of it.
@@ -4137,6 +4169,10 @@ function ameOnDomReady() {
 		});
 	}
 
+	/******************************************************************
+	                      Tooltips and hints
+	 ******************************************************************/
+
 
 	//Set up tooltips
 	$('.ws_tooltip_trigger').qtip({
@@ -4147,6 +4183,49 @@ function ameOnDomReady() {
 			fixed: true,
 			delay: 300
 		}
+	});
+
+	//Set up menu field toltips.
+	menuEditorNode.on('mouseenter click', '.ws_edit_field .ws_field_tooltip_trigger', function(event) {
+		var $trigger = $(this),
+			fieldName = $trigger.closest('.ws_edit_field').data('field_name');
+
+		if (knownMenuFields[fieldName].tooltip === null) {
+			return;
+		}
+
+		var tooltipText = 'Invalid tooltip';
+		if (typeof knownMenuFields[fieldName].tooltip === 'string') {
+			tooltipText = knownMenuFields[fieldName].tooltip;
+		} else if (typeof knownMenuFields[fieldName].tooltip === 'function') {
+			tooltipText = function() {
+				var $theTrigger = $(this),
+					menuItem = $theTrigger.closest('.ws_container').data('menu_item');
+				return knownMenuFields[fieldName].tooltip(menuItem);
+			}
+		}
+
+		$trigger.qtip({
+			overwrite: false,
+			content: {
+				text: tooltipText
+			},
+			show: {
+				event: event.type,
+				ready: true //Show immediately.
+			},
+			style: {
+				classes: 'qtip qtip-rounded ws_tooltip_node'
+			},
+			hide: {
+				fixed: true,
+				delay: 300
+			},
+			position: {
+				my: 'bottom center',
+				at: 'top center'
+			}
+		}, event);
 	});
 
 	//Set up the "additional permissions are available" tooltips.
@@ -4264,15 +4343,11 @@ jQuery(function($){
 
 	var screenOptions = $('#ws-ame-screen-meta-contents');
 	var hideSettingsCheckbox = screenOptions.find('#ws-hide-advanced-settings');
-	var extraIconsCheckbox = screenOptions.find('#ws-show-extra-icons');
-
 	hideSettingsCheckbox.prop('checked', wsEditorData.hideAdvancedSettings);
-	extraIconsCheckbox.prop('checked', wsEditorData.showExtraIcons);
 
 	//Update editor state when settings change
-	$('#ws-hide-advanced-settings, #ws-show-extra-icons').click(function(){
+	$('#ws-hide-advanced-settings').click(function(){
 		wsEditorData.hideAdvancedSettings = hideSettingsCheckbox.prop('checked');
-		wsEditorData.showExtraIcons = extraIconsCheckbox.prop('checked');
 
 		//Show/hide advanced settings dynamically as the user changes the setting.
 		if ($(this).is(hideSettingsCheckbox)) {
@@ -4295,9 +4370,6 @@ jQuery(function($){
 				'_ajax_nonce' : wsEditorData.hideAdvancedSettingsNonce
 			}
 		);
-
-		//We also have a cookie for the current user.
-		$.cookie('ame-show-extra-icons', wsEditorData.showExtraIcons ? '1' : '0', {expires: 90});
 	});
 
 	//Move our options into the screen meta panel
