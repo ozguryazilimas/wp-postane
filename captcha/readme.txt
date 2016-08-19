@@ -4,7 +4,7 @@ Donate link: http://bestwebsoft.com/donate/
 Tags: captcha, capcha, security, spam blocker, simple captcha, antispam, protection, text captcha, captcha numbers, captcha plugin, web form protection, captcha protection
 Requires at least: 3.8
 Tested up to: 4.6
-Stable tag: 4.2.3
+Stable tag: 4.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -180,9 +180,9 @@ f. Click "Save changes";
 
 In case when you don`t want to use own settings for displaying the CAPTCHA in your custom form, the settings from "General Options" tab from the plugin settings page will be used.
 
-2. Open the file with the form (where you would like to add CAPTCHA);
-3. Find a place to insert the code for the CAPTCHA output;
-4. Insert the following lines:
+3. Open the file with the form (where you would like to add CAPTCHA);
+4. Find a place to insert the code for the CAPTCHA output;
+5. Insert the following lines:
 
 `<?php echo apply_filters( 'cptch_display', '', 'my_contact_form' ); ?>`
 
@@ -190,7 +190,7 @@ In this example, the second parameter is a slug for your custom form. If you don
 
 `<?php echo apply_filters( 'cptch_display', '' ); ?>`
 
-5. After that, you should add the following lines to the function of the entered data checking:
+6. After that, you should add the following lines to the function of the entered data checking:
 
 `<?php $error = apply_filters( 'cptch_verify', true );
 if ( true === $error ) { /* the CAPTCHA answer is right */
@@ -204,7 +204,7 @@ If there is a variable in the check function responsible for the errors output, 
 = I got the message "On your site uses functions ... that are deprecated". What should I do? =
 
 Starting with version 4.2.3, we have changed the functionality for faster and more correct plugin work.
-You need to replace the output and response checking for the CAPTCHA in your form according to the instruction by the link http://support.bestwebsoft.com/hc/en-us/articles/202353439 or the appropriate point in the FAQ (see "I would like to add Captcha to the custom form on my website. How can I do this? ").
+You need to replace the output and response checking for the CAPTCHA in your form according to the instruction by the link <http://support.bestwebsoft.com/hc/en-us/articles/202353439> or the appropriate point in the FAQ (see "I would like to add Captcha to the custom form on my website. How can I do this? ").
 
 After making changes, simply close the message in the admin panel.
 
@@ -238,6 +238,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 8. Captcha Whitelist.
 
 == Changelog ==
+
+= V4.2.4 - 18.08.2016 =
+* Bugfix : The bug with the update of the plugin database has been fixed.
 
 = V4.2.3 - 15.08.2016 =
 * NEW : An ability to choose own CAPTCHA settings for each form which is compatible with the plugin.
@@ -635,6 +638,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 * Select functionality of mathematical actions and level of their difficulty are implemented.
 
 == Upgrade Notice ==
+
+= V4.2.4 =
+Bugs fixed.
 
 = V4.2.3 =
 New features added. Changes related to API functionality implemented. Functionality expanded. Functionality improved. Usability improved. The compatibility with new WordPress version updated. Bugs fixed.
