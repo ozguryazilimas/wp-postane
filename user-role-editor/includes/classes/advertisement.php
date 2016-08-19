@@ -59,16 +59,20 @@ class URE_Advertisement {
 	  			
 	
 	/**
-	 * Output all existed ads slots
-	 */
-	public function display() {
-	
-		foreach ($this->slots as $slot) {
-			echo $slot."\n";
-		}
-		
-	}
-	// end of display()
-	
-}
+     * Output all existed ads slots
+     */
+    public function display() {
+?>
+    <div id="ure-sidebar" class="ure_table_cell" >
+<?php
+        foreach ($this->slots as $slot) {
+            echo $slot . "\n";
+        }
+?>
+    </div>     
+        <?php
+    }
+
+        // end of display()
+    }
 // end of ure_Advertisement

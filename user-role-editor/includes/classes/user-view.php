@@ -79,7 +79,7 @@ class URE_User_View extends URE_View {
         
         return $user_info;
     }
-    // end of build_user_info()
+    // end of get_user_info()
     
     
     private function show_primary_role_dropdown_list($user_roles) {
@@ -132,11 +132,11 @@ class URE_User_View extends URE_View {
         $user_info = $this->get_user_info();        
 ?>
 
-<div class="has-sidebar-content">
-<?php
-        $this->display_box_start(esc_html__('Change capabilities for user', 'user-role-editor'). $user_info, 'min-width:1000px;');
- 
-?>
+<div class="postbox" style="float:left;min-width:1000px;width: 100%;">
+    <div id="ure_user_caps_header">
+        <span id="ure_user_caps_title"><?php esc_html_e('Change capabilities for user', 'user-role-editor')?></span> <?php echo $user_info;?>
+    </div>
+    <div class="inside"> 
 <table cellpadding="0" cellspacing="0" style="width: 100%;">
 	<tr>
 		<td>&nbsp;</td>		
@@ -168,14 +168,14 @@ class URE_User_View extends URE_View {
 		</td>
 	</tr>	
 	<tr>
-		<td class="ure-user-roles">
-			<div style="margin-bottom: 5px; font-weight: bold;"><?php esc_html_e('Primary Role:', 'user-role-editor'); ?></div>
+		<td id="ure_user_roles">
+			<div class="ure-user-role-section-title"><?php esc_html_e('Primary Role:', 'user-role-editor'); ?></div>
 <?php 
     $this->show_primary_role_dropdown_list($this->user_to_edit->roles);
 
     if (function_exists('bbp_filter_blog_editable_roles') ) {  // bbPress plugin is active
 ?>	
-	<div style="margin-top: 5px;margin-bottom: 5px; font-weight: bold;"><?php esc_html_e('bbPress Role:', 'user-role-editor'); ?></div>
+	<div class="ure-user-role-section-title" style="margin-top: 5px;"><?php esc_html_e('bbPress Role:', 'user-role-editor'); ?></div>
 <?php
         $dynamic_roles = bbp_get_dynamic_roles();
         $bbp_user_role = bbp_get_user_role($this->user_to_edit->ID);
@@ -195,12 +195,9 @@ class URE_User_View extends URE_View {
 	</tr>
 </table>
   <input type="hidden" name="object" value="user" />
-  <input type="hidden" name="user_id" value="<?php echo $this->user_to_edit->ID; ?>" />
-<?php
-  $this->display_box_end();
-?>
-  
-</div>        
+  <input type="hidden" name="user_id" value="<?php echo $this->user_to_edit->ID; ?>" /> 
+    </div>  
+</div>
 <?php
     }
     // end of display()

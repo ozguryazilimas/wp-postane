@@ -13,6 +13,8 @@ class URE_Capabilities_Groups_Manager {
     private static $instance = null;
     private $lib = null;
     private $groups = null;
+    private $built_in_wp_caps = null;
+    private $cpt_caps = null;
     
     
     public static function get_instance() {
@@ -30,6 +32,8 @@ class URE_Capabilities_Groups_Manager {
     private function __construct() {
         
         $this->lib = URE_Lib::get_instance();
+        $this->_get_built_in_wp_caps();
+        $this->_get_all_custom_post_types_capabilities();
         
     }
     // end of __construct()
@@ -56,7 +60,7 @@ class URE_Capabilities_Groups_Manager {
             $this->groups[$post_type->name] = array('caption'=>$post_type->labels->name, 'parent'=>'custom_post_types', 'level'=>2);
         }
     }
-    // add_custom_post_types()
+    // end of add_custom_post_types()
     
     
     public function get_groups_tree() {
@@ -96,7 +100,7 @@ class URE_Capabilities_Groups_Manager {
      * 
      * @return array 
      */
-    public function get_built_in_wp_caps() {
+    private function _get_built_in_wp_caps() {
 
         $wp_version = get_bloginfo('version');
         $multisite = $this->lib->get('multisite');
@@ -186,27 +190,36 @@ class URE_Capabilities_Groups_Manager {
         
         $caps = apply_filters('ure_built_in_wp_caps', $caps);
         
-        return $caps;
+        $this->built_in_wp_caps = $caps;
+        
+        return $this->built_in_wp_caps;
+    }
+    // end of _get_built_in_wp_caps()
+    
+    
+    public function get_built_in_wp_caps() {
+        
+        return $this->built_in_wp_caps;
     }
     // end of get_built_in_wp_caps()
 
     
-    private function get_custom_post_type_capabilities($post_type, $post_edit_caps, &$cpt_caps) {
+    private function get_custom_post_type_capabilities($post_type, $post_edit_caps) {
         foreach($post_edit_caps as $capability) {
             if (!isset($post_type->cap->$capability)) {
                 continue;                    
             }
             $cap = $post_type->cap->$capability;
-            if (!isset($cpt_caps[$cap])) {
-                $cpt_caps[$cap] = array('custom', 'custom_post_types');
+            if (!isset($this->cpt_caps[$cap])) {
+                $this->cpt_caps[$cap] = array('custom', 'custom_post_types');
             }
-            $cpt_caps[$cap][] = $post_type->name;                
+            $this->cpt_caps[$cap][] = $post_type->name;
         }
     }
     // end of get_custom_post_type_capabilities()
     
     
-    private function get_all_custom_post_types_capabilities() {
+    private function _get_all_custom_post_types_capabilities() {
         
         $post_edit_caps = $this->lib->get_edit_post_capabilities();        
         $post_types = get_post_types(array(), 'objects');
@@ -215,7 +228,7 @@ class URE_Capabilities_Groups_Manager {
         if ($post_types['attachment']->cap->edit_posts=='edit_posts') {
             $built_in_pt[] = 'attachment';
         }
-        $cpt_caps = array();
+        $this->cpt_caps = array();
         foreach($post_types as $post_type) {
             if (!isset($_post_types[$post_type->name])) {
                 continue;
@@ -226,14 +239,14 @@ class URE_Capabilities_Groups_Manager {
             if (!isset($post_type->cap)) {
                 continue;
             }
-            $this->get_custom_post_type_capabilities($post_type, $post_edit_caps, $cpt_caps);
+            $this->get_custom_post_type_capabilities($post_type, $post_edit_caps);
         }
         
-        return $cpt_caps;
+        return $this->cpt_caps;
     }
-    // end of get_custom_post_types_capabilities()
+    // end of _get_all_custom_post_types_capabilities()
     
-    
+        
     private function get_woocommerce_capabilities() {
         
         $caps = array();
@@ -251,9 +264,8 @@ class URE_Capabilities_Groups_Manager {
             $groups = $wc_caps[$cap_id];
         }
         
-        $cpt_caps = $this->get_all_custom_post_types_capabilities();
-        if (isset($cpt_caps[$cap_id])) {
-            $groups = $cpt_caps[$cap_id];
+        if (isset($this->cpt_caps[$cap_id])) {
+            $groups = $this->cpt_caps[$cap_id];
         }
         
         if (empty($groups)) {
@@ -266,12 +278,8 @@ class URE_Capabilities_Groups_Manager {
     
     
     public function get_cap_groups($cap_id, $built_in_wp_caps=null) {
-        
-        if (empty($built_in_wp_caps)) {
-            $built_in_wp_caps = $this->get_built_in_wp_caps();
-        }
-        
-        if (isset($built_in_wp_caps[$cap_id])) {
+                
+        if (isset($this->built_in_wp_caps[$cap_id])) {
             $groups = $built_in_wp_caps[$cap_id];            
         } else {
             $groups = $this->get_groups_for_custom_cap($cap_id);
@@ -284,5 +292,6 @@ class URE_Capabilities_Groups_Manager {
         return $groups;
     }
     // end of get_cap_groups()
+        
 }
 // end of class URE_Capabilities_Groups_Manager

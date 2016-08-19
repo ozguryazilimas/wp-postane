@@ -19,6 +19,9 @@ class URE_View {
     }
     // end of __construct()
     
+    public function display() {}
+    
+    public function toolbar() {}
     
     /**
      * display opening part of the HTML box with title and CSS style
@@ -46,15 +49,22 @@ class URE_View {
         <?php
     }
     // end of display_box_end()
-
+        
 
     public function show_caps_groups() {
         $groups = URE_Capabilities_Groups_Manager::get_instance();
         $groups_list = $groups->get_groups_tree();
         $output = '<ul id="ure_caps_groups_list">'. PHP_EOL;
         foreach($groups_list as $group_id=>$group) {
-            $spacer = $group_id=='all' ? '' : str_repeat('&nbsp;', $group['level']*2) .'- ';
-            $output .= '<li id="ure_caps_group_'. $group_id .'">'. $spacer . $group['caption'] .'</li>'. PHP_EOL;
+            if ($group_id=='all') {
+                $spacer = '';
+                $subgroup = '';
+            } else {
+                $spacer =  'style="padding-left: '. 15*$group['level'] .'px"';
+                $subgroup = '- ';
+            }
+            $output .= '<li id="ure_caps_group_'. $group_id .'" '. $spacer .'>' . 
+                    $subgroup . $group['caption'] .'</li>'. PHP_EOL;
         }
         $output .= '</ul>'. PHP_EOL;
         
@@ -124,7 +134,8 @@ class URE_View {
         $user_is_ure_admin = current_user_can($key_capability);
         $ure_caps = $this->lib->get_ure_caps();
         
-        $output = '';
+        $output = '<div id="ure_caps_list_container">'
+                . '<div id="ure_caps_list">';
         foreach ($full_capabilities as $capability) {    
             $cap_id = $capability['inner'];
             if (!$user_is_ure_admin) { 
@@ -190,6 +201,7 @@ class URE_View {
             
             $output .= $cap_html;
         }
+        $output .= '</div></div>' ;
 
         echo $output;
     }
@@ -241,26 +253,40 @@ class URE_View {
  
     
     public function display_caps($for_role = true, $edit_mode=true) {
+        $caps_columns_quant = $this->lib->get('caps_columns_quant');
 ?>        
-    <table id="ure_role_caps" cellpadding="0" cellspacing="0">
+    <table id="ure_caps_container" cellpadding="0" cellspacing="0">
         <tr> 
-            <td id="ure_role_caps_groups_title"><?php esc_html_e('Group', 'user-role-editor');?></td>
-            <td id="ure_role_caps_select">
-                <input type="checkbox" id="ure_select_all_caps" name="ure_select_all_caps" value="ure_select_all_caps"/>
+            <td id="ure_caps_groups_title"><span style="font-weight: bold;"><?php esc_html_e('Group', 'user-role-editor');?></span> (<?php esc_html_e('Total', 'user-role-editor');?>/<?php esc_html_e('Granted', 'user-role-editor');?>)</td>
+            <td id="ure_caps_select">
+                <div class="ure-table">
+                    <div class="ure-table-cell">
+                        <input type="checkbox" id="ure_select_all_caps" name="ure_select_all_caps" value="ure_select_all_caps"/>                
+                    </div>
+                    <div class="ure-table-cell ure-caps-option nowrap">
+                        <?php esc_html_e('Quick filter:', 'user-role-editor'); ?>&nbsp;
+                        <input type="text" id="quick_filter" name="quick_filter" value="" size="20" onkeyup="ure_filter_capabilities(this.value);" />
+                    </div>                    
+                    <div class="ure-table-cell ure-caps-option nowrap">
+                        <?php esc_html_e('Columns:', 'user-role-editor');?>
+                        <select id="caps_columns_quant" name="caps_columns_quant" onchange="ure_change_caps_columns_quant();">
+                            <option value="1" <?php echo $this->lib->option_selected(1, $caps_columns_quant);?> >1</option>
+                            <option value="2" <?php echo $this->lib->option_selected(2, $caps_columns_quant);?> >2</option>
+                            <option value="3" <?php echo $this->lib->option_selected(3, $caps_columns_quant);?> >3</option>
+                        </select>
+                    </div>    
+                </div>
             </td>
-            <td id="ure_role_caps_quick_filter">
-                <?php esc_html_e('Quick filter:', 'user-role-editor'); ?>&nbsp;
-                <input type="text" id="quick_filter" name="quick_filter" value="" size="20" onkeyup="ure_filter_capabilities(this.value);" />
-            </td>
+            <td id="ure_toolbar_title">&nbsp;</td>
         </tr>    
         <tr>
-            <td class="ure-caps-cell" style="padding:0 10px 0 10px;">
+            <td id="ure_caps_groups_td" class="ure-caps-cell">
                 <?php $this->show_caps_groups(); ?>
             </td>
-            <td class="ure-caps-cell">
-                <?php $this->show_capabilities($for_role, $edit_mode); ?>
+            <td id="ure_caps_td" class="ure-caps-cell">
+                <?php $this->show_capabilities($for_role, $edit_mode); ?>                
             </td>
-            <td class="ure-caps-cell">
+            <td id="ure_toolbar_td" class="ure-caps-cell">
                 <?php $this->toolbar(); ?>
             </td>
         </tr>

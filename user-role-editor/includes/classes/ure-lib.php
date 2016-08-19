@@ -13,6 +13,8 @@
  */
 class Ure_Lib extends URE_Base_Lib {
 
+    const  TRANSIENT_EXPIRATION = 600;
+
     protected $roles = null;
     protected $notification = '';   // notification message to show on page
     protected $apply_to_all = 0;
@@ -23,6 +25,7 @@ class Ure_Lib extends URE_Base_Lib {
     protected $user_to_edit = '';
     protected $show_deprecated_caps = false;
     protected $caps_readable = false;
+    protected $caps_columns_quant = 1;
     protected $hide_pro_banner = false;
     protected $full_capabilities = false;
     protected $ure_object = 'role';  // what to process, 'role' or 'user'      
@@ -299,10 +302,21 @@ class Ure_Lib extends URE_Base_Lib {
     }
     // end of editor()
     
+    
+    private function get_ure_container_width() {
+        
+        $width = ($this->ure_object == 'user') ? 1300 : 1150;
+        if ($this->is_pro()) {
+            $width -= 200;
+        }
+        
+        return $width;
+    }
+    // end of get_ure_container_width()
+    
 
     protected function show_editor() {
-        $container_width = ($this->ure_object == 'user') ? 1400 : 1200;
-
+        //$container_width = $this->get_ure_container_width();
         $this->show_message($this->notification);
         if ($this->ure_object == 'user') {
             $view = new URE_User_View();
@@ -313,18 +327,9 @@ class Ure_Lib extends URE_Base_Lib {
         }
         ?>
         <div class="wrap">
-        		  <div id="ure-icon" class="icon32"><br/></div>
             <h1><?php _e('User Role Editor', 'user-role-editor'); ?></h1>
-            <div id="ure_container" style="min-width: <?php echo $container_width; ?>px;">
-                <div class="ure-sidebar" >
-        <?php
-        if (!$this->is_pro()) {
-            $view->advertise_commercials();
-        }
-        ?>            
-                </div>
-
-                <div class="has-sidebar" >
+            <div id="ure_container">                
+                <div id="user_role_editor" class="ure-table-cell" >
                     <form id="ure_form" method="post" action="<?php echo URE_WP_ADMIN_URL . URE_PARENT . '?page=users-' . URE_PLUGIN_FILE; ?>" >			
                         <div id="ure_form_controls">
         <?php
@@ -334,15 +339,20 @@ class Ure_Lib extends URE_Base_Lib {
                             <input type="hidden" name="action" value="update" />
                         </div>      
                     </form>		      
-        <?php
+<?php
         if (!$this->is_pro()) {
             $view->advertise_pro();
+        }
+?>
+                </div>
+<?php
+        if (!$this->is_pro()) {
+            $view->advertise_commercials();
         }
         $view->display_edit_dialogs();
         do_action('ure_dialogs_html');
         $view->output_confirmation_dialog();
-        ?>
-                </div>          
+?>            
             </div>
         </div>
         <?php
@@ -518,15 +528,31 @@ class Ure_Lib extends URE_Base_Lib {
     // end of process_user_request()
 
 	
-	protected function set_apply_to_all_from_post() {
-    if (isset($_POST['ure_apply_to_all'])) {
-        $this->apply_to_all = 1;
-    } else {
-        $this->apply_to_all = 0;
+    protected function get_apply_to_all_from_post() {
+        if (isset($_POST['ure_apply_to_all'])) {
+            $this->apply_to_all = 1;
+        } else {
+            $this->apply_to_all = 0;
+        }
     }
-}
-	// end of set_apply_to_all_from_post()
-	
+    // end of get_apply_to_all_from_post()
+
+    
+    protected function get_caps_columns_quant() {
+        if (isset($_POST['caps_columns_quant']) && in_array($_POST['caps_columns_quant'], array(1,2,3))) {
+            $value = (int) $_POST['caps_columns_quant'];
+            set_site_transient('ure_caps_columns_quant', $value, self::TRANSIENT_EXPIRATION);
+        } else {
+            $value = get_site_transient('ure_caps_columns_quant');
+            if ($value===false) {
+                $value = 1;
+            }
+        }
+        
+        $this->caps_columns_quant = $value;
+    }
+    // end of get_apply_to_all_from_post()
+    
 
     public function get_default_role() {
         $this->wp_default_role = get_option('default_role');
@@ -538,12 +564,12 @@ class Ure_Lib extends URE_Base_Lib {
         $this->caps_readable = get_site_transient('ure_caps_readable');
         if (false === $this->caps_readable) {
             $this->caps_readable = $this->get_option('ure_caps_readable');
-            set_site_transient('ure_caps_readable', $this->caps_readable, 600);
+            set_site_transient('ure_caps_readable', $this->caps_readable, self::TRANSIENT_EXPIRATION);
         }
         $this->show_deprecated_caps = get_site_transient('ure_show_deprecated_caps');
         if (false === $this->show_deprecated_caps) {
             $this->show_deprecated_caps = $this->get_option('ure_show_deprecated_caps');
-            set_site_transient('ure_caps_readable', $this->caps_readable, 600);
+            set_site_transient('ure_caps_readable', $this->caps_readable, self::TRANSIENT_EXPIRATION);
         }
 
         $this->hide_pro_banner = $this->get_option('ure_hide_pro_banner', 0);
@@ -559,7 +585,8 @@ class Ure_Lib extends URE_Base_Lib {
             $this->ure_object = 'role';
         }
 
-        $this->set_apply_to_all_from_post();
+        $this->get_apply_to_all_from_post();
+        $this->get_caps_columns_quant();
 
         return true;
     }

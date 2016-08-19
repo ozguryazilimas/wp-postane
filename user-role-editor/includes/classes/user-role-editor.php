@@ -778,7 +778,6 @@ class User_Role_Editor {
         
         wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
         wp_enqueue_script('jquery-ui-selectable', false, array('jquery-ui-core', 'jquery'));
-        wp_enqueue_script('jquery-ui-tabs', false, array('jquery-ui-core', 'jquery'));
         wp_register_script('ure-js', plugins_url('/js/ure-js.js', URE_PLUGIN_FULL_PATH));
         wp_enqueue_script('ure-js');
         wp_localize_script('ure-js', 'ure_data', array(
@@ -829,6 +828,7 @@ class User_Role_Editor {
     protected function load_settings_js() {
     
         wp_enqueue_script('jquery-ui-tabs', false, array('jquery-ui-core', 'jquery'));
+        do_action('ure_load_js_settings');
         
     }
     // end of load_settings_js()
