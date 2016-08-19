@@ -118,6 +118,9 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
     	if ($wpdb->collate == '' && $wpdb->charset == "utf8") {
 	        $charset_collate_bin_column .= " COLLATE utf8_bin";
 	    }
+    	if ($wpdb->collate == '' && $wpdb->charset == "utf8mb4") {
+	        $charset_collate_bin_column .= " COLLATE utf8mb4_bin";
+	    }
     }
     
 	$relevanssi_table = $wpdb->prefix . "relevanssi";	
@@ -219,6 +222,9 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 			} else {
 				if ($wpdb->collate == '' && $wpdb->charset == "utf8") {
 					$charset_collate_bin_column .= " COLLATE utf8_bin";
+				}
+				if ($wpdb->collate == '' && $wpdb->charset == "utf8mb4") {
+					$charset_collate_bin_column .= " COLLATE utf8mb4_bin";
 				}
 			}
 			

@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 3.5.3
+Tested up to: 4.6
+Stable tag: 3.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,14 +99,14 @@ important Relevanssi debugging trick](http://www.relevanssi.com/knowledge-base/q
 
 = How to index =
 Check the options to make sure they're to your liking, then click "Save indexing options and
-build the index". If everything's fine, you'll see the Relevanssi options screen again with a 
+build the index". If everything's fine, you'll see the Relevanssi options screen again with a
 message "Indexing successful!"
 
 If something fails, usually the result is a blank screen. The most common problem is a timeout:
 server ran out of time while indexing. The solution to that is simple: just return to Relevanssi
 screen (do not just try to reload the blank page) and click "Continue indexing". Indexing will
 continue. Most databases will get indexed in just few clicks of "Continue indexing". You can
-follow the process in the "State of the Index": if the amount of documents is growing, the 
+follow the process in the "State of the Index": if the amount of documents is growing, the
 indexing is moving along.
 
 If the indexing gets stuck, something's wrong. I've had trouble with some plugins, for example
@@ -147,7 +147,7 @@ for example, won't work with Relevanssi.
 
 Some plugins cause problems when indexing documents. These are generally plugins that use shortcodes
 to do something somewhat complicated. One such plugin is [MapPress Easy Google Maps](http://wordpress.org/extend/plugins/mappress-google-maps-for-wordpress/).
-When indexing, you'll get a white screen. To fix the problem, disable either the offending plugin 
+When indexing, you'll get a white screen. To fix the problem, disable either the offending plugin
 or shortcode expansion in Relevanssi while indexing. After indexing, you can activate the plugin
 again.
 
@@ -157,7 +157,7 @@ again.
 You can find solutions and answers at the [Relevanssi Knowledge Base](http://www.relevanssi.com/category/knowledge-base/).
 
 = Relevanssi doesn't work =
-If you the results don't change after installing and activating Relevanssi, the most likely 
+If you the results don't change after installing and activating Relevanssi, the most likely
 reason is that you have a call to `query_posts()` on your search results template. This confuses
 Relevanssi. Try removing the query_posts call and see what happens.
 
@@ -185,7 +185,7 @@ The various filtering methods work by listing either allowed or forbidden post i
 query WHERE clause. Using the `relevanssi_where` hook you can add your own restrictions to
 the WHERE clause.
 
-These restrictions must be in the general format of 
+These restrictions must be in the general format of
 ` AND doc IN (' . {a list of post ids, which could be a subquery} . ')`
 
 For more details, see where the filter is applied in the `relevanssi_search()` function. This
@@ -194,7 +194,7 @@ WHERE clauses and it is possible to break the search results completely by doing
 here.
 
 There's another filter hook, `relevanssi_hits_filter`, which lets you modify the hits directly.
-The filter passes an array, where index 0 gives the list of hits in the form of an array of 
+The filter passes an array, where index 0 gives the list of hits in the form of an array of
 post objects and index 1 has the search query as a string. The filter expects you to return an
 array containing the array of post objects in index 0 (`return array($your_processed_hit_array)`).
 
@@ -314,7 +314,7 @@ to get a widget that can execute PHP code.
 
 = Restricting searches with taxonomies =
 
-You can use taxonomies to restrict search results to posts and pages tagged with a certain 
+You can use taxonomies to restrict search results to posts and pages tagged with a certain
 taxonomy term. If you have a custom taxonomy of "People" and want to search entries tagged
 "John" in this taxonomy, just use `?s=keyword&people=John` in the URL. You should be able to use
 an input field in the search form to do this, as well - just name the input field with the name
@@ -386,6 +386,14 @@ removing those words helps to make the index smaller and searching faster.
 
 == Changelog ==
 
+= 3.5.4 =
+* Relevanssi had a bug that lead to inflated relevancy scores for posts.
+* Relevanssi can now index the human-readable labels of ACF "select" fields. (Thanks to Raphaël Droz.)
+* New filter: `relevanssi_30days` can be used to adjust the 30 day logs to a different number of days.
+* Adding stopwords that contain apostrophes didn't work.
+* Ensured PHP7 and WP 4.6 compatibility.
+* Fixed a small glitch that could happen if a highlighted term is next to a starting square bracket.
+
 = 3.5.3 =
 * New filter `relevanssi_user_searches_limit` to adjust the number of user searches shown in the logs.
 * Old data check is only done on Relevanssi settings page, not on all admin pages. That should improve admin performance.
@@ -401,7 +409,7 @@ removing those words helps to make the index smaller and searching faster.
 * Fixed an error if the search term was not found in content.
 * Fixed an error when building excerpts from posts shorter than the excerpt length.
 * Blocked the `[starpro]` shortcode that was causing problems with Relevanssi.
-* New filter: `relevanssi_remove_stopwords_in_titles` allows you to include stopwords in titles. 
+* New filter: `relevanssi_remove_stopwords_in_titles` allows you to include stopwords in titles.
 * Added support for `term_tax_id` in the `fields` parameter in tax_queries.
 * Excerpt-building failed if multibyte string operations were missing. It should work now.
 
@@ -523,7 +531,7 @@ removing those words helps to make the index smaller and searching faster.
 * Phrases are now matched to excerpts.
 * Number of queries Relevanssi generates is much, much lower.
 * New filter: `relevanssi_didyoumean_url` lets you modify the URL generated by the did you mean feature.
-* Better set of Russian stopwords. 
+* Better set of Russian stopwords.
 * Relevanssi now highlights search query synonyms as well in documents.
 
 = 3.1.9 =
@@ -556,7 +564,7 @@ removing those words helps to make the index smaller and searching faster.
 * When search included user profiles or taxonomy terms, Relevanssi would generate lots of MySQL errors. Not anymore.
 * New filter: `relevanssi_valid_status` lets you modify the post statuses Relevanssi indexes.
 * New filter: `relevanssi_index_taxonomies_args` lets you modify the arguments passed to get_terms() when indexing taxonomies (for example to set 'hide_empty' to false).
-* Searching by taxonomy ID could confuse two taxonomies with the same term_id. The search is now checking the taxonomy as well to see it's correct. 
+* Searching by taxonomy ID could confuse two taxonomies with the same term_id. The search is now checking the taxonomy as well to see it's correct.
 * Basic support for Polylang plugin.
 * Russian and Italian stopwords are now included, thanks to Flector and Valerio Vendrame.
 * Small fix in the way user meta fields are handled.
@@ -1109,6 +1117,12 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.5.4 =
+* Fix for a small bug that leads to inflated relevancy scores.
+
+= 3.5.3 =
+* New filters and a fix for a fatal error.
 
 = 3.5.2 =
 * Small fix: Relevanssi now supports term_taxonomy_id parameter in tax_queries

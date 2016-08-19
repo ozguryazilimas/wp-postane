@@ -706,11 +706,10 @@ function relevanssi_get_the_title($post_id) {
 }
 
 function relevanssi_update_doc_count( $values, $post ) {
-	$D = get_option( 'relevanssi_doc_count');
-	$count = count($values);
-	if ($values && $count > 0) {
-		update_option( 'relevanssi_doc_count', $D + $count);
-	}
+	global $wpdb, $relevanssi_variables;
+	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
+	$D = $wpdb->get_var("SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi");
+	update_option( 'relevanssi_doc_count', $D);
 	return $values;
 }
 
