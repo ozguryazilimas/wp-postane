@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.6
-Stable tag: 4.27
+Stable tag: 4.27.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,10 @@ If you wish to check available translations or help with plugin translation to y
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog ==
+
+= [4.27.1] 22.08.2016 =
+* Update: There was a conflict with plugins which use a '/' character at the custom user capabilities: e.g. vc_access_rules_backend_editor/disabled_ce_editor from Visual Composer.
+* Update: add/delete, escape, validate user capability code extracted from URE_Lib to the separate URE_Capability class
 
 = [4.27] 18.08.2016 =
 * New: Total/Granted counters were added to the capabilities groups titles.
