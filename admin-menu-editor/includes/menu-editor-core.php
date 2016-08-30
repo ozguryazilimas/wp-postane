@@ -754,6 +754,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'roles' => $roles,
 			'users' => $users,
 			'isMultisite' => is_multisite(),
+			'capPower' => $this->load_cap_power(),
 		);
 		wp_localize_script('ame-actor-manager', 'wsAmeActorData', $actor_data);
 
@@ -820,6 +821,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 			'getPagesNonce' => wp_create_nonce('ws_ame_get_pages'),
 			'getPageDetailsNonce' => wp_create_nonce('ws_ame_get_page_details'),
+
+			'selectedMenu'    => isset($this->get['selected_menu_url'])  ? strval($this->get['selected_menu_url']) : null,
+			'selectedSubmenu' => isset($this->get['selected_submenu_url']) ? strval($this->get['selected_submenu_url']) : null,
+			'expandSelectedMenu'    => isset($this->get['expand_menu']) && ($this->get['expand_menu'] === '1'),
+			'expandSelectedSubmenu' => isset($this->get['expand_submenu']) && ($this->get['expand_submenu'] === '1'),
 
 			'isDemoMode' => defined('IS_DEMO_MODE'),
 			'isMasterMode' => defined('IS_MASTER_MODE'),
@@ -1083,15 +1089,34 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			return $admin_title;
 		}
 
+		$custom_title = null;
+
 		//Check if the we have a custom title for this page.
 		$default_title = isset($item['defaults']['page_title']) ? $item['defaults']['page_title'] : '';
 		if ( !empty($item['page_title']) && $item['page_title'] != $default_title ) {
+			$custom_title = $item['page_title'];
+		}
+
+		//Alternatively, use the custom menu title if the default page title is empty (as is usually
+		//the case with core menus) or matches the default menu title (which is typical for plugins).
+		//This saves the user a little bit of time, and, presumably, they'd want the titles to match.
+		$default_menu_title = isset($item['defaults']['menu_title']) ? $item['defaults']['menu_title'] : '';
+		if (
+			!isset($custom_title)
+			&& !empty($item['menu_title'])
+			&& ($item['menu_title'] !== $default_menu_title)
+			&& (($default_menu_title === $default_title) || ($default_title === ''))
+		) {
+			$custom_title = strip_tags($item['menu_title']);
+		}
+
+		if ( isset($custom_title) ) {
 			if ( empty($title) ) {
-				$admin_title = $item['page_title'] . $admin_title;
+				$admin_title = $custom_title . $admin_title;
 			} else {
 				//Replace the first occurrence of the default title with the custom one.
 				$title_pos = strpos($admin_title, $title);
-				$admin_title = substr_replace($admin_title, $item['page_title'], $title_pos, strlen($title));
+				$admin_title = substr_replace($admin_title, $custom_title, $title_pos, strlen($title));
 			}
 		}
 
@@ -1918,11 +1943,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				$this->set_custom_menu($menu);
 
 				//Redirect back to the editor and display the success message.
-				//Also, automatically select the last selected actor (convenience feature).
 				$query = array('message' => 1);
-				if ( isset($post['selected_actor']) && !empty($post['selected_actor']) ) {
-					$query['selected_actor'] = rawurlencode(strval($post['selected_actor']));
+
+				//Also, automatically select the last selected actor and menu (convenience feature).
+				$pass_through_params = array(
+					'selected_actor', 'selected_menu_url', 'selected_submenu_url',
+					'expand_menu', 'expand_submenu',
+				);
+				foreach($pass_through_params as $param) {
+					if ( isset($post[$param]) && !empty($post[$param]) ) {
+						$query[$param] = rawurlencode(strval($post[$param]));
+					}
 				}
+
 				wp_redirect( add_query_arg($query, $url) );
 				die();
 			} else {
@@ -3394,6 +3427,36 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		return '';
 	}
 
+	/**
+	 * @return array
+	 */
+	private function load_cap_power() {
+		$cap_power = array();
+
+		$power_filename = AME_ROOT_DIR . '/includes/capabilities/cap-power.csv';
+		if ( is_file($power_filename) && is_readable($power_filename) ) {
+			$csv = fopen($power_filename, 'r');
+			$firstLineSkipped = false;
+
+			while ($csv && !feof($csv)) {
+				$line = fgetcsv($csv, 1000, ';');
+				if ( !$firstLineSkipped ) {
+					$firstLineSkipped = true;
+					continue;
+				}
+
+				if ( count($line) >= 2 ) {
+					$cap_power[strval($line[0])] = floatval(str_replace(',', '.', $line[1]));
+				}
+			}
+			fclose($csv);
+
+			arsort($cap_power);
+		}
+
+		return $cap_power;
+	}
+
 } //class
 
 
@@ -3493,13 +3556,23 @@ class ameMenuTemplateBuilder {
 
 	/**
 	 * Sanitize a menu title for display.
-	 * Removes HTML tags and update notification bubbles.
+	 * Removes HTML tags and update notification bubbles. Truncates long titles.
 	 *
 	 * @param string $title
 	 * @return string
 	 */
 	private function sanitizeMenuTitle($title) {
-		return strip_tags( preg_replace('@<span[^>]*>.*</span>@i', '', $title) );
+		$title = strip_tags( preg_replace('@<span[^>]*>.*</span>@i', '', $title) );
+
+		//Compact whitespace.
+		$title = rtrim(preg_replace('@[\s\t\r\n]+@', ' ', $title));
+
+		$maxLength = 50;
+		if ( strlen($title) > $maxLength ) {
+			$title = rtrim(substr($title, 0, $maxLength)) . '...';
+		}
+
+		return $title;
 	}
 
 	public function getRelativeTemplateOrder() {

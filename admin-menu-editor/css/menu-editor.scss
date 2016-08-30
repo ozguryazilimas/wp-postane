@@ -692,10 +692,11 @@ select.ws_dropdown {
 	font-size: 12px;
 }
 
+$dropdownOptionPaddingTop: 3px;
 select.ws_dropdown option {
 	font-family : "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
 	font-size: 12px;
-	padding: 3px;
+	padding: $dropdownOptionPaddingTop;
 }
 
 select.ws_dropdown optgroup option {
@@ -1878,6 +1879,44 @@ $userSelectionPanelPadding: 10px;
 	min-width: 280px;
 }
 
+/*********************************************
+      Capability suggestions and preview
+**********************************************/
+
+#ws_capability_suggestions {
+	padding: 4px;
+	width: 350px;
+
+	border: 1px solid #cdd5d5;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+	background: #fff;
+
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+
+	#ws_previewed_caps {
+		margin-top: 0;
+		margin-bottom: 6px;
+	}
+
+	td, th {
+		//For consistency, padding should match the capability dropdown.
+		padding-top: $dropdownOptionPaddingTop;
+		padding-bottom: $dropdownOptionPaddingTop;
+	}
+
+	tr.ws_preview_has_access .ws_ame_role_name{
+		background-color: lightgreen;
+	}
+
+	.ws_ame_suggested_capability {
+		cursor: pointer;
+
+		&:hover {
+			background-color: #d0f2d0;
+		}
+	}
+}
 
 
 #ws_sidebar_pro_ad {

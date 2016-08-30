@@ -236,6 +236,13 @@ function ame_output_sort_buttons($icons) {
 			<input type="hidden" name="data" id="ws_data" value="">
 			<input type="hidden" name="data_length" id="ws_data_length" value="">
 			<input type="hidden" name="selected_actor" id="ws_selected_actor" value="">
+
+			<input type="hidden" name="selected_menu_url" id="ws_selected_menu_url" value="">
+			<input type="hidden" name="selected_submenu_url" id="ws_selected_submenu_url" value="">
+
+			<input type="hidden" name="expand_menu" id="ws_expand_selected_menu" value="">
+			<input type="hidden" name="expand_submenu" id="ws_expand_selected_submenu" value="">
+
 			<input type="button" id='ws_save_menu' class="button-primary ws_main_button" value="Save Changes" />
 		</form>
 
@@ -264,15 +271,16 @@ function ame_output_sort_buttons($icons) {
 
 		if ( $show_pro_benefits ):
 			$benefit_variations = array(
-				'Simplified, role-based permissions.',
-				'Role-based menu permissions.',
-				'Simpler, role-based permissions.',
+				'Drag items between menu levels.',
+				'More menu icons.',
+				'Make menus open in a new tab or an iframe.',
+				'Prevent users from deleting a specific user.',
 			);
 			//Pseudo-randomly select one phrase based on the site URL.
-			$variation_index = hexdec( substr(md5(get_site_url()), -1) ) % count($benefit_variations);
+			$variation_index = hexdec( substr(md5(get_site_url() . 'ab'), -2) ) % count($benefit_variations);
 			$selected_variation = $benefit_variations[$variation_index];
 
-			$pro_version_link = 'http://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=sidebar_link_cv' . $variation_index . '&utm_campaign=Plugins';
+			$pro_version_link = 'http://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=sidebar_link_nv' . $variation_index . '&utm_campaign=Plugins';
 			?>
 			<div class="clear"></div>
 
@@ -281,9 +289,11 @@ function ame_output_sort_buttons($icons) {
 				<div class="ws_hint_content">
 					<strong>Upgrade to Pro:</strong>
 					<ul>
+						<li>Role-based menu permissions.</li>
+						<li>Hide items from specific users.</li>
+						<li>Menu import and export.</li>
+						<li>Change menu colors.</li>
 						<li><?php echo $selected_variation; ?></li>
-						<li>Drag items between menu levels.</li>
-						<li>Menu export &amp; import.</li>
 					</ul>
 					<a href="<?php echo esc_attr($pro_version_link); ?>" target="_blank">Learn more</a>
 					|
@@ -550,6 +560,8 @@ function ame_output_sort_buttons($icons) {
 		?>
 	</div>
 </div>
+
+<?php include dirname(__FILE__) . '/cap-suggestion-box.php'; ?>
 
 <?php
 if ( $is_pro_version ) {

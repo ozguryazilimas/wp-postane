@@ -1336,6 +1336,30 @@ a#ws-ame-delete-color-preset:hover {
 #ws-ame-copy-permissions-dialog select {
   min-width: 280px; }
 
+/*********************************************
+      Capability suggestions and preview
+**********************************************/
+#ws_capability_suggestions {
+  padding: 4px;
+  width: 350px;
+  border: 1px solid #cdd5d5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  background: #fff;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px; }
+  #ws_capability_suggestions #ws_previewed_caps {
+    margin-top: 0;
+    margin-bottom: 6px; }
+  #ws_capability_suggestions td, #ws_capability_suggestions th {
+    padding-top: 3px;
+    padding-bottom: 3px; }
+  #ws_capability_suggestions tr.ws_preview_has_access .ws_ame_role_name {
+    background-color: lightgreen; }
+  #ws_capability_suggestions .ws_ame_suggested_capability {
+    cursor: pointer; }
+    #ws_capability_suggestions .ws_ame_suggested_capability:hover {
+      background-color: #d0f2d0; }
+
 #ws_sidebar_pro_ad {
   min-width: 225px;
   margin-top: 5px;
