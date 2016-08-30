@@ -3,12 +3,12 @@
 Plugin Name: White Label CMS
 Plugin URI: http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Description:  A plugin that allows you to brand WordPress CMS as your own
-Version: 1.5.7
+Version: 1.5.9
 Author: www.videousermanuals.com
 Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 */
 
-define('WLCMS','1.5.7');
+define('WLCMS','1.5.9');
 
 if ( ! defined('ABSPATH') ) {
         die('Please do not load this file directly.');
@@ -238,6 +238,8 @@ function wlcms_adminbar()
     endif;
     if( get_option('wlcms_o_hide_wp_adminbar') ):
         echo " \n\n <style type=\"text/css\">#wp-admin-bar-wp-logo { display:none; } #wpadminbar #wp-admin-bar-site-name > .ab-item:before { content: normal;}</style> \n\n";
+    else:
+        echo " \n\n <style type=\"text/css\">#wp-admin-bar-wp-logo { display:block!important; }</style> \n\n";
     endif;
 
     if( get_option('wlcms_o_adminbar_custom_logo') ):
