@@ -1,10 +1,10 @@
 === Login-Logout ===
 Contributors: webvitaly
-Donate link: http://web-profile.com.ua/donate/
+Donate link: http://web-profile.net/donate/
 Tags: login, logout, widget, meta, sidebar, admin, register
-Requires at least: 3.0
+Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 3.6
+Stable tag: 3.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -13,8 +13,8 @@ Widget with login, logout, admin and register links. Replacement of the default 
 == Description ==
 
 > **[Speedup WordPress](http://codecanyon.net/item/silver-bullet-pro/15171769?ref=webvitalii "Speedup and protect WordPress in a smart way")** |
-> **[Login-Logout](http://web-profile.com.ua/wordpress/plugins/login-logout/ "Plugin page")** |
-> **[Donate](http://web-profile.com.ua/donate/ "Support the development")** |
+> **[Login-Logout](http://web-profile.net/wordpress/plugins/login-logout/ "Plugin page")** |
+> **[Donate](http://web-profile.net/donate/ "Support the development")** |
 > **[GitHub](https://github.com/webvitalii/login-logout "Fork")**
 
 "Login-Logout" plugin adds widget with login or logout link. Also can be shown register or site-admin link. It is the replacement of the default Meta widget.
@@ -42,6 +42,9 @@ Widget with login, logout, admin and register links. Replacement of the default 
 4. Widget output when user is logged in and inline option is on
 
 == Changelog ==
+
+= 3.7 - 2016-08-29 =
+* Using wp_registration_url() instead of hardcoding registration link. Thanks to dmasin - https://profiles.wordpress.org/dmasin/
 
 = 3.6 - 2016-03-22 =
 * Bugfixing

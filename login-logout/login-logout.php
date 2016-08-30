@@ -3,9 +3,9 @@
 Plugin Name: Login-Logout
 Plugin URI: http://wordpress.org/plugins/login-logout/
 Description: Show login or logout link. Show register or site-admin link. The replacement for the default Meta widget.
-Version: 3.6
+Version: 3.7
 Author: webvitaly
-Author URI: http://web-profile.com.ua/wordpress/plugins/
+Author URI: http://web-profile.net/wordpress/plugins/
 License: GPLv3
 */
 
@@ -20,7 +20,6 @@ class WP_Widget_Login_Logout extends WP_Widget {
 
 
 	public function widget( $args, $instance ) { // outputs the content of the widget
-    global $wpdb;
 		extract($args);
 		$instance = wp_parse_args(
 			(array) $instance,
@@ -63,7 +62,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			$wrap_after = '</p>';
 			$item_before = '<span class='; // class will be added and the tag is not closed
 			$item_after = '</span>';
-      $split_char = '';
+			$split_char = ' | ';
 		} else {
 			$wrap_before = '<ul class="wrap_login_logout">';
 			$wrap_after = '</ul>';
@@ -77,79 +76,32 @@ class WP_Widget_Login_Logout extends WP_Widget {
 			if ( is_user_logged_in() ){
 				$current_user = wp_get_current_user();
 				$username = $current_user->display_name;
-				$username_link = '<a class="kabartmatozu" href="'.get_author_posts_url($current_user->ID).'">'.$username.'</a>';
+				$username_link = apply_filters( 'login_logout_username_link', '<a href="'.admin_url('profile.php').'">'.$username.'</a>', $current_user );
 				$welcome_text_new = str_replace('[username]', $username_link, $welcome_text);
-				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after;
+				echo $item_before.'"item_welcome">'.$welcome_text_new.$item_after.$split_char;
 			}
 		}
 		echo $item_before;
 		//wp_loginout( $redirect_to_self );
 		if ( ! is_user_logged_in() ){
 			echo '"item_login">';
-			echo '<a class="kabartmatozu kabartmatozu_color_red" href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
+			echo '<a href="'.esc_url( wp_login_url( $login_redirect_to ) ).'">'.$login_text.'</a>';
 		} else {
 			echo '"item_logout">';
-			$current_user = wp_get_current_user();
-			$postane_threads = $wpdb->prefix . 'postane_threads';
-			$postane_user_thread = $wpdb->prefix . 'postane_user_thread';
-			$current_uid = $current_user->ID;
-			$rows = $wpdb->get_results("SELECT count(*) as unread_msg_count from $postane_threads INNER JOIN $postane_user_thread ON $postane_user_thread.thread_id=$postane_threads.id where $postane_user_thread.user_id=$current_uid AND $postane_user_thread.last_read_time < $postane_threads.last_message_time", ARRAY_A);
-
-			$unread_message_count = 0;			
-			foreach ( $rows as $row ) {
-			    $unread_message_count = $row['unread_msg_count'];			
-			}
-			
-			$unread_str = '';
-			$unread_class = '';
-			if ($unread_message_count > 0){
-				// $unread_str = ' <sup class="counter"><blink>('.$unread_message_count.')</blink></sup>';
-				$unread_str = ' <span class="blink">(' . $unread_message_count . ')</span>';
-				$unread_class = 'kabartmatozu_color_red';
-			}			
-			echo "
-				<script>
-					jQuery(document).ready(function(){
-						jQuery('div').delegate('.postane_thread_unread', 'click', function() {
-							setTimeout(function(){
-								var data = {
-									'action' : 'postane',
-									'postane_action' : 'unread_thread_count'
-								};
-								jQuery.post(ajaxurl, data, function(data) {
-									var result = JSON.parse(data);
-									if(typeof result['success'] != 'undefined') {
-										var count = result['success']['count'];
-										var button = jQuery('.login_logout_postane_button');
-										if(count == 0) {
-											button.removeClass('kabartmatozu_color_red');
-											button.html('postane');
-										} else {
-											button.addClass('kabartmatozu_color_red');
-											button.html('postane <span class=\"blink\">(' + count + ')</span>');
-										}
-									}
-								});
-							},2000);
-						});
-					});
-				</script>
-			";
-			echo '<a class="login_logout_postane_button kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
-				' <a class="kabartmatozu" href="' . esc_url( wp_logout_url( $logout_redirect_to ) ) . '">' . $logout_text . '</a>';
+			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
 		}
 		echo $item_after;
 		//wp_register();
 		if( $register_link ){ // register link
 			if ( ! is_user_logged_in() ) {
 				if ( get_option('users_can_register') ){
-					echo $split_char.$item_before.'"item_register">'.'<a class="kabartmatozu kabartmatozu_color_red" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
+					echo $split_char.$item_before.'"item_register">' . '<a href="' . wp_registration_url() . '">' . $register_text . '</a>' . $item_after;
 				}
 			}
 		}
 		if( $admin_link ){ // admin link
 			if ( is_user_logged_in() ) {
-				echo $split_char.$item_before.'"item_admin">'.'<a class="kabartmatozu" href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
+				echo $split_char.$item_before.'"item_admin">'.'<a href="'.admin_url().'">'.$admin_text.'</a>'.$item_after;
 			}
 		}
 		
@@ -311,8 +263,8 @@ if ( ! function_exists( 'login_logout_plugin_meta' ) ) :
 	function login_logout_plugin_meta( $links, $file ) {
 		if ( $file == plugin_basename( __FILE__ ) ) {
 			$row_meta = array(
-				'support' => '<a href="http://web-profile.com.ua/wordpress/plugins/login-logout/" target="_blank"><span class="dashicons dashicons-editor-help"></span> ' . __( 'Login-Logout', 'login-logout' ) . '</a>',
-				'donate' => '<a href="http://web-profile.com.ua/donate/" target="_blank"><span class="dashicons dashicons-heart"></span> ' . __( 'Donate', 'login-logout' ) . '</a>',
+				'support' => '<a href="http://web-profile.net/wordpress/plugins/login-logout/" target="_blank"><span class="dashicons dashicons-editor-help"></span> ' . __( 'Login-Logout', 'login-logout' ) . '</a>',
+				'donate' => '<a href="http://web-profile.net/donate/" target="_blank"><span class="dashicons dashicons-heart"></span> ' . __( 'Donate', 'login-logout' ) . '</a>',
 				'pro' => '<a href="http://codecanyon.net/item/silver-bullet-pro/15171769?ref=webvitalii" target="_blank" title="Speedup and protect WordPress in a smart way"><span class="dashicons dashicons-star-filled"></span> ' . __( 'Silver Bullet Pro', 'login-logout' ) . '</a>'
 			);
 			$links = array_merge( $links, $row_meta );
