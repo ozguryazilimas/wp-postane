@@ -1,12 +1,12 @@
 diff --git a/login-logout/login-logout.php b/login-logout/login-logout.php
-index 0767630..2be778e 100644
+index 5cc89d8..62f74a9 100644
 --- a/login-logout/login-logout.php
 +++ b/login-logout/login-logout.php
 @@ -20,6 +20,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
  
  
  	public function widget( $args, $instance ) { // outputs the content of the widget
-+    global $wpdb;
++		global $wpdb;
  		extract($args);
  		$instance = wp_parse_args(
  			(array) $instance,
@@ -15,11 +15,11 @@ index 0767630..2be778e 100644
  			$item_before = '<span class='; // class will be added and the tag is not closed
  			$item_after = '</span>';
 -			$split_char = ' | ';
-+      $split_char = '';
++			$split_char = '';
  		} else {
  			$wrap_before = '<ul class="wrap_login_logout">';
  			$wrap_after = '</ul>';
-@@ -76,32 +77,79 @@ class WP_Widget_Login_Logout extends WP_Widget {
+@@ -76,32 +77,81 @@ class WP_Widget_Login_Logout extends WP_Widget {
  			if ( is_user_logged_in() ){
  				$current_user = wp_get_current_user();
  				$username = $current_user->display_name;
@@ -39,6 +39,7 @@ index 0767630..2be778e 100644
  		} else {
  			echo '"item_logout">';
 -			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
++
 +			$current_user = wp_get_current_user();
 +			$postane_threads = $wpdb->prefix . 'postane_threads';
 +			$postane_user_thread = $wpdb->prefix . 'postane_user_thread';
@@ -87,14 +88,15 @@ index 0767630..2be778e 100644
 +			";
 +			echo '<a class="login_logout_postane_button kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
 +				' <a class="kabartmatozu" href="' . esc_url( wp_logout_url( $logout_redirect_to ) ) . '">' . $logout_text . '</a>';
++
  		}
  		echo $item_after;
  		//wp_register();
  		if( $register_link ){ // register link
  			if ( ! is_user_logged_in() ) {
  				if ( get_option('users_can_register') ){
--					echo $split_char.$item_before.'"item_register">'.'<a href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
-+					echo $split_char.$item_before.'"item_register">'.'<a class="kabartmatozu kabartmatozu_color_red" href="'.site_url('wp-login.php?action=register', 'login').'">'.$register_text.'</a>'.$item_after;
+-					echo $split_char.$item_before.'"item_register">' . '<a href="' . wp_registration_url() . '">' . $register_text . '</a>' . $item_after;
++					echo $split_char.$item_before.'"item_register">' . '<a class="kabartmatozu kabartmatozu_color_red" href="' . wp_registration_url() . '">' . $register_text . '</a>' . $item_after;
  				}
  			}
  		}
