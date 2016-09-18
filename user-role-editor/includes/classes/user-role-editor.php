@@ -444,8 +444,22 @@ class User_Role_Editor {
      * @return array
      */
     public function plugin_action_links($links) {
-
-        $settings_link = "<a href='options-general.php?page=settings-" . URE_PLUGIN_FILE . "'>" . esc_html__('Settings', 'user-role-editor') . "</a>";
+        $single_site_settings_link = '<a href="options-general.php?page=settings-' . URE_PLUGIN_FILE . '">' . esc_html__('Settings', 'user-role-editor') .'</a>';
+        $multisite = $this->lib->get('multisite');        
+        if (!$multisite ) {
+            $settings_link = $single_site_settings_link;
+        } else {
+            $ure = basename(URE_PLUGIN_DIR) . '/' . URE_PLUGIN_FILE;
+            $active_for_network = is_plugin_active_for_network($ure);
+            if (!$active_for_network) {
+                $settings_link = $single_site_settings_link;
+            } else {
+                if (!current_user_can('manage_network_plugins')) {
+                    return $links;
+                }
+                $settings_link = '<a href="'. network_admin_url() .'settings.php?page=settings-'. URE_PLUGIN_FILE .'">'. esc_html__('Settings', 'user-role-editor') .'</a>';
+            }
+        }
         array_unshift($links, $settings_link);
 
         return $links;

@@ -12,12 +12,13 @@ class URE_Capability {
 
     const SPACE_REPLACER = '_URE-SR_';
     const SLASH_REPLACER = '_URE-SLR_';
+    const VERT_LINE_REPLACER = '_URE-VLR_';
 
     
     public static function escape($cap_id) {
         
-        $search = array(' ', '/');
-        $replace = array(self::SPACE_REPLACER, self::SLASH_REPLACER);
+        $search = array(' ', '/', '|');
+        $replace = array(self::SPACE_REPLACER, self::SLASH_REPLACER, self::VERT_LINE_REPLACER);
         
         $cap_id_esc = str_replace($search, $replace, $cap_id);
                 

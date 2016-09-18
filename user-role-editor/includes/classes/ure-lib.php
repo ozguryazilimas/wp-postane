@@ -1470,6 +1470,7 @@ class Ure_Lib extends URE_Base_Lib {
         }
         
         $this->capabilities_to_save = $this->remove_caps_not_allowed_for_single_admin($this->capabilities_to_save);
+        $this->roles[$this->current_role]['name'] = $this->current_role_name;
         $this->roles[$this->current_role]['capabilities'] = $this->capabilities_to_save;
         $option_name = $wpdb->prefix . 'user_roles';
 
@@ -1498,12 +1499,10 @@ class Ure_Lib extends URE_Base_Lib {
         if (!$this->last_check_before_update()) {
             return false;
         }
-        if (!empty($this->current_role)) {
-            if (!isset($this->roles[$this->current_role])) {
-                $this->roles[$this->current_role]['name'] = $this->current_role_name;
-            }
+        if (!empty($this->current_role)) {            
+            $this->roles[$this->current_role]['name'] = $this->current_role_name;
             $this->roles[$this->current_role]['capabilities'] = $this->capabilities_to_save;
-        }        
+        }
 
         $serialized_roles = serialize($this->roles);
         foreach ($this->blog_ids as $blog_id) {

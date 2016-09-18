@@ -140,7 +140,7 @@ class URE_View {
             $cap_id = $capability['inner'];
             if (!$user_is_ure_admin) { 
                 if (isset($ure_caps[$cap_id]) || 
-                    ($this->multisite && $cap_id=='manage_network_plugins')) { 
+                    ($multisite && $cap_id=='manage_network_plugins')) { 
                     // exclude URE caps if user does not have full access to URE
                     continue;
                 }
