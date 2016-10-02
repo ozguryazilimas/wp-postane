@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: captcha, capcha, security, spam blocker, simple captcha, antispam, protection, text captcha, captcha numbers, captcha plugin, web form protection, captcha protection
 Requires at least: 3.8
-Tested up to: 4.6
-Stable tag: 4.2.4
+Tested up to: 4.6.1
+Stable tag: 4.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,7 @@ http://www.youtube.com/watch?v=nlcCKSxu_Kk
 	* Registration form
 	* Reset password form
 	* Comments form
-	* [Contact Form by BestWebSoft](http://bestwebsoft.com/products/contact-form/?k=7f973058ee3bd3a18934b5e13b857d6f)
+	* [Contact Form by BestWebSoft](http://bestwebsoft.com/products/wordpress/plugins/contact-form/?k=7f973058ee3bd3a18934b5e13b857d6f)
 	* Custom form
 * Enhance captcha protection with:
 	* Letters, numbers and images
@@ -37,7 +37,7 @@ http://www.youtube.com/watch?v=nlcCKSxu_Kk
 * Refresh captcha option
 * Image packages with hand-drawn digits
 * Edit captcha title and notifications
-* Merge IP addresses from [Limit Attempts by BestWebSoft](http://bestwebsoft.com/products/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2) plugin with Captcha whitelist
+* Merge IP addresses from [Limit Attempts by BestWebSoft](http://bestwebsoft.com/products/wordpress/plugins/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2) plugin with Captcha whitelist
 * Add custom code via plugin settings page
 * Compatible with latest WordPress version
 * Incredibly simple settings for fast setup without modifying code
@@ -51,13 +51,13 @@ http://www.youtube.com/watch?v=nlcCKSxu_Kk
 > * Contact Form 7 compatible (since v 3.4)
 > * BuddyPress compatible: registration, comments and create a group forms
 > * WooCommerce compatible: login form
-> * [Subscriber by BestWebSoft](http://bestwebsoft.com/products/subscriber/?k=ac02c12d6e17bc91f4cc636eec0a0348) compatible
+> * [Subscriber by BestWebSoft](http://bestwebsoft.com/products/wordpress/plugins/subscriber/?k=ac02c12d6e17bc91f4cc636eec0a0348) compatible
 > * Use multisite network to configure sub websites
 > * Captcha submission time limit for separate forms
 > * Add and enable unlimited number of image packages at the same time
 > * Get answer to your support question within one business day ([Support Policy](http://bestwebsoft.com/support-policy/))
 >
-> [Upgrade to Pro Now](http://bestwebsoft.com/products/captcha/?k=2d2d85a3c277bf3489697c9a9ff2d352)
+> [Upgrade to Pro Now](http://bestwebsoft.com/products/wordpress/plugins/captcha/?k=2d2d85a3c277bf3489697c9a9ff2d352)
 
 If you have a feature suggestion or idea you'd like to see in the plugin, we'd love to hear about it! [Suggest a Feature](http://support.bestwebsoft.com/hc/en-us/requests/new)
 
@@ -77,11 +77,12 @@ Visit our Help Center if you have any questions, our friendly Support Team is ha
 
 * Arabic (ar_AR) (thanks to Albayan Design Hani Aladoli)
 * Bangla (bn_BD) (thanks to [SM Mehdi Akram](mailto:mehdi.akram@gmail.com), www.shamokaldarpon.com)
+* Belarusian (bel) (thanks to [Natasha Diatko](mailto:natasha.diatko@gmail.com))
 * Brazilian Portuguese (pt_BR) (thanks to [Breno Jacinto](mailto:brenojac@gmail.com), www.iconis.org.br)
 * Bulgarian (bg_BG) (thanks to [Nick](mailto:paharaman@gmail.com))
 * Catalan (ca) (thanks to [Psiete](mailto:psiete@gmail.com))
 * Chinese (zh_CN) (thanks to <a href="mailto:416441872@qq.com">TIM</a>)
-* Taiwan (zh_TW) (thanks to [Henry H](mailto:hh3stuff@gmail.com))
+* Taiwan (zh_TW) (thanks to [Kaiconan](mailto:ch.unk.ai.ma.o@gmail.com))
 * Croatian (hr) (thanks to [Daniel](mailto:daniel@croteh.com))
 * Czech (cs_CZ) (thanks to [Crysman](mailto:crysman@seznam.cz))
 * Danish (da_DK) (thanks to Byrial Ole Jensed)
@@ -108,7 +109,7 @@ Visit our Help Center if you have any questions, our friendly Support Team is ha
 * Serbian (sr_RS) (thanks to Radovan Georgijevic)
 * Slovak (sk_SK) (thanks to Branco Radenovich)
 * Slovenian (sl_SI) (thanks to [Uroš Klopčič](mailto:uros.klopcic@gmail.com), www.klopcic.net)
-* Spain (es_ES) (thanks to Iván García Cubero)
+* Spain (es_ES)
 * Swedish (sv_SE) (thanks to Christer Rönningborg, [Blittan](mailto:blittan@xbmc.org))
 * Tagalog (tl) (thanks to [Roozbeh Jalali](mailto:rjalali@languageconnect.net), www.languageconnect.net)
 * Turkish (tr_TR) (thanks to Can Atasever, www.canatasever.com)
@@ -119,9 +120,9 @@ Some of these translations are not complete. We are constantly adding new featur
 
 = Recommended Plugins =
 
-* [Limit Attempts](http://bestwebsoft.com/products/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2) - Limit rate of login attempts to Wordpress website and block IP addresses temporarily. Protect against brute force attacks. Restrict login by IP access using white- and blacklists. Advanced control of user activity.
-* [Updater](http://bestwebsoft.com/products/updater/?k=0864088de1701a5e104ffb77c6d7011c) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
-* [Contact Form](http://bestwebsoft.com/products/contact-form/?k=7f973058ee3bd3a18934b5e13b857d6f) - Add contact form to your WordPress website
+* [Limit Attempts](http://bestwebsoft.com/products/wordpress/plugins/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2) - Limit rate of login attempts to Wordpress website and block IP addresses temporarily. Protect against brute force attacks. Restrict login by IP access using white- and blacklists. Advanced control of user activity.
+* [Updater](http://bestwebsoft.com/products/wordpress/plugins/updater/?k=0864088de1701a5e104ffb77c6d7011c) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
+* [Contact Form](http://bestwebsoft.com/products/wordpress/plugins/contact-form/?k=7f973058ee3bd3a18934b5e13b857d6f) - Add contact form to your WordPress website
 
 = Donate =
 
@@ -238,6 +239,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 8. Captcha Whitelist.
 
 == Changelog ==
+
+= V4.2.6 - 30.09.2016 =
+* NEW : The Belarusian language file has been added.
+* Update : The Spain language file has been updated.
+* Update : The Taiwan language file has been updated.
 
 = V4.2.4 - 18.08.2016 =
 * Bugfix : The bug with the update of the plugin database has been fixed.
@@ -638,6 +644,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 * Select functionality of mathematical actions and level of their difficulty are implemented.
 
 == Upgrade Notice ==
+
+= V4.2.6 =
+* New languages added.
 
 = V4.2.4 =
 Bugs fixed.

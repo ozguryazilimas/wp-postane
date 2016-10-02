@@ -337,7 +337,7 @@ if ( ! function_exists( 'cptch_get_plugin' ) ) {
 if ( ! function_exists( 'cptch_get_plugin_link' ) ) {
 	function cptch_get_plugin_link( $plugin ) {
 		global $wp_version, $cptch_plugin_info;
-		$bws_link = "http://bestwebsoft.com/products/%1s/?k=%2s&pn=72&v={$cptch_plugin_info["Version"]}&wp_v={$wp_version}/";
+		$bws_link = "http://bestwebsoft.com/products/wordpress/plugins/%1s/?k=%2s&pn=72&v={$cptch_plugin_info["Version"]}&wp_v={$wp_version}/";
 		switch ( $plugin ) {
 			case 'contact-form-plugin/contact_form.php':
 			case 'contact-form-pro/contact_form_pro.php':
