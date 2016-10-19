@@ -56,7 +56,7 @@ class Yoast_GA_Dashboards_Collector {
 	 * Fetch the data from Google Analytics and store it
 	 */
 	public function aggregate_data() {
-		if ( is_numeric( $this->ga_profile_id ) ) {
+		if ( ! empty ( $this->ga_profile_id ) && is_numeric( $this->ga_profile_id ) ) {
 			// ProfileID is set
 
 			/**
