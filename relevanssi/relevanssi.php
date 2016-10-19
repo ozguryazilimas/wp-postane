@@ -3,7 +3,7 @@
 Plugin Name: Relevanssi
 Plugin URI: http://www.relevanssi.com/
 Description: This plugin replaces WordPress search with a relevance-sorting search.
-Version: 3.5.4
+Version: 3.5.5
 Author: Mikko Saari
 Author URI: http://www.mikkosaari.fi/
 */
@@ -254,7 +254,7 @@ function _relevanssi_install() {
 	add_option('relevanssi_highlight_comments', 'off');
 	add_option('relevanssi_index_comments', 'none');	//added by OdditY
 	add_option('relevanssi_show_matches', '');
-	add_option('relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %category% in categories, %tags% in tags, %taxonomy% in other taxonomies, %comments% in comments. Score: %score%)');
+	add_option('relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %categories% in categories, %tags% in tags, %taxonomies% in other taxonomies, %comments% in comments. Score: %score%)');
 	add_option('relevanssi_fuzzy', 'sometimes');
 	add_option('relevanssi_indexed', '');
 	add_option('relevanssi_expand_shortcodes', 'on');

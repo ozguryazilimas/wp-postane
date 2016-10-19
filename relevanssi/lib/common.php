@@ -8,6 +8,8 @@ function relevanssi_wpml_filter($data) {
 		$lang = get_bloginfo('language');
 		$filtered_hits = array();
 		foreach ($data[0] as $hit) {
+            if (is_integer($hit)) $hit = get_post($hit); // this in case "fields" is set to "ids"
+
 			if (isset($hit->blog_id)) {
 				switch_to_blog($hit->blog_id);
 			}
@@ -23,7 +25,7 @@ function relevanssi_wpml_filter($data) {
 			}
 			elseif (function_exists('icl_object_id') && function_exists('pll_is_translated_post_type')) {
 				if (pll_is_translated_post_type($hit->post_type)) {
-					if (PLL()->model->get_post_language($hit->ID)->slug == ICL_LANGUAGE_CODE) {
+					if (PLL()->model->post->get_language($hit->ID)->slug == ICL_LANGUAGE_CODE) {
 						$filtered_hits[] = $hit;
 					}
 					else if ($hit->ID == icl_object_id($hit->ID, $hit->post_type, false, ICL_LANGUAGE_CODE)) {
@@ -69,7 +71,7 @@ function relevanssi_object_sort(&$data, $key, $dir = 'desc') {
    				$key2 = strtolower($data[$j + 1]->$key);
    			}
       		if ('asc' == $dir) {
-	           	if ($key1 > $key2) { 
+	           	if ($key1 > $key2) {
     		        $tmp = $data[$j];
         	        $data[$j] = $data[$j + 1];
             	    $data[$j + 1] = $tmp;
@@ -77,7 +79,7 @@ function relevanssi_object_sort(&$data, $key, $dir = 'desc') {
 	           	}
 	        }
 			else {
-	           	if ($key1 < $key2) { 
+	           	if ($key1 < $key2) {
     		        $tmp = $data[$j];
         	        $data[$j] = $data[$j + 1];
             	    $data[$j + 1] = $tmp;
@@ -105,13 +107,13 @@ function relevanssi_show_matches($data, $hit) {
 		$term_hits .= " $term: $hits";
 		$total_hits += $hits;
 	}
-	
+
 	$text = get_option('relevanssi_show_matches_text');
 	$replace_these = array("%body%", "%title%", "%tags%", "%categories%", "%taxonomies%", "%comments%", "%score%", "%terms%", "%total%");
 	$replacements = array($body, $title, $tag, $category, $taxonomy, $comment, $score, $term_hits, $total_hits);
-	
+
 	$result = " " . str_replace($replace_these, $replacements, $text);
-	
+
 	return apply_filters('relevanssi_show_matches', $result);
 }
 
@@ -120,8 +122,8 @@ function relevanssi_update_log($query, $hits) {
 		return;
 
 	global $wpdb, $relevanssi_variables;
-	
-	$user = wp_get_current_user();
+
+	$user = apply_filters('relevanssi_log_get_user', wp_get_current_user());
 	if ($user->ID != 0 && get_option('relevanssi_omit_from_logs')) {
 		$omit = explode(",", get_option('relevanssi_omit_from_logs'));
 		if (in_array($user->ID, $omit)) return;
@@ -137,8 +139,8 @@ function relevanssi_update_log($query, $hits) {
     	foreach ($bots as $name => $lookfor) {
 	        if (stristr($user_agent, $lookfor) !== false) return;
 	    }
-	}	
-	
+	}
+
 	get_option('relevanssi_log_queries_with_ip') == "on" ? $ip = apply_filters('relevanssi_remote_addr', $_SERVER['REMOTE_ADDR']) : $ip = '';
 	$q = $wpdb->prepare("INSERT INTO " . $relevanssi_variables['log_table'] . " (query, hits, user_id, ip, time) VALUES (%s, %d, %d, %s, NOW())", $query, intval($hits), $user->ID, $ip);
 	$wpdb->query($q);
@@ -157,9 +159,9 @@ function relevanssi_default_post_ok($post_ok, $doc) {
 	if ('publish' != $status) {
 		$post_ok = false;
 	}
-	
+
 	// ...unless
-	
+
 	if ('private' == $status) {
 		$post_ok = false;
 
@@ -184,14 +186,14 @@ function relevanssi_default_post_ok($post_ok, $doc) {
 			}
 		}
 	}
-	
+
 	// only show drafts, pending and future posts in admin search
 	if (in_array($status, apply_filters('relevanssi_valid_admin_status', array('draft', 'pending', 'future'))) && is_admin()) {
 		$post_ok = true;
 	}
-	
+
 	if (relevanssi_s2member_level($doc) == 0) $post_ok = false; // not ok with s2member
-	
+
 	return $post_ok;
 }
 
@@ -207,12 +209,12 @@ function relevanssi_s2member_level($doc) {
 	if (function_exists('is_permitted_by_s2member')) {
 		// s2member
 		$alt_view_protect = $GLOBALS["WS_PLUGIN__"]["s2member"]["o"]["filter_wp_query"];
-		
+
 		if (version_compare (WS_PLUGIN__S2MEMBER_VERSION, "110912", ">="))
 			$completely_hide_protected_search_results = (in_array ("all", $alt_view_protect) || in_array ("searches", $alt_view_protect)) ? true : false;
 		else /* Backward compatibility with versions of s2Member, prior to v110912. */
 			$completely_hide_protected_search_results = (strpos ($alt_view_protect, "all") !== false || strpos ($alt_view_protect, "searches") !== false) ? true : false;
-		
+
 		if (is_permitted_by_s2member($doc)) {
 			// Show title and excerpt, even full content if you like.
 			$return = 2;
@@ -226,20 +228,20 @@ function relevanssi_s2member_level($doc) {
 			$return = 0;
 		}
 	}
-	
+
 	return $return;
 }
 
 function relevanssi_populate_array($matches) {
 	global $relevanssi_post_array, $relevanssi_post_types, $wpdb;
-	if (function_exists('wp_suspend_cache_addition')) 
+	if (function_exists('wp_suspend_cache_addition'))
 		wp_suspend_cache_addition(true);
-	
+
 	$ids = array();
 	foreach ($matches as $match) {
 		array_push($ids, $match->doc);
 	}
-	
+
 	$ids = implode(',', $ids);
 	$posts = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE id IN ($ids)");
 	foreach ($posts as $post) {
@@ -247,7 +249,7 @@ function relevanssi_populate_array($matches) {
 		$relevanssi_post_types[$post->ID] = $post->post_type;
 	}
 
-	if (function_exists('wp_suspend_cache_addition')) 
+	if (function_exists('wp_suspend_cache_addition'))
 		wp_suspend_cache_addition(false);
 }
 
@@ -274,7 +276,7 @@ function relevanssi_extract_phrases($q) {
 			$end = mb_strpos($q, '"', $start + 1);
 		else
 			$end = strpos($q, '"', $start + 1);
-		
+
 		if ($end === false) {
 			// just one " in the query
 			$pos = $end;
@@ -284,9 +286,9 @@ function relevanssi_extract_phrases($q) {
 			$phrase = mb_substr($q, $start + 1, $end - $start - 1);
 		else
 			$phrase = substr($q, $start + 1, $end - $start - 1);
-		
+
 		$phrase = trim($phrase);
-		
+
 		if (!empty($phrase)) $phrases[] = $phrase;
 		$pos = $end;
 	}
@@ -298,19 +300,19 @@ function relevanssi_extract_phrases($q) {
  */
 function relevanssi_recognize_phrases($q) {
 	global $wpdb;
-	
+
 	$phrases = relevanssi_extract_phrases($q);
-	
+
 	$all_queries = array();
 	if (count($phrases) > 0) {
 		foreach ($phrases as $phrase) {
 			$queries = array();
 			$phrase = esc_sql($phrase);
 			"on" == get_option("relevanssi_index_excerpt") ? $excerpt = " OR post_excerpt LIKE '%$phrase%'" : $excerpt = "";
-			$query = "(SELECT ID FROM $wpdb->posts 
+			$query = "(SELECT ID FROM $wpdb->posts
 				WHERE (post_content LIKE '%$phrase%' OR post_title LIKE '%$phrase%' $excerpt)
 				AND post_status IN ('publish', 'draft', 'private', 'pending', 'future', 'inherit'))";
-			
+
 			$queries[] = $query;
 
 			$query = "(SELECT ID FROM $wpdb->posts as p, $wpdb->term_relationships as r, $wpdb->term_taxonomy as s, $wpdb->terms as t
@@ -318,7 +320,7 @@ function relevanssi_recognize_phrases($q) {
 				AND t.name LIKE '%$phrase%' AND p.post_status IN ('publish', 'draft', 'private', 'pending', 'future', 'inherit'))";
 
 			$queries[] = $query;
-			
+
 			$query = "(SELECT ID
               FROM $wpdb->posts AS p, $wpdb->postmeta AS m
               WHERE p.ID = m.post_id
@@ -335,7 +337,7 @@ function relevanssi_recognize_phrases($q) {
 	else {
 		$phrases = "";
 	}
-	
+
 	$all_queries = implode(" ", $all_queries);
 
 	return $all_queries;
@@ -386,19 +388,19 @@ function relevanssi_get_custom_fields() {
 	return $custom_fields;
 }
 
-function relevanssi_mb_trim($string) { 
+function relevanssi_mb_trim($string) {
 	$string = str_replace(chr(194) . chr(160), '', $string);
-    $string = preg_replace( "/(^\s+)|(\s+$)/us", "", $string ); 
-    return $string; 
-} 
+    $string = preg_replace( "/(^\s+)|(\s+$)/us", "", $string );
+    return $string;
+}
 
 function relevanssi_remove_punct($a) {
-		$a = preg_replace ('/<[^>]*>/', ' ', $a); 
-    
+		$a = preg_replace ('/<[^>]*>/', ' ', $a);
+
 	    $a = str_replace("\r", '', $a);    // --- replace with empty space
 	    $a = str_replace("\n", ' ', $a);   // --- replace with space
-	    $a = str_replace("\t", ' ', $a);   // --- replace with space		
-		
+	    $a = str_replace("\t", ' ', $a);   // --- replace with space
+
 		$a = stripslashes($a);
 
 		$a = str_replace('ß', 'ss', $a);
@@ -453,10 +455,10 @@ function relevanssi_prevent_default_request( $request, $query ) {
 		if ($bbpress) {
 			// this is a BBPress search; do not meddle
 			return $request;
-		}		
+		}
 		$admin_search_ok = true;
 		$admin_search_ok = apply_filters('relevanssi_admin_search_ok', $admin_search_ok, $query );
-		
+
 		$prevent = true;
 		$prevent = apply_filters('relevanssi_prevent_default_request', $prevent, $query );
 
@@ -464,9 +466,9 @@ function relevanssi_prevent_default_request( $request, $query ) {
 			$prevent = false;
 			$admin_search_ok = false;
 		}
-		
+
 		if (!is_admin() && $prevent )
-			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";		
+			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";
 		else if ('on' == get_option('relevanssi_admin_search') && $admin_search_ok )
 			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";
 	}
@@ -481,7 +483,7 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 		}
 	}
 	if (is_array($str)) return $tokens;
-	
+
 	if ( function_exists('mb_internal_encoding') )
 		mb_internal_encoding("UTF-8");
 
@@ -489,7 +491,7 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 		$stopword_list = relevanssi_fetch_stopwords();
 	}
 
-	if (function_exists('relevanssi_thousandsep')) {	
+	if (function_exists('relevanssi_thousandsep')) {
 		$str = relevanssi_thousandsep($str);
 	}
 
@@ -504,7 +506,7 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 	while ($t !== false) {
 		$t = strval($t);
 		$accept = true;
-		
+
 		if (relevanssi_strlen($t) < $min_word_length) {
 			$t = strtok("\n\t  ");
 			continue;
@@ -523,7 +525,7 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 		if (RELEVANSSI_PREMIUM) {
 			$t = apply_filters('relevanssi_premium_tokenizer', $t);
 		}
-		
+
 		if ($accept) {
 			$t = relevanssi_mb_trim($t);
 			if (is_numeric($t)) $t = " $t";		// $t ends up as an array index, and numbers just don't work there
@@ -534,7 +536,7 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 				$tokens[$t]++;
 			}
 		}
-		
+
 		$t = strtok("\n\t ");
 	}
 	return $tokens;
@@ -542,7 +544,7 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 
 function relevanssi_get_post_status($id) {
 	global $relevanssi_post_array;
-	
+
 	$type = substr($id, 0, 2);
 	if ($type == '**') {
 		return 'publish';
@@ -550,7 +552,7 @@ function relevanssi_get_post_status($id) {
 	if ($type == 'u_') {
 		return 'publish';
 	}
-	
+
 	if (isset($relevanssi_post_array[$id])) {
 		$status = $relevanssi_post_array[$id]->post_status;
 		if ('inherit' == $status) {
@@ -571,7 +573,7 @@ function relevanssi_get_post_status($id) {
 
 function relevanssi_get_post_type($id) {
 	global $relevanssi_post_array;
-	
+
 	if (isset($relevanssi_post_array[$id])) {
 		return $relevanssi_post_array[$id]->post_type;
 	}
@@ -607,7 +609,7 @@ function relevanssi_get_term_tax_id($field, $id, $taxonomy) {
  */
 function relevanssi_add_synonyms($q) {
 	if (empty($q)) return $q;
-	
+
 	$synonym_data = get_option('relevanssi_synonyms');
 	if ($synonym_data) {
 		$synonyms = array();
@@ -631,6 +633,7 @@ function relevanssi_add_synonyms($q) {
 			if (!in_array($q, $terms)) $terms[] = $q;
 
 			foreach ($terms as $term) {
+                $term = trim($term);
 				if (in_array(strval($term), array_keys($synonyms))) {		// strval, otherwise numbers cause problems
 					if (isset($synonyms[strval($term)])) {		// necessary, otherwise terms like "02" can cause problems
 						$new_terms = array_merge($new_terms, array_keys($synonyms[strval($term)]));
@@ -686,7 +689,7 @@ function relevanssi_close_tags($html) {
         }
     }
     return $html;
-} 
+}
 
 /* Prints out post title with highlighting.
  */

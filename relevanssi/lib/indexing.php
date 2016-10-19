@@ -730,13 +730,17 @@ function relevanssi_get_comments($postID) {
  * Droz Raphaël, June 2016
  */
 function relevanssi_index_acf(&$insert_data, $post_id, $field_name, $field_value) {
-	if (! is_plugin_active('advanced-custom-fields/acf.php')) return ;
+	if (! is_admin() ) include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); // otherwise is_plugin_active will cause a fatal error
+	if (! is_plugin_active('advanced-custom-fields/acf.php') &&
+		! is_plugin_active('advanced-custom-fields-pro/acf.php')) return;
 
 	$field_object = get_field_object($field_name, $post_id);
 	if (! isset($field_object['choices'])) return; // not a "select" field
+	if (is_array($field_value)) return; // not handled (currently)
 	if (! isset($field_object['choices'][$field_value])) return; // value does not exist
 
 	if ( ($value = $field_object['choices'][$field_value]) ) {
+		if (! isset($insert_data[$value]['customfield']) ) $insert_data[$value]['customfield'] = 0;
 		$insert_data[$value]['customfield']++;
 	}
 }
