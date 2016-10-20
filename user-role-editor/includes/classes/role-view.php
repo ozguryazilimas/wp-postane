@@ -45,7 +45,7 @@ class URE_Role_View extends URE_View {
         $this->role_default_html = '<select id="default_user_role" name="default_user_role" '. $select_style .'>';
         foreach ($roles as $key => $value) {
             $selected = $this->lib->option_selected($key, $wp_default_role);
-            $disabled = ($key==='administrator' && $caps_access_restrict_for_simple_admin && !is_super_admin()) ? 'disabled' : '';
+            $disabled = ($key==='administrator' && $caps_access_restrict_for_simple_admin && !$this->lib->is_super_admin()) ? 'disabled' : '';
             if ($show_admin_role || $key != 'administrator') {
                 $translated_name = esc_html__($value['name'], 'user-role-editor');  // get translation from URE language file, if exists
                 if ($translated_name === $value['name']) { // get WordPress internal translation
@@ -81,7 +81,7 @@ class URE_Role_View extends URE_View {
                 continue;
             }            
             $selected1 = $this->lib->option_selected($key, $current_role);
-            $disabled = ($key==='administrator' && $caps_access_restrict_for_simple_admin && !is_super_admin()) ? 'disabled' : '';
+            $disabled = ($key==='administrator' && $caps_access_restrict_for_simple_admin && !$this->lib->is_super_admin()) ? 'disabled' : '';
             if ($show_admin_role || $key != 'administrator') {
                 $translated_name = esc_html__($value['name'], 'user-role-editor');  // get translation from URE language file, if exists
                 if ($translated_name === $value['name']) { // get WordPress internal translation
@@ -236,7 +236,7 @@ if ($multisite && !is_network_admin()) {
         } else {
             $add_del_role_for_simple_admin = 1;
         }
-        $super_admin = is_super_admin();
+        $super_admin = $this->lib->is_super_admin();
         $multisite = $this->lib->get('multisite');
         
 ?>	
@@ -294,7 +294,7 @@ if ($multisite && !is_network_admin()) {
                <div id="ure_service_tools">
 <?php
                 do_action('ure_role_edit_toolbar_service');
-                if (!$multisite || (is_main_site( get_current_blog_id()) || (is_network_admin() && is_super_admin()))) {
+                if (!$multisite || (is_main_site( get_current_blog_id()) || (is_network_admin() && $this->lib->is_super_admin()))) {
                     if (current_user_can('ure_reset_roles')) {
 ?>                   
                   <button id="ure_reset_roles_button" class="ure_toolbar_button" style="color: red;" title="Reset Roles to its original state">Reset</button> 
@@ -326,7 +326,7 @@ if ($multisite && !is_network_admin()) {
             $checked = '';
         }
         $caps_access_restrict_for_simple_admin = $this->lib->get_option('caps_access_restrict_for_simple_admin', 0);
-        if (is_super_admin() || !$multisite || !$this->lib->is_pro() || !$caps_access_restrict_for_simple_admin) {
+        if ($this->lib->is_super_admin() || !$multisite || !$this->lib->is_pro() || !$caps_access_restrict_for_simple_admin) {
 ?>              
             <input type="checkbox" name="ure_caps_readable" id="ure_caps_readable" value="1" <?php echo $checked; ?> onclick="ure_turn_caps_readable(0);"/>
             <label for="ure_caps_readable"><?php esc_html_e('Show capabilities in human readable form', 'user-role-editor'); ?></label>&nbsp;&nbsp;
@@ -342,7 +342,7 @@ if ($multisite && !is_network_admin()) {
             <label for="ure_show_deprecated_caps"><?php esc_html_e('Show deprecated capabilities', 'user-role-editor'); ?></label>              
 <?php
         }
-        if ($multisite && $active_for_network && !is_network_admin() && is_main_site(get_current_blog_id()) && is_super_admin()) {
+        if ($multisite && $active_for_network && !is_network_admin() && is_main_site(get_current_blog_id()) && $this->lib->is_super_admin()) {
             $hint = esc_html__('If checked, then apply action to ALL sites of this Network');
             $apply_to_all = $this->lib->get('apply_to_all');
             if ($apply_to_all) {

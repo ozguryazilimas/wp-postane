@@ -69,7 +69,7 @@ class URE_User_View extends URE_View {
             $user_info .= ' (' . $this->user_to_edit->display_name . ')';
         }
         $user_info .= $anchor_end . '</span>';
-        if (is_multisite() && is_super_admin($this->user_to_edit->ID)) {
+        if (is_multisite() && $this->lib->is_super_admin($this->user_to_edit->ID)) {
             $user_info .= '  <span style="font-weight: bold; color:red;">' . esc_html__('Network Super Admin', 'user-role-editor') . '</span>';
         }
 
@@ -142,7 +142,7 @@ class URE_User_View extends URE_View {
 		<td>&nbsp;</td>		
 		<td style="padding-left: 10px; padding-bottom: 5px;">
   <?php    
-    if (is_super_admin() || !$this->multisite || !class_exists('User_Role_Editor_Pro') || !$caps_access_restrict_for_simple_admin) {  
+    if ($this->lib->is_super_admin() || !$this->multisite || !class_exists('User_Role_Editor_Pro') || !$caps_access_restrict_for_simple_admin) {  
         if ($caps_readable) {
             $checked = 'checked="checked"';
         } else {

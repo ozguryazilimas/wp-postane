@@ -227,6 +227,7 @@ class URE_Base_Lib {
     // end of check_version()
 
     /**
+     * @TODO: replace with selected() from WordPress general-template.php
      * returns 'selected' HTML cluster if $value matches to $etalon
      * 
      * @param string $value

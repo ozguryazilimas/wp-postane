@@ -94,7 +94,7 @@ class URE_View {
         $blocked = false;
         $multisite = $this->lib->get('multisite');
         if ($multisite && $this->lib->block_cap_for_single_admin($cap_id, true)) {
-            if (is_super_admin()) {
+            if ($this->lib->is_super_admin()) {
                 if (!is_network_admin()) {
                     $label_style = 'style="color: red;"';
                 }
@@ -118,7 +118,7 @@ class URE_View {
         $onclick_for_admin = '';
         $multisite = $this->lib->get('multisite');
         $current_role = $this->lib->get('current_role');
-        if (!($multisite && is_super_admin())) {  // do not limit SuperAdmin for multi-site
+        if (!($multisite && $this->lib->is_super_admin())) {  // do not limit SuperAdmin for multi-site
             if ('administrator'==$current_role) {
                 $onclick_for_admin = 'onclick="ure_turn_it_back(this)"';
             }

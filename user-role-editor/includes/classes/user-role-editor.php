@@ -311,7 +311,7 @@ class User_Role_Editor {
         if ($current_user->ID===0) {
             return;
         }
-        if (is_super_admin()) { // Superadmin may do all
+        if ($this->lib->is_super_admin()) { // Superadmin may do all
             return;
         }
                         
@@ -324,8 +324,8 @@ class User_Role_Editor {
             return;
         }
         
-        // editing a user profile
-        if (!is_super_admin($current_user->ID) && is_super_admin($profileuser->ID)) { // trying to edit a superadmin while himself is less than a superadmin
+        // editing a user profile: it's correct to call is_super_admin() directly here, as permissions are raised for the $current_user only
+        if (!$this->lib->is_super_admin($current_user->ID) && is_super_admin($profileuser->ID)) { // trying to edit a superadmin while himself is less than a superadmin
             wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
         } elseif (!( is_user_member_of_blog($profileuser->ID, get_current_blog_id()) && is_user_member_of_blog($current_user->ID, get_current_blog_id()) )) { // editing user and edited user aren't members of the same blog
             wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
@@ -405,7 +405,7 @@ class User_Role_Editor {
         $multisite = $this->lib->get('multisite');
         // if multi-site, then allow plugin activation for network superadmins and, if that's specially defined, - for single site administrators too    
         if ($multisite) {
-            if (is_super_admin() || $this->lib->user_is_admin()) {
+            if ($this->lib->is_super_admin() || $this->lib->user_is_admin()) {
                 return $plugins;
             }
         } else {

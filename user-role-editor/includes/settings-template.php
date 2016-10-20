@@ -29,7 +29,7 @@ if (!$license_key_only) {
 ?>
             <li><a href="#ure_tabs-3"><?php esc_html_e('Default Roles', 'user-role-editor'); ?></a></li>
 <?php
-    if ($multisite && ($this->lib->is_pro() || is_super_admin())) {
+    if ($multisite && ($this->lib->is_pro() || $this->lib->is_super_admin())) {
 ?>
             <li><a href="#ure_tabs-4"><?php esc_html_e('Multisite', 'user-role-editor'); ?></a></li>
 <?php
@@ -169,14 +169,14 @@ if (!$multisite) {
     </div> <!-- ure_tabs-3 -->   
     
 <?php
-    if ( $multisite && ($this->lib->is_pro() || is_super_admin())) {
+    if ( $multisite && ($this->lib->is_pro() || $this->lib->is_super_admin())) {
 ?>
     <div id="ure_tabs-4">
         <div id="ure-settings-form-ms">
             <form name="ure_settings_ms" method="post" action="<?php echo $link; ?>?page=settings-<?php echo URE_PLUGIN_FILE; ?>" >
                 <table id="ure_settings_ms">
 <?php
-    if (is_super_admin()) {
+    if ($this->lib->is_super_admin()) {
 ?>
                     <tr>
                          <td>
