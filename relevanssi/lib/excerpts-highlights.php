@@ -421,17 +421,17 @@ function relevanssi_count_matches($words, $fulltext) {
 	$count = 0;
 	foreach( $words as $word ) {
 		if (get_option('relevanssi_fuzzy') == 'never') {
-			$pattern = '/([\s,\.:;]'.$word.'[\s,\.:;])/i';
+			$pattern = '/([\s,\.:;\?!\']'.$word.'[\s,\.:;\?!\'])/i';
 			if (preg_match($pattern, $fulltext, $matches, PREG_OFFSET_CAPTURE)) {
 				$count += count($matches) - 1;
 			}
 		}
 		else {
-			$pattern = '/([\s,\.:;]'.$word.')/i';
+			$pattern = '/([\s,\.:;\?!\']'.$word.')/i';
 			if (preg_match($pattern, $fulltext, $matches, PREG_OFFSET_CAPTURE)) {
 				$count += count($matches) - 1;
 			}
-			$pattern = '/('.$word.'[\s,\.:;])/i';
+			$pattern = '/('.$word.'[\s,\.:;\?!\'])/i';
 			if (preg_match($pattern, $fulltext, $matches, PREG_OFFSET_CAPTURE)) {
 				$count += count($matches) - 1;
 			}

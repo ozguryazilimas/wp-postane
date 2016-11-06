@@ -132,6 +132,7 @@ function relevanssi_update_log($query, $hits) {
 
 	// Bot filter, by Justin_K
 	// See: http://wordpress.org/support/topic/bot-logging-problem-w-tested-solution
+    $user_agent = "";
 	if (isset($_SERVER['HTTP_USER_AGENT'])) {
 	    $user_agent = $_SERVER['HTTP_USER_AGENT'];
     	$bots = array('Google'=>'Mediapartners-Google');
@@ -142,8 +143,12 @@ function relevanssi_update_log($query, $hits) {
 	}
 
 	get_option('relevanssi_log_queries_with_ip') == "on" ? $ip = apply_filters('relevanssi_remote_addr', $_SERVER['REMOTE_ADDR']) : $ip = '';
-	$q = $wpdb->prepare("INSERT INTO " . $relevanssi_variables['log_table'] . " (query, hits, user_id, ip, time) VALUES (%s, %d, %d, %s, NOW())", $query, intval($hits), $user->ID, $ip);
-	$wpdb->query($q);
+
+    $ok_to_log = apply_filters('relevanssi_ok_to_log', true, $query, $hits, $user_agent, $ip);
+    if ($ok_to_log) {
+        $q = $wpdb->prepare("INSERT INTO " . $relevanssi_variables['log_table'] . " (query, hits, user_id, ip, time) VALUES (%s, %d, %d, %s, NOW())", $query, intval($hits), $user->ID, $ip);
+	    $wpdb->query($q);
+    }
 }
 
 /**

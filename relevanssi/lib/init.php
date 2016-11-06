@@ -4,7 +4,7 @@ add_action('admin_menu', 'relevanssi_menu');
 add_filter('the_posts', 'relevanssi_query');
 add_action('delete_post', 'relevanssi_delete');
 add_action('comment_post', 'relevanssi_comment_index'); 	//added by OdditY
-add_action('edit_comment', 'relevanssi_comment_edit'); 		//added by OdditY 
+add_action('edit_comment', 'relevanssi_comment_edit'); 		//added by OdditY
 add_action('delete_comment', 'relevanssi_comment_remove'); 	//added by OdditY
 add_action('wp_insert_post', 'relevanssi_insert_edit', 99, 1 ); // added by lumpysimon
 // BEGIN added by renaissancehack
@@ -50,7 +50,7 @@ function relevanssi_init() {
 			update_option( 'relevanssi_doc_count', $D);
  		}
  	}
-	
+
 	if (!function_exists('mb_internal_encoding')) {
 		function relevanssi_mb_warning() {
 			echo "<div id='relevanssi-warning' class='error'><p><strong>"
@@ -101,7 +101,7 @@ function relevanssi_query_vars($qv) {
 
 function relevanssi_create_database_tables($relevanssi_db_version) {
 	global $wpdb;
-	
+
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 	$charset_collate_bin_column = '';
@@ -118,12 +118,9 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
     	if ($wpdb->collate == '' && $wpdb->charset == "utf8") {
 	        $charset_collate_bin_column .= " COLLATE utf8_bin";
 	    }
-    	if ($wpdb->collate == '' && $wpdb->charset == "utf8mb4") {
-	        $charset_collate_bin_column .= " COLLATE utf8mb4_bin";
-	    }
     }
-    
-	$relevanssi_table = $wpdb->prefix . "relevanssi";	
+
+	$relevanssi_table = $wpdb->prefix . "relevanssi";
 	$relevanssi_stopword_table = $wpdb->prefix . "relevanssi_stopwords";
 	$relevanssi_log_table = $wpdb->prefix . "relevanssi_log";
 
@@ -135,28 +132,28 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 			}
 			delete_option('relevanssi_indexed');
 		}
-	
-		$sql = "CREATE TABLE " . $relevanssi_table . " (doc bigint(20) NOT NULL DEFAULT '0', 
-		term varchar(50) NOT NULL DEFAULT '0', 
+
+		$sql = "CREATE TABLE " . $relevanssi_table . " (doc bigint(20) NOT NULL DEFAULT '0',
+		term varchar(50) NOT NULL DEFAULT '0',
 		term_reverse varchar(50) NOT NULL DEFAULT '0',
-		content mediumint(9) NOT NULL DEFAULT '0', 
-		title mediumint(9) NOT NULL DEFAULT '0', 
-		comment mediumint(9) NOT NULL DEFAULT '0', 
-		tag mediumint(9) NOT NULL DEFAULT '0', 
-		link mediumint(9) NOT NULL DEFAULT '0', 
-		author mediumint(9) NOT NULL DEFAULT '0', 
-		category mediumint(9) NOT NULL DEFAULT '0', 
-		excerpt mediumint(9) NOT NULL DEFAULT '0', 
-		taxonomy mediumint(9) NOT NULL DEFAULT '0', 
-		customfield mediumint(9) NOT NULL DEFAULT '0', 
+		content mediumint(9) NOT NULL DEFAULT '0',
+		title mediumint(9) NOT NULL DEFAULT '0',
+		comment mediumint(9) NOT NULL DEFAULT '0',
+		tag mediumint(9) NOT NULL DEFAULT '0',
+		link mediumint(9) NOT NULL DEFAULT '0',
+		author mediumint(9) NOT NULL DEFAULT '0',
+		category mediumint(9) NOT NULL DEFAULT '0',
+		excerpt mediumint(9) NOT NULL DEFAULT '0',
+		taxonomy mediumint(9) NOT NULL DEFAULT '0',
+		customfield mediumint(9) NOT NULL DEFAULT '0',
 		mysqlcolumn mediumint(9) NOT NULL DEFAULT '0',
 		taxonomy_detail longtext NOT NULL,
 		customfield_detail longtext NOT NULL,
 		mysqlcolumn_detail longtext NOT NULL,
 		type varchar(210) NOT NULL DEFAULT 'post', 
-		item bigint(20) NOT NULL DEFAULT '0', 
+		item bigint(20) NOT NULL DEFAULT '0',
 	    UNIQUE KEY doctermitem (doc, term, item)) $charset_collate";
-		
+
 		dbDelta($sql);
 
 		$sql = "SHOW INDEX FROM $relevanssi_table";
@@ -172,7 +169,7 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 			if ($index->Key_name == 'docs') $docs_exists = true;
 			if ($index->Key_name == 'typeitem') $typeitem_exists = true;
 		}
-		
+
 		if (!$terms_exists) {
 			$sql = "CREATE INDEX terms ON $relevanssi_table (term(20))";
 			$wpdb->query($sql);
@@ -182,12 +179,12 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 			$sql = "CREATE INDEX relevanssi_term_reverse_idx ON $relevanssi_table (term_reverse(10))";
 			$wpdb->query($sql);
 		}
-		
+
 		if (!$docs_exists) {
 			$sql = "CREATE INDEX docs ON $relevanssi_table (doc)";
 			$wpdb->query($sql);
 		}
-		
+
 		if (!$typeitem_exists) {
 			$sql = "CREATE INDEX typeitem ON $relevanssi_table (type, item)";
 			$wpdb->query($sql);
@@ -198,7 +195,7 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 
 		dbDelta($sql);
 
-		$sql = "CREATE TABLE " . $relevanssi_log_table . " (id bigint(9) NOT NULL AUTO_INCREMENT, 
+		$sql = "CREATE TABLE " . $relevanssi_log_table . " (id bigint(9) NOT NULL AUTO_INCREMENT,
 		query varchar(200) NOT NULL,
 		hits mediumint(9) NOT NULL DEFAULT '0',
 		time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -207,11 +204,11 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 	    UNIQUE KEY id (id)) $charset_collate;";
 
 		dbDelta($sql);
-	
+
 		if (RELEVANSSI_PREMIUM && get_option('relevanssi_db_version') < 12) {
 			$charset_collate_bin_column = '';
 			$charset_collate = '';
-		
+
 			if (!empty($wpdb->charset)) {
 				$charset_collate_bin_column = "CHARACTER SET $wpdb->charset";
 				$charset_collate = "DEFAULT $charset_collate_bin_column";
@@ -223,11 +220,8 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 				if ($wpdb->collate == '' && $wpdb->charset == "utf8") {
 					$charset_collate_bin_column .= " COLLATE utf8_bin";
 				}
-				if ($wpdb->collate == '' && $wpdb->charset == "utf8mb4") {
-					$charset_collate_bin_column .= " COLLATE utf8mb4_bin";
-				}
 			}
-			
+
 			$sql = "ALTER TABLE $relevanssi_stopword_table MODIFY COLUMN stopword varchar(50) $charset_collate_bin_column NOT NULL";
 			$wpdb->query($sql);
 			$sql = "ALTER TABLE $relevanssi_log_table ADD COLUMN user_id bigint(20) NOT NULL DEFAULT '0'";
@@ -235,7 +229,7 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 			$sql = "ALTER TABLE $relevanssi_log_table ADD COLUMN ip varchar(40) NOT NULL DEFAULT ''";
 			$wpdb->query($sql);
 		}
-		
+
 		if (get_option('relevanssi_db_version') < 16) {
 			$sql = "ALTER TABLE $relevanssi_table ADD COLUMN term_reverse VARCHAR(50);";
 			$wpdb->query($sql);
@@ -244,10 +238,10 @@ function relevanssi_create_database_tables($relevanssi_db_version) {
 			$sql = "CREATE INDEX relevanssi_term_reverse_idx ON $relevanssi_table (term_reverse(10));";
 			$wpdb->query($sql);
 		}
-		
+
 		update_option('relevanssi_db_version', $relevanssi_db_version);
 	}
-	
+
 	if ($wpdb->get_var("SELECT COUNT(*) FROM $relevanssi_stopword_table WHERE 1") < 1) {
 		relevanssi_populate_stopwords();
 	}

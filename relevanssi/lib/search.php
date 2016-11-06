@@ -7,6 +7,8 @@ function relevanssi_query($posts, $query = false) {
 	global $relevanssi_active;
 	global $wp_query;
 
+	if (!$wp_query) return $posts;
+
 	$search_ok = true; 							// we will search!
 	if (!is_search()) {
 		$search_ok = false;						// no, we can't
@@ -51,8 +53,23 @@ function relevanssi_search($args) {
 	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
 
 	$filtered_args = apply_filters( 'relevanssi_search_filters', $args );
-	extract($filtered_args);
-
+	$q = $filtered_args['q'];
+	$tax_query = $filtered_args['tax_query'];
+	$tax_query_relation = $filtered_args['tax_query_relation'];
+	$post_query = $filtered_args['post_query'];
+	$parent_query = $filtered_args['parent_query'];
+	$meta_query = $filtered_args['meta_query'];
+	$date_query = $filtered_args['date_query'];
+	$expost = $filtered_args['expost'];
+	$post_type = $filtered_args['post_type'];
+	$post_status = $filtered_args['post_status'];
+	$operator = $filtered_args['operator'];
+	$search_blogs = $filtered_args['search_blogs'];
+	$author = $filtered_args['author'];
+	$orderby = $filtered_args['orderby'];
+	$order = $filtered_args['order'];
+	$fields = $filtered_args['fields'];
+	
 	$hits = array();
 
 	$query_restrictions = "";

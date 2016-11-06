@@ -828,7 +828,7 @@ function relevanssi_options_form() {
 		$mysql_columns = get_option('relevanssi_mysql_columns');
 		$serialize_options['relevanssi_mysql_columns'] = $mysql_columns;
 
-		$serialized_options = serialize($serialize_options);
+		$serialized_options = json_encode($serialize_options);
 	}
 
 	echo "<div class='postbox-container' style='width:70%;'>";

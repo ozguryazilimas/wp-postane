@@ -4,7 +4,7 @@ Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 3.5.5
+Stable tag: 3.5.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,14 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.5.6.1 =
+* Fix for a fatal bug in 3.5.6.
+
+= 3.5.6 =
+* Relevanssi admin page had a vulnerability that allowed SQL injection attacks. That is now fixed.
+* Relevanssi didn't like to highlight search terms that are followed by a ?, an ! or an apostrophe.
+* New filter: `relevanssi_ok_to_log` lets you control whether search queries are logged or not.
 
 = 3.5.5 =
 * 500 errors caused by arrays in custom fields should be gone now.
@@ -1126,6 +1134,12 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.5.6.1 =
+* Fix for a fatal error.
+
+= 3.5.6 =
+* Fix for a SQL injection vulnerability.
 
 = 3.5.5 =
 * Bug fixes and small improvements.
