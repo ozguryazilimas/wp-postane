@@ -130,9 +130,9 @@ class URE_View {
         $caps_readable = $this->lib->get('caps_readable');
         $caps_groups_manager = URE_Capabilities_Groups_Manager::get_instance();
         
-        $key_capability = $this->lib->get_key_capability();
+        $key_capability = URE_Own_Capabilities::get_key_capability();
         $user_is_ure_admin = current_user_can($key_capability);
-        $ure_caps = $this->lib->get_ure_caps();
+        $ure_caps = URE_Own_Capabilities::get_caps();
         
         $output = '<div id="ure_caps_list_container">'
                 . '<div id="ure_caps_list">';
@@ -270,9 +270,9 @@ class URE_View {
                     <div class="ure-table-cell ure-caps-option nowrap">
                         <?php esc_html_e('Columns:', 'user-role-editor');?>
                         <select id="caps_columns_quant" name="caps_columns_quant" onchange="ure_change_caps_columns_quant();">
-                            <option value="1" <?php echo $this->lib->option_selected(1, $caps_columns_quant);?> >1</option>
-                            <option value="2" <?php echo $this->lib->option_selected(2, $caps_columns_quant);?> >2</option>
-                            <option value="3" <?php echo $this->lib->option_selected(3, $caps_columns_quant);?> >3</option>
+                            <option value="1" <?php selected(1, $caps_columns_quant);?> >1</option>
+                            <option value="2" <?php selected(2, $caps_columns_quant);?> >2</option>
+                            <option value="3" <?php selected(3, $caps_columns_quant);?> >3</option>
                         </select>
                     </div>    
                 </div>

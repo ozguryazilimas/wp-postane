@@ -46,7 +46,7 @@ class URE_Ajax_Processor {
             die;
         }
         
-        $key_capability = $this->lib->get_key_capability();
+        $key_capability = URE_Own_Capabilities::get_key_capability();
         if (!current_user_can($key_capability)) {
             echo json_encode(array('result'=>'error', 'message'=>'URE: Insufficient permissions'));
             die;

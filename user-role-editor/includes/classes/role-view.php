@@ -44,7 +44,7 @@ class URE_Role_View extends URE_View {
         $wp_default_role = $this->lib->get('wp_default_role');
         $this->role_default_html = '<select id="default_user_role" name="default_user_role" '. $select_style .'>';
         foreach ($roles as $key => $value) {
-            $selected = $this->lib->option_selected($key, $wp_default_role);
+            $selected = selected($key, $wp_default_role, false);
             $disabled = ($key==='administrator' && $caps_access_restrict_for_simple_admin && !$this->lib->is_super_admin()) ? 'disabled' : '';
             if ($show_admin_role || $key != 'administrator') {
                 $translated_name = esc_html__($value['name'], 'user-role-editor');  // get translation from URE language file, if exists
@@ -65,7 +65,7 @@ class URE_Role_View extends URE_View {
         
         global $current_user;
         
-        $key_capability = $this->lib->get_key_capability();
+        $key_capability = URE_Own_Capabilities::get_key_capability();
         $user_is_ure_admin = current_user_can($key_capability);
         $role_to_skip = ($user_is_ure_admin) ? '':$current_user->roles[0];
         
@@ -80,7 +80,7 @@ class URE_Role_View extends URE_View {
             if ($key===$role_to_skip) { //  skip role of current user if he does not have full access to URE
                 continue;
             }            
-            $selected1 = $this->lib->option_selected($key, $current_role);
+            $selected1 = selected($key, $current_role, false);
             $disabled = ($key==='administrator' && $caps_access_restrict_for_simple_admin && !$this->lib->is_super_admin()) ? 'disabled' : '';
             if ($show_admin_role || $key != 'administrator') {
                 $translated_name = esc_html__($value['name'], 'user-role-editor');  // get translation from URE language file, if exists

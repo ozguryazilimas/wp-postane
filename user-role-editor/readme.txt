@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 4.28
+Stable tag: 4.29
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,8 +75,14 @@ If you wish to check available translations or help with plugin translation to y
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog ==
+= [4.29] 10.11.2016 =
+* New: User Role Editor own user capabilities are grouped separately under Custom capabilities.
+* Update: URE_Lib::is_super_admin() uses WordPress core is_super_admin() for multisite setup only. Superadmin is a user with 'administrator' role in the case of single site WordPress installation.  
+  This is the difference with the WordPress core which counts as a superadmin (for single site WP installation) any user with a 'delete_users' capability.
+* Update: BaseLib::option_selected() calls were replaced with the calls of a similar selected() function from WordPress core.
+
 = [4.28] 20.10.2016 =
-* New: WooCommerce plugin user capabilities (if exist) are grouped separately.
+* New: WooCommerce plugin user capabilities (if exist) are grouped separately under Custom capabilities.
 * Update: Temporally raised permissions flag is taken into account when checking, if user has a superadmin privileges. WordPress is_super_admin() function was replaced with custom wrapper to define if current user is a real superadmin or just a local admin with the temporally raised (add/edit users pages) permissions.
 
 = [4.27.2] 15.09.2016 =
