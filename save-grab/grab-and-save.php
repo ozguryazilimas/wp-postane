@@ -25,6 +25,7 @@ class GrabAndSave {
 		
 		add_filter("media_upload_tabs",array(&$this,"build_tab"));
 		add_action("media_upload_grabAndSave", array(&$this, "menu_handle"));
+		add_action('media_buttons', array(&$this, "grabAndSave_button"));
 	}
 	
 	/*
@@ -58,6 +59,11 @@ class GrabAndSave {
 		return $array;
 	}
 
+	function grabAndSave_button() {
+		wp_enqueue_script('media_button', plugin_dir_url( __FILE__ ).'media_button.js', true);
+		echo '<a href="#" id="insert-image" class="button add_media">' .
+			'<span class="wp-media-buttons-icon"></span>' .  __( 'Add Media' ) . '</a>';
+	}
 	
 	function build_tab($tabs) {
 		$newtab = array('grabAndSave' => __('İnternet\'ten Yükle', 'grabAndSave'));
