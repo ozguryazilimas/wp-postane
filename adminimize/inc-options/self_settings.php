@@ -11,7 +11,7 @@ if ( ! function_exists( 'add_action' ) ) {
 ?>
 <div id="poststuff" class="ui-sortable meta-box-sortables">
 	<div id="about" class="postbox">
-		<div class="handlediv" title="<?php esc_attr_e( 'Click to toggle' ); ?>"><br /></div>
+		<div class="handlediv" title="<?php esc_attr_e( 'Click to toggle', 'adminimize' ); ?>"><br /></div>
 		<h3 class="hndle" id="self-settings"><?php esc_attr_e( 'Plugin Settings', 'adminimize' ) ?></h3>
 
 		<div class="inside">
@@ -40,7 +40,7 @@ if ( ! function_exists( 'add_action' ) ) {
 							name="mw_adminimize_multiple_roles" <?php checked(
 							_mw_adminimize_get_option_value( 'mw_adminimize_multiple_roles' ),
 							1, TRUE ); ?>>
-						<?php esc_attr_e( 'A user with multiple roles must have an option selected for all roles in order to hide the selected option. If the option is unselected for any of the user’s roles, then the item will appear.', 'adminimize' ); ?>
+						<?php esc_attr_e( 'To hide an option for a user with multiple roles, the option must be selected for every role of that user. If the option is not selected for one of the user\'s roles, then the item will appear.', 'adminimize' ); ?>
 					</td>
 				</tr>
 				<tr>
@@ -54,7 +54,21 @@ if ( ! function_exists( 'add_action' ) ) {
 							_mw_adminimize_get_option_value( 'mw_adminimize_support_bbpress' ),
 							1,
 							TRUE ); ?>>
-						<?php esc_attr_e( 'See the bbPress roles also in each area to hide for this context.', 'adminimize' ); ?>
+						<?php esc_attr_e( 'Show bbPress roles for each area to allow bbPress specific user settings.', 'adminimize' ); ?>
+					</td>
+				</tr>
+				<tr>
+					<td class="row-title"><label for="mw_adminimize_prevent_page_access">
+							<?php esc_attr_e( 'Allow Page Access', 'adminimize' ); ?>
+						</label>
+					</td>
+					<td>
+						<input type="checkbox" value="1" id="mw_adminimize_prevent_page_access"
+							name="mw_adminimize_prevent_page_access" <?php checked(
+							_mw_adminimize_get_option_value( 'mw_adminimize_prevent_page_access' ),
+							1,
+							TRUE ); ?>>
+						<?php esc_attr_e( 'Activate this option to allow access to pages of the back end, even if it\'s hidden to a user role.', 'adminimize' ); ?>
 					</td>
 				</tr>
 			</table>

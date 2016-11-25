@@ -39,7 +39,7 @@ function _mw_adminimize_get_admin_bar_nodes() {
 
 	$settings = 'mw_adminimize_admin_bar_frontend_nodes';
 	// Set string on settings for Admin Area.
-	if ( is_admin() ){
+	if ( is_admin() ) {
 		$settings = 'mw_adminimize_admin_bar_nodes';
 	}
 
@@ -98,28 +98,14 @@ function _mw_adminimize_change_admin_bar() {
 	//$user_roles = _mw_adminimize_get_all_user_roles();
 	$disabled_admin_bar_option_ = array();
 
-	// Get Backend Admin Bar settings for the current user role.
-	if ( is_admin() ) {
-		foreach ( $user_roles as $role ) {
-			$disabled_admin_bar_option_[ $role ] = (array) _mw_adminimize_get_option_value(
-				'mw_adminimize_disabled_admin_bar_' . $role . '_items'
-			);
-		}
-	} else {
-		// Get Frontend Admin Bar settings for the current user role.
-		foreach ( $user_roles as $role ) {
-			$disabled_admin_bar_option_[ $role ] = (array) _mw_adminimize_get_option_value(
-				'mw_adminimize_disabled_admin_bar_frontend_' . $role . '_items'
-			);
-		}
+	$role_prefix = is_admin() ? 'mw_adminimize_disabled_admin_bar_' : `mw_adminimize_disabled_admin_bar_frontend_`;
+
+	foreach( $user_roles as $role ) {
+		$disabled_admin_bar_option_[] = _mw_adminimize_get_option_value( $role_prefix . $role . '_items' );
 	}
 
-	// New declaration of type for array reduce.
-	if ( ! isset( $disabled_admin_bar_option_ ) ) {
-		$disabled_admin_bar_option_ = array();
-	}
 	// Merge multidimensional array in to one, flat.
-	$disabled_admin_bar_option_ = (array) array_reduce( $disabled_admin_bar_option_, 'array_merge', array() );
+	$disabled_admin_bar_option_ = _mw_adminimize_array_flatten( $disabled_admin_bar_option_ );
 
 	// Support Multiple Roles for users.
 	if ( _mw_adminimize_get_option_value( 'mw_adminimize_multiple_roles' ) && 1 < count( $user->roles ) ) {
@@ -131,7 +117,7 @@ function _mw_adminimize_change_admin_bar() {
 		return;
 	}
 
-	foreach ( $disabled_admin_bar_option_ as $admin_bar_item ) {
+	foreach ( (array) $disabled_admin_bar_option_ as $admin_bar_item ) {
 		$wp_admin_bar->remove_node( $admin_bar_item );
 	}
 }

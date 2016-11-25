@@ -125,3 +125,68 @@ function _mw_adminimize_get_intersection( $array ) {
 
 	return (array) call_user_func_array( 'array_intersect', $array );
 }
+
+/**
+ * Flatten a multi-dimensional array in a simple array.
+ *
+ * @since  2016-11-19
+ *
+ * @param  array $array
+ *
+ * @return array $flat
+ */
+function _mw_adminimize_array_flatten( $array ) {
+
+	$flat = array();
+	foreach ( $array as $key => $value ) {
+		if ( is_array( $value ) ) {
+			$flat = array_merge( $flat, _mw_adminimize_array_flatten( $value ) );
+		} else {
+			$flat[ $key ] = $value;
+		}
+	}
+
+	return $flat;
+}
+
+/**
+ * Break the access to a page.
+ *
+ * @wp-hook load-$page_slug
+ *
+ * @param string $slug
+ */
+function _mw_adminimize_check_page_access( $slug ) {
+
+	// If this default behavior is deactivated.
+	if ( _mw_adminimize_get_option_value( 'mw_adminimize_prevent_page_access' ) ) {
+		return;
+	}
+
+	$uri = esc_url_raw( $_SERVER[ 'REQUEST_URI' ] );
+	$uri = parse_url( $uri );
+
+	if ( ! isset( $uri[ 'path' ] ) ) {
+		return;
+	}
+
+	// URI without query parameter, like WP core edit.php.
+	if ( ! isset( $uri[ 'query' ] ) && strpos( $uri[ 'path' ], $slug ) !== FALSE ) {
+		add_action( 'load-' . $slug, '_mw_adminimize_block_page_access' );
+	}
+
+	// URI with get parameter, like CPT.
+	if ( isset( $uri[ 'query' ] ) && strpos( $slug, $uri[ 'query' ] ) !== FALSE ) {
+		add_action( 'load-' . basename( $uri[ 'path' ] ), '_mw_adminimize_block_page_access' );
+	}
+}
+
+/**
+ * Break the access to a page.
+ *
+ * @wp-hook load-$page_slug
+ */
+function _mw_adminimize_block_page_access() {
+
+	wp_die( esc_attr__( 'Cheatin&#8217; uh? Sorry, you are not allowed to access this site.', 'adminimize' ) );
+}

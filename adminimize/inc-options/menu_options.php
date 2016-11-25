@@ -12,7 +12,7 @@ if ( ! function_exists( 'add_action' ) ) {
 
 <div id="poststuff" class="ui-sortable meta-box-sortables">
 	<div class="postbox">
-		<div class="handlediv" title="<?php esc_attr_e( 'Click to toggle' ); ?>"><br /></div>
+		<div class="handlediv" title="<?php esc_attr_e( 'Click to toggle', 'adminimize' ); ?>"><br /></div>
 		<h3 class="hndle" id="config_menu"><?php esc_attr_e( 'Menu Options', 'adminimize' ); ?></h3>
 
 		<div class="inside">
@@ -125,7 +125,7 @@ if ( ! function_exists( 'add_action' ) ) {
 						// non checked items
 						if ( $menu_slug === 'options-general.php' ) {
 							$disabled_item_adm_hint = '<abbr title="' . esc_attr__(
-									'After activate the check box it heavy attitudes will change.', 'adminimize'
+									'After activate the checkbox you will loose its easy access in the menu.', 'adminimize'
 								) . '" style="cursor:pointer;"> ! </acronym>';
 						} else {
 							$disabled_item_adm      = '';
@@ -221,7 +221,7 @@ if ( ! function_exists( 'add_action' ) ) {
 									//$disabled_subitem_adm = ' disabled="disabled"';
 									$disabled_subitem_adm_hint = '<abbr title="'
 									                             . esc_attr__(
-										                             'After activate the check box it heavy attitudes will change.',
+										                             'After activate the checkbox you will loose its easy access in the menu.',
 										                             'adminimize'
 									                             )
 									                             . '" style="cursor:pointer;"> ! </acronym>';
