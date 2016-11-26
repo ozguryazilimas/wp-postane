@@ -4,15 +4,15 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravan
 Tags: fancybox, lightbox, gallery, image, photo, video, flash, overlay, youtube, vimeo, dailymotion, pdf, svg, iframe, swf, jquery
 Requires at least: 3.3
 Tested up to: 4.7
-Stable tag: 1.5.8
+Stable tag: 1.5.8.2
 
 Easily enable the FancyBox jQuery extension on just about all media links. Multi-Site compatible. Supports iFrame and Flash movies.
 
 == Description ==
 
-Easy FancyBox plugin for WordPress websites gives you a flexible and aesthetic lightbox solution for just about all media links on your website. Easy FancyBox uses the packed FancyBox jQuery extension and is WP 3+ Multi-Site compatible. After activation you can find a new section **FancyBox** on your **Settings > Media** admin page where you can manage the plugins options.
+Easy FancyBox plugin for WordPress websites gives you a flexible and aesthetic light box solution for just about all media links on your website. Easy FancyBox uses the packed FancyBox jQuery extension and is WP 3+ Multi-Site compatible. After activation you can find a new section **FancyBox** on your **Settings > Media** admin page where you can manage the plugins options.
 
-After activation, all links to **JPG, GIF and PNG images** are automatically opened in the [FancyBox](http://fancybox.net/) Mac-style lightbox that floats over the web page. Most options available can be managed with this plugin along with some extra features.
+After activation, all links to **JPG, GIF and PNG images** are automatically opened in the [FancyBox](http://fancybox.net/) Mac/Gnome-style lightbox that floats over the web page. Most options available can be managed with this plugin along with some extra features.
 
 **Also supports:**
 
@@ -493,7 +493,7 @@ If you still do not get to see your images in FancyBox, ask on the [Easy FancyBo
 
 == Upgrade Notice ==
 
-= 1.5.8 =
+= 1.5.8.2 =
 New features: auto-popup delay, margin, nolightbox... Bugfixes and PHP7 compatibility
 
 == Changelog ==
@@ -504,6 +504,10 @@ TODO: move all script to footer and make that optional too for theme compat
 TODO: make jQuery inclusion optional
 TODO: make jQuery 1.6- compat optional
 TODO: fix "fancybox iframe" being forced to "fancybox image iframe" when Inline Content is activated
+
+= 1.5.8.2 =
+* BUGFIX: use dirname(__FILE__) instead of relying on __DIR__ to be available
+* Explicit transparency for gallery navigation links
 
 = 1.5.8 =
 * FIX: variable variable php 7 compat
