@@ -1,5 +1,5 @@
 diff --git a/save-grab/grab-and-save.php b/save-grab/grab-and-save.php
-index f645f36..f9d8c06 100644
+index f645f36..528d3b0 100644
 --- a/save-grab/grab-and-save.php
 +++ b/save-grab/grab-and-save.php
 @@ -12,7 +12,7 @@ class GrabAndSave {
@@ -11,8 +11,31 @@ index f645f36..f9d8c06 100644
  		
  	function __construct(){
  		global $wp_version;
-@@ -60,7 +60,7 @@ class GrabAndSave {
+@@ -25,8 +25,15 @@ class GrabAndSave {
+ 		
+ 		add_filter("media_upload_tabs",array(&$this,"build_tab"));
+ 		add_action("media_upload_grabAndSave", array(&$this, "menu_handle"));
++		add_action('media_buttons', array(&$this, "grabAndSave_button"));
++		remove_action("media_buttons", "media_buttons");
++		add_action("admin_enqueue_scripts", array(&$this, "grabAndSave_media_scripts"));
+ 	}
+ 	
++	function grabAndSave_media_scripts() {
++		wp_enqueue_media();
++	}
++
+ 	/*
+ 	 * Merge an array into middle of another array
+ 	 *
+@@ -58,9 +65,14 @@ class GrabAndSave {
+ 		return $array;
+ 	}
  
++	function grabAndSave_button() {
++		wp_enqueue_script('media_button', plugin_dir_url( __FILE__ ).'media_button.js', true);
++		echo '<a href="#" id="insert-image" class="button add_media">' .
++			'<span class="wp-media-buttons-icon"></span>' .  __( 'Add Media' ) . '</a>';
++	}
  	
  	function build_tab($tabs) {
 -		$newtab = array('grabAndSave' => __('Grab & Save', 'grabAndSave'));
@@ -20,7 +43,7 @@ index f645f36..f9d8c06 100644
  		return $this->array_insert($tabs, $newtab, 2);
  		//return array_merge($tabs,$newtab);
  	}
-@@ -144,11 +144,10 @@ class GrabAndSave {
+@@ -144,11 +156,10 @@ class GrabAndSave {
  		}
  		?>
  		<form action="" method="post" id="image-form" class="media-upload-form type-form">
@@ -35,7 +58,7 @@ index f645f36..f9d8c06 100644
  		</div>
  		
  		</form>
-@@ -157,11 +156,6 @@ class GrabAndSave {
+@@ -157,11 +168,6 @@ class GrabAndSave {
  		if ( $attach_id )  {
  			$this->media_upload_type_form("image", $errors, $attach_id);
  		}
@@ -47,10 +70,28 @@ index f645f36..f9d8c06 100644
  	}
  	
  	
-@@ -219,4 +213,4 @@ class GrabAndSave {
+@@ -219,4 +225,4 @@ class GrabAndSave {
  }
  
  new GrabAndSave();
 -?>
 \ No newline at end of file
 +?>
+diff --git a/save-grab/media_button.js b/save-grab/media_button.js
+new file mode 100644
+index 0000000..1c9deca
+--- /dev/null
++++ b/save-grab/media_button.js
+@@ -0,0 +1,12 @@
++jQuery(function($) {
++    $('#insert-image').click(function(e) {
++        e.preventDefault();
++        parent.wp.media.editor.open( window.wpActiveEditor );
++
++        var state = parent.wp.media.frame._state;
++        if ( state == "iframe:grabAndSave" ) {
++            parent.wp.media.frame.setState("insert");
++            parent.wp.media.frame.setState("iframe:grabAndSave");
++        }
++    });
++});
