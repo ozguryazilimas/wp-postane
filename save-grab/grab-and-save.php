@@ -26,8 +26,14 @@ class GrabAndSave {
 		add_filter("media_upload_tabs",array(&$this,"build_tab"));
 		add_action("media_upload_grabAndSave", array(&$this, "menu_handle"));
 		add_action('media_buttons', array(&$this, "grabAndSave_button"));
+		remove_action("media_buttons", "media_buttons");
+		add_action("admin_enqueue_scripts", array(&$this, "grabAndSave_media_scripts"));
 	}
 	
+	function grabAndSave_media_scripts() {
+		wp_enqueue_media();
+	}
+
 	/*
 	 * Merge an array into middle of another array
 	 *
