@@ -17,7 +17,7 @@ $profile = GADWP_Tools::get_selected_profile( $this->gadwp->config->options['ga_
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 <?php
 $create_options = '{';
 if ( $this->gadwp->config->options['ga_speed_samplerate'] != 1 ) {
@@ -80,6 +80,13 @@ if ( $this->gadwp->config->options['ga_pubyear_dimindex'] && is_single() ) {
 	$date = get_the_date( 'Y', $post->ID );
 	?>
   ga('set', 'dimension<?php echo (int)$this->gadwp->config->options ['ga_pubyear_dimindex']; ?>', '<?php echo (int)$date; ?>');
+<?php
+}
+if ( $this->gadwp->config->options['ga_pubyearmonth_dimindex'] && is_single() ) {
+	global $post;
+	$date = get_the_date( 'Y-m', $post->ID );
+	?>
+  ga('set', 'dimension<?php echo (int)$this->gadwp->config->options ['ga_pubyearmonth_dimindex']; ?>', '<?php echo $date; ?>');
 <?php
 }
 if ( $this->gadwp->config->options['ga_category_dimindex'] && is_category() ) {

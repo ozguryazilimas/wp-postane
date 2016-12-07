@@ -104,6 +104,9 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 			if ( isset( $options['ga_pubyear_dimindex'] ) ) {
 				$options['ga_pubyear_dimindex'] = (int) $options['ga_pubyear_dimindex'];
 			}
+			if ( isset( $options['ga_pubyearmonth_dimindex'] ) ) {
+				$options['ga_pubyearmonth_dimindex'] = (int) $options['ga_pubyearmonth_dimindex'];
+			}
 			if ( isset( $options['ga_aff_tracking'] ) ) {
 				$options['ga_aff_tracking'] = (int) $options['ga_aff_tracking'];
 			}
@@ -112,6 +115,12 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 			}
 			if ( isset( $options['ga_cookiename'] ) ) { // v4.9
 				$options['ga_cookiename'] = sanitize_text_field( $options['ga_cookiename'] );
+			}
+			if ( isset( $options['pagetitle_404'] ) ) { // v4.9.4
+				$options['pagetitle_404'] = sanitize_text_field( $options['pagetitle_404'] );
+			}
+			if ( isset( $options['maps_api_key'] ) ) { // v4.9.4
+				$options['maps_api_key'] = sanitize_text_field( $options['maps_api_key'] );
 			}
 			if ( isset( $options['ga_cookieexpires'] ) && $options['ga_cookieexpires'] ) { // v4.9
 				$options['ga_cookieexpires'] = (int) $options['ga_cookieexpires'];
@@ -214,7 +223,7 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 				GADWP_Tools::clear_cache();
 				GADWP_Tools::delete_cache( 'last_error' );
 				if ( is_multisite() ) { // Cleanup errors and cookies on the entire network
-					foreach ( wp_get_sites( array( 'limit' => apply_filters( 'gadwp_sites_limit', 100 ) ) ) as $blog ) {
+					foreach ( GADWP_Tools::get_sites( array( 'limit' => apply_filters( 'gadwp_sites_limit', 100 ) ) ) as $blog ) {
 						switch_to_blog( $blog['blog_id'] );
 						GADWP_Tools::delete_cache( 'gapi_errors' );
 						restore_current_blog();
@@ -307,6 +316,10 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 				$this->options['ga_pubyear_dimindex'] = 0;
 				$flag = true;
 			}
+			if ( ! isset( $this->options['ga_pubyearmonth_dimindex'] ) ) {
+				$this->options['ga_pubyearmonth_dimindex'] = 0;
+				$flag = true;
+			}
 			if ( ! isset( $this->options['ga_event_affiliates'] ) ) {
 				$this->options['ga_event_affiliates'] = '/out/';
 				$flag = true;
@@ -347,6 +360,14 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 			}
 			if ( ! isset( $this->options['api_backoff'] ) ) { // v4.8.1.3
 				$this->options['api_backoff'] = 0;
+				$flag = true;
+			}
+			if ( ! isset( $this->options['pagetitle_404'] ) ) { // v4.9.4
+				$this->options['pagetitle_404'] = 'Page Not Found';
+				$flag = true;
+			}
+			if ( ! isset( $this->options['maps_api_key'] ) ) { // v4.9.4
+				$this->options['maps_api_key'] = '';
 				$flag = true;
 			}
 			if ( isset( $this->options['ga_tracking_code'] ) ) {

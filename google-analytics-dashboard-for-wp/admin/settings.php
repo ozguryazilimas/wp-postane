@@ -274,6 +274,21 @@ final class GADWP_Settings {
                                 </td>
                             </tr>
                             <tr>
+                                <td colspan="2" class="gadwp-settings-title">
+									<?php echo __("Maps API Key:", 'google-analytics-dashboard-for-wp'); ?>
+									<input type="text" style="text-align: center;" name="options[maps_api_key]" value="<?php echo esc_attr($options['maps_api_key']); ?>" size="50">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><hr><?php echo "<h2>" . __( "404 Errors Report", 'google-analytics-dashboard-for-wp' ) . "</h2>"; ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="gadwp-settings-title">
+									<?php echo __("404 Page Title contains:", 'google-analytics-dashboard-for-wp'); ?>
+									<input type="text" style="text-align: center;" name="options[pagetitle_404]" value="<?php echo esc_attr($options['pagetitle_404']); ?>" size="20">
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="2"><hr></td>
                             </tr>
                             <tr>
@@ -444,6 +459,14 @@ final class GADWP_Settings {
                                     <td><select id="ga_pubyear_dimindex" name="options[ga_pubyear_dimindex]">
 										<?php for ($i=0;$i<21;$i++){?>
 										<option value="<?php echo $i;?>" <?php selected( $options['ga_pubyear_dimindex'], $i ); ?>><?php echo $i==0?'Disabled':'dimension '.$i; ?></option>
+										<?php }?>
+								</select></td>
+                                </tr>
+								<tr>
+                                    <td class="gadwp-settings-title"><label for="ga_pubyearmonth_dimindex"><?php _e("Publication Month:", 'google-analytics-dashboard-for-wp' ); ?></label></td>
+                                    <td><select id="ga_pubyearmonth_dimindex" name="options[ga_pubyearmonth_dimindex]">
+										<?php for ($i=0;$i<21;$i++){?>
+										<option value="<?php echo $i;?>" <?php selected( $options['ga_pubyearmonth_dimindex'], $i ); ?>><?php echo $i==0?'Disabled':'dimension '.$i; ?></option>
 										<?php }?>
 								</select></td>
                                 </tr>
@@ -972,7 +995,7 @@ final class GADWP_Settings {
 					$options = self::update_options( 'network' );
 					$message = "<div class='updated'><p>" . __( "Plugin authorization succeeded.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 					if ( is_multisite() ) { // Cleanup errors on the entire network
-						foreach ( wp_get_sites( array( 'limit' => apply_filters( 'gadwp_sites_limit', 100 ) ) ) as $blog ) {
+						foreach ( GADWP_Tools::get_sites( array( 'limit' => apply_filters( 'gadwp_sites_limit', 100 ) ) ) as $blog ) {
 							switch_to_blog( $blog['blog_id'] );
 							GADWP_Tools::delete_cache( 'gapi_errors' );
 							restore_current_blog();
@@ -1162,7 +1185,7 @@ final class GADWP_Settings {
 					if ( isset( $options['ga_dash_tableid_network'] ) ) {
 						$options['ga_dash_tableid_network'] = json_decode( json_encode( $options['ga_dash_tableid_network'] ), false );
 					}
-					foreach ( wp_get_sites( array( 'limit' => apply_filters( 'gadwp_sites_limit', 100 ) ) ) as $blog ) {
+					foreach ( GADWP_Tools::get_sites( array( 'limit' => apply_filters( 'gadwp_sites_limit', 100 ) ) ) as $blog ) {
 						?>
 							                                         <tr>
                                                                         <td class="gadwp-settings-title-s"><label for="ga_dash_tableid_network"><?php echo '<strong>'.$blog['domain'].$blog['path'].'</strong>: ';?></label></td>
@@ -1171,7 +1194,8 @@ final class GADWP_Settings {
 						if ( ! empty( $options['ga_dash_profile_list'] ) ) {
 							foreach ( $options['ga_dash_profile_list'] as $items ) {
 								if ( $items[3] ) {
-									echo '<option value="' . esc_attr( $items[1] ) . '" ' . selected( $items[1], isset( $options['ga_dash_tableid_network']->$blog['blog_id'] ) ? $options['ga_dash_tableid_network']->$blog['blog_id'] : '', false );
+									$temp_id = $blog['blog_id'];
+									echo '<option value="' . esc_attr( $items[1] ) . '" ' . selected( $items[1], isset( $options['ga_dash_tableid_network']->$temp_id ) ? $options['ga_dash_tableid_network']->$temp_id : '', false );
 									echo ' title="' . __( "View Name:", 'google-analytics-dashboard-for-wp' ) . ' ' . esc_attr( $items[0] ) . '">' . esc_html( GADWP_Tools::strip_protocol( $items[3] ) ) . ' &#8658; ' . esc_attr( $items[0] ) . '</option>';
 								}
 							}
