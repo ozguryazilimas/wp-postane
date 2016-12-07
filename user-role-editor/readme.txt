@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 4.6.1
-Stable tag: 4.29
+Tested up to: 4.7
+Stable tag: 4.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,7 @@ Do you need more functionality with quality support in the real time? Do you wis
 [User Role Editor Pro](https://www.role-editor.com) includes extra modules:
 <ul>
 <li>Block selected admin menu items for role.</li>
+<li>Hide selected front-end menu items for no logged-in visitors, logged-in users, roles.</li>
 <li>Block selected widgets under "Appearance" menu for role.</li>
 <li>Show widgets at front-end for selected roles.</li>
 <li>Block selected meta boxes (dashboard, posts, pages, custom post types) for role.</li>
@@ -75,6 +76,10 @@ If you wish to check available translations or help with plugin translation to y
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog ==
+= [4.30] 01.12.2016 =
+* Update: compatible with WordPress 4.7
+* New: "Granted Only" checkbox to the right from the "Quick Filter" input control allows to show only granted capabilities for the selected role or user.
+
 = [4.29] 10.11.2016 =
 * New: User Role Editor own user capabilities are grouped separately under Custom capabilities.
 * Update: URE_Lib::is_super_admin() uses WordPress core is_super_admin() for multisite setup only. Superadmin is a user with 'administrator' role in the case of single site WordPress installation.  

@@ -265,7 +265,9 @@ class URE_View {
                     </div>
                     <div class="ure-table-cell ure-caps-option nowrap">
                         <?php esc_html_e('Quick filter:', 'user-role-editor'); ?>&nbsp;
-                        <input type="text" id="quick_filter" name="quick_filter" value="" size="20" onkeyup="ure_filter_capabilities(this.value);" />
+                        <input type="text" id="quick_filter" name="quick_filter" value="" size="10" onkeyup="ure_filter_capabilities(this.value);" />&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="granted_only" name="granted_only" />
+                        <label for="granted_only"><?php esc_html_e('Granted Only', 'user-role-editor'); ?></label>&nbsp;
                     </div>                    
                     <div class="ure-table-cell ure-caps-option nowrap">
                         <?php esc_html_e('Columns:', 'user-role-editor');?>
