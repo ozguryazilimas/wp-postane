@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
-Tested up to: 4.6
-Stable tag: 1.7.2
+Tested up to: 4.7
+Stable tag: 1.7.3
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -62,6 +62,12 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.7.3 =
+* Fixed a bug where closing the menu properties of a custom menu item could set "extra capability" to "read". 
+* Added a workaround for WooCommerce 2.6.8 to display the number of new orders in the "Orders" menu title.
+* Minor cosmetic changes.
+* Tested with WP 4.7 and 4.8-alpha.
 
 = 1.7.2 =
 * Added capability suggestions and access preview to the "Extra capability" dropdown.

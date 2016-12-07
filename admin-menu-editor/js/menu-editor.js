@@ -266,7 +266,7 @@ function loadMenuConfiguration(adminMenu) {
 	//There are some menu properties that need to be objects, but PHP JSON-encodes empty associative
 	//arrays as numeric arrays. We want them to be empty objects instead.
 	if (adminMenu.hasOwnProperty('color_presets') && !$.isPlainObject(adminMenu.color_presets)) {
-		adminMenu.colorPresets = {};
+		adminMenu.color_presets = {};
 	}
 
 	var objectProperties = ['grant_access', 'hidden_from_actor'];
@@ -294,6 +294,10 @@ function loadMenuConfiguration(adminMenu) {
 
 	//Load capabilities.
 	AmeCapabilityManager.setGrantedCapabilities(_.get(adminMenu, 'granted_capabilities', {}));
+
+	//Load general menu visibility.
+	generalComponentVisibility = _.get(adminMenu, 'component_visibility', {});
+	AmeEditorApi.refreshComponentVisibility();
 
 	//Display the new admin menu.
 	outputWpMenu(adminMenu.tree);
@@ -1301,6 +1305,11 @@ function updateItemEditor(containerNode) {
 
         setInputValue(input, displayValue);
 
+		//Store the value to help with change detection.
+		if (input.length > 0) {
+			$.data(input.get(0), 'ame_last_display_value', displayValue);
+		}
+
 		if (typeof (knownMenuFields[fieldName].visible) === 'function') {
 			var isFieldVisible = knownMenuFields[fieldName].visible(menuItem, fieldName);
 			if (isFieldVisible) {
@@ -1555,7 +1564,8 @@ function readMenuTreeState(){
 	return {
 		tree: tree,
 		color_presets: $.extend(true, {}, colorPresets),
-		granted_capabilities: AmeCapabilityManager.getGrantedCapabilities()
+		granted_capabilities: AmeCapabilityManager.getGrantedCapabilities(),
+		component_visibility: $.extend(true, {}, generalComponentVisibility)
 	};
 }
 
@@ -1946,6 +1956,9 @@ var ws_paste_count = 0;
 var colorPresets = {},
 	wasPresetDropdownPopulated = false;
 
+//General admin menu visibility.
+var generalComponentVisibility = {};
+
 //Combined DOM-ready event handler.
 var isDomReadyDone = false;
 
@@ -2137,6 +2150,7 @@ function ameOnDomReady() {
 	    var menuItem = containerNode.data('menu_item');
 
 	    var oldValue = menuItem[fieldName];
+	    var oldDisplayValue = $.data(this, 'ame_last_display_value');
 	    var value = getInputValue(input);
 	    var defaultValue = getDefaultValue(menuItem, fieldName, null, containerNode);
         var hasADefaultValue = (defaultValue !== null);
@@ -2152,7 +2166,7 @@ function ameOnDomReady() {
         }
 
 	    //Ignore changes where the new value is the same as the old one.
-	    if (value === oldValue) {
+	    if ((value === oldValue) || (value === oldDisplayValue)) {
 		    return;
 	    }
 
@@ -3828,8 +3842,11 @@ function ameOnDomReady() {
 		//Populate source/destination lists.
 		sourceActorList.find('option').not('[disabled]').remove();
 		destinationActorList.find('option').not('[disabled]').remove();
-		$.each(wsEditorData.actors, function(actor, name) {
-			var option = $('<option>', {val: actor, text: name});
+		$.each(actorSelectorWidget.getVisibleActors(), function(index, actor) {
+			var option = $('<option>', {
+				val: actor.id,
+				text: actorSelectorWidget.getNiceName(actor)
+			});
 			sourceActorList.append(option);
 			destinationActorList.append(option.clone());
 		});
@@ -3877,6 +3894,8 @@ function ameOnDomReady() {
 				//revert to default instead of overwriting if that would make the two actors' permissions match.
 			}
 		});
+
+		//todo: copy granted permissions like CPTs.
 
 		//If the user is currently looking at the destination actor, force the UI to refresh
 		//so that they can see the new permissions.
@@ -4470,6 +4489,110 @@ function ameOnDomReady() {
 					ui.draggable.remove();
 				}
 			})
+		});
+	}
+
+	/******************************************************************
+	                 Component visibility settings
+	 ******************************************************************/
+
+	var $generalVisBox = $('#ws_ame_general_vis_box'),
+		$showAdminMenu = $('#ws_ame_show_admin_menu'),
+		$showWpToolbar = $('#ws_ame_show_toolbar');
+
+	AmeEditorApi.actorCanSeeComponent = function(component, actorId) {
+		if (actorId === null) {
+			return _.some(actorSelectorWidget.getVisibleActors(), function(actor) {
+				return AmeEditorApi.actorCanSeeComponent(component, actor.id);
+			});
+		}
+
+		var actorSpecificSetting = _.get(generalComponentVisibility, [component, actorId], null);
+		if (actorSpecificSetting !== null) {
+			return actorSpecificSetting;
+		}
+
+		//Super Admin can see everything by default.
+		if (actorId === AmeSuperAdmin.permanentActorId) {
+			return _.get(generalComponentVisibility, [component, AmeSuperAdmin.permanentActorId], true);
+		}
+
+		var actor = AmeActors.getActor(actorId);
+		if (actor instanceof AmeUser) {
+			var grants = _.get(generalComponentVisibility, component, {});
+
+			//Super Admin has priority.
+			if (actor.isSuperAdmin) {
+				return AmeEditorApi.actorCanSeeComponent(component, AmeSuperAdmin.permanentActorId);
+			}
+
+			//The user can see the admin menu/Toolbar if at least one of their roles can see it.
+			var result = null;
+			_.forEach(actor.roles, function(roleName) {
+				var allow = _.get(grants, 'role:' + roleName, true);
+				if (result === null) {
+					result = allow;
+				} else {
+					result = result || allow;
+				}
+			});
+
+			if (result !== null) {
+				return result;
+			}
+		}
+
+		//Everyone can see the admin menu and the Toolbar by default.
+		return true;
+	};
+
+	AmeEditorApi.refreshComponentVisibility = function() {
+		if ($generalVisBox.length < 1) {
+			return;
+		}
+
+		var actorId = actorSelectorWidget.selectedActor;
+		$showAdminMenu.prop('checked', AmeEditorApi.actorCanSeeComponent('adminMenu', actorId));
+		$showWpToolbar.prop('checked', AmeEditorApi.actorCanSeeComponent('toolbar', actorId));
+	};
+
+	AmeEditorApi.setComponentVisibility = function(section, actorId, enabled) {
+		if (actorId === null) {
+			_.forEach(actorSelectorWidget.getVisibleActors(), function(actor) {
+				_.set(generalComponentVisibility, [section, actor.id], enabled);
+			});
+		} else {
+			_.set(generalComponentVisibility, [section, actorId], enabled);
+		}
+	};
+
+	if ($generalVisBox.length > 0) {
+		$showAdminMenu.click(function() {
+			AmeEditorApi.setComponentVisibility(
+				'adminMenu',
+				actorSelectorWidget.selectedActor,
+				$(this).is(':checked')
+			);
+		});
+		$showWpToolbar.click(function () {
+			AmeEditorApi.setComponentVisibility(
+				'toolbar',
+				actorSelectorWidget.selectedActor,
+				$(this).is(':checked')
+			);
+		});
+
+		$generalVisBox.find('.handlediv').click(function() {
+			$generalVisBox.toggleClass('closed');
+			$.cookie(
+				'ame_vis_box_open',
+				($generalVisBox.hasClass('closed') ? '0' : '1'),
+				{ expires: 90 }
+			);
+		});
+
+		actorSelectorWidget.onChange(function() {
+			AmeEditorApi.refreshComponentVisibility();
 		});
 	}
 

@@ -202,6 +202,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'index.php?page=nf-changelog' => true,
 			'index.php?page=nf-getting-started' => true,
 			'index.php?page=nf-credits' => true,
+			//All in One SEO Pack 2.3.9.2
+			'index.php?page=aioseop-about' => true,
 		);
 		
 		//AJAXify screen options
@@ -407,7 +409,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//Make a placeholder for our screen options (hacky)
 			add_meta_box("ws-ame-screen-options", "[AME placeholder]", '__return_false', $page);
 		}
-		
+
+		//Compatibility fix for the WooCommerce order count bubble. Must be run before storing or processing $submenu.
+		$this->apply_woocommerce_order_count_fix();
+
 		//Store the "original" menus for later use in the editor
 		$this->default_wp_menu = $menu;
 		$this->default_wp_submenu = $submenu;
@@ -3145,6 +3150,46 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		if ( $badSubmenuExists && $anotherSubmenuExists ) {
 			$this->default_wp_submenu['woocommerce'][0] = $this->default_wp_submenu['woocommerce'][1];
 			unset($this->default_wp_submenu['woocommerce'][1]);
+		}
+	}
+
+	/**
+	 * Compatibility fix for WooCommerce 2.6.8+.
+	 *
+	 * Summary: The "WooCommerce -> Orders" menu item includes an info bubble showing the number of new orders.
+	 * When AME is active, this number doesn't show up. This workaround re-adds the info bubble.
+	 *
+	 * For some inexplicable reason, WooCommerce first creates the "Orders" menu item without the info bubble.
+	 * Then it adds the number of new orders later by modifying the global $submenu array in a separate "admin_head"
+	 * hook. However, by that time AME has already processed the admin menu, so it doesn't see the change.
+	 *
+	 * Workaround: Run the relevant WooCommerce callback during the "admin_menu" action (before processing the menu).
+	 * The now-redundant"admin_head" hook is then removed.
+	 */
+	private function apply_woocommerce_order_count_fix() {
+		global $wp_filter;
+		if ( !class_exists('WC_Admin_Menus', false) || !isset($wp_filter['admin_head'][10]) || did_action('admin_head') ) {
+			return;
+		}
+
+		//Find the WooCommerce callback that adds order count to the menu.
+		//It's the menu_order_count method defined in /woocommerce/includes/admin/class-wc-admin-menus.php.
+		foreach($wp_filter['admin_head'][10] as $key => $filter) {
+			if (!isset($filter['function']) || !is_array($filter['function'])) {
+				continue;
+			}
+
+			$callback = $filter['function'];
+			if (
+				(count($callback) === 2)
+				&& ($callback[1] === 'menu_order_count')
+				&& (get_class($callback[0]) === 'WC_Admin_Menus')
+			) {
+				//Run it now, not in admin_head.
+				call_user_func($callback);
+				remove_action('admin_head', $callback, 10);
+				break;
+			}
 		}
 	}
 

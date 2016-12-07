@@ -73,7 +73,6 @@ class AmeRole extends AmeBaseActor {
 		this.name = roleId;
 	}
 
-
 	hasOwnCap(capability: string): boolean {
 		//In WordPress, a role name is also a capability name. Users that have the role "foo" always
 		//have the "foo" capability. It's debatable whether the role itself actually has that capability

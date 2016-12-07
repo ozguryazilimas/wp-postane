@@ -11,10 +11,11 @@
   float: left;
   display: block;
   border: 1px solid #cdd5d5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background-color: #FFFFFF;
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px; }
+  border-radius: 0px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px; }
 
 .ws_box {
   min-height: 30px;
@@ -1270,6 +1271,11 @@ a#ws-ame-delete-color-preset:hover {
 #ws_plugin_settings_form .ws_tooltip_trigger .dashicons {
   font-size: 18px; }
 
+.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons {
+  font-size: 18px;
+  height: 18px;
+  vertical-align: bottom; }
+
 .ws_wide_tooltip {
   max-width: 450px; }
 
@@ -1308,14 +1314,14 @@ a#ws-ame-delete-color-preset:hover {
   list-style-position: inside;
   margin-left: 0.5em; }
 
-.ws_ame_doc_box .hndle {
+.ws_ame_doc_box .hndle, .ws_ame_custom_postbox .hndle {
   cursor: default !important; }
-.ws_ame_doc_box ul {
+.ws_ame_doc_box ul, .ws_ame_custom_postbox ul {
   list-style: disc outside;
   margin-left: 1em; }
-.ws_ame_doc_box li > ul {
+.ws_ame_doc_box li > ul, .ws_ame_custom_postbox li > ul {
   margin-top: 6px; }
-.ws_ame_doc_box .button-link .toggle-indicator::before {
+.ws_ame_doc_box .button-link .toggle-indicator::before, .ws_ame_custom_postbox .button-link .toggle-indicator::before {
   margin-top: 4px;
   width: 20px;
   -webkit-border-radius: 50%;
@@ -1327,8 +1333,12 @@ a#ws-ame-delete-color-preset:hover {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-decoration: none !important; }
-.ws_ame_doc_box.closed .button-link .toggle-indicator::before {
+.ws_ame_doc_box.closed .button-link .toggle-indicator::before, .ws_ame_custom_postbox.closed .button-link .toggle-indicator::before {
   content: "\f140"; }
+
+.ws_basic_container .ws_ame_custom_postbox {
+  margin-left: 2px;
+  margin-right: 2px; }
 
 /************************************
       Copy Permissions dialog

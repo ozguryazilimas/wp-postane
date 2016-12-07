@@ -266,6 +266,29 @@ function ame_output_sort_buttons($icons) {
 		</div>
 
 		<?php
+		if ( apply_filters('admin_menu_editor-show_general_box', false) ) :
+			$is_general_box_open = true;
+			if ( isset($_COOKIE['ame_vis_box_open']) ) {
+				$is_general_box_open = ($_COOKIE['ame_vis_box_open'] === '1');
+			}
+			$box_class = $is_general_box_open ? '' : 'closed';
+
+			?>
+			<div class="clear"></div>
+			<div class="metabox-holder">
+				<div class="postbox ws_ame_custom_postbox <?php echo $box_class; ?>" id="ws_ame_general_vis_box">
+					<button type="button" class="handlediv button-link">
+						<span class="toggle-indicator"></span>
+					</button>
+					<h2 class="hndle">General</h2>
+					<div class="inside">
+						<?php do_action('admin_menu_editor-general_box'); ?>
+					</div>
+				</div>
+			</div>
+			<?php
+		endif;
+
 		$hint_id = 'ws_sidebar_pro_ad';
 		$show_pro_benefits = !apply_filters('admin_menu_editor_is_pro', false) && (!isset($editor_data['show_hints'][$hint_id]) || $editor_data['show_hints'][$hint_id]);
 

@@ -1,7 +1,7 @@
 <?php
 abstract class ameMenu {
 	const format_name = 'Admin Menu Editor menu';
-	const format_version = '6.4';
+	const format_version = '7.0';
 
 	/**
 	 * Load an admin menu from a JSON string.
@@ -119,6 +119,27 @@ abstract class ameMenu {
 			if (!empty($granted_capabilities)) {
 				$menu['granted_capabilities'] = $granted_capabilities;
 			}
+		}
+
+		//Copy component visibility.
+		if ( isset($arr['component_visibility']) ) {
+			$visibility = array();
+
+			foreach(array('toolbar', 'adminMenu') as $component) {
+				if (
+					isset($arr['component_visibility'][$component])
+					&& is_array($arr['component_visibility'][$component])
+					&& !empty($arr['component_visibility'][$component])
+				) {
+					//Expected: actorId => boolean.
+					$visibility[$component] = array();
+					foreach($arr['component_visibility'][$component] as $actorId => $allow) {
+						$visibility[$component][strval($actorId)] = (bool)($allow);
+					}
+				}
+			}
+
+			$menu['component_visibility'] = $visibility;
 		}
 
 		return $menu;
