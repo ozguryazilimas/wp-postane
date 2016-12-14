@@ -356,6 +356,10 @@ class URE_Capabilities_Groups_Manager {
         $groups[] = 'all'; // Every capability belongs to the 'all' group        
         $groups = array_unique($groups);
         
+        foreach($groups as $key=>$value) {
+            $groups[$key] = 'ure-'. $value;            
+        }
+        
         return $groups;
     }
     // end of get_cap_groups()

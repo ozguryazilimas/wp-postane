@@ -2185,5 +2185,26 @@ class Ure_Lib extends URE_Base_Lib {
         return $page_url;
     }
     // end of get_ure_page_url()
+    
+
+    /**
+     * Compare if current URL path is equal to the required one
+     * if $path is empty, then just check if URL leads to wp-admin
+     * @param string $path
+     * @return boolean
+     */
+    public function is_right_admin_path($path='') {
+        $result = true;
+        $admin_url = admin_url($path);   
+        $parsed = parse_url($admin_url);
+        $full_path = $parsed['path'];
+        if ( stripos($_SERVER['REQUEST_URI'], $full_path)===false ) {
+            $result = false;
+        }
+        
+        return $result;
+    }
+    // end of is_right_admin_path()
+
 }
 // end of URE_Lib class

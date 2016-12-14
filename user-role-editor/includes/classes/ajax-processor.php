@@ -55,6 +55,16 @@ class URE_Ajax_Processor {
     }
     // end of ajax_check_permissions()
     
+    
+    protected function get_caps_to_remove() {
+    
+        $html = URE_Role_View::caps_to_remove_html();
+        $answer = array('result'=>'success', 'html'=>$html, 'message'=>'success');
+        
+        return $answer;
+    }
+    // end of get_caps_to_remove()
+    
                 
     protected function get_users_without_role() {
         global $wp_roles;
@@ -89,6 +99,9 @@ class URE_Ajax_Processor {
     
     protected function _dispatch() {
         switch ($this->action) {
+            case 'get_caps_to_remove':
+                $answer = $this->get_caps_to_remove();
+                break;
             case 'get_users_without_role':
                 $answer = $this->get_users_without_role();
                 break;
