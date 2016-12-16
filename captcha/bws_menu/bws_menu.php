@@ -1,7 +1,7 @@
 <?php
 /*
 * Function for displaying BestWebSoft menu
-* Version: 1.9.5
+* Version: 1.9.7
 */
 
 if ( ! function_exists ( 'bws_admin_enqueue_scripts' ) )
@@ -18,7 +18,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 			/* get $bws_plugins */
-			require_once( dirname( __FILE__ ) . '/product_list.php' );
+			require( dirname( __FILE__ ) . '/product_list.php' );
 
 			$all_plugins = get_plugins();
 			$active_plugins = get_option( 'active_plugins' );
@@ -272,7 +272,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 			<div class="bws-header">
 				<div class="bws-title">
 					<a href="<?php echo self_admin_url( 'admin.php?page=bws_panel' ); ?>">
-						<img class="bws-logo" src="<?php echo plugins_url( 'images/bestwebsoft-logo-white.svg', __FILE__ ); ?>" />
+						<img class="bws-logo" src="<?php echo bws_menu_url( 'images/bestwebsoft-logo-white.svg' ); ?>" />
 						BestWebSoft
 						<span>panel</span>
 					</a>
@@ -541,7 +541,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 												<?php } elseif ( $is_installed ) { ?>
 													<a class="button button-secondary" href="<?php echo wp_nonce_url( 'admin.php?page=bws_panel&amp;bws_activate_plugin=' . $key_plugin, 'bws_activate_plugin' . $key_plugin ); ?>" title="<?php _e( 'Activate this plugin', 'bestwebsoft' ); ?>"><?php _e( 'Activate', 'bestwebsoft' ); ?></a>
 												<?php } else {
-													$install_url = isset( $value_plugin['install_url'] ) ? $value_plugin['install_url'] : esc_url( self_admin_url( 'plugin-install.php?tab=search&type=term&s=' . str_replace( ' ', '+', $value_plugin['name'] ) . '+BestWebSoft&plugin-search-input=Search+Plugins' ) ); ?>
+													$install_url = isset( $value_plugin['install_url'] ) ? $value_plugin['install_url'] : esc_url( self_admin_url( 'plugin-install.php?tab=search&type=term&s=' . str_replace( ' ', '+', str_replace( '-', '', $value_plugin['name'] ) ) . '+BestWebSoft&plugin-search-input=Search+Plugins' ) ); ?>
 													<a class="button button-secondary" href="<?php echo $install_url; ?>" title="<?php _e( 'Install this plugin', 'bestwebsoft' ); ?>" target="_blank"><?php _e( 'Install Now', 'bestwebsoft' ); ?></a>
 												<?php }
 											} ?>
@@ -577,7 +577,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 						<div class="clear"></div>
 					<?php }
 				} elseif ( 'bws_themes' == $_GET['page'] ) {
-					require_once( dirname( __FILE__ ) . '/product_list.php' ); ?>
+					require( dirname( __FILE__ ) . '/product_list.php' ); ?>
 					<h1><?php _e( 'Themes', 'bestwebsoft' ); ?></h1>
 					<div id="availablethemes" class="bws-availablethemes">
 						<?php if ( $wp_version < '3.9' ) {
@@ -585,7 +585,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 								<div class="available-theme installable-theme"><?php
 									$installed_theme = wp_get_theme( $theme->slug ); ?>
 									<a class="screenshot" href="<?php echo esc_url( $theme->href ); ?>">
-										<img src="<?php echo plugins_url( "icons/themes/" , __FILE__ ) . $theme->slug . '.png'; ?>" width='150' />
+										<img src="<?php echo bws_menu_url( "icons/themes/" ) . $theme->slug . '.png'; ?>" width='150' />
 									</a>
 									<h3><?php echo $theme->name; ?></h3>
 									<div class="theme-author"><?php printf( __( 'By %s', 'bestwebsoft' ), 'BestWebSoft' ); ?></div>
@@ -606,7 +606,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 										$installed_theme = wp_get_theme( $theme->slug ); ?>
 										<div class="theme" tabindex="0">
 											<div class="theme-screenshot">
-												<img src="<?php echo plugins_url( "icons/themes/" , __FILE__ ) . $theme->slug . '.png'; ?>" alt="" />
+												<img src="<?php echo bws_menu_url( "icons/themes/" ) . $theme->slug . '.png'; ?>" alt="" />
 											</div>
 											<div class="theme-author"><?php printf( __( 'By %s', 'bestwebsoft' ), 'BestWebSoft' ); ?></div>
 											<h3 class="theme-name"><?php echo $theme->name; ?></h3>

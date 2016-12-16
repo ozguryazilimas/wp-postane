@@ -97,7 +97,7 @@ $bws_plugins = array(
 		'link'			=> 'http://bestwebsoft.com/products/wordpress/plugins/db-manager/?k=01ed9731780d87f85f5901064b7d76d8&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 		'install_url'	=> 'http://bestwebsoft.com/products/wordpress/plugins/db-manager/download/?k=01ed9731780d87f85f5901064b7d76d8&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 		'settings'		=> 'admin.php?page=db-manager.php',
-		'icon'			=> plugins_url( 'icons/plugins/', __FILE__ ) . 'db-manager.png'
+		'icon'			=> bws_menu_url( 'icons/plugins/' ) . 'db-manager.png'
 	),
 	'donate-button/donate.php' => array(
 		'category'		=> array( 'other' ),
@@ -352,6 +352,13 @@ $bws_plugins = array(
 		'description'	=> 'Add customizable quotes and tips blocks to WordPress posts, pages and widgets.',
 		'link'			=> 'http://bestwebsoft.com/products/wordpress/plugins/quotes-and-tips/?k=5738a4e85a798c4a5162240c6515098d&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 		'settings'		=> 'admin.php?page=quotes-and-tips.php'
+	),
+	'rating-bws/rating-bws.php' => array(
+		'category'		=> array( 'content-and-media' ),
+		'name'			=> 'Rating',
+		'description'	=> 'Add rating plugin to your WordPress website to receive feedback from your customers.',
+		'link'			=> 'http://bestwebsoft.com/products/wordpress/plugins/rating/?k=c00e0824bb999735a3224616ef51f4c5&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
+		'settings'		=> 'admin.php?page=rating.php'
 	),
 	'realty/realty.php' => array(
 		'category'		=> array( 'content-and-media' ),

@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: captcha, capcha, security, spam blocker, simple captcha, antispam, protection, text captcha, captcha numbers, captcha plugin, web form protection, captcha protection
 Requires at least: 3.8
-Tested up to: 4.6.1
-Stable tag: 4.2.7
+Tested up to: 4.7
+Stable tag: 4.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,7 +90,7 @@ Visit our Help Center if you have any questions, our friendly Support Team is ha
 * Brazilian Portuguese (pt_BR) (thanks to [Breno Jacinto](mailto:brenojac@gmail.com), www.iconis.org.br)
 * Bulgarian (bg_BG) (thanks to [Nick](mailto:paharaman@gmail.com))
 * Catalan (ca) (thanks to [Psiete](mailto:psiete@gmail.com))
-* Chinese (zh_CN) (thanks to <a href="mailto:416441872@qq.com">TIM</a>)
+* Chinese (zh_CN) (thanks to [TIM(mailto:416441872@qq.com)], [Jack Chen](email: mailto:beijingtours@foxmail.com), www.jackchen.im)
 * Taiwan (zh_TW) (thanks to [Kaiconan](mailto:ch.unk.ai.ma.o@gmail.com))
 * Croatian (hr) (thanks to [Daniel](mailto:daniel@croteh.com))
 * Czech (cs_CZ) (thanks to [Crysman](mailto:crysman@seznam.cz))
@@ -248,6 +248,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 8. Captcha Whitelist.
 
 == Changelog ==
+
+= V4.2.8 - 15.12.2016 =
+* Update : The Chinese language file has been updated (thanks to [Jack Chen](email: mailto:beijingtours@foxmail.com), www.jackchen.im).
 
 = V4.2.7 - 14.11.2016 =
 * Update : The French language file has been updated.
@@ -660,8 +663,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 
 == Upgrade Notice ==
 
+= V4.2.8 =
+* Languages updated.
+
 = V4.2.7 =
-* Languages updated
+* Languages updated.
 
 = V4.2.6 =
 * New languages added.
