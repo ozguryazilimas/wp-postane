@@ -11,9 +11,8 @@
  * @param string $key
  * @param variant $default
  */
-function imsanity_val($arr,$key,$default='')
-{
-	return isset($arr[$key]) ? $arr[$key] : $default;
+function imsanity_val( $arr, $key, $default='' ) {
+	return isset( $arr[$key] ) ? $arr[ $key ] : $default;
 }
 
 /**
@@ -23,14 +22,13 @@ function imsanity_val($arr,$key,$default='')
  * @param string $title
  * @param bool $die
  */
-function imsanity_fatal($message, $title = "", $die = false)
-{
-	echo ("<div style='margin:5px 0px 5px 0px;padding:10px;border: solid 1px red; background-color: #ff6666; color: black;'>"
-		. ($title ? "<h4 style='font-weight: bold; margin: 3px 0px 8px 0px;'>" . $title . "</h4>" : "")
+function imsanity_fatal( $message, $title = "", $die = false ) {
+	echo ( "<div style='margin:5px 0px 5px 0px;padding:10px;border: solid 1px red; background-color: #ff6666; color: black;'>"
+		. ( $title ? "<h4 style='font-weight: bold; margin: 3px 0px 8px 0px;'>" . $title . "</h4>" : "" )
 		. $message
-		. "</div>");
+		. "</div>" );
 		
-	if ($die) die();
+	if ( $die ) die();
 }
 
 /**
@@ -44,10 +42,10 @@ function imsanity_fatal($message, $title = "", $die = false)
  * @param int $jpeg_quality Optional, default is 90. Image quality percentage.
  * @return mixed WP_Error on failure. String with new destination path.
  */
-function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $dest_path = null, $jpeg_quality = 90 ) {
+function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $dest_path = null, $jpeg_quality = 82 ) {
 
-	if (function_exists('wp_get_image_editor'))
-	{
+	if ( function_exists( 'wp_get_image_editor' ) ) {
+// TODO: check to make sure file is writable
 		// WP 3.5 and up use the image editor
 				
 		$editor = wp_get_image_editor( $file );
@@ -55,7 +53,7 @@ function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = 
 			return $editor;
 		$editor->set_quality( $jpeg_quality );
 		
-		$ftype = pathinfo($file, PATHINFO_EXTENSION);
+		$ftype = pathinfo( $file, PATHINFO_EXTENSION );
 	
 		// try to correct for auto-rotation if the info is available
 		if (function_exists('exif_read_data') && ($ftype == 'jpg' || $ftype == 'jpeg') ) {
@@ -96,6 +94,7 @@ function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = 
 	}
 	else
 	{
+	// TODO: remove this, but handle failure properly upstream
 		// wordpress prior to 3.5 uses the old image_resize function
 		return image_resize( $file, $max_w, $max_h, $crop, $suffix, $dest_path, $jpeg_quality);
 	}

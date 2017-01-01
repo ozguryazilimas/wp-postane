@@ -1,27 +1,31 @@
 <?php
 /*
 Plugin Name: Imsanity
-Plugin URI: http://verysimple.com/products/imsanity/
+Plugin URI: https://wordpress.org/plugins/imsanity/
 Description: Imsanity stops insanely huge image uploads
-Author: Jason Hinkle
-Version: 2.3.6
-Author URI: http://verysimple.com/
+Author: Shane Bishop
+Version: 2.3.7
+Author URI: https://ewww.io/
+Text Domain: imsanity
+License: GPLv3
 */
 
-define('IMSANITY_VERSION','2.3.6');
+define('IMSANITY_VERSION','2.3.7');
 define('IMSANITY_SCHEMA_VERSION','1.1');
 
 define('IMSANITY_DEFAULT_MAX_WIDTH',2048);
 define('IMSANITY_DEFAULT_MAX_HEIGHT',2048);
 define('IMSANITY_DEFAULT_BMP_TO_JPG',1);
 define('IMSANITY_DEFAULT_PNG_TO_JPG',0);
-define('IMSANITY_DEFAULT_QUALITY',90);
+define('IMSANITY_DEFAULT_QUALITY',82);
 
-define('IMSANITY_SOURCE_POST',1);
-define('IMSANITY_SOURCE_LIBRARY',2);
-define('IMSANITY_SOURCE_OTHER',4);
+define( 'IMSANITY_SOURCE_POST', 1 );
+define( 'IMSANITY_SOURCE_LIBRARY', 2 );
+define( 'IMSANITY_SOURCE_OTHER', 4 );
 
-if (!defined('IMSANITY_AJAX_MAX_RECORDS')) define('IMSANITY_AJAX_MAX_RECORDS',250);
+if ( ! defined( 'IMSANITY_AJAX_MAX_RECORDS' ) ) {
+	define( 'IMSANITY_AJAX_MAX_RECORDS', 250 );
+}
 
 /**
  * Load Translations
@@ -49,17 +53,15 @@ function imsanity_upload_ui()
  * Inspects the request and determines where the upload came from
  * @return IMSANITY_SOURCE_POST | IMSANITY_SOURCE_LIBRARY | IMSANITY_SOURCE_OTHER
  */
-function imsanity_get_source()
-{
-
+function imsanity_get_source() {
 	$id = array_key_exists('post_id', $_REQUEST) ? $_REQUEST['post_id'] : '';
 	$action = array_key_exists('action', $_REQUEST) ? $_REQUEST['action'] : '';
 	
 	// a post_id indicates image is attached to a post
 	if ($id > 0) return IMSANITY_SOURCE_POST; 
-	
+
 	// post_id of 0 is 3.x otherwise use the action parameter
-	if ($id === 0 || $action == 'upload-attachment') return IMSANITY_SOURCE_LIBRARY;
+	if ( $id === 0 || $id === '0' || $action == 'upload-attachment' ) return IMSANITY_SOURCE_LIBRARY;
 	
 	// we don't know where this one came from but $_REQUEST['_wp_http_referer'] may contain info
 	return IMSANITY_SOURCE_OTHER;
@@ -71,26 +73,24 @@ function imsanity_get_source()
  * @example:  list($w,$h) = imsanity_get_max_width_height(IMSANITY_SOURCE_LIBRARY);
  * @param int IMSANITY_SOURCE_POST | IMSANITY_SOURCE_LIBRARY | IMSANITY_SOURCE_OTHER
  */
-function imsanity_get_max_width_height($source)
-{
-	$w = imsanity_get_option('imsanity_max_width',IMSANITY_DEFAULT_MAX_WIDTH);
-	$h = imsanity_get_option('imsanity_max_height',IMSANITY_DEFAULT_MAX_HEIGHT);
+function imsanity_get_max_width_height( $source ) {
+	$w = imsanity_get_option( 'imsanity_max_width',IMSANITY_DEFAULT_MAX_WIDTH );
+	$h = imsanity_get_option( 'imsanity_max_height',IMSANITY_DEFAULT_MAX_HEIGHT );
 
-	switch ($source)
-	{
+	switch ( $source ) {
 		case IMSANITY_SOURCE_POST:
 			break;
 		case IMSANITY_SOURCE_LIBRARY:
-			$w = imsanity_get_option('imsanity_max_width_library',$w);
-			$h = imsanity_get_option('imsanity_max_height_library',$h);
+			$w = imsanity_get_option( 'imsanity_max_width_library',$w );
+			$h = imsanity_get_option( 'imsanity_max_height_library',$h );
 			break;
 		default:
-			$w = imsanity_get_option('imsanity_max_width_other',$w);
-			$h = imsanity_get_option('imsanity_max_height_other',$h);
+			$w = imsanity_get_option( 'imsanity_max_width_other',$w );
+			$h = imsanity_get_option( 'imsanity_max_height_other',$h );
 			break;
 	}
 
-	return array($w,$h);
+	return array( $w, $h );
 }
 
 /**
@@ -156,7 +156,6 @@ function imsanity_handle_upload($params)
 
 			list($newW, $newH) = wp_constrain_dimensions($oldW, $oldH, $maxW, $maxH);
 
-			// this is wordpress prior to 3.5 (image_resize deprecated as of 3.5)
 			$resizeResult = imsanity_image_resize( $oldPath, $newW, $newH, false, null, null, $quality);
 
 			/* uncomment to debug error handling code: */
@@ -271,7 +270,7 @@ function imsanity_convert_to_jpg($type,$params)
 add_filter( 'wp_handle_upload', 'imsanity_handle_upload' );
 
 /* add filters/actions to customize upload page */
-add_action('post-upload-ui', 'imsanity_upload_ui');
+//add_action('post-upload-ui', 'imsanity_upload_ui');
 
 
 

@@ -1,13 +1,12 @@
 === Plugin Name ===
-Contributors: verysimple
-Donate link: http://verysimple.com/products/imsanity/
-Tags: imsanity, image, images, automatic scale, automatic resize, image resizer, image scaler, automatic image resizer, auto image resize, auto image resizer, space saver, image shrinker, image skruncher, image cruncher
-Requires at least: 2.9
-Tested up to: 4.4
-Stable tag: trunk
+Contributors: nosilver4u,verysimple
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MKMQKCBFFG3WW
+Tags: image, scale, resize, space saver, quality
+Requires at least: 3.9
+Tested up to: 4.7
+Stable tag: 2.3.7
 
-Imsanity automatically resizes huge image uploads.  Are contributors uploading
-huge photos?  Tired of manually scaling?  Imsanity to the rescue!
+Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually scaling? Imsanity to the rescue!
 
 == Description ==
 
@@ -33,6 +32,10 @@ before uploading.
 * Once enabled, Imsanity requires no actions on the part of the user
 * Uses WordPress built-in image scaling functions
 
+= Translations =
+
+Imsanity is available in several languages, each of which will be downloaded automatically when you install the plugin. To help translate it into your language, visit https://translate.wordpress.org/projects/wp-plugins/imsanity
+
 == Installation ==
 
 Automatic Installation:
@@ -47,17 +50,10 @@ Manual Installation:
 2. Unzip and upload the 'imsanity' folder to your '/wp-content/plugins/' directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
-Optional:
-
-If you prefer not to see the Imsanity girl logo image on the settings page, add the following line to wp-config.php:
-
-define('IMSANITY_HIDE_LOGO',true);
-
 == Screenshots ==
 
-1. Imsanity girl will cut you
-2. Imsanity settings page to configure max height/width
-3. Imsanity bulk image resize feature
+1. Imsanity settings page to configure max height/width
+2. Imsanity bulk image resize feature
 
 == Frequently Asked Questions ==
 
@@ -83,7 +79,7 @@ WordPress uses the GD library to handle the image manipulation.  GD can be insta
 various types of images.  If GD is not configured to handle a particular image type then you will get
 this message when you try to upload it.  For more info see http://php.net/manual/en/image.installation.php
 
-= 4. How can I tell Imsanity to ingore a certain image so I can upload it without being resized? =
+= 4. How can I tell Imsanity to ignore a certain image so I can upload it without being resized? =
 
 You can re-name your file and add "-noresize" to the filename.  For example if your file is named
 "photo.jpg" you can rename it "photo-noresize.jpg" and Imsanity will ignore it, allowing you
@@ -118,26 +114,18 @@ you already have a good understanding of image resolution.
 = 7. Doesn't WordPress already automatically scale images? =
 
 When an image is uploaded WordPress keeps the original and, depending on the size of the original,
-will create up to 3 smaller sized copies of the file (Large, Medium, Thumbnail) which are intended
+will create up to 4 smaller sized copies of the file (Large, Medium-Large, Medium, Thumbnail) which are intended
 for embedding on your pages.  Unless you have special photographic needs, the original usually sits
 there unused, but taking up disk quota.
 
-= 8. Why did you spell Insanity wrong and why does Imsanity girl want to cut me? =
+= 8. Why did you spell Insanity wrong? =
 
-Imsanity is short for "Image Sanity Limit"  A sanity limit is a term for limiting something down to
-a size or value that is reasonable.  Imsanity girl cuts because you drive her insane by uploading
-unecessarily large images for no good reason.
+Imsanity is short for "Image Sanity Limit". A sanity limit is a term for limiting something down to
+a size or value that is reasonable.
 
-= 9. How can I hide or remove the Imsanity logo image on the settings page? =
+= 9. Where do I go for support? =
 
-If you prefer not to see the logo, add the following line to wp-config.php:
-
-define('IMSANITY_HIDE_LOGO',true);
-
-= 10. Where do I go for support? =
-
-Documentation is available on the plugin homepage at http://wordpress.org/tags/imsanity and questions may
-be posted on the support forum at http://wordpress.org/tags/imsanity
+Questions may be posted on the support forum at https://wordpress.org/support/plugin/imsanity although I may move support to the helpscout platform we use for EWWW I.O.
 
 = TODO =
 
@@ -145,7 +133,7 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Upgrade Notice ==
 
-= 2.3.6	 =
+= 2.3.6	=
 * tested up to WP 4.4
 * if resized image is not smaller than original, then keep original
 * allow IMSANITY_AJAX_MAX_RECORDS to be overridden in wp-config.php
@@ -153,108 +141,38 @@ be posted on the support forum at http://wordpress.org/tags/imsanity
 
 == Changelog ==
 
-= 2.3.6	 =
+As some already know, Jason Hinkle passed away earlier this year. He will be sorely missed, but I hope to continue his legacy, to improve and support Imsanity. Who am I? https://ewww.io
+
+= 2.3.7 =
+* fixed: uploads to Media Library not detected properly
+* changed: default JPG quality is now 82, to match the WordPress default
+* changed: fr_FR and ru_RU moved to WP.org language packs
+* changed: new maintainer
+
+= 2.3.6	=
 * tested up to WP 4.4
 * if resized image is not smaller than original, then keep original
 * allow IMSANITY_AJAX_MAX_RECORDS to be overridden in wp-config.php
 * if png-to-jpg is enabled, replace png transparency with white
 
-= 2.3.5	 =
+= 2.3.5	=
 * Add option to hide Imsanity girl logo image on settings screen
 
-= 2.3.4	 =
+= 2.3.4	=
 * Security update to network settings page
 
-= 2.3.3	 =
+= 2.3.3	=
 * Update default size from 1024 to 2048
 * Tested up to WordPress 4.1.1
 * Move screenshots to /assets folder
 * Added 256x256 icon
 
-= 2.3.2	 =
+= 2.3.2	=
 * Add PNG-To-JPG Option thanks to Jody Nesbitt
 
-= 2.3.1	 =
+= 2.3.1	=
 * ignore errors if EXIF data is not readable
 * show counter when bulk resizing images
 
 = 2.3.0 =
 * fix for incorrectly identifying media uploads as coming from 'other' on WP 4+
-
-= 2.2.9 =
-* add "noresize" to filename will bypass imsanity
-* fix issue trying to auto-resize non-jpg images
-* add danish language support
-
-= 2.2.8 =
-* hotfix for bux exif_read_data constant
-
-= 2.2.7 =
-* Automatically rotate images according to EXIF rotation data if available
-* Reset the quota cache after bulk resizing images
-
-= 2.2.6 =
-* fixed bug in network settings where width/height input fields are in the same place
-
-= 2.2.5 =
-* fixed bug with bulk upload deleting the "large" image size in certain situations
-* style settings page input boxes a little wider
-
-= 2.2.4 =
-* load js properly to avoid warnings with certain security plugins
-* update settings text to be more clear about max w/h
-* updated language translation .pot file
-* updated FAQ
-
-= 2.2.3 =
-* improved error reporting in bulk resize
-
-= 2.2.2 =
-* replaced image_resize() call for wordpress prior to 3.5
-
-= 2.2.1 =
-* removed deprecated call to image_resize() in bulk resize
-
-= 2.2.0 =
-* removed deprecated call to image_resize() on < wordpress > 3.5
-
-= 2.1.7 =
-* fixed call to is_multisite() on < wordpress < 3.0
-
-= 2.1.6 =
-* internationalization support & French translation thanks to https://twitter.com/ChrysMTP
-
-= 2.1.5 =
-* fixed undefined error in setup.php
-
-= 2.1.4 =
-* fixed crash when uploading images via Android app via RPC (thanks Pieter!)
-
-= 2.1.3 =
-* fixed issue where only first 250 images could be re-sized in bulk-resize feature
-
-= 2.1.2 =
-* really fixed bug w/ multisite network settings only working on main site
-
-= 2.1.1 =
-* fixed bug w/ multisite network settings only working on main site
-
-= 2.1.0 =
-* max height/width can be configured separately for different upload types
-
-= 2.0.0 =
-* added network configuration for multi-site installation to enforce server-wide settings
-* added "bulk resize" feature to resize existing images and recover disk space
-
-= 1.1.0 =
-* added ms-config.php file that can be used for global settings configuration
-
-= 1.0.2 =
-* added feature & setting to convert bmp images to jpg
-* added setting to control JPG quality
-
-= 1.0.1 =
-* added error handling & reporting when image_resize returns an error
-
-= 1.0.0 =
-* original release.  fresh!

@@ -25,7 +25,7 @@ $_imsanity_multisite_settings = null;
  * @param array $links
  * @return array
  */
-function imsanity_settings_link($links) {
+function imsanity_settings_link( $links ) {
 	$links[] = '<a href="'. get_admin_url(null, 'options-general.php?page='.__FILE__) .'">Settings</a>';
 	return $links;
 }
@@ -55,6 +55,7 @@ function imsanity_create_menu()
 // }
 // add_action( 'admin_menu', 'dm_add_pages' );
 
+// TODO: put network options where they belong, not in a custom table
 /**
  * Returns the name of the custom multi-site settings table.
  * this will be the same table regardless of the blog
@@ -267,23 +268,15 @@ function imsanity_network_settings()
 	</select></td>
 	</tr>
 
-	<tr valign="top">
-	<th scope="row"><?php _e("JPG Quality",'imsanity'); ?></th>
-		<td><select name="imsanity_quality">
-			<?php
-			$q = $settings->imsanity_quality;
-
-			for ($x = 10; $x <= 100; $x = $x + 10)
-			{
-				echo "<option". ($q == $x ? " selected='selected'" : "") .">$x</option>";
-			}
-			?>
-		</select><?php _e(" (WordPress default is 90)",'imsanity'); ?></td>
+	<tr>
+	<th><label for='imsanity_quality' ><?php esc_html_e( "JPG image quality", 'imsanity' ); ?></th>
+	<td><input type='text' id='imsanity_quality' name='imsanity_quality' class='small-text' value='<?php echo imsanity_jpg_quality(); ?>' /> <?php esc_html_e('Valid values are 1-100.', 'imsanity' ); ?>
+	<p class='description'><?php esc_html_e( 'WordPress default is 82','imsanity' ); ?></p></td>
 	</tr>
 
 	</table>
 
-	<p class="submit"><input type="submit" class="button-primary" value="<?php _e("Update Settings",'imsanity'); ?>" /></p>
+	<p class="submit"><input type="submit" class="button-primary" value="<?php esc_attr_e( 'Update Settings', 'imsanity' ); ?>" /></p>
 
 	</form>
 	<?php
@@ -317,7 +310,7 @@ function imsanity_network_settings_update()
 	$data->imsanity_max_width_other = sanitize_text_field($_POST['imsanity_max_width_other']);
 	$data->imsanity_bmp_to_jpg = $_POST['imsanity_bmp_to_jpg'] == 1;
 	$data->imsanity_png_to_jpg = $_POST['imsanity_png_to_jpg'] == 1;
-	$data->imsanity_quality = sanitize_text_field($_POST['imsanity_quality']);
+	$data->imsanity_quality = imsanity_jpg_quality($_POST['imsanity_quality']);
 
 	$wpdb->update(
 		$table_name,
@@ -409,7 +402,21 @@ function imsanity_register_settings()
 	register_setting( 'imsanity-settings-group', 'imsanity_max_width_other' );
 	register_setting( 'imsanity-settings-group', 'imsanity_bmp_to_jpg' );
 	register_setting( 'imsanity-settings-group', 'imsanity_png_to_jpg' );
-	register_setting( 'imsanity-settings-group', 'imsanity_quality' );
+	register_setting( 'imsanity-settings-group', 'imsanity_quality', 'imsanity_jpg_quality' );
+}
+
+/**
+ * Validate and return the JPG quality setting
+ */
+function imsanity_jpg_quality( $quality = null ) {
+	if ( $quality === null ) {
+		$quality = get_option( 'imsanity_quality' );
+	}
+	if ( preg_match( '/^(100|[1-9][0-9]?)$/', $quality ) ) {
+		return (int) $quality;
+	} else {
+		return IMSANITY_DEFAULT_QUALITY;
+	}
 }
 
 /**
@@ -453,17 +460,18 @@ function imsanity_settings_css()
  */
 function imsanity_settings_banner()
 {
+// TODO: put this where it belongs, and merge the calls
 	// register the scripts that are used by the bulk resizer
 	wp_register_script( 'my_plugin_script', plugins_url('/imsanity/scripts/imsanity.js?v='.IMSANITY_VERSION), array('jquery'));
 	wp_enqueue_script( 'my_plugin_script' );
 	
-	echo '
-	<div id="imsanity_header" style="float: left;">';
+//	echo '
+//	<div id="imsanity_header" style="float: left;">';
 	
-	if (!defined('IMSANITY_HIDE_LOGO')) 
-		echo '<a href="http://verysimple.com/products/imsanity/"><img alt="Imsanity" src="' . plugins_url() . '/imsanity/images/imsanity.png" style="float: right; margin-left: 15px;"/></a>';
+//	if (!defined('IMSANITY_HIDE_LOGO')) 
+//		echo '<a href="http://verysimple.com/products/imsanity/"><img alt="Imsanity" src="' . plugins_url() . '/imsanity/images/imsanity.png" style="float: right; margin-left: 15px;"/></a>';
 	
-	echo '
+/*	echo '
 		<h4>'.__("Imsanity automatically resizes insanely huge image uploads",'imsanity').'</h4>'.
 
 		__("<p>Imsanity automaticaly reduces the size of images that are larger than the specified maximum and replaces the original
@@ -481,9 +489,9 @@ function imsanity_settings_banner()
 
 		<p>Be sure to save back-ups of your full-sized images if you wish to keep them.</p>",'imsanity') .
 
-		sprintf( __("<p>Imsanity Version %s by %s </p>",'imsanity'),IMSANITY_VERSION ,'<a href="http://verysimple.com/">Jason Hinkle</a>') .
+		sprintf( __("<p>Imsanity Version %s by %s </p>",'imsanity'),IMSANITY_VERSION ,'<a href="https://ewww.io/">Shane Bishop</a>') .
 	'</div>
-	<br style="clear:both" />';
+	<br style="clear:both" />';*/
 }
 
 /**
@@ -593,18 +601,10 @@ function imsanity_settings_page_form()
 		</tr>
 
 
-		<tr valign="middle">
-		<th scope="row"><?php _e("JPG image quality",'imsanity'); ?></th>
-		<td><select name="imsanity_quality">
-			<?php
-			$q = get_option('imsanity_quality',IMSANITY_DEFAULT_QUALITY);
-
-			for ($x = 10; $x <= 100; $x = $x + 10)
-			{
-				echo "<option". ($q == $x ? " selected='selected'" : "") .">$x</option>";
-			}
-			?>
-		</select><?php _e(" (WordPress default is 90)",'imsanity'); ?></td>
+		<tr>
+		<th><label for='imsanity_quality' ><?php esc_html_e( "JPG image quality", 'imsanity' ); ?></th>
+		<td><input type='text' id='imsanity_quality' name='imsanity_quality' class='small-text' value='<?php echo imsanity_jpg_quality(); ?>' /> <?php esc_html_e('Valid values are 1-100.', 'imsanity' ); ?>
+		<p class='description'><?php esc_html_e( 'WordPress default is 82','imsanity' ); ?></p></td>
 		</tr>
 
 		<tr valign="middle">
