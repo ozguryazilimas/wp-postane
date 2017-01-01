@@ -5,8 +5,8 @@ Author URI: http://www.yarpp.com/
 Plugin URI: http://www.yarpp.com/
 Tags: feeds, pages, posts, related, rss, yarpp, ads, multisite, multilingual, thumbnails, related posts, related content
 Requires at least: 3.3
-Tested up to: 4.4
-Stable tag: 4.3.1
+Tested up to: 4.7
+Stable tag: 4.3.3
 License: GPLv2 or later
 
 Display a list of related posts on your site based on a powerful unique algorithm. Earn money by including sponsored content!
@@ -14,18 +14,6 @@ Display a list of related posts on your site based on a powerful unique algorith
 == Description ==
 
 Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post types related to the current entry, introducing your readers to other relevant content on your site.
-
-Now you can mix and match **YARPP Basic** and **YARPP Pro** to get the best of both features, beneath articles or in the sidebar! Use the combination that works best for you.
-
-**YARPP Pro for Sponsored Content**
------------------------------------------
-* Create a **variety of native units**, including Content Recommendation or In Feed display
-* **Make money by displaying sponsored content**, at the bottom of your posts, in the sidebar, or both.
-* **Easily promote your product or service** on thousands of blogs and websites.
-* Advertisers are now able to bid by CPC and/or CPM
-* Support for more granular advertiser targeting such as IAB category and geo-targeting by DMA
-
-[Learn more about the new YARPP Pro enhancements!](http://www.yarpp.com)
 
 **YARPP Basic for Standard Features**
 -------------------------------------------
@@ -51,9 +39,9 @@ Make sure the "display related posts in feeds" option is turned on if you would 
 
 = Widget =
 
-Related posts can also be displayed as a widget. Go to the Appearance > Widgets options page and add the "Related Posts (YARPP)" widget. Choose to display content from YARPP Basic or YARPP Pro. The widget will only be displayed on single entry (permalink) pages.
+Related posts can also be displayed as a widget. Go to the Appearance > Widgets options page and add the "Related Posts (YARPP)" widget. Choose to display content from YARPP Basic. The widget will only be displayed on single entry (permalink) pages.
 
-The YARPP Basic widget can be used even if the "auto display" option is turned off. The YARPP Pro sidebar widget can be used even if you choose YARPP Basic to display related content at the bottom of your posts.
+The YARPP Basic widget can be used even if the "auto display" option is turned off.
 
 = Custom display through templates =
 
@@ -63,7 +51,7 @@ YARPP allows the advanced user with knowledge of PHP to customize the display of
 
 **Common Questions about YARPP Basic**
 
-Below are Frequently Asked Questions about YARPP basic. For questions about the new YARPP Pro enhancements, please visit the [YARPP Pro FAQ](http://www.yarpp.com/faq).
+Below are Frequently Asked Questions about YARPP basic.
 
 If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/yet-another-related-posts-plugin).
 
@@ -73,7 +61,7 @@ Most likely you have "no related posts" right now because the default "match thr
 
 = How can I move the related posts display? =
 
-If you do not want to show the Related Posts display in its default position (right below the post content), first go to YARPP options and turn off the "automatically display" options in the "website" section. If you would like to instead display it in your sidebar and you have a widget-aware theme, YARPP provides a Related Posts widget which you can add under "Appearance" > "Widgets." (You can choose to display sidebar content from either YARPP Basic or YARPP Pro.)
+If you do not want to show the Related Posts display in its default position (right below the post content), first go to YARPP options and turn off the "automatically display" options in the "website" section. If you would like to instead display it in your sidebar and you have a widget-aware theme, YARPP provides a Related Posts widget which you can add under "Appearance" > "Widgets."
 
 If you would like to add the Related Posts display elsewhere, edit your relevant theme file (most likely something like `single.php`) and add the PHP code `related_posts();` within [The Loop](http://codex.wordpress.org/The_Loop) where you want to display the related posts. (Make sure you don't add `echo related_posts();` or you may end up with duplicates in your related posts section.)
 
@@ -121,8 +109,6 @@ Once you save any CSS changes, empty your browser's cache and reload your page t
 The default YARPP thumbnail size is 120px by 120px. The thumbnail size can be specified programmatically by adding `add_image_size('yarpp-thumbnail', $width, $height, true);` to your theme's `functions.php` file with appropriate width and height variables. In the future I may add some UI to the settings to also set this. Feedback is requested on whether this is a good idea.
 
 Each time you change YARPP's thumbnail dimensions like this, you will probably want to have WordPress regenerate appropriate sized thumbnails for all of your images. I highly recommend the [Regenerate Thumbnails](http://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin for this purpose.
-
-Please note that, by enabling the YARPP Pro enhancements, you can customize the thumbnail display using the admin interface instead of through PHP code.
 
 = I'm using the Thumbnails display. Why aren't the right size thumbnails being served? =
 
@@ -296,6 +282,13 @@ YARPP is currently localized in the following languages:
 * Uzbek (`uz_UZ`) by Ali Safarov of [comfi.com](http://www.comfi.com/)
 
 == Changelog ==
+
+= 4.3.3 =
+* Fix 'Undefined index' in YARPP_Cache.php (credit to Derrick Hammer/@pcfreak30)
+
+= 4.3.2 =
+* Fix ksort error in YARPP_Cache.php (credit to Derrick Hammer/@pcfreak30)
+* Discontinuing the YARPP Pro service as of 12/31/2016
 
 = 4.3.1 =
 * Tested on WordPress 4.4.
