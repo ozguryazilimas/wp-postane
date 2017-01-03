@@ -2,9 +2,9 @@
 Contributors: nosilver4u,verysimple
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MKMQKCBFFG3WW
 Tags: image, scale, resize, space saver, quality
-Requires at least: 3.9
+Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 2.3.7
+Stable tag: 2.3.8
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually scaling? Imsanity to the rescue!
 
@@ -133,6 +133,9 @@ Questions may be posted on the support forum at https://wordpress.org/support/pl
 
 == Upgrade Notice ==
 
+= 2.3.8 =
+* network settings page only available when plugin is network-activated, please let me know if that sounds crazy to you: https://ewww.io/contact-us/
+
 = 2.3.6	=
 * tested up to WP 4.4
 * if resized image is not smaller than original, then keep original
@@ -142,6 +145,19 @@ Questions may be posted on the support forum at https://wordpress.org/support/pl
 == Changelog ==
 
 As some already know, Jason Hinkle passed away earlier this year. He will be sorely missed, but I hope to continue his legacy, to improve and support Imsanity. Who am I? https://ewww.io
+
+= 2.3.8 =
+* added: 'imsanity_crop_image' filter to crop images during resizing
+* added: increased security of network settings and AJAX requests
+* changed: metadata fetch and update use correct functions instead of direct database queries
+* changed: bulk resize search is kinder to your database
+* fixed: bulk resize could produce a larger image
+* fixed: image file permissions not checked prior to resizing
+* fixed: EWWW Image Optimizer optimizes image during resizing instead of waiting for metadata generation
+* fixed: JPG quality not displaying correctly on network/multisite settings page
+* fixed: some strings were not translatable
+* fixed: bulk resize results container was not scrollable
+* removed: legacy resize function for WP lower than 3.5
 
 = 2.3.7 =
 * fixed: uploads to Media Library not detected properly

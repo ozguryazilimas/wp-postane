@@ -11,14 +11,14 @@ if (!function_exists('imagecreatefrombmp')) {
 	function imagecreatefrombmp($filename) {
 		// version 1.00
 		if (!($fh = fopen($filename, 'rb'))) {
-			trigger_error(sprintf(__('imagecreatefrombmp: Can not open %s!','imsanity'),$filename), E_USER_WARNING);
+			trigger_error( sprintf( __( 'imagecreatefrombmp: Can not open %s!','imsanity') , $filename ), E_USER_WARNING );
 			return false;
 		}
 		// read file header
-		$meta = unpack('vtype/Vfilesize/Vreserved/Voffset', fread($fh, 14));
+		$meta = unpack('vtype/Vfilesize/Vreserved/Voffset', fread( $fh, 14 ) );
 		// check for bitmap
 		if ($meta['type'] != 19778) {
-			trigger_error(sprintf(__('imagecreatefrombmp: %s is not a bitmap!','imsanity'), $filename), E_USER_WARNING);
+			trigger_error( sprintf( __( 'imagecreatefrombmp: %s is not a bitmap!', 'imsanity' ), $filename ), E_USER_WARNING );
 			return false;
 		}
 		// read image header
@@ -40,7 +40,7 @@ if (!function_exists('imagecreatefrombmp')) {
 			if ($meta['imagesize'] < 1) {
 				$meta['imagesize'] = @filesize($filename) - $meta['offset'];
 				if ($meta['imagesize'] < 1) {
-					trigger_error(sprintf(__('imagecreatefrombmp: Can not obtain filesize of %s !','imsanity'),$filename ), E_USER_WARNING);
+					trigger_error( sprintf( __( 'imagecreatefrombmp: Cannot obtain filesize of %s !', 'imsanity' ), $filename ), E_USER_WARNING );
 					return false;
 				}
 			}
@@ -126,7 +126,7 @@ if (!function_exists('imagecreatefrombmp')) {
 						$color[1] = $palette[ $color[1] + 1 ];
 						break;
 					default:
-						trigger_error( sprintf(__('imagecreatefrombmp: %s has %d bits and this is not supported!','imsanity'),$filename,$meta['bits']), E_USER_WARNING);
+						trigger_error( sprintf( __( 'imagecreatefrombmp: %s has %d bits and this is not supported!', 'imsanity' ), $filename, $meta['bits'] ), E_USER_WARNING );
 						return false;
 				}
 				imagesetpixel($im, $x, $y, $color[1]);

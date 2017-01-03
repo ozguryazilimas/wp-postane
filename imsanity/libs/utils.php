@@ -43,9 +43,7 @@ function imsanity_fatal( $message, $title = "", $die = false ) {
  * @return mixed WP_Error on failure. String with new destination path.
  */
 function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $dest_path = null, $jpeg_quality = 82 ) {
-
 	if ( function_exists( 'wp_get_image_editor' ) ) {
-// TODO: check to make sure file is writable
 		// WP 3.5 and up use the image editor
 				
 		$editor = wp_get_image_editor( $file );
@@ -92,12 +90,7 @@ function imsanity_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = 
 	
 		return $dest_file;
 	}
-	else
-	{
-	// TODO: remove this, but handle failure properly upstream
-		// wordpress prior to 3.5 uses the old image_resize function
-		return image_resize( $file, $max_w, $max_h, $crop, $suffix, $dest_path, $jpeg_quality);
-	}
+	return false;
 }
 
 ?>
