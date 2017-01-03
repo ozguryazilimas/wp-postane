@@ -6,10 +6,10 @@ Plugin URI: http://www.yarpp.com/
 Tags: feeds, pages, posts, related, rss, yarpp, ads, multisite, multilingual, thumbnails, related posts, related content
 Requires at least: 3.3
 Tested up to: 4.7
-Stable tag: 4.3.3
+Stable tag: 4.3.6
 License: GPLv2 or later
 
-Display a list of related posts on your site based on a powerful unique algorithm. Earn money by including sponsored content!
+Display a list of related posts on your site based on a powerful unique algorithm.
 
 == Description ==
 
@@ -282,6 +282,16 @@ YARPP is currently localized in the following languages:
 * Uzbek (`uz_UZ`) by Ali Safarov of [comfi.com](http://www.comfi.com/)
 
 == Changelog ==
+
+= 4.3.6 =
+* Removed new file
+
+= 4.3.5 =
+* Fix 'unable to update'
+
+= 4.3.4 =
+* Don't allow new YARPP Pro signups
+* Discontinuing the YARPP Pro service as of 01/31/2017
 
 = 4.3.3 =
 * Fix 'Undefined index' in YARPP_Cache.php (credit to Derrick Hammer/@pcfreak30)

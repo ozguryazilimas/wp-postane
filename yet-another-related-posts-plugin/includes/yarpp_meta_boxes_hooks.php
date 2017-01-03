@@ -54,20 +54,6 @@ add_meta_box(
     'core'
 );
 
-if (!$yarpp->yarppPro['active']) {
-    add_meta_box(
-        'yarpp_display_optin',
-        'Get the Most Out of YARPP',
-        array(
-            new YARPP_Meta_Box_Optin,
-            'display'
-        ),
-        'settings_page_yarpp',
-        'side',
-        'core'
-    );
-}
-
 add_meta_box(
     'yarpp_display_contact',
     __('Contact YARPP', 'yarpp'),
