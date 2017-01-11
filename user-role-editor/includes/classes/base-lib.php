@@ -61,6 +61,17 @@ class URE_Base_Lib {
     }
     // end of get_property()
     
+    
+    public function set($property_name, $property_value) {
+        
+        if (!property_exists($this, $property_name)) {
+            syslog(LOG_ERR, 'Lib class does not have such property '. $property_name);
+        }
+        
+        $this->$property_name = $property_value;
+    }
+    // end of get_property()
+    
 
     public function get_main_site() {
         global $current_site;
@@ -127,12 +138,12 @@ class URE_Base_Lib {
         $result = 0;
         if ($request_type == 'get') {
             if (isset($_GET[$var_name])) {
-                $result = $_GET[$var_name];
+                $result = filter_var($_GET[$var_name], FILTER_SANITIZE_STRING);
             }
         } else if ($request_type == 'post') {
             if (isset($_POST[$var_name])) {
                 if ($var_type != 'checkbox') {
-                    $result = $_POST[$var_name];
+                    $result = filter_var($_POST[$var_name], FILTER_SANITIZE_STRING);;
                 } else {
                     $result = 1;
                 }

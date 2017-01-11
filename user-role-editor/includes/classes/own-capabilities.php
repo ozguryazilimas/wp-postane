@@ -8,7 +8,6 @@
  * @copyright  Copyright (c) 2010 - 2016, Vladimir Garagulya
  **/
 class URE_Own_Capabilities {
-    const URE_KEY_CAP_TR = 'ure_key_cap';
     const URE_SETTINGS_CAP_TR = 'ure_settings_cap';
 
     
@@ -26,9 +25,7 @@ class URE_Own_Capabilities {
             'ure_reset_roles' => 1
         );        
                 
-        if ($lib->is_pro()) {            
-            $multisite = $lib->get('multisite');
-            
+        if ($lib->is_pro()) {                                    
             $ure_caps['ure_export_roles'] = 1;
             $ure_caps['ure_import_roles'] = 1;
             $ure_caps['ure_admin_menu_access'] = 1;
@@ -38,7 +35,9 @@ class URE_Own_Capabilities {
             $ure_caps['ure_other_roles_access'] = 1;
             $ure_caps['ure_edit_posts_access'] = 1;
             $ure_caps['ure_plugins_activation_access'] = 1;   
-            $ure_caps['ure_view_posts_access'] = 1;            
+            $ure_caps['ure_view_posts_access'] = 1;   
+            $ure_caps['ure_front_end_menu_access'] = 1;   
+            $multisite = $lib->get('multisite');
             if ($multisite) {
                 $ure_caps['ure_themes_access'] = 1;
             }
@@ -54,11 +53,13 @@ class URE_Own_Capabilities {
      */
     public static function get_key_capability() {
         
-        $key_cap = get_transient(self::URE_KEY_CAP_TR);
+        $lib = URE_Lib::get_instance();
+        $key_cap = $lib->get('key_capability');
+        
         if (!empty($key_cap)) {
             return $key_cap;
         }
-        $lib = URE_Lib::get_instance();
+        
         $multisite = $lib->get('multisite');
         if (!$multisite) {
             $key_cap = URE_KEY_CAPABILITY;
@@ -70,8 +71,8 @@ class URE_Own_Capabilities {
             } else {
                 $key_cap = 'manage_network_plugins';
             }
-        }
-        set_transient(self::URE_KEY_CAP_TR, $key_cap, 60);
+        }        
+        $lib->set('key_capability', $key_cap);
                 
         return $key_cap;
     }
@@ -85,12 +86,12 @@ class URE_Own_Capabilities {
      */
     public static function get_settings_capability() {
         
-        $settings_cap = get_transient(self::URE_SETTINGS_CAP_TR);
+        $lib = URE_Lib::get_instance();
+        $settings_cap = $lib->get('settings_capability');
         if (!empty($settings_cap)) {
             return $settings_cap;
         }
-        
-        $lib = URE_Lib::get_instance();
+                
         $multisite = $lib->get('multisite');
         if (!$multisite) {
             $settings_cap = 'ure_manage_options';
@@ -103,7 +104,7 @@ class URE_Own_Capabilities {
                 $settings_cap = self::get_key_capability();
             }
         }
-        set_transient(self::URE_SETTINGS_CAP_TR, $settings_cap, 60);
+        $lib->set('settings_capability', $settings_cap);
         
         return $settings_cap;
     }

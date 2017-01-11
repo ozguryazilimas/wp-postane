@@ -32,6 +32,8 @@ class Ure_Lib extends URE_Base_Lib {
     protected $advert = null;
     protected $role_additional_options = null;
     protected $bbpress = null; // reference to the URE_bbPress class instance
+    protected $key_capability = ''; // Key user capability for get full access to the User Role Editor
+    protected $settings_capability = ''; // User capability for access to User Role Editor Settings
     
     // when allow_edit_users_to_not_super_admin option is turned ON, we set this property to true 
     // when we raise single site admin permissions up to the superadmin for the 'Add new user' new-user.php page

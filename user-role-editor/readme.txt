@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 4.31
+Stable tag: 4.31.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,11 +76,15 @@ If you wish to check available translations or help with plugin translation to y
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog ==
+= [4.31.1] 06.01.2017 =
+* Fix: WP transients get/set were removed from URE_Own_Capabilities class. It leaded to the MySQL deadlock in some cases.
+* Update: Base_Lib::get_request_var() sanitizes user input by PHP's filter_var() in addition to WordPress core's esc_attr().
+
 = [4.31] 14.12.2016 =
 * New: It's possible to remove unused user capabilities by list.
 * Fix: There was no support for installations with the hidden/changed URL to wp-admin. URE uses 'admin_url()' now to get and check admin URL, instead of direct comparing URL with 'wp-admin' string.
 * Fix: Deprecated capabilities were shown in some cases at the 'Core' group even with "Show deprecated capabilities" mode switched off.
-* Update: Capability groups CSS classes are prefixed with 'ure-' in order to the minimize possible CSS conflicts with other plugins/themes which may load styles with the same classes globally and break URE's markup.
+* Update: Capability groups CSS classes are prefixed with 'ure-' in order to minimize possible CSS conflicts with other plugins/themes which may load styles with the same classes globally and break URE's markup.
 
 = [4.30] 01.12.2016 =
 * Update: compatible with WordPress 4.7
