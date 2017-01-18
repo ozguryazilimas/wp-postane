@@ -7,11 +7,10 @@ Tags: cms, custom, admin, branding, dashboard, administration, plugin, login, cl
 Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Author:  Video User Manuals
 Requires at least: 3.3 
-Tested up to: 4.6
-Stable tag: 1.5.9
-Version:1.5.9
+Tested up to: 4.6.1
+Stable tag: 1.6
 
-Allows complete customization of dashboard panels and logos, removal of menus, giving editors access to widgets and menus plus lots more. Import/export your settings and include an RSS panel on the dashboard to feed your clients the latest posts from your blog to keep you top of mind whenever they login to their dashboard.
+Customize dashboard panels and branding, remove menus, give editors access to widgets plus lots more.
 
 == Description ==
 The White Label CMS plugin is for developers who want to give their clients a more personalised and less confusing content management system
@@ -58,6 +57,9 @@ You can now brand the dashboard as well as the admin bar.
 5. Customize the homepage
 
 == Changelog ==
+
+= 1.6 =
+Fixed Import
 
 = 1.5.9 =
 Minor changes
