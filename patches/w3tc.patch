@@ -1,31 +1,31 @@
-diff --git a/w3-total-cache/lib/W3/ObjectCache.php b/w3-total-cache/lib/W3/ObjectCache.php
-index ebd1241..ab9f1a7 100644
---- a/w3-total-cache/lib/W3/ObjectCache.php
-+++ b/w3-total-cache/lib/W3/ObjectCache.php
-@@ -164,7 +164,7 @@ class W3_ObjectCache {
-                   !in_array($group, $this->nonpersistent_groups) &&
-                     $this->_check_can_cache_runtime($group)) {
-             $cache = $this->_get_cache(null, $group);
--            $v = $cache->get($key);
-+            $v = $cache->get($key, $group);
-             if (is_array($v) && $v['content'] != null)
-                 $value = $v['content'];
-             else
-@@ -251,7 +251,7 @@ class W3_ObjectCache {
+diff --git a/w3-total-cache/ObjectCache_WpObjectCache_Regular.php b/w3-total-cache/ObjectCache_WpObjectCache_Regular.php
+index 4e544b1..a670b3c 100755
+--- a/w3-total-cache/ObjectCache_WpObjectCache_Regular.php
++++ b/w3-total-cache/ObjectCache_WpObjectCache_Regular.php
+@@ -153,7 +153,7 @@ class ObjectCache_WpObjectCache_Regular {
+ 			!in_array( $group, $this->nonpersistent_groups ) &&
+ 			$this->_check_can_cache_runtime( $group ) ) {
+ 			$cache = $this->_get_cache( null, $group );
+-			$v = $cache->get( $key );
++			$v = $cache->get( $key, $group );
  
-             $v = array('content' => $data);
-             return $cache->set($key, $v,
--                ($expire ? $expire : $this->_lifetime));
-+                ($expire ? $expire : $this->_lifetime), $group);
-         }
+ 			/* for debugging
+ 				$a = $cache->_get_with_old_raw( $key );
+@@ -277,7 +277,7 @@ class ObjectCache_WpObjectCache_Regular {
  
-         return true;
-@@ -277,7 +277,7 @@ class W3_ObjectCache {
-         if ($this->_caching && !in_array($group, $this->nonpersistent_groups)) {
-             $cache = $this->_get_cache(null, $group);
+ 			$v = array( 'content' => $data );
+ 			$ext_return = $cache->set( $key, $v,
+-				( $expire ? $expire : $this->_lifetime ) );
++				( $expire ? $expire : $this->_lifetime ), $group );
+ 			$return = $ext_return;
+ 		}
  
--            return $cache->delete($key);
-+            return $cache->delete($key, $group);
-         }
+@@ -319,7 +319,7 @@ class ObjectCache_WpObjectCache_Regular {
  
-         return true;
+ 		if ( $this->_caching && !in_array( $group, $this->nonpersistent_groups ) ) {
+ 			$cache = $this->_get_cache( null, $group );
+-			$return = $cache->delete( $key );
++			$return = $cache->delete( $key, $group );
+ 		}
+ 
+ 		if ( $this->_is_transient_group( $group ) &&
