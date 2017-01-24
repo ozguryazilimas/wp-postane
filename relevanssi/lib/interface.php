@@ -442,10 +442,10 @@ function relevanssi_query_log() {
 	echo '<h3>' . __("Common Queries", 'relevanssi') . '</h3>';
 
 	$limit = apply_filters('relevanssi_user_searches_limit', 20);
-	$lead = __("Here you can see the $limit most common user search queries, how many times those
+	$lead = __("Here you can see the %d most common user search queries, how many times those
 		queries were made and how many results were found for those queries.", 'relevanssi');
 
-	echo "<p>$lead</p>";
+	sprintf("<p>" . $lead . "</p>", $limit);
 
 	echo "<div style='width: 30%; float: left; margin-right: 2%; overflow: scroll'>";
 	relevanssi_date_queries(1, __("Today and yesterday", 'relevanssi'));
@@ -482,7 +482,7 @@ function relevanssi_query_log() {
 		echo '<h3>' . __('Reset Logs', 'relevanssi') . "</h3>\n";
 		echo "<form method='post'>\n$nonce";
 		echo "<p>";
-		printf(__('To reset the logs, type "reset" into the box here %s and click %s', 'relevanssi'), ' <input type="text" name="relevanssi_reset_code" />', 'and click <input type="submit" name="relevanssi_reset" value="Reset" class="button" />');
+		printf(__('To reset the logs, type "reset" into the box here %s and click %s', 'relevanssi'), ' <input type="text" name="relevanssi_reset_code" />', ' <input type="submit" name="relevanssi_reset" value="Reset" class="button" />');
 		echo "</p></form>";
 
 	}
@@ -1022,12 +1022,11 @@ function relevanssi_options_form() {
 	<small><?php _e("Comma-separated list of numeric user IDs or user login names that will not be logged.", "relevanssi"); ?></small>
 
 <?php
-	if (RELEVANSSI_PREMIUM) {
-		echo "<p>" . __("If you enable logs, you can see what your users are searching for. You can prevent your own searches from getting in the logs with the omit feature.", "relevanssi") . "</p>";
+	echo "<p>" . __("If you enable logs, you can see what your users are searching for. You can prevent your own searches from getting in the logs with the omit feature.", "relevanssi");
+	if (!RELEVANSSI_PREMIUM) {
+		echo " " . __("Logs are also needed to use the 'Did you mean?' feature.", "relevanssi");
 	}
-	else {
-		echo "<p>" . __("If you enable logs, you can see what your users are searching for. Logs are also needed to use the 'Did you mean?' feature. You can prevent your own searches from getting in the logs with the omit feature.", "relevanssi") . "</p>";
-	}
+	echo "</p>";
 ?>
 
 	<?php if (function_exists('relevanssi_form_hide_branding')) relevanssi_form_hide_branding($hide_branding); ?>
@@ -1055,12 +1054,11 @@ function relevanssi_options_form() {
 	<label for='relevanssi_expst'><?php _e('Exclude these posts/pages from search:', 'relevanssi'); ?>
 	<input type='text'  name='relevanssi_expst' id='relevanssi_expst' size='20' value='<?php echo esc_attr($expst); ?>' /></label><br />
 <?php
+	echo "<small>" . __("Enter a comma-separated list of post/page IDs that are excluded from search results. This only works here, you can't use the input field option (WordPress doesn't pass custom parameters there).", 'relevanssi');
 	if (RELEVANSSI_PREMIUM) {
-		echo "<small>" . __("Enter a comma-separated list of post/page IDs that are excluded from search results. This only works here, you can't use the input field option (WordPress doesn't pass custom parameters there). You can also use a checkbox on post/page edit pages to remove posts from index.", 'relevanssi') . "</small>";
+		echo " " . __("You can also use a checkbox on post/page edit pages to remove posts from index. This setting doesn't work in multisite searches, but the checkbox does.", 'relevanssi');
 	}
-	else {
-		echo "<small>" . __("Enter a comma-separated list of post/page IDs that are excluded from search results. This only works here, you can't use the input field option (WordPress doesn't pass custom parameters there).", 'relevanssi') . "</small>";
-	}
+	echo "</small>";
 ?>
 
 	<br /><br />

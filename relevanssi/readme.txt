@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 4.0
-Tested up to: 4.6.1
-Stable tag: 3.5.6.1
+Tested up to: 4.7.1
+Stable tag: 3.5.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,17 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.5.7.1 =
+* Small fix for a bug that broke the settings page.
+
+= 3.5.7 =
+* An improved version of the sorting function will not throw notices when Intuitive Custom Post Order plugin is used.
+* New filter: `relevanssi_missing_sort_key` can be used to adjust the result sorting when using keys that are not present in all posts (eg. menu_order).
+* Czech translation and stopwords, thanks to Michael Kucera.
+* Relevanssi broke the WP admin menu search when admin searches were enabled.
+* Relevanssi broke the admin page search under WP 4.7. Relevanssi is now disabled in admin page searches.
+* The way accented characters are handled in highlighting is improved. A new filter, `relevanssi_accents_replacement_arrays`, can be used to adjust the accent replacement.
 
 = 3.5.6.1 =
 * Fix for a fatal bug in 3.5.6.
@@ -1134,6 +1145,12 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.5.7.1 =
+* Fix for the broken settings page.
+
+= 3.5.7 =
+* Bug fixes and small improvements.
 
 = 3.5.6.1 =
 * Fix for a fatal error.

@@ -26,6 +26,11 @@ function relevanssi_query($posts, $query = false) {
 		$search_ok = false;
 	}
 
+	// Required so that the admin dashboard page search works.
+	if ($wp_query->is_admin && $wp_query->query_vars['post_type'] == 'page') {
+		$search_ok = false;
+	}
+
 	// Disable search in media library search
 	if ($search_ok) {
 		if ($wp_query->query_vars['post_type'] == 'attachment' && $wp_query->query_vars['post_status'] == 'inherit,private') {
@@ -69,7 +74,7 @@ function relevanssi_search($args) {
 	$orderby = $filtered_args['orderby'];
 	$order = $filtered_args['order'];
 	$fields = $filtered_args['fields'];
-	
+
 	$hits = array();
 
 	$query_restrictions = "";

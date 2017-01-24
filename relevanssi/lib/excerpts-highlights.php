@@ -285,6 +285,7 @@ function relevanssi_highlight_terms($excerpt, $query) {
 	foreach ($terms as $term) {
 //		$pr_term = relevanssi_replace_punctuation(preg_quote($term, '/'));
 		$pr_term = preg_quote($term, '/');
+		$pr_term = relevanssi_add_accent_variations($pr_term);
 
 		$undecoded_excerpt = $excerpt;
 		$excerpt = html_entity_decode($excerpt);
@@ -420,6 +421,8 @@ function relevanssi_extract_locations($words, $fulltext) {
 function relevanssi_count_matches($words, $fulltext) {
 	$count = 0;
 	foreach( $words as $word ) {
+		$word = relevanssi_add_accent_variations($word);
+
 		if (get_option('relevanssi_fuzzy') == 'never') {
 			$pattern = '/([\s,\.:;\?!\']'.$word.'[\s,\.:;\?!\'])/i';
 			if (preg_match($pattern, $fulltext, $matches, PREG_OFFSET_CAPTURE)) {
@@ -437,7 +440,6 @@ function relevanssi_count_matches($words, $fulltext) {
 			}
 		}
 	}
-
 	return $count;
 }
 
@@ -522,6 +524,17 @@ function relevanssi_extract_relevant($words, $fulltext, $rellength=300, $prevcou
 	$besthits = count(relevanssi_extract_locations($words, $reltext));
 
     return array($reltext, $besthits, $start);
+}
+
+function relevanssi_add_accent_variations($word) {
+    $replacement_arrays = apply_filters('relevanssi_accents_replacement_arrays', array(
+        "from" => array('a','c','e','i','o','u','n','ss'),
+        "to" => array('(a|á|à|â)','(c|ç)', '(e|é|è|ê|ë)','(i|í|ì|î|ï)','(o|ó|ò|ô|õ)','(u|ú|ù|ü|û)','(n|ñ)','(ss|ß)'),
+    ));
+
+	$word = str_ireplace($replacement_arrays['from'], $replacement_arrays['to'], $word);
+
+   	return $word;
 }
 
 ?>

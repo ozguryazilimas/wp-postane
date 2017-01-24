@@ -288,6 +288,8 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 				$values = get_post_meta($post->ID, $field, false);
 				if ("" == $values) continue;
 				foreach ($values as $value) {
+					// Quick hack : allow indexing of PODS relationship custom fields // TMV
+					if (isset($value['post_title'])) $value = $value['post_title'];
 					relevanssi_index_acf($insert_data, $post->ID, $field, $value);
 					$value_tokens = relevanssi_tokenize($value, true, $min_word_length);
 					foreach ($value_tokens as $token => $count) {

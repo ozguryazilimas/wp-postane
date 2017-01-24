@@ -54,42 +54,66 @@ function relevanssi_wpml_filter($data) {
 /**
  * Function by Matthew Hood http://my.php.net/manual/en/function.sort.php#75036
  */
-function relevanssi_object_sort(&$data, $key, $dir = 'desc') {
-	if ('title' == $key) $key = 'post_title';
-	if ('date' == $key) $key = 'post_date';
-	if (!isset($data[0]->$key)) return;			// trying to sort by a non-existent key
-	$dir = strtolower($dir);
-    for ($i = count($data) - 1; $i >= 0; $i--) {
-		$swapped = false;
-      	for ($j = 0; $j < $i; $j++) {
-      		if (function_exists('mb_strtolower')) {
-	   			$key1 = mb_strtolower($data[$j]->$key);
-   				$key2 = mb_strtolower($data[$j + 1]->$key);
-   			}
-   			else {
-	   			$key1 = strtolower($data[$j]->$key);
-   				$key2 = strtolower($data[$j + 1]->$key);
-   			}
-      		if ('asc' == $dir) {
-	           	if ($key1 > $key2) {
-    		        $tmp = $data[$j];
-        	        $data[$j] = $data[$j + 1];
-            	    $data[$j + 1] = $tmp;
-                	$swapped = true;
-	           	}
-	        }
-			else {
-	           	if ($key1 < $key2) {
-    		        $tmp = $data[$j];
-        	        $data[$j] = $data[$j + 1];
-            	    $data[$j + 1] = $tmp;
-                	$swapped = true;
-	           	}
-			}
-    	}
-	    if (!$swapped) return;
-    }
-}
+ function relevanssi_object_sort(&$data, $key, $dir = 'desc') {
+ 	if ('title' == $key) $key = 'post_title';
+ 	if ('date' == $key) $key = 'post_date';
+ 	if (!isset($data[0]->$key)) return;			// trying to sort by a non-existent key
+ 	$dir = strtolower($dir);
+     for ($i = count($data) - 1; $i >= 0; $i--) {
+ 		$swapped = false;
+       	for ($j = 0; $j < $i; $j++) {
+       		if (function_exists('mb_strtolower')) {
+ 				$key1 = "";
+ 				$key2 = "";
+ 				if (isset($data[$j]->$key)) {
+ 		   			$key1 = mb_strtolower($data[$j]->$key);
+ 		   		}
+ 		   		else {
+ 		   			$key1 = apply_filters('relevanssi_missing_sort_key', $key1, $key);
+ 		   		}
+ 				if (isset($data[$j + 1]->$key)) {
+ 	   				$key2 = mb_strtolower($data[$j + 1]->$key);
+ 	   			}
+ 		   		else {
+ 		   			$key2 = apply_filters('relevanssi_missing_sort_key', $key2, $key);
+ 		   		}
+    			}
+    			else {
+ 				$key1 = "";
+ 				$key2 = "";
+ 				if (isset($data[$j]->$key)) {
+ 		   			$key1 = strtolower($data[$j]->$key);
+ 		   		}
+ 		   		else {
+ 		   			$key1 = apply_filters('relevanssi_missing_sort_key', $key1, $key);
+ 		   		}
+ 				if (isset($data[$j + 1]->$key)) {
+ 	   				$key2 = strtolower($data[$j + 1]->$key);
+ 	   			}
+ 		   		else {
+ 		   			$key2 = apply_filters('relevanssi_missing_sort_key', $key2, $key);
+ 		   		}
+    			}
+       		if ('asc' == $dir) {
+ 	           	if ($key1 > $key2) {
+     		        $tmp = $data[$j];
+         	        $data[$j] = $data[$j + 1];
+             	    $data[$j + 1] = $tmp;
+                 	$swapped = true;
+ 	           	}
+ 	        }
+ 			else {
+ 	           	if ($key1 < $key2) {
+     		        $tmp = $data[$j];
+         	        $data[$j] = $data[$j + 1];
+             	    $data[$j + 1] = $tmp;
+                 	$swapped = true;
+ 	           	}
+ 			}
+     	}
+ 	    if (!$swapped) return;
+     }
+ }
 
 function relevanssi_show_matches($data, $hit) {
 	isset($data['body_matches'][$hit]) ? $body = $data['body_matches'][$hit] : $body = 0;
@@ -469,6 +493,16 @@ function relevanssi_prevent_default_request( $request, $query ) {
 
 		if (empty($query->query_vars['s'])) {
 			$prevent = false;
+			$admin_search_ok = false;
+		}
+
+        if ( $query->is_admin && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			$prevent = false;
+			$admin_search_ok = false;
+		}
+
+        if ( $query->is_admin && $query->query_vars['post_type'] == 'page') {
+            $prevent = false;
 			$admin_search_ok = false;
 		}
 
