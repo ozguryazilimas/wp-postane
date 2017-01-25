@@ -7,8 +7,8 @@ Tags: cms, custom, admin, branding, dashboard, administration, plugin, login, cl
 Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Author:  Video User Manuals
 Requires at least: 3.3 
-Tested up to: 4.6.1
-Stable tag: 1.6
+Tested up to: 4.7.1
+Stable tag: 1.6.1
 
 Customize dashboard panels and branding, remove menus, give editors access to widgets plus lots more.
 
@@ -57,6 +57,9 @@ You can now brand the dashboard as well as the admin bar.
 5. Customize the homepage
 
 == Changelog ==
+
+= 1.6.1 =
+Fixed Import for php5.2
 
 = 1.6 =
 Fixed Import

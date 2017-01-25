@@ -3,12 +3,12 @@
 Plugin Name: White Label CMS
 Plugin URI: http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Description:  A plugin that allows you to brand WordPress CMS as your own
-Version: 1.6
+Version: 1.6.1
 Author: www.videousermanuals.com
 Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 */
 
-define('WLCMS','1.6');
+define('WLCMS','1.6.1');
 
 if ( ! defined('ABSPATH') ) {
         die('Please do not load this file directly.');
@@ -693,13 +693,17 @@ function wlcms_add_admin()
     }
 }
 
+function vum_fix_json($matches) {
+	return "s:".strlen($matches[2]).':"'.$matches[2].'";';
+}
+
 function wlcmsImport()
 {
     if ($_FILES['wlcms_import']['error'] == UPLOAD_ERR_OK
             && is_uploaded_file($_FILES['wlcms_import']['tmp_name'])):
 
         $import = file_get_contents($_FILES['wlcms_import']['tmp_name']);     
-        $import = preg_replace_callback( '/s:([0-9]+):\"(.*?)\";/', (function ($matches) { return "s:".strlen($matches[2]).':"'.$matches[2].'";';}), $import );   
+        $import = preg_replace_callback( '/s:([0-9]+):\"(.*?)\";/', 'vum_fix_json', $import );   
         $import = unserialize($import);
 
         if( ! is_array($import) )
