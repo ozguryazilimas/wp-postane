@@ -1468,7 +1468,7 @@ class YARPP {
 
 		if ($this->get_option('cross_relate')) {
 			$type = $this->get_post_types();
-        } else if (get_post_type === 'page') {
+        } else if (get_post_type() === 'page') {
 			$type = array('page');
         } else {
 			$type = array('post');

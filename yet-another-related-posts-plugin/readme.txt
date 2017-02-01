@@ -6,7 +6,7 @@ Plugin URI: http://www.yarpp.com/
 Tags: feeds, pages, posts, related, rss, yarpp, ads, multisite, multilingual, thumbnails, related posts, related content
 Requires at least: 3.3
 Tested up to: 4.7
-Stable tag: 4.3.6
+Stable tag: 4.4
 License: GPLv2 or later
 
 Display a list of related posts on your site based on a powerful unique algorithm.
@@ -282,6 +282,9 @@ YARPP is currently localized in the following languages:
 * Uzbek (`uz_UZ`) by Ali Safarov of [comfi.com](http://www.comfi.com/)
 
 == Changelog ==
+
+= 4.4 =
+* Discontinuing the YARPP Pro service
 
 = 4.3.6 =
 * Removed new file
