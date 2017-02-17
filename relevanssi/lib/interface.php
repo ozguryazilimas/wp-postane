@@ -376,10 +376,14 @@ function relevanssi_remove_stopword($term) {
 	$success = $wpdb->query($q);
 
 	if ($success) {
-		printf(__("<div id='message' class='updated fade'><p>Term '%s' removed from stopwords! Re-index to get it back to index.</p></div>", "relevanssi"), stripslashes($term));
+		echo "<div id='message' class='updated fade'><p>";
+		printf(__("Term '%s' removed from stopwords! Re-index to get it back to index.", "relevanssi"), stripslashes($term));
+		echo "</p></div>";
 	}
 	else {
-		printf(__("<div id='message' class='updated fade'><p>Couldn't remove term '%s' from stopwords!</p></div>", "relevanssi"), stripslashes($term));
+		echo "<div id='message' class='updated fade'><p>";
+		printf(__("Couldn't remove term '%s' from stopwords!", "relevanssi"), stripslashes($term));
+		echo "</p></div>";
 	}
 }
 
@@ -1208,7 +1212,7 @@ function relevanssi_options_form() {
 			else {
 				$checked = '';
 			}
-			$label = sprintf(__("%s", 'relevanssi'), $type);
+			$label = sprintf("%s", $type);
 			in_array($type, $public_types) ? $public = __('yes', 'relevanssi') : $public = __('no', 'relevanssi');
 
 			echo <<<EOH
@@ -1262,7 +1266,7 @@ EOH;
 			else {
 				$checked = '';
 			}
-			$label = sprintf(__("%s", 'relevanssi'), $taxonomy->name);
+			$label = sprintf("%s", $taxonomy->name);
 			$taxonomy->public ? $public = __('yes', 'relevanssi') : $public = __('no', 'relevanssi');
 			$type = $taxonomy->name;
 
@@ -1370,13 +1374,15 @@ function relevanssi_show_stopwords() {
 
 	RELEVANSSI_PREMIUM ? $plugin = 'relevanssi-premium' : $plugin = 'relevanssi';
 
-	_e("<p>Enter a word here to add it to the list of stopwords. The word will automatically be removed from the index, so re-indexing is not necessary. You can enter many words at the same time, separate words with commas.</p>", 'relevanssi');
+	echo "<p>";
+	_e("Enter a word here to add it to the list of stopwords. The word will automatically be removed from the index, so re-indexing is not necessary. You can enter many words at the same time, separate words with commas.", 'relevanssi');
+	echo "</p>";
 
 ?><label for="addstopword"><p><?php _e("Stopword(s) to add: ", 'relevanssi'); ?><textarea name="addstopword" id="addstopword" rows="2" cols="40"></textarea>
 <input type="submit" value="<?php esc_attr_e("Add", 'relevanssi'); ?>" class='button' /></p></label>
-<?php
+<p><?php
 
-	_e("<p>Here's a list of stopwords in the database. Click a word to remove it from stopwords. Removing stopwords won't automatically return them to index, so you need to re-index all posts after removing stopwords to get those words back to index.", 'relevanssi');
+	_e("Here's a list of stopwords in the database. Click a word to remove it from stopwords. Removing stopwords won't automatically return them to index, so you need to re-index all posts after removing stopwords to get those words back to index.", 'relevanssi');
 
 	if (function_exists("plugins_url")) {
 		if (version_compare($wp_version, '2.8dev', '>' )) {
@@ -1391,7 +1397,7 @@ function relevanssi_show_stopwords() {
 		$src = '/wp-content/plugins/' . $plugin . '/delete.png';
 	}
 
-	echo "<ul>";
+	echo "</p><ul>";
 	$results = $wpdb->get_results("SELECT * FROM " . $relevanssi_variables['stopword_table']);
 	$exportlist = array();
 	foreach ($results as $stopword) {

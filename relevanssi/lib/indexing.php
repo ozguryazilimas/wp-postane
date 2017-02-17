@@ -289,7 +289,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 				if ("" == $values) continue;
 				foreach ($values as $value) {
 					// Quick hack : allow indexing of PODS relationship custom fields // TMV
-					if (isset($value['post_title'])) $value = $value['post_title'];
+					if (is_array($value) && isset($value['post_title'])) $value = $value['post_title'];
 					relevanssi_index_acf($insert_data, $post->ID, $field, $value);
 					$value_tokens = relevanssi_tokenize($value, true, $min_word_length);
 					foreach ($value_tokens as $token => $count) {
@@ -318,7 +318,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	if (!empty($post->post_title)) {
 		if (apply_filters('relevanssi_index_titles', $index_titles)) {
 			$filtered_title = apply_filters('relevanssi_post_title_before_tokenize', $post->post_title, $post);
-			$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID), apply_filters('relevanssi_remove_stopwords_in_titles', true));
+			$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID), apply_filters('relevanssi_remove_stopwords_in_titles', true), $min_word_length);
 
 			if (count($titles) > 0) {
 				foreach ($titles as $title => $count) {
@@ -350,7 +350,12 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 					$My_WP_Table_Reloaded = new WP_Table_Reloaded_Controller_Frontend();
 				}
 				// TablePress support
-				if ( defined( 'TABLEPRESS_ABSPATH' ) ) {
+				if (defined('TABLEPRESS_ABSPATH')) {
+					if (!isset(TablePress::$model_options)) {
+						include_once(TABLEPRESS_ABSPATH . 'classes/class-model.php');
+						include_once(TABLEPRESS_ABSPATH . 'models/model-options.php');
+						TablePress::$model_options = new TablePress_Options_Model();
+					}
 					$My_TablePress_Controller = TablePress::load_controller( 'frontend' );
 					$My_TablePress_Controller->init_shortcodes();
 				}

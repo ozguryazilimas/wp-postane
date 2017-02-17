@@ -55,63 +55,46 @@ function relevanssi_wpml_filter($data) {
  * Function by Matthew Hood http://my.php.net/manual/en/function.sort.php#75036
  */
  function relevanssi_object_sort(&$data, $key, $dir = 'desc') {
- 	if ('title' == $key) $key = 'post_title';
- 	if ('date' == $key) $key = 'post_date';
- 	if (!isset($data[0]->$key)) return;			// trying to sort by a non-existent key
- 	$dir = strtolower($dir);
+ 	 if ('title' == $key) $key = 'post_title';
+ 	 if ('date' == $key) $key = 'post_date';
+ 	 if (!isset($data[0]->$key)) return;			// trying to sort by a non-existent key
+ 	 $dir = strtolower($dir);
+     function_exists('mb_strtolower') ? $strtolower = 'mb_strtolower' : $strtolower = 'strtolower';
      for ($i = count($data) - 1; $i >= 0; $i--) {
- 		$swapped = false;
-       	for ($j = 0; $j < $i; $j++) {
-       		if (function_exists('mb_strtolower')) {
- 				$key1 = "";
- 				$key2 = "";
- 				if (isset($data[$j]->$key)) {
- 		   			$key1 = mb_strtolower($data[$j]->$key);
- 		   		}
- 		   		else {
- 		   			$key1 = apply_filters('relevanssi_missing_sort_key', $key1, $key);
- 		   		}
- 				if (isset($data[$j + 1]->$key)) {
- 	   				$key2 = mb_strtolower($data[$j + 1]->$key);
- 	   			}
- 		   		else {
- 		   			$key2 = apply_filters('relevanssi_missing_sort_key', $key2, $key);
- 		   		}
-    			}
-    			else {
- 				$key1 = "";
- 				$key2 = "";
- 				if (isset($data[$j]->$key)) {
- 		   			$key1 = strtolower($data[$j]->$key);
- 		   		}
- 		   		else {
- 		   			$key1 = apply_filters('relevanssi_missing_sort_key', $key1, $key);
- 		   		}
- 				if (isset($data[$j + 1]->$key)) {
- 	   				$key2 = strtolower($data[$j + 1]->$key);
- 	   			}
- 		   		else {
- 		   			$key2 = apply_filters('relevanssi_missing_sort_key', $key2, $key);
- 		   		}
-    			}
-       		if ('asc' == $dir) {
- 	           	if ($key1 > $key2) {
-     		        $tmp = $data[$j];
-         	        $data[$j] = $data[$j + 1];
-             	    $data[$j + 1] = $tmp;
-                 	$swapped = true;
- 	           	}
- 	        }
- 			else {
- 	           	if ($key1 < $key2) {
-     		        $tmp = $data[$j];
-         	        $data[$j] = $data[$j + 1];
-             	    $data[$j + 1] = $tmp;
-                 	$swapped = true;
- 	           	}
- 			}
-     	}
- 	    if (!$swapped) return;
+         $swapped = false;
+       	 for ($j = 0; $j < $i; $j++) {
+             $key1 = "";
+             $key2 = "";
+             if (isset($data[$j]->$key)) {
+                 $key1 = call_user_func($strtolower, $data[$j]->$key);
+             }
+             else {
+                 $key1 = apply_filters('relevanssi_missing_sort_key', $key1, $key);
+             }
+             if (isset($data[$j + 1]->$key)) {
+                 $key2 = call_user_func($strtolower, $data[$j + 1]->$key);
+             }
+             else {
+                 $key2 = apply_filters('relevanssi_missing_sort_key', $key2, $key);
+             }
+             if ('asc' == $dir) {
+                 if ($key1 > $key2) {
+                     $tmp = $data[$j];
+                     $data[$j] = $data[$j + 1];
+                     $data[$j + 1] = $tmp;
+                     $swapped = true;
+                 }
+             }
+             else {
+                 if ($key1 < $key2) {
+                     $tmp = $data[$j];
+                     $data[$j] = $data[$j + 1];
+                     $data[$j + 1] = $tmp;
+                     $swapped = true;
+                 }
+             }
+         }
+         if (!$swapped) return;
      }
  }
 
@@ -293,29 +276,22 @@ function relevanssi_get_term_taxonomy($id) {
  * Returns an array of phrases
  */
 function relevanssi_extract_phrases($q) {
-	if ( function_exists( 'mb_strpos' ) )
-		$pos = mb_strpos($q, '"');
-	else
-		$pos = strpos($q, '"');
+	function_exists( 'mb_strpos' ) ? $strpos_function = "mb_strpos" : $strpos_function = "strpos";
+	function_exists( 'mb_substr' ) ? $substr_function = "mb_substr" : $substr_function = "substr";
+
+	$pos = call_user_func($strpos_function, $q, '"');
 
 	$phrases = array();
 	while ($pos !== false) {
 		$start = $pos;
-		if ( function_exists( 'mb_strpos' ) )
-			$end = mb_strpos($q, '"', $start + 1);
-		else
-			$end = strpos($q, '"', $start + 1);
+		$end = call_user_func($strpos_function, $q, '"', $start + 1);
 
 		if ($end === false) {
 			// just one " in the query
 			$pos = $end;
 			continue;
 		}
-		if ( function_exists( 'mb_substr' ) )
-			$phrase = mb_substr($q, $start + 1, $end - $start - 1);
-		else
-			$phrase = substr($q, $start + 1, $end - $start - 1);
-
+		$phrase = call_user_func($substr_function, $q, $start + 1, $end - $start - 1);
 		$phrase = trim($phrase);
 
 		if (!empty($phrase)) $phrases[] = $phrase;
@@ -424,40 +400,42 @@ function relevanssi_mb_trim($string) {
 }
 
 function relevanssi_remove_punct($a) {
-		$a = preg_replace ('/<[^>]*>/', ' ', $a);
+    if (!is_string($a)) return "";  // In case something sends a non-string here.
 
-	    $a = str_replace("\r", '', $a);    // --- replace with empty space
-	    $a = str_replace("\n", ' ', $a);   // --- replace with space
-	    $a = str_replace("\t", ' ', $a);   // --- replace with space
+	$a = preg_replace ('/<[^>]*>/', ' ', $a);
 
-		$a = stripslashes($a);
+	$a = str_replace("\r", '', $a);    // --- replace with empty space
+	$a = str_replace("\n", ' ', $a);   // --- replace with space
+	$a = str_replace("\t", ' ', $a);   // --- replace with space
 
-		$a = str_replace('ß', 'ss', $a);
+	$a = stripslashes($a);
 
-		$a = str_replace("·", '', $a);
-		$a = str_replace("…", '', $a);
-		$a = str_replace("€", '', $a);
-		$a = str_replace("&shy;", '', $a);
+	$a = str_replace('ß', 'ss', $a);
 
-		$a = str_replace(chr(194) . chr(160), ' ', $a);
-		$a = str_replace("&nbsp;", ' ', $a);
-		$a = str_replace('&#8217;', ' ', $a);
-		$a = str_replace("'", ' ', $a);
-		$a = str_replace("’", ' ', $a);
-		$a = str_replace("‘", ' ', $a);
-		$a = str_replace("”", ' ', $a);
-		$a = str_replace("“", ' ', $a);
-		$a = str_replace("„", ' ', $a);
-		$a = str_replace("´", ' ', $a);
-		$a = str_replace("—", ' ', $a);
-		$a = str_replace("–", ' ', $a);
-		$a = str_replace("×", ' ', $a);
-        $a = preg_replace('/[[:punct:]]+/u', ' ', $a);
+	$a = str_replace("·", '', $a);
+	$a = str_replace("…", '', $a);
+	$a = str_replace("€", '', $a);
+	$a = str_replace("&shy;", '', $a);
 
-        $a = preg_replace('/[[:space:]]+/', ' ', $a);
-		$a = trim($a);
+	$a = str_replace(chr(194) . chr(160), ' ', $a);
+	$a = str_replace("&nbsp;", ' ', $a);
+	$a = str_replace('&#8217;', ' ', $a);
+	$a = str_replace("'", ' ', $a);
+	$a = str_replace("’", ' ', $a);
+	$a = str_replace("‘", ' ', $a);
+	$a = str_replace("”", ' ', $a);
+	$a = str_replace("“", ' ', $a);
+	$a = str_replace("„", ' ', $a);
+	$a = str_replace("´", ' ', $a);
+	$a = str_replace("—", ' ', $a);
+	$a = str_replace("–", ' ', $a);
+	$a = str_replace("×", ' ', $a);
+    $a = preg_replace('/[[:punct:]]+/u', ' ', $a);
 
-        return $a;
+    $a = preg_replace('/[[:space:]]+/', ' ', $a);
+	$a = trim($a);
+
+    return $a;
 }
 
 

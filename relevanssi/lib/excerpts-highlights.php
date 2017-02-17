@@ -482,14 +482,9 @@ function relevanssi_determine_snip_location($locations, $prevcount) {
 // 1/6 ratio on prevcount tends to work pretty well and puts the terms
 // in the middle of the extract
 function relevanssi_extract_relevant($words, $fulltext, $rellength=300, $prevcount=50) {
+	$textlength = relevanssi_strlen($fulltext);
 
-	if (function_exists('mb_strlen')) {
-	    $textlength = mb_strlen($fulltext);
-	}
-	else {
-	    $textlength = strlen($fulltext);
-	}
-    if($textlength <= $rellength) {
+	if($textlength <= $rellength) {
         return array($fulltext, 1, 0);
     }
 
@@ -501,21 +496,14 @@ function relevanssi_extract_relevant($words, $fulltext, $rellength=300, $prevcou
         $startpos = $startpos - ($textlength-$startpos)/2;
     }
 
-	if (function_exists('mb_substr')) {
-	    $reltext = mb_substr($fulltext, $startpos, $rellength);
-	}
-	else {
-	    $reltext = substr($fulltext, $startpos, $rellength);
-	}
+    function_exists('mb_substr') ? $substr = 'mb_substr' : $substr = 'substr';
+    function_exists('mb_strrpos') ? $strrpos = 'mb_strrpos' : $strrpos = 'strrpos';
+
+	$reltext = call_user_func($substr, $fulltext, $startpos, $rellength);
 
     // check to ensure we dont snip the last word if thats the match
     if( $startpos + $rellength < $textlength) {
-		if (function_exists('mb_substr') && function_exists('mb_strrpos')) {
-	        $reltext = mb_substr($reltext, 0, mb_strrpos($reltext, " ")); // remove last word
-	    }
-	    else {
-    	    $reltext = substr($reltext, 0, strrpos($reltext, " ")); // remove last word
-    	}
+        $reltext = call_user_func($substr, $reltext, 0, call_user_func($strrpos, $reltext, " ")); // remove last word
     }
 
 	$start = false;

@@ -3,8 +3,8 @@ Contributors: msaari
 Donate link: http://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 4.0
-Tested up to: 4.7.1
-Stable tag: 3.5.7.1
+Tested up to: 4.7.2
+Stable tag: 3.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,14 @@ removing those words helps to make the index smaller and searching faster.
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.5.8 =
+* Did you mean function had a XSS vulnerability, which is now removed.
+* Minimum word length wasn't applied to titles in indexing. It is now fixed. If you think this is a problem, rebuild the index.
+* TablePress compatibility has been improved.
+* Meta query handling has been improved, thanks to Maxime Culea.
+* Improved WP_Query parameter support: setting query variable `sentence` to 1 forces phrase search.
+* Improved ACF compatibility.
 
 = 3.5.7.1 =
 * Small fix for a bug that broke the settings page.
@@ -1145,6 +1153,9 @@ removing those words helps to make the index smaller and searching faster.
 * First published version.
 
 == Upgrade notice ==
+
+= 3.5.8 =
+* Fix for a XSS vulnerability.
 
 = 3.5.7.1 =
 * Fix for the broken settings page.

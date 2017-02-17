@@ -74,6 +74,7 @@ function relevanssi_search($args) {
 	$orderby = $filtered_args['orderby'];
 	$order = $filtered_args['order'];
 	$fields = $filtered_args['fields'];
+	$sentence = $filtered_args['sentence'];
 
 	$hits = array();
 
@@ -377,6 +378,11 @@ function relevanssi_search($args) {
 
 	$remove_stopwords = apply_filters('relevanssi_remove_stopwords_in_titles', true);
 	if (function_exists('wp_encode_emoji')) $q = wp_encode_emoji($q);
+	if ($sentence) {
+		$q = str_replace('"', '', $q);
+		$q = '"' . $q . '"';
+	}
+
 	$phrases = relevanssi_recognize_phrases($q);
 
 	if (function_exists('relevanssi_recognize_negatives')) {
@@ -867,22 +873,57 @@ function relevanssi_do_query(&$query) {
 		$multi_args['operator'] = $operator;
 
 		$meta_query = array();
-		if (!empty($query->query_vars["meta_query"])) {
-			$meta_query = $query->query_vars["meta_query"];
-		}
-		if (isset($query->query_vars["customfield_key"])) {
-			isset($query->query_vars["customfield_value"]) ? $value = $query->query_vars["customfield_value"] : $value = null;
-			$meta_query[] = array('key' => $query->query_vars["customfield_key"], 'value' => $value, 'compare' => '=');
-		}
-		if (!empty($query->query_vars["meta_key"]) ||
-		    !empty($query->query_vars["meta_value"]) ||
-		    !empty($query->query_vars["meta_value_num"])) {
-			$value = null;
-			if (!empty($query->query_vars["meta_value"])) $value = $query->query_vars["meta_value"];
-			if (!empty($query->query_vars["meta_value_num"])) $value = $query->query_vars["meta_value_num"];
-			!empty($query->query_vars["meta_compare"]) ? $compare = $query->query_vars["meta_compare"] : $compare = '=';
-			$meta_query[] = array('key' => $query->query_vars["meta_key"], 'value' => $value, 'compare' => $compare);
-		}
+		if ( ! empty( $query->query_vars["meta_query"] ) ) {
+ 			$meta_query = $query->query_vars["meta_query"];
+ 		}
+
+		if ( isset( $query->query_vars["customfield_key"] ) ) {
+			$build_meta_query = array();
+
+			// Use meta key
+			$build_meta_query['key'] = $query->query_vars["customfield_key"];
+
+			/**
+			 * Check the value is not empty for ordering purpose,
+			 * Set it or not for the current meta query
+			 */
+			if ( ! empty( $query->query_vars["customfield_value"] ) ) {
+				$build_meta_query['value'] = $query->query_vars["customfield_value"];
+			}
+
+			// Set the compare
+			$build_meta_query['compare'] = '=';
+
+			$meta_query[] = $build_meta_query;
+ 		}
+
+		if ( ! empty($query->query_vars["meta_key"] ) || ! empty($query->query_vars["meta_value"] ) || ! empty( $query->query_vars["meta_value_num"] ) ) {
+
+			$build_meta_query = array();
+
+			// Use meta key
+			$build_meta_query['key'] = $query->query_vars["meta_key"];
+
+ 			$value = null;
+			if ( ! empty( $query->query_vars["meta_value"] ) ) {
+				$value = $query->query_vars["meta_value"];
+			} elseif ( ! empty( $query->query_vars["meta_value_num"] ) ) {
+				$value = $query->query_vars["meta_value_num"];
+			}
+
+			/**
+			 * Check the meta value, as it could be not set for ordering purpose
+			 * set it or not for the current meta query
+			 */
+			if ( ! empty( $value ) ) {
+				$build_meta_query['value'] = $value;
+			}
+
+			// Set meta compare
+			$build_meta_query['compare'] = ! empty( $query->query_vars["meta_compare"] ) ? $query->query_vars["meta_compare"] : '=';
+
+			$meta_query[] = $build_meta_query;
+ 		}
 
 		$multi_args['meta_query'] = $meta_query;
 		if (function_exists('relevanssi_search_multi')) {
@@ -1046,25 +1087,57 @@ function relevanssi_do_query(&$query) {
 			$parent_query = array('parent not in' => $query->query_vars['post_parent__not_in']);
 		}
 
+ 		$meta_query_relation = apply_filters('relevanssi_default_meta_query_relation', 'AND');
 		$meta_query = array();
-		$meta_query_relation = apply_filters('relevanssi_default_meta_query_relation', 'AND');
+		if ( ! empty( $query->query_vars["meta_query"] ) ) {
+ 			$meta_query = $query->query_vars["meta_query"];
+ 		}
 
-		if (!empty($query->query_vars["meta_query"])) {
-			$meta_query = $query->query_vars["meta_query"];
-		}
-		if (isset($query->query_vars["customfield_key"])) {
-			isset($query->query_vars["customfield_value"]) ? $value = $query->query_vars["customfield_value"] : $value = null;
-			$meta_query[] = array('key' => $query->query_vars["customfield_key"], 'value' => $value, 'compare' => '=');
-		}
-		if (!empty($query->query_vars["meta_key"]) ||
-			!empty($query->query_vars["meta_value"]) ||
-			!empty($query->query_vars["meta_value_num"])) {
-			$value = null;
-			if (!empty($query->query_vars["meta_value"])) $value = $query->query_vars["meta_value"];
-			if (!empty($query->query_vars["meta_value_num"])) $value = $query->query_vars["meta_value_num"];
-			!empty($query->query_vars["meta_compare"]) ? $compare = $query->query_vars["meta_compare"] : $compare = '=';
-			$meta_query[] = array('key' => $query->query_vars["meta_key"], 'value' => $value, 'compare' => $compare);
-		}
+		if ( isset( $query->query_vars["customfield_key"] ) ) {
+			$build_meta_query = array();
+
+			// Use meta key
+			$build_meta_query['key'] = $query->query_vars["customfield_key"];
+
+			/**
+		 	 * Check the value is not empty for ordering purpose,
+		 	 * Set it or not for the current meta query
+		 	 */
+		 	if ( ! empty( $query->query_vars["customfield_value"] ) ) {
+				$build_meta_query['value'] = $query->query_vars["customfield_value"];
+			}
+
+			// Set the compare
+			$build_meta_query['compare'] = '=';
+			$meta_query[] = $build_meta_query;
+ 		}
+
+		if ( ! empty($query->query_vars["meta_key"] ) || ! empty($query->query_vars["meta_value"] ) || ! empty( $query->query_vars["meta_value_num"] ) ) {
+			$build_meta_query = array();
+
+			// Use meta key
+			$build_meta_query['key'] = $query->query_vars["meta_key"];
+
+ 			$value = null;
+			if ( ! empty( $query->query_vars["meta_value"] ) ) {
+				$value = $query->query_vars["meta_value"];
+			} elseif ( ! empty( $query->query_vars["meta_value_num"] ) ) {
+				$value = $query->query_vars["meta_value_num"];
+			}
+
+			/**
+		 	 * Check the meta value, as it could be not set for ordering purpose
+			 * set it or not for the current meta query
+			 */
+			if ( ! empty( $value ) ) {
+				$build_meta_query['value'] = $value;
+			}
+
+			// Set meta compare
+			$build_meta_query['compare'] = ! empty( $query->query_vars["meta_compare"] ) ? $query->query_vars["meta_compare"] : '=';
+
+			$meta_query[] = $build_meta_query;
+ 		}
 
 		$date_query = false;
 		if (!empty($query->date_query)) {
@@ -1114,6 +1187,11 @@ function relevanssi_do_query(&$query) {
 		isset($query->query_vars['orderby']) ? $orderby = $query->query_vars['orderby'] : $orderby = null;
 		isset($query->query_vars['order']) ? $order = $query->query_vars['order'] : $order = null;
 
+		$sentence = false;
+		if (isset($query->query_vars['sentence']) && !empty($query->query_vars['sentence'])) {
+			$sentence = true;
+		}
+
 		$fields = "";
 		if (!empty($query->query_vars['fields'])) {
 			if ($query->query_vars['fields'] == 'ids') {
@@ -1147,7 +1225,8 @@ function relevanssi_do_query(&$query) {
 			'author' => $author,
 			'orderby' => $orderby,
 			'order' => $order,
-			'fields' => $fields);
+			'fields' => $fields,
+			'sentence' => $sentence);
 
 		$return = relevanssi_search($search_params);
 	}
