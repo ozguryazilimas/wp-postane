@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: MonsterInsights Lite\n"
 "Report-Msgid-Bugs-To: https://github.com/awesomemotive/monsterinsights/"
 "issues\n"
-"POT-Creation-Date: 2017-02-27 18:35-0500\n"
+"POT-Creation-Date: 2017-03-07 01:42-0500\n"
 "PO-Revision-Date: 2016-07-21 17:01-0400\n"
 "Last-Translator: Chris Christoff <support@monsterinsights.com>\n"
 "Language-Team: Chris Christoff <support@monsterinsights.com>\n"
@@ -141,71 +141,71 @@ msgid ""
 "the word. Thank you from the MonsterInsights team!"
 msgstr ""
 
-#: includes/admin/common.php:122
+#: includes/admin/common.php:131
 msgid "Loading..."
 msgstr ""
 
-#: includes/admin/common.php:123
+#: includes/admin/common.php:132
 msgid ""
 "Warning: You have unsaved setting changes. If you leave the settings page "
 "without saving your changes will be lost. Did you still want to leave the "
 "page?"
 msgstr ""
 
-#: includes/admin/common.php:125
+#: includes/admin/common.php:134
 msgid "Status: Active"
 msgstr ""
 
-#: includes/admin/common.php:126 includes/admin/pages/addons.php:492
+#: includes/admin/common.php:135 includes/admin/pages/addons.php:492
 msgid "Activate"
 msgstr ""
 
-#: includes/admin/common.php:127
+#: includes/admin/common.php:136
 msgid "Status: Network Activated"
 msgstr ""
 
-#: includes/admin/common.php:128 includes/admin/pages/addons.php:490
+#: includes/admin/common.php:137 includes/admin/pages/addons.php:490
 msgid "Network activate"
 msgstr ""
 
-#: includes/admin/common.php:130
+#: includes/admin/common.php:139
 msgid "Activating..."
 msgstr ""
 
-#: includes/admin/common.php:131 includes/admin/pages/addons.php:465
+#: includes/admin/common.php:140 includes/admin/pages/addons.php:465
 #: includes/admin/pages/addons.php:467
 msgid "Deactivate"
 msgstr ""
 
-#: includes/admin/common.php:132 includes/admin/pages/addons.php:463
+#: includes/admin/common.php:141 includes/admin/pages/addons.php:463
 msgid "Network deactivate"
 msgstr ""
 
-#: includes/admin/common.php:134
+#: includes/admin/common.php:143
 msgid "Deactivating..."
 msgstr ""
 
-#: includes/admin/common.php:135
+#: includes/admin/common.php:144
 msgid "Status: Inactive"
 msgstr ""
 
-#: includes/admin/common.php:136
+#: includes/admin/common.php:145
 msgid "Status: Network inactive"
 msgstr ""
 
-#: includes/admin/common.php:137 includes/admin/pages/addons.php:422
+#: includes/admin/common.php:146 includes/admin/pages/addons.php:422
 msgid "Install"
 msgstr ""
 
-#: includes/admin/common.php:139
+#: includes/admin/common.php:148
 msgid "Installing..."
 msgstr ""
 
-#: includes/admin/common.php:140
+#: includes/admin/common.php:149
 msgid "Proceed"
 msgstr ""
 
-#: includes/admin/common.php:344
+#: includes/admin/common.php:353
 #, php-format
 msgid ""
 "MonsterInsights has detected that it's files are being blocked. This is "
@@ -218,52 +218,58 @@ msgid ""
 "happy to help diagnose the issue."
 msgstr ""
 
-#: includes/admin/google.php:313 includes/admin/google.php:354
-msgid "Google Analytics had a connection error"
+#: includes/admin/google.php:316 includes/admin/google.php:361
+msgid ""
+"MonsterInsights requires WordPress version 4.6 or newer to use oAuth. Please "
+"update your WordPress version."
 msgstr ""
 
-#: includes/admin/google.php:462 includes/admin/google.php:569
+#: includes/admin/google.php:318 includes/admin/google.php:363
+msgid "Google Analytics had a connection error."
+msgstr ""
+
+#: includes/admin/google.php:472 includes/admin/google.php:579
 msgid "Permission Denied"
 msgstr ""
 
-#: includes/admin/google.php:475
+#: includes/admin/google.php:485
 msgid "Cannot connect to Google"
 msgstr ""
 
-#: includes/admin/google.php:501
+#: includes/admin/google.php:511
 msgid "No profiles viewable for that account. Please use another account."
 msgstr ""
 
-#: includes/admin/google.php:508
+#: includes/admin/google.php:518
 msgid "Bad Google Code. Please try again."
 msgstr ""
 
-#: includes/admin/google.php:515
+#: includes/admin/google.php:525
 msgid "Please paste in your Google code."
 msgstr ""
 
-#: includes/admin/google.php:541
+#: includes/admin/google.php:551
 msgid "Invalid profile selected."
 msgstr ""
 
-#: includes/admin/google.php:547
+#: includes/admin/google.php:557
 msgid "Please select a profile."
 msgstr ""
 
-#: includes/admin/google.php:607
+#: includes/admin/google.php:617
 msgid "Analytics profile"
 msgstr ""
 
-#: includes/admin/google.php:608
+#: includes/admin/google.php:618
 msgid "Select a profile"
 msgstr ""
 
-#: includes/admin/google.php:718
+#: includes/admin/google.php:728
 #, php-format
 msgid "Please configure your %1$sGoogle Analytics settings%2$s!"
 msgstr ""
 
-#: includes/admin/google.php:731
+#: includes/admin/google.php:741
 #, php-format
 msgid ""
 "It seems the authentication for the plugin has expired or the connection to "
@@ -271,7 +277,7 @@ msgid ""
 "Google Analytics to allow the plugin to fetch data."
 msgstr ""
 
-#: includes/admin/google.php:744
+#: includes/admin/google.php:754
 #, php-format
 msgid ""
 "It seems the authentication for the plugin is missing permissions. Please "
@@ -279,7 +285,7 @@ msgid ""
 "data."
 msgstr ""
 
-#: includes/admin/google.php:757 includes/admin/pages/dashboard.php:121
+#: includes/admin/google.php:767 includes/admin/pages/dashboard.php:121
 #: includes/admin/pages/reports.php:164
 #, php-format
 msgid ""
@@ -1153,7 +1159,7 @@ msgstr ""
 msgid ""
 "@Webmaster, normally you will find the Google Analytics tracking code here, "
 "but you are in the disabled user groups. To change this, navigate to "
-"Insights %1$s Settings %1$s Ignore Users"
+"Insights %1$s Settings %2$s Ignore Users"
 msgstr ""
 
 #: includes/frontend/tracking/class-tracking-disabled.php:92

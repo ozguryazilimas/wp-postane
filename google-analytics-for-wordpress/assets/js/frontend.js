@@ -10,11 +10,19 @@
  *
  * @since 6.0.12
  */
-(function(){
+var MonsterInsights = function(){
     // MonsterInsights JS  events tracking works on all major browsers, including IE starting at IE 7, via polyfills for any major JS fucntion used that
     // is not supported by at least  95% of the global and/or US browser marketshare. Currently, IE 7 & 8 which as of 2/14/17 have under 0.25% global marketshare, require
     // us to polyfill Array.prototype.lastIndexOf, and if they continue to drop, we might remove this polyfill at some point. In that case note that events tracking
     // for IE 7/8 will continue to work, with the exception of events tracking of downloads.
+    var lastClicked = '';
+    this.setLastClicked = function(a){ 
+        lastClicked = a;
+    }
+    this.getLastClicked = function () {
+        return lastClicked;
+    }
+
     function __gaTrackerClickEventPHP() {
         var debug_mode = false;
         if ( monsterinsights_frontend.is_debug_mode === "true" ) {
@@ -42,26 +50,30 @@
         return phpvalues;
     }
 
-    function __gaTrackerClickEvent( event ) {
+    function __gaTrackerLog ( message ) {
         var phpvalues     = __gaTrackerClickEventPHP();
         var is_debug_mode =  phpvalues.is_debug_mode || window.monsterinsights_debug_mode; /* Console log instead of running? */
-        var el = event.srcElement || event.target;
         if ( is_debug_mode ) {
-            console.log( "__gaTracker.hasOwnProperty(loaded)" );
-            console.log( __gaTracker.hasOwnProperty( "loaded" ) );
-            console.log( "__gaTracker.loaded" );
-            console.log( __gaTracker.loaded );
-            console.log( "Event.which: " + event.which );
-            console.log( "El: ");
-            console.log( el );
-            console.log( "GA Loaded and click: " + ! ( ! __gaTracker.hasOwnProperty( "loaded" ) || __gaTracker.loaded != true || ( event.which != 1 && event.which != 2 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey  ) ) ) ;
+            console.log( message );
         }
+    }
+
+    function __gaTrackerClickEvent( event ) {
+        var phpvalues     = __gaTrackerClickEventPHP();
+        var el            = event.srcElement || event.target;
+        __gaTrackerLog( "__gaTracker.hasOwnProperty(loaded)" );
+        __gaTrackerLog( __gaTracker.hasOwnProperty( "loaded" ) );
+        __gaTrackerLog( "__gaTracker.loaded" );
+        __gaTrackerLog( __gaTracker.loaded );
+        __gaTrackerLog( "Event.which: " + event.which );
+        __gaTrackerLog( "El: ");
+        __gaTrackerLog( el );
+        __gaTrackerLog( "GA Loaded and click: " + ! ( ! __gaTracker.hasOwnProperty( "loaded" ) || __gaTracker.loaded != true || ( event.which != 1 && event.which != 2 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey  ) ) ) ;
 
         /* If GA is blocked or not loaded, or not main|middle|touch click then don't track */
         if ( ! __gaTracker.hasOwnProperty( "loaded" ) || __gaTracker.loaded != true || ( event.which != 1 && event.which != 2 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey  ) ) {
-            if ( is_debug_mode ) {
-                console.log( "Will track: false");
-            }
+             __gaTrackerLog( "Will track: false");
+             lastClicked = 'ganlonte';
             return;
         }
 
@@ -91,9 +103,7 @@
             var track_download_as   = phpvalues.track_download_as; /* should downloads be tracked as events or pageviews */
             var internal_label      = phpvalues.internal_label; /* What is the prefix for internal-as-external links */
 
-            if ( is_debug_mode ) {
-                console.log( "Will track: true");
-            }
+            __gaTrackerLog("Will track: true");
 
             /* Remove the anchor at the end, if there is one */
             extension = extension.substring( 0, (extension.indexOf( "#" ) == -1 ) ? extension.length : extension.indexOf( "#" ) );
@@ -215,14 +225,14 @@
                 return x.replace(/^\s+|\s+$/gm,'');
             }
 
-            if ( is_debug_mode ) {
-                console.log( "Link: " + link);
-                console.log( "Extension: " + extension );
-                console.log( "Protocol: " + el.protocol );
-                console.log( "External: " + (el.hostname.length > 0 && currentdomain.length > 0 && ! el.hostname.endsWith( currentdomain )) );
-                console.log( "Current domain: " + currentdomain );
-                console.log( "Link domain: " + el.hostname );
-            }
+            __gaTrackerLog( "Link: " + link);
+            __gaTrackerLog( "Extension: " + extension );
+            __gaTrackerLog( "Protocol: " + el.protocol );
+            __gaTrackerLog( "External: " + (el.hostname.length > 0 && currentdomain.length > 0 && ! el.hostname.endsWith( currentdomain )) );
+            __gaTrackerLog( "Current domain: " + currentdomain );
+            __gaTrackerLog( "Link domain: " + el.hostname );
+            __gaTrackerLog( "Outbound Paths: " + inbound_paths );
+            
 
             /* Let's get the type of click event this is */
             if ( monsterinsightsStringTrim( el.protocol ) == 'mailto' ||  monsterinsightsStringTrim( el.protocol ) == 'mailto:' ) { /* If it's an email */
@@ -235,16 +245,16 @@
                 var index, len;
                 var pathname = el.pathname;
                 for ( index = 0, len = inbound_paths.length; index < len; ++index ) {
-                    if ( pathname.startsWith( inbound_paths[ index ] ) ) {
+                    if ( inbound_paths[ index ].length > 0 && pathname.startsWith( inbound_paths[ index ] ) ) {
                         type = "internal-as-outbound";
                         break;
                     }
                 }
             }
 
-            if ( is_debug_mode ) {
-                console.log( "Type: " + type );
-            }
+            lastClicked = type;
+
+            __gaTrackerLog( "Type: " + type );
 
             /* Let's track everything but internals (that aren't internal-as-externals) */
             if ( type !== 'internal' && ! link.match( /^javascript\:/i ) ) {
@@ -257,13 +267,12 @@
                     target = "_blank";
                 }
 
-                if ( is_debug_mode ) {
-                    console.log( "Control Key: " + event.ctrlKey );
-                    console.log( "Shift Key: " + event.shiftKey );
-                    console.log( "Meta Key: " + event.metaKey );
-                    console.log( "Which Key: " + event.which );
-                    console.log( "Target: " + target );
-                }
+                __gaTrackerLog( "Control Key: " + event.ctrlKey );
+                __gaTrackerLog( "Shift Key: " + event.shiftKey );
+                __gaTrackerLog( "Meta Key: " + event.metaKey );
+                __gaTrackerLog( "Which Key: " + event.which );
+                __gaTrackerLog( "Target: " + target );
+            
 
                 var __gaTrackerHitBackRun = false; /* Tracker has not yet run */
 
@@ -280,119 +289,96 @@
                 if ( target ) { /* If target opens a new window then just track */
                     if ( type == 'download' ) {
                         if ( track_download_as == 'pageview' ) {
-                            if ( ! is_debug_mode ) {
-                                __gaTracker( 'send', 'pageview', link );
-                            } else {
-                                console.log( "Target | Download | Send | Pageview | " + link );
-                            }
+                            __gaTracker( 'send', 'pageview', link );
+                            __gaTrackerLog( "Target | Download | Send | Pageview | " + link );
                         } else {
-                            if ( ! is_debug_mode ) {
-                                __gaTracker( 'send', 'event', 'download', link );
-                            } else {
-                                console.log( "Target | Download | Send | Event | " + link );
-                            }
+                            __gaTracker( 'send', 'event', 'download', link );
+                            __gaTrackerLog( "Target | Download | Send | Event | " + link );
                         }
                     } else if ( type == 'mailto' ) {
-                        if ( ! is_debug_mode ) {
-                            __gaTracker( 'send', 'event', 'mailto', link );
-                        } else {
-                            console.log( "Target | Mailto | Send | Event | Mailto | " + link );
-                        }
-
+                        __gaTracker( 'send', 'event', 'mailto', link );
+                        __gaTrackerLog( "Target | Mailto | Send | Event | Mailto | " + link );
                     } else if ( type == 'internal-as-outbound' ) {
-                        if ( ! is_debug_mode ) {
-                            __gaTracker( 'send', 'event', internal_label, link, el.title );
-                        } else {
-                            console.log( "Target | Internal-As-Outbound | Send | event | " + internal_label + " | " + link + " | " + el.title );
-                        }
-
+                        __gaTracker( 'send', 'event', internal_label, link, el.title );
+                        __gaTrackerLog( "Target | Internal-As-Outbound | Send | event | " + internal_label + " | " + link + " | " + el.title );
                     } else if ( type == 'external' ) {
-                        if ( ! is_debug_mode ) {
-                            __gaTracker( 'send', 'event', 'outbound-link', link, el.title );
-                        } else {
-                            console.log( "Target | External | Send | 'outbound-link' | " + link + " | " + el.title );
-                        }
-
+                        __gaTracker( 'send', 'event', 'outbound-link', link, el.title );
+                        __gaTrackerLog( "Target | External | Send | 'outbound-link' | " + link + " | " + el.title );
                     } else {
-                        if ( is_debug_mode ) {
-                            console.log(  "Target | " + type + " | " + link + " is not a tracked click." );
-                        }
+                        __gaTrackerLog( "Target | " + type + " | " + link + " is not a tracked click." );
                     }
-                } else { /* Prevent standard click, track then open */
+                } else { 
+                    /* Prevent standard click, track then open */
+                    if ( type != 'external' && type != 'internal-as-outbound' ) {
                         if (!event.defaultPrevented) {
                             event.preventDefault ? event.preventDefault() : event.returnValue = !1;
                         }
-
+                    }
+                    
                     if ( type == 'download' ) {
                         if ( track_download_as == 'pageview' ) {
-                            if ( ! is_debug_mode ) {
-                                __gaTracker( 'send', 'pageview', link, { "hitCallback": __gaTrackerHitBack } );
-                            } else {
-                                console.log( "Not Target | Download | Send | Pageview | " + link );
-                            }
+                            __gaTracker( 'send', 'pageview', link, { "hitCallback": __gaTrackerHitBack } );
+                            __gaTrackerLog( "Not Target | Download | Send | Pageview | " + link );
                         } else {
-                            if ( ! is_debug_mode ) {
-                                __gaTracker( 'send', 'event', 'download',{ "hitCallback": __gaTrackerHitBack } );
-                            } else {
-                                console.log( "Not Target | Download | Send | Event | " + link );
-                            }
+                            __gaTracker( 'send', 'event', 'download',{ "hitCallback": __gaTrackerHitBack } );
+                            __gaTrackerLog( "Not Target | Download | Send | Event | " + link );
                         }
-
                     } else if ( type == 'mailto' ) {
-                        if ( ! is_debug_mode ) {
-                            __gaTracker( 'send', 'event', 'mailto', link, { "hitCallback": __gaTrackerHitBack } );
-                        } else {
-                            console.log( "Not Target | Mailto | Send | Event | Mailto | " + link );
-                        }
-
+                        __gaTracker( 'send', 'event', 'mailto', link, { "hitCallback": __gaTrackerHitBack } );
+                        __gaTrackerLog( "Not Target | Mailto | Send | Event | Mailto | " + link );
                     } else if ( type == 'internal-as-outbound' ) {
                         window.onbeforeunload = function(e) {
-                            if ( ! is_debug_mode ) {
-                                if ( ! navigator.sendBeacon ) {
-                                    __gaTracker( 'send', 'event', internal_label, link, el.title, { "hitCallback": __gaTrackerHitBack } );
-                                } else {
-                                    __gaTracker( 'send', 'event', internal_label, link, el.title, { transport: 'beacon' } );
-                                }
-                            } else {
-                                console.log( "Not Target | Internal-As-Outbound | Send | event | " + internal_label + " | " + link + " | " + el.title );
+                            if (!event.defaultPrevented) {
+                                event.preventDefault ? event.preventDefault() : event.returnValue = !1;
                             }
+                            if ( ! navigator.sendBeacon ) {
+                                __gaTracker( 'send', 'event', internal_label, link, el.title, { "hitCallback": __gaTrackerHitBack } );
+                            } else {
+                                __gaTracker( 'send', 'event', internal_label, link, el.title, { transport: 'beacon',"hitCallback": __gaTrackerHitBack } );
+                            }
+
+                            setTimeout( __gaTrackerHitBack, 1000 );
+
+                            __gaTrackerLog( "Not Target | Internal-As-Outbound | Send | event | " + internal_label + " | " + link + " | " + el.title );
+                            __gaTrackerLog( "Internal as Outbound: Redirecting" );
                         };
+                        lastClicked = type;
+                        __gaTrackerLog( "Internal as Outbound: Not redirecting" );
                     } else if ( type == 'external' ) {
                         window.onbeforeunload = function(e) {
-                            if ( ! is_debug_mode ) {
-                                if ( ! navigator.sendBeacon ) {
-                                    __gaTracker( 'send', 'event', 'outbound-link', link, el.title, { "hitCallback": __gaTrackerHitBack } )
-                                } else {
-                                    __gaTracker( 'send', 'event', 'outbound-link', link, el.title, { transport: 'beacon' } )
-                                }
+                            if ( ! navigator.sendBeacon ) {
+                                __gaTracker( 'send', 'event', 'outbound-link', link, el.title, { "hitCallback": __gaTrackerHitBack } )
                             } else {
-                                console.log( "Not Target | External | Send | 'outbound-link' | " + link + " | " + el.title );
+                                __gaTracker( 'send', 'event', 'outbound-link', link, el.title, { transport: 'beacon',"hitCallback": __gaTrackerHitBack } )
                             }
+
+                            setTimeout( __gaTrackerHitBack, 1000 );
+
+                            __gaTrackerLog( "Not Target | External | Send | 'outbound-link' | " + link + " | " + el.title );
+                            __gaTrackerLog( "External: Redirecting" );
                         };
+                        lastClicked = type;
+                        __gaTrackerLog( "External: Not redirecting" );
                     } else {
-                        if ( is_debug_mode ) {
-                            console.log(  "Not Target | " + type + " | " + link + " is not a tracked click." );
-                        }
+                        __gaTrackerLog(  "Not Target | " + type + " | " + link + " is not a tracked click." );
                     }
 
-                    if ( ! is_debug_mode ) {
-                     /* Run hitCallback again if GA takes longer than 1 second */
+                    if ( type != 'external' && type != 'internal-as-outbound' ) {
+                        /* Run hitCallback again if GA takes longer than 1 second */
                         setTimeout( __gaTrackerHitBack, 1000 );
-                    } else {
-                        window.location.href = link;
                     }
                 }
             }
         } else {
-            if ( is_debug_mode ) {
-                console.log( "Will track: false");
-            }
+            lastClicked = 'internal';
+            __gaTrackerLog( "Will track: false");
         }
     }
 
-    var __gaTrackerWindow = window;
+    var __gaTrackerWindow    = window;
     var __gaTrackerEventType = "click";
     /* Attach the event to all clicks in the document after page has loaded */
     __gaTrackerWindow.addEventListener ? __gaTrackerWindow.addEventListener( "load", function() {document.body.addEventListener(__gaTrackerEventType, __gaTrackerClickEvent, false)}, false)
                                        : __gaTrackerWindow.attachEvent && __gaTrackerWindow.attachEvent("onload", function() {document.body.attachEvent( "on" + __gaTrackerEventType, __gaTrackerClickEvent)});
-})();
+};
+var MonsterInsightsObject = new MonsterInsights();

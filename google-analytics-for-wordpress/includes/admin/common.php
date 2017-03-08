@@ -111,7 +111,16 @@ function monsterinsights_admin_scripts() {
 			if ( ! file_exists( MONSTERINSIGHTS_PLUGIN_DIR . 'assets/js/admin.min.js' ) ) {
 				$suffix = '';
 			}
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script', plugins_url( 'assets/js/admin' . $suffix . '.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
+
+			$deps = array( 
+				'jquery',
+				MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-script',
+				MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-script',
+				MONSTERINSIGHTS_PLUGIN_SLUG . '-chartjs-script',
+				MONSTERINSIGHTS_PLUGIN_SLUG . '-list-script'
+			);
+
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script', plugins_url( 'assets/js/admin' . $suffix . '.js', MONSTERINSIGHTS_PLUGIN_FILE ), $deps, monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script' );
 			wp_localize_script(
 				MONSTERINSIGHTS_PLUGIN_SLUG . '-admin-script',
@@ -144,7 +153,7 @@ function monsterinsights_admin_scripts() {
 
 	// See if there's an admin.js file for this plugin version
 		if ( file_exists( MONSTERINSIGHTS_PLUGIN_DIR . 'pro/assets/js/admin.js' ) ) {
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-pro-admin-script', plugins_url( 'pro/assets/js/admin.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-pro-admin-script', plugins_url( 'pro/assets/js/admin.js', MONSTERINSIGHTS_PLUGIN_FILE ), $deps, monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-pro-admin-script' );
 			wp_localize_script(
 				MONSTERINSIGHTS_PLUGIN_SLUG . '-pro-admin-script',
@@ -154,7 +163,7 @@ function monsterinsights_admin_scripts() {
 				)
 			);
 		} else if ( file_exists( MONSTERINSIGHTS_PLUGIN_DIR . 'lite/assets/js/admin.js' ) ) {
-			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-script', plugins_url( 'only/assets/js/admin.js', MONSTERINSIGHTS_PLUGIN_FILE ), array( 'jquery' ), monsterinsights_get_asset_version() );
+			wp_register_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-script', plugins_url( 'only/assets/js/admin.js', MONSTERINSIGHTS_PLUGIN_FILE ), $deps, monsterinsights_get_asset_version() );
 			wp_enqueue_script( MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-script' );
 			wp_localize_script(
 				MONSTERINSIGHTS_PLUGIN_SLUG . '-only-admin-script',
