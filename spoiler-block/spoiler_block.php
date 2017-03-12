@@ -53,13 +53,14 @@ if (!defined('SPOILERBLOCK_CONFIG_PAGE')) {
   define('SPOILERBLOCK_CONFIG_PAGE', "spoiler-block-config");
 }
 
-add_action('wp_print_styles', 'add_sb_style');
-add_action('wp_enqueue_scripts', 'add_sb_scripts');
+// add_action('wp_print_styles', 'add_sb_style');
+// add_action('wp_enqueue_scripts', 'add_sb_scripts');
 
 load_plugin_textdomain( SPOILERBLOCK_TEXTDOMAIN, false, "/spoiler-block/languages" );
 
 /* enfileirando os marotos */
 
+/*
 function add_sb_style() {
     $myStyleUrl = SPOILERBLOCK_PLUGIN_URL . '/css/style.css';
 
@@ -74,7 +75,16 @@ function add_sb_scripts() {
     	array('scriptaculous'),
     	'1.0', true );
 }
+ */
 
+function spoiler_block_add_assets() {
+  wp_register_style('spoiler_block_css', plugins_url('css/style.css', __FILE__));
+  wp_enqueue_style('spoiler_block_css');
+
+  wp_register_script('spoiler_block_js', plugins_url('js/scripts.js', __FILE__), array('jquery'));
+  wp_enqueue_script('spoiler_block_js');
+}
+add_action('wp_enqueue_scripts', 'spoiler_block_add_assets');
 
 /*
 	Fazendo o nego funfar no admin =D
@@ -92,7 +102,8 @@ function spoiler_add_button($buttons)
  
 function spoiler_register($plugin_array){
 
-    $url = SPOILERBLOCK_PLUGIN_URL . '/js/spoiler_plugin/spoiler_mce.js';
+    // $url = SPOILERBLOCK_PLUGIN_URL . '/js/spoiler_plugin/spoiler_mce.js';
+    $url = plugins_url('js/spoiler_plugin/spoiler_mce.js', __FILE__);
  
     $plugin_array["spoiler"] = $url;
     return $plugin_array;
@@ -106,7 +117,8 @@ function spoiler_editor_css($url) {
 	if ( !empty($url) )
 		$url .= ',';
 
-	$url .= SPOILERBLOCK_PLUGIN_URL . '/css/spoiler_admin_style.css';
+	// $url .= SPOILERBLOCK_PLUGIN_URL . '/css/spoiler_admin_style.css';
+	$url .= plugins_url('css/spoiler_admin_style.css', __FILE__);
 
   return $url;
 }
