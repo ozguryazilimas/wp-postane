@@ -143,7 +143,11 @@ class Simple_Local_Avatars {
 			$local_avatars[$size] = home_url( $local_avatars[$size] );
 		
 		$author_class = is_author( $user_id ) ? ' current-author' : '' ;
-		$avatar = "<img alt='" . esc_attr( $alt ) . "' src='" . esc_url( $local_avatars[$size] ) . "' class='avatar avatar-{$size}{$author_class} photo' height='{$size}' width='{$size}' />";
+		$avatar_url = esc_url($local_avatars[$size]);
+		if (!empty($avatar_url)) {
+			$avatar_url = set_url_scheme($avatar_url);
+		}
+		$avatar = "<img alt='" . esc_attr( $alt ) . "' src='" . $avatar_url  . "' class='avatar avatar-{$size}{$author_class} photo' height='{$size}' width='{$size}' />";
 		
 		return apply_filters( 'simple_local_avatar', $avatar );
 	}
