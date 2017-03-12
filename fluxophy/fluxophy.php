@@ -32,12 +32,13 @@ $wp_fp = new WP_Fluxophy_Widget();
 global $wpdb;
 
 add_action('widgets_init', 'fluxophy_init');
-add_action('init', 'fluxophy_add_css');
+// add_action('init', 'fluxophy_add_css');
 
-
-function fluxophy_add_css() {
-  wp_enqueue_style('fluxophy', get_option('siteurl') . '/wp-content/plugins/fluxophy/css/fluxophy.css');
+function fluxophy_add_assets() {
+  wp_register_style('fluxophy', plugins_url('css/fluxophy.css', __FILE__));
+  wp_enqueue_style('fluxophy');
 }
+add_action('wp_enqueue_scripts', 'fluxophy_add_assets');
 
 function fluxophy_init() {
   load_plugin_textdomain('fluxophy', false, basename(dirname(__FILE__)) . '/languages' );

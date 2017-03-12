@@ -42,6 +42,7 @@ function mojimoji_register_globals() {
 add_action('init', 'mojimoji_register_globals');
 
 function my_custom_smilies_src($img_src, $img, $siteurl) {
+  // return $siteurl . '/wp-content/plugins/mojimoji/emoji/' . $img;
   return $siteurl . '/wp-content/plugins/mojimoji/emoji/' . $img;
 }
 add_filter('smilies_src', 'my_custom_smilies_src', 1, 10);

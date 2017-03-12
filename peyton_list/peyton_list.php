@@ -124,14 +124,20 @@ function peyton_list_update_db_check() {
 
 function peyton_list_add_assets() {
   // enqueue WordPress CSS hook
-  wp_register_script('jquery_datatables_js', '//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js');
+  wp_register_script('jquery_datatables_js', '//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js', array('jquery'));
   wp_enqueue_script('jquery_datatables_js');
 
   wp_register_style('jquery_datatables_css', '//cdn.datatables.net/1.10.9/css/jquery.dataTables.css');
   wp_enqueue_style('jquery_datatables_css');
+}
+add_action('wp_enqueue_scripts', 'peyton_list_add_assets');
 
-  wp_enqueue_style('peyton_list', get_option('siteurl') . '/wp-content/plugins/peyton_list/css/peyton_list.css');
-  wp_enqueue_script('peyton_list', get_option('siteurl') . '/wp-content/plugins/peyton_list/js/peyton_list.js');
+function peyton_list_add_custom_assets() {
+  wp_register_style('peyton_list', plugins_url('css/peyton_list.css', __FILE__));
+  wp_enqueue_style('peyton_list');
+
+  wp_register_script('peyton_list', plugins_url('js/peyton_list.js', __FILE__), array('jquery', 'jquery_datatables_js'));
+  wp_enqueue_script('peyton_list');
 }
 
 function peyton_list_init() {
@@ -139,7 +145,7 @@ function peyton_list_init() {
 }
 
 function peyton_list_get_main_data() {
-  peyton_list_add_assets();
+  peyton_list_add_custom_assets();
   peyton_list_main();
 }
 

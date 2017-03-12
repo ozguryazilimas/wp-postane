@@ -63,7 +63,7 @@ $output .='
         <hgroup>
           <div class="ucm_title">
             <div id="ugurcum_logo">
-              <img src="' . get_option('siteurl') . '/wp-content/plugins/ugurcum/images/ugurcum.png"
+              <img src="' . plugins_url('images/ugurcum.png', __FILE__) . '"
                 width="120" height="120" title="' . __('Play it Sam', 'ugurcum') . '">
             </div>
             <div id="ugurcum_page_title_wrapper">

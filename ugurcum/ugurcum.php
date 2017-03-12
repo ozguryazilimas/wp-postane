@@ -43,7 +43,7 @@ global $installed_version;
 add_action('widgets_init', 'ugurcum_init');
 
 // add css
-add_action('init', 'ugurcum_add_assets');
+// add_action('init', 'ugurcum_add_assets');
 
 register_activation_hook(__FILE__, 'ugurcum_init_db');
 add_action('plugins_loaded', 'ugurcum_update_db_check');
@@ -90,14 +90,16 @@ function ugurcum_update_db_check() {
 
 function ugurcum_add_assets() {
   // enqueue WordPress CSS hook
-  wp_register_script('jquery_datatables_js', '//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js');
+  wp_register_script('jquery_datatables_js', '//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js', array('jquery'));
   wp_enqueue_script('jquery_datatables_js');
 
   wp_register_style('jquery_datatables_css', '//cdn.datatables.net/1.10.9/css/jquery.dataTables.css');
   wp_enqueue_style('jquery_datatables_css');
 
-  wp_enqueue_style('ugurcum', get_option('siteurl') . '/wp-content/plugins/ugurcum/css/ugurcum.css');
+  wp_register_style('ugurcum', plugins_url('css/ugurcum.css', __FILE__));
+  wp_enqueue_style('ugurcum');
 }
+add_action('wp_enqueue_scripts', 'ugurcum_add_assets');
 
 function ugurcum_init() {
   load_plugin_textdomain('ugurcum', false, basename(dirname(__FILE__)) . '/languages' );
