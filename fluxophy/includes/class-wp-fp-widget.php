@@ -227,8 +227,11 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
 }
 
 function fluxophy_fetch_data_twitter($account, $data_id) {
-  $output = '<a class="twitter-timeline" href="https://twitter.com/' . $account . '" height="360" data-widget-id="' . $data_id . '">@22dakika kullanıcısından Tweetler</a>' .
-    '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+  # note that height has no effect when data-tweet-limit is given so we handle overflow by css
+  $output = '<a class="twitter-timeline" href="https://twitter.com/' . $account . '" height="360" data-widget-id="' . $data_id . '" data-tweet-limit="3">@22dakika kullanıcısından Tweetler</a>' .
+    '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
+    // old script
+    // '<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
 
   return $output;
 }
