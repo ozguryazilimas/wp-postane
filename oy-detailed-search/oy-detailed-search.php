@@ -697,7 +697,7 @@ function oy_custom_page_template_redirect() {
 }
 
 
-add_action('init','oy_load');
+// add_action('init','oy_load');
 
 /**
  * Function to load css and js files that are used by the plugin.
@@ -705,11 +705,16 @@ add_action('init','oy_load');
  * @author Kivilcim Eray
  * @author baskin
 */
-function oy_load() {
-  wp_enqueue_script('jquery-ui-datepicker');
-  wp_enqueue_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
-  wp_register_style('oy_template_css', WP_PLUGIN_URL . '/oy-detailed-search/css/oy-css.css');
-  wp_enqueue_style('oy_template_css');
-  wp_enqueue_script('oy-js', WP_PLUGIN_URL . '/oy-detailed-search/js/oy-js.js');
+function oy_detailed_search_assets() {
+  wp_enqueue_script('jquery-ui-datepicker', array('jquery'));
+  wp_enqueue_style('jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+
+  wp_register_style('oy_detailed_search_template_css', plugins_url('css/oy-css.css', __FILE__));
+  wp_enqueue_style('oy_detailed_search_template_css');
+
+  wp_register_script('oy_detailed_search_template_js', plugins_url('js/oy-js.js', __FILE__));
+  wp_enqueue_script('oy_detailed_search_template_js');
 }
+add_action('wp_enqueue_scripts', 'oy_detailed_search_assets');
+
 ?>
