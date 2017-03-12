@@ -572,7 +572,7 @@ function sic_snippets() {
 				var s = document.createElement("script");
 				s.type = "text/javascript";
 				s.async = true;
-				s.src = "http://assets.pinterest.com/js/pinit.js";
+				s.src = "https://assets.pinterest.com/js/pinit.js";
 				var x = document.getElementsByTagName("script")[0];
 				x.parentNode.insertBefore(s, x);
 			}
@@ -600,9 +600,9 @@ function sic_filter_html_tag() { //Add fb namespace (if needed) and schema.org i
 	}
 	//schema.org itemscope
 	if (is_single() || is_page()) {
-		echo ' itemscope itemtype="http://schema.org/Article" ';
+		echo ' itemscope itemtype="https://schema.org/Article" ';
 	} else {
-		echo ' itemscope itemtype="http://schema.org/Blog" ';
+		echo ' itemscope itemtype="https://schema.org/Blog" ';
 	}
 }
 
