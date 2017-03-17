@@ -144,6 +144,7 @@ class URE_Grant_Roles {
     
     
     public function load_js() {
+        wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core','jquery-ui-button', 'jquery') );
         wp_register_script('ure-users-grant-roles', plugins_url('/js/users-grant-roles.js', URE_PLUGIN_FULL_PATH));
         wp_enqueue_script('ure-users-grant-roles', '', array(), false, true);
         wp_localize_script('ure-users-grant-roles', 'ure_users_grant_roles_data', array(
