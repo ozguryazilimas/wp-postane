@@ -4,7 +4,7 @@
 Plugin Name: Auto Post Thumbnail
 Plugin URI: http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-thumbnail/
 Description: Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post (or any custom post type) only if Post Thumbnail is not set manually.
-Version: 3.3.4
+Version: 3.4.1
 Author: Aditya Mooley <adityamooley@sanisoft.com>, Tarique Sani <tarique@sanisoft.com>
 Author URI: http://www.sanisoft.com/blog/author/adityamooley/
 Modified by Dr. Tarique Sani <tarique@sanisoft.com> to make it work with Wordpress 3.4
@@ -360,6 +360,13 @@ function apt_generate_post_thumb($matches, $key, $post_content, $post_id)
     if (!$file_data) {
         return null;
     }
+
+    //Fix for checking file extensions
+    $exts = explode(".",$filename);
+	if(count($exts)>2)return null;
+	$allowed=get_allowed_mime_types();
+	$ext=pathinfo($new_file,PATHINFO_EXTENSION);
+	if(!array_key_exists($ext,$allowed))return null;
 
     file_put_contents($new_file, $file_data);
 

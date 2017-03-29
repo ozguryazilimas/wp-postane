@@ -2,8 +2,8 @@
 Contributors: tariquesani
 Tags: Post, thumbnail, automatic, posts, featured image, image, featured, images, admin
 Requires at least: 3.6.1
-Tested up to: 4.4.x
-Stable tag: 3.4.0
+Tested up to: 4.6.x
+Stable tag: 3.4.1
 
 Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post or any custom post type only if Post Thumbnail is not set manually.
 
@@ -26,6 +26,9 @@ For more details, see http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-a
 3. Sorry, no more steps :)
 
 == Changelog ==
+
+= 3.4.1 =
+* Fix for unchecked extension of uploaded files
 
 = 3.4.0 =
 * Tested with the latest wordpress release.
