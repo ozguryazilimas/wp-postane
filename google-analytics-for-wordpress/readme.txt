@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics, analytics dashboard, google analytics, google analytics dashboard, google analytics widget, universal google analytics, statistics, tracking, stats, google, yoast, google analytics by yoast, ga, monster insights, monsterinsights, universal analytics, web stats, ecommerce, ecommerce tracking
 Requires at least: 3.9
 Tested up to: 4.7.4
-Stable tag: 6.0.16
+Stable tag: 6.1.5
 License: GPL v3
 
 The best Google Analytics plugin for WordPress. See how visitors find and use your website, so you can keep them coming back.
@@ -136,6 +136,36 @@ You can also learn about other <a href="http://www.wpbeginner.com/category/plugi
 4. Want more features? <a href="https://www.monsterinsights.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase MonsterInsights Pro</a>!
 
 == Changelog ==
+= 6.1.5, March 24, 2017 =
+* New: Added some functions to prepare for upcoming new addon (Google AMP) and updates (eCommerce, Performance, Dimensions).
+* Tweak: Ks events tracking for click events.
+
+= 6.1.4, March 23, 2017 =
+* Tweak: JS events tracking for click events.
+* Bugfix: Edge case where JS events tracking won't turn on if the main tracking setting was disabled (such as faulty import).
+
+= 6.1.1 - 6.1.3 (depending on which version of MI you have), March 22, 2017 =
+* Bugfix: (pro users) Issue with JS events throwing an error for array on non-set settings.
+
+= 6.1.0, March 22, 2017 =
+* New: Campaign URL building tool with shortlink capability.
+* New: Settings import/export tool.
+* New: Experimental (beta) hash tracking for single-page style themes. Note, as the description for the setting says, this feature is a beta feature, and can be tweaked or removed in upcoming versions.
+* New: Manual default subsite UA's can now be set from the network settings panel for MonsterInsights.
+* New: Optout of GA tracking is now enabled per Google standard. See https://github.com/awesomemotive/google-analytics-for-wordpress/issues/488 for more information.
+* Tweak: Notices about JS conflicts now include the JS error when possible.
+* Tweak: Some tweaking to when the "Connection error with Google" error is displayed during oAuth.
+* Tweak: Notice now shown when too early to display statistics from Google.
+* Tweak: Inbound as outbound links may now have a period in them.
+* Tweak: Removed duplicate option checking on frontend.
+* Tweak: oAuth dialog now only programically closes when the select profile view is shown or when a new one is opened.
+* Tweak: Mailto links are now handled as an externally opening link, allowing to bypass issues with the Safari browser not following standards.
+* Tweak: WP-Admin Login page tracking has been removed.
+* Tweak: More countries now shown in the country map in the overview report.
+* Tweak: License key field is no longer shown on lite installs.
+* Tweak: Frontend JS file has been refactored to make it more unit testable.
+* Bugfix: Download events now correctly include data in all cases not just some.
+* Bugfix: A syntax error involving the manual UA code input has been resolved that could have affected some users under a rare circumstance.
 
 = 6.0.16, March 7, 2017 =
 * Fixed: Issues related to link tracking.
