@@ -285,7 +285,7 @@ class User_Role_Editor {
           return;
       }             
       
-      wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core','jquery-ui-button', 'jquery') );
+      wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core','jquery-ui-button', 'jquery') );
       wp_register_script( 'ure-users-js', plugins_url( '/js/ure-users.js', URE_PLUGIN_FULL_PATH ) );
       wp_enqueue_script ( 'ure-users-js' );      
       wp_localize_script( 'ure-users-js', 'ure_users_data', array(
@@ -829,8 +829,8 @@ class User_Role_Editor {
         $confirm_role_update = $this->lib->get_option('ure_confirm_role_update', 1);        
         $page_url = $this->lib->get_ure_page_url();
         
-        wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
-        wp_enqueue_script('jquery-ui-selectable', false, array('jquery-ui-core', 'jquery'));
+        wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
+        wp_enqueue_script('jquery-ui-selectable', '', array('jquery-ui-core', 'jquery'));
         wp_register_script('ure-js', plugins_url('/js/ure-js.js', URE_PLUGIN_FULL_PATH));
         wp_enqueue_script('ure-js');
         wp_localize_script('ure-js', 'ure_data', array(
@@ -881,7 +881,7 @@ class User_Role_Editor {
     
     protected function load_settings_js() {
     
-        wp_enqueue_script('jquery-ui-tabs', false, array('jquery-ui-core', 'jquery'));
+        wp_enqueue_script('jquery-ui-tabs', '', array('jquery-ui-core', 'jquery'));
         do_action('ure_load_js_settings');
         
     }

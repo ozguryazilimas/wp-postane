@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 4.32.2
+Stable tag: 4.32.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog ==
+= [4.32.3] 03.04.2017 =
+* Fix: Boolean false was sent to WordPress core wp_enqueue_script() function as the 2nd parameter instead of an empty string. We should respect the type of parameter which code author supposed to use initially.
+* Fix: Bulk grant to users multiple roles JavaScript code is loaded now for users.php page only, not globally.
+
 = [4.32.2] 17.03.2017 =
 * Fix: "Users->Grant Roles" button did not work with switched off option "Count Users without role" at "Settings->User Role Editor->Additional Modules" tab. "JQuery UI" library was not loaded.
 * Update: minimal PHP version was raised to 5.3.

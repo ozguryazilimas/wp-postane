@@ -71,7 +71,7 @@ class URE_User_Other_Roles {
             return;
         }
         
-        wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
+        wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
         wp_register_script('ure-jquery-multiple-select', plugins_url('/js/jquery.multiple.select.js', URE_PLUGIN_FULL_PATH));
         wp_enqueue_script('ure-jquery-multiple-select');
         wp_register_script('ure-user-profile-other-roles', plugins_url('/js/ure-user-profile-other-roles.js', URE_PLUGIN_FULL_PATH));
