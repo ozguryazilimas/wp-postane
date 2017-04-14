@@ -4,7 +4,7 @@ Donate link: https://bestwebsoft.com/donate/
 Tags: captcha, capcha, security, spam blocker, simple captcha, antispam, protection, text captcha, captcha numbers, captcha plugin, web form protection, captcha protection
 Requires at least: 3.8
 Tested up to: 4.7.3
-Stable tag: 4.2.9
+Stable tag: 4.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ Users are required to complete the math equation before the form can be submitte
 
 Stop spam now!
 
-http://www.youtube.com/watch?v=nlcCKSxu_Kk
+https://www.youtube.com/watch?v=nlcCKSxu_Kk
 
 = Free Features =
 
@@ -97,7 +97,7 @@ Visit our Help Center if you have any questions, our friendly Support Team is ha
 * Chinese (zh_CN) (thanks to [TIM(mailto:416441872@qq.com)], [Jack Chen](email: mailto:beijingtours@foxmail.com), www.jackchen.im)
 * Taiwan (zh_TW) (thanks to [Kaiconan](mailto:ch.unk.ai.ma.o@gmail.com))
 * Croatian (hr) (thanks to [Daniel](mailto:daniel@croteh.com))
-* Czech (cs_CZ) (thanks to [Crysman](mailto:crysman@seznam.cz))
+* Czech (cs_CZ) (thanks to [Michal Kučera](mailto:kucerami@gmail.com) www.n0lim.it)
 * Danish (da_DK) (thanks to Byrial Ole Jensed)
 * Dutch (nl_NL) (thanks to [Bart Duineveld](mailto:byrial@vip.cybercity.dk))
 * Estonian (et) (thanks to Ahto Tanner)
@@ -129,19 +129,13 @@ Visit our Help Center if you have any questions, our friendly Support Team is ha
 * Ukrainian (uk)
 * Vietnamese (vi_VN) (thanks to NDT Solutions)
 
-Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](https://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](http://www.poedit.net/download.php).
+Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](https://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](https://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](https://www.poedit.net/download.php).
 
 = Recommended Plugins =
 
 * [Limit Attempts](https://bestwebsoft.com/products/wordpress/plugins/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2) - Limit rate of login attempts to Wordpress website and block IP addresses temporarily. Protect against brute force attacks. Restrict login by IP access using white- and blacklists. Advanced control of user activity.
 * [Updater](https://bestwebsoft.com/products/wordpress/plugins/updater/?k=0864088de1701a5e104ffb77c6d7011c) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
 * [Contact Form](https://bestwebsoft.com/products/wordpress/plugins/contact-form/?k=7f973058ee3bd3a18934b5e13b857d6f) - Add contact form to your WordPress website
-
-= Donate =
-
-Donations play an important role in supporting open-source projects. We greatly appreciate any donation you can make to help us continue further development of free products.
-
-[Donate Now](https://bestwebsoft.com/donate/)
 
 == Installation ==
 
@@ -151,7 +145,7 @@ Donations play an important role in supporting open-source projects. We greatly 
 
 [View a Step-by-step Instruction on Captcha Installation](https://docs.google.com/document/d/1DN2yYCvDyK2LqmbWw6xmUNLbb0awOVDZ_dOgIXod-Jw/edit).
 
-http://www.youtube.com/watch?v=qsfLTcSo5Ok
+https://www.youtube.com/watch?v=qsfLTcSo5Ok
 
 == Frequently Asked Questions ==
 
@@ -252,6 +246,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 8. Captcha Whitelist.
 
 == Changelog ==
+
+= V4.3.0 - 14.04.2017 =
+* Bugfix : Multiple Cross-Site Scripting (XSS) vulnerability was fixed.
+* Update : The French and Czech language files have been updated.
 
 = V4.2.9 - 07.03.2017 =
 * NEW : Character recognition type was added.
@@ -670,6 +668,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * Select functionality of mathematical actions and level of their difficulty are implemented.
 
 == Upgrade Notice ==
+
+= V4.3.0 =
+* Bugs fixed.
 
 = V4.2.9 =
 * New features added.
