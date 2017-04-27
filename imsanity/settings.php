@@ -61,7 +61,7 @@ function imsanity_queue_script( $hook ) {
 		return;
 	}
 	// register the scripts that are used by the bulk resizer
-	wp_enqueue_script( 'imsanity_script', plugins_url( '/imsanity/scripts/imsanity.js' ), array( 'jquery' ), IMSANITY_VERSION );
+	wp_enqueue_script( 'imsanity_script', plugins_url( '/scripts/imsanity.js', __FILE__ ), array( 'jquery' ), IMSANITY_VERSION );
 	wp_localize_script( 'imsanity_script', 'imsanity_vars', array(
 			'_wpnonce' => wp_create_nonce( 'imsanity-bulk' ),
 			'resizing_complete' => esc_html__( 'Resizing Complete', 'imsanity' ),

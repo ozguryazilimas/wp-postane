@@ -3,8 +3,8 @@ Contributors: nosilver4u,verysimple
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MKMQKCBFFG3WW
 Tags: image, scale, resize, space saver, quality
 Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 2.3.8
+Tested up to: 4.7.4
+Stable tag: 2.3.9
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually scaling? Imsanity to the rescue!
 
@@ -144,7 +144,11 @@ Questions may be posted on the support forum at https://wordpress.org/support/pl
 
 == Changelog ==
 
-As some already know, Jason Hinkle passed away earlier this year. He will be sorely missed, but I hope to continue his legacy, to improve and support Imsanity. Who am I? https://ewww.io
+= 2.3.9 =
+* fixed: PNG to JPG filled transparency with black instead of white
+* fixed: auto-rotation causes incorrect scaling
+* fixed: results box stops scrolling at line 28
+* added: pre-emptive checks on file parameter to prevent read errors with getimagesize()
 
 = 2.3.8 =
 * added: 'imsanity_crop_image' filter to crop images during resizing

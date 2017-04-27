@@ -48,8 +48,7 @@ function imsanity_resize_next(images,next_index)
 				}
 		    }
 
-			target.animate({scrollTop: target.height()});
-
+			target.animate({scrollTop: target.prop('scrollHeight')}, 200);
 			// recurse
 			imsanity_resize_next(images,next_index+1);
 		}
@@ -63,7 +62,7 @@ function imsanity_resize_complete()
 {
 	var target = jQuery('#resize_results'); 
 	target.append('<div><strong>' + imsanity_vars.resizing_complete + '</strong></div>');
-	target.animate({scrollTop: target.height()});
+	target.animate({scrollTop: target.prop('scrollHeight')});
 }
 
 /** 
