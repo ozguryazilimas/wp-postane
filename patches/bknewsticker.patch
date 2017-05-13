@@ -1,5 +1,5 @@
 diff --git a/bknewsticker/ticker-color.php b/bknewsticker/ticker-color.php
-index d869548..960d849 100644
+index d8695484..960d8491 100644
 --- a/bknewsticker/ticker-color.php
 +++ b/bknewsticker/ticker-color.php
 @@ -20,14 +20,32 @@ background: <?php $color_background = get_option('ticker_background_posts'); ech
@@ -40,7 +40,7 @@ index d869548..960d849 100644
 +
 +</style>	
 diff --git a/bknewsticker/ticker.css b/bknewsticker/ticker.css
-index 2de6538..544ae79 100644
+index 2de65382..544ae792 100644
 --- a/bknewsticker/ticker.css
 +++ b/bknewsticker/ticker.css
 @@ -6,6 +6,10 @@
@@ -103,7 +103,7 @@ index 2de6538..544ae79 100644
 \ No newline at end of file
 +	}
 diff --git a/bknewsticker/ticker.php b/bknewsticker/ticker.php
-index 91f85c7..d5e445f 100644
+index 91f85c71..f1b9735a 100644
 --- a/bknewsticker/ticker.php
 +++ b/bknewsticker/ticker.php
 @@ -8,7 +8,8 @@ Author URI: http://www.bekero.com
@@ -141,17 +141,19 @@ index 91f85c7..d5e445f 100644
  </div>
  <?php
  }
-@@ -197,6 +201,9 @@ function ticker_recent_comments($src_count, $src_length) {
+@@ -197,6 +201,11 @@ function ticker_recent_comments($src_count, $src_length) {
  }
  
  function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
++  $transient_key_name = 'bknewsticker_get_posts';
++  if (false === ($posts_fixed = get_transient($transient_key_name))) {
 +	// We do not want to fetch 2147483647 posts
 +	$get_posts_category_param = count($cat_filter) > 0 ? $cat_filter[0] : '';
 +
  	switch($type){
  		case 'popular':
  		$days = get_option('ticker_popular_days');
-@@ -213,7 +220,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+@@ -213,7 +222,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
  		case 'recent':
  		$posts = get_posts(
  			array(
@@ -161,7 +163,7 @@ index 91f85c7..d5e445f 100644
  				'orderby' => 'post_date',
  				'suppress_filters' => 0,
  				)
-@@ -222,7 +230,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+@@ -222,7 +232,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
  		case 'commented':
  		$posts = get_posts(
  			array(
@@ -171,7 +173,7 @@ index 91f85c7..d5e445f 100644
  				'orderby' => 'comment_count',
  				'suppress_filters' => 0,
  				)
-@@ -231,7 +240,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+@@ -231,7 +242,8 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
  		case 'userspecified':
  		$posts_tmp = get_posts(
  			array(
@@ -181,7 +183,19 @@ index 91f85c7..d5e445f 100644
  				'include' => $post_list,
  				'suppress_filters' => 0,
  				)
-@@ -875,4 +885,4 @@ function ticker_plugin_action_links( $links, $file ) {
+@@ -271,7 +283,10 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+ 	ticker_get_posts_tags($posts_fixed);
+ 	ticker_get_posts_meta($posts_fixed);
+ 	ticker_get_posts_tweak($posts_fixed);
+-    return $posts_fixed;
++  set_transient($transient_key_name, $posts_fixed, 600);
++  }
++
++  return $posts_fixed;
+ }
+ function ticker_get_posts_categories(&$posts) {
+ 	foreach ($posts as $post_id => $post) {
+@@ -875,4 +890,4 @@ function ticker_plugin_action_links( $links, $file ) {
  	}
  	return $links;
  }
