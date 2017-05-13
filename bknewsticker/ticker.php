@@ -201,6 +201,8 @@ function ticker_recent_comments($src_count, $src_length) {
 }
 
 function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
+  $transient_key_name = 'bknewsticker_get_posts';
+  if (false === ($posts_fixed = get_transient($transient_key_name))) {
 	// We do not want to fetch 2147483647 posts
 	$get_posts_category_param = count($cat_filter) > 0 ? $cat_filter[0] : '';
 
@@ -281,7 +283,10 @@ function ticker_get_posts($type, $cat_filter, $n, $post_list=null){
 	ticker_get_posts_tags($posts_fixed);
 	ticker_get_posts_meta($posts_fixed);
 	ticker_get_posts_tweak($posts_fixed);
-    return $posts_fixed;
+  set_transient($transient_key_name, $posts_fixed, 600);
+  }
+
+  return $posts_fixed;
 }
 function ticker_get_posts_categories(&$posts) {
 	foreach ($posts as $post_id => $post) {
