@@ -1,6 +1,6 @@
 <?php
 
-function relevanssi_build_index($extend = false) {
+function relevanssi_build_index($extend = false, $verbose = true, $post_limit = null) {
 	if (function_exists('wp_suspend_cache_addition'))
 		wp_suspend_cache_addition(true);	// Thanks to Julien Mession
 
@@ -13,6 +13,7 @@ function relevanssi_build_index($extend = false) {
 	$types = get_option("relevanssi_index_post_types");
 	if (!is_array($types)) $types = array();
 	foreach ($types as $type) {
+	 	if ($type == "bogus") continue;
 		array_push($post_types, "'$type'");
 	}
 
@@ -41,7 +42,7 @@ function relevanssi_build_index($extend = false) {
 
 	if (!$extend) {
 		// truncate table first
-		$wpdb->query("TRUNCATE TABLE $relevanssi_table");
+		relevanssi_truncate_index();
 
 		if (function_exists('relevanssi_index_taxonomies')) {
 			if (get_option('relevanssi_index_taxonomies') == 'on') {
@@ -53,6 +54,13 @@ function relevanssi_build_index($extend = false) {
 			if (get_option('relevanssi_index_users') == 'on') {
 				relevanssi_index_users();
 			}
+		}
+
+		// if post limit parameter is present, numeric and > 0, use that
+		$limit = "";
+		if (isset($post_limit) && is_numeric($post_limit) && $post_limit > 0) {
+			$size = $post_limit;
+			$limit = " LIMIT $post_limit";
 		}
 
         $q = "SELECT post.ID
@@ -67,13 +75,17 @@ function relevanssi_build_index($extend = false) {
 					OR (post.post_parent=0)
 				)
 			))
-		$restriction";
+		$restriction $limit";
 
 		update_option('relevanssi_index', '');
 	}
 	else {
 		// extending, so no truncate and skip the posts already in the index
 		$limit = get_option('relevanssi_index_limit', 200);
+
+		// if post limit parameter is present, numeric and > 0, use that
+		if (isset($post_limit) && is_numeric($post_limit) && $post_limit > 0) $limit = $post_limit;
+
 		if (is_numeric($limit) && $limit > 0) {
 			$size = $limit;
 			$limit = " LIMIT $limit";
@@ -105,26 +117,40 @@ function relevanssi_build_index($extend = false) {
 	do_action('relevanssi_pre_indexing_query');
 	$content = $wpdb->get_results($q);
 
+	if ( defined( 'WP_CLI' ) && WP_CLI ) $progress = \WP_CLI\Utils\make_progress_bar( 'Indexing posts', count($content) );
 	foreach ($content as $post) {
-		$n += relevanssi_index_doc($post->ID, false, $custom_fields, true);
-		// n calculates the number of insert queries
+		$result = relevanssi_index_doc($post->ID, false, $custom_fields, true);
+		if (is_numeric($result) && $result > 0) $n++;
+		// n calculates the number of posts indexed
 		// $bypassglobalpost set to true, because at this point global $post should be NULL, but in some cases it is not
+
+		if ( defined( 'WP_CLI' ) && WP_CLI ) $progress->tick();
 	}
+	if ( defined( 'WP_CLI' ) && WP_CLI ) $progress->finish();
 
 	$wpdb->query("ANALYZE TABLE $relevanssi_table");
 	// To prevent empty indices
 
-    echo '<div id="message" class="updated fade"><p>'
-		. __((($size == 0) || (count($content) < $size)) ? "Indexing complete!" : "More to index...", "relevanssi")
-		. '</p></div>';
+	$complete = false;
+	if ($verbose) {
+	    echo '<div id="message" class="updated fade"><p>'
+			. __((($size == 0) || (count($content) < $size)) ? "Indexing complete!" : "More to index...", "relevanssi")
+			. '</p></div>';
+	}
+	else {
+		if (($size == 0) || (count($content) < $size)) $complete = true;
+	}
+
 	update_option('relevanssi_indexed', 'done');
 
-	// We always want to run this on init, if the index is finishd building.
+	// We always want to run this on init, if the index is finished building.
 	$D = $wpdb->get_var("SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi");
 	update_option( 'relevanssi_doc_count', $D);
 
 	if (function_exists('wp_suspend_cache_addition'))
 		wp_suspend_cache_addition(false);	// Thanks to Julien Mession
+
+	return array($complete, $n);
 }
 
 // BEGIN modified by renaissancehack
@@ -142,7 +168,7 @@ function relevanssi_build_index($extend = false) {
 	-	Quick edit:
 		global $post is an array, $indexpost is the ID of current revision.
 */
-function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields = false, $bypassglobalpost = false) {
+function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields = false, $bypassglobalpost = false, $debug = false) {
 	global $wpdb, $post, $relevanssi_variables;
 	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
 	$post_was_null = false;
@@ -185,7 +211,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 		// At this point we should have something in $post; if not, quit.
 		if ($post_was_null) $post = null;
 		if ($previous_post) $post = $previous_post;
-		return;
+		return -1;
 	}
 
 	// Finally fetch the post again by ID. Complicated, yes, but unless we do this, we might end
@@ -194,9 +220,10 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 	if (function_exists('relevanssi_hide_post')) {
 		if (relevanssi_hide_post($post->ID)) {
+			if ($debug) relevanssi_debug_echo("relevanssi_hide_post() returned true.");
 			if ($post_was_null) $post = null;
 			if ($previous_post) $post = $previous_post;
-			return;
+			return "hide";
 		}
 	}
 
@@ -209,6 +236,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 	if (true == apply_filters('relevanssi_do_not_index', false, $post->ID)) {
 		// filter says no
+		if ($debug) relevanssi_debug_echo("relevanssi_do_not_index returned true.");
 		$index_this_post = false;
 	}
 
@@ -218,6 +246,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 		if (function_exists('relevanssi_remove_item')) {
 			relevanssi_remove_item($post->ID, 'post');
 		}
+		if ($debug) relevanssi_debug_echo("Removed the post from the index.");
 	}
 
 	// This needs to be here, after the call to relevanssi_remove_doc(), because otherwise
@@ -225,7 +254,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	if (!$index_this_post) {
 		if ($post_was_null) $post = null;
 		if ($previous_post) $post = $previous_post;
-		return;
+		return "donotindex";
 	}
 
 	$n = 0;
@@ -237,11 +266,13 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 	//Added by OdditY - INDEX COMMENTS of the POST ->
 	if ("none" != get_option("relevanssi_index_comments")) {
+		if ($debug) relevanssi_debug_echo("Indexing comments.");
 		$pcoms = relevanssi_get_comments($post->ID);
 		if ($pcoms != "") {
 			$pcoms = relevanssi_strip_invisibles($pcoms);
 			$pcoms = preg_replace('/<[a-zA-Z\/][^>]*>/', ' ', $pcoms);
 			$pcoms = strip_tags($pcoms);
+			if ($debug) relevanssi_debug_echo("Comment content: $pcoms");
 			$pcoms = relevanssi_tokenize($pcoms, true, $min_word_length);
 			if (count($pcoms) > 0) {
 				foreach ($pcoms as $pcom => $count) {
@@ -257,6 +288,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 	// Then process all taxonomies, if any.
 	foreach ($taxonomies as $taxonomy) {
+		if ($debug) relevanssi_debug_echo("Indexing taxonomy terms for $taxonomy");
 		$insert_data = relevanssi_index_taxonomy_terms($post, $taxonomy, $insert_data);
 	}
 
@@ -265,6 +297,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 		$auth = $post->post_author;
 		$display_name = $wpdb->get_var("SELECT display_name FROM $wpdb->users WHERE ID=$auth");
 		$names = relevanssi_tokenize($display_name, false, $min_word_length);
+		if ($debug) relevanssi_debug_echo("Indexing post author as: " . implode(" ", array_keys($names)));
 		foreach($names as $name => $count) {
 			isset($insert_data[$name]['author']) ? $insert_data[$name]['author'] += $count : $insert_data[$name]['author'] = $count;
 		}
@@ -280,6 +313,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 		}
 		$custom_fields = apply_filters('relevanssi_index_custom_fields', $custom_fields);
 		if (is_array($custom_fields)) {
+			if ($debug) relevanssi_debug_echo("Custom fields to index: " . implode(", ", $custom_fields));
 			$custom_fields = array_unique($custom_fields);	// no reason to index duplicates
 			foreach ($custom_fields as $field) {
 				if ($remove_underscore_fields) {
@@ -291,6 +325,8 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 					// Quick hack : allow indexing of PODS relationship custom fields // TMV
 					if (is_array($value) && isset($value['post_title'])) $value = $value['post_title'];
 					relevanssi_index_acf($insert_data, $post->ID, $field, $value);
+					if ($debug) relevanssi_debug_echo("\tKey: " . $field . " – value: " . $value);
+
 					$value_tokens = relevanssi_tokenize($value, true, $min_word_length);
 					foreach ($value_tokens as $token => $count) {
 						isset($insert_data[$token]['customfield']) ? $insert_data[$token]['customfield'] += $count : $insert_data[$token]['customfield'] = $count;
@@ -304,6 +340,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	}
 
 	if (isset($post->post_excerpt) && ("on" == get_option("relevanssi_index_excerpt") || "attachment" == $post->post_type)) { // include excerpt for attachments which use post_excerpt for captions - modified by renaissancehack
+		if ($debug) relevanssi_debug_echo("Indexing post excerpt: $post->post_excerpt");
 		$excerpt_tokens = relevanssi_tokenize($post->post_excerpt, true, $min_word_length);
 		foreach ($excerpt_tokens as $token => $count) {
 			isset($insert_data[$token]['excerpt']) ? $insert_data[$token]['excerpt'] += $count : $insert_data[$token]['excerpt'] = $count;
@@ -311,14 +348,17 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 	}
 
 	if (function_exists('relevanssi_index_mysql_columns')) {
+		if ($debug) relevanssi_debug_echo("Indexing MySQL columns.");
 		$insert_data = relevanssi_index_mysql_columns($insert_data, $post->ID);
 	}
 
 	$index_titles = true;
 	if (!empty($post->post_title)) {
 		if (apply_filters('relevanssi_index_titles', $index_titles)) {
+			if ($debug) relevanssi_debug_echo("Indexing post title.");
 			$filtered_title = apply_filters('relevanssi_post_title_before_tokenize', $post->post_title, $post);
 			$titles = relevanssi_tokenize(apply_filters('the_title', $filtered_title, $post->ID), apply_filters('relevanssi_remove_stopwords_in_titles', true), $min_word_length);
+			if ($debug) relevanssi_debug_echo("\tTitle, tokenized: " . implode(" ", array_keys($titles)));
 
 			if (count($titles) > 0) {
 				foreach ($titles as $title => $count) {
@@ -331,16 +371,20 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 
 	$index_content = true;
 	if (apply_filters('relevanssi_index_content', $index_content)) {
+		if ($debug) relevanssi_debug_echo("Indexing post content.");
 		remove_shortcode('noindex');
 		add_shortcode('noindex', 'relevanssi_noindex_shortcode_indexing');
 
 		$contents = apply_filters('relevanssi_post_content', $post->post_content, $post);
+		if ($debug) relevanssi_debug_echo("\tPost content after relevanssi_post_content:\n$contents");
 
 		// Allow user to add extra content for Relevanssi to index
 		// Thanks to Alexander Gieg
 		$additional_content = trim(apply_filters('relevanssi_content_to_index', '', $post));
-		if ('' != $additional_content)
+		if ('' != $additional_content) {
 			$contents .= ' '.$additional_content;
+			if ($debug) relevanssi_debug_echo("\tAdditional content from relevanssi_content_to_index:\n$contents");
+		}
 
 		if ('on' == get_option('relevanssi_expand_shortcodes')) {
 			if (function_exists("do_shortcode")) {
@@ -393,6 +437,8 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 				remove_shortcode('woocommerce_thankyou');
 				remove_shortcode('woocommerce_lost_password');
 				remove_shortcode('woocommerce_edit_address');
+				remove_shortcode('tc_process_payment');
+				remove_shortcode('maxmegamenu');			// Max Mega Menu
 
 				$post_before_shortcode = $post;
 				$contents = do_shortcode($contents);
@@ -427,6 +473,8 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 		if (function_exists('wp_encode_emoji')) $contents = wp_encode_emoji($contents);
 		$contents = apply_filters('relevanssi_post_content_before_tokenize', $contents, $post);
 		$contents = relevanssi_tokenize($contents, true, $min_word_length);
+
+		if ($debug) relevanssi_debug_echo("\tContent, tokenized:\n" . implode(" ", array_keys($contents)));
 
 		if (count($contents) > 0) {
 			foreach ($contents as $content => $count) {
@@ -472,6 +520,7 @@ function relevanssi_index_doc($indexpost, $remove_first = false, $custom_fields 
 		$values = implode(', ', $values);
 		$query = "INSERT IGNORE INTO $relevanssi_table (doc, term, term_reverse, content, title, comment, tag, link, author, category, excerpt, taxonomy, customfield, type, taxonomy_detail, customfield_detail, mysqlcolumn)
 			VALUES $values";
+		if ($debug) relevanssi_debug_echo("Final indexing query:\n\t$query");
 		$wpdb->query($query);
 	}
 
@@ -751,4 +800,14 @@ function relevanssi_index_acf(&$insert_data, $post_id, $field_name, $field_value
 		$insert_data[$value]['customfield']++;
 	}
 }
+
+/**
+ * Truncates the Relevanssi index.
+ */
+function relevanssi_truncate_index() {
+	global $wpdb, $relevanssi_variables;
+	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
+	return $wpdb->query("TRUNCATE TABLE $relevanssi_table");
+}
+
 ?>

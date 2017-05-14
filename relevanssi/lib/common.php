@@ -740,4 +740,16 @@ function relevanssi_strlen($s) {
 	return strlen( $s );
 }
 
+/* If WP_CLI is available, print out the debug notice as a WP_CLI::log(), otherwise
+ * just echo.
+ */
+function relevanssi_debug_echo($s) {
+	if ( defined( 'WP_CLI' ) && WP_CLI ) {
+		WP_CLI::log($s);
+	}
+	else {
+		echo $s . "\n";
+	}
+}
+
 ?>
