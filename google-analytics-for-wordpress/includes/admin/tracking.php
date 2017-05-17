@@ -4,7 +4,7 @@
  *
  * @package     MonsterInsights
  * @subpackage  Admin
- * @copyright   Copyright (c) 2016, Chris Christoff
+ * @copyright   Copyright (c) 2017, Chris Christoff
  * @since       6.0.0
 */
 
@@ -122,6 +122,15 @@ class MonsterInsights_Tracking {
 	 * @return void
 	 */
 	public function send_checkin( $override = false, $ignore_last_checkin = false ) {
+
+		$home_url = trailingslashit( home_url() );
+		if ( $home_url === 'https://www.monsterinsights.com/'     || 
+			 $home_url === 'https://beta.monsterinsights.com/'    ||
+			 $home_url === 'https://staging.monsterinsights.com/' ||
+			 $home_url === 'https://testing.monsterinsights.com/'
+		) {
+			return false;
+		}
 
 		if( ! $this->tracking_allowed() && ! $override ) {
 			return false;
