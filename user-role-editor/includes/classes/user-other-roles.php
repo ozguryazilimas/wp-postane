@@ -71,6 +71,9 @@ class URE_User_Other_Roles {
             return;
         }
         
+        
+        $select_primary_role = apply_filters('ure_users_select_primary_role', true);
+        
         wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
         wp_register_script('ure-jquery-multiple-select', plugins_url('/js/jquery.multiple.select.js', URE_PLUGIN_FULL_PATH));
         wp_enqueue_script('ure-jquery-multiple-select');
@@ -79,14 +82,15 @@ class URE_User_Other_Roles {
         wp_localize_script('ure-user-profile-other-roles', 'ure_data_user_profile_other_roles', array(
             'wp_nonce' => wp_create_nonce('user-role-editor'),
             'other_roles' => esc_html__('Other Roles', 'user-role-editor'),
-            'select_roles' => esc_html__('Select additional roles for this user', 'user-role-editor')
+            'select_roles' => esc_html__('Select additional roles for this user', 'user-role-editor'),
+            'select_primary_role' => ($select_primary_role || $this->lib->is_super_admin()) ? 1: 0
         ));
     }
     // end of load_js()
     
     
     /**
-     * Returns list of user roles, except 1st one, and bbPress assigned as they are shown by WordPress and bbPress theirselves.
+     * Returns list of user roles, except 1st one, and bbPress assigned as they are shown by WordPress and bbPress themselves.
      * 
      * @param type $user WP_User from wp-includes/capabilities.php
      * @return array

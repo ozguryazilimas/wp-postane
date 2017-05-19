@@ -7,6 +7,11 @@ jQuery(document).ready(function(){
     if (jQuery('#ure_select_other_roles').length==0) {
         return;
     }
+    
+    if (ure_data_user_profile_other_roles.select_primary_role!=1) {
+        jQuery('.user-role-wrap').hide();
+    }
+    
     jQuery('#ure_select_other_roles').multipleSelect({
             filter: true,
             multiple: true,

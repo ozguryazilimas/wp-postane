@@ -242,7 +242,7 @@ class URE_View {
     // end of advertisement()
 
 
-    public function output_confirmation_dialog() {
+    public static function output_confirmation_dialog() {
         ?>
         <div id="ure_confirmation_dialog" class="ure-modal-dialog">
             <div id="ure_cd_html" style="padding:10px;"></div>

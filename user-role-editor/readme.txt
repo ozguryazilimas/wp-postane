@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 4.7.3
-Stable tag: 4.32.3
+Tested up to: 4.7.5
+Stable tag: 4.33
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,16 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog ==
+= [4.33] 19.05.2017 =
+* Fix: "Users->Without Roles", "Users->Grant Roles" are shown only to the users with 'edit_users' capability.
+* Fix: Roles were updated for all sites of all networks for WordPress multisite. "Apply to All Sites" option updates roles inside a current network only.
+* Update: "Reset" button moved from the "Users->User Role Editor" main page to the "Settings->User Role Editor->Tools" tab.
+* Update: "Users->Grant Roles" button worked only for superadmin or user with 'ure_manage_options' capability. User with 'edit_users' can use this feature now.
+* New: boolean filter 'ure_bulk_grant_roles' allows to not show "Users->Grant Roles" button if you don't need it.
+* New: boolean filter 'ure_users_select_primary_role' can hide 'Primary role' selection controls from the user profile edit page. 
+* New: boolean filter 'ure_users_show_wp_change_role' can hide "Change Role" bulk action selection control from the Users page. So it's possible to configure permissions for user who can change just other roles of a user without changing his primary role.
+* Update: Settings tabs and dialog stylesheets was updated to jQuery UI 1.11.4 default theme.  
+
 = [4.32.3] 03.04.2017 =
 * Fix: Boolean false was sent to WordPress core wp_enqueue_script() function as the 2nd parameter instead of an empty string. We should respect the type of parameter which code author supposed to use initially.
 * Fix: Bulk grant to users multiple roles JavaScript code is loaded now for users.php page only, not globally.

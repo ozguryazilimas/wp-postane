@@ -50,7 +50,8 @@ class URE_Assign_Role {
         $where = "where not exists (select user_id from {$usermeta}
                                           where user_id=users.ID and meta_key='{$blog_prefix}capabilities') or
                           exists (select user_id from {$usermeta}
-                                    where user_id=users.ID and meta_key='{$blog_prefix}capabilities' and meta_value='a:0:{}')";
+                                    where user_id=users.ID and meta_key='{$blog_prefix}capabilities' and 
+                                          (meta_value='a:0:{}' or meta_value is NULL))";
                                     
         return $where;                            
     }

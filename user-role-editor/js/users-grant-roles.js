@@ -3,6 +3,15 @@
  * User Role Editor: support of 'Grant Roles' button for Users page (wp-admin/users.php)
  */
 
+jQuery(document).ready(function() {
+    if (ure_users_grant_roles_data.show_wp_change_role!=1) {        
+        jQuery('#new_role').hide();
+        jQuery('#new_role2').hide();
+        jQuery('#changeit').hide();
+        jQuery('[id=changeit]:eq(1)').hide();   // for 2nd 'Change' button with the same ID.        
+    }
+});
+
 
 function ure_get_selected_checkboxes(item_name) {
     var items = jQuery('input[type="checkbox"][name="'+ item_name +'\\[\\]"]:checked').map(function() { return this.value; }).get();
@@ -28,9 +37,7 @@ function ure_show_grant_roles_dialog() {
         title: ure_users_grant_roles_data.dialog_title,
         'buttons': {
             'OK': function () {
-                if (!ure_grant_roles()) {
-                    return false;
-                }                
+                ure_grant_roles();
                 jQuery(this).dialog('close');
                 return true;
             },
@@ -44,19 +51,16 @@ function ure_show_grant_roles_dialog() {
 
 
 function ure_grant_roles() {    
-    
-    var roles = ure_get_selected_checkboxes('ure_roles');
-    if (roles.length==0) {
-        alert(ure_users_grant_roles_data.select_roles_first);
-        return false;
-    }
+    var primary_role = jQuery('#primary_role').val();
+    var other_roles = ure_get_selected_checkboxes('ure_roles');
     jQuery('#ure_task_status').show();
     var users = ure_get_selected_checkboxes('users');
     var data = {
         'action': 'ure_ajax',
         'sub_action':'grant_roles', 
         'users': users, 
-        'roles': roles,
+        'primary_role': primary_role,
+        'other_roles': other_roles,
         'wp_nonce': ure_users_grant_roles_data.wp_nonce};
     jQuery.post(ajaxurl, data, ure_page_reload, 'json');
     
@@ -89,7 +93,7 @@ function ure_set_url_arg(arg_name, arg_value) {
 
 function ure_page_reload(response) {
     
-    if (response.result=='error') {
+    if (response!==null && response.result=='error') {
         jQuery('#ure_task_status').hide();
         alert(response.message);
         return;

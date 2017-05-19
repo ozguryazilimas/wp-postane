@@ -253,7 +253,7 @@ class Ure_Lib extends URE_Base_Lib {
         }
         $view->display_edit_dialogs();
         do_action('ure_dialogs_html');
-        $view->output_confirmation_dialog();
+        URE_Role_View::output_confirmation_dialog();
 ?>            
             </div>
         </div>
@@ -453,7 +453,7 @@ class Ure_Lib extends URE_Base_Lib {
         
         $this->caps_columns_quant = $value;
     }
-    // end of get_apply_to_all_from_post()
+    // end of get_caps_columns_quant()
     
 
     public function get_default_role() {
@@ -1200,8 +1200,9 @@ class Ure_Lib extends URE_Base_Lib {
      * @global WP_Roles $wp_roles
      */
     protected function wp_roles_reinit() {
-        global $wp_roles;
+        global $wp_roles, $wp_user_roles;
         
+        $wp_user_roles = null;
         $wp_roles->roles = array();
         $wp_roles->role_objects = array();
         $wp_roles->role_names = array();
@@ -1209,7 +1210,7 @@ class Ure_Lib extends URE_Base_Lib {
 
         require_once(ABSPATH . '/wp-admin/includes/schema.php');
         populate_roles();
-        $wp_roles->reinit();
+        $wp_roles = new WP_Roles();
         
         $this->roles = $this->get_user_roles();
         
@@ -1219,36 +1220,27 @@ class Ure_Lib extends URE_Base_Lib {
     /**
      * reset user roles to WordPress default roles
      */
-    protected function reset_user_roles() {
+    public function reset_user_roles() {
         
         if (!current_user_can('ure_reset_roles')) {
-            return esc_html__('Insufficient permissions to work with User Role Editor','user-role-editor');
+           esc_html_e('Insufficient permissions to work with User Role Editor','user-role-editor');
+           die;
         }
               
         $this->wp_roles_reinit();
         URE_Own_Capabilities::init_caps();
-        if ($this->is_full_network_synch() || $this->apply_to_all) {
+        $this->get_apply_to_all_from_post();
+        if ($this->apply_to_all) {
             $this->current_role = '';
             $this->direct_network_roles_update();
         }
-        //$this->validate_user_roles();  // if user has non-existing role lower him to Subscriber role
         
-        $reload_link = wp_get_referer();
-        $reload_link = esc_url_raw(remove_query_arg('action', $reload_link));
-        ?>    
-        	<script type="text/javascript" >
-             jQuery.ure_postGo('<?php echo $reload_link; ?>', 
-                      { action: 'roles_restore_note', 
-                        ure_nonce: ure_data.wp_nonce} );
-        	</script>  
-        <?php
     }
     // end of reset_user_roles()
 
     
     /**
-     * if returns true - make full syncronization of roles for all sites with roles from the main site
-     * else - only currently selected role update is replicated
+     * Make full synchronization of roles for all sites with roles from the main site directly updating database records
      * 
      * @return boolean
      */
@@ -1342,7 +1334,7 @@ class Ure_Lib extends URE_Base_Lib {
                 $this->log_event($wpdb->last_error, true);
                 return false;
             }
-            // save role additional options
+            // @TODO: save role additional options
             
         }
         
@@ -1838,10 +1830,20 @@ class Ure_Lib extends URE_Base_Lib {
             }
         }
         
-        $primary_role = $_POST['primary_role'];  
-        if (empty($primary_role) || !isset($wp_roles->roles[$primary_role])) {
-            $primary_role = '';
+        $select_primary_role = apply_filters('ure_users_select_primary_role', true);
+        if ($select_primary_role  || $this->is_super_admin()) {
+            $primary_role = $_POST['primary_role'];  
+            if (empty($primary_role) || !isset($wp_roles->roles[$primary_role])) {
+                $primary_role = '';
+            }
+        } else {
+            if (!empty($user->roles)) {
+                $primary_role = $user->roles[0];
+            } else {
+                $primary_role = '';
+            }
         }
+        
         if (function_exists('bbp_filter_blog_editable_roles')) {  // bbPress plugin is active
             $bbp_user_role = bbp_get_user_role($user->ID);
         } else {

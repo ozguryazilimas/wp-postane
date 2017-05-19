@@ -198,7 +198,7 @@ class URE_Role_View extends URE_View {
 <script language="javascript" type="text/javascript">
 
   var ure_current_role = '<?php echo $current_role; ?>';
-  var ure_current_role_name  = '<?php echo $current_role_name; ?>';
+  var ure_current_role_name  = "<?php echo $current_role_name; ?>";
 
 </script>
 
@@ -334,13 +334,6 @@ if ($multisite && !is_network_admin()) {
                <div id="ure_service_tools">
 <?php
                 do_action('ure_role_edit_toolbar_service');
-                if (!$multisite || (is_main_site( get_current_blog_id()) || (is_network_admin() && $this->lib->is_super_admin()))) {
-                    if (current_user_can('ure_reset_roles')) {
-?>                   
-                  <button id="ure_reset_roles_button" class="ure_toolbar_button" style="color: red;" title="Reset Roles to its original state">Reset</button> 
-<?php
-                    }
-                }
 ?>
                </div>
 <?php
