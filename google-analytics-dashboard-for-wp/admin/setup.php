@@ -146,7 +146,7 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 
 					wp_enqueue_script( 'gadwp-nprogress', GADWP_URL . 'common/nprogress/nprogress.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
 
-					wp_enqueue_script( 'gadwp-backend-dashboard-reports', GADWP_URL . 'common/js/reports.js', array( 'jquery', 'googlecharts', 'gadwp-nprogress', 'jquery-ui-tooltip', 'jquery-ui-core', 'jquery-ui-position', 'jquery-ui-tooltip-html' ), GADWP_CURRENT_VERSION, true );
+					wp_enqueue_script( 'gadwp-backend-dashboard-reports', GADWP_URL . 'common/js/reports5.js', array( 'jquery', 'googlecharts', 'gadwp-nprogress', 'jquery-ui-tooltip', 'jquery-ui-core', 'jquery-ui-position', 'jquery-ui-tooltip-html' ), GADWP_CURRENT_VERSION, true );
 
 					/* @formatter:off */
 					wp_localize_script( 'gadwp-backend-dashboard-reports', 'gadwpItemData', array(
@@ -249,7 +249,7 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 
 					wp_enqueue_script( 'gadwp-nprogress', GADWP_URL . 'common/nprogress/nprogress.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
 
-					wp_enqueue_script( 'gadwp-backend-item-reports', GADWP_URL . 'common/js/reports.js', array( 'gadwp-nprogress', 'googlecharts', 'jquery', 'jquery-ui-dialog' ), GADWP_CURRENT_VERSION, true );
+					wp_enqueue_script( 'gadwp-backend-item-reports', GADWP_URL . 'common/js/reports5.js', array( 'gadwp-nprogress', 'googlecharts', 'jquery', 'jquery-ui-dialog' ), GADWP_CURRENT_VERSION, true );
 
 					/* @formatter:off */
 					wp_localize_script( 'gadwp-backend-item-reports', 'gadwpItemData', array(
@@ -352,7 +352,7 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 		function admin_notice() {
 			$currentScreen = get_current_screen();
 
-			if ( ! current_user_can( 'manage_options' ) || $currentScreen->base != 'dashboard' ) {
+			if ( ! current_user_can( 'manage_options' ) || 'dashboard' != $currentScreen->base ) {
 				return;
 			}
 

@@ -57,7 +57,7 @@ if ( ! class_exists( 'GADWP_Frontend_Setup' ) ) {
 
 				wp_enqueue_script( 'gadwp-nprogress', GADWP_URL . 'common/nprogress/nprogress.js', array( 'jquery' ), GADWP_CURRENT_VERSION );
 
-				wp_enqueue_script( 'gadwp-frontend-item-reports', GADWP_URL . 'common/js/reports.js', array( 'gadwp-nprogress', 'googlecharts', 'jquery', 'jquery-ui-dialog' ), GADWP_CURRENT_VERSION, true );
+				wp_enqueue_script( 'gadwp-frontend-item-reports', GADWP_URL . 'common/js/reports5.js', array( 'gadwp-nprogress', 'googlecharts', 'jquery', 'jquery-ui-dialog' ), GADWP_CURRENT_VERSION, true );
 
 				/* @formatter:off */
 				wp_localize_script( 'gadwp-frontend-item-reports', 'gadwpItemData', array(
@@ -115,6 +115,7 @@ if ( ! class_exists( 'GADWP_Frontend_Setup' ) ) {
 							__( "Time on Page", 'google-analytics-dashboard-for-wp' ),
 							__( "Page Load Time", 'google-analytics-dashboard-for-wp' ),
 							__( "Exit Rate", 'google-analytics-dashboard-for-wp' ),
+							__( "Precision: ", 'google-analytics-dashboard-for-wp' ), //29
 					),
 					'colorVariations' => GADWP_Tools::variations( $this->gadwp->config->options['ga_dash_style'] ),
 					'region' => $region,

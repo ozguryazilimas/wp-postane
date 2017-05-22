@@ -172,16 +172,33 @@ if ( ! class_exists( 'GADWP_Tools' ) ) {
 			$sqlquery = $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'gadwp_cache_qr%%'" );
 		}
 
-		public static function get_sites( $args ){ // Use wp_get_sites() if WP version is lower than 4.6.0
+		public static function get_sites( $args ) { // Use wp_get_sites() if WP version is lower than 4.6.0
 			global $wp_version;
 			if ( version_compare( $wp_version, '4.6.0', '<' ) ) {
 				return wp_get_sites( $args );
 			} else {
 				foreach ( get_sites( $args ) as $blog ) {
-					$blogs[] = (array)$blog; //Convert WP_Site object to array
+					$blogs[] = (array) $blog; // Convert WP_Site object to array
 				}
 				return $blogs;
 			}
+		}
+
+		/**
+		 * Loads a view file
+		 *
+		 * $data parameter will be available in the template file as $data['value']
+		 *
+		 * @param string $template - Template file to load
+		 * @param array $data - data to pass along to the template
+		 * @return boolean - If template file was found
+		 **/
+		public static function load_view( $path, $data = array() ) {
+			if( file_exists( GADWP_DIR . $path ) ) {
+				require_once( GADWP_DIR . $path );
+				return true;
+			}
+			return false;
 		}
 	}
 }
