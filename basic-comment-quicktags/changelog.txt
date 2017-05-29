@@ -1,0 +1,75 @@
+= 3.2.3 =
+* 2014 Apr 11, by Ipstenu
+* Omitted a line in the last updated like a doofus (<a href="https://wordpress.org/support/topic/php-error-77">props KTS915</a>)
+
+= 3.2.2 =
+* 2014 Apr 7, by Ipstenu
+* Switch order of comments open check to correct non-reproducable error (it doesn't break anything on my end)
+* Fixed actual default to on for comments *sigh*
+
+= 3.2.1 =
+* 2013 Dec 9, by Ipstenu
+* Force prevent any code from running on login pages.
+
+= 3.2 =
+* 2013 Dec 7, by Ipstenu
+* Tweak to bbPress call because JJJ hates me (not really)
+
+= 3.1 =
+* 2013 May 14, by Ipstenu
+* Left out js dependancy causing buttons not to show.
+
+= 3.0 =
+* 2013 May 14, by Ipstenu
+* Better options handling
+* Internationalization
+* Classification (singletons, basically better code)
+* Better option validation and output
+
+= 2.2 =
+* 2013 May 5, by Ipstenu
+* I thought I had a check for if comments are open or not. I didn't. I suck.
+
+= 2.1 =
+* 2013 Feb 27, by Ipstenu
+* There is a difference between is_single and is_singular.
+
+= 2.0 =
+* 2013 Feb 18, by Ipstenu
+* More judicious script calling
+
+= 1.7 =
+* 2012 June 29, by Ipstenu (and aahan)
+* Dropping the call for editor.css and including just what we need. <a href="http://wordpress.org/support/topic/plugin-basic-comment-quicktags-why-use-editorcss">Read this thread for why</a>.
+
+= 1.6 =
+* 2012 June 28, by Ipstenu (and sleary)
+* Booyah! P2 in the hizzouse.
+
+= 1.5 =
+* 2012 June 18, by Ipstenu
+* Curse you, JJJ! (bbPress 2.1 includes its own quicky taggies)
+
+= 1.4 =
+* 2012 June 02, by Ipstenu
+* Reported issue with bbPress. Verified.
+
+= 1.3 =
+* 2012 May 07, by Ipstenu
+* Crap, typo'd. Really sorry :(
+
+= 1.2 =
+* 2012 May 07, by Ipstenu
+* bbPress is strange, should work now.
+
+= 1.1 =
+* 2012 May 02, by Ipstenu (and trepmal)
+* Added options to turn on and off for both comments <em>and</em> bbPress (per request of leeuniverse) - You will <em>only</em> see the bbPress box if you have bbPress installed (so as not to confuse people).
+* Fixed IE being an asshat (props trepmal).
+
+= 1.0 =
+* 2012 April 27, by Ipstenu
+* Initial fork of MarcTV Comment QuickTag
+* Added in support for bbPress
+* Added in checks to only load JS/CSS when on a page where one might leave comments
+* Added failure if not WordPress 3.3 or greater
