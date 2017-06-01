@@ -322,8 +322,13 @@
 
 	/** Tracking Tab Styles **/
 		/** Upgrade CSS */
+			.monsterinsights-upsell-under-box{background-color:#f6fbff;border:1px solid #d6ecff;border-radius:3px;padding:10px 20px;margin-top:30px;}
 			.monsterinsights-upsell-box{background-color:#f6fbff;border:1px solid #d6ecff;border-radius:3px;padding:10px 20px}
 			a.monsterinsights-upsell-box-button.button.button-primary{margin-top:20px}
+			.monsterinsights-no-settings-shown td{ padding: 5px 0px 0px 0px !important}
+			.monsterinsights-no-settings-shown tr{ border:none !important}
+			#monsterinsights-settings-pages p.monsterinsights-upsell-button-par{margin-bottom: 1em}
+			.monsterinsights-upsell-lite-text{font-size: 14px; margin-bottom:2px;}
 			
 	/** Status Tab Styles **/
 
@@ -362,6 +367,7 @@
 /** Tools Page Styles **/
 	/** Generic Tools Page Styles **/
 		#monsterinsights-tools-pages .monsterinsights-main-nav-tab { padding: 30px 5px;margin: 0px; }
+		#monsterinsights-tools-pages .monsterinsights-main-nav-tab .monsterinsights-upsell-under-box{ margin-top: 0px; }
 		
 	/** URL Generator Tab Styles **/
 		.monsterinsights-main-nav-tabs label{margin-top:7px;display:block;color:#444851}

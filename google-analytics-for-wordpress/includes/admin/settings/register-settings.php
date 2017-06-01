@@ -186,8 +186,8 @@ function monsterinsights_get_registered_settings() {
 				),
 				'hash_tracking' => array(
 					'id'          => 'hash_tracking',
-					'name'        => __( 'Turn on anchor tracking (beta; see description)', 'google-analytics-for-wordpress' ),
-					'desc'        => esc_html__( 'Many WordPress "1-page" style themes rely on anchor tags for navigation to show virtual pages. The problem is that to Google Analytics, these are all just a single page, and it makes it hard to get meaningful statistics about pages viewed. This experimental MonsterInsights feature allows for the tracking of anchor links as pages in Google Analytics. As a beta, first-look feature, we\'re adding a setting to turn this functionality on so we can collect feedback from people that want to use it. We may tweak or remove this feature at any time. Note: This feature tracks all anchor links as pages, without the ability to opt a particular anchor tag out currently, so only use this if you are using a "1-page" style WordPress theme', 'google-analytics-for-wordpress' ),
+					'name'        => __( 'Turn on anchor tracking', 'google-analytics-for-wordpress' ),
+					'desc'        => esc_html__( 'Many WordPress "1-page" style themes rely on anchor tags for navigation to show virtual pages. The problem is that to Google Analytics, these are all just a single page, and it makes it hard to get meaningful statistics about pages viewed. This feature allows proper tracking in those themes.', 'google-analytics-for-wordpress' ),
 					'type' 		  => 'checkbox',
 				),
 				'allow_anchor' => array(

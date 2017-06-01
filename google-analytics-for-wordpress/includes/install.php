@@ -615,7 +615,7 @@ class MonsterInsights_Install {
 			'custom_code'                => '',
 			'debug_mode'                 => 0,
 			'anonymous_data'             => 0,
-			'save_setings'               => array(),
+			'save_settings'              => array(),
 			'view_reports'               => array(),
 		);
 	}

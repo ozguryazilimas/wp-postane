@@ -313,7 +313,7 @@ function monsterinsights_get_upgrade_link() {
 		// Note: On the Addons screen, if the user has a license, we won't hit this function,
 		// as the API will tell us the direct URL to send the user to based on their license key,
 		// so they see pro-rata pricing.
-		return 'https://www.monsterinsights.com/pricing/?utm_source=proplugin&utm_medium=link&utm_campaign=WordPress';
+		return 'https://www.monsterinsights.com/lite/?utm_source=proplugin&utm_medium=link&utm_campaign=WordPress';
 	}
 
 	$shareasale_id = monsterinsights_get_shareasale_id();
@@ -321,7 +321,7 @@ function monsterinsights_get_upgrade_link() {
 	// If at this point we still don't have an ID, we really don't have one!
 	// Just return the standard upgrade URL.
 	if ( empty( $shareasale_id ) ) {
-		return 'https://www.monsterinsights.com/pricing/?utm_source=liteplugin&utm_medium=link&utm_campaign=WordPress';
+		return 'https://www.monsterinsights.com/lite/?utm_source=liteplugin&utm_medium=link&utm_campaign=WordPress';
 	}
 
 	// If here, we have a ShareASale ID

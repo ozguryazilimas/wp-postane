@@ -6,7 +6,7 @@
  * Author:              MonsterInsights
  * Author URI:          https://www.monsterinsights.com/
  *
- * Version:             6.1.10
+ * Version:             6.1.11
  * Requires at least:   3.9.0
  * Tested up to:        4.8.0
  *
@@ -69,7 +69,7 @@ final class MonsterInsights_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.1.10';
+	public $version = '6.1.11';
 
 	/**
 	 * Plugin file.
@@ -497,6 +497,7 @@ final class MonsterInsights_Lite {
 		if ( is_admin() || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/googleauth.php';
 			require_once MONSTERINSIGHTS_PLUGIN_DIR . 'lite/includes/admin/addons.php';
+			require_once MONSTERINSIGHTS_PLUGIN_DIR . 'lite/includes/admin/tools.php';
 			//require_once MONSTERINSIGHTS_PLUGIN_DIR . 'lite/includes/admin/tab-support.php';
 			
 			// Late loading classes (self instantiating)

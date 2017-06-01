@@ -103,6 +103,7 @@ function monsterinsights_mp_api_call( $args = array() ) {
 		}
 	}
 
+	$debug_mode = monsterinsights_is_debug_mode();
 	$args = array(
 		'method'   => 'POST',
 		'timeout'  => '5',
@@ -116,7 +117,7 @@ function monsterinsights_mp_api_call( $args = array() ) {
 
 	$response = wp_remote_post( monsterinsights_get_mp_api_url(), $args );
 
-	//$debug_mode = monsterinsights_is_debug_mode();
+	//
 	//if ( $debug_mode ) {
 	//	monsterinsights_debug_output( $body );
 	//	monsterinsights_debug_output( $response );
