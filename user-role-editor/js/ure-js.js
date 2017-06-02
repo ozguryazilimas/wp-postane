@@ -397,17 +397,6 @@ jQuery(function ($) {
     }
     
 
-    $('#ure_reset_roles_button').button({
-        label: ure_data.reset
-    }).click(function (event) {
-        event.preventDefault();
-        if (!confirm(ure_data.reset_warning)) {
-            return false;
-        }
-        jQuery.ure_postGo(ure_data.page_url, {action: 'reset', ure_nonce: ure_data.wp_nonce});
-    });
-
-
     function ure_confirm(message, routine) {
 
         $('#ure_confirmation_dialog').dialog({

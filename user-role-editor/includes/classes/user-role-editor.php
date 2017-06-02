@@ -589,7 +589,7 @@ class User_Role_Editor {
                     'settings-' . URE_PLUGIN_FILE, 
                     array($this, 'settings'));
             add_action( 'load-'.$this->settings_page_hook, array($this,'settings_screen_configure') );
-            add_action("admin_print_styles-{$this->settings_page_hook}", array($this, 'admin_css_action'));
+            add_action("admin_print_styles-{$this->settings_page_hook}", array($this, 'settings_css_action'));
         }
     }
     // end of plugin_menu()
@@ -606,7 +606,7 @@ class User_Role_Editor {
                     'settings-' . URE_PLUGIN_FILE, 
                     array(&$this, 'settings'));
             add_action( 'load-'.$this->settings_page_hook, array($this,'settings_screen_configure') );
-            add_action("admin_print_styles-{$this->settings_page_hook}", array($this, 'admin_css_action'));
+            add_action("admin_print_styles-{$this->settings_page_hook}", array($this, 'settings_css_action'));
         }
         
     }
@@ -811,13 +811,21 @@ class User_Role_Editor {
     public function admin_css_action() {
 
         wp_enqueue_style('wp-jquery-ui-dialog');
-        wp_enqueue_style('wp-jquery-ui-selectable');
-        if (stripos($_SERVER['REQUEST_URI'], 'settings-user-role-editor')!==false) {
-            wp_enqueue_style('ure-jquery-ui-tabs', URE_PLUGIN_URL . 'css/jquery-ui.min.css', array(), false, 'screen');
-        }
+        wp_enqueue_style('wp-jquery-ui-selectable');        
         wp_enqueue_style('ure-admin-css', URE_PLUGIN_URL . 'css/ure-admin.css', array(), false, 'screen');
     }
     // end of admin_css_action()
+    
+    
+    public function settings_css_action() {
+
+
+        wp_enqueue_style('ure-jquery-ui-tabs', URE_PLUGIN_URL . 'css/jquery-ui.min.css', array(), false, 'screen');
+        wp_enqueue_style('ure-admin-css', URE_PLUGIN_URL . 'css/ure-admin.css', array(), false, 'screen');
+
+    }
+    // end of admin_css_action()
+
     
     
     // call roles editor page
@@ -878,11 +886,6 @@ class User_Role_Editor {
             'cancel' => esc_html__('Cancel', 'user-role-editor'),
             'add_capability' => esc_html__('Add Capability', 'user-role-editor'),
             'delete_capability' => esc_html__('Delete Capability', 'user-role-editor'),
-            'reset' => esc_html__('Reset', 'user-role-editor'),
-            'reset_warning' => esc_html__('DANGER! Resetting will restore default settings from WordPress Core.', 'user-role-editor') . "\n\n" .
-            esc_html__('If any plugins have changed capabilities in any way upon installation (such as S2Member, WooCommerce, and many more), those capabilities will be DELETED!', 'user-role-editor') . "\n\n" .
-            esc_html__('For more information on how to undo changes and restore plugin capabilities go to', 'user-role-editor') . "\n" .
-            'http://role-editor.com/how-to-restore-deleted-wordpress-user-roles/' . "\n\n" .
             esc_html__('Continue?', 'user-role-editor'),
             'default_role' => esc_html__('Default Role', 'user-role-editor'),
             'set_new_default_role' => esc_html__('Set New Default Role', 'user-role-editor'),

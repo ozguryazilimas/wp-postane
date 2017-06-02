@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 4.7.5
-Stable tag: 4.33
+Tested up to: 4.8
+Stable tag: 4.34
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,7 +77,16 @@ If you wish to check available translations or help with plugin translation to y
 https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
-== Changelog ==
+== Changelog =
+= [4.34] 02.06.2017 =
+* New: Multisite 'upgrade_network' capability support was added for compatibility with WordPress 4.8.
+* New: Multisite 'delete_sites' capability support was added.
+* Update: Users->Grant Roles: if a single user was selected for "Grant Roles" bulk action, dialog will show the current roles of selected user with checkboxes turned ON (pre-selected).
+* Fix: Transients caching was removed from URE_Lib::_get_post_types() function. It cached post types list too early in some cases.
+* Fix: jQuery UI CSS was updated to fix minor view inconsistency at the URE's Settings page.
+* Fix: "Reset" presentation code remainders were removed from the main User Role Editor page.
+* Fix: 'manage_links' capability was included into a wrong subgroup instead of "Core->General". It was a mistake in the capabilities group counters for that reason.
+
 = [4.33] 19.05.2017 =
 * Fix: "Users->Without Roles", "Users->Grant Roles" are shown only to the users with 'edit_users' capability.
 * Fix: Roles were updated for all sites of all networks for WordPress multisite. "Apply to All Sites" option updates roles inside a current network only.

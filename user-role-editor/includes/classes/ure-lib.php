@@ -1070,14 +1070,11 @@ class Ure_Lib extends URE_Base_Lib {
      * @return array
      */
     public function _get_post_types() {
-        $post_types = get_transient('ure_public_post_types');
-        if (empty($post_types)) {
-            $all_post_types = get_post_types();
-            $internal_post_types = get_post_types(array('public'=>false, '_builtin'=>true));
-            $post_types = array_diff($all_post_types, $internal_post_types);
-            set_transient('ure_public_post_types', $post_types, 30);
-        }
         
+        $all_post_types = get_post_types();
+        $internal_post_types = get_post_types(array('public'=>false, '_builtin'=>true));
+        $post_types = array_diff($all_post_types, $internal_post_types);
+                
         return $post_types;
     }
     // end of _get_post_types()

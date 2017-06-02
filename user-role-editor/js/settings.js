@@ -17,14 +17,8 @@ jQuery(document).ready(function() {
     jQuery('#ure_reset_roles_button').button({
         label: ure_data.reset
     }).click(function (event) {
-        event.preventDefault();
-        /*
-        if (!confirm(ure_data.reset_warning)) {
-            return false;
-        }
-        jQuery('#ure_reset_roles_form').submit();
-        */
-       ure_confirm(ure_data.reset_warning, ure_roles_reset_form_submit);
+        event.preventDefault();        
+        ure_confirm(ure_data.reset_warning, ure_roles_reset_form_submit);
     });
     
     function ure_confirm(message, routine) {
@@ -35,7 +29,7 @@ jQuery(document).ready(function() {
             autoOpen: true,
             closeOnEscape: true,
             width: 600,
-            height: 300,
+            height: 280,
             resizable: false,
             title: ure_data.confirm_title,
             'buttons': {
