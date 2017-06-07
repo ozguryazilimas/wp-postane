@@ -28,7 +28,7 @@ function monsterinsights_get_settings_tabs() {
 			'level' => 'lite'
 		),
 		'links' => array( 
-			'title' => esc_html__( 'Enhanced Link Attribution', 'google-analytics-for-wordpress' ),
+			'title' => esc_html__( 'Link Attribution', 'google-analytics-for-wordpress' ),
 			'level' => 'lite'
 		),
 		'files' => array( 
@@ -51,7 +51,6 @@ function monsterinsights_get_settings_tabs() {
 		'forms' => array( 
 			'title' => esc_html__( 'Forms', 'google-analytics-for-wordpress' ),
 			'level' => 'plus',
-			'comingsoon' => true
 		),
 		'ecommerce' => array( 
 			'title' => esc_html__( 'eCommerce', 'google-analytics-for-wordpress' ),
@@ -73,7 +72,24 @@ function monsterinsights_get_settings_tabs() {
 		),
 		'performance' => array( 
 			'title' => esc_html__( 'Performance', 'google-analytics-for-wordpress' ),
-			'level' => 'basic'
+			'level' => 'plus'
+		),
+		'amp' => array( 
+			'title' => esc_html__( 'Google AMP', 'google-analytics-for-wordpress' ),
+			'level' => 'plus'
+		),
+		'goptimize' => array( 
+			'title' => esc_html__( 'Google Optimize', 'google-analytics-for-wordpress' ),
+			'level' => 'plus'
+		),
+		'fbia' => array( 
+			'title' => esc_html__( 'FB Instant Articles', 'google-analytics-for-wordpress' ),
+			'level' => 'plus'
+		),
+		'bounce' => array( 
+			'title' => esc_html__( 'Bounce Reduction', 'google-analytics-for-wordpress' ),
+			'level' => 'plus',
+			'comingsoon' => true
 		),
 		'reporting' => array( 
 			'title' => esc_html__( 'Additional Reporting', 'google-analytics-for-wordpress' ),
@@ -279,6 +295,22 @@ function monsterinsights_get_registered_settings() {
 		),
 		/** Performance Tracking Settings */
 		'performance' => apply_filters('monsterinsights_settings_performance',
+			array()
+		),
+		/** AMP Tracking Settings */
+		'amp' => apply_filters('monsterinsights_settings_amp',
+			array()
+		),
+		/** Google Optimize Tracking Settings */
+		'goptimize' => apply_filters('monsterinsights_settings_goptimize',
+			array()
+		),
+		/** Facebook Instant Articles Tracking Settings */
+		'fbia' => apply_filters('monsterinsights_settings_fbia',
+			array()
+		),
+		/** Bounce Reduction Settings */
+		'bounce' => apply_filters('monsterinsights_settings_bounce',
 			array()
 		),
 		/** Reporting Tracking Settings */

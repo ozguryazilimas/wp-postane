@@ -36,10 +36,6 @@ function monsterinsights_admin_styles() {
 	wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-style', plugins_url( 'assets/css/jvectormap/jquery-jvectormap-2.0.3.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
 	wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-jvectormap-style' );
 
-	// FontAwesome (used for message boxes)
-	wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-font-awesome', plugins_url( 'assets/css/font-awesome/font-awesome.min.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
-	wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-font-awesome' );
-
 	 // Select300
 	wp_register_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-style', plugins_url( 'assets/css/select300/select300.css', MONSTERINSIGHTS_PLUGIN_FILE ), array(), monsterinsights_get_asset_version() );
 	wp_enqueue_style( MONSTERINSIGHTS_PLUGIN_SLUG . '-select300-style' );

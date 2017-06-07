@@ -87,7 +87,7 @@ function monsterinsights_registered_settings_filter( $settings ) {
 				'desc' => esc_html__( "By upgrading to MonsterInsights Pro, you can add Membership tracking.", 'google-analytics-for-wordpress' )
 			);
 
-		// Dimensions
+			// Dimensions
 			$settings['dimensions']['dimensions_notice'] = array( 
 				'id' => 'dimensions_notice',
 				'no_label' => true,
@@ -114,7 +114,43 @@ function monsterinsights_registered_settings_filter( $settings ) {
 				'desc' => esc_html__( "By upgrading to MonsterInsights Pro, you can enable enhanced reporting.", 'google-analytics-for-wordpress' )
 			);
 
-			// Reporting
+			// Google AMP
+			$settings['amp']['amp_notice'] = array( 
+				'id' => 'amp_notice',
+				'no_label' => true,
+				'name' => __( 'Want to use track users visiting your AMP pages?', 'google-analytics-for-wordpress'),
+				'type' => 'upgrade_notice',
+				'desc' => esc_html__( "By upgrading to MonsterInsights Pro, you can enable AMP page tracking.", 'google-analytics-for-wordpress' )
+			);
+
+			// Google Optimize
+			$settings['goptimize']['goptimize_notice'] = array( 
+				'id' => 'goptimize_notice',
+				'no_label' => true,
+				'name' => __( 'Want to use Google Optimize to retarget your website vistors and perform A/B split tests with ease?', 'google-analytics-for-wordpress'),
+				'type' => 'upgrade_notice',
+				'desc' => esc_html__( "By upgrading to MonsterInsights Pro, you can enable Google Optimize.", 'google-analytics-for-wordpress' )
+			);
+
+			// Facebook Instant Articles
+			$settings['fbia']['fbia_notice'] = array( 
+				'id' => 'fbia_notice',
+				'no_label' => true,
+				'name' => __( 'Want to expand your website audience beyond your website with Facebook Instant Articles?', 'google-analytics-for-wordpress'),
+				'type' => 'upgrade_notice',
+				'desc' => esc_html__( "By upgrading to MonsterInsights Pro, you can track your Facebook Instant Article visitors with MonsterInsights.", 'google-analytics-for-wordpress' )
+			);
+
+			// Bounce Reduction
+			$settings['bounce']['bounce_notice'] = array( 
+				'id' => 'bounce_notice',
+				'no_label' => true,
+				'name' => __( 'Want to adjust your website bounce rate?', 'google-analytics-for-wordpress'),
+				'type' => 'upgrade_notice',
+				'desc' => esc_html__( "By upgrading to MonsterInsights Pro, you can adjust your Google Analytics bounce rate with MonsterInsights.", 'google-analytics-for-wordpress' )
+			);
+
+			// Notifications
 			$settings['notifications']['notifications_notice'] = array( 
 				'id' => 'notifications_notice',
 				'no_label' => true,
@@ -123,7 +159,7 @@ function monsterinsights_registered_settings_filter( $settings ) {
 				'desc' => esc_html__( "By upgrading to MonsterInsights Pro, you can enable notifications.", 'google-analytics-for-wordpress' )
 			);
 
-			// Reporting
+			// eCommerce
 			$settings['ecommerce']['ecommerce_notice'] = array( 
 				'id' => 'ecommerce_notice',
 				'no_label' => true,

@@ -153,6 +153,15 @@ function monsterinsights_save_settings() {
 }
 add_action( 'current_screen', 'monsterinsights_save_settings' );
 
+function monsterinsights_is_settings_tab( $tab = '' ){
+	$tabs = monsterinsights_get_settings_tabs();
+	if ( empty( $tab ) || empty( $tabs ) || ! is_string( $tab ) || ! is_array( $tabs ) ) {
+		return false;
+	}
+
+	return !empty( $tabs[$tab]);
+}
+
 /**
  * Flattens the set of registered settings and their type so we can easily sanitize all the settings
  * in a much cleaner set of logic in monsterinsights_settings_sanitize
