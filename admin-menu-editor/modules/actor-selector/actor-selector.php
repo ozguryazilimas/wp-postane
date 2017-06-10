@@ -1,20 +1,17 @@
 <?php
-class ameActorSelector {
+class ameActorSelector extends ameModule {
 	const ajaxUpdateAction = 'ws_ame_set_visible_users';
 
-	/**
-	 * @var WPMenuEditor
-	 */
-	private $menuEditor;
-
 	public function __construct($menuEditor) {
-		$this->menuEditor = $menuEditor;
+		parent::__construct($menuEditor);
 
 		add_action('wp_ajax_' . self::ajaxUpdateAction, array($this, 'ajaxSetVisibleUsers'));
-		add_action('admin_menu_editor-register_scripts', array($this, 'registerScripts'));
+		add_action('admin_menu_editor-users_to_load', array($this, 'addVisibleUsersToLoginList'));
 	}
 
 	public function registerScripts() {
+		parent::registerScripts();
+
 		$isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 		$dependencies = array('ame-actor-manager', 'ame-lodash', 'jquery');
 		if ( $isProVersion || wp_script_is('ame-visible-users', 'registered') ) {
@@ -57,5 +54,13 @@ class ameActorSelector {
 
 		$this->menuEditor->set_plugin_option('visible_users', $visibleUsers);
 		die('OK');
+	}
+
+	public function addVisibleUsersToLoginList($userLogins) {
+		$visibleUsers = $this->menuEditor->get_plugin_option('visible_users');
+		if ( is_array($visibleUsers) ) {
+			$userLogins = array_merge($userLogins, $visibleUsers);
+		}
+		return $userLogins;
 	}
 }

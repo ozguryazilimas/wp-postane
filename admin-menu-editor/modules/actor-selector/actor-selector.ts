@@ -87,7 +87,7 @@ class AmeActorSelector {
 
 		//Select an actor on click.
 		this.selectorNode.on('click', 'li a.ws_actor_option', (event) => {
-			var actor = jQuery(event.target).attr('href').substring(1);
+			let actor = jQuery(event.target).attr('href').substring(1);
 			if (actor === '') {
 				actor = null;
 			}
@@ -124,13 +124,13 @@ class AmeActorSelector {
 			return;
 		}
 
-		var previousSelection = this.selectedActor;
+		const previousSelection = this.selectedActor;
 		this.selectedActor = actorId;
 		this.highlightSelectedActor();
 
 		//Notify subscribers that the selection has changed.
 		if (this.selectedActor !== previousSelection) {
-			for (var i = 0; i < this.subscribers.length; i++) {
+			for (let i = 0; i < this.subscribers.length; i++) {
 				this.subscribers[i](this.selectedActor, previousSelection);
 			}
 		}
@@ -145,7 +145,7 @@ class AmeActorSelector {
 		this.selectorNode.find('.current').removeClass('current');
 
 		//Select the new one or "All".
-		var selector;
+		let selector;
 		if (this.selectedActor === null) {
 			selector = 'a.ws_no_actor';
 		} else {
@@ -157,13 +157,13 @@ class AmeActorSelector {
 	private populateActorSelector() {
 		const actorSelector = this.selectorNode,
 			$ = jQuery;
-		var isSelectedActorVisible = false;
+		let isSelectedActorVisible = false;
 
 		//Build the list of available actors.
 		actorSelector.empty();
 		actorSelector.append('<li><a href="#" class="current ws_actor_option ws_no_actor" data-text="All">All</a></li>');
 
-		var visibleActors = this.getVisibleActors();
+		const visibleActors = this.getVisibleActors();
 		for (let i = 0; i < visibleActors.length; i++) {
 			const actor = visibleActors[i],
 				name = this.getNiceName(actor);
@@ -181,7 +181,7 @@ class AmeActorSelector {
 		}
 
 		if (this.isProVersion) {
-			var moreUsersText = 'Choose users\u2026';
+			const moreUsersText = 'Choose users\u2026';
 			actorSelector.append(
 				$('<li>').append(
 					$('<a></a>')
@@ -211,7 +211,7 @@ class AmeActorSelector {
 		}
 
 		const _ = AmeActorSelector._;
-		var actors = [];
+		let actors = [];
 
 		//Include all roles.
 		//Idea: Sort roles either alphabetically or by typical privilege level (admin, editor, author, ...).
@@ -230,7 +230,7 @@ class AmeActorSelector {
 			.without(this.currentUserLogin)
 			.sortBy()
 			.forEach((login) => {
-				var user = this.actorManager.getUser(login);
+				const user = this.actorManager.getUser(login);
 				actors.push(user);
 			})
 			.value();

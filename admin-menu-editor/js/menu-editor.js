@@ -1907,7 +1907,7 @@ function setActorAccess(containerNode, actor, allowAccess) {
 	}
 
 	if (typeof actor === 'string') {
-		menuItem.grant_access[actor] = !!allowAccess;
+		menuItem.grant_access[actor] = Boolean(allowAccess);
 	} else {
 		_.assign(menuItem.grant_access, actor);
 	}
@@ -3924,6 +3924,7 @@ function ameOnDomReady() {
 		event.preventDefault();
 
 		var button = $(this),
+			direction = button.data('sort-direction') || 'asc',
 			menuBox = $(this).closest('.ws_main_container').find('.ws_box').first();
 
 		if (menuBox.is('#ws_submenu_box')) {
@@ -3931,7 +3932,16 @@ function ameOnDomReady() {
 		}
 
 		if (menuBox.length > 0) {
-			sortMenuItems(menuBox, button.data('sort-direction') || 'asc');
+			sortMenuItems(menuBox, direction);
+		}
+
+		//When sorting the top level menu also sort submenus, but leave the first item unmoved.
+		//Moving the first item would change the parent menu URL (WP always links it to the first item),
+		//which can be unexpected and confusing. The user can always move the first item manually.
+		if (menuBox.is('#ws_menu_box')) {
+			$('#ws_submenu_box').find('.ws_submenu').each(function() {
+				sortMenuItems($(this), direction, true);
+			});
 		}
 	});
 
@@ -3940,10 +3950,12 @@ function ameOnDomReady() {
 	 *
 	 * @param $menuBox A DOM node that contains multiple menu items.
 	 * @param {string} direction 'asc' or 'desc'
+	 * @param {boolean} [leaveFirstItem] Leave the first item in its original position. Defaults to false.
 	 */
-	function sortMenuItems($menuBox, direction) {
+	function sortMenuItems($menuBox, direction, leaveFirstItem) {
 		var multiplier = (direction === 'desc') ? -1 : 1,
-			items = $menuBox.find('.ws_container');
+			items = $menuBox.find('.ws_container'),
+			firstItem = items.first();
 
 		//Separators don't have a title, but we don't want them to end up at the top of the list.
 		//Instead, lets keep their position the same relative to the previous item.
@@ -3960,8 +3972,8 @@ function ameOnDomReady() {
 		}));
 
 		function compareMenus(a, b){
-			var aTitle = jsTrim($(a).find('.ws_item_title').text()),
-				bTitle = jsTrim($(b).find('.ws_item_title').text());
+			var aTitle = $(a).data('ame-sort-value'),
+				bTitle = $(b).data('ame-sort-value');
 
 			aTitle = aTitle.toLowerCase();
 			bTitle = bTitle.toLowerCase();
@@ -3975,6 +3987,11 @@ function ameOnDomReady() {
 		}
 
 		items.sort(compareMenus);
+
+		if (leaveFirstItem) {
+			//Move the first item back to the top.
+			firstItem.prependTo($menuBox);
+		}
 	}
 
 	//Toggle the second row of toolbar buttons.

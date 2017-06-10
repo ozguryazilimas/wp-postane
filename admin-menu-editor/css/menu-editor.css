@@ -144,6 +144,9 @@
   width: 290px;
   padding: 3px;
   margin: 2px 0 2px 6px; }
+  body.rtl .ws_container {
+    margin-right: 6px;
+    margin-left: 0; }
 
 .ws_submenu {
   min-height: 2em; }
@@ -530,8 +533,8 @@ select.ws_dropdown optgroup option {
     margin-bottom: 0; }
   .ws_tool_tab_nav li.ui-tabs-active {
     border-color: #dfdfdf;
-    background-color: #FDFDFD;
-    border-bottom-color: #FDFDFD; }
+    border-bottom-color: #FDFDFD;
+    background: #FDFDFD none; }
   .ws_tool_tab_nav a {
     text-decoration: none; }
   .ws_tool_tab_nav li.ui-tabs-active a {
@@ -837,6 +840,9 @@ a#ws-ame-delete-color-preset:hover {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px; }
+  .ui-dialog .ui-dialog-content {
+    padding: 8px 8px 8px 8px;
+    font-size: 1.1em; }
 
 .ui-dialog-titlebar {
   display: block;
@@ -872,10 +878,6 @@ a#ws-ame-delete-color-preset:hover {
 .ui-dialog-titlebar-close:hover {
   /*background-image: url(../images/x-light.png);*/
   background-color: #a6c2f5; }
-
-.ui-dialog-content {
-  padding: 8px 8px 8px 8px;
-  font-size: 1.1em; }
 
 #export_dialog .ws_dialog_panel {
   height: 50px; }
@@ -1370,6 +1372,17 @@ a#ws-ame-delete-color-preset:hover {
     #ws_capability_suggestions .ws_ame_suggested_capability:hover {
       background-color: #d0f2d0; }
 
+/*********************************************
+      Settings page stuff
+**********************************************/
+#ws_plugin_settings_form figure {
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 1em; }
+
+/*********************************************
+      Miscellaneous
+**********************************************/
 #ws_sidebar_pro_ad {
   min-width: 225px;
   margin-top: 5px;

@@ -1,10 +1,15 @@
 /// <reference path="lodash-3.10.d.ts" />
 /// <reference path="common.d.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var AmeBaseActor = (function () {
     function AmeBaseActor(id, displayName, capabilities) {
         this.displayName = '[Error: No displayName set]';
@@ -54,9 +59,10 @@ var AmeBaseActor = (function () {
 var AmeRole = (function (_super) {
     __extends(AmeRole, _super);
     function AmeRole(roleId, displayName, capabilities) {
-        _super.call(this, 'role:' + roleId, displayName, capabilities);
-        this.actorTypeSpecificity = 1;
-        this.name = roleId;
+        var _this = _super.call(this, 'role:' + roleId, displayName, capabilities) || this;
+        _this.actorTypeSpecificity = 1;
+        _this.name = roleId;
+        return _this;
     }
     AmeRole.prototype.hasOwnCap = function (capability) {
         //In WordPress, a role name is also a capability name. Users that have the role "foo" always
@@ -73,21 +79,22 @@ var AmeUser = (function (_super) {
     __extends(AmeUser, _super);
     function AmeUser(userLogin, displayName, capabilities, roles, isSuperAdmin, userId) {
         if (isSuperAdmin === void 0) { isSuperAdmin = false; }
-        _super.call(this, 'user:' + userLogin, displayName, capabilities);
-        this.userId = 0;
-        this.isSuperAdmin = false;
-        this.avatarHTML = '';
-        this.actorTypeSpecificity = 10;
-        this.userLogin = userLogin;
-        this.roles = roles;
-        this.isSuperAdmin = isSuperAdmin;
-        this.userId = userId || 0;
-        if (this.isSuperAdmin) {
-            this.groupActors.push(AmeSuperAdmin.permanentActorId);
+        var _this = _super.call(this, 'user:' + userLogin, displayName, capabilities) || this;
+        _this.userId = 0;
+        _this.isSuperAdmin = false;
+        _this.avatarHTML = '';
+        _this.actorTypeSpecificity = 10;
+        _this.userLogin = userLogin;
+        _this.roles = roles;
+        _this.isSuperAdmin = isSuperAdmin;
+        _this.userId = userId || 0;
+        if (_this.isSuperAdmin) {
+            _this.groupActors.push(AmeSuperAdmin.permanentActorId);
         }
-        for (var i = 0; i < this.roles.length; i++) {
-            this.groupActors.push('role:' + this.roles[i]);
+        for (var i = 0; i < _this.roles.length; i++) {
+            _this.groupActors.push('role:' + _this.roles[i]);
         }
+        return _this;
     }
     AmeUser.createFromProperties = function (properties) {
         var user = new AmeUser(properties.user_login, properties.display_name, properties.capabilities, properties.roles, properties.is_super_admin, properties.hasOwnProperty('id') ? properties.id : null);
@@ -101,20 +108,21 @@ var AmeUser = (function (_super) {
 var AmeSuperAdmin = (function (_super) {
     __extends(AmeSuperAdmin, _super);
     function AmeSuperAdmin() {
-        _super.call(this, AmeSuperAdmin.permanentActorId, 'Super Admin', {});
-        this.actorTypeSpecificity = 2;
+        var _this = _super.call(this, AmeSuperAdmin.permanentActorId, 'Super Admin', {}) || this;
+        _this.actorTypeSpecificity = 2;
+        return _this;
     }
     AmeSuperAdmin.prototype.hasOwnCap = function (capability) {
         //The Super Admin has all possible capabilities except the special "do_not_allow" flag.
         return (capability !== 'do_not_allow');
     };
-    AmeSuperAdmin.permanentActorId = 'special:super_admin';
     return AmeSuperAdmin;
 }(AmeBaseActor));
+AmeSuperAdmin.permanentActorId = 'special:super_admin';
 var AmeActorManager = (function () {
     function AmeActorManager(roles, users, isMultisite) {
-        var _this = this;
         if (isMultisite === void 0) { isMultisite = false; }
+        var _this = this;
         this.roles = {};
         this.users = {};
         this.grantedCapabilities = {};
@@ -187,11 +195,12 @@ var AmeActorManager = (function () {
             return true;
         }
         capability = AmeActorManager.mapMetaCap(capability);
+        var result = null;
         //Step #1: Check temporary context - unsaved caps, etc. Optional.
         //Step #2: Check granted capabilities. Default on, but can be skipped.
         if (contextList) {
             //Check for explicit settings first.
-            var result = null, actorValue, len = contextList.length;
+            var actorValue = void 0, len = contextList.length;
             for (var i = 0; i < len; i++) {
                 if (contextList[i].hasOwnProperty(actorId)) {
                     actorValue = contextList[i][actorId];
@@ -363,7 +372,8 @@ var AmeActorManager = (function () {
         var rolesByPower = _.values(this.getRoles()).sort(function (a, b) {
             var aCaps = capsByPower(a), bCaps = capsByPower(b);
             //Prioritise roles with the highest number of the most powerful capabilities.
-            for (var i = 0, limit = Math.min(aCaps.length, bCaps.length); i < limit; i++) {
+            var i = 0, limit = Math.min(aCaps.length, bCaps.length);
+            for (; i < limit; i++) {
                 var delta_1 = bCaps[i].power - aCaps[i].power;
                 if (delta_1 !== 0) {
                     return delta_1;
@@ -430,9 +440,9 @@ var AmeActorManager = (function () {
     AmeActorManager.prototype.getSuggestedCapabilities = function () {
         return this.suggestedCapabilities;
     };
-    AmeActorManager._ = wsAmeLodash;
     return AmeActorManager;
 }());
+AmeActorManager._ = wsAmeLodash;
 if (typeof wsAmeActorData !== 'undefined') {
     AmeActors = new AmeActorManager(wsAmeActorData.roles, wsAmeActorData.users, wsAmeActorData.isMultisite);
     if (typeof wsAmeActorData['capPower'] !== 'undefined') {

@@ -1,9 +1,9 @@
 /// <reference path="lodash-3.10.d.ts" />
 /// <reference path="common.d.ts" />
 
-declare var wsAmeActorData: any;
+declare let wsAmeActorData: any;
 declare var wsAmeLodash: _.LoDashStatic;
-declare var AmeActors: AmeActorManager;
+declare let AmeActors: AmeActorManager;
 
 interface CapabilityMap {
 	[capabilityName: string] : boolean;
@@ -41,7 +41,7 @@ abstract class AmeBaseActor {
 	}
 
 	static getActorSpecificity(actorId: string) {
-		var actorType = actorId.substring(0, actorId.indexOf(':')),
+		let actorType = actorId.substring(0, actorId.indexOf(':')),
 			specificity = 0;
 		switch (actorType) {
 			case 'role':
@@ -122,7 +122,7 @@ class AmeUser extends AmeBaseActor {
 		if (this.isSuperAdmin) {
 			this.groupActors.push(AmeSuperAdmin.permanentActorId);
 		}
-		for (var i = 0; i < this.roles.length; i++) {
+		for (let i = 0; i < this.roles.length; i++) {
 			this.groupActors.push('role:' + this.roles[i]);
 		}
 	}
@@ -186,12 +186,12 @@ class AmeActorManager {
 		this.isMultisite = !!isMultisite;
 
 		AmeActorManager._.forEach(roles, (roleDetails, id) => {
-			var role = new AmeRole(id, roleDetails.name, roleDetails.capabilities);
+			const role = new AmeRole(id, roleDetails.name, roleDetails.capabilities);
 			this.roles[role.name] = role;
 		});
 
 		AmeActorManager._.forEach(users, (userDetails: AmeUserPropertyMap) => {
-			var user = AmeUser.createFromProperties(userDetails);
+			const user = AmeUser.createFromProperties(userDetails);
 			this.users[user.userLogin] = user;
 		});
 
@@ -219,7 +219,7 @@ class AmeActorManager {
 			return this.superAdmin;
 		}
 
-		var separator = actorId.indexOf(':'),
+		const separator = actorId.indexOf(':'),
 			actorType = actorId.substring(0, separator),
 			actorKey = actorId.substring(separator + 1);
 
@@ -266,13 +266,14 @@ class AmeActorManager {
 		}
 
 		capability = AmeActorManager.mapMetaCap(capability);
+		let result = null;
 
 		//Step #1: Check temporary context - unsaved caps, etc. Optional.
 		//Step #2: Check granted capabilities. Default on, but can be skipped.
 		if (contextList) {
 			//Check for explicit settings first.
-			var result = null, actorValue, len = contextList.length;
-			for (var i = 0; i < len; i++) {
+			let actorValue, len = contextList.length;
+			for (let i = 0; i < len; i++) {
 				if (contextList[i].hasOwnProperty(actorId)) {
 					actorValue = contextList[i][actorId];
 					if (typeof actorValue === 'boolean') {
@@ -289,7 +290,7 @@ class AmeActorManager {
 		}
 
 		//Step #3: Check owned/default capabilities. Always checked.
-		var actor = this.getActor(actorId),
+		let actor = this.getActor(actorId),
 			hasOwnCap = actor.hasOwnCap(capability);
 		if (hasOwnCap !== null) {
 			return hasOwnCap;
@@ -305,7 +306,7 @@ class AmeActorManager {
 
 			//Check if any of the user's roles have the capability.
 			result = false;
-			for (var index = 0; index < actor.roles.length; index++) {
+			for (let index = 0; index < actor.roles.length; index++) {
 				result = result || this.actorHasCap('role:' + actor.roles[index], capability, contextList);
 			}
 			return result;
@@ -390,7 +391,7 @@ class AmeActorManager {
 	) {
 		capability = AmeActorManager.mapMetaCap(capability);
 
-		var grant = sourceType ? [hasCap, sourceType, sourceName || null] : hasCap;
+		const grant = sourceType ? [hasCap, sourceType, sourceName || null] : hasCap;
 		AmeActorManager._.set(context, [actor, capability], grant);
 	}
 
@@ -413,13 +414,13 @@ class AmeActorManager {
 	 * the direct grant is redundant. We can remove it. Jane will still have "edit_posts" because she's an editor.
 	 */
 	pruneGrantedUserCapabilities(): AmeGrantedCapabilityMap {
-		var _ = AmeActorManager._,
+		let _ = AmeActorManager._,
 			pruned = _.cloneDeep(this.grantedCapabilities),
 			context = [pruned];
 
-		var actorKeys = _(pruned).keys().filter((actorId) => {
+		let actorKeys = _(pruned).keys().filter((actorId) => {
 			//Skip users that are not loaded.
-			var actor = this.getActor(actorId);
+			const actor = this.getActor(actorId);
 			if (actor === null) {
 				return false;
 			}
@@ -428,10 +429,10 @@ class AmeActorManager {
 
 		_.forEach(actorKeys, (actor) => {
 			_.forEach(_.keys(pruned[actor]), (capability) => {
-				var grant = pruned[actor][capability];
+				const grant = pruned[actor][capability];
 				delete pruned[actor][capability];
 
-				var hasCap = _.isArray(grant) ? grant[0] : grant,
+				const hasCap = _.isArray(grant) ? grant[0] : grant,
 					hasCapWhenPruned = this.actorHasCap(actor, capability, context);
 
 				if (hasCap !== hasCapWhenPruned) {
@@ -454,7 +455,7 @@ class AmeActorManager {
 	 * @return {Number}
 	 */
 	static compareActorSpecificity(actor1: string, actor2: string): Number {
-		var delta = AmeBaseActor.getActorSpecificity(actor1) - AmeBaseActor.getActorSpecificity(actor2);
+		let delta = AmeBaseActor.getActorSpecificity(actor1) - AmeBaseActor.getActorSpecificity(actor2);
 		if (delta !== 0) {
 			delta = (delta > 0) ? 1 : -1;
 		}
@@ -484,7 +485,8 @@ class AmeActorManager {
 				bCaps = capsByPower(b);
 
 			//Prioritise roles with the highest number of the most powerful capabilities.
-			for (var i = 0, limit = Math.min(aCaps.length, bCaps.length); i < limit; i++) {
+			let i = 0, limit = Math.min(aCaps.length, bCaps.length);
+			for (; i < limit; i++) {
 				let delta = bCaps[i].power - aCaps[i].power;
 				if (delta !== 0) {
 					return delta;

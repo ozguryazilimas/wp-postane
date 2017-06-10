@@ -3,9 +3,10 @@
 /// <reference path="../../js/jqueryui.d.ts" />
 /// <reference path="../../js/lodash-3.10.d.ts" />
 /// <reference path="../../modules/actor-selector/actor-selector.ts" />
+/// <reference path="../../ajax-wrapper/ajax-action-wrapper.d.ts" />
 
-declare var amePluginVisibility: AmePluginVisibilityModule;
-declare var wsPluginVisibilityData: PluginVisibilityScriptData;
+declare let amePluginVisibility: AmePluginVisibilityModule;
+declare const wsPluginVisibilityData: PluginVisibilityScriptData;
 
 interface PluginVisibilityScriptData {
 	isMultisite: boolean,
@@ -13,10 +14,7 @@ interface PluginVisibilityScriptData {
 	selectedActor: string,
 	installedPlugins: Array<PvPluginInfo>,
 	settings: PluginVisibilitySettings,
-	isProVersion: boolean,
-
-	adminAjaxUrl: string,
-	dismissNoticeNonce: string
+	isProVersion: boolean
 }
 
 interface PluginVisibilitySettings {
@@ -24,7 +22,9 @@ interface PluginVisibilitySettings {
 	plugins: {
 		[fileName : string] : {
 			isVisibleByDefault: boolean,
-			grantAccess: GrantAccessMap
+			grantAccess: GrantAccessMap,
+			customName: string,
+			customDescription: string
 		}
 	}
 }
@@ -37,7 +37,10 @@ interface PvPluginInfo {
 	name: string,
 	fileName: string,
 	description: string,
-	isActive: boolean
+	isActive: boolean,
+
+	customName: string,
+	customDescription: string
 }
 
 class AmePluginVisibilityModule {
@@ -66,7 +69,7 @@ class AmePluginVisibilityModule {
 		this.actorSelector = new AmeActorSelector(AmeActors, scriptData.isProVersion);
 
 		//Wrap the selected actor in a computed observable so that it can be used with Knockout.
-		var _selectedActor = ko.observable(this.actorSelector.selectedActor);
+		let _selectedActor = ko.observable(this.actorSelector.selectedActor);
 		this.selectedActor = ko.computed<string>({
 			read: function () {
 				return _selectedActor();
@@ -94,6 +97,10 @@ class AmePluginVisibilityModule {
 
 		this.plugins = _.map(scriptData.installedPlugins, (plugin) => {
 			return new AmePlugin(plugin, _.get(scriptData.settings.plugins, plugin.fileName, {}), this);
+		});
+		//Normally, the plugin list is sorted by the (real) plugin name. Re-sort taking custom names into account.
+		this.plugins.sort(function(a, b) {
+			return a.name().localeCompare(b.name());
 		});
 
 		this.privilegedActors = [this.actorSelector.getCurrentUserActor()];
@@ -202,13 +209,16 @@ class AmePluginVisibilityModule {
 				isVisibleByDefault: plugin.isVisibleByDefault(),
 				grantAccess: _.mapValues(plugin.grantAccess, (allow): boolean => {
 					return allow();
-				})
+				}),
+				customName: plugin.customName(),
+				customDescription: plugin.customDescription()
 			};
 		});
 
 		return result;
 	}
 
+	//noinspection JSUnusedGlobalSymbols Used in KO template.
 	saveChanges() {
 		const settings = this.getSettings();
 
@@ -226,28 +236,60 @@ class AmePluginVisibilityModule {
 	}
 }
 
-class AmePlugin implements PvPluginInfo {
-	name: string;
+class AmePlugin {
+	name: KnockoutComputed<string>;
 	fileName: string;
-	description: string;
+	description: KnockoutComputed<string>;
 	isActive: boolean;
+
+	defaultName: KnockoutObservable<string>;
+	defaultDescription: KnockoutObservable<string>;
+
+	isBeingEdited: KnockoutObservable<boolean>;
+	customName: KnockoutObservable<string>;
+	customDescription: KnockoutObservable<string>;
+	editableName: KnockoutObservable<string>;
+	editableDescription: KnockoutObservable<string>;
 
 	isChecked: KnockoutComputed<boolean>;
 
 	isVisibleByDefault: KnockoutObservable<boolean>;
 	grantAccess: {[actorId : string] : KnockoutObservable<boolean>};
 
-	constructor(details: PvPluginInfo, visibility: Object, module: AmePluginVisibilityModule) {
-		this.name = AmePlugin.stripAllTags(details.name);
-		this.description = AmePlugin.stripAllTags(details.description);
+	constructor(details: PvPluginInfo, settings: Object, module: AmePluginVisibilityModule) {
+		const _ = AmePluginVisibilityModule._;
+
+		this.defaultName = ko.observable(details.name);
+		this.defaultDescription = ko.observable(details.description);
+		this.customName = ko.observable(_.get(settings, 'customName', ''));
+		this.customDescription = ko.observable(_.get(settings, 'customDescription', ''));
+
+		this.name = ko.computed(() => {
+			let value = this.customName();
+			if (value === '') {
+				value = this.defaultName();
+			}
+			return AmePlugin.stripAllTags(value);
+		});
+		this.description = ko.computed(() => {
+			let value = this.customDescription();
+			if (value === '') {
+				value = this.defaultDescription();
+			}
+			return AmePlugin.stripAllTags(value);
+		});
+
 		this.fileName = details.fileName;
 		this.isActive = details.isActive;
 
-		const _ = AmePluginVisibilityModule._;
-		this.isVisibleByDefault = ko.observable(_.get(visibility, 'isVisibleByDefault', true));
+		this.isBeingEdited = ko.observable(false);
+		this.editableName = ko.observable(this.defaultName());
+		this.editableDescription = ko.observable(this.defaultDescription());
+
+		this.isVisibleByDefault = ko.observable(_.get(settings, 'isVisibleByDefault', true));
 
 		const emptyGrant: {[actorId : string] : boolean} = {};
-		this.grantAccess = _.mapValues(_.get(visibility, 'grantAccess', emptyGrant), (hasAccess) => {
+		this.grantAccess = _.mapValues(_.get(settings, 'grantAccess', emptyGrant), (hasAccess) => {
 			return ko.observable<boolean>(hasAccess);
 		});
 
@@ -268,9 +310,43 @@ class AmePlugin implements PvPluginInfo {
 		return this.grantAccess[actorId];
 	}
 
+	//noinspection JSUnusedGlobalSymbols Used in KO template.
+	openInlineEditor() {
+		this.editableName(this.customName() === '' ? this.defaultName() : this.customName());
+		this.editableDescription(this.customDescription() === '' ? this.defaultDescription() : this.customDescription());
+		this.isBeingEdited(true);
+	}
+
+	//noinspection JSUnusedGlobalSymbols Used in KO template.
+	cancelEdit() {
+		this.isBeingEdited(false);
+	}
+
+	//noinspection JSUnusedGlobalSymbols Used in KO template.
+	confirmEdit() {
+		this.customName(this.editableName());
+		this.customDescription(this.editableDescription());
+
+		if (this.customName() === this.defaultName()) {
+			this.customName('');
+		}
+		if (this.customDescription() === this.defaultDescription()) {
+			this.customDescription('');
+		}
+
+		this.isBeingEdited(false);
+	}
+
+	//noinspection JSUnusedGlobalSymbols Used in KO template.
+	resetNameAndDescription() {
+		this.customName('');
+		this.customDescription('');
+		this.isBeingEdited(false);
+	}
+
 	static stripAllTags(input): string {
 		//Based on: http://phpjs.org/functions/strip_tags/
-		var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
+		const tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
 			commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
 		return input.replace(commentsAndPhpTags, '').replace(tags, '');
 	}
@@ -282,12 +358,6 @@ jQuery(function ($) {
 
 	//Permanently dismiss the usage hint via AJAX.
 	$('#ame-pv-usage-notice').on('click', '.notice-dismiss', function() {
-		$.post(
-			wsPluginVisibilityData.adminAjaxUrl,
-			{
-				'action' : 'ws_ame_dismiss_pv_usage_notice',
-				'_ajax_nonce' : wsPluginVisibilityData.dismissNoticeNonce
-			}
-		);
+		AjawV1.getAction('ws_ame_dismiss_pv_usage_notice').request();
 	});
 });

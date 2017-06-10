@@ -215,6 +215,11 @@ $mainContainerBorderRadius: 0px;
 	
 	padding : $itemPadding;
 	margin: 2px 0 2px $itemHorizontalMargin;
+
+	body.rtl & {
+		margin-right: $itemHorizontalMargin;
+		margin-left: 0;
+	}
 }
 
 .ws_active { }
@@ -731,8 +736,8 @@ $activeToolTabBackground: #FDFDFD;
 
 	li.ui-tabs-active {
 		border-color: #dfdfdf;
-		background-color: #FDFDFD;
 		border-bottom-color: $activeToolTabBackground;
+		background: #FDFDFD none;
 	}
 
 	a {
@@ -1130,6 +1135,11 @@ a#ws-ame-delete-color-preset:hover {
 	-moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+
+	.ui-dialog-content {
+		padding: 8px 8px 8px 8px;
+		font-size: 1.1em;
+	}
 }
 
 .ui-dialog-titlebar {
@@ -1179,11 +1189,6 @@ a#ws-ame-delete-color-preset:hover {
 
 .ui-icon-closethick {
 	
-}
-
-.ui-dialog-content {
-	padding: 8px 8px 8px 8px;
-	font-size: 1.1em;
 }
 
 #export_dialog .ws_dialog_panel {
@@ -1933,6 +1938,19 @@ $userSelectionPanelPadding: 10px;
 	}
 }
 
+/*********************************************
+      Settings page stuff
+**********************************************/
+
+#ws_plugin_settings_form figure {
+	margin-left: 0;
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+/*********************************************
+      Miscellaneous
+**********************************************/
 
 #ws_sidebar_pro_ad {
     min-width: 225px;

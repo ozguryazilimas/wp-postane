@@ -3,6 +3,7 @@
 /// <reference path="../../js/jqueryui.d.ts" />
 /// <reference path="../../js/lodash-3.10.d.ts" />
 /// <reference path="../../modules/actor-selector/actor-selector.ts" />
+/// <reference path="../../ajax-wrapper/ajax-action-wrapper.d.ts" />
 var AmePluginVisibilityModule = (function () {
     function AmePluginVisibilityModule(scriptData) {
         var _this = this;
@@ -31,6 +32,10 @@ var AmePluginVisibilityModule = (function () {
         });
         this.plugins = _.map(scriptData.installedPlugins, function (plugin) {
             return new AmePlugin(plugin, _.get(scriptData.settings.plugins, plugin.fileName, {}), _this);
+        });
+        //Normally, the plugin list is sorted by the (real) plugin name. Re-sort taking custom names into account.
+        this.plugins.sort(function (a, b) {
+            return a.name().localeCompare(b.name());
         });
         this.privilegedActors = [this.actorSelector.getCurrentUserActor()];
         if (this.isMultisite) {
@@ -132,11 +137,14 @@ var AmePluginVisibilityModule = (function () {
                 isVisibleByDefault: plugin.isVisibleByDefault(),
                 grantAccess: _.mapValues(plugin.grantAccess, function (allow) {
                     return allow();
-                })
+                }),
+                customName: plugin.customName(),
+                customDescription: plugin.customDescription()
             };
         });
         return result;
     };
+    //noinspection JSUnusedGlobalSymbols Used in KO template.
     AmePluginVisibilityModule.prototype.saveChanges = function () {
         var settings = this.getSettings();
         //Remove settings associated with roles and users that no longer exist or are not visible.
@@ -152,16 +160,35 @@ var AmePluginVisibilityModule = (function () {
     return AmePluginVisibilityModule;
 }());
 var AmePlugin = (function () {
-    function AmePlugin(details, visibility, module) {
+    function AmePlugin(details, settings, module) {
         var _this = this;
-        this.name = AmePlugin.stripAllTags(details.name);
-        this.description = AmePlugin.stripAllTags(details.description);
+        var _ = AmePluginVisibilityModule._;
+        this.defaultName = ko.observable(details.name);
+        this.defaultDescription = ko.observable(details.description);
+        this.customName = ko.observable(_.get(settings, 'customName', ''));
+        this.customDescription = ko.observable(_.get(settings, 'customDescription', ''));
+        this.name = ko.computed(function () {
+            var value = _this.customName();
+            if (value === '') {
+                value = _this.defaultName();
+            }
+            return AmePlugin.stripAllTags(value);
+        });
+        this.description = ko.computed(function () {
+            var value = _this.customDescription();
+            if (value === '') {
+                value = _this.defaultDescription();
+            }
+            return AmePlugin.stripAllTags(value);
+        });
         this.fileName = details.fileName;
         this.isActive = details.isActive;
-        var _ = AmePluginVisibilityModule._;
-        this.isVisibleByDefault = ko.observable(_.get(visibility, 'isVisibleByDefault', true));
+        this.isBeingEdited = ko.observable(false);
+        this.editableName = ko.observable(this.defaultName());
+        this.editableDescription = ko.observable(this.defaultDescription());
+        this.isVisibleByDefault = ko.observable(_.get(settings, 'isVisibleByDefault', true));
         var emptyGrant = {};
-        this.grantAccess = _.mapValues(_.get(visibility, 'grantAccess', emptyGrant), function (hasAccess) {
+        this.grantAccess = _.mapValues(_.get(settings, 'grantAccess', emptyGrant), function (hasAccess) {
             return ko.observable(hasAccess);
         });
         this.isChecked = ko.computed({
@@ -180,6 +207,34 @@ var AmePlugin = (function () {
         }
         return this.grantAccess[actorId];
     };
+    //noinspection JSUnusedGlobalSymbols Used in KO template.
+    AmePlugin.prototype.openInlineEditor = function () {
+        this.editableName(this.customName() === '' ? this.defaultName() : this.customName());
+        this.editableDescription(this.customDescription() === '' ? this.defaultDescription() : this.customDescription());
+        this.isBeingEdited(true);
+    };
+    //noinspection JSUnusedGlobalSymbols Used in KO template.
+    AmePlugin.prototype.cancelEdit = function () {
+        this.isBeingEdited(false);
+    };
+    //noinspection JSUnusedGlobalSymbols Used in KO template.
+    AmePlugin.prototype.confirmEdit = function () {
+        this.customName(this.editableName());
+        this.customDescription(this.editableDescription());
+        if (this.customName() === this.defaultName()) {
+            this.customName('');
+        }
+        if (this.customDescription() === this.defaultDescription()) {
+            this.customDescription('');
+        }
+        this.isBeingEdited(false);
+    };
+    //noinspection JSUnusedGlobalSymbols Used in KO template.
+    AmePlugin.prototype.resetNameAndDescription = function () {
+        this.customName('');
+        this.customDescription('');
+        this.isBeingEdited(false);
+    };
     AmePlugin.stripAllTags = function (input) {
         //Based on: http://phpjs.org/functions/strip_tags/
         var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
@@ -192,10 +247,7 @@ jQuery(function ($) {
     ko.applyBindings(amePluginVisibility, document.getElementById('ame-plugin-visibility-editor'));
     //Permanently dismiss the usage hint via AJAX.
     $('#ame-pv-usage-notice').on('click', '.notice-dismiss', function () {
-        $.post(wsPluginVisibilityData.adminAjaxUrl, {
-            'action': 'ws_ame_dismiss_pv_usage_notice',
-            '_ajax_nonce': wsPluginVisibilityData.dismissNoticeNonce
-        });
+        AjawV1.getAction('ws_ame_dismiss_pv_usage_notice').request();
     });
 });
 //# sourceMappingURL=plugin-visibility.js.map

@@ -354,6 +354,16 @@ abstract class ameMenuItem {
 			unset($item['role_access']);
 		}
 
+		//There's no need to store the default position if a custom position is set.
+		//The default position will not be used, and there's no option to reset the position to default.
+		if ( isset($item['position'], $item['defaults']['position']) && ($item['defaults']['position'] === $item['position'])) {
+			unset($item['defaults']['position']);
+		}
+		//The same goes for template ID.
+		if ( isset($item['template_id']) ) {
+			unset($item['defaults']['template_id']);
+		}
+
 		if ( isset($item['items']) ) {
 			foreach($item['items'] as $index => $sub_item) {
 				$item['items'][$index] = self::normalize($sub_item);

@@ -6,6 +6,7 @@
  * @var array $settings Plugin settings.
  * @var string $editor_page_url A fully qualified URL of the admin menu editor page.
  * @var string $settings_page_url
+ * @var string $db_option_name
  */
 
 $currentUser = wp_get_current_user();
@@ -112,6 +113,62 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 							Per-site &mdash;
 							Use different admin menu settings for each site.
 						</label>
+					</fieldset>
+				</td>
+			</tr>
+
+			<tr>
+				<th scope="row">
+					Modules
+					<a class="ws_tooltip_trigger"
+					   title="Modules are plugin features that can be turned on or off.
+					&lt;br&gt;
+					Turning off unused features will slightly increase performance and may help with certain compatibility issues.
+					">
+						<div class="dashicons dashicons-info"></div>
+					</a>
+				</th>
+				<td>
+					<fieldset>
+						<?php
+						global $wp_menu_editor;
+						foreach ($wp_menu_editor->get_available_modules() as $id => $module) {
+							if ( !empty($module['isAlwaysActive']) ) {
+								continue;
+							}
+
+							$isCompatible = $wp_menu_editor->is_module_compatible($module);
+							$compatibilityNote = '';
+							if ( !$isCompatible && !empty($module['requiredPhpVersion']) ) {
+								if ( version_compare(phpversion(), $module['requiredPhpVersion'], '<') ) {
+									$compatibilityNote = sprintf(
+										'Required PHP version: %1$s or later. Installed PHP version: %2$s',
+										htmlentities($module['requiredPhpVersion']),
+										htmlentities(phpversion())
+									);
+								}
+							}
+
+							echo '<p>';
+							/** @noinspection HtmlUnknownAttribute */
+							printf(
+								'<label>
+									<input type="checkbox" name="active_modules[]" value="%1$s" %2$s %3$s>
+								    %4$s
+								</label>',
+								esc_attr($id),
+								$wp_menu_editor->is_module_active($id, $module) ? 'checked="checked"' : '',
+								$isCompatible ? '' : 'disabled="disabled"',
+								!empty($module['title']) ? $module['title'] : htmlentities($id)
+							);
+
+							if ( !empty($compatibilityNote) ) {
+								printf('<br><span class="description">%s</span>', $compatibilityNote);
+							}
+
+							echo '</p>';
+						}
+						?>
 					</fieldset>
 				</td>
 			</tr>
@@ -298,6 +355,7 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 			<tr>
 				<th scope="row">Debugging</th>
 				<td>
+					<p>
 					<label>
 						<input type="checkbox" name="security_logging_enabled"
 							<?php checked($settings['security_logging_enabled']); ?>>
@@ -310,6 +368,53 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 						Note: It's not recommended to use this option on a live site as
 						it can reveal information about your menu configuration.
 					</span>
+					</p>
+
+					<p>
+						<label>
+							<input type="checkbox" name="force_custom_dashicons"
+								<?php checked($settings['force_custom_dashicons']); ?>>
+							Attempt to override menu icon CSS that was added by other plugins
+						</label>
+					</p>
+
+					<p>
+						<label>
+							<input type="checkbox" name="compress_custom_menu"
+								<?php checked($settings['compress_custom_menu']); ?>>
+							Compress menu configuration data that's stored in the database
+						</label>
+						<br><span class="description">
+							Significantly reduces the size of
+							the <code><?php echo esc_html($db_option_name); ?></code> DB option,
+							but adds decompression overhead to every page.
+						</span>
+					</p>
+				</td>
+			</tr>
+
+			<tr>
+				<th scope="row">Server info</th>
+				<td>
+					<figure>
+						<figcaption>PHP error log:</figcaption>
+
+						<code><?php
+						echo esc_html(ini_get('error_log'));
+						?></code>
+					</figure>
+
+					<figure>
+						<figcaption>PHP memory usage:</figcaption>
+
+						<?php
+						printf(
+							'%.2f MiB of %s',
+							memory_get_peak_usage() / (1024 * 1024),
+							esc_html(ini_get('memory_limit'))
+						);
+						?>
+					</figure>
 				</td>
 			</tr>
 			</tbody>

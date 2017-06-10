@@ -142,6 +142,11 @@ abstract class ameMenu {
 			$menu['component_visibility'] = $visibility;
 		}
 
+		//Copy the "modified icons" flag.
+		if ( isset($arr['has_modified_dashicons']) ) {
+			$menu['has_modified_dashicons'] = (bool)$arr['has_modified_dashicons'];
+		}
+
 		return $menu;
 	}
 
@@ -412,14 +417,23 @@ abstract class ameMenu {
 		}
 
 		$common = $menu['format']['common'];
-		$menu['tree'] = self::map_items(
-			$menu['tree'],
-			array(__CLASS__, 'decompress_item'),
-			array($common)
-		);
+		$menu['tree'] = self::decompress_list($menu['tree'], $common);
 
 		unset($menu['format']['compressed'], $menu['format']['common']);
 		return $menu;
+	}
+
+	protected static function decompress_list($list, $common) {
+		//Optimization: Direct iteration is about 40% faster than map_items.
+		$result = array();
+		foreach($list as $key => $item) {
+			$item = self::decompress_item($item, $common);
+			if ( !empty($item['items']) ) {
+				$item['items'] = self::decompress_list($item['items'], $common);
+			}
+			$result[$key] = $item;
+		}
+		return $result;
 	}
 
 	protected static function decompress_item($item, $common) {
@@ -444,10 +458,11 @@ abstract class ameMenu {
 		if ( $extra_params === null ) {
 			$extra_params = array();
 		}
+		$args = array_merge(array(null), $extra_params);
 
 		$result = array();
 		foreach($items as $key => $item) {
-			$args = array_merge(array($item), $extra_params);
+			$args[0] = $item;
 			$item = call_user_func_array($callback, $args);
 
 			if ( !empty($item['items']) ) {
@@ -456,6 +471,19 @@ abstract class ameMenu {
 			$result[$key] = $item;
 		}
 		return $result;
+	}
+
+	/**
+	 * @param array $items
+	 * @param callable $callback
+	 */
+	public static function for_each($items, $callback) {
+		foreach($items as $key => $item) {
+			call_user_func($callback, $item);
+			if ( !empty($item['items']) ) {
+				self::for_each($item['items'], $callback);
+			}
+		}
 	}
 }
 
@@ -495,6 +523,32 @@ class ameGrantedCapabilityFilter {
 			}
 		}
 		return false;
+	}
+}
+
+/**
+ * This could just be a closure, but we want to support PHP 5.2.
+ */
+class ameModifiedIconDetector {
+	private $result = false;
+
+	public static function detect($menu) {
+		$detector = new self();
+		ameMenu::for_each($menu['tree'], array($detector, 'checkItem'));
+		return $detector->getResult();
+	}
+
+	public function checkItem($item) {
+		$this->result = $this->result || $this->hasModifiedDashicon($item);
+	}
+
+	private function hasModifiedDashicon($item) {
+		return !ameMenuItem::is_default($item, 'icon_url')
+			&& (strpos(ameMenuItem::get($item, 'icon_url'), 'dashicons-') === 0);
+	}
+
+	private function getResult() {
+		return $this->result;
 	}
 }
 

@@ -39,16 +39,16 @@ $hiddenItemBorder: #f1acb1;
   -moz-border-radius: 0;
   border-radius: 0; }
 
-.ws_edit_link {
+a.ws_edit_link {
   background: transparent;
   color: #A0A5AA;
   text-align: center;
   border-radius: 0; }
-  .ws_edit_link::before {
+  a.ws_edit_link::before {
     content: "\f140";
     font: normal 20px/1 dashicons;
     display: block; }
-  .ws_edit_link:hover {
+  a.ws_edit_link:hover {
     color: #777; }
 
 .ws_edit_link.ws_edit_link_expanded::before {
@@ -147,6 +147,30 @@ $hiddenItemBorder: #f1acb1;
   border-bottom: 1px solid #dfdfdf;
   height: auto;
   padding: 0; }
+  .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    background: none;
+    border-style: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    text-align: center; }
+    .ui-dialog-titlebar .ui-dialog-titlebar-close .ui-icon, .ui-dialog-titlebar .ui-dialog-titlebar-close .ui-button-text {
+      display: none; }
+  .ui-dialog-titlebar .ui-dialog-titlebar-close::before {
+    font: normal 20px/36px 'dashicons';
+    content: '\f158';
+    vertical-align: middle;
+    width: 36px;
+    height: 36px; }
+  .ui-dialog-titlebar .ui-dialog-titlebar-close:hover {
+    background: transparent none;
+    color: #2ea2cc; }
 
 .ui-dialog-title {
   color: #444444;
@@ -155,29 +179,5 @@ $hiddenItemBorder: #f1acb1;
   line-height: 36px;
   padding: 0 36px 0 8px;
   display: block; }
-
-.ui-dialog-titlebar-close {
-  background: none;
-  border-style: none;
-  color: #666;
-  cursor: pointer;
-  padding: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 36px;
-  height: 36px;
-  text-align: center; }
-
-.ui-dialog-titlebar-close::before {
-  font: normal 20px/36px 'dashicons';
-  content: '\f158';
-  vertical-align: middle;
-  width: 36px;
-  height: 36px; }
-
-.ui-dialog-titlebar-close:hover {
-  background: transparent none;
-  color: #2ea2cc; }
 
 /*# sourceMappingURL=style-modern-one.css.map */

@@ -62,6 +62,8 @@ $mainContainerWidth: $itemWidth + $columnPadding * 2;
 	}
 
 	.ws_flag_container {
+		//Hide low-importance flags. It's debatable (knowing which roles have custom permissions is useful
+		//when debugging configuration issues), but lets leave them hidden for now.
 		.ws_custom_actor_permissions_flag,
 		.ws_custom_flag {
 			display: none;
@@ -85,7 +87,7 @@ $mainContainerWidth: $itemWidth + $columnPadding * 2;
 	border-radius: 0;
 }
 
-.ws_edit_link {
+a.ws_edit_link {
 	background: transparent;
 	color: #A0A5AA;
 
@@ -295,6 +297,42 @@ $mainContainerWidth: $itemWidth + $columnPadding * 2;
 	border-bottom: 1px solid #dfdfdf;
 	height: auto;
 	padding: 0;
+
+	.ui-dialog-titlebar-close {
+		background: none;
+		border-style: none;
+
+		color: #666;
+		cursor: pointer;
+		padding: 0;
+		margin: 0;
+		position: absolute;
+		top: 0;
+		right: 0;
+
+		width: 36px;
+		height: 36px;
+
+		text-align: center;
+
+		.ui-icon, .ui-button-text {
+			display: none;
+		}
+	}
+
+	.ui-dialog-titlebar-close::before {
+		font: normal 20px/36px 'dashicons';
+		content: '\f158';
+
+		vertical-align: middle;
+		width: 36px;
+		height: 36px;
+	}
+
+	.ui-dialog-titlebar-close:hover {
+		background: transparent none;
+		color: #2ea2cc;
+	}
 }
 
 .ui-dialog-title {
@@ -305,35 +343,4 @@ $mainContainerWidth: $itemWidth + $columnPadding * 2;
 
 	padding: 0 36px 0 8px;
 	display: block;
-}
-
-.ui-dialog-titlebar-close {
-	background: none;
-	border-style: none;
-
-	color: #666;
-	cursor: pointer;
-	padding: 0;
-	position: absolute;
-	top: 0;
-	right: 0;
-
-	width: 36px;
-	height: 36px;
-
-	text-align: center;
-}
-
-.ui-dialog-titlebar-close::before {
-	font: normal 20px/36px 'dashicons';
-	content: '\f158';
-
-	vertical-align: middle;
-	width: 36px;
-	height: 36px;
-}
-
-.ui-dialog-titlebar-close:hover {
-	background: transparent none;
-	color: #2ea2cc;
 }

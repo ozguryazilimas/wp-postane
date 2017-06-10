@@ -16,6 +16,8 @@ $dashiconsStylesheet = ABSPATH . WPINC . '/css/dashicons.css';
 
 $icons = array();
 
+$allDashiconDefinitions = '';
+
 $ignoreIcons = array('dashboard', 'editor-bold', 'editor-italic');
 $ignoreIcons = array_flip($ignoreIcons);
 
@@ -33,10 +35,10 @@ foreach($blocks as $block) {
 
 		if ( preg_match('/\.dashicons-(?P<name>[\w\-]+):before/', $selector->getSelector(), $matches) ) {
 			$name = $matches['name'];
+			$char = null;
 
-			//We already have styles for icons that start with "admin-", and the arrow icons
-			//aren't really suitable as menu icons.
-			if ( preg_match('/^(admin|arrow)-/', $name) ) {
+			//The arrow icons aren't really suitable as menu icons.
+			if ( preg_match('/^(arrow)-/', $name) ) {
 				break;
 			}
 
@@ -57,11 +59,27 @@ foreach($blocks as $block) {
 				}
 			}
 
+			if (isset($char) && ($name !== 'before')) {
+				$allDashiconDefinitions .= sprintf(
+					'%s { content: "\%s" !important; }',
+					implode(', ', $selectors),
+					$char
+				) . "\n";
+			}
 
 			break;
 		}
 	}
 }
+
+$dashiconComment = sprintf(
+	"/*\nThis file was automatically generated from /wp-includes/css/dashicons.css.\nLast update: %s\n*/",
+	date('c')
+);
+file_put_contents(
+	dirname(__FILE__) . '/../css/_dashicons.scss',
+	$dashiconComment . "\n" . $allDashiconDefinitions
+);
 
 ?>
 <div class="wrap">

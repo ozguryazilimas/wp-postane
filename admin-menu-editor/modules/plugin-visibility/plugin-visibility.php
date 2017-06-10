@@ -13,6 +13,8 @@ class amePluginVisibility {
 	private $menuEditor;
 	private $settings = array();
 
+	private $dismissNoticeAction;
+
 	public function __construct($menuEditor) {
 		$this->menuEditor = $menuEditor;
 		self::$lastInstance = $this;
@@ -36,10 +38,11 @@ class amePluginVisibility {
 
 		//Display a usage hint in our tab.
 		add_action('admin_notices', array($this, 'displayUsageNotice'));
-		$dismissNoticeAction = new ameAjaxAction('ws_ame_dismiss_pv_usage_notice');
-		$dismissNoticeAction
-			->setAuthCallback(array($this->menuEditor, 'current_user_can_edit_menu'))
-			->setHandler(array($this, 'ajaxDismissUsageNotice'));
+		$this->dismissNoticeAction = ajaw_v1_CreateAction('ws_ame_dismiss_pv_usage_notice')
+			->handler(array($this, 'ajaxDismissUsageNotice'))
+			->permissionCallback(array($this->menuEditor, 'current_user_can_edit_menu'))
+			->method('post')
+			->register();
 	}
 
 	public function getSettings() {
@@ -187,12 +190,24 @@ class amePluginVisibility {
 	 */
 	public function filterPluginList($plugins) {
 		$user = wp_get_current_user();
+		$settings = $this->getSettings();
 
-		//Remove all hidden plugins.
 		$pluginFileNames = array_keys($plugins);
 		foreach($pluginFileNames as $fileName) {
+			//Remove all hidden plugins.
 			if ( !$this->isPluginVisible($fileName, $user) ) {
 				unset($plugins[$fileName]);
+				continue;
+			}
+
+			//Set custom names and descriptions.
+			$customName = ameUtils::get($settings, array('plugins', $fileName, 'customName'), '');
+			$customDescription = ameUtils::get($settings, array('plugins', $fileName, 'customDescription'), '');
+			if ( $customName !== '' ) {
+				$plugins[$fileName]['Name'] = $customName;
+			}
+			if ( $customDescription !== '' ) {
+				$plugins[$fileName]['Description'] = $customDescription;
 			}
 		}
 
@@ -311,7 +326,10 @@ class amePluginVisibility {
 		wp_register_auto_versioned_script(
 			'ame-plugin-visibility',
 			plugins_url('plugin-visibility.js', __FILE__),
-			array('ame-lodash', 'knockout', 'ame-actor-selector', 'jquery-json',)
+			array(
+				'ame-lodash', 'knockout', 'ame-actor-selector', 'jquery-json',
+				$this->dismissNoticeAction->getScriptHandle(),
+			)
 		);
 		wp_enqueue_script('ame-plugin-visibility');
 
@@ -348,6 +366,9 @@ class amePluginVisibility {
 				'name' => $header['Name'],
 				'description' => isset($header['Description']) ? $header['Description'] : '',
 				'isActive' => $isActive || $isActiveForNetwork,
+
+				'customName' => '',
+				'customDescription' => '',
 			);
 		}
 
@@ -364,9 +385,6 @@ class amePluginVisibility {
 			'canManagePlugins' => $canManagePlugins,
 			'isMultisite' => is_multisite(),
 			'isProVersion' => $this->menuEditor->is_pro_version(),
-
-			'dismissNoticeNonce' => wp_create_nonce('ws_ame_dismiss_pv_usage_notice'),
-			'adminAjaxUrl' => admin_url('admin-ajax.php'),
 		);
 	}
 

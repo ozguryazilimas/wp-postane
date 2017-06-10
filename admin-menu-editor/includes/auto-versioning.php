@@ -54,14 +54,17 @@ class AutoVersioning {
 	}
 
 	private static function guess_filename_from_url($url) {
-		$url_mappings = array(
-			plugins_url() => WP_PLUGIN_DIR,
-			plugins_url('', WPMU_PLUGIN_DIR . '/dummy') => WPMU_PLUGIN_DIR,
-			get_stylesheet_directory_uri() => get_stylesheet_directory(),
-			get_template_directory_uri() => get_template_directory(),
-			content_url() => WP_CONTENT_DIR,
-			site_url('/' . WPINC) => ABSPATH . WPINC,
-		);
+		static $url_mappings = null;
+		if ( $url_mappings === null ) {
+			$url_mappings = array(
+				plugins_url() => WP_PLUGIN_DIR,
+				plugins_url('', WPMU_PLUGIN_DIR . '/dummy') => WPMU_PLUGIN_DIR,
+				get_stylesheet_directory_uri() => get_stylesheet_directory(),
+				get_template_directory_uri() => get_template_directory(),
+				content_url() => WP_CONTENT_DIR,
+				site_url('/' . WPINC) => ABSPATH . WPINC,
+			);
+		}
 
 		$filename = null;
 		foreach($url_mappings as $root_url => $directory) {
