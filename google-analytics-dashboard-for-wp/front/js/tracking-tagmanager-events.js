@@ -1,1 +1,1 @@
-(function(a){a(window).load(function(){a.scrollDepth({percentage:true,userTiming:false,pixelDepth:false,gtmOverride:false})})})(jQuery);
+(function(a){a(window).on("load",function(){a.scrollDepth({percentage:true,userTiming:false,pixelDepth:false,gtmOverride:false})})})(jQuery);
