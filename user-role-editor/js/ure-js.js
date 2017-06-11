@@ -133,7 +133,9 @@ jQuery(function ($) {
 
     ure_count_caps_in_groups();
     ure_sizes_update();
-    $('#ure_select_all_caps').click(ure_auto_select_caps);
+    if ($('#ure_select_all_caps').length>0) {
+        $('#ure_select_all_caps').click(ure_auto_select_caps);
+    }    
     $('#granted_only').click(ure_show_granted_caps_only);
     $('#ure_caps_groups_list').selectable({
         selected: function( event, ui ) {
