@@ -4,7 +4,7 @@ Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 3.5.11
+Stable tag: 3.5.11.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -267,6 +267,11 @@ Each document database is full of useless words. All the little words that appea
 * Mohib Ebrahim for relentless bug hunting.
 
 == Changelog ==
+
+= 3.5.11.1 =
+* New filter: `relevanssi_allow_one_letter_highlights` lets you allow one-letter highlights. Just make the filter function return `true`.
+* New filter: `relevanssi_block_one_letter_searches` by default blocks one-letter searches. If you want to enable them, add a filter function that always returns `false`.
+* Fixed an undefined variable notice.
 
 = 3.5.11 =
 * Synonym indexing failed if synonyms contained a forward slash.
@@ -1057,6 +1062,9 @@ Each document database is full of useless words. All the little words that appea
 * First published version.
 
 == Upgrade notice ==
+
+= 3.5.11.1 =
+* Minor bug fix, kills an error notice.
 
 = 3.5.11 =
 * Improvements in excerpts, new filters.
