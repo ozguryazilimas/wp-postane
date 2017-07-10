@@ -251,16 +251,7 @@ class User_Role_Editor {
       }
       
       $assign_role = $this->lib->get_assign_role();
-      $users_quant = $assign_role->count_users_without_role();      
-      if ($users_quant>0) {
-?>          
-        &nbsp;&nbsp;<input type="button" name="move_from_no_role" id="move_from_no_role" class="button"
-                        value="Without role (<?php echo $users_quant;?>)" onclick="ure_move_users_from_no_role_dialog()">
-        <div id="move_from_no_role_dialog" class="ure-dialog">
-            <div id="move_from_no_role_content" style="padding: 10px;"></div>                
-        </div>
-<?php        
-      }
+      $assign_role->show_html();
       
   }
   // end of move_users_from_no_role()

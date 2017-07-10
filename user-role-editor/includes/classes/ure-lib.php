@@ -11,7 +11,7 @@
 /**
  * This class contains general stuff for usage at WordPress plugins
  */
-class Ure_Lib extends URE_Base_Lib {
+class URE_Lib extends URE_Base_Lib {
 
     const  TRANSIENT_EXPIRATION = 600;
 
@@ -2168,7 +2168,8 @@ class Ure_Lib extends URE_Base_Lib {
     
     // create assign_role object
     public function get_assign_role() {
-        $assign_role = new URE_Assign_Role($this);
+        
+        $assign_role = new URE_Assign_Role();
         
         return $assign_role;
     }
@@ -2207,5 +2208,16 @@ class Ure_Lib extends URE_Base_Lib {
     }
     // end of is_right_admin_path()
 
+    /*
+     * It's overriden in Pro version to add bbPress roles
+     */    
+    public function get_all_editable_roles() {
+        
+        $roles = get_editable_roles();  // WordPress roles        
+        
+        return $roles;
+    }
+    // end of get_all_roles()
+    
 }
 // end of URE_Lib class

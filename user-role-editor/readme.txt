@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 4.35
+Stable tag: 4.35.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,11 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.35.1] 10.07.2017 =
+* Fix: "Grant Roles" button at the bottom of "Users" page did not work as had the same ID as a similar button at the top of this page.
+* Update: when bbPress plugin is active, "Grant Roles" does not revoke bbPress role granted to user anymore.
+* Fix: The same ID "move_from_no_role" and "move_from_no_role_dialog" were included twice to the "Users" page.
+
 = [4.35] 11.06.2017 =
 * Update: Bulk capabilities selection checkbox is not shown for 'administrator' role for single site WP, and is shown if current user is superadmin for multisite WP. It was done to exclude sudden revoke of all capabilities from the 'administrator' role.
 * Update: Full copy of JQuery UI 1.11.4 custom theme CSS file (jquery-ui.css) was included.
