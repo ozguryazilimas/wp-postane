@@ -15,13 +15,17 @@ class URE_Protect_Admin {
     private $user_to_check = null;  // cached list of user IDs, who has Administrator role     	 
     
     public function __construct($lib) {
+        global $pagenow;
+        
         $this->lib = $lib;
         $this->user_to_check = array();
         
         // Exclude administrator role from edit list.
         add_filter('editable_roles', array($this, 'exclude_admin_role'));
-        // prohibit any actions with user who has Administrator role
-        add_filter('user_has_cap', array($this, 'not_edit_admin'), 10, 3);
+        if (in_array($pagenow, array('users.php', 'user-edit.php'))) {
+            // prohibit any actions with user who has Administrator role
+            add_filter('user_has_cap', array($this, 'not_edit_admin'), 10, 3);
+        }
         // exclude users with 'Administrator' role from users list
         add_action('pre_user_query', array($this, 'exclude_administrators'));
         // do not show 'Administrator (s)' view above users list
@@ -32,13 +36,12 @@ class URE_Protect_Admin {
 
     // apply protection to the user edit pages only
     protected function is_protection_applicable() {
+        global $pagenow;
+        
         $result = false;
-        $links_to_block = array('profile.php', 'users.php', 'user-new.php');
-        foreach ($links_to_block as $key => $value) {
-            $result = stripos($_SERVER['REQUEST_URI'], $value);
-            if ($result !== false) {
-                break;
-            }
+        $pages_to_block = array('profile.php', 'users.php', 'user-new.php', 'user-edit.php');
+        if (in_array($pagenow, $pages_to_block)) {
+            $result = true;
         }
         
         return $result;
@@ -103,8 +106,8 @@ class URE_Protect_Admin {
      * 2nd: http://blogdomain.com/wp-admin/users.php?action=delete&user=ID&_wpnonce=ab34225a78
      * If put Administrator user ID into such request, user with lower capabilities (if he has 'edit_users')
      * can edit, delete admin record
-     * This function removes 'edit_users' capability from current user capabilities
-     * if request has admin user ID in it
+     * This function removes 'edit_users' or 'delete_users' or 'remove_users' capability from current user capabilities,
+     * if request sent against a user with 'administrator' role
      *
      * @param array $allcaps
      * @param type $caps
@@ -112,13 +115,18 @@ class URE_Protect_Admin {
      * @return array
      */
     public function not_edit_admin($allcaps, $caps, $name) {
+        $cap = (is_array($caps) & count($caps)>0) ? $caps[0] : $caps;
+        $checked_caps = array('edit_users', 'delete_users', 'remove_users');
+        if (!in_array($cap, $checked_caps)) {
+            return $allcaps;
+        }
         
         $user_keys = array('user_id', 'user');
         foreach ($user_keys as $user_key) {
             $access_deny = false;
             $user_id = $this->lib->get_request_var($user_key, 'get');
-            if (empty($user_id)) {
-                break;
+            if (empty($user_id)) {  // check the next key
+                continue;
             }
             if ($user_id == 1) {  // built-in WordPress Admin
                 $access_deny = true;
@@ -131,8 +139,9 @@ class URE_Protect_Admin {
                     $access_deny = $this->user_to_check[$user_id];
                 }
             }
-            if ($access_deny) {
-                unset($allcaps['edit_users']);
+            if ($access_deny && isset($allcaps[$cap])) {
+                unset($allcaps[$cap]);
+                
             }
             break;            
         }
@@ -150,7 +159,7 @@ class URE_Protect_Admin {
      */
     public function exclude_administrators($user_query) {
 
-        global $wpdb;
+        global $wpdb, $current_user;
         
         if (!$this->is_protection_applicable()) { // block the user edit stuff only
             return;
@@ -160,9 +169,9 @@ class URE_Protect_Admin {
         $tableName = $this->lib->get_usermeta_table_name();
         $meta_key = $wpdb->prefix . 'capabilities';
         $admin_role_key = '%"administrator"%';
-        $query = "select user_id
-              from $tableName
-              where meta_key='$meta_key' and meta_value like '$admin_role_key'";
+        $query = "SELECT user_id
+              FROM $tableName
+              WHERE user_id!={$current_user->ID} AND meta_key='{$meta_key}' AND meta_value like '{$admin_role_key}'";
         $ids_arr = $wpdb->get_col($query);
         if (is_array($ids_arr) && count($ids_arr) > 0) {
             $ids = implode(',', $ids_arr);

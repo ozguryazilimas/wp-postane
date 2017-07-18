@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 4.35.1
+Stable tag: 4.35.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,11 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+
+= [4.35.2] 18.07.2017 =
+* Fix: Multiple default roles (if defined at URE's settings) are selected automatically at 'add-new-user' page.
+* Update: Code enhancement for protection of users with 'administrator' role from each other. Current user can see his own record and edit own profile.
+
 = [4.35.1] 10.07.2017 =
 * Fix: "Grant Roles" button at the bottom of "Users" page did not work as had the same ID as a similar button at the top of this page.
 * Update: when bbPress plugin is active, "Grant Roles" does not revoke bbPress role granted to user anymore.

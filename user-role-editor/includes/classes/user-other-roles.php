@@ -123,7 +123,7 @@ class URE_User_Other_Roles {
     // end of get_roles_array()    
     
 
-    private function roles_select_html($user) {
+    private function roles_select_html($user, $context) {
         
         global $wp_roles;
                 
@@ -133,20 +133,25 @@ class URE_User_Other_Roles {
         if (isset($roles[$primary_role])) { // exclude role assigned to the user as a primary role
             unset($roles[$primary_role]);
         }
-        $other_roles = $this->get_roles_array($user);
-                
+                                
         echo '<select multiple="multiple" id="ure_select_other_roles" name="ure_select_other_roles" style="width: 500px;" >'."\n";
         foreach($roles as $key=>$role) {
             echo '<option value="'.$key.'" >'.$role['name'].'</option>'."\n";
         }   // foreach()
         echo '</select><br>'."\n";
-                
+        
+        if ($context=='add-new-user') {
+            // Get other default roles
+            $other_roles = $this->lib->get_option('other_default_roles', array());
+        } else {
+            $other_roles = $this->get_roles_array($user);
+        }
         if (is_array($other_roles) && count($other_roles) > 0) {
             $other_roles_str = implode(',', $other_roles);
         } else {
             $other_roles_str = '';
         }
-            echo '<input type="hidden" name="ure_other_roles" id="ure_other_roles" value="' . $other_roles_str . '" />';
+        echo '<input type="hidden" name="ure_other_roles" id="ure_other_roles" value="' . $other_roles_str . '" />';
         
         
         $output = $this->lib->roles_text($other_roles);        
@@ -186,7 +191,7 @@ class URE_User_Other_Roles {
         			<th scope="row"><?php esc_html_e('Other Roles', 'user-role-editor'); ?></th>
         			<td>
 <?php
-            $this->roles_select_html($user);            
+            $this->roles_select_html($user, $context);            
 ?>
         			</td>
         		</tr>
