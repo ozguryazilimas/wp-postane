@@ -12,7 +12,7 @@
 class URE_User_Other_Roles {
 
     protected $lib = null;
-    
+    private static $counter = 0;
     
     function __construct() {
     
@@ -36,6 +36,7 @@ class URE_User_Other_Roles {
         $multisite = $this->lib->get('multisite');
         if ($multisite) {          
             add_action( 'wpmu_activate_user', array($this, 'add_other_roles'), 10, 1 );
+            add_action( 'added_existing_user', array($this, 'add_other_roles'), 10, 1);
         }
         add_action( 'user_register', array($this, 'add_other_roles'), 10, 1 );
             
@@ -133,14 +134,15 @@ class URE_User_Other_Roles {
         if (isset($roles[$primary_role])) { // exclude role assigned to the user as a primary role
             unset($roles[$primary_role]);
         }
-                                
-        echo '<select multiple="multiple" id="ure_select_other_roles" name="ure_select_other_roles" style="width: 500px;" >'."\n";
+        $button_number =  (self::$counter>0) ? '_2': '';                        
+        
+        echo '<select multiple="multiple" id="ure_select_other_roles'. $button_number .'" name="ure_select_other_roles" style="width: 500px;" >'."\n";
         foreach($roles as $key=>$role) {
             echo '<option value="'.$key.'" >'.$role['name'].'</option>'."\n";
         }   // foreach()
         echo '</select><br>'."\n";
         
-        if ($context=='add-new-user') {
+        if ($context=='add-new-user' || $context=='add-existing-user') {
             // Get other default roles
             $other_roles = $this->lib->get_option('other_default_roles', array());
         } else {
@@ -151,11 +153,13 @@ class URE_User_Other_Roles {
         } else {
             $other_roles_str = '';
         }
-        echo '<input type="hidden" name="ure_other_roles" id="ure_other_roles" value="' . $other_roles_str . '" />';
+        echo '<input type="hidden" name="ure_other_roles" id="ure_other_roles'. $button_number .'" value="' . $other_roles_str . '" />';
         
         
         $output = $this->lib->roles_text($other_roles);        
-        echo '<span id="ure_other_roles_list">'. $output .'</span>';
+        echo '<span id="ure_other_roles_list'. $button_number .'">'. $output .'</span>';
+        
+        self::$counter++;
     }
     // end of roles_select()    
     
@@ -321,7 +325,6 @@ class URE_User_Other_Roles {
     }
     // end of add_other_roles()    
     
-    
-    
+        
 }
 // end of URE_User_Other_Roles class

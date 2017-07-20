@@ -3,8 +3,16 @@
  * email: support@role-editor.com
  */
 
-jQuery(document).ready(function(){
-    if (jQuery('#ure_select_other_roles').length==0) {
+jQuery(document).ready(function() {
+    
+    ure_init_controls('');
+    ure_init_controls('_2');          
+            
+});    
+
+
+function ure_init_controls(context) {
+    if (jQuery('#ure_select_other_roles'+ context).length==0) {
         return;
     }
     
@@ -12,7 +20,7 @@ jQuery(document).ready(function(){
         jQuery('.user-role-wrap').hide();
     }
     
-    jQuery('#ure_select_other_roles').multipleSelect({
+    jQuery('#ure_select_other_roles'+ context).multipleSelect({
             filter: true,
             multiple: true,
             selectAll: false,
@@ -20,19 +28,18 @@ jQuery(document).ready(function(){
             maxHeight: 300,
             placeholder: ure_data_user_profile_other_roles.select_roles,
             onClick: function(view) {
-                ure_update_linked_controls_other_roles();
+                ure_update_linked_controls_other_roles(context);
             }
     });
       
-    var other_roles = jQuery('#ure_other_roles').val();
+    var other_roles = jQuery('#ure_other_roles'+ context).val();
     var selected_roles = other_roles.split(',');
-    jQuery('#ure_select_other_roles').multipleSelect('setSelects', selected_roles);      
-            
-});    
+    jQuery('#ure_select_other_roles'+ context).multipleSelect('setSelects', selected_roles);
+}
 
 
-function ure_update_linked_controls_other_roles() {
-    var data_value = jQuery('#ure_select_other_roles').multipleSelect('getSelects');
+function ure_update_linked_controls_other_roles(context) {
+    var data_value = jQuery('#ure_select_other_roles'+ context).multipleSelect('getSelects');
     var to_save = '';
     for (i=0; i<data_value.length; i++) {
         if (to_save!=='') {
@@ -40,9 +47,9 @@ function ure_update_linked_controls_other_roles() {
         }
         to_save = to_save + data_value[i];
     }
-    jQuery('#ure_other_roles').val(to_save);
+    jQuery('#ure_other_roles'+ context).val(to_save);
     
-    var data_text = jQuery('#ure_select_other_roles').multipleSelect('getSelects', 'text');
+    var data_text = jQuery('#ure_select_other_roles'+ context).multipleSelect('getSelects', 'text');
     var to_show = '';
     for (i=0; i<data_text.length; i++) {        
         if (to_show!=='') {
@@ -50,5 +57,5 @@ function ure_update_linked_controls_other_roles() {
         }
         to_show = to_show + data_text[i];
     }    
-    jQuery('#ure_other_roles_list').html(to_show);
+    jQuery('#ure_other_roles_list'+ context).html(to_show);
 }

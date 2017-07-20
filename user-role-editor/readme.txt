@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 4.35.2
+Stable tag: 4.35.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,8 +79,11 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog =
 
+= [4.35.3] 20.07.2017 =
+* Fix: Multiple roles assignment (including default roles) did not work at "Users->Add New" new-user.php (contexts: add-existing-user, add-new-user) page for WordPress multisite.
+
 = [4.35.2] 18.07.2017 =
-* Fix: Multiple default roles (if defined at URE's settings) are selected automatically at 'add-new-user' page.
+* Fix: Multiple default roles (if defined at URE's settings) are selected automatically at new-user.php (context: add-new-user) page.
 * Update: Code enhancement for protection of users with 'administrator' role from each other. Current user can see his own record and edit own profile.
 
 = [4.35.1] 10.07.2017 =
