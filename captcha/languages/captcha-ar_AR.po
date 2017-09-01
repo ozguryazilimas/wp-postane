@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-23 09:24+0300\n"
-"PO-Revision-Date: 2017-06-23 09:24+0300\n"
-"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
+"POT-Creation-Date: 2017-07-25 12:04+0300\n"
+"PO-Revision-Date: 2017-07-25 12:04+0300\n"
+"Last-Translator: Albayan Design Hani Aladoli <info@albayan-design.com>\n"
 "Language-Team: Albayan Design Hani Aladoli <info@albayan-design.com>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -18,556 +18,551 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: captcha.php:34 captcha.php:36 captcha.php:445
-#: includes/class-cptch-settings-tabs.php:358
+#: captcha.php:32 captcha.php:34 captcha.php:363
+#: includes/class-hctpc-settings-tabs.php:453
 #, fuzzy
 msgid "Captcha Settings"
 msgstr "خيارات Captcha "
 
-#: captcha.php:36 captcha.php:1675 captcha.php:1688
-#: includes/class-cptch-settings-tabs.php:25
+#: captcha.php:34 captcha.php:1557 captcha.php:1570
+#: includes/class-hctpc-settings-tabs.php:39
 msgid "Settings"
 msgstr "الاعدادت "
 
-#: captcha.php:38 includes/class-cptch-package-list.php:91
+#: captcha.php:36 includes/class-hctpc-package-list.php:91
 msgid "Captcha Packages"
 msgstr ""
 
-#: captcha.php:38
+#: captcha.php:36
 msgid "Packages"
 msgstr ""
 
-#: captcha.php:40 includes/class-cptch-whitelist.php:89
+#: captcha.php:38 includes/class-hctpc-whitelist.php:78
 msgid "Captcha Whitelist"
 msgstr ""
 
-#: captcha.php:40 includes/class-cptch-settings-tabs.php:317
+#: captcha.php:38
 msgid "Whitelist"
 msgstr ""
 
-#: captcha.php:47 includes/class-cptch-package-list.php:118
-#: includes/pro_banners.php:26
-msgid "Upgrade to Pro"
-msgstr ""
-
-#: captcha.php:528 captcha.php:534 captcha.php:550 captcha.php:552
-#: captcha.php:561 captcha.php:615 captcha.php:619 captcha.php:628
-#: captcha.php:651 captcha.php:661 captcha.php:686 captcha.php:689
-#: captcha.php:697
+#: captcha.php:441 captcha.php:447 captcha.php:463 captcha.php:465
+#: captcha.php:474 captcha.php:528 captcha.php:532 captcha.php:541
+#: captcha.php:564 captcha.php:574 captcha.php:599 captcha.php:602
+#: captcha.php:610
 msgid "ERROR"
 msgstr "خطاء"
 
-#: captcha.php:753 captcha.php:759
+#: captcha.php:666 captcha.php:672
 msgid "Error"
 msgstr ""
 
-#: captcha.php:753 captcha.php:759
+#: captcha.php:666 captcha.php:672
 #, fuzzy
 msgid "Click the BACK button on your browser, and try again."
 msgstr ""
 "خطاء : لقد قمت بأدخال CAPTCHA  غير صحيح ’, اضغظ علي زر الرجوع في متصفحك "
 "والتجربة مرة اخري"
 
-#: captcha.php:979
+#: captcha.php:860
 msgid "In order to pass the CAPTCHA please enable JavaScript"
 msgstr ""
 
-#: captcha.php:1354
+#: captcha.php:1235
 msgid "zero"
 msgstr "صفر"
 
-#: captcha.php:1355
+#: captcha.php:1236
 msgid "one"
 msgstr "واحد"
 
-#: captcha.php:1356
+#: captcha.php:1237
 msgid "two"
 msgstr "اتنان"
 
-#: captcha.php:1357
+#: captcha.php:1238
 msgid "three"
 msgstr "ثلاته"
 
-#: captcha.php:1358
+#: captcha.php:1239
 msgid "four"
 msgstr "اربعه"
 
-#: captcha.php:1359
+#: captcha.php:1240
 msgid "five"
 msgstr "خمسة"
 
-#: captcha.php:1360
+#: captcha.php:1241
 msgid "six"
 msgstr "سته"
 
-#: captcha.php:1361
+#: captcha.php:1242
 msgid "seven"
 msgstr "سبعة"
 
-#: captcha.php:1362
+#: captcha.php:1243
 msgid "eight"
 msgstr "ثمانية"
 
-#: captcha.php:1363
+#: captcha.php:1244
 msgid "nine"
 msgstr "تسعة"
 
-#: captcha.php:1365
+#: captcha.php:1246
 msgid "ten"
 msgstr "عشرة"
 
-#: captcha.php:1366
+#: captcha.php:1247
 msgid "eleven"
 msgstr "احدي عشر "
 
-#: captcha.php:1367
+#: captcha.php:1248
 msgid "twelve"
 msgstr "اثني عشر"
 
-#: captcha.php:1368
+#: captcha.php:1249
 msgid "thirteen"
 msgstr "ثلاثة عشر "
 
-#: captcha.php:1369
+#: captcha.php:1250
 msgid "fourteen"
 msgstr "اربعة عشر"
 
-#: captcha.php:1370
+#: captcha.php:1251
 msgid "fifteen"
 msgstr "خمسة عشر"
 
-#: captcha.php:1371
+#: captcha.php:1252
 msgid "sixteen"
 msgstr "ستة عشر"
 
-#: captcha.php:1372
+#: captcha.php:1253
 msgid "seventeen"
 msgstr "سبعة عشر"
 
-#: captcha.php:1373
+#: captcha.php:1254
 msgid "eighteen"
 msgstr "ثمانية عشر"
 
-#: captcha.php:1374
+#: captcha.php:1255
 msgid "nineteen"
 msgstr "تسعة عشر"
 
-#: captcha.php:1376
+#: captcha.php:1257
 msgid "twenty"
 msgstr "عشرون"
 
-#: captcha.php:1377
+#: captcha.php:1258
 #, fuzzy
 msgid "twenty one"
 msgstr "عشرون"
 
-#: captcha.php:1378
+#: captcha.php:1259
 #, fuzzy
 msgid "twenty two"
 msgstr "عشرون"
 
-#: captcha.php:1379
+#: captcha.php:1260
 #, fuzzy
 msgid "twenty three"
 msgstr "عشرون"
 
-#: captcha.php:1380
+#: captcha.php:1261
 #, fuzzy
 msgid "twenty four"
 msgstr "عشرون"
 
-#: captcha.php:1381
+#: captcha.php:1262
 #, fuzzy
 msgid "twenty five"
 msgstr "عشرون"
 
-#: captcha.php:1382
+#: captcha.php:1263
 #, fuzzy
 msgid "twenty six"
 msgstr "عشرون"
 
-#: captcha.php:1383
+#: captcha.php:1264
 #, fuzzy
 msgid "twenty seven"
 msgstr "عشرون"
 
-#: captcha.php:1384
+#: captcha.php:1265
 #, fuzzy
 msgid "twenty eight"
 msgstr "عشرون"
 
-#: captcha.php:1385
+#: captcha.php:1266
 #, fuzzy
 msgid "twenty nine"
 msgstr "عشرون"
 
-#: captcha.php:1387
+#: captcha.php:1268
 msgid "thirty"
 msgstr "ثلاثون"
 
-#: captcha.php:1388
+#: captcha.php:1269
 #, fuzzy
 msgid "thirty one"
 msgstr "ثلاثون"
 
-#: captcha.php:1389
+#: captcha.php:1270
 #, fuzzy
 msgid "thirty two"
 msgstr "ثلاثون"
 
-#: captcha.php:1390
+#: captcha.php:1271
 #, fuzzy
 msgid "thirty three"
 msgstr "ثلاثة عشر "
 
-#: captcha.php:1391
+#: captcha.php:1272
 #, fuzzy
 msgid "thirty four"
 msgstr "ثلاثون"
 
-#: captcha.php:1392
+#: captcha.php:1273
 #, fuzzy
 msgid "thirty five"
 msgstr "ثلاثون"
 
-#: captcha.php:1393
+#: captcha.php:1274
 #, fuzzy
 msgid "thirty six"
 msgstr "ثلاثون"
 
-#: captcha.php:1394
+#: captcha.php:1275
 #, fuzzy
 msgid "thirty seven"
 msgstr "ثلاثة عشر "
 
-#: captcha.php:1395
+#: captcha.php:1276
 #, fuzzy
 msgid "thirty eight"
 msgstr "ثلاثون"
 
-#: captcha.php:1396
+#: captcha.php:1277
 #, fuzzy
 msgid "thirty nine"
 msgstr "ثلاثون"
 
-#: captcha.php:1398
+#: captcha.php:1279
 msgid "forty"
 msgstr "اربعون"
 
-#: captcha.php:1399
+#: captcha.php:1280
 #, fuzzy
 msgid "forty one"
 msgstr "اربعون"
 
-#: captcha.php:1400
+#: captcha.php:1281
 #, fuzzy
 msgid "forty two"
 msgstr "اربعون"
 
-#: captcha.php:1401
+#: captcha.php:1282
 #, fuzzy
 msgid "forty three"
 msgstr "ثلاته"
 
-#: captcha.php:1402
+#: captcha.php:1283
 #, fuzzy
 msgid "forty four"
 msgstr "اربعون"
 
-#: captcha.php:1403
+#: captcha.php:1284
 #, fuzzy
 msgid "forty five"
 msgstr "اربعون"
 
-#: captcha.php:1404
+#: captcha.php:1285
 #, fuzzy
 msgid "forty six"
 msgstr "اربعون"
 
-#: captcha.php:1405
+#: captcha.php:1286
 #, fuzzy
 msgid "forty seven"
 msgstr "سبعة"
 
-#: captcha.php:1406
+#: captcha.php:1287
 #, fuzzy
 msgid "forty eight"
 msgstr "ثمانية"
 
-#: captcha.php:1407
+#: captcha.php:1288
 #, fuzzy
 msgid "forty nine"
 msgstr "اربعون"
 
-#: captcha.php:1409
+#: captcha.php:1290
 msgid "fifty"
 msgstr "خمسون"
 
-#: captcha.php:1410
+#: captcha.php:1291
 #, fuzzy
 msgid "fifty one"
 msgstr "خمسون"
 
-#: captcha.php:1411
+#: captcha.php:1292
 #, fuzzy
 msgid "fifty two"
 msgstr "خمسون"
 
-#: captcha.php:1412
+#: captcha.php:1293
 #, fuzzy
 msgid "fifty three"
 msgstr "خمسة عشر"
 
-#: captcha.php:1413
+#: captcha.php:1294
 #, fuzzy
 msgid "fifty four"
 msgstr "خمسون"
 
-#: captcha.php:1414
+#: captcha.php:1295
 #, fuzzy
 msgid "fifty five"
 msgstr "خمسون"
 
-#: captcha.php:1415
+#: captcha.php:1296
 #, fuzzy
 msgid "fifty six"
 msgstr "خمسون"
 
-#: captcha.php:1416
+#: captcha.php:1297
 #, fuzzy
 msgid "fifty seven"
 msgstr "خمسة عشر"
 
-#: captcha.php:1417
+#: captcha.php:1298
 #, fuzzy
 msgid "fifty eight"
 msgstr "ثمانية"
 
-#: captcha.php:1418
+#: captcha.php:1299
 #, fuzzy
 msgid "fifty nine"
 msgstr "خمسون"
 
-#: captcha.php:1420
+#: captcha.php:1301
 msgid "sixty"
 msgstr "ستون"
 
-#: captcha.php:1421
+#: captcha.php:1302
 #, fuzzy
 msgid "sixty one"
 msgstr "ستون"
 
-#: captcha.php:1422
+#: captcha.php:1303
 #, fuzzy
 msgid "sixty two"
 msgstr "ستون"
 
-#: captcha.php:1423
+#: captcha.php:1304
 #, fuzzy
 msgid "sixty three"
 msgstr "ستة عشر"
 
-#: captcha.php:1424
+#: captcha.php:1305
 #, fuzzy
 msgid "sixty four"
 msgstr "ستون"
 
-#: captcha.php:1425
+#: captcha.php:1306
 #, fuzzy
 msgid "sixty five"
 msgstr "ستون"
 
-#: captcha.php:1426
+#: captcha.php:1307
 #, fuzzy
 msgid "sixty six"
 msgstr "ستون"
 
-#: captcha.php:1427
+#: captcha.php:1308
 #, fuzzy
 msgid "sixty seven"
 msgstr "ستة عشر"
 
-#: captcha.php:1428
+#: captcha.php:1309
 #, fuzzy
 msgid "sixty eight"
 msgstr "ثمانية"
 
-#: captcha.php:1429
+#: captcha.php:1310
 #, fuzzy
 msgid "sixty nine"
 msgstr "ستون"
 
-#: captcha.php:1431
+#: captcha.php:1312
 msgid "seventy"
 msgstr "سبعون"
 
-#: captcha.php:1432
+#: captcha.php:1313
 #, fuzzy
 msgid "seventy one"
 msgstr "سبعون"
 
-#: captcha.php:1433
+#: captcha.php:1314
 #, fuzzy
 msgid "seventy two"
 msgstr "سبعون"
 
-#: captcha.php:1434
+#: captcha.php:1315
 #, fuzzy
 msgid "seventy three"
 msgstr "سبعة عشر"
 
-#: captcha.php:1435
+#: captcha.php:1316
 #, fuzzy
 msgid "seventy four"
 msgstr "سبعون"
 
-#: captcha.php:1436
+#: captcha.php:1317
 #, fuzzy
 msgid "seventy five"
 msgstr "سبعون"
 
-#: captcha.php:1437
+#: captcha.php:1318
 #, fuzzy
 msgid "seventy six"
 msgstr "سبعون"
 
-#: captcha.php:1438
+#: captcha.php:1319
 #, fuzzy
 msgid "seventy seven"
 msgstr "سبعة عشر"
 
-#: captcha.php:1439
+#: captcha.php:1320
 #, fuzzy
 msgid "seventy eight"
 msgstr "سبعون"
 
-#: captcha.php:1440
+#: captcha.php:1321
 #, fuzzy
 msgid "seventy nine"
 msgstr "سبعون"
 
-#: captcha.php:1442
+#: captcha.php:1323
 msgid "eighty"
 msgstr "ثمانون"
 
-#: captcha.php:1443
+#: captcha.php:1324
 #, fuzzy
 msgid "eighty one"
 msgstr "ثمانون"
 
-#: captcha.php:1444
+#: captcha.php:1325
 #, fuzzy
 msgid "eighty two"
 msgstr "ثمانون"
 
-#: captcha.php:1445
+#: captcha.php:1326
 #, fuzzy
 msgid "eighty three"
 msgstr "ثمانية عشر"
 
-#: captcha.php:1446
+#: captcha.php:1327
 #, fuzzy
 msgid "eighty four"
 msgstr "ثمانون"
 
-#: captcha.php:1447
+#: captcha.php:1328
 #, fuzzy
 msgid "eighty five"
 msgstr "ثمانون"
 
-#: captcha.php:1448
+#: captcha.php:1329
 #, fuzzy
 msgid "eighty six"
 msgstr "ثمانون"
 
-#: captcha.php:1449
+#: captcha.php:1330
 #, fuzzy
 msgid "eighty seven"
 msgstr "ثمانية عشر"
 
-#: captcha.php:1450
+#: captcha.php:1331
 #, fuzzy
 msgid "eighty eight"
 msgstr "ثمانون"
 
-#: captcha.php:1451
+#: captcha.php:1332
 #, fuzzy
 msgid "eighty nine"
 msgstr "ثمانون"
 
-#: captcha.php:1453
+#: captcha.php:1334
 msgid "ninety"
 msgstr "تسعون"
 
-#: captcha.php:1454
+#: captcha.php:1335
 #, fuzzy
 msgid "ninety one"
 msgstr "تسعون"
 
-#: captcha.php:1455
+#: captcha.php:1336
 #, fuzzy
 msgid "ninety two"
 msgstr "تسعون"
 
-#: captcha.php:1456
+#: captcha.php:1337
 #, fuzzy
 msgid "ninety three"
 msgstr "تسعة عشر"
 
-#: captcha.php:1457
+#: captcha.php:1338
 #, fuzzy
 msgid "ninety four"
 msgstr "تسعون"
 
-#: captcha.php:1458
+#: captcha.php:1339
 #, fuzzy
 msgid "ninety five"
 msgstr "تسعون"
 
-#: captcha.php:1459
+#: captcha.php:1340
 #, fuzzy
 msgid "ninety six"
 msgstr "تسعون"
 
-#: captcha.php:1460
+#: captcha.php:1341
 #, fuzzy
 msgid "ninety seven"
 msgstr "تسعة عشر"
 
-#: captcha.php:1461
+#: captcha.php:1342
 #, fuzzy
 msgid "ninety eight"
 msgstr "تسعون"
 
-#: captcha.php:1462
+#: captcha.php:1343
 #, fuzzy
 msgid "ninety nine"
 msgstr "تسعون"
 
-#: captcha.php:1527
+#: captcha.php:1408
 #, fuzzy
 msgid "Encryption password is not set"
 msgstr "لم يتم تعيين كلمة المرور من فك التشفير"
 
-#: captcha.php:1548
+#: captcha.php:1429
 #, fuzzy
 msgid "Decryption password is not set"
 msgstr "لم يتم تعيين كلمة المرور من فك التشفير"
 
-#: captcha.php:1689
+#: captcha.php:1571
 msgid "FAQ"
 msgstr "اسئلة واجوبة"
 
-#: captcha.php:1690
+#: captcha.php:1572
 msgid "Support"
 msgstr "الدعم"
 
-#: captcha.php:1731
+#: captcha.php:1613
 #, fuzzy
 msgid "settings page"
 msgstr "تم حفظ التغييرات"
 
-#: captcha.php:1734
+#: captcha.php:1616
 #, php-format
 msgid ""
 "You're using W3 Total Cache plugin. If %1$s doesn't work properly, please "
@@ -575,105 +570,42 @@ msgid ""
 "plugin %3$s."
 msgstr ""
 
-#: captcha.php:1736
+#: captcha.php:1618
 msgid "Show CAPTCHA after the end of the page loading"
 msgstr ""
 
-#: captcha.php:1886
-msgid "Warning"
-msgstr ""
-
-#: captcha.php:1890
-msgid "plugin contains deprecated functionality that will be removed"
-msgstr ""
-
-#: captcha.php:1891
-msgid "in the future"
-msgstr ""
-
-#: captcha.php:1891
-msgid "after"
-msgstr ""
-
-#: captcha.php:1894
-msgid "has old version"
-msgstr ""
-
-#: captcha.php:1897
-msgid "has compatibility problems with"
-msgstr ""
-
-#: captcha.php:1904
-msgid "You need to update this plugin for correct work with"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:38
+#: includes/class-hctpc-package-list.php:38
 msgid "package"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:39
+#: includes/class-hctpc-package-list.php:39
 msgid "packages"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:95
-#: includes/class-cptch-whitelist.php:92
-msgid "Add New"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:96 includes/pro_banners.php:17
-msgid "This options is available in Pro version of plugin"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:104
-msgid "If the package already exists"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:106
-msgid "Skip it"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:107
-msgid "Update the existed one"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:108
-#, fuzzy
-msgid "Save it as new"
-msgstr "حفظ التغييرات"
-
-#: includes/class-cptch-package-list.php:111
-#: includes/class-cptch-settings-tabs.php:849
-msgid "Install Now"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:112
-msgid "Browse packages"
-msgstr ""
-
-#: includes/class-cptch-package-list.php:130
+#: includes/class-hctpc-package-list.php:98
 msgid "Search"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:152
+#: includes/class-hctpc-package-list.php:120
 msgid "No packages found"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:162
+#: includes/class-hctpc-package-list.php:130
 msgid "Package"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:163
-#: includes/class-cptch-whitelist.php:236
+#: includes/class-hctpc-package-list.php:131
+#: includes/class-hctpc-whitelist.php:190
 msgid "Date Added"
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:43
+#: includes/class-hctpc-package-loader.php:43
 msgid ""
 "Can not load images in to the \"uploads\" folder. Please, check your "
 "permissions."
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:130
+#: includes/class-hctpc-package-loader.php:130
 #, php-format
 msgid "One package has been updated or added to the database."
 msgid_plural "%s packages have been updated or added to the database."
@@ -684,7 +616,7 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: includes/class-cptch-package-loader.php:131
+#: includes/class-hctpc-package-loader.php:131
 #, php-format
 msgid "One image has been updated or added to the database."
 msgid_plural "%s images have been updated or added to the database."
@@ -695,456 +627,391 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: includes/class-cptch-package-loader.php:239
+#: includes/class-hctpc-package-loader.php:239
 msgid "Archive is empty"
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:585
+#: includes/class-hctpc-package-loader.php:585
 #, php-format
 msgid ""
 "Some settings of the package %s were set incorrectly. They have been skipped."
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:588
+#: includes/class-hctpc-package-loader.php:588
 msgid "Wrong data"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:26
+#: includes/class-hctpc-settings-tabs.php:40
 msgid "Messages"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:27
+#: includes/class-hctpc-settings-tabs.php:41
 msgid "Misc"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:28
-msgid "Custom Code"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:30
-msgid "License Key"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:57
-#: includes/class-cptch-settings-tabs.php:68
+#: includes/class-hctpc-settings-tabs.php:49
 msgid "Login form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:58
-#: includes/class-cptch-settings-tabs.php:65
-#: includes/class-cptch-settings-tabs.php:69
+#: includes/class-hctpc-settings-tabs.php:50
 #, fuzzy
 msgid "Registration form"
 msgstr "اطار التسجيل"
 
-#: includes/class-cptch-settings-tabs.php:59
-#: includes/class-cptch-settings-tabs.php:70
+#: includes/class-hctpc-settings-tabs.php:51
 msgid "Forgot password form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:60
-#: includes/class-cptch-settings-tabs.php:66
+#: includes/class-hctpc-settings-tabs.php:52
 msgid "Comments form"
 msgstr "اطار التعليقات"
 
-#: includes/class-cptch-settings-tabs.php:67
-msgid "Create a Group form"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:71
-msgid "Checkout form"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:108
+#: includes/class-hctpc-settings-tabs.php:88
 msgid "WordPress default"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:117
-#: includes/class-cptch-settings-tabs.php:125
-msgid "External plugins"
+#: includes/class-hctpc-settings-tabs.php:118
+msgid "Are you sure you want to restore default settings?"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:132
-msgid "BuddyPress"
+#: includes/class-hctpc-settings-tabs.php:121
+msgid "Yes, restore all settings"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:140
-msgid "WooCommerce"
+#: includes/class-hctpc-settings-tabs.php:122
+msgid "No, go back to the settings page"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:193
-#: includes/class-cptch-settings-tabs.php:289
+#: includes/class-hctpc-settings-tabs.php:137
+msgid "Information"
+msgstr ""
+
+#: includes/class-hctpc-settings-tabs.php:143
+msgid "Version"
+msgstr ""
+
+#: includes/class-hctpc-settings-tabs.php:151
+#: includes/class-hctpc-settings-tabs.php:171
+msgid "Save Changes"
+msgstr "حفظ التغييرات"
+
+#: includes/class-hctpc-settings-tabs.php:246
+msgid "All plugin settings were restored."
+msgstr ""
+
+#: includes/class-hctpc-settings-tabs.php:282
+msgid "Miscellaneous Settings"
+msgstr ""
+
+#: includes/class-hctpc-settings-tabs.php:286
+msgid "Default Settings"
+msgstr ""
+
+#: includes/class-hctpc-settings-tabs.php:288
+msgid "Restore Settings"
+msgstr ""
+
+#: includes/class-hctpc-settings-tabs.php:289
+msgid "This will restore plugin settings to defaults."
+msgstr ""
+
+#: includes/class-hctpc-settings-tabs.php:308
+#: includes/class-hctpc-settings-tabs.php:400
 msgid "Arithmetic Actions"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:194
-#: includes/class-cptch-settings-tabs.php:299
+#: includes/class-hctpc-settings-tabs.php:309
+#: includes/class-hctpc-settings-tabs.php:410
 msgid "Complexity"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:195
-#: includes/class-cptch-settings-tabs.php:326 includes/pro_banners.php:62
+#: includes/class-hctpc-settings-tabs.php:310
+#: includes/class-hctpc-settings-tabs.php:428
 msgid "Image Packages"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:213
+#: includes/class-hctpc-settings-tabs.php:324
 msgid "Text fields in the \"Messages\" tab must not be empty."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:224
+#: includes/class-hctpc-settings-tabs.php:335
 #, php-format
 msgid "\"%s\" option must not be fully disabled."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:252
+#: includes/class-hctpc-settings-tabs.php:363
 msgid ""
 "In order to use \"Optical Character Recognition\" type, please select at "
 "least one of the items in the option \"Image Packages\"."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:255
+#: includes/class-hctpc-settings-tabs.php:366
 msgid ""
 "In order to use images in the CAPTCHA, please select at least one of the "
 "items in the option \"Image Packages\". The \"Images\" checkbox in "
 "\"Complexity\" option has been disabled."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:266
+#: includes/class-hctpc-settings-tabs.php:377
 msgid "Settings saved."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:281
+#: includes/class-hctpc-settings-tabs.php:392
 msgid "Captcha Type"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:283
+#: includes/class-hctpc-settings-tabs.php:394
 #, fuzzy
 msgid "Arithmetic actions"
 msgstr "الإجراءات الحسابية لCAPTCHA"
 
-#: includes/class-cptch-settings-tabs.php:284
+#: includes/class-hctpc-settings-tabs.php:395
 msgid "Optical Character Recognition (OCR)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:291
+#: includes/class-hctpc-settings-tabs.php:402
 msgid "Addition"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:292
+#: includes/class-hctpc-settings-tabs.php:403
 msgid "Subtruction"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:293
+#: includes/class-hctpc-settings-tabs.php:404
 #, fuzzy
 msgid "Multiplication"
 msgstr " ضاعف (&times;)"
 
-#: includes/class-cptch-settings-tabs.php:301
+#: includes/class-hctpc-settings-tabs.php:412
 msgid "Numbers (1, 2, 3, etc.)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:302
+#: includes/class-hctpc-settings-tabs.php:413
 msgid "Words (one, two, three, etc.)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:303
+#: includes/class-hctpc-settings-tabs.php:414
 msgid "Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:309
+#: includes/class-hctpc-settings-tabs.php:420
 msgid "Number of Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:312
+#: includes/class-hctpc-settings-tabs.php:423
 msgid "Set a number of images to display simultaneously as a captcha question."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:318
-msgid ""
-"With a whitelist you can hide captcha field for your personal and trusted IP "
-"addresses."
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:320
-msgid "Default"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:321
-msgid "Limit Attempts"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:332
-msgid "Use several image packages at the same time"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:338
+#: includes/class-hctpc-settings-tabs.php:433
 msgid "Enlarge Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:339
+#: includes/class-hctpc-settings-tabs.php:434
 msgid "Enable to enlarge captcha images on mouseover."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:344
+#: includes/class-hctpc-settings-tabs.php:439
 msgid "Reload Button"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:345
+#: includes/class-hctpc-settings-tabs.php:440
 msgid "Enable to display reload button for captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:348
+#: includes/class-hctpc-settings-tabs.php:443
 msgid "Captcha Title"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:351
+#: includes/class-hctpc-settings-tabs.php:446
 msgid "Required Symbol"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:354
+#: includes/class-hctpc-settings-tabs.php:449
 msgid "Advanced Protection"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:355
+#: includes/class-hctpc-settings-tabs.php:450
 msgid "Enable to display captcha when the website page is loaded."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:361
+#: includes/class-hctpc-settings-tabs.php:455
 msgid "General"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:364
+#: includes/class-hctpc-settings-tabs.php:458
 msgid "Enable Captcha for"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:393
-msgid "Check off for adding the CAPTCHA to forms on their settings pages."
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:409
-#: includes/class-cptch-settings-tabs.php:444
-#: includes/class-cptch-settings-tabs.php:584
-#: includes/class-cptch-settings-tabs.php:596 includes/pro_banners.php:20
-msgid "Close"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:514 includes/pro_banners.php:91
+#: includes/class-hctpc-settings-tabs.php:534
 msgid "Enable to activate a time limit requeired to complete captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:525 includes/pro_banners.php:88
+#: includes/class-hctpc-settings-tabs.php:545
 msgid "Time Limit"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:532
+#: includes/class-hctpc-settings-tabs.php:552
 msgid "Time Limit Thershold"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:535
+#: includes/class-hctpc-settings-tabs.php:555
 msgid "sec"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:568
+#: includes/class-hctpc-settings-tabs.php:586
 msgid "This option is available only for network or for main blog"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:575
+#: includes/class-hctpc-settings-tabs.php:593
 msgid "Hide from Registered Users"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:607
-msgid "update"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:608
-msgid "to the current version"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:615
-msgid "install"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:620
-#: includes/class-cptch-whitelist.php:556
-msgid "activate"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:632
-msgid "You should"
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:635
-msgid "to use this functionality."
-msgstr ""
-
-#: includes/class-cptch-settings-tabs.php:658
+#: includes/class-hctpc-settings-tabs.php:610
 msgid "Messages Settings"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:664
+#: includes/class-hctpc-settings-tabs.php:615
 msgid "Captcha Field is Empty"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:665 includes/helpers.php:31
+#: includes/class-hctpc-settings-tabs.php:616 includes/helpers.php:31
 msgid "Please complete the captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:668
+#: includes/class-hctpc-settings-tabs.php:619
 msgid "Captcha is Incorrect"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:669 includes/helpers.php:32
+#: includes/class-hctpc-settings-tabs.php:620 includes/helpers.php:32
 msgid "Please enter correct captcha value."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:672
-#: includes/class-cptch-settings-tabs.php:676
+#: includes/class-hctpc-settings-tabs.php:623
+#: includes/class-hctpc-settings-tabs.php:627
 msgid "Time Limit Exceeded"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:673
-#: includes/class-cptch-settings-tabs.php:677 includes/helpers.php:33
+#: includes/class-hctpc-settings-tabs.php:624
+#: includes/class-hctpc-settings-tabs.php:628 includes/helpers.php:33
 #: includes/helpers.php:34
 msgid "Time limit exceeded. Please complete the captcha once again."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:678
+#: includes/class-hctpc-settings-tabs.php:629
 msgid "This message will be displayed above the captcha field."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:681
+#: includes/class-hctpc-settings-tabs.php:632
 msgid "Whitelisted IP"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:682
+#: includes/class-hctpc-settings-tabs.php:633 includes/helpers.php:35
 msgid "Your IP address is Whitelisted."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:683
+#: includes/class-hctpc-settings-tabs.php:634
 msgid "This message will be displayed instead of the captcha field."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:799
+#: includes/class-hctpc-settings-tabs.php:742
 msgid ""
 "The image packages list is empty. Please restore default settings or re-"
 "install the plugin to fix this error."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:847
+#: includes/class-hctpc-settings-tabs.php:790
 msgid "Activate"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:46
+#: includes/class-hctpc-settings-tabs.php:792
+msgid "Install Now"
+msgstr ""
+
+#: includes/class-hctpc-whitelist.php:43
 msgid "All dates"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:47
+#: includes/class-hctpc-whitelist.php:44
 msgid "Last 24 hours"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:48
+#: includes/class-hctpc-whitelist.php:45
 msgid "Last week"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:49
+#: includes/class-hctpc-whitelist.php:46
 msgid "Last month"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:50
+#: includes/class-hctpc-whitelist.php:47
 msgid "Last year"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:122
-msgid "Limit Attempts whitelist is activated."
+#: includes/class-hctpc-whitelist.php:80
+msgid "Add New"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:123
-msgid "View the whitelist"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:124
-msgid "or"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:125
-msgid "Enable default captcha whitelist"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:128
-msgid "Load IP Address(-es)"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:131
-#, fuzzy
-msgid "Save changes"
-msgstr "حفظ التغييرات"
-
-#: includes/class-cptch-whitelist.php:136
-msgid "Load IP addresses from the \"Limit Attempts\" whitelist."
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:144
+#: includes/class-hctpc-whitelist.php:104
 msgid "IP to whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:151
+#: includes/class-hctpc-whitelist.php:111
 msgid "My IP"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:156 includes/pro_banners.php:37
+#: includes/class-hctpc-whitelist.php:116
 msgid "Allowed formats"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:158
+#: includes/class-hctpc-whitelist.php:118
 msgid "Allowed diapason"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:165
+#: includes/class-hctpc-whitelist.php:121
 msgid "Add IP to whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:172
+#: includes/class-hctpc-whitelist.php:127
 msgid "Search item"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:228
+#: includes/class-hctpc-whitelist.php:182
 msgid "Nothing found"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:228
+#: includes/class-hctpc-whitelist.php:182
 msgid "No IP in the whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:235
+#: includes/class-hctpc-whitelist.php:189
 msgid "IP Address"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:290
-#: includes/class-cptch-whitelist.php:299
+#: includes/class-hctpc-whitelist.php:244
 msgid "Delete"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:401
+#: includes/class-hctpc-whitelist.php:348
 msgid "Filter"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:450
+#: includes/class-hctpc-whitelist.php:394
 msgid "IP added to the whitelist successfully."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:452
+#: includes/class-hctpc-whitelist.php:396
 msgid "Some errors occurred."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:454
+#: includes/class-hctpc-whitelist.php:398
 msgid "IP is already in the whitelist."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:457
+#: includes/class-hctpc-whitelist.php:401
 msgid "Invalid IP. See allowed formats."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:468
+#: includes/class-hctpc-whitelist.php:412
 #, php-format
 msgid "%s IP was deleted successfully"
 msgid_plural "%s IPs were deleted successfully"
@@ -1155,261 +1022,23 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: includes/class-cptch-whitelist.php:474
-#: includes/class-cptch-whitelist.php:486
+#: includes/class-hctpc-whitelist.php:418
+#: includes/class-hctpc-whitelist.php:430
 msgid "Some errors occurred"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:480
+#: includes/class-hctpc-whitelist.php:424
 msgid "One IP was deleted successfully"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:489
+#: includes/class-hctpc-whitelist.php:433
 msgid "You have not entered any value."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:492
+#: includes/class-hctpc-whitelist.php:436
 msgid "You have not entered any value in to the search form."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:494
+#: includes/class-hctpc-whitelist.php:438
 msgid "Search results for"
 msgstr ""
-
-#: includes/class-cptch-whitelist.php:524
-msgid "IP-address(es) successfully copied to the whitelist."
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:547
-msgid "use"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:547
-msgid "the whitelist of"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:555
-#: includes/class-cptch-whitelist.php:563
-#, php-format
-msgid "use the whitelist of %s"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:556
-#, php-format
-msgid "you should %s to use this functionality"
-msgstr ""
-
-#: includes/class-cptch-whitelist.php:564
-#, php-format
-msgid "you should install %s to use this functionality"
-msgstr ""
-
-#: includes/helpers.php:35
-msgid "Your IP addresse is Whitelisted."
-msgstr ""
-
-#: includes/pro_banners.php:38
-msgid "Allowed separators for IPs: a comma"
-msgstr ""
-
-#: includes/pro_banners.php:38 includes/pro_banners.php:41
-msgid "semicolon"
-msgstr ""
-
-#: includes/pro_banners.php:38
-msgid "ordinary space, tab, new line or carriage return"
-msgstr ""
-
-#: includes/pro_banners.php:39
-msgid "Reason"
-msgstr ""
-
-#: includes/pro_banners.php:41
-msgid "Allowed separators for reasons: a comma"
-msgstr ""
-
-#: includes/pro_banners.php:41
-msgid "tab, new line or carriage return"
-msgstr ""
-
-#: includes/pro_banners.php:55
-msgid "General Settings"
-msgstr ""
-
-#: includes/pro_banners.php:58
-msgid "Enable to use general captcha settings."
-msgstr ""
-
-#: includes/pro_banners.php:106
-msgid "Use Several Image Packages at The Same Time"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Settings saved"
-#~ msgstr "تم حفظ التغييرات"
-
-#, fuzzy
-#~ msgid "Hide from registered users"
-#~ msgstr "اخفاء CAPTCHA  للاعضاء المسلجين"
-
-#, fuzzy
-#~ msgid "WordPress Login form"
-#~ msgstr "اطار تسجيل الدخو"
-
-#, fuzzy
-#~ msgid "WordPress Registration form"
-#~ msgstr "اطار التسجيل"
-
-#, fuzzy
-#~ msgid "WordPress Reset Password form"
-#~ msgstr "اطار استرجاع الرقم السري"
-
-#, fuzzy
-#~ msgid "WordPress Comments form"
-#~ msgstr "اطار التعليقات"
-
-#, fuzzy
-#~ msgid "Buddypress Registration form"
-#~ msgstr "اطار التسجيل"
-
-#, fuzzy
-#~ msgid "Buddypress Comments form"
-#~ msgstr "اطار التعليقات"
-
-#, fuzzy
-#~ msgid "WooCommerce Login form"
-#~ msgstr "اطار التعليقات"
-
-#, fuzzy
-#~ msgid "WooCommerce Register form"
-#~ msgstr "اطار التسجيل"
-
-#, fuzzy
-#~ msgid "WooCommerce Lost Password form"
-#~ msgstr "اطار استرجاع الرقم السري"
-
-#, fuzzy
-#~ msgid "Please enter a CAPTCHA value."
-#~ msgstr "الرجاء تكملة الـ  CAPTCHA ."
-
-#, fuzzy
-#~ msgid "Please enter a valid CAPTCHA value."
-#~ msgstr "الرجاء تكملة الـ  CAPTCHA ."
-
-#, fuzzy
-#~ msgid "Time limit is exhausted. Please enter a CAPTCHA value again."
-#~ msgstr "الرجاء تكملة الـ  CAPTCHA ."
-
-#, fuzzy
-#~ msgid "Time limit is exhausted. Please reload the CAPTCHA."
-#~ msgstr "الرجاء تكملة الـ  CAPTCHA ."
-
-#, fuzzy
-#~ msgid "for"
-#~ msgstr "اربعه"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "تفعيل الـ CAPTCHA علي :"
-
-#~ msgid "Save Changes"
-#~ msgstr "حفظ التغييرات"
-
-#, fuzzy
-#~ msgid "Plugins"
-#~ msgstr "Плагины BWS"
-
-#~ msgid "Captcha"
-#~ msgstr "Captcha"
-
-#~ msgid "Plus"
-#~ msgstr "أكثر"
-
-#~ msgid "Minus"
-#~ msgstr "اقل"
-
-#~ msgid "Numbers"
-#~ msgstr "ارقام"
-
-#~ msgid "Words"
-#~ msgstr "كلمات"
-
-#, fuzzy
-#~ msgid "If the CAPTCHA field is empty"
-#~ msgstr "الـ  CAPTCHA  غير صحيح"
-
-#, fuzzy
-#~ msgid "If the CAPTCHA is incorrect"
-#~ msgstr "الـ  CAPTCHA  غير صحيح"
-
-#, fuzzy
-#~ msgid ""
-#~ "If the time limit is exhausted (this message will be displayed above the "
-#~ "CAPTCHA)"
-#~ msgstr "الرجاء تكملة الـ  CAPTCHA ."
-
-#, fuzzy
-#~ msgid "These messages will be displayed inside of the CAPTCHA"
-#~ msgstr "الرجاء تكملة الـ  CAPTCHA ."
-
-#, fuzzy
-#~ msgid "Enable the CAPTCHA for"
-#~ msgstr "تفعيل الـ CAPTCHA علي :"
-
-#~ msgid "Plus (&#43;)"
-#~ msgstr "  (&#43 أكثر;)"
-
-#~ msgid "Minus (&minus;)"
-#~ msgstr "اقل (&minus;)"
-
-#, fuzzy
-#~ msgid "Multiply"
-#~ msgstr " ضاعف (&times;)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
-#~ msgstr "يرجى تحديد نقطة واحدة في الأعمال الحسابية لـ CAPTCHA"
-
-#, fuzzy
-#~ msgid "Please select one item in the block Enable image packages"
-#~ msgstr "يرجى تحديد نقطة واحدة في الأعمال الحسابية لـ CAPTCHA"
-
-#, fuzzy
-#~ msgid "If you would like to add Captcha to a custom form, please see"
-#~ msgstr ""
-#~ "اذا كنت ترغب في تخصيص بعض الخيارات الاضافية في هذه النموذج الرجاء الاتصال "
-#~ "بنا عبر <a href=\"Mailto:plugin@bestwebsoft.com\">plugin@bestwebsoft.com</"
-#~ "a>  او عبر نموذج الاتصال علي موقعنا الخاص"
-
-#, fuzzy
-#~ msgid "Hide CAPTCHA"
-#~ msgstr "تفعيل الـ CAPTCHA علي :"
-
-#~ msgid "Arithmetic actions for CAPTCHA"
-#~ msgstr "الإجراءات الحسابية لCAPTCHA"
-
-#~ msgid "and"
-#~ msgstr "و"
-
-#, fuzzy
-#~ msgid "Title for CAPTCHA in the form"
-#~ msgstr "تسمية لـCAPTCHA  في النموذج"
-
-#, fuzzy
-#~ msgid "Contact Form"
-#~ msgstr "نموذج الاتصال"
-
-#~ msgid "Activate contact form"
-#~ msgstr "تفعيل نموذج الاتصال"
-
-#~ msgid "Download contact form"
-#~ msgstr "تحميل الاتصال بنا "
-
-#, fuzzy
-#~ msgid "Rate the plugin"
-#~ msgstr "اضافات موصي بها"
-
-#, fuzzy
-#~ msgid "ERROR:"
-#~ msgstr "خطاء"

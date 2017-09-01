@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 09:30+0300\n"
 "PO-Revision-Date: 2017-06-23 09:30+0300\n"
-"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
+"Last-Translator: NDT Solutions <admin@ndtan.net>\n"
 "Language-Team: NDT Solutions <admin@ndtan.net>\n"
 "Language: vi_VN\n"
 "MIME-Version: 1.0\n"
@@ -18,17 +18,17 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: captcha.php:34 captcha.php:36 captcha.php:445
-#: includes/class-cptch-settings-tabs.php:358
+#: includes/class-hctpc-settings-tabs.php:358
 #, fuzzy
 msgid "Captcha Settings"
 msgstr "Tùy chọn CAPTCHA"
 
 #: captcha.php:36 captcha.php:1675 captcha.php:1688
-#: includes/class-cptch-settings-tabs.php:25
+#: includes/class-hctpc-settings-tabs.php:25
 msgid "Settings"
 msgstr "Cấu hình"
 
-#: captcha.php:38 includes/class-cptch-package-list.php:91
+#: captcha.php:38 includes/class-hctpc-package-list.php:91
 msgid "Captcha Packages"
 msgstr ""
 
@@ -36,15 +36,15 @@ msgstr ""
 msgid "Packages"
 msgstr ""
 
-#: captcha.php:40 includes/class-cptch-whitelist.php:89
+#: captcha.php:40 includes/class-hctpc-whitelist.php:89
 msgid "Captcha Whitelist"
 msgstr ""
 
-#: captcha.php:40 includes/class-cptch-settings-tabs.php:317
+#: captcha.php:40 includes/class-hctpc-settings-tabs.php:317
 msgid "Whitelist"
 msgstr ""
 
-#: captcha.php:47 includes/class-cptch-package-list.php:118
+#: captcha.php:47 includes/class-hctpc-package-list.php:118
 #: includes/pro_banners.php:26
 msgid "Upgrade to Pro"
 msgstr ""
@@ -606,584 +606,584 @@ msgstr ""
 msgid "You need to update this plugin for correct work with"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:38
+#: includes/class-hctpc-package-list.php:38
 msgid "package"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:39
+#: includes/class-hctpc-package-list.php:39
 msgid "packages"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:95
-#: includes/class-cptch-whitelist.php:92
+#: includes/class-hctpc-package-list.php:95
+#: includes/class-hctpc-whitelist.php:92
 msgid "Add New"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:96 includes/pro_banners.php:17
+#: includes/class-hctpc-package-list.php:96 includes/pro_banners.php:17
 msgid "This options is available in Pro version of plugin"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:104
+#: includes/class-hctpc-package-list.php:104
 msgid "If the package already exists"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:106
+#: includes/class-hctpc-package-list.php:106
 msgid "Skip it"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:107
+#: includes/class-hctpc-package-list.php:107
 msgid "Update the existed one"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:108
+#: includes/class-hctpc-package-list.php:108
 #, fuzzy
 msgid "Save it as new"
 msgstr "Lưu thay đổi"
 
-#: includes/class-cptch-package-list.php:111
-#: includes/class-cptch-settings-tabs.php:849
+#: includes/class-hctpc-package-list.php:111
+#: includes/class-hctpc-settings-tabs.php:849
 msgid "Install Now"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:112
+#: includes/class-hctpc-package-list.php:112
 msgid "Browse packages"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:130
+#: includes/class-hctpc-package-list.php:130
 msgid "Search"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:152
+#: includes/class-hctpc-package-list.php:152
 msgid "No packages found"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:162
+#: includes/class-hctpc-package-list.php:162
 msgid "Package"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:163
-#: includes/class-cptch-whitelist.php:236
+#: includes/class-hctpc-package-list.php:163
+#: includes/class-hctpc-whitelist.php:236
 msgid "Date Added"
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:43
+#: includes/class-hctpc-package-loader.php:43
 msgid ""
 "Can not load images in to the \"uploads\" folder. Please, check your "
 "permissions."
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:130
+#: includes/class-hctpc-package-loader.php:130
 #, php-format
 msgid "One package has been updated or added to the database."
 msgid_plural "%s packages have been updated or added to the database."
 msgstr[0] ""
 
-#: includes/class-cptch-package-loader.php:131
+#: includes/class-hctpc-package-loader.php:131
 #, php-format
 msgid "One image has been updated or added to the database."
 msgid_plural "%s images have been updated or added to the database."
 msgstr[0] ""
 
-#: includes/class-cptch-package-loader.php:239
+#: includes/class-hctpc-package-loader.php:239
 msgid "Archive is empty"
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:585
+#: includes/class-hctpc-package-loader.php:585
 #, php-format
 msgid ""
 "Some settings of the package %s were set incorrectly. They have been skipped."
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:588
+#: includes/class-hctpc-package-loader.php:588
 msgid "Wrong data"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:26
+#: includes/class-hctpc-settings-tabs.php:26
 msgid "Messages"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:27
+#: includes/class-hctpc-settings-tabs.php:27
 msgid "Misc"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:28
+#: includes/class-hctpc-settings-tabs.php:28
 msgid "Custom Code"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:30
+#: includes/class-hctpc-settings-tabs.php:30
 msgid "License Key"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:57
-#: includes/class-cptch-settings-tabs.php:68
+#: includes/class-hctpc-settings-tabs.php:57
+#: includes/class-hctpc-settings-tabs.php:68
 msgid "Login form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:58
-#: includes/class-cptch-settings-tabs.php:65
-#: includes/class-cptch-settings-tabs.php:69
+#: includes/class-hctpc-settings-tabs.php:58
+#: includes/class-hctpc-settings-tabs.php:65
+#: includes/class-hctpc-settings-tabs.php:69
 #, fuzzy
 msgid "Registration form"
 msgstr "Khung đăng ký"
 
-#: includes/class-cptch-settings-tabs.php:59
-#: includes/class-cptch-settings-tabs.php:70
+#: includes/class-hctpc-settings-tabs.php:59
+#: includes/class-hctpc-settings-tabs.php:70
 msgid "Forgot password form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:60
-#: includes/class-cptch-settings-tabs.php:66
+#: includes/class-hctpc-settings-tabs.php:60
+#: includes/class-hctpc-settings-tabs.php:66
 msgid "Comments form"
 msgstr "Khung comment"
 
-#: includes/class-cptch-settings-tabs.php:67
+#: includes/class-hctpc-settings-tabs.php:67
 msgid "Create a Group form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:71
+#: includes/class-hctpc-settings-tabs.php:71
 msgid "Checkout form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:108
+#: includes/class-hctpc-settings-tabs.php:108
 msgid "WordPress default"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:117
-#: includes/class-cptch-settings-tabs.php:125
+#: includes/class-hctpc-settings-tabs.php:117
+#: includes/class-hctpc-settings-tabs.php:125
 msgid "External plugins"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:132
+#: includes/class-hctpc-settings-tabs.php:132
 msgid "BuddyPress"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:140
+#: includes/class-hctpc-settings-tabs.php:140
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:193
-#: includes/class-cptch-settings-tabs.php:289
+#: includes/class-hctpc-settings-tabs.php:193
+#: includes/class-hctpc-settings-tabs.php:289
 msgid "Arithmetic Actions"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:194
-#: includes/class-cptch-settings-tabs.php:299
+#: includes/class-hctpc-settings-tabs.php:194
+#: includes/class-hctpc-settings-tabs.php:299
 msgid "Complexity"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:195
-#: includes/class-cptch-settings-tabs.php:326 includes/pro_banners.php:62
+#: includes/class-hctpc-settings-tabs.php:195
+#: includes/class-hctpc-settings-tabs.php:326 includes/pro_banners.php:62
 msgid "Image Packages"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:213
+#: includes/class-hctpc-settings-tabs.php:213
 msgid "Text fields in the \"Messages\" tab must not be empty."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:224
+#: includes/class-hctpc-settings-tabs.php:224
 #, php-format
 msgid "\"%s\" option must not be fully disabled."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:252
+#: includes/class-hctpc-settings-tabs.php:252
 msgid ""
 "In order to use \"Optical Character Recognition\" type, please select at "
 "least one of the items in the option \"Image Packages\"."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:255
+#: includes/class-hctpc-settings-tabs.php:255
 msgid ""
 "In order to use images in the CAPTCHA, please select at least one of the "
 "items in the option \"Image Packages\". The \"Images\" checkbox in "
 "\"Complexity\" option has been disabled."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:266
+#: includes/class-hctpc-settings-tabs.php:266
 msgid "Settings saved."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:281
+#: includes/class-hctpc-settings-tabs.php:281
 msgid "Captcha Type"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:283
+#: includes/class-hctpc-settings-tabs.php:283
 #, fuzzy
 msgid "Arithmetic actions"
 msgstr "Hành động số học cho CAPTCHA"
 
-#: includes/class-cptch-settings-tabs.php:284
+#: includes/class-hctpc-settings-tabs.php:284
 msgid "Optical Character Recognition (OCR)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:291
+#: includes/class-hctpc-settings-tabs.php:291
 msgid "Addition"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:292
+#: includes/class-hctpc-settings-tabs.php:292
 msgid "Subtruction"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:293
+#: includes/class-hctpc-settings-tabs.php:293
 #, fuzzy
 msgid "Multiplication"
 msgstr "Nhân (&times;)"
 
-#: includes/class-cptch-settings-tabs.php:301
+#: includes/class-hctpc-settings-tabs.php:301
 msgid "Numbers (1, 2, 3, etc.)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:302
+#: includes/class-hctpc-settings-tabs.php:302
 msgid "Words (one, two, three, etc.)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:303
+#: includes/class-hctpc-settings-tabs.php:303
 msgid "Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:309
+#: includes/class-hctpc-settings-tabs.php:309
 msgid "Number of Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:312
+#: includes/class-hctpc-settings-tabs.php:312
 msgid "Set a number of images to display simultaneously as a captcha question."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:318
+#: includes/class-hctpc-settings-tabs.php:318
 msgid ""
 "With a whitelist you can hide captcha field for your personal and trusted IP "
 "addresses."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:320
+#: includes/class-hctpc-settings-tabs.php:320
 msgid "Default"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:321
+#: includes/class-hctpc-settings-tabs.php:321
 msgid "Limit Attempts"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:332
+#: includes/class-hctpc-settings-tabs.php:332
 msgid "Use several image packages at the same time"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:338
+#: includes/class-hctpc-settings-tabs.php:338
 msgid "Enlarge Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:339
+#: includes/class-hctpc-settings-tabs.php:339
 msgid "Enable to enlarge captcha images on mouseover."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:344
+#: includes/class-hctpc-settings-tabs.php:344
 msgid "Reload Button"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:345
+#: includes/class-hctpc-settings-tabs.php:345
 msgid "Enable to display reload button for captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:348
+#: includes/class-hctpc-settings-tabs.php:348
 msgid "Captcha Title"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:351
+#: includes/class-hctpc-settings-tabs.php:351
 msgid "Required Symbol"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:354
+#: includes/class-hctpc-settings-tabs.php:354
 msgid "Advanced Protection"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:355
+#: includes/class-hctpc-settings-tabs.php:355
 msgid "Enable to display captcha when the website page is loaded."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:361
+#: includes/class-hctpc-settings-tabs.php:361
 msgid "General"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:364
+#: includes/class-hctpc-settings-tabs.php:364
 msgid "Enable Captcha for"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:393
+#: includes/class-hctpc-settings-tabs.php:393
 msgid "Check off for adding the CAPTCHA to forms on their settings pages."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:409
-#: includes/class-cptch-settings-tabs.php:444
-#: includes/class-cptch-settings-tabs.php:584
-#: includes/class-cptch-settings-tabs.php:596 includes/pro_banners.php:20
+#: includes/class-hctpc-settings-tabs.php:409
+#: includes/class-hctpc-settings-tabs.php:444
+#: includes/class-hctpc-settings-tabs.php:584
+#: includes/class-hctpc-settings-tabs.php:596 includes/pro_banners.php:20
 msgid "Close"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:514 includes/pro_banners.php:91
+#: includes/class-hctpc-settings-tabs.php:514 includes/pro_banners.php:91
 msgid "Enable to activate a time limit requeired to complete captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:525 includes/pro_banners.php:88
+#: includes/class-hctpc-settings-tabs.php:525 includes/pro_banners.php:88
 msgid "Time Limit"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:532
+#: includes/class-hctpc-settings-tabs.php:532
 msgid "Time Limit Thershold"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:535
+#: includes/class-hctpc-settings-tabs.php:535
 msgid "sec"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:568
+#: includes/class-hctpc-settings-tabs.php:568
 msgid "This option is available only for network or for main blog"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:575
+#: includes/class-hctpc-settings-tabs.php:575
 msgid "Hide from Registered Users"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:607
+#: includes/class-hctpc-settings-tabs.php:607
 msgid "update"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:608
+#: includes/class-hctpc-settings-tabs.php:608
 msgid "to the current version"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:615
+#: includes/class-hctpc-settings-tabs.php:615
 msgid "install"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:620
-#: includes/class-cptch-whitelist.php:556
+#: includes/class-hctpc-settings-tabs.php:620
+#: includes/class-hctpc-whitelist.php:556
 msgid "activate"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:632
+#: includes/class-hctpc-settings-tabs.php:632
 msgid "You should"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:635
+#: includes/class-hctpc-settings-tabs.php:635
 msgid "to use this functionality."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:658
+#: includes/class-hctpc-settings-tabs.php:658
 msgid "Messages Settings"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:664
+#: includes/class-hctpc-settings-tabs.php:664
 msgid "Captcha Field is Empty"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:665 includes/helpers.php:31
+#: includes/class-hctpc-settings-tabs.php:665 includes/helpers.php:31
 msgid "Please complete the captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:668
+#: includes/class-hctpc-settings-tabs.php:668
 msgid "Captcha is Incorrect"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:669 includes/helpers.php:32
+#: includes/class-hctpc-settings-tabs.php:669 includes/helpers.php:32
 msgid "Please enter correct captcha value."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:672
-#: includes/class-cptch-settings-tabs.php:676
+#: includes/class-hctpc-settings-tabs.php:672
+#: includes/class-hctpc-settings-tabs.php:676
 msgid "Time Limit Exceeded"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:673
-#: includes/class-cptch-settings-tabs.php:677 includes/helpers.php:33
+#: includes/class-hctpc-settings-tabs.php:673
+#: includes/class-hctpc-settings-tabs.php:677 includes/helpers.php:33
 #: includes/helpers.php:34
 msgid "Time limit exceeded. Please complete the captcha once again."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:678
+#: includes/class-hctpc-settings-tabs.php:678
 msgid "This message will be displayed above the captcha field."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:681
+#: includes/class-hctpc-settings-tabs.php:681
 msgid "Whitelisted IP"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:682
+#: includes/class-hctpc-settings-tabs.php:682
 msgid "Your IP address is Whitelisted."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:683
+#: includes/class-hctpc-settings-tabs.php:683
 msgid "This message will be displayed instead of the captcha field."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:799
+#: includes/class-hctpc-settings-tabs.php:799
 msgid ""
 "The image packages list is empty. Please restore default settings or re-"
 "install the plugin to fix this error."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:847
+#: includes/class-hctpc-settings-tabs.php:847
 msgid "Activate"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:46
+#: includes/class-hctpc-whitelist.php:46
 msgid "All dates"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:47
+#: includes/class-hctpc-whitelist.php:47
 msgid "Last 24 hours"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:48
+#: includes/class-hctpc-whitelist.php:48
 msgid "Last week"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:49
+#: includes/class-hctpc-whitelist.php:49
 msgid "Last month"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:50
+#: includes/class-hctpc-whitelist.php:50
 msgid "Last year"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:122
+#: includes/class-hctpc-whitelist.php:122
 msgid "Limit Attempts whitelist is activated."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:123
+#: includes/class-hctpc-whitelist.php:123
 msgid "View the whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:124
+#: includes/class-hctpc-whitelist.php:124
 msgid "or"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:125
+#: includes/class-hctpc-whitelist.php:125
 msgid "Enable default captcha whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:128
+#: includes/class-hctpc-whitelist.php:128
 msgid "Load IP Address(-es)"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:131
+#: includes/class-hctpc-whitelist.php:131
 #, fuzzy
 msgid "Save changes"
 msgstr "Lưu thay đổi"
 
-#: includes/class-cptch-whitelist.php:136
+#: includes/class-hctpc-whitelist.php:136
 msgid "Load IP addresses from the \"Limit Attempts\" whitelist."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:144
+#: includes/class-hctpc-whitelist.php:144
 msgid "IP to whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:151
+#: includes/class-hctpc-whitelist.php:151
 msgid "My IP"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:156 includes/pro_banners.php:37
+#: includes/class-hctpc-whitelist.php:156 includes/pro_banners.php:37
 msgid "Allowed formats"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:158
+#: includes/class-hctpc-whitelist.php:158
 msgid "Allowed diapason"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:165
+#: includes/class-hctpc-whitelist.php:165
 msgid "Add IP to whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:172
+#: includes/class-hctpc-whitelist.php:172
 msgid "Search item"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:228
+#: includes/class-hctpc-whitelist.php:228
 msgid "Nothing found"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:228
+#: includes/class-hctpc-whitelist.php:228
 msgid "No IP in the whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:235
+#: includes/class-hctpc-whitelist.php:235
 msgid "IP Address"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:290
-#: includes/class-cptch-whitelist.php:299
+#: includes/class-hctpc-whitelist.php:290
+#: includes/class-hctpc-whitelist.php:299
 msgid "Delete"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:401
+#: includes/class-hctpc-whitelist.php:401
 msgid "Filter"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:450
+#: includes/class-hctpc-whitelist.php:450
 msgid "IP added to the whitelist successfully."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:452
+#: includes/class-hctpc-whitelist.php:452
 msgid "Some errors occurred."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:454
+#: includes/class-hctpc-whitelist.php:454
 msgid "IP is already in the whitelist."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:457
+#: includes/class-hctpc-whitelist.php:457
 msgid "Invalid IP. See allowed formats."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:468
+#: includes/class-hctpc-whitelist.php:468
 #, php-format
 msgid "%s IP was deleted successfully"
 msgid_plural "%s IPs were deleted successfully"
 msgstr[0] ""
 
-#: includes/class-cptch-whitelist.php:474
-#: includes/class-cptch-whitelist.php:486
+#: includes/class-hctpc-whitelist.php:474
+#: includes/class-hctpc-whitelist.php:486
 msgid "Some errors occurred"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:480
+#: includes/class-hctpc-whitelist.php:480
 msgid "One IP was deleted successfully"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:489
+#: includes/class-hctpc-whitelist.php:489
 msgid "You have not entered any value."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:492
+#: includes/class-hctpc-whitelist.php:492
 msgid "You have not entered any value in to the search form."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:494
+#: includes/class-hctpc-whitelist.php:494
 msgid "Search results for"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:524
+#: includes/class-hctpc-whitelist.php:524
 msgid "IP-address(es) successfully copied to the whitelist."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:547
+#: includes/class-hctpc-whitelist.php:547
 msgid "use"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:547
+#: includes/class-hctpc-whitelist.php:547
 msgid "the whitelist of"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:555
-#: includes/class-cptch-whitelist.php:563
+#: includes/class-hctpc-whitelist.php:555
+#: includes/class-hctpc-whitelist.php:563
 #, php-format
 msgid "use the whitelist of %s"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:556
+#: includes/class-hctpc-whitelist.php:556
 #, php-format
 msgid "you should %s to use this functionality"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:564
+#: includes/class-hctpc-whitelist.php:564
 #, php-format
 msgid "you should install %s to use this functionality"
 msgstr ""
@@ -1227,337 +1227,3 @@ msgstr ""
 #: includes/pro_banners.php:106
 msgid "Use Several Image Packages at The Same Time"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Settings saved"
-#~ msgstr "Tùy chọn đã được lưu"
-
-#, fuzzy
-#~ msgid "Hide from registered users"
-#~ msgstr "Ẩn CAPTCHA đối với thành viên đã đăng ký"
-
-#, fuzzy
-#~ msgid "WordPress Login form"
-#~ msgstr "Khung đăng nhập"
-
-#, fuzzy
-#~ msgid "WordPress Registration form"
-#~ msgstr "Khung đăng ký"
-
-#, fuzzy
-#~ msgid "WordPress Reset Password form"
-#~ msgstr "Khung quên mật khẩu"
-
-#, fuzzy
-#~ msgid "WordPress Comments form"
-#~ msgstr "Khung comment"
-
-#, fuzzy
-#~ msgid "Buddypress Registration form"
-#~ msgstr "Khung đăng ký"
-
-#, fuzzy
-#~ msgid "Buddypress Comments form"
-#~ msgstr "Khung comment"
-
-#, fuzzy
-#~ msgid "Buddypress \"Create a Group\" form"
-#~ msgstr "Khung \"Tạo một nhóm\""
-
-#, fuzzy
-#~ msgid "WooCommerce Login form"
-#~ msgstr "Khung comment"
-
-#, fuzzy
-#~ msgid "WooCommerce Register form"
-#~ msgstr "Khung đăng ký"
-
-#, fuzzy
-#~ msgid "WooCommerce Lost Password form"
-#~ msgstr "Khung quên mật khẩu"
-
-#, fuzzy
-#~ msgid "Please enter a CAPTCHA value."
-#~ msgstr "Vui lòng nhập mã xác nhận!"
-
-#, fuzzy
-#~ msgid "Please enter a valid CAPTCHA value."
-#~ msgstr "Vui lòng nhập mã xác nhận!"
-
-#, fuzzy
-#~ msgid "Time limit is exhausted. Please enter a CAPTCHA value again."
-#~ msgstr "Vui lòng nhập mã xác nhận!"
-
-#, fuzzy
-#~ msgid "Time limit is exhausted. Please reload the CAPTCHA."
-#~ msgstr "Vui lòng nhập mã xác nhận!"
-
-#, fuzzy
-#~ msgid "for"
-#~ msgstr "bốn"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "Kích hoạt tính năng CAPTCHA trên:"
-
-#~ msgid "Captcha"
-#~ msgstr "Captcha"
-
-#~ msgid "Go PRO"
-#~ msgstr "Go PRO"
-
-#~ msgid "Save Changes"
-#~ msgstr "Lưu thay đổi"
-
-#~ msgid "Plus"
-#~ msgstr "Cộng"
-
-#~ msgid "Minus"
-#~ msgstr "Trừ"
-
-#~ msgid "Numbers"
-#~ msgstr "Số"
-
-#~ msgid "Words"
-#~ msgstr "Từ"
-
-#, fuzzy
-#~ msgid "CAPTCHA title"
-#~ msgstr "Mức độ phức tạp của CAPTCHA"
-
-#~ msgid "Required symbol"
-#~ msgstr "Biểu tượng cần thiết"
-
-#, fuzzy
-#~ msgid "If the CAPTCHA field is empty"
-#~ msgstr "Mã xác nhận không chính xác!"
-
-#, fuzzy
-#~ msgid "If the CAPTCHA is incorrect"
-#~ msgstr "Mã xác nhận không chính xác!"
-
-#, fuzzy
-#~ msgid ""
-#~ "If the time limit is exhausted (this message will be displayed above the "
-#~ "CAPTCHA)"
-#~ msgstr "Vui lòng nhập mã xác nhận!"
-
-#, fuzzy
-#~ msgid "These messages will be displayed inside of the CAPTCHA"
-#~ msgstr "Vui lòng nhập mã xác nhận!"
-
-#, fuzzy
-#~ msgid "Enable the CAPTCHA for"
-#~ msgstr "Kích hoạt tính năng CAPTCHA trên:"
-
-#, fuzzy
-#~ msgid "Unlock premium options by upgrading to Pro version"
-#~ msgstr "Mở khóa tùy chọn cao cấp bằng cách nâng cấp lên phiên bản PRO."
-
-#~ msgid "Learn More"
-#~ msgstr "Tìm hiểu thêm"
-
-#~ msgid "Plus (&#43;)"
-#~ msgstr "Cộng (&#43;)"
-
-#~ msgid "Minus (&minus;)"
-#~ msgstr "Trừ (&minus;)"
-
-#, fuzzy
-#~ msgid "Multiply"
-#~ msgstr "Nhân (&times;)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
-#~ msgstr ""
-#~ "Hãy chọn một thời điểm trong các hành động số học khối và khó cho CAPTCHA"
-
-#, fuzzy
-#~ msgid "Please select one item in the block Enable image packages"
-#~ msgstr ""
-#~ "Hãy chọn một thời điểm trong các hành động số học khối và khó cho CAPTCHA"
-
-#, fuzzy
-#~ msgid "Plugins"
-#~ msgstr "Trang plugins"
-
-#, fuzzy
-#~ msgid "If you would like to add Captcha to a custom form, please see"
-#~ msgstr ""
-#~ "Nếu bạn muốn tùy chỉnh plugin này cho một hình thức tùy chỉnh, xin vui "
-#~ "lòng liên hệ với chúng tôi qua <a href=\"Mailto:plugin@bestwebsoft.com\"> "
-#~ "plugin@bestwebsoft.com</a> hoặc điền vào mẫu liên hệ của chúng tôi trên "
-#~ "trang web của chúng tôi."
-
-#, fuzzy
-#~ msgid "Hide CAPTCHA"
-#~ msgstr "Kích hoạt tính năng CAPTCHA trên:"
-
-#~ msgid "Arithmetic actions for CAPTCHA"
-#~ msgstr "Hành động số học cho CAPTCHA"
-
-#~ msgid "If you upgrade to Pro version all your settings will be saved."
-#~ msgstr ""
-#~ "Nếu bạn nâng cấp lên phiên bản Pro tất cả các thiết lập của bạn sẽ được "
-#~ "lưu lại."
-
-#~ msgid "and"
-#~ msgstr "và"
-
-#~ msgid "Notice:"
-#~ msgstr "Chú ý:"
-
-#~ msgid ""
-#~ "The plugin's settings have been changed. In order to save them please "
-#~ "don't forget to click the 'Save Changes' button."
-#~ msgstr ""
-#~ "Thiết lập các plugin đã được thay đổi. Để thực hiện việc thay đổi xin "
-#~ "đừng quên nhấn nút 'Save Changes'."
-
-#, fuzzy
-#~ msgid "Title for CAPTCHA in the form"
-#~ msgstr "Nhãn cho CAPTCHA trong form"
-
-#~ msgid "Activate contact form"
-#~ msgstr "Kích hoạt Contact Form"
-
-#~ msgid "Download contact form"
-#~ msgstr "Tải contact form về"
-
-#~ msgid "Go"
-#~ msgstr "Go"
-
-#~ msgid "requires"
-#~ msgstr "yêu cầu"
-
-#~ msgid ""
-#~ "or higher, that is why it has been deactivated! Please upgrade WordPress "
-#~ "and try again."
-#~ msgstr ""
-#~ "hoặc cao hơn, đó là lý do tại sao nó đã ngừng hoạt động! Hãy nâng cấp "
-#~ "WordPress và thử lại."
-
-#~ msgid "Back to the WordPress"
-#~ msgstr "Quay lại WordPress"
-
-#~ msgid "Wrong license key"
-#~ msgstr "Sai thông tin bản quyền"
-
-#~ msgid ""
-#~ "Something went wrong. Try again later. If the error will appear again, "
-#~ "please, contact us <a href=https://support.bestwebsoft.com>BestWebSoft</"
-#~ "a>. We are sorry for inconvenience."
-#~ msgstr ""
-#~ "Có lỗi xảy ra. Vui lòng thử lại sau. Nếu lỗi này vẫn tiếp tục xuất hiện, "
-#~ "hãy liên hệ với chúng tôi tại <a href=http://support.bestwebsoft."
-#~ "com>BestWebSoft</a>. Chúng tôi rất xin lỗi vì sự bất tiện này."
-
-#~ msgid "This license key is bind to another site"
-#~ msgstr "Key bản quyền này đã được sử dung tại trang web khác."
-
-#~ msgid ""
-#~ "Unfortunately, you have exceeded the number of available tries per day. "
-#~ "Please, upload the plugin manually."
-#~ msgstr ""
-#~ "Thật đáng tiếc, bạn đã vượt quá số lần thử có sẵn mỗi ngày. Xin vui lòng, "
-#~ "upload plugin bằng tay."
-
-#~ msgid ""
-#~ "Failed to download the zip archive. Please, upload the plugin manually"
-#~ msgstr ""
-#~ "Không thể tải về các kho lưu trữ zip. Xin vui lòng, upload plugin bằng tay"
-
-#~ msgid "Failed to open the zip archive. Please, upload the plugin manually"
-#~ msgstr ""
-#~ "Không thể mở các kho lưu trữ zip. Xin vui lòng, upload plugin bằng tay"
-
-#~ msgid ""
-#~ "Your server does not support either ZipArchive or Phar. Please, upload "
-#~ "the plugin manually"
-#~ msgstr ""
-#~ "Máy chủ không hỗ trợ ZipArchive hoặc Phar. Vui lòng upload plugin bằng tay"
-
-#, fuzzy
-#~ msgid "UploadDir is not writable. Please, upload the plugin manually"
-#~ msgstr ""
-#~ "Không thể mở các kho lưu trữ zip. Xin vui lòng, upload plugin bằng tay"
-
-#, fuzzy
-#~ msgid ""
-#~ "Something went wrong. Try again later or upload the plugin manually. We "
-#~ "are sorry for inconvenience."
-#~ msgstr ""
-#~ "Có lỗi xảy ra. Vui lòng thử lại sau hoặc upload plugin bằng tay. Chúng "
-#~ "tôi rất xin lỗi vì sự bất tiện này."
-
-#~ msgid "Please, enter Your license key"
-#~ msgstr "Vui lòng nhập key bản quyền của bạn"
-
-#~ msgid "Contact form"
-#~ msgstr "Khung liên hệ"
-
-#~ msgid "powered by"
-#~ msgstr "được cung cấp bởi"
-
-#~ msgid "Subscriber"
-#~ msgstr "Người đăng ký"
-
-#~ msgid "If you enjoy our plugin, please give it 5 stars on WordPress"
-#~ msgstr ""
-#~ "Nếu bạn thích các plugin của chúng tôi, xin vui lòng vote 5 sao trên "
-#~ "WordPress"
-
-#, fuzzy
-#~ msgid "Rate the plugin"
-#~ msgstr "Các plugin được khuyến cáo"
-
-#~ msgid "If there is something wrong about it, please contact us"
-#~ msgstr "Nếu có bất cứ điều gì sai về nó, hãy liên hệ với chúng tôi"
-
-#~ msgid ""
-#~ "Congratulations! The PRO version of the plugin is successfully download "
-#~ "and activated."
-#~ msgstr ""
-#~ "Xin chúc mừng! Phiên bản PRO của plugin đã được tải và kích hoạt thành "
-#~ "công."
-
-#~ msgid "Please, go to"
-#~ msgstr "Hãy đi đến"
-
-#~ msgid "You will be redirected automatically in 5 seconds."
-#~ msgstr "Bạn sẽ được chuyển tự động trong 5 giây."
-
-#~ msgid "You can download and activate"
-#~ msgstr "Bạn có thể tải về và kích hoạt"
-
-#~ msgid "version of this plugin by entering Your license key."
-#~ msgstr "phiên bản của plugin này bằng cách nhập key bản quyền của bạn."
-
-#~ msgid ""
-#~ "You can find your license key on your personal page Client area, by "
-#~ "clicking on the link"
-#~ msgstr ""
-#~ "Bạn có thể tìm thấy key bản quyền trên trang  cá nhân của bạn, bằng cách "
-#~ "nhấn vào liên kết"
-
-#~ msgid ""
-#~ "(your username is the email you specify when purchasing the product)."
-#~ msgstr "(tên người dùng của bạn là email bạn chỉ định khi mua sản phẩm)."
-
-#~ msgid "Go!"
-#~ msgstr "Go!"
-
-#, fuzzy
-#~ msgid "ERROR:"
-#~ msgstr "XẢY RA LỖI"
-
-#~ msgid ""
-#~ "It's time to upgrade your <strong>Captcha plugin</strong> to <strong>PRO</"
-#~ "strong> version"
-#~ msgstr ""
-#~ "Đây là thời điểm để nâng cấp <strong> Captcha plugin </ strong> của bạn "
-#~ "lên <strong> phiên bản PRO</ strong>"
-
-#~ msgid "Extend standard plugin functionality with new great options"
-#~ msgstr "Mở rộng chức năng plugin tiêu chuẩn với những tùy chọn mới"

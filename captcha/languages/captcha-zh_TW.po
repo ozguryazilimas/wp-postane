@@ -18,16 +18,16 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: captcha.php:34 captcha.php:36 captcha.php:445
-#: includes/class-cptch-settings-tabs.php:358
+#: includes/class-hctpc-settings-tabs.php:358
 msgid "Captcha Settings"
 msgstr "驗證碼設定"
 
 #: captcha.php:36 captcha.php:1675 captcha.php:1688
-#: includes/class-cptch-settings-tabs.php:25
+#: includes/class-hctpc-settings-tabs.php:25
 msgid "Settings"
 msgstr "設定"
 
-#: captcha.php:38 includes/class-cptch-package-list.php:91
+#: captcha.php:38 includes/class-hctpc-package-list.php:91
 msgid "Captcha Packages"
 msgstr ""
 
@@ -35,15 +35,15 @@ msgstr ""
 msgid "Packages"
 msgstr "套件"
 
-#: captcha.php:40 includes/class-cptch-whitelist.php:89
+#: captcha.php:40 includes/class-hctpc-whitelist.php:89
 msgid "Captcha Whitelist"
 msgstr ""
 
-#: captcha.php:40 includes/class-cptch-settings-tabs.php:317
+#: captcha.php:40 includes/class-hctpc-settings-tabs.php:317
 msgid "Whitelist"
 msgstr "允許清單"
 
-#: captcha.php:47 includes/class-cptch-package-list.php:118
+#: captcha.php:47 includes/class-hctpc-package-list.php:118
 #: includes/pro_banners.php:26
 msgid "Upgrade to Pro"
 msgstr ""
@@ -529,579 +529,579 @@ msgstr "有以下相容性問題"
 msgid "You need to update this plugin for correct work with"
 msgstr "您必須更新該外掛才能修正工作項目"
 
-#: includes/class-cptch-package-list.php:38
+#: includes/class-hctpc-package-list.php:38
 msgid "package"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:39
+#: includes/class-hctpc-package-list.php:39
 msgid "packages"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:95
-#: includes/class-cptch-whitelist.php:92
+#: includes/class-hctpc-package-list.php:95
+#: includes/class-hctpc-whitelist.php:92
 msgid "Add New"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:96 includes/pro_banners.php:17
+#: includes/class-hctpc-package-list.php:96 includes/pro_banners.php:17
 msgid "This options is available in Pro version of plugin"
 msgstr "這項設定適用於專業版外掛"
 
-#: includes/class-cptch-package-list.php:104
+#: includes/class-hctpc-package-list.php:104
 msgid "If the package already exists"
 msgstr "若套件已存在"
 
-#: includes/class-cptch-package-list.php:106
+#: includes/class-hctpc-package-list.php:106
 msgid "Skip it"
 msgstr "跳過"
 
-#: includes/class-cptch-package-list.php:107
+#: includes/class-hctpc-package-list.php:107
 msgid "Update the existed one"
 msgstr "更新已存在的項目"
 
-#: includes/class-cptch-package-list.php:108
+#: includes/class-hctpc-package-list.php:108
 msgid "Save it as new"
 msgstr "另存"
 
-#: includes/class-cptch-package-list.php:111
-#: includes/class-cptch-settings-tabs.php:849
+#: includes/class-hctpc-package-list.php:111
+#: includes/class-hctpc-settings-tabs.php:849
 msgid "Install Now"
 msgstr "立即安裝"
 
-#: includes/class-cptch-package-list.php:112
+#: includes/class-hctpc-package-list.php:112
 msgid "Browse packages"
 msgstr "瀏覽套件"
 
-#: includes/class-cptch-package-list.php:130
+#: includes/class-hctpc-package-list.php:130
 msgid "Search"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:152
+#: includes/class-hctpc-package-list.php:152
 msgid "No packages found"
 msgstr ""
 
-#: includes/class-cptch-package-list.php:162
+#: includes/class-hctpc-package-list.php:162
 msgid "Package"
 msgstr "套件"
 
-#: includes/class-cptch-package-list.php:163
-#: includes/class-cptch-whitelist.php:236
+#: includes/class-hctpc-package-list.php:163
+#: includes/class-hctpc-whitelist.php:236
 msgid "Date Added"
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:43
+#: includes/class-hctpc-package-loader.php:43
 msgid ""
 "Can not load images in to the \"uploads\" folder. Please, check your "
 "permissions."
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:130
+#: includes/class-hctpc-package-loader.php:130
 #, php-format
 msgid "One package has been updated or added to the database."
 msgid_plural "%s packages have been updated or added to the database."
 msgstr[0] ""
 
-#: includes/class-cptch-package-loader.php:131
+#: includes/class-hctpc-package-loader.php:131
 #, php-format
 msgid "One image has been updated or added to the database."
 msgid_plural "%s images have been updated or added to the database."
 msgstr[0] ""
 
-#: includes/class-cptch-package-loader.php:239
+#: includes/class-hctpc-package-loader.php:239
 msgid "Archive is empty"
 msgstr "檔案為空白"
 
-#: includes/class-cptch-package-loader.php:585
+#: includes/class-hctpc-package-loader.php:585
 #, php-format
 msgid ""
 "Some settings of the package %s were set incorrectly. They have been skipped."
 msgstr ""
 
-#: includes/class-cptch-package-loader.php:588
+#: includes/class-hctpc-package-loader.php:588
 msgid "Wrong data"
 msgstr "資料錯誤"
 
-#: includes/class-cptch-settings-tabs.php:26
+#: includes/class-hctpc-settings-tabs.php:26
 msgid "Messages"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:27
+#: includes/class-hctpc-settings-tabs.php:27
 msgid "Misc"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:28
+#: includes/class-hctpc-settings-tabs.php:28
 msgid "Custom Code"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:30
+#: includes/class-hctpc-settings-tabs.php:30
 msgid "License Key"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:57
-#: includes/class-cptch-settings-tabs.php:68
+#: includes/class-hctpc-settings-tabs.php:57
+#: includes/class-hctpc-settings-tabs.php:68
 msgid "Login form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:58
-#: includes/class-cptch-settings-tabs.php:65
-#: includes/class-cptch-settings-tabs.php:69
+#: includes/class-hctpc-settings-tabs.php:58
+#: includes/class-hctpc-settings-tabs.php:65
+#: includes/class-hctpc-settings-tabs.php:69
 msgid "Registration form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:59
-#: includes/class-cptch-settings-tabs.php:70
+#: includes/class-hctpc-settings-tabs.php:59
+#: includes/class-hctpc-settings-tabs.php:70
 msgid "Forgot password form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:60
-#: includes/class-cptch-settings-tabs.php:66
+#: includes/class-hctpc-settings-tabs.php:60
+#: includes/class-hctpc-settings-tabs.php:66
 msgid "Comments form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:67
+#: includes/class-hctpc-settings-tabs.php:67
 msgid "Create a Group form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:71
+#: includes/class-hctpc-settings-tabs.php:71
 msgid "Checkout form"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:108
+#: includes/class-hctpc-settings-tabs.php:108
 msgid "WordPress default"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:117
-#: includes/class-cptch-settings-tabs.php:125
+#: includes/class-hctpc-settings-tabs.php:117
+#: includes/class-hctpc-settings-tabs.php:125
 msgid "External plugins"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:132
+#: includes/class-hctpc-settings-tabs.php:132
 msgid "BuddyPress"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:140
+#: includes/class-hctpc-settings-tabs.php:140
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:193
-#: includes/class-cptch-settings-tabs.php:289
+#: includes/class-hctpc-settings-tabs.php:193
+#: includes/class-hctpc-settings-tabs.php:289
 msgid "Arithmetic Actions"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:194
-#: includes/class-cptch-settings-tabs.php:299
+#: includes/class-hctpc-settings-tabs.php:194
+#: includes/class-hctpc-settings-tabs.php:299
 msgid "Complexity"
 msgstr "複雜度"
 
-#: includes/class-cptch-settings-tabs.php:195
-#: includes/class-cptch-settings-tabs.php:326 includes/pro_banners.php:62
+#: includes/class-hctpc-settings-tabs.php:195
+#: includes/class-hctpc-settings-tabs.php:326 includes/pro_banners.php:62
 msgid "Image Packages"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:213
+#: includes/class-hctpc-settings-tabs.php:213
 msgid "Text fields in the \"Messages\" tab must not be empty."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:224
+#: includes/class-hctpc-settings-tabs.php:224
 #, php-format
 msgid "\"%s\" option must not be fully disabled."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:252
+#: includes/class-hctpc-settings-tabs.php:252
 msgid ""
 "In order to use \"Optical Character Recognition\" type, please select at "
 "least one of the items in the option \"Image Packages\"."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:255
+#: includes/class-hctpc-settings-tabs.php:255
 msgid ""
 "In order to use images in the CAPTCHA, please select at least one of the "
 "items in the option \"Image Packages\". The \"Images\" checkbox in "
 "\"Complexity\" option has been disabled."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:266
+#: includes/class-hctpc-settings-tabs.php:266
 msgid "Settings saved."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:281
+#: includes/class-hctpc-settings-tabs.php:281
 msgid "Captcha Type"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:283
+#: includes/class-hctpc-settings-tabs.php:283
 msgid "Arithmetic actions"
 msgstr "算術動作"
 
-#: includes/class-cptch-settings-tabs.php:284
+#: includes/class-hctpc-settings-tabs.php:284
 msgid "Optical Character Recognition (OCR)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:291
+#: includes/class-hctpc-settings-tabs.php:291
 msgid "Addition"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:292
+#: includes/class-hctpc-settings-tabs.php:292
 msgid "Subtruction"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:293
+#: includes/class-hctpc-settings-tabs.php:293
 msgid "Multiplication"
 msgstr "乘號"
 
-#: includes/class-cptch-settings-tabs.php:301
+#: includes/class-hctpc-settings-tabs.php:301
 msgid "Numbers (1, 2, 3, etc.)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:302
+#: includes/class-hctpc-settings-tabs.php:302
 msgid "Words (one, two, three, etc.)"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:303
+#: includes/class-hctpc-settings-tabs.php:303
 msgid "Images"
 msgstr "影像"
 
-#: includes/class-cptch-settings-tabs.php:309
+#: includes/class-hctpc-settings-tabs.php:309
 msgid "Number of Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:312
+#: includes/class-hctpc-settings-tabs.php:312
 msgid "Set a number of images to display simultaneously as a captcha question."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:318
+#: includes/class-hctpc-settings-tabs.php:318
 msgid ""
 "With a whitelist you can hide captcha field for your personal and trusted IP "
 "addresses."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:320
+#: includes/class-hctpc-settings-tabs.php:320
 msgid "Default"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:321
+#: includes/class-hctpc-settings-tabs.php:321
 msgid "Limit Attempts"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:332
+#: includes/class-hctpc-settings-tabs.php:332
 msgid "Use several image packages at the same time"
 msgstr "同時使用數個套件"
 
-#: includes/class-cptch-settings-tabs.php:338
+#: includes/class-hctpc-settings-tabs.php:338
 msgid "Enlarge Images"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:339
+#: includes/class-hctpc-settings-tabs.php:339
 msgid "Enable to enlarge captcha images on mouseover."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:344
+#: includes/class-hctpc-settings-tabs.php:344
 msgid "Reload Button"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:345
+#: includes/class-hctpc-settings-tabs.php:345
 msgid "Enable to display reload button for captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:348
+#: includes/class-hctpc-settings-tabs.php:348
 msgid "Captcha Title"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:351
+#: includes/class-hctpc-settings-tabs.php:351
 msgid "Required Symbol"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:354
+#: includes/class-hctpc-settings-tabs.php:354
 msgid "Advanced Protection"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:355
+#: includes/class-hctpc-settings-tabs.php:355
 msgid "Enable to display captcha when the website page is loaded."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:361
+#: includes/class-hctpc-settings-tabs.php:361
 msgid "General"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:364
+#: includes/class-hctpc-settings-tabs.php:364
 msgid "Enable Captcha for"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:393
+#: includes/class-hctpc-settings-tabs.php:393
 msgid "Check off for adding the CAPTCHA to forms on their settings pages."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:409
-#: includes/class-cptch-settings-tabs.php:444
-#: includes/class-cptch-settings-tabs.php:584
-#: includes/class-cptch-settings-tabs.php:596 includes/pro_banners.php:20
+#: includes/class-hctpc-settings-tabs.php:409
+#: includes/class-hctpc-settings-tabs.php:444
+#: includes/class-hctpc-settings-tabs.php:584
+#: includes/class-hctpc-settings-tabs.php:596 includes/pro_banners.php:20
 msgid "Close"
 msgstr "關閉"
 
-#: includes/class-cptch-settings-tabs.php:514 includes/pro_banners.php:91
+#: includes/class-hctpc-settings-tabs.php:514 includes/pro_banners.php:91
 msgid "Enable to activate a time limit requeired to complete captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:525 includes/pro_banners.php:88
+#: includes/class-hctpc-settings-tabs.php:525 includes/pro_banners.php:88
 msgid "Time Limit"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:532
+#: includes/class-hctpc-settings-tabs.php:532
 msgid "Time Limit Thershold"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:535
+#: includes/class-hctpc-settings-tabs.php:535
 msgid "sec"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:568
+#: includes/class-hctpc-settings-tabs.php:568
 msgid "This option is available only for network or for main blog"
 msgstr "這個選項僅適用於主要連網或部落格"
 
-#: includes/class-cptch-settings-tabs.php:575
+#: includes/class-hctpc-settings-tabs.php:575
 msgid "Hide from Registered Users"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:607
+#: includes/class-hctpc-settings-tabs.php:607
 msgid "update"
 msgstr "更新"
 
-#: includes/class-cptch-settings-tabs.php:608
+#: includes/class-hctpc-settings-tabs.php:608
 msgid "to the current version"
 msgstr "至目前的版本"
 
-#: includes/class-cptch-settings-tabs.php:615
+#: includes/class-hctpc-settings-tabs.php:615
 msgid "install"
 msgstr "安裝"
 
-#: includes/class-cptch-settings-tabs.php:620
-#: includes/class-cptch-whitelist.php:556
+#: includes/class-hctpc-settings-tabs.php:620
+#: includes/class-hctpc-whitelist.php:556
 msgid "activate"
 msgstr "啟動"
 
-#: includes/class-cptch-settings-tabs.php:632
+#: includes/class-hctpc-settings-tabs.php:632
 msgid "You should"
 msgstr "您應該"
 
-#: includes/class-cptch-settings-tabs.php:635
+#: includes/class-hctpc-settings-tabs.php:635
 msgid "to use this functionality."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:658
+#: includes/class-hctpc-settings-tabs.php:658
 msgid "Messages Settings"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:664
+#: includes/class-hctpc-settings-tabs.php:664
 msgid "Captcha Field is Empty"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:665 includes/helpers.php:31
+#: includes/class-hctpc-settings-tabs.php:665 includes/helpers.php:31
 msgid "Please complete the captcha."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:668
+#: includes/class-hctpc-settings-tabs.php:668
 msgid "Captcha is Incorrect"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:669 includes/helpers.php:32
+#: includes/class-hctpc-settings-tabs.php:669 includes/helpers.php:32
 msgid "Please enter correct captcha value."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:672
-#: includes/class-cptch-settings-tabs.php:676
+#: includes/class-hctpc-settings-tabs.php:672
+#: includes/class-hctpc-settings-tabs.php:676
 msgid "Time Limit Exceeded"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:673
-#: includes/class-cptch-settings-tabs.php:677 includes/helpers.php:33
+#: includes/class-hctpc-settings-tabs.php:673
+#: includes/class-hctpc-settings-tabs.php:677 includes/helpers.php:33
 #: includes/helpers.php:34
 msgid "Time limit exceeded. Please complete the captcha once again."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:678
+#: includes/class-hctpc-settings-tabs.php:678
 msgid "This message will be displayed above the captcha field."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:681
+#: includes/class-hctpc-settings-tabs.php:681
 msgid "Whitelisted IP"
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:682
+#: includes/class-hctpc-settings-tabs.php:682
 msgid "Your IP address is Whitelisted."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:683
+#: includes/class-hctpc-settings-tabs.php:683
 msgid "This message will be displayed instead of the captcha field."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:799
+#: includes/class-hctpc-settings-tabs.php:799
 msgid ""
 "The image packages list is empty. Please restore default settings or re-"
 "install the plugin to fix this error."
 msgstr ""
 
-#: includes/class-cptch-settings-tabs.php:847
+#: includes/class-hctpc-settings-tabs.php:847
 msgid "Activate"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:46
+#: includes/class-hctpc-whitelist.php:46
 msgid "All dates"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:47
+#: includes/class-hctpc-whitelist.php:47
 msgid "Last 24 hours"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:48
+#: includes/class-hctpc-whitelist.php:48
 msgid "Last week"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:49
+#: includes/class-hctpc-whitelist.php:49
 msgid "Last month"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:50
+#: includes/class-hctpc-whitelist.php:50
 msgid "Last year"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:122
+#: includes/class-hctpc-whitelist.php:122
 msgid "Limit Attempts whitelist is activated."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:123
+#: includes/class-hctpc-whitelist.php:123
 msgid "View the whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:124
+#: includes/class-hctpc-whitelist.php:124
 msgid "or"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:125
+#: includes/class-hctpc-whitelist.php:125
 msgid "Enable default captcha whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:128
+#: includes/class-hctpc-whitelist.php:128
 msgid "Load IP Address(-es)"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:131
+#: includes/class-hctpc-whitelist.php:131
 msgid "Save changes"
 msgstr "儲存變更"
 
-#: includes/class-cptch-whitelist.php:136
+#: includes/class-hctpc-whitelist.php:136
 msgid "Load IP addresses from the \"Limit Attempts\" whitelist."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:144
+#: includes/class-hctpc-whitelist.php:144
 msgid "IP to whitelist"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:151
+#: includes/class-hctpc-whitelist.php:151
 msgid "My IP"
 msgstr "我的 IP"
 
-#: includes/class-cptch-whitelist.php:156 includes/pro_banners.php:37
+#: includes/class-hctpc-whitelist.php:156 includes/pro_banners.php:37
 msgid "Allowed formats"
 msgstr "允許格式"
 
-#: includes/class-cptch-whitelist.php:158
+#: includes/class-hctpc-whitelist.php:158
 msgid "Allowed diapason"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:165
+#: includes/class-hctpc-whitelist.php:165
 msgid "Add IP to whitelist"
 msgstr "新增 IP 至允許清單"
 
-#: includes/class-cptch-whitelist.php:172
+#: includes/class-hctpc-whitelist.php:172
 msgid "Search item"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:228
+#: includes/class-hctpc-whitelist.php:228
 msgid "Nothing found"
 msgstr "沒有找到"
 
-#: includes/class-cptch-whitelist.php:228
+#: includes/class-hctpc-whitelist.php:228
 msgid "No IP in the whitelist"
 msgstr "沒有 IP 在允許清單中"
 
-#: includes/class-cptch-whitelist.php:235
+#: includes/class-hctpc-whitelist.php:235
 msgid "IP Address"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:290
-#: includes/class-cptch-whitelist.php:299
+#: includes/class-hctpc-whitelist.php:290
+#: includes/class-hctpc-whitelist.php:299
 msgid "Delete"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:401
+#: includes/class-hctpc-whitelist.php:401
 msgid "Filter"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:450
+#: includes/class-hctpc-whitelist.php:450
 msgid "IP added to the whitelist successfully."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:452
+#: includes/class-hctpc-whitelist.php:452
 msgid "Some errors occurred."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:454
+#: includes/class-hctpc-whitelist.php:454
 msgid "IP is already in the whitelist."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:457
+#: includes/class-hctpc-whitelist.php:457
 msgid "Invalid IP. See allowed formats."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:468
+#: includes/class-hctpc-whitelist.php:468
 #, php-format
 msgid "%s IP was deleted successfully"
 msgid_plural "%s IPs were deleted successfully"
 msgstr[0] "%s  IP 已成功刪除"
 
-#: includes/class-cptch-whitelist.php:474
-#: includes/class-cptch-whitelist.php:486
+#: includes/class-hctpc-whitelist.php:474
+#: includes/class-hctpc-whitelist.php:486
 msgid "Some errors occurred"
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:480
+#: includes/class-hctpc-whitelist.php:480
 msgid "One IP was deleted successfully"
 msgstr "一項 IP 已成功刪除"
 
-#: includes/class-cptch-whitelist.php:489
+#: includes/class-hctpc-whitelist.php:489
 msgid "You have not entered any value."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:492
+#: includes/class-hctpc-whitelist.php:492
 msgid "You have not entered any value in to the search form."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:494
+#: includes/class-hctpc-whitelist.php:494
 msgid "Search results for"
 msgstr "搜尋結果"
 
-#: includes/class-cptch-whitelist.php:524
+#: includes/class-hctpc-whitelist.php:524
 msgid "IP-address(es) successfully copied to the whitelist."
 msgstr ""
 
-#: includes/class-cptch-whitelist.php:547
+#: includes/class-hctpc-whitelist.php:547
 msgid "use"
 msgstr "使用"
 
-#: includes/class-cptch-whitelist.php:547
+#: includes/class-hctpc-whitelist.php:547
 msgid "the whitelist of"
 msgstr "允許清單的"
 
-#: includes/class-cptch-whitelist.php:555
-#: includes/class-cptch-whitelist.php:563
+#: includes/class-hctpc-whitelist.php:555
+#: includes/class-hctpc-whitelist.php:563
 #, php-format
 msgid "use the whitelist of %s"
 msgstr "只用允許清單的 %s"
 
-#: includes/class-cptch-whitelist.php:556
+#: includes/class-hctpc-whitelist.php:556
 #, php-format
 msgid "you should %s to use this functionality"
 msgstr "您應該使用 %s 這項功能"
 
-#: includes/class-cptch-whitelist.php:564
+#: includes/class-hctpc-whitelist.php:564
 #, php-format
 msgid "you should install %s to use this functionality"
 msgstr "您應該安裝 %s 以使用這項功能"
@@ -1145,327 +1145,3 @@ msgstr ""
 #: includes/pro_banners.php:106
 msgid "Use Several Image Packages at The Same Time"
 msgstr ""
-
-#~ msgid ""
-#~ "The image packages list is empty. Please restore default settings or re-"
-#~ "install the plugin to fix this error"
-#~ msgstr "影像套件清單為空白。請還原至預設或重新安裝外掛修正錯誤"
-
-#~ msgid ""
-#~ "Can not load images in to the \"uploads\" folder. Please, check your "
-#~ "permissions"
-#~ msgstr "無法載入影像至「上傳」資料夾。請檢視您的權限。"
-
-#~ msgid "Error during package uploading"
-#~ msgstr "套件載入時發生錯誤"
-
-#~ msgid "file size should not exceed"
-#~ msgstr "檔案大小不應該超過限制"
-
-#~ msgid "MB"
-#~ msgstr "MB"
-
-#~ msgid "KB"
-#~ msgstr "KB"
-
-#~ msgid "Bytes"
-#~ msgstr "位元組"
-
-#~ msgid "One package has been updated or added to the database"
-#~ msgid_plural "%s packages have been updated or added to the database"
-#~ msgstr[0] "%s 已上傳或已新增套件至資料庫"
-
-#~ msgid "One image has been updated or added to the database"
-#~ msgid_plural "%s images have been updated or added to the database"
-#~ msgstr[0] "%s 已上傳或已新增影像至資料庫"
-
-#~ msgid ""
-#~ "Some settings of the package %s were set incorrectly. They have been "
-#~ "skipped"
-#~ msgstr "部分 %s 套件的設定錯誤。它們將被跳過"
-
-#~ msgid "\"%s\" option must not be fully disabled"
-#~ msgstr "\"%s\" 的選項必須完全停用"
-
-#~ msgid "Settings saved"
-#~ msgstr "設定已儲存"
-
-#~ msgid "Hide from registered users"
-#~ msgstr "針對使用者隱藏表單"
-
-#~ msgid "Allowed formats:"
-#~ msgstr "允許格式："
-
-#~ msgid "Allowed diapason:"
-#~ msgstr "允許協調："
-
-#~ msgid "IP added to the whitelist successfully"
-#~ msgstr "成功將 IP 新增至允許清單中"
-
-#~ msgid "IP is already in the whitelist"
-#~ msgstr "IP 已在允許清單中"
-
-#~ msgid "Invalid IP. See allowed formats"
-#~ msgstr "無效的 IP 。請見允許的格式"
-
-#~ msgid "You have not entered any value"
-#~ msgstr "您尚未輸入任何值"
-
-#~ msgid "You have not entered any value in to the search form"
-#~ msgstr "您尚未在搜尋表單中輸入任何值"
-
-#~ msgid "IP-address(es) successfully copied to the whitelist"
-#~ msgstr "IP 位置已成功複製到允許清單"
-
-#~ msgid "Date"
-#~ msgstr "日期"
-
-#~ msgid "Remove from the whitelist"
-#~ msgstr "從允許清單中移除"
-
-#~ msgid "Use general settings"
-#~ msgstr "使用一般設定"
-
-#~ msgid "Use image packages"
-#~ msgstr "使用影像套件"
-
-#~ msgid "WordPress Login form"
-#~ msgstr "Wordpress 登入表單"
-
-#~ msgid "WordPress Registration form"
-#~ msgstr "Wordpress 註冊表單"
-
-#~ msgid "WordPress Reset Password form"
-#~ msgstr "WordPress 密碼重設表單"
-
-#~ msgid "WordPress Comments form"
-#~ msgstr "Wordpress 迴響表單"
-
-#~ msgid "Buddypress Registration form"
-#~ msgstr "Buddypress 註冊表單"
-
-#~ msgid "Buddypress Comments form"
-#~ msgstr "Buddypress 迴響表單"
-
-#~ msgid "Buddypress \"Create a Group\" form"
-#~ msgstr "Buddypress  「建立群組」 表單"
-
-#~ msgid "WooCommerce Login form"
-#~ msgstr "WooCommerce 登入表單"
-
-#~ msgid "WooCommerce Register form"
-#~ msgstr "WooCommerce 註冊表單"
-
-#~ msgid "WooCommerce Lost Password form"
-#~ msgstr "WooCommerce 密碼遺失表單"
-
-#~ msgid "WooCommerce Checkout Billing form"
-#~ msgstr "WooCommerce 結算帳目明細表單"
-
-#~ msgid "Check off for adding the CAPTCHA to forms on their settings pages"
-#~ msgstr "取消勾選在他們的設定頁面中新增驗證碼至表單"
-
-#~ msgid "For IP addresses from the whitelist CAPTCHA will not be displayed"
-#~ msgstr "在允許清單中的 IP 位置將不會顯示"
-
-#~ msgid "IP address"
-#~ msgstr "IP 位置"
-
-#~ msgid "Date added"
-#~ msgstr "新增日期"
-
-#~ msgid "Please enter a CAPTCHA value."
-#~ msgstr "請輸入驗證碼。"
-
-#~ msgid "Please enter a valid CAPTCHA value."
-#~ msgstr "請輸入有效的驗證碼。"
-
-#~ msgid "Time limit is exhausted. Please enter a CAPTCHA value again."
-#~ msgstr "限制時效已用盡。請再次輸入驗證碼。"
-
-#~ msgid "Time limit is exhausted. Please reload the CAPTCHA."
-#~ msgstr "限制時效已用盡。請重新載入驗證碼。"
-
-#~ msgid "You are in the whitelist."
-#~ msgstr "您在允許清單中。"
-
-#~ msgid "Enable time limit"
-#~ msgstr "啟動限制時效"
-
-#~ msgid "for"
-#~ msgstr "給"
-
-#~ msgid "seconds"
-#~ msgstr "秒數"
-
-#~ msgid "Enable"
-#~ msgstr "啟動"
-
-#~ msgid "Captcha"
-#~ msgstr "驗證碼"
-
-#~ msgid "How to Use Step-by-step Instruction"
-#~ msgstr "如何使用「按照步驟」指示"
-
-#~ msgid "This setting is available in Pro version"
-#~ msgstr "這個設定僅適用於專業版"
-
-#~ msgid "Custom code"
-#~ msgstr "自訂代碼"
-
-#~ msgid "Go PRO"
-#~ msgstr "至專業版"
-
-#~ msgid "check your archive"
-#~ msgstr "檢視您的檔案"
-
-#~ msgid "file format should be ZIP-archive"
-#~ msgstr "檔案格式應為 ZIP 檔"
-
-#~ msgid "it is impossible to upload the archive to the server"
-#~ msgstr "無法上傳檔案至伺服器"
-
-#~ msgid "archive can not be unzipped"
-#~ msgstr "檔案無法解壓"
-
-#~ msgid "General Options"
-#~ msgstr "一般設定"
-
-#~ msgid "All plugin settings were restored."
-#~ msgstr "所有外掛設定已還原。"
-
-#~ msgid "Save Changes"
-#~ msgstr "變更儲存"
-
-#~ msgid ""
-#~ "Text fields in the \"Notification messages\" option must not be empty"
-#~ msgstr "在「訊息通知」文字欄位的選項必須為空白"
-
-#~ msgid ""
-#~ "In order to use images in the CAPTCHA, please select at least one of the "
-#~ "items in the option \"Use image packages\". The \"Images\" checkbox in "
-#~ "\"Complexity\" option has been disabled"
-#~ msgstr ""
-#~ "請選擇至少一個「使用影像套件」的項目，才能使用影像驗證碼。在「影像」的「複"
-#~ "雜度」中的選項已停用。"
-
-#~ msgid "Plus"
-#~ msgstr "加號"
-
-#~ msgid "Minus"
-#~ msgstr "減號"
-
-#~ msgid "Numbers"
-#~ msgstr "數字"
-
-#~ msgid "Words"
-#~ msgstr "文字"
-
-#~ msgid "Enlarge images on mouseover"
-#~ msgstr "滑鼠移動時放大影像"
-
-#~ msgid "Show reload button"
-#~ msgstr "顯示重新載入按鈕"
-
-#~ msgid "CAPTCHA title"
-#~ msgstr "驗證碼標題"
-
-#~ msgid "Required symbol"
-#~ msgstr "必要的符號"
-
-#~ msgid ""
-#~ "With this option the CAPTCHA will be generated via %s into the form after "
-#~ "the end of the page loading. In this case, the most of spam bots can't "
-#~ "figure out the answer to the CAPTCHA automatically because they just "
-#~ "can't get the CAPTCHA content"
-#~ msgstr ""
-#~ "選擇這個選項，將會透過載入中的頁面底部的表單 %s 載入驗證碼。這樣可以使大部"
-#~ "分的垃圾郵件機器人無法辨識自動產生的驗證碼答案，因為它們無法獲得驗證碼內"
-#~ "容。"
-
-#~ msgid "second"
-#~ msgid_plural "seconds"
-#~ msgstr[0] "秒"
-
-#~ msgid "If the CAPTCHA field is empty"
-#~ msgstr "如果驗證碼欄位空白"
-
-#~ msgid "If the CAPTCHA is incorrect"
-#~ msgstr "如果驗證碼不正確"
-
-#~ msgid "If the time limit is exhausted"
-#~ msgstr "如果限制時校已用盡"
-
-#~ msgid ""
-#~ "If the time limit is exhausted (this message will be displayed above the "
-#~ "CAPTCHA)"
-#~ msgstr "如果限制時效已用盡（這個訊息將會取代驗證碼）"
-
-#~ msgid ""
-#~ "If the user IP is added to the whitelist (this message will be displayed "
-#~ "instead of the CAPTCHA)"
-#~ msgstr "如果使用者的IP新增至允許清單（這個訊息將會取代驗證碼）"
-
-#~ msgid "Errors"
-#~ msgstr "錯誤"
-
-#~ msgid ""
-#~ "These messages will be displayed if the CAPTCHA answer has not passed the "
-#~ "verification"
-#~ msgstr "如果驗證碼的回答沒有通過驗證，將會顯示這個訊息"
-
-#~ msgid "Info"
-#~ msgstr "資訊"
-
-#~ msgid "These messages will be displayed inside of the CAPTCHA"
-#~ msgstr "這個訊息將會顯示在驗證碼內部"
-
-#~ msgid "Notification messages"
-#~ msgstr "通知訊息"
-
-#~ msgid "to use this functionality"
-#~ msgstr "使用這項功能"
-
-#~ msgid ""
-#~ "With this option, CAPTCHA will not be displayed for IP-addresses from the "
-#~ "whitelist of %s"
-#~ msgstr "透過這個設定，驗證碼將不會對允許清單中的 IP 位置顯示 %s"
-
-#~ msgid "Load IP to the whitelist"
-#~ msgstr "載入 IP 至允許清單"
-
-#~ msgid ""
-#~ "By click on this button, all IP-addresses from the whitelist of %s will "
-#~ "be loaded to the whitelist of %s"
-#~ msgstr ""
-#~ "按一下這個按鍵，所以在允許清單的 IP 位置 %s 將不會載入 %s 的允許清單"
-
-#~ msgid "Search IP"
-#~ msgstr "搜尋 IP"
-
-#~ msgid "Some errors occured"
-#~ msgstr "發生一些錯誤"
-
-#~ msgid "instruction"
-#~ msgstr "按照步驟"
-
-#~ msgid ""
-#~ "Functions from the %1s plugin are used on your site. These functions are "
-#~ "deprecated ( %2s ) since version %4s. Please replace them according to "
-#~ "the %3s. If you close this message it will appear in case if deprecated "
-#~ "function would be called again only"
-#~ msgstr ""
-#~ " %1s 外掛功能正在您的網站上運作。 這接功能已在 %4s 版本時被取代( %2s ) 。"
-#~ "請依據 %3s 移除它們。如果您關閉此訊息，將只會在呼叫已取代的功能時顯示。"
-
-#~ msgid "some call functions for the \"%s\" filter hook"
-#~ msgstr "部分功能呼叫 \"%s\" 勾點篩選器"
-
-#~ msgid "Enable the CAPTCHA for"
-#~ msgstr "啟動驗證碼於"
-
-#~ msgid "Unlock premium options by upgrading to Pro version"
-#~ msgstr "透過升級至專業版解除進階版設定鎖定"
-
-#~ msgid "Learn More"
-#~ msgstr "了解更多"
