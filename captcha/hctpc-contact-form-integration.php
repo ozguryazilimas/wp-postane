@@ -33,7 +33,7 @@ function add_shortcode_wpcaptcha() {
 function captcha_shortcode($tag){
 
 	$tag = new WPCF7_Shortcode( $tag );
-	$captcha =  hctpc_display_filter();
+	$captcha =  cptch_display_filter();
 	return $captcha;
 	
 }

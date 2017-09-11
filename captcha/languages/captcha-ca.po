@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: captcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-25 12:34+0300\n"
-"PO-Revision-Date: 2017-07-25 12:34+0300\n"
-"Last-Translator: Psiete <psiete@gmail.com>\n"
+"POT-Creation-Date: 2016-11-08 14:49+0300\n"
+"PO-Revision-Date: 2017-02-20 15:00+0200\n"
+"Last-Translator: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language-Team: Psiete <psiete@gmail.com>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -14,551 +14,561 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: captcha.php:32 captcha.php:34 captcha.php:363
-#: includes/class-hctpc-settings-tabs.php:453
+#: captcha.php:37 captcha.php:428
 msgid "Captcha Settings"
 msgstr "Opcions de Captcha"
 
-#: captcha.php:34 captcha.php:1557 captcha.php:1570
-#: includes/class-hctpc-settings-tabs.php:39
+#: captcha.php:37
+msgid "Captcha"
+msgstr "Captcha"
+
+#: captcha.php:430
+msgid "How to Use Step-by-step Instruction"
+msgstr ""
+
+#: captcha.php:433 captcha.php:1678 captcha.php:1691
 msgid "Settings"
 msgstr "Configuració"
 
-#: captcha.php:36 includes/class-hctpc-package-list.php:91
-msgid "Captcha Packages"
+#: captcha.php:435
+msgid "This setting is available in Pro version"
 msgstr ""
 
-#: captcha.php:36
+#: captcha.php:435
 msgid "Packages"
 msgstr ""
 
-#: captcha.php:38 includes/class-hctpc-whitelist.php:78
-msgid "Captcha Whitelist"
-msgstr ""
-
-#: captcha.php:38
+#: captcha.php:437
 msgid "Whitelist"
 msgstr ""
 
-#: captcha.php:441 captcha.php:447 captcha.php:463 captcha.php:465
-#: captcha.php:474 captcha.php:528 captcha.php:532 captcha.php:541
-#: captcha.php:564 captcha.php:574 captcha.php:599 captcha.php:602
-#: captcha.php:610
+#: captcha.php:438
+msgid "Custom code"
+msgstr ""
+
+#: captcha.php:439
+msgid "Go PRO"
+msgstr ""
+
+#: captcha.php:548 captcha.php:554 captcha.php:570 captcha.php:572
+#: captcha.php:581 captcha.php:635 captcha.php:639 captcha.php:648
+#: captcha.php:671 captcha.php:681 captcha.php:706 captcha.php:709
+#: captcha.php:717
 msgid "ERROR"
 msgstr "ERROR"
 
-#: captcha.php:666 captcha.php:672
+#: captcha.php:774 captcha.php:780
 msgid "Error"
 msgstr ""
 
-#: captcha.php:666 captcha.php:672
+#: captcha.php:774 captcha.php:780
 #, fuzzy
 msgid "Click the BACK button on your browser, and try again."
 msgstr ""
 "Error: S'ha introduït un valor CAPTCHA incorrecte. Feu clic al botó Enrere "
 "del navegador i torneu a intentar-ho."
 
-#: captcha.php:860
+#: captcha.php:1019
 msgid "In order to pass the CAPTCHA please enable JavaScript"
 msgstr ""
 
-#: captcha.php:1235
+#: captcha.php:1366
 msgid "zero"
 msgstr "zero"
 
-#: captcha.php:1236
+#: captcha.php:1367 includes/settings_page.php:437
 msgid "one"
 msgstr "un"
 
-#: captcha.php:1237
+#: captcha.php:1368
 msgid "two"
 msgstr "dues"
 
-#: captcha.php:1238
+#: captcha.php:1369
 msgid "three"
 msgstr "tres"
 
-#: captcha.php:1239
+#: captcha.php:1370
 msgid "four"
 msgstr "quatre"
 
-#: captcha.php:1240
+#: captcha.php:1371
 msgid "five"
 msgstr "cinc"
 
-#: captcha.php:1241
+#: captcha.php:1372 includes/settings_page.php:437
 msgid "six"
 msgstr "sis"
 
-#: captcha.php:1242
+#: captcha.php:1373 includes/settings_page.php:419
+#: includes/settings_page.php:427
 msgid "seven"
 msgstr "set"
 
-#: captcha.php:1243
+#: captcha.php:1374 includes/settings_page.php:423
 msgid "eight"
 msgstr "vuit"
 
-#: captcha.php:1244
+#: captcha.php:1375
 msgid "nine"
 msgstr "nou"
 
-#: captcha.php:1246
+#: captcha.php:1377
 msgid "ten"
 msgstr "deu"
 
-#: captcha.php:1247
+#: captcha.php:1378
 msgid "eleven"
 msgstr "onze"
 
-#: captcha.php:1248
+#: captcha.php:1379
 msgid "twelve"
 msgstr "dotze"
 
-#: captcha.php:1249
+#: captcha.php:1380
 msgid "thirteen"
 msgstr "tretze"
 
-#: captcha.php:1250
+#: captcha.php:1381
 msgid "fourteen"
 msgstr "catorze"
 
-#: captcha.php:1251
+#: captcha.php:1382
 msgid "fifteen"
 msgstr "quinze"
 
-#: captcha.php:1252
+#: captcha.php:1383
 msgid "sixteen"
 msgstr "setze"
 
-#: captcha.php:1253
+#: captcha.php:1384
 msgid "seventeen"
 msgstr "disset"
 
-#: captcha.php:1254
+#: captcha.php:1385
 msgid "eighteen"
 msgstr "divuit"
 
-#: captcha.php:1255
+#: captcha.php:1386
 msgid "nineteen"
 msgstr "dinou"
 
-#: captcha.php:1257
+#: captcha.php:1388
 msgid "twenty"
 msgstr "vint"
 
-#: captcha.php:1258
+#: captcha.php:1389
 #, fuzzy
 msgid "twenty one"
 msgstr "vint"
 
-#: captcha.php:1259
+#: captcha.php:1390
 #, fuzzy
 msgid "twenty two"
 msgstr "vint"
 
-#: captcha.php:1260
+#: captcha.php:1391
 #, fuzzy
 msgid "twenty three"
 msgstr "vint"
 
-#: captcha.php:1261
+#: captcha.php:1392
 #, fuzzy
 msgid "twenty four"
 msgstr "vint"
 
-#: captcha.php:1262
+#: captcha.php:1393
 #, fuzzy
 msgid "twenty five"
 msgstr "vint"
 
-#: captcha.php:1263
+#: captcha.php:1394
 #, fuzzy
 msgid "twenty six"
 msgstr "vint"
 
-#: captcha.php:1264
+#: captcha.php:1395
 #, fuzzy
 msgid "twenty seven"
 msgstr "vint"
 
-#: captcha.php:1265
+#: captcha.php:1396
 #, fuzzy
 msgid "twenty eight"
 msgstr "vint"
 
-#: captcha.php:1266
+#: captcha.php:1397
 #, fuzzy
 msgid "twenty nine"
 msgstr "vint"
 
-#: captcha.php:1268
+#: captcha.php:1399
 msgid "thirty"
 msgstr "trenta"
 
-#: captcha.php:1269
+#: captcha.php:1400
 #, fuzzy
 msgid "thirty one"
 msgstr "trenta"
 
-#: captcha.php:1270
+#: captcha.php:1401
 #, fuzzy
 msgid "thirty two"
 msgstr "trenta"
 
-#: captcha.php:1271
+#: captcha.php:1402
 #, fuzzy
 msgid "thirty three"
 msgstr "tretze"
 
-#: captcha.php:1272
+#: captcha.php:1403
 #, fuzzy
 msgid "thirty four"
 msgstr "trenta"
 
-#: captcha.php:1273
+#: captcha.php:1404
 #, fuzzy
 msgid "thirty five"
 msgstr "trenta"
 
-#: captcha.php:1274
+#: captcha.php:1405
 #, fuzzy
 msgid "thirty six"
 msgstr "trenta"
 
-#: captcha.php:1275
+#: captcha.php:1406
 #, fuzzy
 msgid "thirty seven"
 msgstr "tretze"
 
-#: captcha.php:1276
+#: captcha.php:1407
 #, fuzzy
 msgid "thirty eight"
 msgstr "trenta"
 
-#: captcha.php:1277
+#: captcha.php:1408
 #, fuzzy
 msgid "thirty nine"
 msgstr "trenta"
 
-#: captcha.php:1279
+#: captcha.php:1410
 msgid "forty"
 msgstr "quaranta"
 
-#: captcha.php:1280
+#: captcha.php:1411
 #, fuzzy
 msgid "forty one"
 msgstr "quaranta"
 
-#: captcha.php:1281
+#: captcha.php:1412
 #, fuzzy
 msgid "forty two"
 msgstr "quaranta"
 
-#: captcha.php:1282
+#: captcha.php:1413
 #, fuzzy
 msgid "forty three"
 msgstr "tres"
 
-#: captcha.php:1283
+#: captcha.php:1414
 #, fuzzy
 msgid "forty four"
 msgstr "quaranta"
 
-#: captcha.php:1284
+#: captcha.php:1415
 #, fuzzy
 msgid "forty five"
 msgstr "quaranta"
 
-#: captcha.php:1285
+#: captcha.php:1416
 #, fuzzy
 msgid "forty six"
 msgstr "quaranta"
 
-#: captcha.php:1286
+#: captcha.php:1417
 #, fuzzy
 msgid "forty seven"
 msgstr "set"
 
-#: captcha.php:1287
+#: captcha.php:1418
 #, fuzzy
 msgid "forty eight"
 msgstr "vuit"
 
-#: captcha.php:1288
+#: captcha.php:1419
 #, fuzzy
 msgid "forty nine"
 msgstr "quaranta"
 
-#: captcha.php:1290
+#: captcha.php:1421
 msgid "fifty"
 msgstr "cinquanta"
 
-#: captcha.php:1291
+#: captcha.php:1422
 #, fuzzy
 msgid "fifty one"
 msgstr "cinquanta"
 
-#: captcha.php:1292
+#: captcha.php:1423
 #, fuzzy
 msgid "fifty two"
 msgstr "cinquanta"
 
-#: captcha.php:1293
+#: captcha.php:1424
 #, fuzzy
 msgid "fifty three"
 msgstr "quinze"
 
-#: captcha.php:1294
+#: captcha.php:1425
 #, fuzzy
 msgid "fifty four"
 msgstr "cinquanta"
 
-#: captcha.php:1295
+#: captcha.php:1426
 #, fuzzy
 msgid "fifty five"
 msgstr "cinquanta"
 
-#: captcha.php:1296
+#: captcha.php:1427
 #, fuzzy
 msgid "fifty six"
 msgstr "cinquanta"
 
-#: captcha.php:1297
+#: captcha.php:1428
 #, fuzzy
 msgid "fifty seven"
 msgstr "quinze"
 
-#: captcha.php:1298
+#: captcha.php:1429
 #, fuzzy
 msgid "fifty eight"
 msgstr "vuit"
 
-#: captcha.php:1299
+#: captcha.php:1430
 #, fuzzy
 msgid "fifty nine"
 msgstr "cinquanta"
 
-#: captcha.php:1301
+#: captcha.php:1432
 msgid "sixty"
 msgstr "seixanta"
 
-#: captcha.php:1302
+#: captcha.php:1433
 #, fuzzy
 msgid "sixty one"
 msgstr "seixanta"
 
-#: captcha.php:1303
+#: captcha.php:1434
 #, fuzzy
 msgid "sixty two"
 msgstr "seixanta"
 
-#: captcha.php:1304
+#: captcha.php:1435
 #, fuzzy
 msgid "sixty three"
 msgstr "setze"
 
-#: captcha.php:1305
+#: captcha.php:1436
 #, fuzzy
 msgid "sixty four"
 msgstr "seixanta"
 
-#: captcha.php:1306
+#: captcha.php:1437
 #, fuzzy
 msgid "sixty five"
 msgstr "seixanta"
 
-#: captcha.php:1307
+#: captcha.php:1438
 #, fuzzy
 msgid "sixty six"
 msgstr "seixanta"
 
-#: captcha.php:1308
+#: captcha.php:1439
 #, fuzzy
 msgid "sixty seven"
 msgstr "setze"
 
-#: captcha.php:1309
+#: captcha.php:1440
 #, fuzzy
 msgid "sixty eight"
 msgstr "vuit"
 
-#: captcha.php:1310
+#: captcha.php:1441
 #, fuzzy
 msgid "sixty nine"
 msgstr "seixanta"
 
-#: captcha.php:1312
+#: captcha.php:1443
 msgid "seventy"
 msgstr "setanta"
 
-#: captcha.php:1313
+#: captcha.php:1444
 #, fuzzy
 msgid "seventy one"
 msgstr "setanta"
 
-#: captcha.php:1314
+#: captcha.php:1445
 #, fuzzy
 msgid "seventy two"
 msgstr "setanta"
 
-#: captcha.php:1315
+#: captcha.php:1446
 #, fuzzy
 msgid "seventy three"
 msgstr "disset"
 
-#: captcha.php:1316
+#: captcha.php:1447
 #, fuzzy
 msgid "seventy four"
 msgstr "setanta"
 
-#: captcha.php:1317
+#: captcha.php:1448
 #, fuzzy
 msgid "seventy five"
 msgstr "setanta"
 
-#: captcha.php:1318
+#: captcha.php:1449
 #, fuzzy
 msgid "seventy six"
 msgstr "setanta"
 
-#: captcha.php:1319
+#: captcha.php:1450
 #, fuzzy
 msgid "seventy seven"
 msgstr "disset"
 
-#: captcha.php:1320
+#: captcha.php:1451
 #, fuzzy
 msgid "seventy eight"
 msgstr "setanta"
 
-#: captcha.php:1321
+#: captcha.php:1452
 #, fuzzy
 msgid "seventy nine"
 msgstr "setanta"
 
-#: captcha.php:1323
+#: captcha.php:1454
 msgid "eighty"
 msgstr "vuitanta"
 
-#: captcha.php:1324
+#: captcha.php:1455
 #, fuzzy
 msgid "eighty one"
 msgstr "vuitanta"
 
-#: captcha.php:1325
+#: captcha.php:1456
 #, fuzzy
 msgid "eighty two"
 msgstr "vuitanta"
 
-#: captcha.php:1326
+#: captcha.php:1457
 #, fuzzy
 msgid "eighty three"
 msgstr "divuit"
 
-#: captcha.php:1327
+#: captcha.php:1458
 #, fuzzy
 msgid "eighty four"
 msgstr "vuitanta"
 
-#: captcha.php:1328
+#: captcha.php:1459
 #, fuzzy
 msgid "eighty five"
 msgstr "vuitanta"
 
-#: captcha.php:1329
+#: captcha.php:1460
 #, fuzzy
 msgid "eighty six"
 msgstr "vuitanta"
 
-#: captcha.php:1330
+#: captcha.php:1461
 #, fuzzy
 msgid "eighty seven"
 msgstr "divuit"
 
-#: captcha.php:1331
+#: captcha.php:1462
 #, fuzzy
 msgid "eighty eight"
 msgstr "vuitanta"
 
-#: captcha.php:1332
+#: captcha.php:1463
 #, fuzzy
 msgid "eighty nine"
 msgstr "vuitanta"
 
-#: captcha.php:1334
+#: captcha.php:1465
 msgid "ninety"
 msgstr "noranta"
 
-#: captcha.php:1335
+#: captcha.php:1466
 #, fuzzy
 msgid "ninety one"
 msgstr "noranta"
 
-#: captcha.php:1336
+#: captcha.php:1467
 #, fuzzy
 msgid "ninety two"
 msgstr "noranta"
 
-#: captcha.php:1337
+#: captcha.php:1468
 #, fuzzy
 msgid "ninety three"
 msgstr "dinou"
 
-#: captcha.php:1338
+#: captcha.php:1469
 #, fuzzy
 msgid "ninety four"
 msgstr "noranta"
 
-#: captcha.php:1339
+#: captcha.php:1470
 #, fuzzy
 msgid "ninety five"
 msgstr "noranta"
 
-#: captcha.php:1340
+#: captcha.php:1471
 #, fuzzy
 msgid "ninety six"
 msgstr "noranta"
 
-#: captcha.php:1341
+#: captcha.php:1472
 #, fuzzy
 msgid "ninety seven"
 msgstr "dinou"
 
-#: captcha.php:1342
+#: captcha.php:1473
 #, fuzzy
 msgid "ninety eight"
 msgstr "noranta"
 
-#: captcha.php:1343
+#: captcha.php:1474
 #, fuzzy
 msgid "ninety nine"
 msgstr "noranta"
 
-#: captcha.php:1408
+#: captcha.php:1539
 msgid "Encryption password is not set"
 msgstr "La contrasenya de xifratge no s'ha establert"
 
-#: captcha.php:1429
+#: captcha.php:1560
 msgid "Decryption password is not set"
 msgstr "La contrasenya de desxifrat no s'ha establert"
 
-#: captcha.php:1571
+#: captcha.php:1692
 msgid "FAQ"
 msgstr "FAQ"
 
-#: captcha.php:1572
+#: captcha.php:1693
 msgid "Support"
 msgstr "Suport"
 
-#: captcha.php:1613
+#: captcha.php:1734
 #, fuzzy
 msgid "settings page"
 msgstr "Opcions guardades."
 
-#: captcha.php:1616
+#: captcha.php:1737
 #, php-format
 msgid ""
 "You're using W3 Total Cache plugin. If %1$s doesn't work properly, please "
@@ -566,462 +576,708 @@ msgid ""
 "plugin %3$s."
 msgstr ""
 
-#: captcha.php:1618
+#: captcha.php:1739 includes/settings_page.php:412
 msgid "Show CAPTCHA after the end of the page loading"
 msgstr ""
 
-#: includes/class-hctpc-package-list.php:38
-msgid "package"
+#: captcha.php:1924
+msgid "Warning"
 msgstr ""
 
-#: includes/class-hctpc-package-list.php:39
-msgid "packages"
+#: captcha.php:1928
+msgid "plugin contains deprecated functionality that will be removed"
 msgstr ""
 
-#: includes/class-hctpc-package-list.php:98
-msgid "Search"
+#: captcha.php:1929
+msgid "in the future"
 msgstr ""
 
-#: includes/class-hctpc-package-list.php:120
-msgid "No packages found"
+#: captcha.php:1929
+msgid "after"
 msgstr ""
 
-#: includes/class-hctpc-package-list.php:130
-msgid "Package"
+#: captcha.php:1932
+msgid "has old version"
 msgstr ""
 
-#: includes/class-hctpc-package-list.php:131
-#: includes/class-hctpc-whitelist.php:190
-msgid "Date Added"
+#: captcha.php:1935
+msgid "has compatibility problems with"
 msgstr ""
 
-#: includes/class-hctpc-package-loader.php:43
-msgid ""
-"Can not load images in to the \"uploads\" folder. Please, check your "
-"permissions."
+#: captcha.php:1942
+msgid "You need to update this plugin for correct work with"
 msgstr ""
 
-#: includes/class-hctpc-package-loader.php:130
-#, php-format
-msgid "One package has been updated or added to the database."
-msgid_plural "%s packages have been updated or added to the database."
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/class-hctpc-package-loader.php:131
-#, php-format
-msgid "One image has been updated or added to the database."
-msgid_plural "%s images have been updated or added to the database."
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/class-hctpc-package-loader.php:239
-msgid "Archive is empty"
+#: includes/whitelist.php:76
+msgid "For IP addresses from the whitelist CAPTCHA will not be displayed"
 msgstr ""
 
-#: includes/class-hctpc-package-loader.php:585
+#: includes/whitelist.php:88
 #, php-format
 msgid ""
-"Some settings of the package %s were set incorrectly. They have been skipped."
+"With this option, CAPTCHA will not be displayed for IP-addresses from the "
+"whitelist of %s"
 msgstr ""
 
-#: includes/class-hctpc-package-loader.php:588
-msgid "Wrong data"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:40
-msgid "Messages"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:41
-msgid "Misc"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:49
-msgid "Login form"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:50
-msgid "Registration form"
-msgstr "Formulari de registre"
-
-#: includes/class-hctpc-settings-tabs.php:51
-msgid "Forgot password form"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:52
-msgid "Comments form"
-msgstr "Formulari de comentaris"
-
-#: includes/class-hctpc-settings-tabs.php:88
-msgid "WordPress default"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:118
-msgid "Are you sure you want to restore default settings?"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:121
-msgid "Yes, restore all settings"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:122
-msgid "No, go back to the settings page"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:137
-msgid "Information"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:143
-msgid "Version"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:151
-#: includes/class-hctpc-settings-tabs.php:171
-msgid "Save Changes"
-msgstr "Salvar canvis"
-
-#: includes/class-hctpc-settings-tabs.php:246
-msgid "All plugin settings were restored."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:282
-msgid "Miscellaneous Settings"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:286
-msgid "Default Settings"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:288
-msgid "Restore Settings"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:289
-msgid "This will restore plugin settings to defaults."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:308
-#: includes/class-hctpc-settings-tabs.php:400
-msgid "Arithmetic Actions"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:309
-#: includes/class-hctpc-settings-tabs.php:410
-msgid "Complexity"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:310
-#: includes/class-hctpc-settings-tabs.php:428
-msgid "Image Packages"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:324
-msgid "Text fields in the \"Messages\" tab must not be empty."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:335
-#, php-format
-msgid "\"%s\" option must not be fully disabled."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:363
-msgid ""
-"In order to use \"Optical Character Recognition\" type, please select at "
-"least one of the items in the option \"Image Packages\"."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:366
-msgid ""
-"In order to use images in the CAPTCHA, please select at least one of the "
-"items in the option \"Image Packages\". The \"Images\" checkbox in "
-"\"Complexity\" option has been disabled."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:377
-msgid "Settings saved."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:392
-msgid "Captcha Type"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:394
-#, fuzzy
-msgid "Arithmetic actions"
-msgstr "Operacions aritmètiques del CAPTCHA"
-
-#: includes/class-hctpc-settings-tabs.php:395
-msgid "Optical Character Recognition (OCR)"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:402
-msgid "Addition"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:403
-msgid "Subtruction"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:404
-#, fuzzy
-msgid "Multiplication"
-msgstr "Multiplicació (&times;)"
-
-#: includes/class-hctpc-settings-tabs.php:412
-msgid "Numbers (1, 2, 3, etc.)"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:413
-msgid "Words (one, two, three, etc.)"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:414
-msgid "Images"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:420
-msgid "Number of Images"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:423
-msgid "Set a number of images to display simultaneously as a captcha question."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:433
-msgid "Enlarge Images"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:434
-msgid "Enable to enlarge captcha images on mouseover."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:439
-msgid "Reload Button"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:440
-msgid "Enable to display reload button for captcha."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:443
-msgid "Captcha Title"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:446
-msgid "Required Symbol"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:449
-msgid "Advanced Protection"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:450
-msgid "Enable to display captcha when the website page is loaded."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:455
-msgid "General"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:458
-msgid "Enable Captcha for"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:534
-msgid "Enable to activate a time limit requeired to complete captcha."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:545
-msgid "Time Limit"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:552
-msgid "Time Limit Thershold"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:555
-msgid "sec"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:586
-msgid "This option is available only for network or for main blog"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:593
-msgid "Hide from Registered Users"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:610
-msgid "Messages Settings"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:615
-msgid "Captcha Field is Empty"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:616 includes/helpers.php:31
-msgid "Please complete the captcha."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:619
-msgid "Captcha is Incorrect"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:620 includes/helpers.php:32
-msgid "Please enter correct captcha value."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:623
-#: includes/class-hctpc-settings-tabs.php:627
-msgid "Time Limit Exceeded"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:624
-#: includes/class-hctpc-settings-tabs.php:628 includes/helpers.php:33
-#: includes/helpers.php:34
-msgid "Time limit exceeded. Please complete the captcha once again."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:629
-msgid "This message will be displayed above the captcha field."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:632
-msgid "Whitelisted IP"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:633 includes/helpers.php:35
-msgid "Your IP address is Whitelisted."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:634
-msgid "This message will be displayed instead of the captcha field."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:742
-msgid ""
-"The image packages list is empty. Please restore default settings or re-"
-"install the plugin to fix this error."
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:790
-msgid "Activate"
-msgstr ""
-
-#: includes/class-hctpc-settings-tabs.php:792
-msgid "Install Now"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:43
-msgid "All dates"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:44
-msgid "Last 24 hours"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:45
-msgid "Last week"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:46
-msgid "Last month"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:47
-msgid "Last year"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:80
-msgid "Add New"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:104
-msgid "IP to whitelist"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:111
-msgid "My IP"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:116
-msgid "Allowed formats"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:118
-msgid "Allowed diapason"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:121
+#: includes/whitelist.php:99 includes/whitelist.php:135
 msgid "Add IP to whitelist"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:127
-msgid "Search item"
+#: includes/whitelist.php:102
+msgid "Load IP to the whitelist"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:182
+#: includes/whitelist.php:105
+#, php-format
+msgid ""
+"By click on this button, all IP-addresses from the whitelist of %s will be "
+"loaded to the whitelist of %s"
+msgstr ""
+
+#: includes/whitelist.php:114
+#, fuzzy
+msgid "Save changes"
+msgstr "Salvar canvis"
+
+#: includes/whitelist.php:131
+msgid "My IP"
+msgstr ""
+
+#: includes/whitelist.php:139
+msgid "Allowed formats:"
+msgstr ""
+
+#: includes/whitelist.php:140
+msgid "Allowed diapason:"
+msgstr ""
+
+#: includes/whitelist.php:146
+msgid "Search IP"
+msgstr ""
+
+#: includes/whitelist.php:201
 msgid "Nothing found"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:182
+#: includes/whitelist.php:201
 msgid "No IP in the whitelist"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:189
-msgid "IP Address"
+#: includes/whitelist.php:208
+msgid "IP address"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:244
-msgid "Delete"
+#: includes/whitelist.php:209
+msgid "Date added"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:348
-msgid "Filter"
+#: includes/whitelist.php:263 includes/whitelist.php:272
+msgid "Remove from the whitelist"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:394
-msgid "IP added to the whitelist successfully."
+#: includes/whitelist.php:357
+msgid "IP added to the whitelist successfully"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:396
-msgid "Some errors occurred."
+#: includes/whitelist.php:359 includes/whitelist.php:381
+#: includes/whitelist.php:393
+msgid "Some errors occured"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:398
-msgid "IP is already in the whitelist."
+#: includes/whitelist.php:361
+msgid "IP is already in the whitelist"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:401
-msgid "Invalid IP. See allowed formats."
+#: includes/whitelist.php:364
+msgid "Invalid IP. See allowed formats"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:412
+#: includes/whitelist.php:375
 #, php-format
 msgid "%s IP was deleted successfully"
 msgid_plural "%s IPs were deleted successfully"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-hctpc-whitelist.php:418
-#: includes/class-hctpc-whitelist.php:430
-msgid "Some errors occurred"
-msgstr ""
-
-#: includes/class-hctpc-whitelist.php:424
+#: includes/whitelist.php:387
 msgid "One IP was deleted successfully"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:433
-msgid "You have not entered any value."
+#: includes/whitelist.php:396
+msgid "You have not entered any value"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:436
-msgid "You have not entered any value in to the search form."
+#: includes/whitelist.php:399
+msgid "You have not entered any value in to the search form"
 msgstr ""
 
-#: includes/class-hctpc-whitelist.php:438
+#: includes/whitelist.php:401
 msgid "Search results for"
 msgstr ""
+
+#: includes/whitelist.php:415
+msgid "IP-address(es) successfully copied to the whitelist"
+msgstr ""
+
+#: includes/whitelist.php:440
+msgid "use"
+msgstr ""
+
+#: includes/whitelist.php:440
+msgid "the whitelist of"
+msgstr ""
+
+#: includes/whitelist.php:448 includes/whitelist.php:456
+#, php-format
+msgid "use the whitelist of %s"
+msgstr ""
+
+#: includes/whitelist.php:449
+#, php-format
+msgid "you should %s to use this functionality"
+msgstr ""
+
+#: includes/whitelist.php:449 includes/settings_page.php:636
+msgid "activate"
+msgstr ""
+
+#: includes/whitelist.php:457
+#, php-format
+msgid "you should install %s to use this functionality"
+msgstr ""
+
+#: includes/deprecated.php:87
+msgid "instruction"
+msgstr ""
+
+#: includes/deprecated.php:96
+#, php-format
+msgid ""
+"Functions from the %1s plugin are used on your site. These functions are "
+"deprecated ( %2s ) since version %4s. Please replace them according to the "
+"%3s. If you close this message it will appear in case if deprecated function "
+"would be called again only"
+msgstr ""
+
+#: includes/deprecated.php:115
+#, php-format
+msgid "some call functions for the \"%s\" filter hook"
+msgstr ""
+
+#: includes/deprecated.php:118
+#, fuzzy
+msgid "Enable the CAPTCHA for"
+msgstr "Habilitar CAPTCHA per:"
+
+#: includes/pro_banners.php:17
+msgid "This options is available in Pro version of plugin"
+msgstr ""
+
+#: includes/pro_banners.php:20
+msgid "Close"
+msgstr ""
+
+#: includes/pro_banners.php:26
+msgid "Unlock premium options by upgrading to Pro version"
+msgstr ""
+
+#: includes/pro_banners.php:27
+msgid "Learn More"
+msgstr ""
+
+#: includes/pro_banners.php:38
+msgid "Reason"
+msgstr ""
+
+#: includes/pro_banners.php:40
+msgid "Allowed formats"
+msgstr ""
+
+#: includes/pro_banners.php:41
+msgid "Allowed separators for IPs: a comma"
+msgstr ""
+
+#: includes/pro_banners.php:41 includes/pro_banners.php:42
+msgid "semicolon"
+msgstr ""
+
+#: includes/pro_banners.php:41
+msgid "ordinary space, tab, new line or carriage return"
+msgstr ""
+
+#: includes/pro_banners.php:42
+msgid "Allowed separators for reasons: a comma"
+msgstr ""
+
+#: includes/pro_banners.php:42
+msgid "tab, new line or carriage return"
+msgstr ""
+
+#: includes/pro_banners.php:61 includes/package_loader.php:73
+msgid "If the package already exists"
+msgstr ""
+
+#: includes/pro_banners.php:63 includes/package_loader.php:78
+msgid "Skip it"
+msgstr ""
+
+#: includes/pro_banners.php:64 includes/package_loader.php:82
+msgid "Update the existed one"
+msgstr ""
+
+#: includes/pro_banners.php:65 includes/package_loader.php:86
+#, fuzzy
+msgid "Save it as new"
+msgstr "Salvar canvis"
+
+#: includes/pro_banners.php:68 includes/package_loader.php:91
+msgid "Install Now"
+msgstr ""
+
+#: includes/pro_banners.php:69 includes/package_loader.php:93
+msgid "Browse packages"
+msgstr ""
+
+#: includes/pro_banners.php:80 includes/pro_banners.php:157
+msgid "Package"
+msgstr ""
+
+#: includes/pro_banners.php:83 includes/pro_banners.php:160
+msgid "Date"
+msgstr ""
+
+#: includes/pro_banners.php:177 includes/pro_banners.php:238
+msgid "Use general settings"
+msgstr ""
+
+#: includes/pro_banners.php:181 includes/pro_banners.php:242
+#: includes/settings_page.php:406
+msgid "Use image packages"
+msgstr ""
+
+#: includes/pro_banners.php:207 includes/pro_banners.php:268
+#: includes/settings_page.php:541
+msgid "Enable time limit"
+msgstr ""
+
+#: includes/pro_banners.php:211 includes/pro_banners.php:272
+#: includes/settings_page.php:546
+#, fuzzy
+msgid "for"
+msgstr "quatre"
+
+#: includes/pro_banners.php:213 includes/pro_banners.php:274
+msgid "seconds"
+msgstr ""
+
+#: includes/pro_banners.php:230 includes/settings_page.php:656
+#, fuzzy
+msgid "Enable"
+msgstr "Habilitar CAPTCHA per:"
+
+#: includes/pro_banners.php:234 includes/settings_page.php:657
+#, fuzzy
+msgid "Hide from registered users"
+msgstr "Amagar el CAPTCHA als usuaris registrats"
+
+#: includes/pro_banners.php:290
+msgid "Use several image packages at the same time"
+msgstr ""
+
+#: includes/package_loader.php:43
+msgid ""
+"Can not load images in to the \"uploads\" folder. Please, check your "
+"permissions"
+msgstr ""
+
+#: includes/package_loader.php:131
+msgid "Error during package uploading"
+msgstr ""
+
+#: includes/package_loader.php:143
+msgid "check your archive"
+msgstr ""
+
+#: includes/package_loader.php:145
+msgid "file format should be ZIP-archive"
+msgstr ""
+
+#: includes/package_loader.php:147
+msgid "file size should not exceed"
+msgstr ""
+
+#: includes/package_loader.php:158
+msgid "it is impossible to upload the archive to the server"
+msgstr ""
+
+#: includes/package_loader.php:170
+msgid "archive can not be unzipped"
+msgstr ""
+
+#: includes/package_loader.php:183
+msgid "MB"
+msgstr ""
+
+#: includes/package_loader.php:185
+msgid "KB"
+msgstr ""
+
+#: includes/package_loader.php:187
+msgid "Bytes"
+msgstr ""
+
+#: includes/package_loader.php:242
+#, php-format
+msgid "One package has been updated or added to the database"
+msgid_plural "%s packages have been updated or added to the database"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/package_loader.php:243
+#, php-format
+msgid "One image has been updated or added to the database"
+msgid_plural "%s images have been updated or added to the database"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/package_loader.php:351
+msgid "Archive is empty"
+msgstr ""
+
+#: includes/package_loader.php:699
+#, php-format
+msgid ""
+"Some settings of the package %s were set incorrectly. They have been skipped"
+msgstr ""
+
+#: includes/package_loader.php:702
+msgid "Wrong data"
+msgstr ""
+
+#: includes/helpers.php:30
+#, fuzzy
+msgid "Please enter a CAPTCHA value."
+msgstr "Si us plau, introduïu un valor vàlid per al CAPTCHA"
+
+#: includes/helpers.php:31
+msgid "Please enter a valid CAPTCHA value."
+msgstr "Si us plau, introduïu un valor vàlid per al CAPTCHA"
+
+#: includes/helpers.php:32
+#, fuzzy
+msgid "Time limit is exhausted. Please enter a CAPTCHA value again."
+msgstr "Si us plau, introduïu un valor vàlid per al CAPTCHA"
+
+#: includes/helpers.php:33
+#, fuzzy
+msgid "Time limit is exhausted. Please reload the CAPTCHA."
+msgstr "Si us plau, introduïu un valor vàlid per al CAPTCHA"
+
+#: includes/helpers.php:34
+msgid "You are in the whitelist."
+msgstr ""
+
+#: includes/settings_page.php:46
+msgid "General Options"
+msgstr ""
+
+#: includes/settings_page.php:47
+#, fuzzy
+msgid "WordPress Login form"
+msgstr "Inici de sessió"
+
+#: includes/settings_page.php:48
+#, fuzzy
+msgid "WordPress Registration form"
+msgstr "Formulari de registre"
+
+#: includes/settings_page.php:49
+#, fuzzy
+msgid "WordPress Reset Password form"
+msgstr "Formulari per a restablir la contrasenya"
+
+#: includes/settings_page.php:50
+#, fuzzy
+msgid "WordPress Comments form"
+msgstr "Formulari de comentaris"
+
+#: includes/settings_page.php:89
+#, fuzzy
+msgid "Buddypress Registration form"
+msgstr "Formulari de registre"
+
+#: includes/settings_page.php:90
+#, fuzzy
+msgid "Buddypress Comments form"
+msgstr "Formulari de comentaris"
+
+#: includes/settings_page.php:91
+msgid "Buddypress \"Create a Group\" form"
+msgstr ""
+
+#: includes/settings_page.php:92
+#, fuzzy
+msgid "WooCommerce Login form"
+msgstr "Formulari de comentaris"
+
+#: includes/settings_page.php:93
+#, fuzzy
+msgid "WooCommerce Register form"
+msgstr "Formulari de registre"
+
+#: includes/settings_page.php:94
+#, fuzzy
+msgid "WooCommerce Lost Password form"
+msgstr "Formulari de contrasenya oblidada"
+
+#: includes/settings_page.php:95
+msgid "WooCommerce Checkout Billing form"
+msgstr ""
+
+#: includes/settings_page.php:145
+msgid "All plugin settings were restored."
+msgstr ""
+
+#: includes/settings_page.php:171
+msgid "Save Changes"
+msgstr "Salvar canvis"
+
+#: includes/settings_page.php:211 includes/settings_page.php:404
+#, fuzzy
+msgid "Arithmetic actions"
+msgstr "Operacions aritmètiques del CAPTCHA"
+
+#: includes/settings_page.php:212 includes/settings_page.php:405
+msgid "Complexity"
+msgstr ""
+
+#: includes/settings_page.php:221
+#, php-format
+msgid "\"%s\" option must not be fully disabled"
+msgstr ""
+
+#: includes/settings_page.php:235
+msgid "Text fields in the \"Notification messages\" option must not be empty"
+msgstr ""
+
+#: includes/settings_page.php:282
+msgid ""
+"In order to use images in the CAPTCHA, please select at least one of the "
+"items in the option \"Use image packages\". The \"Images\" checkbox in "
+"\"Complexity\" option has been disabled"
+msgstr ""
+
+#: includes/settings_page.php:291
+#, fuzzy
+msgid "Settings saved"
+msgstr "Opcions guardades."
+
+#: includes/settings_page.php:402
+#, php-format
+msgid ""
+"With this option the CAPTCHA will be generated via %s into the form after "
+"the end of the page loading. In this case, the most of spam bots can't "
+"figure out the answer to the CAPTCHA automatically because they just can't "
+"get the CAPTCHA content"
+msgstr ""
+
+#: includes/settings_page.php:408
+msgid "Enlarge images on mouseover"
+msgstr ""
+
+#: includes/settings_page.php:409
+msgid "Show reload button"
+msgstr ""
+
+#: includes/settings_page.php:410
+#, fuzzy
+msgid "CAPTCHA title"
+msgstr "Nivell de complexitat de CAPTCHA"
+
+#: includes/settings_page.php:411
+msgid "Required symbol"
+msgstr ""
+
+#: includes/settings_page.php:418
+msgid "Plus"
+msgstr "Suma (&#43;)"
+
+#: includes/settings_page.php:422
+msgid "Minus"
+msgstr "Resta (&minus;)"
+
+#: includes/settings_page.php:426
+#, fuzzy
+msgid "Multiplication"
+msgstr "Multiplicació (&times;)"
+
+#: includes/settings_page.php:432
+msgid "Numbers"
+msgstr "Números"
+
+#: includes/settings_page.php:436
+msgid "Words"
+msgstr "Paraules"
+
+#: includes/settings_page.php:440
+msgid "Images"
+msgstr ""
+
+#: includes/settings_page.php:547
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/settings_page.php:566
+msgid "If the CAPTCHA field is empty"
+msgstr ""
+
+#: includes/settings_page.php:567
+msgid "If the CAPTCHA is incorrect"
+msgstr ""
+
+#: includes/settings_page.php:568
+msgid "If the time limit is exhausted"
+msgstr ""
+
+#: includes/settings_page.php:571
+#, fuzzy
+msgid ""
+"If the time limit is exhausted (this message will be displayed above the "
+"CAPTCHA)"
+msgstr "Si us plau, introduïu un valor vàlid per al CAPTCHA"
+
+#: includes/settings_page.php:572
+msgid ""
+"If the user IP is added to the whitelist (this message will be displayed "
+"instead of the CAPTCHA)"
+msgstr ""
+
+#: includes/settings_page.php:577
+msgid "Errors"
+msgstr ""
+
+#: includes/settings_page.php:578
+msgid ""
+"These messages will be displayed if the CAPTCHA answer has not passed the "
+"verification"
+msgstr ""
+
+#: includes/settings_page.php:581
+msgid "Info"
+msgstr ""
+
+#: includes/settings_page.php:582
+#, fuzzy
+msgid "These messages will be displayed inside of the CAPTCHA"
+msgstr "Si us plau, introduïu un valor vàlid per al CAPTCHA"
+
+#: includes/settings_page.php:587
+msgid "Notification messages"
+msgstr ""
+
+#: includes/settings_page.php:623
+msgid "update"
+msgstr ""
+
+#: includes/settings_page.php:624
+msgid "to the current version"
+msgstr ""
+
+#: includes/settings_page.php:631
+msgid "install"
+msgstr ""
+
+#: includes/settings_page.php:645
+msgid "You should"
+msgstr ""
+
+#: includes/settings_page.php:648
+msgid "to use this functionality"
+msgstr ""
+
+#: includes/settings_page.php:678
+msgid "This option is available only for network or for main blog"
+msgstr ""
+
+#: includes/settings_page.php:690
+msgid "Check off for adding the CAPTCHA to forms on their settings pages"
+msgstr ""
+
+#: includes/settings_page.php:787
+msgid ""
+"The image packages list is empty. Please restore default settings or re-"
+"install the plugin to fix this error"
+msgstr ""
+
+#~ msgid "Registration form"
+#~ msgstr "Formulari de registre"
+
+#~ msgid "Comments form"
+#~ msgstr "Formulari de comentaris"
+
+#~ msgid "Plus (&#43;)"
+#~ msgstr "Suma (&#43;)"
+
+#~ msgid "Minus (&minus;)"
+#~ msgstr "Resta (&minus;)"
+
+#~ msgid "Multiply"
+#~ msgstr "Multiplicar"
+
+#~ msgid ""
+#~ "Please select one item in the block Arithmetic and Complexity for CAPTCHA"
+#~ msgstr ""
+#~ "Si us plau, seleccioneu un element en el bloc d'Aritmètica i la "
+#~ "complexitat de CAPTCHA"
+
+#, fuzzy
+#~ msgid "Please select one item in the block Enable image packages"
+#~ msgstr ""
+#~ "Si us plau, seleccioneu un element en el bloc d'Aritmètica i la "
+#~ "complexitat de CAPTCHA"
+
+#, fuzzy
+#~ msgid "Plugins"
+#~ msgstr "BWS Plugins"
+
+#, fuzzy
+#~ msgid "If you would like to add Captcha to a custom form, please see"
+#~ msgstr ""
+#~ "Si vols personalitzar aquest plugin per a un formulari personalitzat, "
+#~ "consulteu"
+
+#, fuzzy
+#~ msgid "Hide CAPTCHA"
+#~ msgstr "Habilitar CAPTCHA per:"
+
+#~ msgid "Arithmetic actions for CAPTCHA"
+#~ msgstr "Operacions aritmètiques del CAPTCHA"
+
+#~ msgid "and"
+#~ msgstr "i"
+
+#~ msgid "Title for CAPTCHA in the form"
+#~ msgstr "Títol per al CAPTCHA en el formulari"
+
+#, fuzzy
+#~ msgid "Contact Form"
+#~ msgstr "Plugin Contact Form"
+
+#~ msgid "Activate contact form"
+#~ msgstr "Activar plugin Contact Form"
+
+#~ msgid "Download contact form"
+#~ msgstr "Descarregar plugin Contact Form"
+
+#~ msgid "powered by"
+#~ msgstr "impulsat per"
+
+#, fuzzy
+#~ msgid "Rate the plugin"
+#~ msgstr "Plugins recomendados"
+
+#, fuzzy
+#~ msgid "ERROR:"
+#~ msgstr "ERROR"
