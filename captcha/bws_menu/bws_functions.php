@@ -118,7 +118,7 @@ if ( ! function_exists ( 'bws_plugin_update_row' ) ) {
 						<div class="update-message' . $div_class . '"' . $style . '>';
 						if ( $wp_version >= 4.6 )
 							echo '<p>';
-						echo '<strong>' . __( 'WARNING: Illegal use notification', 'bestwebsoft' ) . '.</strong> ' . __( 'You can use one license of the Pro plugin for one domain only. Please check and edit your license or domain if necessary using you personal Client Area. We strongly recommend you to solve the problem within 24 hours, otherwise the Pro plugin will be deactivated.', 'bestwebsoft' ) . ' <a target="_blank" href="https://support.bestwebsoft.com/hc/en-us/articles/204240089">' . __( 'Learn More', 'bestwebsoft' ) . '</a>';
+						echo '<strong>' . __( 'WARNING: Illegal use notification', 'bestwebsoft' ) . '.</strong> ' . __( 'You can use one license of the Pro plugin for one domain only. Please check and edit your license or domain if necessary using you personal Client Area. We strongly recommend you to solve the problem within 24 hours, otherwise the Pro plugin will be deactivated.', 'bestwebsoft' ) . ' <a target="_blank" href="http://www.wppromat.com/catpcha-wordpress-plugin/requests/">' . __( 'Learn More', 'bestwebsoft' ) . '</a>';
 						if ( $wp_version >= 4.6 )
 							echo '</p>';
 						echo '</div>
@@ -135,9 +135,9 @@ if ( ! function_exists ( 'bws_plugin_update_row' ) ) {
 						if ( $wp_version >= 4.6 )
 							echo '<p>';
 						if ( isset( $bstwbsftwppdtplgns_options['trial'][ $plugin_key ] ) && $link_slug != false ) {
-							echo __( 'Notice: Your Pro Trial license has expired. To continue using the plugin, you should buy a Pro license', 'bestwebsoft' ) . ' - <a href="https://bestwebsoft.com/products/wordpress/plugins/' . $link_slug .'/">https://bestwebsoft.com/products/wordpress/plugins/' . $link_slug . '/</a>';
+							echo __( 'Notice: Your Pro Trial license has expired. To continue using the plugin, you should buy a Pro license', 'bestwebsoft' ) . ' - <a href="http://www.wppromat.com/catpcha-wordpress-plugin/requests/' . $link_slug .'/">http://www.wppromat.com/catpcha-wordpress-plugin/requests/' . $link_slug . '/</a>';
 						} else {
-							echo __( 'Your license has expired. To continue getting top-priority support and plugin updates, you should extend it.', 'bestwebsoft' ) . ' <a target="_new" href="https://support.bestwebsoft.com/entries/53487136">' . __( "Learn more", 'bestwebsoft' ) . '</a>';
+							echo __( 'Your license has expired. To continue getting top-priority support and plugin updates, you should extend it.', 'bestwebsoft' ) . ' <a target="_new" href="http://www.wppromat.com/catpcha-wordpress-plugin/requests/">' . __( "Learn more", 'bestwebsoft' ) . '</a>';
 						}
 						if ( $wp_version >= 4.6 )
 							echo '</p>';
@@ -330,7 +330,7 @@ if ( ! function_exists( 'bws_plugin_banner' ) ) {
 							<span><?php _e( 'Extend standard plugin functionality with new great options.', 'bestwebsoft' ); ?></span>
 						</div>
 						<div class="button_div">
-							<a class="button" target="_blank" href="https://bestwebsoft.com/products/wordpress/plugins/<?php echo $link_slug; ?>/?k=<?php echo $link_key; ?>&amp;pn=<?php echo $link_pn; ?>&amp;v=<?php echo $plugin_info["Version"]; ?>&amp;wp_v=<?php echo $wp_version; ?>"><?php _e( 'Learn More', 'bestwebsoft' ); ?></a>
+							<a class="button" target="_blank" href="http://www.wppromat.com/catpcha-wordpress-plugin/requests/<?php echo $link_slug; ?>/?k=<?php echo $link_key; ?>&amp;pn=<?php echo $link_pn; ?>&amp;v=<?php echo $plugin_info["Version"]; ?>&amp;wp_v=<?php echo $wp_version; ?>"><?php _e( 'Learn More', 'bestwebsoft' ); ?></a>
 						</div>
 					</div>
 				</div>
@@ -373,7 +373,7 @@ if ( ! function_exists ( 'bws_plugin_banner_timeout' ) ) {
 					<div class="icon">
 						<img title="" src="<?php echo $banner_url; ?>" alt="" />
 					</div>
-					<div class="text"><?php printf( __( "Your license key for %s expires on %s and you won't be granted TOP-PRIORITY SUPPORT or UPDATES.", 'bestwebsoft' ), '<strong>' . $plugin_name . '</strong>', $bstwbsftwppdtplgns_options['time_out'][ $plugin_key ] ); ?> <a target="_new" href="https://support.bestwebsoft.com/entries/53487136"><?php _e( "Learn more", 'bestwebsoft' ); ?></a></div>
+					<div class="text"><?php printf( __( "Your license key for %s expires on %s and you won't be granted TOP-PRIORITY SUPPORT or UPDATES.", 'bestwebsoft' ), '<strong>' . $plugin_name . '</strong>', $bstwbsftwppdtplgns_options['time_out'][ $plugin_key ] ); ?> <a target="_new" href="http://www.wppromat.com/catpcha-wordpress-plugin/requests/"><?php _e( "Learn more", 'bestwebsoft' ); ?></a></div>
 				</div>
 			</div>
 		<?php }
@@ -470,7 +470,7 @@ if ( ! function_exists( 'bws_plugin_suggest_feature_banner' ) ) {
 				<div class="text">
 					<strong><?php printf( __( 'Thank you for choosing %s plugin!', 'bestwebsoft' ), $plugin_info['Name'] ); ?></strong><br />
 					<?php _e( "If you have a feature, suggestion or idea you'd like to see in the plugin, we'd love to hear about it!", 'bestwebsoft' ); ?>
-					<a target="_blank" href="https://support.bestwebsoft.com/hc/en-us/requests/new"><?php _e( 'Suggest a Feature', 'bestwebsoft' ); ?></a>
+					<a target="_blank" href="http://www.wppromat.com/catpcha-wordpress-plugin/requests/"><?php _e( 'Suggest a Feature', 'bestwebsoft' ); ?></a>
 				</div>
 				<form action="" method="post">
 					<button class="notice-dismiss bws_hide_settings_notice" title="<?php _e( 'Close notice', 'bestwebsoft' ); ?>"></button>
@@ -622,8 +622,8 @@ if ( ! function_exists ( 'bws_plugins_admin_head' ) ) {
 			<!-- TinyMCE Shortcode Plugin -->
 			<script type='text/javascript'>
 				var bws_shortcode_button = {
-					'label': '<?php esc_attr_e( "Add BWS Shortcode", "bestwebsoft" ); ?>',
-					'title': '<?php esc_attr_e( "Add BWS Plugins Shortcode", "bestwebsoft" ); ?>',
+					'label': '<?php esc_attr_e( "Add SW Shortcode", "bestwebsoft" ); ?>',
+					'title': '<?php esc_attr_e( "Add SW Plugins Shortcode", "bestwebsoft" ); ?>',
 					'function_name': [
 						<?php foreach ( $bws_shortcode_list as $key => $value ) {
 							if ( isset( $value['js_function'] ) )
@@ -900,12 +900,12 @@ if ( ! function_exists( 'bws_add_help_box' ) ) {
 			<span class="bws_hidden_help_text">' . $content . '</span>
 		</span>';
 	}
-}
+} 
 
 /* add help tab  */
 if ( ! function_exists( 'bws_help_tab' ) ) {
 	function bws_help_tab( $screen, $args ) {
-		$url = ( ! empty( $args['section'] ) ) ? 'https://support.bestwebsoft.com/hc/en-us/sections/' . $args['section'] : 'https://support.bestwebsoft.com/';
+		$url = ( ! empty( $args['section'] ) ) ? 'http://www.wppromat.com/catpcha-wordpress-plugin/requests/' . $args['section'] : 'http://www.wppromat.com/';
 
 		$content = '<p><a href="' . $url . '" target="_blank">' . __( 'Visit Help Center', 'bestwebsoft' ) . '</a></p>';
 
@@ -921,7 +921,7 @@ if ( ! function_exists( 'bws_help_tab' ) ) {
 			'<p><strong>' . __( 'For more information:', 'bestwebsoft' ) . '</strong></p>' .
 			'<p><a href="https://drive.google.com/folderview?id=0B5l8lO-CaKt9VGh0a09vUjNFNjA&usp=sharing#list" target="_blank">' . __( 'Documentation', 'bestwebsoft' ) . '</a></p>' .
 			'<p><a href="http://www.youtube.com/user/bestwebsoft/playlists?flow=grid&sort=da&view=1" target="_blank">' . __( 'Video Instructions', 'bestwebsoft' ) . '</a></p>' .
-			'<p><a href="https://support.bestwebsoft.com/hc/en-us/requests/new" target="_blank">' . __( 'Submit a Request', 'bestwebsoft' ) . '</a></p>'
+			'<p><a href="http://www.wppromat.com/catpcha-wordpress-plugin/requests/" target="_blank">' . __( 'Submit a Request', 'bestwebsoft' ) . '</a></p>'
 		);
 	}
 }
