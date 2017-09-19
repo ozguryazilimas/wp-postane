@@ -175,13 +175,17 @@ class URE_Base_Lib {
     public function get_option($option_name, $default = false) {
 
         if (isset($this->options[$option_name])) {
-            return $this->options[$option_name];
+            $value = $this->options[$option_name];
         } else {
-            return $default;
+            $value = $default;
         }
+        $value = apply_filters('ure_get_option_'. $option_name, $value);
+        
+        return $value;
     }
     // end of get_option()
 
+    
     /**
      * puts option value according to $option_name option name into options array property
      */

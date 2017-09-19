@@ -263,13 +263,17 @@ class URE_User_Other_Roles {
         }
         if (!current_user_can('edit_user', $user_id)) {
             return false;
-        }
-        $user = get_userdata($user_id);
+        }        
 
-        if (empty($_POST['ure_other_roles'])) {
+        if (!isset($_POST['ure_other_roles'])) {    // add default other roles, there is no related data at the POST
             return false;
         }
         
+        if (empty($_POST['ure_other_roles'])) { // there is no need in other roles, user did not selected them
+            return true;
+        }
+        
+        $user = get_userdata($user_id);
         $data = explode(',', str_replace(' ', '', $_POST['ure_other_roles']));
         $ure_other_roles = array();
         foreach($data as $role_id) {
@@ -290,6 +294,13 @@ class URE_User_Other_Roles {
 
     
     private function add_default_other_roles($user_id) {
+        if (!current_user_can('edit_users')) {
+            return false;
+        }
+        if (!current_user_can('edit_user', $user_id)) {
+            return false;
+        }
+        
         $user = get_user_by('id', $user_id);
         if (empty($user->ID)) {
             return;
