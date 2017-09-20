@@ -199,6 +199,8 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
 
   if ($request_result) {
     $received = json_decode($request_result);
+    # date_i18n does not care for timezone, get_date_from_gmt does not care for formatting, what a mess...
+    date_default_timezone_set(get_option('timezone_string'));
 
     for ($i = 0; $i < $display_count; $i++) {
       if (isset($received->data[$i]->message)) {
@@ -209,8 +211,8 @@ function fluxophy_fetch_data_fb($source_url, $display_count, $picture_url) {
           $output .= '<img src="' . $picture_url . '"></img>';
         }
         $output .= "<div class='fluxophy_22dakika'><a href='http://www.facebook.com/22dakika.org'>22dakika<br/><span style='font-weight:normal'>/22dakika.org</span></a></div>";
-        $output .= '<a href="' . $received->data[$i]->link . '" title="' . date_i18n('G:i - d F Y', strtotime($received->data[$i]->updated_time)) . '" target="_blank">';
-        $output .= date_i18n('d M', strtotime($received->data[$i]->updated_time));
+        $output .= '<a href="' . $received->data[$i]->link . '" title="' . date_i18n('G:i - d F Y', strtotime($received->data[$i]->created_time)) . '" target="_blank">';
+        $output .= date_i18n('d M', strtotime($received->data[$i]->created_time));
         $output .= '</a>';
 
         $output .= '</div>';
