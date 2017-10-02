@@ -63,8 +63,7 @@ class URE_Role_View extends URE_View {
     
     private function role_select_copy_prepare_html($select_width=200) {
         
-        global $current_user;
-        
+        $current_user = wp_get_current_user();
         $key_capability = URE_Own_Capabilities::get_key_capability();
         $user_is_ure_admin = current_user_can($key_capability);
         $role_to_skip = ($user_is_ure_admin) ? '':$current_user->roles[0];

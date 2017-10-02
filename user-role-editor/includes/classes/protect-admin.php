@@ -14,10 +14,10 @@ class URE_Protect_Admin {
     private $lib = null;
     private $user_to_check = null;  // cached list of user IDs, who has Administrator role     	 
     
-    public function __construct($lib) {
+    public function __construct() {
         global $pagenow;
         
-        $this->lib = $lib;
+        $this->lib = URE_Lib::get_instance();
         $this->user_to_check = array();
         
         // Exclude administrator role from edit list.
@@ -158,20 +158,20 @@ class URE_Protect_Admin {
      * @param  type $user_query
      */
     public function exclude_administrators($user_query) {
-
-        global $wpdb, $current_user;
+        global $wpdb;
         
         if (!$this->is_protection_applicable()) { // block the user edit stuff only
             return;
         }
 
         // get user_id of users with 'Administrator' role  
+        $current_user_id = get_current_user_id();
         $tableName = $this->lib->get_usermeta_table_name();
         $meta_key = $wpdb->prefix . 'capabilities';
         $admin_role_key = '%"administrator"%';
         $query = "SELECT user_id
               FROM $tableName
-              WHERE user_id!={$current_user->ID} AND meta_key='{$meta_key}' AND meta_value like '{$admin_role_key}'";
+              WHERE user_id!={$current_user_id} AND meta_key='{$meta_key}' AND meta_value like '{$admin_role_key}'";
         $ids_arr = $wpdb->get_col($query);
         if (is_array($ids_arr) && count($ids_arr) > 0) {
             $ids = implode(',', $ids_arr);

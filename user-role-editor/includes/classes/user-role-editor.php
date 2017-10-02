@@ -153,19 +153,14 @@ class User_Role_Editor {
      */
     public function plugin_init() {
 
-        global $current_user, $pagenow;
+        global $pagenow;
 
-        if (!empty($current_user->ID)) {
-            $user_id = $current_user->ID;
-        } else {
-            $user_id = 0;
-        }
-
+        $user_id = get_current_user_id();
         $supress_protection = apply_filters('ure_supress_administrators_protection', false);
         // these filters and actions should prevent editing users with administrator role
         // by other users with 'edit_users' capability
         if (!$supress_protection && !$this->lib->user_is_admin($user_id)) {
-            new URE_Protect_Admin($this->lib);
+            new URE_Protect_Admin();
         }
 
         add_action('admin_enqueue_scripts', array($this, 'admin_load_js'));
@@ -207,13 +202,12 @@ class User_Role_Editor {
    * Allow non-superadmin user to add/create users to the site as superadmin does.
    * Include current user to the list of superadmins - for the user-new.php page only, and 
    * if user really can create_users and promote_users
-   * @global string $page
+   * @global string $pagenow
    * @param array $site_admins
    * @return array
    */
-  public function allow_add_user_as_superadmin($site_admins) {
-  
-      global $pagenow, $current_user;
+  public function allow_add_user_as_superadmin($site_admins) {  
+      global $pagenow;
       
       $this->lib->set_raised_permissions(false);
       
@@ -229,14 +223,14 @@ class User_Role_Editor {
       if (!$can_add_user) {
           return $site_admins; // no help in this case
       }
-              
+
+      $current_user = wp_get_current_user();
       if (!in_array($current_user->user_login, $site_admins)) {
           $this->lib->set_raised_permissions(true);
           $site_admins[] = $current_user->user_login;
       }
       
-      return $site_admins;
-      
+      return $site_admins;      
   }
   // end of allow_add_user_as_superadmin()
   
@@ -341,10 +335,10 @@ class User_Role_Editor {
      * 
      */
     public function edit_user_permission_check() {
-        global $current_user, $profileuser;
+        global $profileuser;
 
-        wp_get_current_user();
-        if ($current_user->ID===0) {
+        $current_user_id = get_current_user_id();
+        if ($current_user_id===0) {
             return;
         }
         if ($this->lib->is_super_admin()) { // Superadmin may do all
@@ -361,9 +355,9 @@ class User_Role_Editor {
         }
         
         // editing a user profile: it's correct to call is_super_admin() directly here, as permissions are raised for the $current_user only
-        if (!$this->lib->is_super_admin($current_user->ID) && is_super_admin($profileuser->ID)) { // trying to edit a superadmin while himself is less than a superadmin
+        if (!$this->lib->is_super_admin($current_user_id) && is_super_admin($profileuser->ID)) { // trying to edit a superadmin while himself is less than a superadmin
             wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
-        } elseif (!( is_user_member_of_blog($profileuser->ID, get_current_blog_id()) && is_user_member_of_blog($current_user->ID, get_current_blog_id()) )) { // editing user and edited user aren't members of the same blog
+        } elseif (!( is_user_member_of_blog($profileuser->ID, get_current_blog_id()) && is_user_member_of_blog($current_user_id, get_current_blog_id()) )) { // editing user and edited user aren't members of the same blog
             wp_die(esc_html__('You do not have permission to edit this user.', 'user-role-editor'));
         }
 
@@ -375,30 +369,31 @@ class User_Role_Editor {
    * Add/hide edit actions for every user row at the users list
    * 
    * @global type $pagenow
-   * @global type $current_user
    * @param string $actions
    * @param type $user
    * @return string
    */
     public function user_row($actions, $user) {
+        global $pagenow;
 
-        global $pagenow, $current_user;
-
-        if ($pagenow == 'users.php') {
-            if ($current_user->has_cap($this->key_capability)) {
-                $actions['capabilities'] = '<a href="' .
-                        wp_nonce_url("users.php?page=users-" . URE_PLUGIN_FILE . "&object=user&amp;user_id={$user->ID}", "ure_user_{$user->ID}") .
-                        '">' . esc_html__('Capabilities', 'user-role-editor') . '</a>';
-            }
+        if ($pagenow!=='users.php') {
+            return $actions;
         }
-
+        
+        $current_user = wp_get_current_user();
+        if ($current_user->has_cap($this->key_capability)) {
+            $actions['capabilities'] = '<a href="' .
+                    wp_nonce_url("users.php?page=users-" . URE_PLUGIN_FILE . "&object=user&amp;user_id={$user->ID}", "ure_user_{$user->ID}") .
+                    '">' . esc_html__('Capabilities', 'user-role-editor') . '</a>';
+        }
+        
         return $actions;
     }
 
     // end of user_row()
 
   
-    /**
+  /**
    * every time when new blog created - duplicate to it roles from the main blog (1)  
    * @global wpdb $wpdb
    * @global WP_Roles $wp_roles

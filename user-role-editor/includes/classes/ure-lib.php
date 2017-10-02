@@ -137,8 +137,7 @@ class URE_Lib extends URE_Base_Lib {
      * User Role Editor stores its options at the main blog/site only and applies them to the all network
      * 
      */
-    protected function init_options($options_id) {
-        
+    protected function init_options($options_id) {        
         global $wpdb;
         
         if ($this->multisite) { 
@@ -171,7 +170,6 @@ class URE_Lib extends URE_Base_Lib {
      * saves options array into WordPress database wp_options table
      */
     public function flush_options() {
-
         global $wpdb;
         
         $current_blog = $wpdb->blogid;
@@ -573,16 +571,14 @@ class URE_Lib extends URE_Base_Lib {
     /**
      * Checks if user is allowed to use User Role Editor
      * 
-     * @global int $current_user
      * @param int $user_id
      * @return boolean true 
      */
     public function user_is_admin($user_id = false) {
-        global $current_user;
 
         $ure_key_capability = URE_Own_Capabilities::get_key_capability();
         if (empty($user_id)) {                    
-            $user_id = $current_user->ID;
+            $user_id = get_current_user_id();
         }
         $result = user_can($user_id, $ure_key_capability);
         
@@ -600,7 +596,6 @@ class URE_Lib extends URE_Base_Lib {
      * @return array
      */
     public function get_user_roles() {
-
         global $wp_roles;
         
         if (!isset($wp_roles)) {
@@ -706,8 +701,7 @@ class URE_Lib extends URE_Base_Lib {
     // ure_ConvertCapsToReadable
     
             
-    public function make_roles_backup() 
-    {
+    public function make_roles_backup() {
         global $wpdb;
 
         // check if backup user roles record exists already
@@ -764,7 +758,6 @@ class URE_Lib extends URE_Base_Lib {
     /**
      * return array with roles which we could delete, e.g self-created and not used with any blog user
      * 
-     * @global wpdb $wpdb   - WP database object
      * @return array 
      */
     public function get_roles_can_delete() {
@@ -818,7 +811,6 @@ class URE_Lib extends URE_Base_Lib {
      * return the array of unused user capabilities
      * 
      * @global WP_Roles $wp_roles
-     * @global wpdb $wpdb
      * @return array 
      */
     public function get_caps_to_remove() {
@@ -904,7 +896,6 @@ class URE_Lib extends URE_Base_Lib {
      * 
      */   
     protected function validate_user_roles() {
-
         global $wp_roles;
 
         $default_role = get_option('default_role');
@@ -1100,8 +1091,7 @@ class URE_Lib extends URE_Base_Lib {
     // end of get_edit_post_capabilities();
     
     
-    protected function add_custom_post_type_caps() {
-               
+    protected function add_custom_post_type_caps() {               
         global $wp_roles;
         
         $capabilities = $this->get_edit_post_capabilities();        
@@ -1250,21 +1240,27 @@ class URE_Lib extends URE_Base_Lib {
     // end of is_full_network_synch()
     
     
-    protected function last_check_before_update() {
-        global $current_user;
+    protected function last_check_before_update() {        
         
         if (empty($this->roles) || !is_array($this->roles) || count($this->roles)==0) { // Nothing to save - something goes wrong - stop ...
             return false;
         }
         
         $key_capability = URE_Own_Capabilities::get_key_capability();
-        $user_is_ure_admin = current_user_can($key_capability);
-        if (!$user_is_ure_admin) {
-            if (in_array($this->current_role, $current_user->roles)) {
-                // do not allow to a user update his own role if he does not have full access to the User Role Editor
-                return false;
-            }
+        if (current_user_can($key_capability)) {    // current user is an URE admin
+            return true;
         }
+        
+        if (!current_user_can('ure_edit_roles')) {
+            return false;
+        }
+        
+        $current_user = wp_get_current_user();
+        if (in_array($this->current_role, $current_user->roles)) {
+            // do not allow to non-admin user without full access to URE update his own role
+            return false;
+        }
+
         
         return true;
     }
@@ -1405,7 +1401,7 @@ class URE_Lib extends URE_Base_Lib {
     /**
      * Process user request on update roles
      * 
-     * @global wpdb $wpdb
+     * @global WP_Roles $wp_roles
      * @return boolean
      */
     protected function update_roles() {
@@ -1482,7 +1478,6 @@ class URE_Lib extends URE_Base_Lib {
      * 
      */
     protected function add_new_role() {
-
         global $wp_roles;
 
         if (!current_user_can('ure_create_roles')) {
@@ -1549,7 +1544,6 @@ class URE_Lib extends URE_Base_Lib {
      * 
      */
     protected function rename_role() {
-
         global $wp_roles;
 
         $mess = '';
@@ -1643,9 +1637,8 @@ class URE_Lib extends URE_Base_Lib {
     
     
     /**
-     * process user request for user role deletion
-     * @global WP_Roles $wp_roles
-     * @return type
+     * Process user request for user role deletion
+     * @return string
      */
     protected function delete_role() {        
 
@@ -2033,7 +2026,6 @@ class URE_Lib extends URE_Base_Lib {
      * which counts any user with 'delete_users' capability as a superadmin.
      * 
      * @param int $user_id
-     * @global WP_User $current_user
      * @return boolean
      */
     public function is_super_admin($user_id = false) {
@@ -2065,7 +2057,6 @@ class URE_Lib extends URE_Base_Lib {
     // Returns true if user has $capability assigned through the roles or directly
     // Returns true if user has role with name equal $cap
     public function user_has_capability($user, $cap) {
-
         global $wp_roles;
 
         if (!is_object($user) || empty($user->ID)) {

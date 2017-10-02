@@ -124,8 +124,7 @@ class URE_User_Other_Roles {
     // end of get_roles_array()    
     
 
-    private function roles_select_html($user, $context) {
-        
+    private function roles_select_html($user, $context) {        
         global $wp_roles;
                 
         $user_roles = $user->roles;
@@ -165,8 +164,8 @@ class URE_User_Other_Roles {
     
     
     private function user_profile_capabilities($user) {
-        global $current_user;
         
+        $current_user_id = get_current_user_id();        
         $user_caps = $this->lib->get_edited_user_caps($user);
 ?>
           <tr>
@@ -176,7 +175,7 @@ class URE_User_Other_Roles {
               <td>
 <?php 
                 echo $user_caps .'<br/>'; 
-      if ($this->lib->user_is_admin($current_user->ID)) {
+      if ($this->lib->user_is_admin($current_user_id)) {
             echo '<a href="' . wp_nonce_url("users.php?page=users-".URE_PLUGIN_FILE."&object=user&amp;user_id={$user->ID}", "ure_user_{$user->ID}") . '">' . 
                  esc_html__('Edit', 'user-role-editor') . '</a>';
       }                      
@@ -214,7 +213,6 @@ class URE_User_Other_Roles {
     /**
      * Add URE stuff to the edit user profile page
      * 
-     * @global object $current_user
      * @param object $user
      * @return void
      */
@@ -232,7 +230,7 @@ class URE_User_Other_Roles {
 <?php
         $this->display($user, 'user-edit');
     }
-    // end of edit_user_profile()
+    // end of edit_user_profile_html()
 
     
     public function user_new_form($context) {
@@ -250,12 +248,11 @@ class URE_User_Other_Roles {
         </table>
 <?php        
     }
-    // end of edit_user_profile_html()
+    // end of user_new_form()
     
     
     // save additional user roles when user profile is updated, as WordPress itself doesn't know about them
     public function update($user_id) {
-
         global $wp_roles;
         
         if (!current_user_can('edit_users')) {
