@@ -43,6 +43,7 @@ class MonsterInsights_Tracking {
 		add_action( 'admin_notices', array( $this, 'monsterinsights_admin_notice' ),7 );
 		add_filter( 'cron_schedules', array( $this, 'add_schedules' ) );
 		add_action( 'monsterinsights_daily_cron', array( $this, 'send_checkin' ) );
+		add_action( 'monsterinsights_send_tracking_data', array( $this, 'send_tracking_data' ) );
 	}
 
 	/**
@@ -144,9 +145,18 @@ class MonsterInsights_Tracking {
 
 		// Send a maximum of once per week
 		$last_send = $this->get_last_send();
-		if( is_numeric( $last_send ) && $last_send > strtotime( '-1 week' ) && ! $ignore_last_checkin ) {
+		if ( is_numeric( $last_send ) && $last_send > strtotime( '-1 week' ) && ! $ignore_last_checkin ) {
 			return false;
 		}
+
+		$hours   = (int) rand( 0 , 23 );
+		$minutes = (int) rand( 0 , 59 );
+		$seconds = (int) rand( 0 , 59 );
+		wp_schedule_single_event( time() + ( $hours * $minutes * $seconds ), 'monsterinsights_send_tracking_data' );
+		return true;
+	}
+
+	public function send_tracking_data( ) {
 
 		$this->setup_data();
 
@@ -160,11 +170,14 @@ class MonsterInsights_Tracking {
 			'user-agent'  => 'MI/' . MONSTERINSIGHTS_VERSION . '; ' . get_bloginfo( 'url' )
 		) );
 
-		if( is_wp_error( $request ) ) {
-			return $request;
+		if ( is_wp_error( $request ) ) {
+			// If we have not completed successfully, re-check in a random amount of days
+			$days = (int) rand ( 0 , 6 );
+			update_option( 'mi_tracking_last_send', time() + ( $days * 24 * 60 * 60) );
+		} else {
+			// If we have completed successfully, recheck in 1 week
+			update_option( 'mi_tracking_last_send', time() );
 		}
-
-		update_option( 'mi_tracking_last_send', time() );
 
 		return true;
 
