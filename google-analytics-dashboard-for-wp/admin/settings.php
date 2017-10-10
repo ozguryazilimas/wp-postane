@@ -31,9 +31,11 @@ final class GADWP_Settings {
 				$options['ga_aff_tracking'] = 0;
 				$options['ga_hash_tracking'] = 0;
 				$options['ga_formsubmit_tracking'] = 0;
+				$options['ga_force_ssl'] = 0;
 				$options['ga_pagescrolldepth_tracking'] = 0;
 				$options['tm_pagescrolldepth_tracking'] = 0;
 				$options['amp_tracking_analytics'] = 0;
+				$options['amp_tracking_clientidapi'] = 0;
 				$options['amp_tracking_tagmanager'] = 0;
 				$options['optimize_pagehiding'] = 0;
 				$options['optimize_tracking'] = 0;
@@ -771,6 +773,18 @@ final class GADWP_Settings {
 									</td>
 								</tr>
 								<tr>
+									<td colspan="2" class="gadwp-settings-title">
+										<div class="button-primary gadwp-settings-switchoo">
+											<input type="checkbox" name="options[ga_force_ssl]" value="1" class="gadwp-settings-switchoo-checkbox" id="ga_force_ssl" <?php checked( $options['ga_force_ssl'], 1 ); ?>>
+											<label class="gadwp-settings-switchoo-label" for="ga_force_ssl">
+												<div class="gadwp-settings-switchoo-inner"></div>
+												<div class="gadwp-settings-switchoo-switch"></div>
+											</label>
+										</div>
+										<div class="switch-desc"><?php echo " ".__("enable Force SSL", 'google-analytics-dashboard-for-wp' );?></div>
+									</td>
+								</tr>
+								<tr>
 									<td colspan="2"><?php echo "<h2>" . __( "Cross-domain Tracking", 'google-analytics-dashboard-for-wp' ) . "</h2>"; ?></td>
 								</tr>
 								<tr>
@@ -842,6 +856,18 @@ final class GADWP_Settings {
 											</label>
 										</div>
 										<div class="switch-desc"><?php echo " ".__("enable tracking for Accelerated Mobile Pages (AMP)", 'google-analytics-dashboard-for-wp' );?></div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" class="gadwp-settings-title">
+										<div class="button-primary gadwp-settings-switchoo">
+											<input type="checkbox" name="options[amp_tracking_clientidapi]" value="1" class="gadwp-settings-switchoo-checkbox" id="amp_tracking_clientidapi" <?php checked( $options['amp_tracking_clientidapi'], 1 ); ?>>
+											<label class="gadwp-settings-switchoo-label" for="amp_tracking_clientidapi">
+												<div class="gadwp-settings-switchoo-inner"></div>
+												<div class="gadwp-settings-switchoo-switch"></div>
+											</label>
+										</div>
+										<div class="switch-desc"><?php echo " ".__("enable Google AMP Client Id API", 'google-analytics-dashboard-for-wp' );?></div>
 									</td>
 								</tr>
 								<tr>

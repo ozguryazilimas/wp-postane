@@ -244,6 +244,9 @@ if ( ! class_exists( 'GADWP_Tracking_Analytics' ) ) {
 			if ( ! empty( $this->gadwp->config->options['ga_cookieexpires'] ) ) {
 				$fieldsobject['cookieExpires'] = (int) $this->gadwp->config->options['ga_cookieexpires'];
 			}
+			if ( $this->gadwp->config->options['amp_tracking_clientidapi'] ) {
+				$fieldsobject['useAmpClientId'] = 'true';
+			}
 			$this->add( 'create', $fields, $fieldsobject );
 
 			if ( $this->gadwp->config->options['ga_crossdomain_tracking'] && '' != $this->gadwp->config->options['ga_crossdomain_list'] ) {
@@ -271,6 +274,13 @@ if ( ! class_exists( 'GADWP_Tracking_Analytics' ) ) {
 				$fields = array();
 				$fields['plugin'] = 'linkid';
 				$this->add( 'require', $fields );
+			}
+
+			if ( $this->gadwp->config->options['ga_force_ssl'] ) {
+				$fields = array();
+				$fields['option'] = 'forceSSL';
+				$fields['value'] = 'true';
+				$this->add( 'set', $fields );
 			}
 
 			$custom_dimensions = $this->bulid_custom_dimensions();
@@ -354,7 +364,9 @@ if ( ! class_exists( 'GADWP_Tracking_Analytics' ) ) {
 				}
 			}
 
-			GADWP_Tools::load_view( 'front/views/analytics-code.php', array( 'trackingcode' => $trackingcode ) );
+			$tracking_script_path = apply_filters( 'gadwp_analytics_script_path', 'https://www.google-analytics.com/analytics.js' );;
+
+			GADWP_Tools::load_view( 'front/views/analytics-code.php', array( 'trackingcode' => $trackingcode, 'tracking_script_path' => $tracking_script_path ) );
 		}
 	}
 }
@@ -371,6 +383,9 @@ if ( ! class_exists( 'GADWP_Tracking_Analytics_AMP' ) ) {
 			add_filter( 'amp_post_template_data', array( $this, 'load_scripts' ) );
 			add_action( 'amp_post_template_footer', array( $this, 'output' ) );
 			add_filter( 'the_content', array( $this, 'add_data_attributes' ), 999, 1 );
+			if ( $this->gadwp->config->options['amp_tracking_clientidapi'] ) {
+				add_action( 'amp_post_template_head', array( $this, 'add_amp_client_id' ) );
+			}
 		}
 
 		private function get_link_event_data( $link ) {
@@ -576,6 +591,10 @@ if ( ! class_exists( 'GADWP_Tracking_Analytics_AMP' ) ) {
 				}
 			}
 			do_action( 'gadwp_analytics_amp_config', $this );
+		}
+
+		public function add_amp_client_id() {
+			GADWP_Tools::load_view( 'front/views/analytics-amp-clientidapi.php' );
 		}
 
 		/**
