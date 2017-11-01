@@ -445,7 +445,7 @@ class URE_Lib extends URE_Base_Lib {
         } else {
             $value = get_site_transient('ure_caps_columns_quant');
             if ($value===false) {
-                $value = 1;
+                $value = $this->get_option('caps_columns_quant', 1);
             }
         }
         

@@ -3,10 +3,10 @@
 Plugin Name: User Role Editor
 Plugin URI: https://www.role-editor.com
 Description: Change/add/delete WordPress user roles and capabilities.
-Version: 4.36.1
+Version: 4.37
 Author: Vladimir Garagulya
 Author URI: https://www.role-editor.com
-Text Domain: ure
+Text Domain: user-role-editor
 Domain Path: /lang/
 */
 
@@ -23,7 +23,7 @@ if (defined('URE_PLUGIN_URL')) {
    wp_die('It seems that other version of User Role Editor is active. Please deactivate it before use this version');
 }
 
-define('URE_VERSION', '4.36.1');
+define('URE_VERSION', '4.37');
 define('URE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('URE_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('URE_PLUGIN_BASE_NAME', plugin_basename(__FILE__));

@@ -181,12 +181,41 @@ class URE_Protect_Admin {
     // end of exclude_administrators()
 
     
+    
+    private function extract_view_quantity($text) {
+        $match = array();
+        $result = preg_match('#\((.*?)\)#', $text, $match);
+        if ($result) {
+            $quantity = $match[1];
+        } else {
+            $quantity = 0;
+        }
+        
+        return $quantity;
+    }
+    // end of extract_view_quantity()
+    
+    
     /*
      * Exclude view of users with Administrator role
      * 
      */
     public function exclude_admins_view($views) {
 
+        if (!isset($views['administrator'])) {
+            return $views;
+        }
+        
+        if (isset($views['all'])) {        
+            // Decrease quant of all users to the quant of hidden admins
+            $admins_orig = $this->extract_view_quantity($views['administrator']);
+            $admins_int = str_replace(',', '', $admins_orig);
+            $all_orig = $this->extract_view_quantity($views['all']);
+            $all_orig_int = str_replace(',', '', $all_orig);
+            $all_new = $all_orig_int - $admins_int;
+            $views['all'] = str_replace($all_orig, $all_new, $views['all']);
+        }
+        
         unset($views['administrator']);
 
         return $views;

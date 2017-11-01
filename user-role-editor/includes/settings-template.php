@@ -96,6 +96,19 @@ if (!$license_key_only) {
                     <td>                        
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <?php esc_html_e('Show capabilities in', 'user-role-editor'); ?>&nbsp;
+                        <select name="caps_columns_quant" id="caps_columns_quant"> 
+                            <option value="1" <?php selected(1, $caps_columns_quant);?> >1</option>
+                            <option value="2" <?php selected(2, $caps_columns_quant);?> >2</option>
+                            <option value="3" <?php selected(3, $caps_columns_quant);?> >3</option>
+                        </select>    
+                        <?php esc_html_e('columns', 'user-role-editor'); ?>
+                    </td>
+                    <td>                        
+                    </td>
+                </tr>
                 
 <?php
 }

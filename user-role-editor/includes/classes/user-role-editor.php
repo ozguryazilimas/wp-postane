@@ -277,9 +277,9 @@ class User_Role_Editor {
       }             
       
       wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core','jquery-ui-button', 'jquery') );
-      wp_register_script( 'ure-users-js', plugins_url( '/js/ure-users.js', URE_PLUGIN_FULL_PATH ) );
-      wp_enqueue_script ( 'ure-users-js' );      
-      wp_localize_script( 'ure-users-js', 'ure_users_data', array(
+      wp_register_script( 'ure-users', plugins_url( '/js/users.js', URE_PLUGIN_FULL_PATH ) );
+      wp_enqueue_script ( 'ure-users' );      
+      wp_localize_script( 'ure-users', 'ure_users_data', array(
         'wp_nonce' => wp_create_nonce('user-role-editor'),
         'move_from_no_role_title' => esc_html__('Change role for users without role', 'user-role-editor'),
         'to' => esc_html__('To:', 'user-role-editor'),  
@@ -646,7 +646,10 @@ class User_Role_Editor {
         $this->lib->put_option('ure_confirm_role_update', $confirm_role_update);
         
         $edit_user_caps = $this->lib->get_request_var('edit_user_caps', 'checkbox');
-        $this->lib->put_option('edit_user_caps', $edit_user_caps);       
+        $this->lib->put_option('edit_user_caps', $edit_user_caps);
+        
+        $caps_columns_quant = $this->lib->get_request_var('caps_columns_quant', 'checkbox');
+        $this->lib->put_option('caps_columns_quant', $caps_columns_quant);       
         
         do_action('ure_settings_update1');
 
@@ -764,6 +767,7 @@ class User_Role_Editor {
         $show_deprecated_caps = $this->lib->get_option('ure_show_deprecated_caps', 0);
         $confirm_role_update = $this->lib->get_option('ure_confirm_role_update', 1);
         $edit_user_caps = $this->lib->get_option('edit_user_caps', 1);
+        $caps_columns_quant = $this->lib->get_option('caps_columns_quant', 1);
         $multisite = $this->lib->get('multisite');
         if ($multisite) {
             $allow_edit_users_to_not_super_admin = $this->lib->get_option('allow_edit_users_to_not_super_admin', 0);
@@ -848,9 +852,9 @@ class User_Role_Editor {
         
         wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
         wp_enqueue_script('jquery-ui-selectable', '', array('jquery-ui-core', 'jquery'));
-        wp_register_script('ure-js', plugins_url('/js/ure-js.js', URE_PLUGIN_FULL_PATH));
-        wp_enqueue_script('ure-js');
-        wp_localize_script('ure-js', 'ure_data', array(
+        wp_register_script('ure', plugins_url('/js/ure.js', URE_PLUGIN_FULL_PATH));
+        wp_enqueue_script('ure');
+        wp_localize_script('ure', 'ure_data', array(
             'wp_nonce' => wp_create_nonce('user-role-editor'),
             'network_admin' => is_network_admin() ? 1 : 0,
             'page_url' => $page_url,
