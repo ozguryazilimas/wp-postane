@@ -49,7 +49,7 @@ class easyFancyBox_Admin extends easyFancyBox {
 
 	// add our FancyBox Media Settings Section on Settings > Media admin page
 	public static function settings_section() {
-		echo '<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=Easy%20FancyBox&item_number='.EASY_FANCYBOX_VERSION.'&no_shipping=0&tax=0&charset=UTF%2d8&currency_code=EUR" title="'.__('Donate to keep the Easy FancyBox plugin development going!','easy-fancybox').'"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" style="border:none;float:right;margin:5px 0 0 10px" alt="'.__('Donate to keep the Easy FancyBox plugin development going!','easy-fancybox').'" width="92" height="26" /></a>'.sprintf(__('The options in this section are provided by the plugin %s and determine the <strong>Media Lightbox</strong> overlay appearance and behaviour controlled by %s.','easy-fancybox'),'<strong><a href="http://status301.net/wordpress-plugins/easy-fancybox/">'.__('Easy FancyBox','easy-fancybox').'</a></strong>','<strong><a href="http://fancybox.net/">'.__('FancyBox','easy-fancybox').'</a></strong>').'</p><p>'.__('First enable each sub-section that you need. Then save and come back to adjust its specific settings.','easy-fancybox').' '.__('Note: Each additional sub-section and features like <em>Auto-detection</em>, <em>Elastic transitions</em> and all <em>Easing effects</em> (except Swing) will have some extra impact on client-side page speed. Enable only those sub-sections and options that you actually need on your site.','easy-fancybox').' '.__('Some setting like Transition options are unavailable for SWF video, PDF and iFrame content to ensure browser compatibility and readability.','easy-fancybox').'</p>';
+		echo '<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=Easy%20FancyBox&item_number='.EASY_FANCYBOX_VERSION.'&no_shipping=0&tax=0&charset=UTF%2d8&currency_code=EUR" title="'.__('Donate to keep the Easy FancyBox plugin development going!','easy-fancybox').'"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" style="border:none;float:right;margin:5px 0 0 10px" alt="'.__('Donate to keep the Easy FancyBox plugin development going!','easy-fancybox').'" width="92" height="26" /></a>'.sprintf(__('The options in this section are provided by the plugin %s and determine the <strong>Media Lightbox</strong> overlay appearance and behavior controlled by %s.','easy-fancybox'),'<strong><a href="http://status301.net/wordpress-plugins/easy-fancybox/">'.__('Easy FancyBox','easy-fancybox').'</a></strong>','<strong><a href="http://fancybox.net/">'.__('FancyBox','easy-fancybox').'</a></strong>').'</p><p>'.__('First enable each sub-section that you need. Then save and come back to adjust its specific settings.','easy-fancybox').' '.__('Note: Each additional sub-section and features like <em>Auto-detection</em>, <em>Elastic transitions</em> and all <em>Easing effects</em> (except Swing) will have some extra impact on client-side page speed. Enable only those sub-sections and options that you actually need on your site.','easy-fancybox').' '.__('Some setting like Transition options are unavailable for SWF video, PDF and iFrame content to ensure browser compatibility and readability.','easy-fancybox').'</p>';
 
 		// Pro extension version compatibility message
 		if ( self::$do_compat_warning ) {
@@ -269,28 +269,35 @@ class easyFancyBox_Admin extends easyFancyBox {
 		}
 
 		/* Black Friday deal notice */
-		//if ( !class_exists('easyFancyBox_Advanced') && current_user_can( 'install_plugins' ) && !get_user_meta($current_user->ID, 'easy_fancybox_ignore_deal_2017') && strtotime('now') => strtotime('24-11-2017') && strtotime('now') <= strtotime('27-11-2017') ) {
-		//	echo '<div class="update-nag updating-message success"><h3>Easy FancyBox advanced options at 30% OFF!</h3><p><strong>Black Friday to Cyber Monday: THE BIG 30 SALE at Status301.</strong> <em>A whopping 30% discount but only for the first 30 customers so <strong><a href="https://premium.status301.net/black-friday-til-cyber-monday-big-30-sale/?discount=BFCM30" target="_blank">to take advantage of this opportunity</a></strong> before it\'s too late</em>... ';
-		//	printf(__('Or you can ignore and <a href="%1$s">hide this message</a>.','easy-fancybox'), '?easy_fancybox_ignore_deal_2017=1');
-		//	echo '</p></div>';
-		//}
+		if ( !class_exists('easyFancyBox_Advanced')
+			&& current_user_can( 'install_plugins' )
+			&& !get_user_meta($current_user->ID, 'easy_fancybox_ignore_deal_2017')
+			&& strtotime('now') > strtotime('23-11-2017')
+			&& strtotime('now') < strtotime('28-11-2017') ) {
+
+			echo '<div class="update-nag updating-message success"><h3>Easy FancyBox advanced options at 30% OFF!</h3>
+				<p><strong>Black Friday to Cyber Monday: THE BIG 30 SALE at Status301.</strong> <em>A whopping 30% discount but only for the first 30 customers.
+				After that, there will still be a discount of 15% for everybody until tuesday 0:00 GMT so
+				<strong><a href="https://premium.status301.net/black-friday-til-cyber-monday-big-30-sale/?discount=BFCM30" target="_blank">to take advantage of this opportunity</a></strong> before it\'s too late</em>... ';
+			printf(__('Or you can ignore and <a href="%1$s">hide this message</a>.','easy-fancybox'), '?easy_fancybox_ignore_deal_2017=1');
+			echo '</p></div>';
+		}
 	}
 
 	/**********************
 	         RUN
 	 **********************/
 
-	public static function run(){
-
-		load_plugin_textdomain('easy-fancybox', false, dirname( parent::$plugin_basename ) . '/languages' );
-
+	public static function run() {
+		add_action('plugins_loaded', array(__CLASS__, 'load_textdomain'));
 		add_action('admin_init', array(__CLASS__, 'admin_init'));
 	}
 
-	public static function admin_init(){
-
+	public static function load_textdomain(){
 		load_plugin_textdomain('easy-fancybox', false, dirname( parent::$plugin_basename ) . '/languages' );
+	}
 
+	public static function admin_init() {
 		add_action('admin_notices', array(__CLASS__, 'admin_notice'));
 
 		add_filter('plugin_action_links_'.parent::$plugin_basename, array(__CLASS__, 'add_action_link') );
@@ -310,8 +317,8 @@ class easyFancyBox_Admin extends easyFancyBox {
 			add_user_meta($current_user->ID, 'easy_fancybox_ignore_notice', 'true', true);
 		}
 
-		if ( isset($_GET['easy_fancybox_ignore_deal']) && '1' == $_GET['easy_fancybox_ignore_deal'] ) {
-			add_user_meta($current_user->ID, 'easy_fancybox_ignore_deal', 'true', true);
+		if ( isset($_GET['easy_fancybox_ignore_deal_2017']) && '1' == $_GET['easy_fancybox_ignore_deal_2017'] ) {
+			add_user_meta($current_user->ID, 'easy_fancybox_ignore_deal_2017', 'true', true);
 		}
 
 		if ( class_exists('easyFancyBox_Advanced')

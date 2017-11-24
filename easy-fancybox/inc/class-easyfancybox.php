@@ -98,7 +98,7 @@ var easy_fancybox_handler = function(){';
 			if(!empty($autoAttribute)) {
 				if(is_numeric($autoAttribute)) {
 					echo '
-	jQuery(\''.$value['options']['autoAttribute']['selector'].'\').not(\'.nolightbox\').addClass(\''.$value['options']['class']['default'].'\');';
+	jQuery(\''.$value['options']['autoAttribute']['selector'].'\').not(\'.nolightbox,li.nolightbox>a\').addClass(\''.$value['options']['class']['default'].'\');';
 				} else {
 					// set selectors
 					$file_types = array_filter( explode( ' ', str_replace( ',', ' ', $autoAttribute ) ) );
@@ -244,10 +244,10 @@ var easy_fancybox_auto = function(){';
 #fancybox-outer,#fancybox-content{border-radius:'.$borderRadius.'px}.fancybox-title-inside{padding-top:'.$borderRadius.'px;margin-top:-'.$borderRadius.'px !important;border-radius: 0 0 '.$borderRadius.'px '.$borderRadius.'px}';
 		if (!empty($backgroundColor))
 			$styles .= '
-#fancybox-content{background-color:'.$backgroundColor.'}';
+#fancybox-content{background:'.$backgroundColor.'}';
 		if (!empty($paddingColor))
 			$styles .= '
-#fancybox-content{border-color:'.$paddingColor.'}#fancybox-outer{background-color:'.$paddingColor.'}'; //.fancybox-title-inside{background-color:'.$paddingColor.';margin-left:0 !important;margin-right:0 !important;width:100% !important;}
+#fancybox-content{border-color:'.$paddingColor.'}#fancybox-outer{background:'.$paddingColor.'}'; //.fancybox-title-inside{background-color:'.$paddingColor.';margin-left:0 !important;margin-right:0 !important;width:100% !important;}
 		if (!empty($textColor))
 			$styles .= '
 #fancybox-content{color:'.$textColor.'}';
@@ -372,7 +372,7 @@ var easy_fancybox_auto = function(){';
 		// first exclude some links by adding nolightbox class:
 		// (1) nofancybox backwards compatibility and (2) tries to detect social sharing buttons with known issues
 		echo '<script type="text/javascript">
-jQuery(document).on(\'ready post-load\', function(){ jQuery(\'.nofancybox,a.pin-it-button,a[href*="pinterest.com/pin/create/button"]\').addClass(\'nolightbox\'); });';
+jQuery(document).on(\'ready post-load\', function(){ jQuery(\'.nofancybox,a.pin-it-button,a[href*="pinterest.com/pin/create"]\').addClass(\'nolightbox\'); });';
 
 		echo apply_filters( 'easy_fancybox_onready_handler', '
 jQuery(document).on(\'ready post-load\',easy_fancybox_handler);' );

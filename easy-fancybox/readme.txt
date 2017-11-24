@@ -3,8 +3,8 @@ Contributors: RavanH
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=Easy%20FancyBox
 Tags: fancybox, lightbox, gallery, image, photo, video, flash, overlay, youtube, vimeo, dailymotion, pdf, svg, iframe, swf, jquery, webp
 Requires at least: 3.3
-Tested up to: 4.7
-Stable tag: 1.6
+Tested up to: 4.9
+Stable tag: 1.6.1
 
 Easily enable the FancyBox jQuery extension on just about all media links. Multi-Site compatible. Supports iFrame and Flash movies.
 
@@ -42,31 +42,11 @@ Visit [FancyBox](http://fancybox.net/) for more information, examples and the Fa
 **Recommended:**
 - For increased site performance, simply install and activate the plugin [Use Google Libraries](http://wordpress.org/plugins/use-google-libraries/) to load jQuery from Googles CDN.
 
-= Translators =
+= Contribute =
 
-Please go to https://translate.wordpress.org/projects/wp-plugins/easy-fancybox/ and share your knowledge!
+If you're happy with this plugin as it is, please consider writing a quick [rating](https://wordpress.org/support/plugin/easy-fancybox/reviews/#new-post) or helping other users out on the [support forum](https://wordpress.org/support/plugin/easy-fancybox).
 
-Current contributors:
-
-- **Belarussian** * Natasha, https://www.ustarcash.com (version 1.5.8)
-- **Croatian** * Ivan Capan (version 1.5.6)
-- **Czech** * Eldenroot (version 1.5.5)
-- **Dutch** * R.A. van Hagen, http://status301.net (version 1.5.6)
-- **French** * Emmanuel Maillard (version 1.5.5)
-- **Greek** * Dimitrios Kaisaris, http://www.foodblogstarter.com (version 1.5.7)
-- **Gujarati** * Apoto Team, http://www.apoto.com (version 1.5.0)
-- **Hindi** * Outshine Solutions, http://outshinesolutions.com (version 1.3.4.9)
-- **Indonesian** * Nasrulhaq Muiz, http://al-badar.net (version 1.5.5)
-- **Lithuanian** * Vincent G, http://www.host1free.com (version 1.3.4.9)
-- **Persian** * Ali Akbar Kaviani, http://www.wiki10.net (version 1.5.2)
-- **Polish** * Kamil Szymański (version 1.3.4.9)
-- **Romanian** * Web Geek Sciense, http://webhostinggeeks.com/ (version 1.3.4.9)
-- **Russian** * Ivanka Skakun from Everycloud, http://www.everycloudtech.com/ (version 1.5.8)
-- **Serbo-Croatian** * Andrijana Nikolic, http://webhostinggeeks.com/wordpresshosting.html (version 1.5.2) + translation of this page on http://science.webhostinggeeks.com/easy-fancybox
-- **Slovak** * Jan Fajcak, http://fajo.name/ (version: 1.5.7)
-- **Spanish** * David Pérez, http://www.closemarketing.es (version 1.3.4.9)
-- **Turkish** * Hakan Er, http://hakanertr.wordpress.com/ (version: 1.5.2)
-- **Ukrainian** * Cmd Software, http://www.cmd-soft.com (version: 1.3.4.9)
+If you wish to help build this plugin, you're very welcome to [translate Easy FancyBox into your language](https://translate.wordpress.org/projects/wp-plugins/easy-fancybox/) or contribute code on [Github](https://github.com/RavanH/easy-fancybox/).
 
 
 == Installation ==
@@ -85,7 +65,7 @@ Follow these steps:
 
  1. Download archive.
 
- 2. Upload the zip file via the Plugins > Add New > Upload page &hellip; OR &hellip; unpack and upload with your favourite FTP client to the /plugins/ folder.
+ 2. Upload the zip file via the Plugins > Add New > Upload page &hellip; OR &hellip; unpack and upload with your favorite FTP client to the /plugins/ folder.
 
  3. Activate the plugin on the Plug-ins page.
 
@@ -109,7 +89,7 @@ Basically, it is a fancy way of presenting images, movies, portable documents an
 
 = Which version of FancyBox does this plugin use? =
 
-The same version as this plugin has. I aim to keep close pace to FancyBox upgrades and always move to the latest and greates version. Please, let me know if I'm lagging behind and missed an upgrade!
+The same version as this plugin has. I aim to keep close pace to FancyBox upgrades and always move to the latest and greatest version. Please, let me know if I'm lagging behind and missed an upgrade!
 
 = I installed the plugin. What now? =
 
@@ -162,7 +142,7 @@ Yes. All links with class **nolightbox** that would normally get auto-enabled, w
 
 = Can NextGEN Gallery work with Easy FancyBox ? =
 
-NetxGEN has its own built in FancyBox version along with a choice of other lightbox scripts but if you prefer to use Easy FancyBox (because of better customisability) then you need to take some steps to make the two plugins compatible.
+NetxGEN has its own built in FancyBox version along with a choice of other lightbox scripts but if you prefer to use Easy FancyBox (because of better customizability) then you need to take some steps to make the two plugins compatible.
 
 1. Go to your Settings > Media admin page and switch OFF the FancyBox "Auto-gallery" option in the Images section;
 1. Go to Gallery > Other Options and set the Lightbox Effects option to "Custom" and click on Show Advanced Settings;
@@ -185,7 +165,7 @@ It can be done manually (using the internal WordPress gallery feature, or not) _
 <div class="fancybox-hidden">
 `
 
-**C.** Right after that starting on a new line, insert all other images you want to show in your gallery. You can even use the WordPress internal gallery feature with the shortcode `[gallery link="file"]`. NOTE: if the gallery thumbnail is attached to the post, it will be show a second time when flipping through the gallery in FancyBox. If you do not want that, use an image that is not attached to the post as gallery thumbail.
+**C.** Right after that starting on a new line, insert all other images you want to show in your gallery. You can even use the WordPress internal gallery feature with the shortcode `[gallery link="file"]`. NOTE: if the gallery thumbnail is attached to the post, it will be show a second time when flipping through the gallery in FancyBox. If you do not want that, use an image that is not attached to the post as gallery thumbnail.
 
 **D.** Close the hidden div with the following code on a new line:
 `
@@ -292,21 +272,21 @@ NOTE: The difference between these two classes ('-' or space) is in size of the 
 
 Yes. Just place a link _with the URL ending in .pdf_ to your Portable Document file in the page content.
 
-If you do'nt have *Auto-detect* checked under **PDF** on Settings > Media admin page, you will need to add `class="fancybox-pdf"` (to force pdf content recognition) to the link to enable FancyBox for it.
+If you don't have *Auto-detect* checked under **PDF** on Settings > Media admin page, you will need to add `class="fancybox-pdf"` (to force pdf content recognition) to the link to enable FancyBox for it.
 
 
 = Can I play SWF files in a FancyBox overlay? =
 
 Yes. Just place a link _with the URL ending in .swf_ to your Flash file in the page content.
 
-If you do'nt have *Auto-detect* checked under **SWF** on Settings > Media admin page, you will need to add either `class="fancybox"` or `class="fancybox-swf"` (to force swf content recognition) to the link to enable FancyBox for it.
+If you don't have *Auto-detect* checked under **SWF** on Settings > Media admin page, you will need to add either `class="fancybox"` or `class="fancybox-swf"` (to force swf content recognition) to the link to enable FancyBox for it.
 
 
 = How do I show content with different sizes? =
 
 FancyBox tries to detect the size of the content automatically but if it can not find a size, it will default to the settings for that particular content type as set on the Settings > Media page.
 
-The **[Pro extension](http://premium.status301.net/downloads/easy-fancybox-pro/)** provides an extra option to allow you to manually override this by defining the width and height wrapped in curly brases in the class attribute of the link itself. Make sure the option "Inlcude the Metadata jQuery extension script..." under FancyBox | Links on Settings > Media is enabled.
+The **[Pro extension](http://premium.status301.net/downloads/easy-fancybox-pro/)** provides an extra option to allow you to manually override this by defining the width and height wrapped in curly braces in the class attribute of the link itself. Make sure the option "Include the Metadata jQuery extension script..." under FancyBox | Links on Settings > Media is enabled.
 
 For example, a Flash movie with different size:
 
@@ -354,7 +334,7 @@ Then place a FancyBox link tag with class attribute "fancybox-inline" anywhere e
 
 NOTE: The wrapping divs ID *must* be unique and it must correspond with the links HREF with a # in front of it. When using the above example for more FancyBox inline content (hidden div + opening link) combinations on one page, give the second one the ID  fancyboxID-2 and so on...
 
-NOTE 2: If you find that the inline contect shown in FancyBox is styled very different than the rests of the page content, then you might want to change the div tag attribute `class="hentry"` to something else that matches your theme. Find out what class name is used for the main content on your site and re-use that.
+NOTE 2: If you find that the inline content shown in FancyBox is styled very different than the rests of the page content, then you might want to change the div tag attribute `class="hentry"` to something else that matches your theme. Find out what class name is used for the main content on your site and re-use that.
 
 
 = Can I display a contact form in FancyBox? =
@@ -387,7 +367,7 @@ Yes. But it depends on you theme what you need to do to make it work. If you are
 
 1. Go to Settings > Media and enable FancyBox iFrame support.
 2. Go to Appearance > Menus and open the little tab "Screen Options" in the top-right corner.
-3. Enable the option "CSS Classes" under Advanced menu proterties.
+3. Enable the option "CSS Classes" under Advanced menu properties.
 4. Now give the menu item you want to open in a FancyBox iframe the class `fancybox-iframe`.
 
 If you are on an older version of WordPress or if you cannot use WP's Menus, you will need to do some heavy theme hacking to get it to work. Basically, what you need to achieve is that the menu item you want opened in a lightbox overlay, should get a class="fancybox-iframe" tag.
@@ -413,13 +393,13 @@ Yes. Designed to work with **Network Activate** and does not require manual acti
 - **All in One SEO Pack** and **Analytics for WordPress** with outbound link tracking enabled. Disable that feature.
 - **Better WP Security** randomly changes version numbers in linked file URLs, breaking the FancyBox stylesheet. Disable the option "Display random version number to all non-administrative users" in the Better WP Security settings.
 - By default **Google Analytics for WordPress** converts links like `href="#anyID"` to `href="http://yoursite.url/page/#anyID"`, disabling inline content shown in FancyBox.
-- **jQuery Updater** moves jQuery to version 2+ wich is incompatible.
+- **jQuery Updater** moves jQuery to version 2+ which is incompatible.
 - Both the **uBillBoard** and **Camera slideshow** have their own easing script hard-coded which conflicts with the one in Easy FancyBox. The only way around the conflict is to set both the Easing In and Easing Out options on your Settings > Media page to **Swing**.
-- **Wordpress Firewall 2** blocks access to image files needed for porper display of the FancyBox overlay in older IE and other non-css3 browsers.
+- **Wordpress Firewall 2** blocks access to image files needed for proper display of the FancyBox overlay in older IE and other non-css3 browsers.
 - **WordPress Amazon Associate**: A script provided by Amazon and the FancyBox script are incompatible. Disabling _Product Preview_ in the **WP - Amazon > Settings** page should work around the issue.
 - **WP Slimstat** with Track Outbound Clicks enabled, will break the light box effect on some browsers. Adding `fancybox` (or any of the other classes like `fancybox-youtube,fancybox-iframe,fancybox-inline` depending on which media should be displayed in FancyBox) to the Do Not Track field is reported to solve the issue. Slimstat also might interfere with the YouTube url conversion. When clicking a Youtube link, the movie opens in an overlay as it is supposed to but immediately after that, the complete page gets redirected to the original YouTube page. Adding a `class="noslimstat"` to the link is reported to work around the issue.
 - When using **WP-Minify**, the javascript files like `fancybox/jquery.fancybox-X.X.X.pack.js` and others need to be excluded from minification.
-- When using **W3 Total Cache**, minification needs to be switched off. You can try to run **WP-Minify** alongside W3TC to be able to exclude fancybox files (as suggested above) ans still have page speed benefit from minification.
+- When using **W3 Total Cache**, minification needs to be switched off. You can try to run **WP-Minify** alongside W3TC to be able to exclude fancybox files (as suggested above) and still have page speed benefit from minification.
 - **WP Supersized** uses the Animate Enhanced jQuery extension which causes a conflict with the Easing extension used by FancyBox resulting in a 0px sized lightbox frame and/or some kind of positioning issue with auto-centering.
 
 = Theme conflicts =
@@ -470,21 +450,6 @@ If you still do not get to see your images in FancyBox, ask on the [Easy FancyBo
 1. Check if your theme loads another or the same lightbox script or any other of the needed jQuery extensions like jquery.easing or jquery.mousewheel. Look for references to Thickbox, Prettyphoto, Lightbox2, Colorbox or FancyBox script files or code. These are very likely to cause the incompatibility and you will have to either find a setting in the other plugin to switch OFF the use of the conflicting script (possible in NextGEN for example, see under Advanced below) or choose between the two conflicting plugins.
 
 
-== Translation ==
-
-1. Install PoEdit on your computer.
-1. Go to this plugins /languages/ directory.
-1. If there is no .po file that corresponds with your language yet, rename the template translation database easy-fancybox-xx_XX.po by replacing the xx with your language code and XX with your country code.
-1. Open the .po file of your language with PoEdit.
-1. Go to Edit > Preferences and on the tab Editor check the option to compile a .mo database on save automatically. Close with OK.
-1. Go to Catalog > Settings and set your name, e-mail address, language and country. Close with OK.
-1. Go to Catalog > Update from POT-file and select the main easy-fancybox.pot file. Then accept all new and removed translation strings with OK.
-1. Now go ahead and start translating all the texts listed in PoEdit.
-1. When done, go to File > Save to Save.
-1. Upload the automatically created easy-fancybox-xx_XX.mo database file (where xx_XX should now be your language and country code) to the plugins /languages/ directory on your WordPress site.
-1. After verifying the translations work on your site, send the .mo file and, if you're willing to share it, your original .po file to ravanhagen@gmail.com and don't forget to tell me how and with what link you would like to be mentioned in the credits!
-
-
 == Screenshots ==
 
 1. Example image with **Overlay** caption. This is the default way Easy FancyBox displays images. Other options are **Inside** and the old **Outside**.
@@ -493,10 +458,17 @@ If you still do not get to see your images in FancyBox, ask on the [Easy FancyBo
 
 == Upgrade Notice ==
 
-= 1.6 =
-Webp images autodetected by default. Some common rel tags excluded from autogallery. FIX: image preload.
+= 1.6.1 =
+Bugfix release: color code, translation strings, pinterest button compat...
 
 == Changelog ==
+
+= 1.6.1 =
+* Nolightbox class in menu also for other media types than images
+* FIX: CSS color code
+* Spelling fixes, thanks @garrett-eclipse
+* FIX: Pinterest button compatibility
+* FIX: Double load plugin text domain
 
 = 1.6 =
 * Add webp to default Autodetect image types
@@ -549,7 +521,7 @@ Webp images autodetected by default. Some common rel tags excluded from autogall
 
 = 1.5.1 =
 * FIX: jQuery 1.9+ compatibility
-* Dropping support for gForms again -- "Cannot convert 'c' to object" error in combinaition with some older gForms version :(
+* Dropping support for gForms again -- "Cannot convert 'c' to object" error in combination with some older gForms version :(
 * NEW: support for Infinite Scroll by Jetpack
 
 = 1.5.0 =
@@ -583,7 +555,7 @@ Webp images autodetected by default. Some common rel tags excluded from autogall
 = 1.3.4.9 =
 * NEW: Lithuanian translation
 * NEW: Hindi translation
-* NEW: Indonasian translation
+* NEW: Indonesian translation
 * NEW: Romanian translation
 * NEW: Polish translation
 * NEW: Spanish translation
