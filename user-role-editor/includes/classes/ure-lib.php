@@ -655,7 +655,6 @@ class URE_Lib extends URE_Base_Lib {
               limit 0, 1";
         $option_value = $wpdb->get_var($query);
         if ($wpdb->last_error) {
-            $this->log_event($wpdb->last_error, true);
             return $error_message;
         }
         if ($option_value) {
@@ -665,7 +664,6 @@ class URE_Lib extends URE_Base_Lib {
                     limit 1";
             $record = $wpdb->query($query);
             if ($wpdb->last_error) {
-                $this->log_event($wpdb->last_error, true);
                 return $error_message;
             }
             $wp_roles = new WP_Roles();
@@ -712,14 +710,13 @@ class URE_Lib extends URE_Base_Lib {
           limit 0, 1";
         $option_id = $wpdb->get_var($query);
         if ($wpdb->last_error) {
-            $this->log_event($wpdb->last_error, true);
             return false;
         }
         if (!$option_id) {
             $roles_option_name = $wpdb->prefix.'user_roles';
             $query = "select option_value 
                         from $wpdb->options 
-                        where option_name like '$roles_option_name' limit 0,1";
+                        where option_name='$roles_option_name' limit 0,1";
             $serialized_roles = $wpdb->get_var($query);
             // create user roles record backup            
             $query = "insert into $wpdb->options
@@ -727,7 +724,6 @@ class URE_Lib extends URE_Base_Lib {
                 values ('$backup_option_name', '$serialized_roles', 'no')";
             $record = $wpdb->query($query);
             if ($wpdb->last_error) {
-                $this->log_event($wpdb->last_error, true);
                 return false;
             }
         }
@@ -1324,7 +1320,6 @@ class URE_Lib extends URE_Base_Lib {
                 limit 1";
             $wpdb->query($query);
             if ($wpdb->last_error) {
-                $this->log_event($wpdb->last_error, true);
                 return false;
             }
             // @TODO: save role additional options
@@ -1422,33 +1417,7 @@ class URE_Lib extends URE_Base_Lib {
         
         return true;
     }
-    // end of update_roles()
-
-    
-    /**
-     * Write message to the log file
-     * 
-     * @global type $wp_version
-     * @param string $message
-     * @param boolean $show_message
-     */
-    protected function log_event($message, $show_message = false) {
-        global $wp_version, $wpdb;
-
-        $file_name = URE_PLUGIN_DIR . 'user-role-editor.log';
-        $fh = fopen($file_name, 'a');
-        $cr = "\n";
-        $s = $cr . date("d-m-Y H:i:s") . $cr .
-                'WordPress version: ' . $wp_version . ', PHP version: ' . phpversion() . ', MySQL version: ' . $wpdb->db_version() . $cr;
-        fwrite($fh, $s);
-        fwrite($fh, $message . $cr);
-        fclose($fh);
-
-        if ($show_message) {
-            $this->show_message('Error! ' . esc_html__('Error is occur. Please check the log file.', 'user-role-editor'));
-        }
-    }
-    // end of log_event()
+    // end of update_roles()    
 
     
     /**

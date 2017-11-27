@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 4.37
+Stable tag: 4.38
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,11 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+
+= [4.38] 27.11.2017 =
+* Security: XSS vulnerability was fixed at URE's options page. Bug was discovered and fixed at tab index value numeric type checking. Tab index value is additionally escaped before output also.
+* Security: Deprecated code for debug output to the .log file in case of database query error was removed.
+* Security: Multiple select jQuery plugin (https://github.com/wenzhixin/multiple-select/) was updated to the latest available version 1.2.1, which fixed XSS vulnerability, existed in earlier versions.
 
 = [4.37] 01.11.2017 =
 * New: New option was added to the "Settings->User Role Editor->General" tab. It's possible to set a default value for a quant of columns at capabilities section of the main User Role Editor page.
@@ -160,3 +165,9 @@ For full list of changes applied to User Role Editor plugin look changelog.txt f
 You can find more information about "User Role Editor" plugin at [this page](http://www.shinephp.com/user-role-editor-wordpress-plugin/)
 
 I am ready to answer on your questions about plugin usage. Use [plugin page comments](http://www.shinephp.com/user-role-editor-wordpress-plugin/) for that.
+
+== Upgrade Notice ==
+= [4.38] 27.11.2017 =
+* Security: XSS vulnerability was fixed at URE's options page. Bug was discovered and fixed at tab index value numeric type checking. Tab index value is additionally escaped before output also.
+* Security: Deprecated code for debug output to the .log file in case of database query error was removed.
+* Security: Multiple select jQuery plugin (https://github.com/wenzhixin/multiple-select/) was updated to the latest available version 1.2.1, which fixed XSS vulnerability, existed in earlier versions.

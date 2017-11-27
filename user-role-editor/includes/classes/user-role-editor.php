@@ -779,7 +779,7 @@ class User_Role_Editor {
         $view = new URE_Role_View();
         $view->role_default_prepare_html(0);
         
-        $ure_tab_idx = $this->lib->get_request_var('ure_tab_idx', 'int');
+        $ure_tab_idx = (int) $this->lib->get_request_var('ure_tab_idx', 'post', 'int');
                 
         do_action('ure_settings_load');        
 

@@ -247,7 +247,8 @@ if (!$multisite) {
     jQuery(function() {
         jQuery('#ure_tabs').tabs();
 <?php
-    if ($ure_tab_idx>0) {
+    $ure_tab_idx = (int) $ure_tab_idx;
+    if ($ure_tab_idx>0 && $ure_tab_idx<=count($tabs_index)) {
 ?>
         jQuery("#ure_tabs").tabs("option", "active", <?php echo $ure_tab_idx; ?>);    
 <?php
