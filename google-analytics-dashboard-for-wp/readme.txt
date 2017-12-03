@@ -3,8 +3,8 @@ Contributors: deconf
 Donate link: https://deconf.com/donate/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget
 Requires at least: 3.5
-Tested up to: 4.8.2
-Stable tag: 5.1.2.2
+Tested up to: 4.9.1
+Stable tag: 5.1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,11 @@ This is a major update, please read the [release notes](https://deconf.com/googl
 
 == Changelog ==
 
+= 5.1.2.3 =
+* Bug Fixes:
+	* fixes an access token request loop
+	* some thrown errors weren't properly stored
+	
 = 5.1.2.2 =
 * Bug Fixes:
 	* fixes a GAPI parameter issue
