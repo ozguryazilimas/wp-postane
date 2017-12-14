@@ -7,7 +7,7 @@
  * Description: Visually compresses the administrative meta-boxes so that more admin page content can be initially seen. The plugin that lets you hide 'unnecessary' items from the WordPress administration menu, for all roles of your install. You can also hide post meta controls on the edit-area to simplify the interface. It is possible to simplify the admin in different for all roles.
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de/
- * Version:     1.11.3
+ * Version:     1.11.4
  * License:     GPLv3+
  *
  * Php Version 5.6
@@ -15,7 +15,7 @@
  * @package WordPress
  * @author  Frank Bültge <frank@bueltge.de>
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @version 2017-11-16
+ * @version 2017-12-14
  */
 
 /**
@@ -110,11 +110,11 @@ function _mw_adminimize_exclude_settings_page() {
 
 	$screen = $page;
 	if ( function_exists( 'get_current_screen' ) ) {
-		$screen = get_current_screen();
+		$screen_tmp = get_current_screen();
 	}
 
-	if ( isset( $screen->id ) ) {
-		$screen = $screen->id;
+	if ( isset( $screen_tmp->id ) && null !== $screen_tmp->id ) {
+		$screen = $screen_tmp->id;
 	}
 
 	// Don't filter on settings page
@@ -378,12 +378,16 @@ function _mw_adminimize_admin_init() {
 					$disabled_metaboxes_post_all
 				)
 			) {
-				add_filter(
-					'wp_default_editor',
-					function() {
-						return 'tinymce';
-					}
-				);
+				add_filter( 'wp_default_editor', '_mw_admininimize_return_tinmyce' );
+				/**
+				 * Return string tinymce.
+				 * Necessary for php 5.2 usage :(; not possible to use an anonymous function.
+				 *
+				 * @return string
+				 */
+				function _mw_admininimize_return_tinmyce() {
+					return 'tinymce';
+				}
 			}
 
 			// Remove media buttons
@@ -424,7 +428,8 @@ function _mw_adminimize_admin_init() {
 }
 
 // Change menu via settings of Adminimize.
-add_action( 'custom_menu_order', '_mw_adminimize_set_menu_option', 99999 );
+//add_filter( 'custom_menu_order', '__return_true' );
+add_filter( 'admin_menu', '_mw_adminimize_set_menu_option', 99999 );
 
 // global_options
 add_action( 'admin_head', '_mw_adminimize_set_global_option', 1 );
@@ -434,7 +439,6 @@ if ( is_admin() ) {
 	add_action( 'admin_menu', '_mw_adminimize_add_settings_page' );
 	add_action( 'admin_menu', '_mw_adminimize_remove_dashboard' );
 }
-add_action( 'init', '_mw_adminimize_set_logout_menu', 2 );
 
 register_activation_hook( __FILE__, '_mw_adminimize_install' );
 register_uninstall_hook( __FILE__, '_mw_adminimize_uninstall' );
@@ -620,21 +624,15 @@ function _mw_adminimize_set_menu_option() {
 	_mw_adminimize_debug( $mw_adminimize_menu, 'Adminimize, Menu Slugs to hide after Filter.' );
 	_mw_adminimize_debug( $mw_adminimize_menu, 'Adminimize, Sub-Menu Slugs to hide after Filter.' );
 
-	/**
-	 * @ToDo Remove it after feedback from users.
-	 *
-	// Fallback on users.php on all user roles smaller admin.
-	if ( in_array( 'users.php', $mw_adminimize_menu, TRUE ) ) {
-		$mw_adminimize_menu[] = 'profile.php';
-	}
-	 */
 	foreach ( $menu as $key => $item ) {
+
+		_mw_adminimize_debug( $item, 'Adminimize, Each Menu Item Array to check for hiding.' );
 
 		// Menu
 		if ( isset( $item[ 2 ] ) ) {
 			$menu_slug = $item[ 2 ];
 			// Check, if the Menu item in the current user role settings?
-			if ( in_array( $menu_slug, $mw_adminimize_menu, TRUE )
+			if ( in_array( $menu_slug, $mw_adminimize_menu, false )
 			) {
 				remove_menu_page( $menu_slug );
 				// Prevent access to the page with the slug, there was inactive.
@@ -1079,10 +1077,6 @@ require_once 'inc-setup/widget.php';
 require_once 'inc-setup/footer.php';
 require_once 'inc-setup/admin-footer.php';
 
-// global settings
-// @TODO Testing, not ready for productive
-//require_once( 'inc-options/settings_notice.php' );
-
 // remove admin bar
 require_once 'inc-setup/remove-admin-bar.php';
 
@@ -1116,8 +1110,7 @@ function _mw_adminimize_filter_plugin_meta( $links, $file ) {
 		array_unshift(
 			$links,
 			sprintf(
-				'<a href="options-general.php?page=%s">%s</a>',
-				FB_ADMINIMIZE_BASENAME,
+				'<a href="options-general.php?page=adminimize-options">%s</a>',
 				esc_attr__( 'Settings' )
 			)
 		);
@@ -1166,31 +1159,6 @@ function _mw_adminimize_on_load_page() {
 		TRUE
 	);
 	wp_enqueue_script( 'adminimize-settings-script' );
-}
-
-/**
- * Set theme for users
- * Kill with version 1.7.18
- * @ToDo Remove for the feature releases.
- */
-function _mw_adminimize_set_theme() {
-
-	if ( ! current_user_can( 'edit_users' ) ) {
-		wp_die( esc_attr__( 'Cheatin&#8217; uh?' ) );
-	}
-
-	$user_ids    = (array) $_POST[ 'mw_adminimize_theme_items' ];
-	$admin_color = htmlspecialchars( stripslashes( $_POST[ '_mw_adminimize_set_theme' ] ) );
-
-	if ( ! $user_ids ) {
-		return FALSE;
-	}
-
-	foreach ( $user_ids as $user_id ) {
-		update_user_meta( $user_id, 'admin_color', $admin_color );
-	}
-
-	return TRUE;
 }
 
 /**

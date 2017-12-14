@@ -5,7 +5,7 @@
  * @package    Adminimize
  * @subpackage import
  * @author     Frank Bültge
- * @version    2017-04-13
+ * @version    2017-11-29
  */
 
 if ( ! function_exists( 'add_action' ) ) {
@@ -45,15 +45,30 @@ function _mw_adminimize_import_json() {
 	$tmp       = explode( '/', $type );
 	$extension = end( $tmp );
 
-	if ( 'json' !== $extension ) {
+	// Fallback, if we have no file information on server.
+	$extension_types = array( 'octet-stream' );
+	if ( in_array( $extension, $extension_types, false ) ) {
+		$finfo = new finfo(FILEINFO_MIME_TYPE);
+		$extension = $finfo->file( $_FILES[ 'import_file' ][ 'tmp_name' ] );
+	}
+
+	$extension_allow = array( 'json', 'text/plain', 'text/html' );
+	if ( false !== $extension && ! in_array( $extension, $extension_allow, false ) ) {
+		var_dump('test');var_dump($extension);
 		wp_die(
-			esc_attr__( 'Please upload a valid .json file', 'adminimize' )
+			sprintf(
+				esc_attr__( 'Please upload a valid .json file, Extension check. Your file have the extension %s.', 'adminimize' ),
+				'<code>' . $extension . '</code>'
+			)
 		);
 	}
 
-	if ( empty( $path ) ) {
+	if ( empty( $path ) || ! is_readable( $path ) ) {
 		wp_die(
-			esc_attr__( 'Please upload a file to import', 'adminimize' )
+			sprintf(
+				esc_attr__( 'It is not possible to find a file in %s', 'adminimize' ),
+				$path
+			)
 		);
 	}
 
@@ -64,4 +79,5 @@ function _mw_adminimize_import_json() {
 	unlink( $path );
 
 	_mw_adminimize_update_option( $settings );
+	wp_safe_redirect( get_option( 'siteurl' ) . '/wp-admin/options-general.php?page=adminimize-options' );
 }
