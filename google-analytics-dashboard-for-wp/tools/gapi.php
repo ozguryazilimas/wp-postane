@@ -810,7 +810,7 @@ if ( ! class_exists( 'GADWP_GAPI_Controller' ) ) {
 			$i = 0;
 			$gadwp_data = $data;
 			foreach ( $data->getRows() as $row ) {
-				$gadwp_data->rows[$i] = array_map( 'esc_html', $row );
+				$gadwp_data->rows[$i] = array_map( 'wp_kses_data', $row );
 				$i++;
 			}
 
