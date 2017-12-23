@@ -4,7 +4,7 @@ Donate link: https://deconf.com/donate/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget
 Requires at least: 3.5
 Tested up to: 4.9.1
-Stable tag: 5.1.2.4
+Stable tag: 5.1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,10 +163,12 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 
 == Upgrade Notice ==
 
-This is a major update, please read the [release notes](https://deconf.com/google-analytics-dashboard-for-wp-5-0-release-notes/) first.
-
 == Changelog ==
 
+= 5.1.2.5 =
+* Bug Fixes:
+	* encode quotation marks on webpage titles
+	
 = 5.1.2.4 =
 * Security:
 	* fixes a security vulnerability on a dashboard report, see [the release notes](https://deconf.com/google-analytics-dashboard-for-wp-5-1-2-4-security-release); credits [Oways](https://hackerone.com/0ways)
