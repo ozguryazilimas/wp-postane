@@ -1,3 +1,11 @@
+= 3.3.2 =
+* 2017 May 25, by Ipstenu
+* Remove internationalization which was breaking translations - props @natali_z
+
+= 3.3 =
+* 2014 Sep 5, by Ipstenu
+* Removed P2 Support. it wasn't working and was causing issues with other themes. Sorry.
+
 = 3.2.3 =
 * 2014 Apr 11, by Ipstenu
 * Omitted a line in the last updated like a doofus (<a href="https://wordpress.org/support/topic/php-error-77">props KTS915</a>)

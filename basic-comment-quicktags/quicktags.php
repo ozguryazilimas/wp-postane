@@ -2,14 +2,14 @@
 /*
   Plugin Name: Basic Comment Quicktags
   Plugin URI: http://halfelf.org/plugins/basic-comment-quicktags/
-  Description: Displays a bold, italic, add link and quote button on top of the comment form
-  Version: 3.3.2
+  Description: Make commenting easier with bold, italic, add link and quote buttons on top of the form.
+  Version: 3.4.0
   Author: Mika "Ipstenu" Epstein
   Author URI: http://halfelf.org
   Text Domain: basic-comment-quicktags
 
-  Original author: Marc Tönsing -- http://www.marctv.de/blog/2010/08/25/marctv-wordpress-plugins/
-  Copyright 2012-2017 Mika Epstein (ipstenu@halfelf.org)
+	Original author: Marc Tönsing -- http://www.marctv.de/blog/2010/08/25/marctv-wordpress-plugins/
+	Copyright 2012-2018 Mika Epstein (ipstenu@halfelf.org)
 
 	This file is part of Basic Comment Quicktags, a plugin for WordPress.
 
@@ -28,13 +28,14 @@
 */
 
 global $wp_version;
-if ( version_compare( $wp_version, "3.8", "<" ) ) { 
-	exit( __('This plugin requires WordPress 3.8', 'basic-comment-quicktags' ) ); 
+if ( version_compare( $wp_version, "4.6", "<" ) ) { 
+	exit( __('This plugin requires WordPress 4.6 or greater.', 'basic-comment-quicktags' ) ); 
 }
 
 if ( !class_exists( 'BasicCommentsQuicktagsHELF' ) ) {
 	class BasicCommentsQuicktagsHELF {
-	
+
+		protected static $version;
 		var $bcq_defaults;
 		var $bcq_bbp_fancy;
 
@@ -46,20 +47,20 @@ if ( !class_exists( 'BasicCommentsQuicktagsHELF' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'init', array( &$this, 'init' ) );
-			
+
 			// Setting plugin defaults here:
+			self::$version = '3.4.0';
 			$this->bcq_defaults = array(
-				'comments'	  => '1',
-				'bbpress'	   => '0',
+				'comments' => '1',
+				'bbpress'  => '0',
 			);
-		
+
 			//global $bcq_bbp_fancy;
 			$this->bcq_bbp_fancy = get_option( '_bbp_use_wp_editor' );
-			
+
 			add_option( 'ippy_bcq_options', $this->bcq_defaults );
 			
 		}
-
 
 		/**
 		 * init function.
@@ -68,13 +69,12 @@ if ( !class_exists( 'BasicCommentsQuicktagsHELF' ) ) {
 		 * @return void
 		 */
 		public function init() {
-	
+
 			if( !is_admin() && !in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) ) {
 				add_action( 'wp_print_scripts', array( $this,'add_scripts_frontend' ) );
 				add_action( 'wp_print_styles', array( $this,'add_styles_frontend' ) );
-				add_action('comment_form_top', array($this, 'echo_smiley_box'));
 			}
-			
+
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			
 			add_filter( 'plugin_row_meta', array( $this, 'donate_link' ), 10, 2 );
@@ -85,9 +85,12 @@ if ( !class_exists( 'BasicCommentsQuicktagsHELF' ) ) {
 			wp_enqueue_style( 'basic-comment-quicktags', plugins_url( '/quicktags.css' ,__FILE__) );
 		}
 		function add_scripts() {
-			wp_enqueue_script( 'basic-comment-quicktags', plugins_url( '/quicktags.js' ,__FILE__ ), array( 'quicktags', 'jquery' ), '3.3.1', 1 ); 
+			wp_enqueue_script( 'basic-comment-quicktags', plugins_url( '/quicktags.js' ,__FILE__ ), array( 'quicktags', 'jquery' ), self::$version, 1 ); 
+			wp_localize_script('basic-comment-quicktags', 'bcq_script_vars', array(
+				'quote' => __('quote', 'basic-comment-quicktags')
+			) );
 		}
-		
+
 		/**
 		 * add_styles_frontend function.
 		 * 
@@ -124,54 +127,7 @@ if ( !class_exists( 'BasicCommentsQuicktagsHELF' ) ) {
 				$this->add_scripts();
 			}
 		}
-			
-		function echo_smiley_box() {
-			global $wpsmiliestrans, $mojimoji_category_map, $mojimoji_categories;
 
-			echo '<script type="text/javascript">';
-			echo '  var ajaxurl = "' . admin_url('admin-ajax.php') . '";';
-			echo '</script>';
-			echo '<div id="smiley_container">';
-			echo '<ul id="smiley_tab_navigation">';
-
-			foreach ($mojimoji_categories as $category => $category_smiley) {
-				$additional_class = '';
-
-				if ('people' === $category) {
-					$additional_class = 'active';
-				}
-
-				echo '<lu id="smiley_tab_header_' . $category . '" class="smiley_tab_header ' . $additional_class . '" onclick="smiley_tab_clicked(\'' . $category . '\')">';
-				echo convert_smilies($category_smiley);
-				echo '</lu>';
-			}
-
-			echo '</ul>';
-
-			foreach ($mojimoji_categories as $category => $category_smiley) {
-				$additional_style = '';
-
-				if ('people' !== $category) {
-					$additional_style = 'display: none;';
-				}
-
-				echo '<div id="smiley_tab_content_' . $category . '" class="smiley_tab_content" style="' . $additional_style . '">';
-
-				/*
-				foreach ($mojimoji_category_map[$category] as $smiley) {
-					echo '<span class="smiley_smiley" onclick="smiley_insert(\''.$smiley.'\')">';
-					echo convert_smilies($smiley);
-					echo '</span>';
-					}
-				*/
-
-				echo '</div>';
-			}
-
-			echo '</div>';
-		}
-			
-			
 		/**
 		 * admin_init function.
 		 * 
@@ -188,7 +144,7 @@ if ( !class_exists( 'BasicCommentsQuicktagsHELF' ) ) {
 			add_settings_field(
 				'ippy_bcq_bbpress',                         // id
 				__('Quicktags', 'basic-comment-quicktags'), // setting title
-				array( $this, 'setting_input' ),	            // display callback
+				array( $this, 'setting_input' ),            // display callback
 				'discussion',                               // settings page
 				'default'                                   // settings section
 			);
@@ -244,7 +200,7 @@ if ( !class_exists( 'BasicCommentsQuicktagsHELF' ) ) {
 		 */
 		function donate_link($links, $file) {
 			if ( $file == plugin_basename(__FILE__)) {
-				$donate_link = '<a href="https://store.halfelf.org/donate/">' . __( 'Donate', 'basic-comment-quicktags' ) . '</a>';
+				$donate_link = '<a href="https://ko-fi.com/A236CENl/">' . __( 'Donate', 'basic-comment-quicktags' ) . '</a>';
 				$links[] = $donate_link;
 			}
 			return $links;
