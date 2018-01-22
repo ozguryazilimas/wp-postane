@@ -1,4 +1,5 @@
 <?php
+
 if ( ! class_exists( 'AM_Notification' ) ) {
 	/**
 	 * Awesome Motive Notifications
@@ -7,12 +8,13 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 	 * retrieve notifications for this product.
 	 *
 	 * @package    AwesomeMotive
-	 * @author     Benjamin Rojas
+	 * @author     AwesomeMotive Team
 	 * @license    GPL-2.0+
-	 * @copyright  Copyright (c) 2017, Retyp LLC
-	 * @version    1.0.0
+	 * @copyright  Copyright (c) 2018, Awesome Motive LLC
+	 * @version    1.0.4
 	 */
 	class AM_Notification {
+
 		/**
 		 * The api url we are calling.
 		 *
@@ -40,24 +42,6 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 * @var string
 		 */
 		public $plugin_version;
-
-		/**
-		 * The list of installed plugins.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @var array
-		 */
-		public $plugin_list = array();
-
-		/**
-		 * The list of installed themes.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @var string
-		 */
-		public $theme_list = array();
 
 		/**
 		 * Flag if a notice has been registered.
@@ -93,7 +77,9 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 */
 		public function custom_post_type() {
 			register_post_type( 'amn_' . $this->plugin, array(
-				'supports' => false,
+				'label'      => $this->plugin . ' Announcements',
+				'can_export' => false,
+				'supports'   => false,
 			) );
 		}
 
@@ -103,7 +89,7 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 * @since 1.0.0
 		 */
 		public function get_remote_notifications() {
-			if ( ! current_user_can( apply_filters( 'am_notifications_display', 'manage_options' ) ) ) {
+			if ( ! current_user_can( apply_filters( 'am_notifications_display', is_super_admin() ) ) ) {
 				return;
 			}
 
@@ -111,7 +97,7 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 
 			if ( $last_checked < strtotime( 'today midnight' ) ) {
 				$plugin_notifications = $this->get_plugin_notifications( 1 );
-				$notification_id 	  = null;
+				$notification_id      = null;
 
 				if ( ! empty( $plugin_notifications ) ) {
 					// Unset it from the array.
@@ -124,8 +110,6 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 						'slug'              => $this->plugin,
 						'version'           => $this->plugin_version,
 						'last_notification' => $notification_id,
-						'plugins'           => $this->get_plugins_list(),
-						'themes'            => $this->get_themes_list(),
 					),
 				) ) );
 
@@ -149,17 +133,17 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 					}
 
 					if ( empty( $notifications ) ) {
-						$new_notification_id = wp_insert_post( array(
-							'post_content' => wp_kses_post( $data->content ),
-							'post_type'    => 'amn_' . $this->plugin,
-						) );
+						$new_notification_id = wp_insert_post(
+							array(
+								'post_content' => wp_kses_post( $data->content ),
+								'post_type'    => 'amn_' . $this->plugin,
+							)
+						);
 
 						update_post_meta( $new_notification_id, 'notification_id', absint( $data->id ) );
 						update_post_meta( $new_notification_id, 'type', sanitize_text_field( trim( $data->type ) ) );
 						update_post_meta( $new_notification_id, 'dismissable', (bool) $data->dismissible ? 1 : 0 );
 						update_post_meta( $new_notification_id, 'location', function_exists( 'wp_json_encode' ) ? wp_json_encode( $data->location ) : json_encode( $data->location ) );
-						update_post_meta( $new_notification_id, 'plugins', function_exists( 'wp_json_encode' ) ? wp_json_encode( $data->plugins ) : json_encode( $data->plugins ) );
-						update_post_meta( $new_notification_id, 'theme', sanitize_text_field( trim( $data->theme ) ) );
 						update_post_meta( $new_notification_id, 'version', sanitize_text_field( trim( $data->version ) ) );
 						update_post_meta( $new_notification_id, 'viewed', 0 );
 						update_post_meta( $new_notification_id, 'expiration', $data->expiration ? absint( $data->expiration ) : false );
@@ -187,69 +171,13 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 *
 		 * @return WP_Post[] WP_Post that match the query.
 		 */
-		public function get_plugin_notifications( $limit = -1, $args = array() ) {
+		public function get_plugin_notifications( $limit = - 1, $args = array() ) {
 			return get_posts(
 				array(
-					'showposts' => $limit,
-					'post_type' => 'amn_' . $this->plugin,
+					'posts_per_page' => $limit,
+					'post_type'      => 'amn_' . $this->plugin,
 				) + $args
 			);
-		}
-
-		/**
-		 * Retrieve a list of plugins that are currently installed.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @return array An array of plugins that are currently installed.
-		 */
-		public function get_plugins_list() {
-			if ( ! empty( $this->plugin_list ) ) {
-				return $this->plugin_list;
-			}
-
-			if ( ! function_exists( 'get_plugins' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/plugin.php';
-			}
-
-			$plugins = get_plugins();
-
-			foreach ( $plugins as $slug => $plugin ) {
-				$this->plugin_list[ $slug ] = array(
-					'slug'    => $slug,
-					'name'    => $plugin['Name'],
-					'version' => $plugin['Version'],
-					'active'  => is_plugin_active( $slug ),
-				);
-			}
-
-			return $this->plugin_list;
-		}
-
-		/**
-		 * Retrieve a list of themes that are currently installed.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @return array An array of themes that are currently installed.
-		 */
-		public function get_themes_list() {
-			if ( ! empty( $this->theme_list ) ) {
-				return $this->theme_list;
-			}
-
-			$themes = wp_get_themes();
-
-			foreach ( $themes as $slug => $theme ) {
-				$this->theme_list[ $slug ] = array(
-					'slug'    => $slug,
-					'name'    => $theme->Name,
-					'version' => $theme->Version,
-					'active'  => (string) wp_get_theme() === $theme->Name,
-				);
-			}
-
-			return $this->theme_list;
 		}
 
 		/**
@@ -258,11 +186,11 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 * @since 1.0.0
 		 */
 		public function display_notifications() {
-			if ( ! current_user_can( apply_filters( 'am_notifications_display', 'manage_options' ) ) ) {
+			if ( ! current_user_can( apply_filters( 'am_notifications_display', is_super_admin() ) ) ) {
 				return;
 			}
 
-			$plugin_notifications = $this->get_plugin_notifications( -1, array(
+			$plugin_notifications = $this->get_plugin_notifications( - 1, array(
 				'post_status' => 'all',
 				'meta_key'    => 'viewed',
 				'meta_value'  => '0',
@@ -279,14 +207,14 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 						<?php echo $notification->post_content; ?>
 					</div>
 					<script type="text/javascript">
-						jQuery(document).ready(function ($) {
-							$(document).on('click', '.am-notification-<?php echo $notification->ID; ?> button.notice-dismiss', function (event) {
-								$.post(ajaxurl, {
+						jQuery( document ).ready( function ( $ ) {
+							$( document ).on( 'click', '.am-notification-<?php echo $notification->ID; ?> button.notice-dismiss', function ( event ) {
+								$.post( ajaxurl, {
 									action: 'am_notification_dismiss',
 									notification_id: '<?php echo $notification->ID; ?>'
-								});
-							});
-						});
+								} );
+							} );
+						} );
 					</script>
 					<?php
 				}
@@ -401,12 +329,11 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 */
 		public function get_plan_level() {
 			// Prepare variables.
-			$key	= '';
-			$level  = '';
-			$option = false;
+			$key   = '';
+			$level = '';
+
 			switch ( $this->plugin ) {
-				case 'wpforms-lite' :
-				case 'wpforms'      :
+				case 'wpforms':
 					$option = get_option( 'wpforms_license' );
 					$key    = is_array( $option ) && isset( $option['key'] ) ? $option['key'] : '';
 					$level  = is_array( $option ) && isset( $option['type'] ) ? $option['type'] : '';
@@ -415,41 +342,34 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 					if ( empty( $key ) && defined( 'WPFORMS_LICENSE_KEY' ) ) {
 						$key = WPFORMS_LICENSE_KEY;
 					}
-				break;
-				case 'mi-lite' :
-				case 'mi'      :
-					$option = get_option( 'monsterinsights_license' );
-					$key    = is_array( $option ) && isset( $option['key'] ) ? $option['key'] : '';
-					$level  = is_array( $option ) && isset( $option['type'] ) ? $option['type'] : '';
+					break;
+				case 'mi-lite':
+				case 'mi':
+					if ( version_compare( MONSTERINSIGHTS_VERSION, '6.9.0', '>=' ) ) {
+						if ( MonsterInsights()->license->get_site_license_type() ) {
+							$key  = MonsterInsights()->license->get_site_license_key();
+							$type = MonsterInsights()->license->get_site_license_type();
+						} else if ( MonsterInsights()->license->get_network_license_type() ) {
+							$key  = MonsterInsights()->license->get_network_license_key();
+							$type = MonsterInsights()->license->get_network_license_type();
+						}
 
-					// Possibly check for a constant.
-					if ( empty( $key ) && defined( 'MONSTERINSIGHTS_LICENSE_KEY' ) && is_string( MONSTERINSIGHTS_LICENSE_KEY ) && strlen( MONSTERINSIGHTS_LICENSE_KEY ) > 10 ) {
-						$key = MONSTERINSIGHTS_LICENSE_KEY;
-					}
-				break;
-				case 'sol-lite' :
-				case 'sol'      :
-					$option = get_option( 'soliloquy' );
-					$key    = is_array( $option ) && isset( $option['key'] ) ? $option['key'] : '';
-					$level  = is_array( $option ) && isset( $option['type'] ) ? $option['type'] : '';
+						// Check key fallbacks
+						if ( empty( $key ) ) {
+							$key = MonsterInsights()->license->get_license_key();
+						}
+					} else {
+						$option = get_option( 'monsterinsights_license' );
+						$key    = is_array( $option ) && isset( $option['key'] ) ? $option['key'] : '';
+						$level  = is_array( $option ) && isset( $option['type'] ) ? $option['type'] : '';
 
-					// Possibly check for a constant.
-					if ( empty( $key ) && defined( 'SOLILOQUY_LICENSE_KEY' ) ) {
-						$key = SOLILOQUY_LICENSE_KEY;
+						// Possibly check for a constant.
+						if ( empty( $key ) && defined( 'MONSTERINSIGHTS_LICENSE_KEY' ) && is_string( MONSTERINSIGHTS_LICENSE_KEY ) && strlen( MONSTERINSIGHTS_LICENSE_KEY ) > 10 ) {
+							$key = MONSTERINSIGHTS_LICENSE_KEY;
+						}
 					}
-				break;
-				case 'envira-lite' :
-				case 'envira'      :
-					$option = get_option( 'envira_gallery' );
-					$key    = is_array( $option ) && isset( $option['key'] ) ? $option['key'] : '';
-					$level  = is_array( $option ) && isset( $option['type'] ) ? $option['type'] : '';
-
-					// Possibly check for a constant.
-					if ( empty( $key ) && defined( 'ENVIRA_LICENSE_KEY' ) ) {
-						$key = ENVIRA_LICENSE_KEY;
-					}
-				break;
-				case 'om' :
+					break;
+				case 'om':
 					$option = get_option( 'optin_monster_api' );
 					$key    = is_array( $option ) && isset( $option['api']['apikey'] ) ? $option['api']['apikey'] : '';
 
@@ -462,7 +382,7 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 					if ( empty( $key ) ) {
 						$key = is_array( $option ) && isset( $option['api']['key'] ) ? $option['api']['key'] : '';
 					}
-				break;
+					break;
 			}
 
 			// Possibly set the level to 'none' if the key is empty and no level has been set.
@@ -470,24 +390,29 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 				$level = 'none';
 			}
 
+			// Possibly set the level to 'unknown' if a key is entered, but no level can be determined (such as manually entered key)
+			if ( ! empty( $key ) && empty( $level ) ) {
+				$level = 'unknown';
+			}	
+
 			// Normalize the level.
 			switch ( $level ) {
-				case 'bronze' :
-				case 'personal' :
+				case 'bronze':
+				case 'personal':
 					$level = 'basic';
-				break;
-				case 'silver' :
-				case 'multi' :
+					break;
+				case 'silver':
+				case 'multi':
 					$level = 'plus';
-				break;
-				case 'gold' :
-				case 'developer' :
+					break;
+				case 'gold':
+				case 'developer':
 					$level = 'pro';
-				break;
-				case 'platinum' :
-				case 'master' :
+					break;
+				case 'platinum':
+				case 'master':
 					$level = 'ultimate';
-				break;
+					break;
 			}
 
 			// Return the plan level.
@@ -500,7 +425,7 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 * @since 1.0.0
 		 */
 		public function dismiss_notification() {
-			if ( ! current_user_can( apply_filters( 'am_notifications_display', 'manage_options' ) ) ) {
+			if ( ! current_user_can( apply_filters( 'am_notifications_display', is_super_admin() ) ) ) {
 				die;
 			}
 
@@ -519,7 +444,7 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		public function revoke_notifications( $ids ) {
 			// Loop through each of the IDs and find the post that has it as meta.
 			foreach ( (array) $ids as $id ) {
-				$notifications = $this->get_plugin_notifications( -1, array( 'post_status' => 'all', 'meta_key' => 'notification_id', 'meta_value' => $id ) );
+				$notifications = $this->get_plugin_notifications( - 1, array( 'post_status' => 'all', 'meta_key' => 'notification_id', 'meta_value' => $id ) );
 				if ( $notifications ) {
 					foreach ( $notifications as $notification ) {
 						update_post_meta( $notification->ID, 'viewed', 1 );

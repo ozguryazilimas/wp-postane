@@ -6,9 +6,9 @@
  * Author:              MonsterInsights
  * Author URI:          https://www.monsterinsights.com/
  *
- * Version:             6.2.6
+ * Version:             6.2.7
  * Requires at least:   3.9.0
- * Tested up to:        4.8.1
+ * Tested up to:        4.9.1
  *
  * License:             GPL v3
  * 
@@ -69,7 +69,7 @@ final class MonsterInsights_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.2.6';
+	public $version = '6.2.7';
 
 	/**
 	 * Plugin file.
