@@ -388,6 +388,8 @@ function relevanssi_default_post_ok($post_ok, $doc) {
 }
 
 /**
+ * This is only for legacy use, current versions of s2member do not need this anymore, they filter through pre_get_posts and 'not_in'.
+ * 
  * Return values:
  *  2: full access to post
  *  1: show title only
@@ -472,9 +474,11 @@ function relevanssi_extract_phrases($q) {
 		$phrase = call_user_func($substr_function, $q, $start + 1, $end - $start - 1);
 		$phrase = trim($phrase);
 
-		if (!empty($phrase)) $phrases[] = $phrase;
+		// Do not count single-word phrases as phrases
+		if (!empty($phrase) && str_word_count($phrase) > 1) $phrases[] = $phrase;
 		$pos = $end;
 	}
+
 	return $phrases;
 }
 
@@ -742,7 +746,7 @@ function relevanssi_tokenize($str, $remove_stops = true, $min_word_length = -1) 
 	}
 
 	$str = apply_filters('relevanssi_remove_punctuation', $str);
-
+	
 	if ( function_exists('mb_strtolower') )
 		$str = mb_strtolower($str);
 	else
@@ -1045,11 +1049,17 @@ function relevanssi_switch_blog($new_blog, $prev_blog) {
 function relevanssi_get_permalink() {
 	$permalink = apply_filters('relevanssi_permalink', get_permalink());
 	$highlight_docs = get_option('relevanssi_highlight_docs');
-	if (isset($highlight_docs) && $highlight_docs != "off") {
-		$permalink = esc_attr(add_query_arg(array(
-			'highlight' => urlencode(get_search_query())
-			), $permalink )
-		);
+	$query = get_search_query();
+	if (isset($highlight_docs) && $highlight_docs != "off" && !empty($query)) {
+		global $post;
+		$frontpage_id = get_option('page_on_front');
+		if ($post->ID != $frontpage_id) {
+			// We won't add the highlight parameter for the front page, as that will break the link
+			$permalink = esc_attr(add_query_arg(array(
+				'highlight' => urlencode(get_search_query())
+				), $permalink )
+			);
+		}
 	}
 	return $permalink;
 }
@@ -1092,32 +1102,56 @@ function relevanssi_simple_didyoumean($query, $pre, $post, $n = 5) {
 
 	$data = $wpdb->get_results($q);
 
-	$distance = -1;
-	$closest = "";
+	$query = htmlspecialchars_decode($query);
+	$tokens = relevanssi_tokenize($query);
+	$suggestion = "";
+	$suggestions_made = false;
+	foreach ($tokens as $token => $count) {
+		$closest = "";
+		$distance = -1;
+		foreach ($data as $row) {
+			if ($row->c < 2) break;
+		
+			if ($token === $row->query) {
+				$closest = "";
+				break;
+			}
+			else {
+				$lev = levenshtein($token, $row->query);
 
-	foreach ($data as $row) {
-		if ($row->c < 2) break;
-		$lev = levenshtein($query, $row->query);
-
-		if ($lev < $distance || $distance < 0) {
-			if ($row->a > 0) {
-				$distance = $lev;
-				$closest = $row->query;
-				if ($lev == 1) break; // get the first with distance of 1 and go
+				if ($lev < $distance || $distance < 0) {
+					if ($row->a > 0) {
+						$distance = $lev;
+						$closest = $row->query;
+						if ($lev < 2) break; // get the first with distance of 1 and go
+					}
+				}
 			}
 		}
+		if (!empty($closest)) {
+			$query = str_ireplace($token, $closest, $query);
+			$suggestions_made = true;
+		} 
+	}
+
+	if ($suggestions_made) {
+		$suggestion = $query;
+		$suggestion_enc = urlencode($suggestion);
 	}
 
 	$result = null;
-	if ($distance > 0) {
+	if ($suggestion) {
  		$url = get_bloginfo('url');
 		$url = esc_attr(add_query_arg(array(
-			's' => urlencode($closest)
+			's' => urlencode($suggestion)
 
 			), $url ));
-		$url = apply_filters('relevanssi_didyoumean_url', $url, $query, $closest);
-		$closest = htmlspecialchars($closest);
-		$result = apply_filters('relevanssi_didyoumean_suggestion', "$pre<a href='$url'>$closest</a>$post");
+		$url = apply_filters('relevanssi_didyoumean_url', $url, $query, $suggestion);
+
+		// Escape the suggestion to avoid XSS attacks
+		$suggestion = htmlspecialchars($suggestion);
+
+		$result = apply_filters('relevanssi_didyoumean_suggestion', "$pre<a href='$url'>$suggestion</a>$post");
  	}
 
  	return $result;
