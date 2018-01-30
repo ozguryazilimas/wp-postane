@@ -89,7 +89,7 @@ if ( ! class_exists( 'AM_Notification' ) ) {
 		 * @since 1.0.0
 		 */
 		public function get_remote_notifications() {
-			if ( ! current_user_can( apply_filters( 'am_notifications_display', is_super_admin() ) ) ) {
+			if ( ! apply_filters( 'am_notifications_display', is_super_admin() ) ) {
 				return;
 			}
 
