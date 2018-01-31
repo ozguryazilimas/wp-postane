@@ -181,8 +181,7 @@ class URE_Protect_Admin {
     }
     // end of exclude_administrators()
 
-    
-    
+        
     private function extract_view_quantity($text) {
         $match = array();
         $result = preg_match('#\((.*?)\)#', $text, $match);
@@ -197,6 +196,15 @@ class URE_Protect_Admin {
     // end of extract_view_quantity()
     
     
+    private function extract_int($str_val) {
+        $str_val1 = str_replace(',', '', $str_val);  // remove ',' from numbers like '2,015'
+        $int_val = (int) preg_replace('/[^\-\d]*(\-?\d*).*/','$1', $str_val1);  // extract numeric value strings like from '2015 bla-bla'
+        
+        return $int_val;
+    }
+    // end of extract_int()
+    
+    
     /*
      * Exclude view of users with Administrator role
      * 
@@ -208,13 +216,14 @@ class URE_Protect_Admin {
         }
         
         if (isset($views['all'])) {        
-            // Decrease quant of all users to the quant of hidden admins
-            $admins_orig = $this->extract_view_quantity($views['administrator']);
-            $admins_int = str_replace(',', '', $admins_orig);
-            $all_orig = $this->extract_view_quantity($views['all']);
-            $all_orig_int = str_replace(',', '', $all_orig);
-            $all_new = $all_orig_int - $admins_int;
-            $views['all'] = str_replace($all_orig, $all_new, $views['all']);
+            // Decrease quant of all users for a quant of hidden admins
+            $admins_orig_s = $this->extract_view_quantity($views['administrator']);
+            $admins_int = $this->extract_int($admins_orig_s);
+            $all_orig_s = $this->extract_view_quantity($views['all']);
+            $all_orig_int = $this->extract_int($all_orig_s);
+            $all_new_int = $all_orig_int - $admins_int;
+            $all_new_s = number_format_i18n($all_new_int);
+            $views['all'] = str_replace($all_orig_s, $all_new_s, $views['all']);
         }
         
         unset($views['administrator']);

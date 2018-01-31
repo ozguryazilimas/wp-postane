@@ -112,7 +112,7 @@ class URE_Lib extends URE_Base_Lib {
         $this->notification = $value;
         
     }
-    // end of esc_html()
+    // end of set_notification()
     
     
     public function set_apply_to_all($value) {
@@ -560,15 +560,11 @@ class URE_Lib extends URE_Base_Lib {
      * @return array
      */
     public function get_user_roles() {
-        global $wp_roles;
-        
-        if (!isset($wp_roles)) {
-            $wp_roles = new WP_Roles();
-        }                
 
         if (!empty($this->bbpress)) {  // bbPress plugin is active
             $this->roles = $this->bbpress->get_roles();
         } else {
+            $wp_roles = wp_roles();
             $this->roles = $wp_roles->roles;
         }        
         
