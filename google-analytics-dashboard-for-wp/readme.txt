@@ -3,8 +3,8 @@ Contributors: deconf
 Donate link: https://deconf.com/donate/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget
 Requires at least: 3.5
-Tested up to: 4.9.1
-Stable tag: 5.1.2.5
+Tested up to: 4.9.4
+Stable tag: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -165,6 +165,23 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 
 == Changelog ==
 
+= 5.2 =
+* Enhancements:  
+	* improvements on exponential backoff system
+	* introduces a new authentication method with endpoints
+	* multiple updates of plugin's options
+	* code cleanup
+	* improvements on error reporting system
+	* option to report errors to developer
+	* move the upgrade notice from the Dashboard to plugin's settings page
+	* enable PHP cURL proxy support using WordPress settings, props by [Joe Hobson](https://github.com/joehobson)
+	* hide unusable options based on plugin's settings 
+* Bug Fixes:	
+	* some thrown errors were not displayed on Errors & Debug screen
+	* analytics icon disappears from post list after quick edit, props by [karex](https://github.com/karex)
+	* fix for inline SVG links, props by [Andrew Minion](https://github.com/macbookandrew)
+	* fixes a bug on affiliate events tracking
+
 = 5.1.2.5 =
 * Bug Fixes:
 	* encode quotation marks on webpage titles
@@ -176,12 +193,11 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 = 5.1.2.3 =
 * Bug Fixes:
 	* fixes an access token request loop
-	* some thrown errors weren't properly stored
-	
+
 = 5.1.2.2 =
 * Bug Fixes:
 	* fixes a GAPI parameter issue
-	
+
 = 5.1.2.1 =
 * Bug Fixes:
 	* fixes multiple GAPI issues
