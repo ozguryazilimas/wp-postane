@@ -3,8 +3,8 @@ Contributors: nosilver4u,verysimple
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MKMQKCBFFG3WW
 Tags: image, scale, resize, space saver, quality
 Requires at least: 4.0
-Tested up to: 4.7.4
-Stable tag: 2.3.9
+Tested up to: 4.9.4
+Stable tag: 2.3.10
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually scaling? Imsanity to the rescue!
 
@@ -143,6 +143,10 @@ Questions may be posted on the support forum at https://wordpress.org/support/pl
 * if png-to-jpg is enabled, replace png transparency with white
 
 == Changelog ==
+
+= 2.3.10 =
+* fixed: undefined notice for query during ajax operation
+* fixed: stale metadata could prevent further resizing
 
 = 2.3.9 =
 * fixed: PNG to JPG filled transparency with black instead of white

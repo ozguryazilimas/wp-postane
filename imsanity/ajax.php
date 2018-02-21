@@ -39,22 +39,7 @@ function imsanity_get_images()
 	$maxH = imsanity_get_option( 'imsanity_max_height', IMSANITY_DEFAULT_MAX_HEIGHT );
 	$count = 0;
 
-	while( $images = $wpdb->get_results( "SELECT metas.meta_value as file_meta,metas.post_id as ID FROM $wpdb->postmeta metas INNER JOIN $wpdb->posts posts ON posts.ID = metas.post_id WHERE posts.post_type LIKE 'attachment' AND posts.post_mime_type LIKE 'image%%' AND posts.post_mime_type NOT LIKE 'image/bmp' AND metas.meta_key = '_wp_attachment_metadata' $attachment_query LIMIT $offset,$limit" ) ) {
-/*	$query = $wpdb->prepare(
-		"select
-			$wpdb->posts.ID as ID,
-			$wpdb->postmeta.meta_value as file_meta
-			from $wpdb->posts
-			inner join $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id and $wpdb->postmeta.meta_key = %s
-			where $wpdb->posts.post_type = %s
-			and $wpdb->posts.post_mime_type like %s
-			and $wpdb->posts.post_mime_type != %s",
-		array( '_wp_attachment_metadata', 'attachment', 'image%', 'image/bmp' )
-	);
-
-	$images = $wpdb->get_results($query);*/
-
-//	if ( $images ) {
+	while( $images = $wpdb->get_results( "SELECT metas.meta_value as file_meta,metas.post_id as ID FROM $wpdb->postmeta metas INNER JOIN $wpdb->posts posts ON posts.ID = metas.post_id WHERE posts.post_type LIKE 'attachment' AND posts.post_mime_type LIKE 'image%%' AND posts.post_mime_type NOT LIKE 'image/bmp' AND metas.meta_key = '_wp_attachment_metadata' LIMIT $offset,$limit" ) ) {
 
 		foreach ( $images as $image ) {
 			$meta = unserialize( $image->file_meta );
@@ -74,7 +59,6 @@ function imsanity_get_images()
 			if ( $count >= IMSANITY_AJAX_MAX_RECORDS ) break 2;
 		}
 		$offset += $limit;
-//	}
 	} // endwhile
 	die( json_encode( $results ) );
 }
@@ -95,7 +79,6 @@ function imsanity_resize_image()
 		die( json_encode( array( 'success' => false, 'message' => esc_html__( 'Missing ID Parameter', 'imsanity' ) ) ) );
 	}
 
-	//$images = $wpdb->get_results( $query );
 	$meta = wp_get_attachment_metadata( $id );
 
 	if ( $meta && is_array( $meta ) ) {
@@ -169,7 +152,16 @@ function imsanity_resize_image()
 				);
 			}
 		} else {
-			$results = array('success'=>true,'id'=> $id, 'message' => sprintf( esc_html__( 'SKIPPED: %s (Resize not required)', 'imsanity' ) , $oldPath ) );
+			$results = array('success'=>true,'id'=> $id, 'message' => sprintf( esc_html__( 'SKIPPED: %s (Resize not required)', 'imsanity' ) , $oldPath ) . " -- $oldW x $oldH" );
+			if ( empty( $meta['width'] ) || empty( $meta['height'] ) ) {
+				if ( empty( $meta['width'] ) || $meta['width'] > $oldW ) {
+					$meta['width'] = $oldW;
+				}
+				if ( empty( $meta['height'] ) || $meta['height'] > $oldH ) {
+					$meta['height'] = $oldH;
+				}
+				wp_update_attachment_metadata( $id, $meta );
+			}
 		}
 	} else {
 		$results = array( 'success' => false, 'id'=> $id, 'message' => sprintf( esc_html__( 'ERROR: Attachment with ID of %s not found', 'imsanity' ) , htmlentities( $id ) ) );

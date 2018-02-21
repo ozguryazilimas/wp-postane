@@ -4,13 +4,13 @@ Plugin Name: Imsanity
 Plugin URI: https://wordpress.org/plugins/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Shane Bishop
-Version: 2.3.9
+Version: 2.3.10
 Author URI: https://ewww.io/
 Text Domain: imsanity
 License: GPLv3
 */
 
-define( 'IMSANITY_VERSION', '2.3.9' );
+define( 'IMSANITY_VERSION', '2.3.10' );
 define( 'IMSANITY_SCHEMA_VERSION', '1.1' );
 
 define( 'IMSANITY_DEFAULT_MAX_WIDTH', 2048 );
@@ -35,11 +35,11 @@ function imsanity_init() {
 }
 
 /**
- * import supporting libraries
+ * Import supporting libraries.
  */
-include_once( plugin_dir_path(__FILE__) . 'libs/utils.php' );
-include_once( plugin_dir_path(__FILE__) . 'settings.php' );
-include_once( plugin_dir_path(__FILE__) . 'ajax.php' );
+include_once( plugin_dir_path( __FILE__ ) . 'libs/utils.php' );
+include_once( plugin_dir_path( __FILE__ ) . 'settings.php' );
+include_once( plugin_dir_path( __FILE__ ) . 'ajax.php' );
 
 /**
  * Inspects the request and determines where the upload came from.
@@ -47,16 +47,20 @@ include_once( plugin_dir_path(__FILE__) . 'ajax.php' );
  * @return IMSANITY_SOURCE_POST | IMSANITY_SOURCE_LIBRARY | IMSANITY_SOURCE_OTHER
  */
 function imsanity_get_source() {
-	$id = array_key_exists('post_id', $_REQUEST) ? $_REQUEST['post_id'] : '';
-	$action = array_key_exists('action', $_REQUEST) ? $_REQUEST['action'] : '';
+	$id = array_key_exists( 'post_id', $_REQUEST ) ? $_REQUEST['post_id'] : '';
+	$action = array_key_exists( 'action', $_REQUEST ) ? $_REQUEST['action'] : '';
 
-	// a post_id indicates image is attached to a post
-	if ($id > 0) return IMSANITY_SOURCE_POST;
+	// A post_id indicates image is attached to a post.
+	if ( $id > 0 ) {
+		return IMSANITY_SOURCE_POST;
+	}
 
-	// post_id of 0 is 3.x otherwise use the action parameter
-	if ( $id === 0 || $id === '0' || $action == 'upload-attachment' ) return IMSANITY_SOURCE_LIBRARY;
+	// Post_id of 0 is 3.x otherwise use the action parameter.
+	if ( 0 === $id || '0' === $id || 'upload-attachment' == $action ) {
+		return IMSANITY_SOURCE_LIBRARY;
+	}
 
-	// we don't know where this one came from but $_REQUEST['_wp_http_referer'] may contain info
+	// We don't know where this one came from but $_REQUEST['_wp_http_referer'] may contain info.
 	return IMSANITY_SOURCE_OTHER;
 }
 
