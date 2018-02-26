@@ -22,6 +22,8 @@ final class GADWP_Settings {
 			$new_options = $_POST['options'];
 			if ( 'tracking' == $who ) {
 				$options['ga_anonymize_ip'] = 0;
+				$options['ga_optout'] = 0;
+				$options['ga_dnt_optout'] = 0;
 				$options['ga_event_tracking'] = 0;
 				$options['ga_enhanced_links'] = 0;
 				$options['ga_event_precision'] = 0;
@@ -760,6 +762,30 @@ final class GADWP_Settings {
 								<tr>
 									<td colspan="2" class="gadwp-settings-title">
 										<div class="button-primary gadwp-settings-switchoo">
+											<input type="checkbox" name="options[ga_optout]" value="1" class="gadwp-settings-switchoo-checkbox" id="ga_optout" <?php checked( $options['ga_optout'], 1 ); ?>>
+											<label class="gadwp-settings-switchoo-label" for="ga_optout">
+												<div class="gadwp-settings-switchoo-inner"></div>
+												<div class="gadwp-settings-switchoo-switch"></div>
+											</label>
+										</div>
+										<div class="switch-desc"><?php echo " ".__("enable support for user opt-out", 'google-analytics-dashboard-for-wp' );?></div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" class="gadwp-settings-title">
+										<div class="button-primary gadwp-settings-switchoo">
+											<input type="checkbox" name="options[ga_dnt_optout]" value="1" class="gadwp-settings-switchoo-checkbox" id="ga_dnt_optout" <?php checked( $options['ga_dnt_optout'], 1 ); ?>>
+											<label class="gadwp-settings-switchoo-label" for="ga_dnt_optout">
+												<div class="gadwp-settings-switchoo-inner"></div>
+												<div class="gadwp-settings-switchoo-switch"></div>
+											</label>
+										</div>
+										<div class="switch-desc"> <?php _e( 'exclude tracking for users sending Do Not Track header', 'google-analytics-dashboard-for-wp' ); ?></div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" class="gadwp-settings-title">
+										<div class="button-primary gadwp-settings-switchoo">
 											<input type="checkbox" name="options[ga_remarketing]" value="1" class="gadwp-settings-switchoo-checkbox" id="ga_remarketing" <?php checked( $options['ga_remarketing'], 1 ); ?>>
 											<label class="gadwp-settings-switchoo-label" for="ga_remarketing">
 												<div class="gadwp-settings-switchoo-inner"></div>
@@ -1075,7 +1101,7 @@ final class GADWP_Settings {
 			<div class="settings-wrapper">
 				<div class="inside">
 						<?php if (isset($message)) echo $message; ?>
-						<?php $tabs = array( 'errors' => __( "Errors & Details", 'google-analytics-dashboard-for-wp' ), 'config' => __( "Plugin Settings", 'google-analytics-dashboard-for-wp' ) ); ?>
+						<?php $tabs = array( 'errors' => __( "Errors & Details", 'google-analytics-dashboard-for-wp' ), 'config' => __( "Plugin Settings", 'google-analytics-dashboard-for-wp' ), 'sysinfo' => __( "System", 'google-analytics-dashboard-for-wp' ) ); ?>
 						<?php self::navigation_tabs( $tabs ); ?>
 						<div id="gadwp-errors">
 						<table class="gadwp-settings-logdata">
@@ -1131,6 +1157,20 @@ final class GADWP_Settings {
 							</tr>
 						</table>
 					</div>
+					<div id="gadwp-sysinfo">
+						<table class="gadwp-settings-options">
+							<tr>
+								<td><?php echo "<h2>" . __( "System Information", 'google-analytics-dashboard-for-wp' ) . "</h2>"; ?></td>
+							</tr>
+							<tr>
+								<td>
+									<pre class="gadwp-settings-logdata"><?php echo esc_html(GADWP_Tools::system_info());?></pre>
+									<br />
+									<hr>
+								</td>
+							</tr>
+						</table>
+					</div>
 	<?php
 		self::output_sidebar();
 	}
@@ -1148,17 +1188,18 @@ final class GADWP_Settings {
 		}
 		echo '<script type="text/javascript">jQuery("#gapi-warning").hide()</script>';
 		if ( isset( $_POST['gadwp_access_code'] ) ) {
-			if ( 1 == ! stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) ) {
+			if ( 1 == ! stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) && $_POST['gadwp_access_code'] != get_option( 'gadwp_redeemed_code' ) ) {
 				try {
 					$gadwp_access_code = $_POST['gadwp_access_code'];
+					update_option( 'gadwp_redeemed_code', $gadwp_access_code );
+					GADWP_Tools::delete_cache( 'gapi_errors' );
+					GADWP_Tools::delete_cache( 'last_error' );
 					$gadwp->gapi_controller->client->authenticate( $_POST['gadwp_access_code'] );
 					$gadwp->config->options['token'] = $gadwp->gapi_controller->client->getAccessToken();
 					$gadwp->config->options['automatic_updates_minorversion'] = 1;
 					$gadwp->config->set_plugin_options();
 					$options = self::update_options( 'general' );
 					$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Plugin authorization succeeded.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
-					GADWP_Tools::delete_cache( 'gapi_errors' );
-					GADWP_Tools::delete_cache( 'last_error' );
 					if ( $gadwp->config->options['token'] && $gadwp->gapi_controller->client->getAccessToken() ) {
 						if ( ! empty( $gadwp->config->options['ga_profiles_list'] ) ) {
 							$profiles = $gadwp->config->options['ga_profiles_list'];
@@ -1187,7 +1228,11 @@ final class GADWP_Settings {
 					$gadwp->gapi_controller->reset_token( true );
 				}
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "The access code is <strong>not</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X) <strong>nor</strong> your <strong>email address</strong>!", 'google-analytics-dashboard-for-wp' ) . ".</p></div>";
+				if ( 1 == stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) ) {
+					$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "The access code is <strong>not</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X) <strong>nor</strong> your <strong>email address</strong>!", 'google-analytics-dashboard-for-wp' ) . ".</p></div>";
+				} else {
+					$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You can only use the access code <strong>once</strong>, please generate a <strong>new access</strong> code following the instructions!", 'google-analytics-dashboard-for-wp' ) . ".</p></div>";
+				}
 			}
 		}
 		if ( isset( $_POST['Clear'] ) ) {
@@ -1213,13 +1258,14 @@ final class GADWP_Settings {
 
 				if ( GADWP_Tools::get_cache( 'gapi_errors' ) || GADWP_Tools::get_cache( 'last_error' ) ) {
 
-					$anonim = GADWP_Tools::anonymize_options( $gadwp->config->options );
+					$info = GADWP_Tools::system_info();
+					$info .= 'GADWP Version: ' . GADWP_CURRENT_VERSION;
 
 					$sep = "\n---------------------------\n";
 					$error_report = GADWP_Tools::get_cache( 'last_error' );
 					$error_report .= $sep . print_r( GADWP_Tools::get_cache( 'gapi_errors' ), true );
 					$error_report .= $sep . GADWP_Tools::get_cache( 'errors_count' );
-					$error_report .= $sep . print_r( $anonim, true );
+					$error_report .= $sep . $info;
 
 					$url = GADWP_ENDPOINT_URL . 'gadwp-report.php';
 					/* @formatter:off */
@@ -1295,7 +1341,7 @@ final class GADWP_Settings {
 												</tr>
 												<tr>
 													<td colspan="2" class="gadwp-settings-info">
-														<?php printf(__('You should watch the %1$s and read this %2$s before proceeding to authorization. This plugin requires a properly configured Google Analytics account!', 'google-analytics-dashboard-for-wp'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=top_video&utm_campaign=gadwp', __("video", 'google-analytics-dashboard-for-wp')), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=top_tutorial&utm_campaign=gadwp', __("tutorial", 'google-analytics-dashboard-for-wp')));?>
+														<?php printf(__('You need to create a %1$s and watch this %2$s before proceeding to authorization.', 'google-analytics-dashboard-for-wp'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/creating-a-google-analytics-account/?utm_source=gadwp_config&utm_medium=link&utm_content=top_tutorial&utm_campaign=gadwp', __("free analytics account", 'google-analytics-dashboard-for-wp')), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=top_video&utm_campaign=gadwp', __("video tutorial", 'google-analytics-dashboard-for-wp')));?>
 													</td>
 												</tr>
 												  <?php if (! $options['token'] || ($options['user_api']  && ! $options['network_mode'])) : ?>
@@ -1462,10 +1508,10 @@ final class GADWP_Settings {
 
 		echo '<script type="text/javascript">jQuery("#gapi-warning").hide()</script>';
 		if ( isset( $_POST['gadwp_access_code'] ) ) {
-			if ( 1 == ! stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) ) {
+			if ( 1 == ! stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) && $_POST['gadwp_access_code'] != get_option( 'gadwp_redeemed_code' ) ) {
 				try {
-
 					$gadwp_access_code = $_POST['gadwp_access_code'];
+					update_option( 'gadwp_redeemed_code', $gadwp_access_code );
 					$gadwp->gapi_controller->client->authenticate( $_POST['gadwp_access_code'] );
 					$gadwp->config->options['token'] = $gadwp->gapi_controller->client->getAccessToken();
 					$gadwp->config->options['automatic_updates_minorversion'] = 1;
@@ -1511,7 +1557,11 @@ final class GADWP_Settings {
 					$gadwp->gapi_controller->reset_token( true );
 				}
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "The access code is <strong>not</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X) <strong>nor</strong> your <strong>email address</strong>!", 'google-analytics-dashboard-for-wp' ) . ".</p></div>";
+				if ( 1 == stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) ) {
+					$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "The access code is <strong>not</strong> your <strong>Tracking ID</strong> (UA-XXXXX-X) <strong>nor</strong> your <strong>email address</strong>!", 'google-analytics-dashboard-for-wp' ) . ".</p></div>";
+				} else {
+					$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You can only use the access code <strong>once</strong>, please generate a <strong>new access code</strong> using the red link", 'google-analytics-dashboard-for-wp' ) . "!</p></div>";
+				}
 			}
 		}
 		if ( isset( $_POST['Refresh'] ) ) {
@@ -1628,7 +1678,7 @@ final class GADWP_Settings {
 																	</tr>
 																	<tr>
 																		<td colspan="2" class="gadwp-settings-info">
-								<?php printf(__('You should watch the %1$s and read this %2$s before proceeding to authorization. This plugin requires a properly configured Google Analytics account!', 'google-analytics-dashboard-for-wp'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=top_video&utm_campaign=gadwp', __("video", 'google-analytics-dashboard-for-wp')), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=top_tutorial&utm_campaign=gadwp', __("tutorial", 'google-analytics-dashboard-for-wp')));?>
+								<?php printf(__('You need to create a %1$s and watch this %2$s before proceeding to authorization.', 'google-analytics-dashboard-for-wp'), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/creating-a-google-analytics-account/?utm_source=gadwp_config&utm_medium=link&utm_content=top_tutorial&utm_campaign=gadwp', __("free analytics account", 'google-analytics-dashboard-for-wp')), sprintf('<a href="%1$s" target="_blank">%2$s</a>', 'https://deconf.com/google-analytics-dashboard-wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=top_video&utm_campaign=gadwp', __("video tutorial", 'google-analytics-dashboard-for-wp')));?>
 								</td>
 																	</tr>
 								<?php if ( ! $options['token'] || $options['user_api'] ) : ?>
@@ -1801,32 +1851,21 @@ final class GADWP_Settings {
 														</div>
 														<div class="postbox">
 															<h3>
-																<span><?php _e("Follow & Review",'google-analytics-dashboard-for-wp')?></span>
+																<span><?php _e("Stay Updated",'google-analytics-dashboard-for-wp')?></span>
 															</h3>
 															<div class="inside">
 																<div class="gadwp-desc">
-																	<div style="margin-left: -10px;">
-																		<div class="g-page" data-width="273" data-href="//plus.google.com/+Deconfcom" data-layout="landscape" data-showtagline="false" data-showcoverphoto="false" data-rel="publisher"></div>
-																	</div>
-																	<script type="text/javascript">
-																	  (function() {
-																		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-																		po.src = 'https://apis.google.com/js/platform.js';
-																		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-																	  })();
-																	</script>
+																	<div class="g-ytsubscribe" data-channel="TheDeConf" data-layout="default" data-count="default"></div>
 																</div>
 																<br />
 																<div class="gadwp-desc">
-																	<a href="https://twitter.com/deconfcom" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @deconfcom</a>
-																	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+																	<div class="g-follow" data-annotation="bubble" data-height="24" data-href="//plus.google.com/u/0/114149166432576972465" data-rel="publisher"></div>
+																	<script src="https://apis.google.com/js/platform.js" async defer></script>
 																</div>
 																<br />
-																<div class="gadwp-title">
-																	<a href="http://wordpress.org/support/view/plugin-reviews/google-analytics-dashboard-for-wp#plugin-info"><img src="<?php echo plugins_url( 'images/star.png' , __FILE__ ); ?>" /></a>
-																</div>
 																<div class="gadwp-desc">
-																	<?php printf(__('Your feedback and review are both important, %s!', 'google-analytics-dashboard-for-wp'), sprintf('<a href="http://wordpress.org/support/view/plugin-reviews/google-analytics-dashboard-for-wp#plugin-info">%s</a>', __('rate this plugin', 'google-analytics-dashboard-for-wp')));?>
+																	<a href="https://twitter.com/deconfcom" class="twitter-follow-button" data-show-screen-name="false"></a>
+																	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 																</div>
 															</div>
 														</div>
@@ -1850,10 +1889,10 @@ final class GADWP_Settings {
 																</div>
 																<br />
 																<div class="gadwp-title">
-																	<a href="https://deconf.com/wordpress/?utm_source=gadwp_config&utm_medium=link&utm_content=plugins&utm_campaign=gadwp"><img src="<?php echo plugins_url( 'images/wp.png' , __FILE__ ); ?>" /></a>
+																	<a href="http://wordpress.org/support/view/plugin-reviews/google-analytics-dashboard-for-wp#plugin-info"><img src="<?php echo plugins_url( 'images/star.png' , __FILE__ ); ?>" /></a>
 																</div>
 																<div class="gadwp-desc">
-																	<?php printf(__('Premium %s', 'google-analytics-dashboard-for-wp'), sprintf('<a href="https://shareasale.com/r.cfm?b=386922&u=926589&m=28169&urllink=&afftrack=">%s</a>', __('WordPress Themes & Plugins', 'google-analytics-dashboard-for-wp')));?>
+																	<?php printf(__('Your feedback and review are both important, %s!', 'google-analytics-dashboard-for-wp'), sprintf('<a href="http://wordpress.org/support/view/plugin-reviews/google-analytics-dashboard-for-wp#plugin-info">%s</a>', __('rate this plugin', 'google-analytics-dashboard-for-wp')));?>
 																</div>
 															</div>
 														</div>

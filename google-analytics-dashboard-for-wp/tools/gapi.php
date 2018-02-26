@@ -41,6 +41,7 @@ if ( ! class_exists( 'GADWP_GAPI_Controller' ) ) {
 				} else {
 					$rightversion = false;
 				}
+
 				if ( $rightversion && defined( 'GADWP_IP_VERSION' ) && GADWP_IP_VERSION ) {
 					$curl_options[CURLOPT_IPRESOLVE] = GADWP_IP_VERSION; // Force CURL_IPRESOLVE_V4 or CURL_IPRESOLVE_V6
 				}
@@ -119,11 +120,27 @@ if ( ! class_exists( 'GADWP_GAPI_Controller' ) ) {
 				$url = $request->getUrl();
 
 				if ( in_array( $url, array( 'https://accounts.google.com/o/oauth2/token', 'https://accounts.google.com/o/oauth2/revoke' ) ) ) {
-					$curl_options[CURLOPT_SSL_VERIFYPEER] = 0;
-					$this->client->setClassConfig( 'Deconf_IO_Curl', 'options', $curl_options );
+					if ( get_class( $this->client->getIo() ) != 'Deconf_IO_Stream' ) {
+						$curl_old_options = $this->client->getClassConfig( 'Deconf_IO_Curl' );
+						$curl_options = $curl_old_options['options'];
+						$curl_options[CURLOPT_SSL_VERIFYPEER] = 0;
+						$this->client->setClassConfig( 'Deconf_IO_Curl', 'options', $curl_options );
+					} else {
+						add_filter( 'gadwp_endpoint_stream_options', array( $this, 'add_endpoint_stream_ssl' ), 10 );
+					}
 				} else {
-					$curl_options[CURLOPT_SSL_VERIFYPEER] = 1;
-					$this->client->setClassConfig( 'Deconf_IO_Curl', 'options', $curl_options );
+					if ( get_class( $this->client->getIo() ) != 'Deconf_IO_Stream' ) {
+						$curl_old_options = $this->client->getClassConfig( 'Deconf_IO_Curl' );
+						$curl_options = $curl_old_options['options'];
+						if ( isset( $curl_options[CURLOPT_SSL_VERIFYPEER] ) ) {
+							unset( $curl_options[CURLOPT_SSL_VERIFYPEER] );
+							if ( empty( $curl_options ) ) {
+								$this->client->setClassConfig( 'Deconf_IO_Curl', 'options', '' );
+							} else {
+								$this->client->setClassConfig( 'Deconf_IO_Curl', 'options', $curl_options );
+							}
+						}
+					}
 				}
 
 				$url = str_replace( 'https://accounts.google.com/o/oauth2/token', GADWP_ENDPOINT_URL . 'gadwp-token.php', $url );
@@ -136,6 +153,10 @@ if ( ! class_exists( 'GADWP_GAPI_Controller' ) ) {
 					$request->setUserAgent( $this->client->getApplicationName() );
 				}
 			}
+		}
+
+		public function add_endpoint_stream_ssl( $requestSslContext ) {
+			return array( "verify_peer" => false );
 		}
 
 		/**

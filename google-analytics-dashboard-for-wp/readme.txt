@@ -4,7 +4,7 @@ Donate link: https://deconf.com/donate/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget
 Requires at least: 3.5
 Tested up to: 4.9.4
-Stable tag: 5.2.2
+Stable tag: 5.2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,20 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 5.2.3.1 =
+* Bug Fixes:	
+	* fixing a small reporting issue 
+	
+= 5.2.3 =
+* Enhancements:
+	* add Google Analytics user opt-out support
+	* add option to exclude tracking for users sending the <em>Do Not Track</em> header
+	* add System tab to Errors & Debug screen
+	* check to avoid using a redeemed access code
+* Bug Fixes:	
+	* remove a debugging message
+	* cURL options were overwritten during regular API calls	
 
 = 5.2.2 =
 * Enhancements:  
