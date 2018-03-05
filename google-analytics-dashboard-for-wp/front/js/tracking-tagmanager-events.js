@@ -1,1 +1,0 @@
-jQuery(window).on("load",function(){jQuery.scrollDepth({percentage:true,userTiming:false,pixelDepth:false,gtmOverride:false})});

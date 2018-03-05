@@ -4,7 +4,8 @@ Donate link: https://deconf.com/donate/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget
 Requires at least: 3.5
 Tested up to: 4.9.4
-Stable tag: 5.2.3.1
+Stable tag: 5.3
+Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,8 +41,8 @@ In addition, you can control who can view specific Google Analytics reports by s
 
 Installs the latest Google Analytics tracking code and allows full code customization:
 
-- Universal Google Analytics tracking code
-- IP address anonymization
+- Universal Google Analytics (analytics.js) tracking code
+- Global Site Tag (gtag.js) tracking code
 - Enhanced link attribution
 - Remarketing, demographics and interests tracking
 - Page Speed sampling rate control
@@ -50,6 +51,12 @@ Installs the latest Google Analytics tracking code and allows full code customiz
 - Exclude user roles from tracking
 - Accelerated Mobile Pages (AMP) support for Google Analytics
 - Ecommerce support for Google Analytics
+
+User privacy oriented features:
+
+- IP address anonymization
+- option to follow Do Not Track (DNT) sent by browsers
+- support for user tracking opt-out
 
 Google Analytics Dashboard for WP enables you to easily track events like:
  
@@ -79,7 +86,6 @@ As an alternative to Google Analytics tracking code, you can use Google Tag Mana
 
 - Google Tag Manager code
 - Data Layer variables: authors, publication year, publication month, categories, tags, user type
-- Additional Data Layer variables for page scrolling depth
 - Exclude user roles from tracking
 - Accelerated Mobile Pages (AMP) support for Google Tag Manager
 
@@ -165,6 +171,16 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 
 == Changelog ==
 
+= 5.3 =
+* [release notes](https://deconf.com/adding-gtag-js-to-your-site/)
+* Enhancements:
+	* adds full support for Global Site Tag (gtag.js)
+	* remove Scroll Depth functionality, since this is now available as a trigger on Google Tag Manager
+	* adds custom dimensions support for AMP pages with Google Tag Manager tracking
+	* adds support for button submits
+* Bug Fixes:	
+	* form submit events were not following the non-interaction settings   
+	
 = 5.2.3.1 =
 * Bug Fixes:	
 	* fixing a small reporting issue 
