@@ -1199,12 +1199,8 @@ final class GADWP_Settings {
 					$options = self::update_options( 'general' );
 					$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Plugin authorization succeeded.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 					if ( $gadwp->config->options['token'] && $gadwp->gapi_controller->client->getAccessToken() ) {
-						if ( ! empty( $gadwp->config->options['ga_profiles_list'] ) ) {
-							$profiles = $gadwp->config->options['ga_profiles_list'];
-						} else {
-							$profiles = $gadwp->gapi_controller->refresh_profiles();
-						}
-						if ( $profiles ) {
+						$profiles = $gadwp->gapi_controller->refresh_profiles();
+						if ( is_array ( $profiles ) && ! empty( $profiles ) ) {
 							$gadwp->config->options['ga_profiles_list'] = $profiles;
 							if ( ! $gadwp->config->options['tableid_jail'] ) {
 								$profile = GADWP_Tools::guess_default_domain( $profiles );
@@ -1223,7 +1219,7 @@ final class GADWP_Settings {
 				} catch ( Exception $e ) {
 					$timeout = $gadwp->gapi_controller->get_timeouts( 'midnight' );
 					GADWP_Tools::set_error( $e, $timeout );
-					$gadwp->gapi_controller->reset_token( true );
+					$gadwp->gapi_controller->reset_token();
 				}
 			} else {
 				if ( 1 == stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) ) {
@@ -1243,7 +1239,7 @@ final class GADWP_Settings {
 		}
 		if ( isset( $_POST['Reset'] ) ) {
 			if ( isset( $_POST['gadwp_security'] ) && wp_verify_nonce( $_POST['gadwp_security'], 'gadwp_form' ) ) {
-				$gadwp->gapi_controller->reset_token( true );
+				$gadwp->gapi_controller->reset_token();
 				GADWP_Tools::clear_cache();
 				$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Token Reseted and Revoked.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 				$options = self::update_options( 'Reset' );
@@ -1264,6 +1260,8 @@ final class GADWP_Settings {
 					$error_report .= $sep . print_r( GADWP_Tools::get_cache( 'gapi_errors' ), true );
 					$error_report .= $sep . GADWP_Tools::get_cache( 'errors_count' );
 					$error_report .= $sep . $info;
+
+					$error_report = urldecode( $error_report );
 
 					$url = GADWP_ENDPOINT_URL . 'gadwp-report.php';
 					/* @formatter:off */
@@ -1528,12 +1526,8 @@ final class GADWP_Settings {
 						GADWP_Tools::delete_cache( 'gapi_errors' );
 					}
 					if ( $gadwp->config->options['token'] && $gadwp->gapi_controller->client->getAccessToken() ) {
-						if ( ! empty( $gadwp->config->options['ga_profiles_list'] ) ) {
-							$profiles = $gadwp->config->options['ga_profiles_list'];
-						} else {
-							$profiles = $gadwp->gapi_controller->refresh_profiles();
-						}
-						if ( $profiles ) {
+						$profiles = $gadwp->gapi_controller->refresh_profiles();
+						if ( is_array ( $profiles ) && ! empty( $profiles ) ) {
 							$gadwp->config->options['ga_profiles_list'] = $profiles;
 							if ( isset( $gadwp->config->options['tableid_jail'] ) && ! $gadwp->config->options['tableid_jail'] ) {
 								$profile = GADWP_Tools::guess_default_domain( $profiles );
@@ -1552,7 +1546,7 @@ final class GADWP_Settings {
 				} catch ( Exception $e ) {
 					$timeout = $gadwp->gapi_controller->get_timeouts( 'midnight' );
 					GADWP_Tools::set_error( $e, $timeout );
-					$gadwp->gapi_controller->reset_token( true );
+					$gadwp->gapi_controller->reset_token();
 				}
 			} else {
 				if ( 1 == stripos( 'x' . $_POST['gadwp_access_code'], 'UA-', 1 ) ) {
@@ -1597,7 +1591,7 @@ final class GADWP_Settings {
 		}
 		if ( isset( $_POST['Reset'] ) ) {
 			if ( isset( $_POST['gadwp_security'] ) && wp_verify_nonce( $_POST['gadwp_security'], 'gadwp_form' ) ) {
-				$gadwp->gapi_controller->reset_token( true );
+				$gadwp->gapi_controller->reset_token();
 				GADWP_Tools::clear_cache();
 				$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Token Reseted and Revoked.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 				$options = self::update_options( 'Reset' );
