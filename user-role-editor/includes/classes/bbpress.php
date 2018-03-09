@@ -25,7 +25,11 @@ class URE_bbPress {
     
     
     static public function get_instance(URE_Lib $lib) {
-        if (!function_exists('bbp_filter_blog_editable_roles')) {  // bbPress plugin is not active
+
+        if (!function_exists('is_plugin_active')) {
+            require_once(ABSPATH .'/wp-admin/includes/plugin.php');
+        }
+        if (!is_plugin_active('bbpress/bbpress.php')) {  // bbPress plugin is not active
             return null;            
         }
         
