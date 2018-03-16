@@ -81,7 +81,8 @@ var fb_opts = {';
 			}
 		}
 		echo ' };
-var easy_fancybox_handler = function(){';
+var easy_fancybox_handler = function(){
+	jQuery(\'.nofancybox,a.pin-it-button,a[href*="pinterest.com/pin/create"]\').addClass(\'nolightbox\');';
 
 		foreach (self::$options as $key => $value) {
 			// check if not enabled or hide=true then skip
@@ -202,7 +203,7 @@ var easy_fancybox_handler = function(){';
 		}
 
 			echo '
-}
+};
 var easy_fancybox_auto = function(){';
 
 		if ( empty($delayClick) ) $delayClick = '0';
@@ -227,7 +228,7 @@ var easy_fancybox_auto = function(){';
 		}
 
 		echo '
-}
+};
 /* ]]> */
 </script>
 ';
@@ -311,14 +312,21 @@ var easy_fancybox_auto = function(){';
 		else
 			wp_register_script('jquery-fancybox', self::$plugin_url.'fancybox/jquery.fancybox-'.FANCYBOX_VERSION.'.min.js', array('jquery'), EASY_FANCYBOX_VERSION, true);
 
-		// easing in IMG settings?
-		if ( ( '' == get_option( self::$options['IMG']['options']['easingIn']['id'], self::$options['IMG']['options']['easingIn']['default']) || 'linear' == get_option( self::$options['IMG']['options']['easingIn']['id'], self::$options['IMG']['options']['easingIn']['default']) ) && ( '' == get_option( self::$options['IMG']['options']['easingOut']['id'], self::$options['IMG']['options']['easingOut']['default']) || 'linear' == get_option( self::$options['IMG']['options']['easingOut']['id'], self::$options['IMG']['options']['easingOut']['default']) ) ) {
-			// do nothing
-		} else {
-			if ( 'elastic' == get_option( self::$options['IMG']['options']['transitionIn']['id'], self::$options['IMG']['options']['transitionIn']['default']) || 'elastic' == get_option( self::$options['IMG']['options']['transitionOut']['id'], self::$options['IMG']['options']['transitionOut']['default']) ) {
-				wp_deregister_script('jquery-easing');
-				wp_register_script('jquery-easing', self::$plugin_url.'js/jquery.easing.min.js', array('jquery'), EASING_VERSION, true);
-			}
+		$add_easing = false;
+		// test for easing in IMG settings
+		if ( get_option(self::$options['Global']['options']['Enable']['options']['IMG']['id'], self::$options['Global']['options']['Enable']['options']['IMG']['default'])
+			&& ( 'elastic' == get_option( self::$options['IMG']['options']['transitionIn']['id'], self::$options['IMG']['options']['transitionIn']['default'])
+			|| 'elastic' == get_option( self::$options['IMG']['options']['transitionOut']['id'], self::$options['IMG']['options']['transitionOut']['default']) ) )
+			$add_easing = true;
+		// test for easing in Inline settings
+		if ( get_option(self::$options['Global']['options']['Enable']['options']['Inline']['id'], self::$options['Global']['options']['Enable']['options']['Inline']['default'])
+			&& ( 'elastic' == get_option( self::$options['Inline']['options']['transitionIn']['id'], self::$options['Inline']['options']['transitionIn']['default'])
+			|| 'elastic' == get_option( self::$options['Inline']['options']['transitionOut']['id'], self::$options['Inline']['options']['transitionOut']['default']) ) )
+			$add_easing = true;
+		// register easing?
+		if ( $add_easing ) {
+			wp_deregister_script('jquery-easing');
+			wp_register_script('jquery-easing', self::$plugin_url.'js/jquery.easing.min.js', array('jquery'), EASING_VERSION, true);
 		}
 
 		// mousewheel in IMG settings?
@@ -363,25 +371,23 @@ var easy_fancybox_auto = function(){';
 
 	public static function on_ready() {
 
-		if (!self::$add_scripts) // abort mission, there is no need for any script files
-			return;
+		if (!self::$add_scripts)
+			return; // abort mission, there is no need for any script files
 
 		// 'gform_post_render' for gForms content triggers an error... Why?
 		// 'post-load' is for Infinite Scroll by JetPack
 
 		// first exclude some links by adding nolightbox class:
 		// (1) nofancybox backwards compatibility and (2) tries to detect social sharing buttons with known issues
-		echo '<script type="text/javascript">
-jQuery(document).on(\'ready post-load\', function(){ jQuery(\'.nofancybox,a.pin-it-button,a[href*="pinterest.com/pin/create"]\').addClass(\'nolightbox\'); });';
+		echo '<script type="text/javascript">' . PHP_EOL;
 
-		echo apply_filters( 'easy_fancybox_onready_handler', '
-jQuery(document).on(\'ready post-load\',easy_fancybox_handler);' );
+		echo apply_filters( 'easy_fancybox_onready_handler', 'jQuery(easy_fancybox_handler);' ) . PHP_EOL;
 
-		echo apply_filters( 'easy_fancybox_onready_auto', '
-jQuery(document).on(\'ready\',easy_fancybox_auto);' );
+		echo apply_filters( 'easy_fancybox_onpostload_handler', 'jQuery(document.body).on(\'post-load\',easy_fancybox_handler);' ) . PHP_EOL;
 
-		echo '</script>
-';
+		echo apply_filters( 'easy_fancybox_onready_auto', 'jQuery(easy_fancybox_auto);' ) . PHP_EOL;
+
+		echo '</script>' . PHP_EOL;
 	}
 
 	// Hack to fix missing wmode in Youtube oEmbed code based on David C's code in the comments on
@@ -404,13 +410,6 @@ jQuery(document).on(\'ready\',easy_fancybox_auto);' );
 		add_filter('embed_oembed_html', array(__CLASS__, 'add_video_wmode_opaque'), 10, 3);
 	}
 
-	public static function plugins_loaded(){
-		if ( is_admin() ) {
-			require_once dirname(__FILE__) . '/class-easyfancybox-admin.php';
-			easyFancyBox_Admin::run();
-		}
-	}
-
 	/**********************
 	         RUN
 	 **********************/
@@ -424,8 +423,6 @@ jQuery(document).on(\'ready\',easy_fancybox_auto);' );
 		require_once dirname(__FILE__) . '/class-easyfancybox-options.php';
 
 		// HOOKS //
-		add_action('plugins_loaded', array(__CLASS__, 'plugins_loaded'));
-
 		add_action('init', array(__CLASS__, 'init'));
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_styles'), 999);
 		add_action('wp_head', array(__CLASS__, 'main_script'), 999);
