@@ -1,10 +1,10 @@
 === Google Analytics Dashboard for WP (GADWP) ===
 Contributors: deconf
 Donate link: https://deconf.com/donate/
-Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget
+Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.5
 Tested up to: 4.9.4
-Stable tag: 5.3.1.1
+Stable tag: 5.3.2
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -173,6 +173,14 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 
 [GADWP v5.3 release notes](https://deconf.com/adding-gtag-js-to-your-site/)
 
+= 5.3.2 =
+* Bug Fixes:	
+	* fixes for user opt-out feature 
+* Enhancements: 
+	* use <em>gadwp_useroptout</em> shortcode to easily generate opt-out buttons and links, [more details](https://deconf.com/google-analytics-gdpr-and-user-data-privacy-compliance)
+	* adding <em>gadwp_gtag_commands</em> and <em>gadwp_gtag_script_path</em> hooks to allow further gtag (Global Site Tag) code customization
+	* adds opt-out and DNT support for Google Tag Manager	
+	
 = 5.3.1.1 =
 * Bug Fixes:	
 	* avoid tracking issues by not clearing the profiles list on automatic token resets
