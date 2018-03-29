@@ -122,6 +122,10 @@ jQuery(document).ready(function($){
 		$("#relevanssi_show_matches_text").attr('disabled', !this.checked);
 		$("#relevanssi_highlight_docs_external").attr('disabled', !this.checked);
 	});
+
+	$("#relevanssi_searchblogs_all").click(function() {
+		$("#relevanssi_searchblogs").attr('disabled', this.checked);
+	});
 });
 
 var time = 0;
@@ -186,6 +190,7 @@ function process_indexing_step(args) {
 			offset: args.offset,
 			limit: args.limit,
 			extend: args.extend,
+			security: args.security,
 		},
 		dataType: 'json',
 		success: function(response) {
@@ -260,6 +265,7 @@ function process_indexing_step(args) {
 					'total_seconds' : args.total_seconds,
 					'limit' : args.limit,
 					'extend' : args.extend,
+					'security' : args.security,
 				};
 
 				process_indexing_step(new_args);

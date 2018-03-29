@@ -2,7 +2,8 @@ jQuery(document).ready(function($) {
     $("#build_index").click(function() {
         $("#relevanssi-progress").show();
         $("#results").show();
-        $("#relevanssi-timer").show();
+		$("#relevanssi-timer").show();
+		$("#relevanssi-indexing-instructions").show();
         $("#stateoftheindex").html(relevanssi.reload_state);
         $("#indexing_button_instructions").hide();
         var results = document.getElementById("results");
@@ -40,7 +41,8 @@ jQuery(document).ready(function($) {
                     'offset' : 0,
                     'total_seconds' : 0,
                     'limit' : 10,
-                    'extend' : false,
+					'extend' : false,
+					'security' : nonce.indexing_nonce,
                 };
                 process_indexing_step(args);				
             });
