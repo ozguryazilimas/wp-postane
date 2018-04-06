@@ -54,7 +54,11 @@ class URE_Lib extends URE_Base_Lib {
         parent::__construct($options_id); 
         $this->debug = defined('URE_DEBUG') && (URE_DEBUG==1 || URE_DEBUG==true);
  
-        $this->bbpress = URE_bbPress::get_instance($this);
+        if ($this->is_pro()) {
+            $this->bbpress = new URE_bbPress_Pro($this);
+        } else {
+            $this->bbpress = new URE_bbPress($this);
+        }
         
         $this->upgrade();
     }
@@ -561,7 +565,7 @@ class URE_Lib extends URE_Base_Lib {
      */
     public function get_user_roles() {
 
-        if (!empty($this->bbpress)) {  // bbPress plugin is active
+        if ($this->bbpress->is_active()) {  // bbPress plugin is active
             $this->roles = $this->bbpress->get_roles();
         } else {
             $wp_roles = wp_roles();
@@ -586,22 +590,20 @@ class URE_Lib extends URE_Base_Lib {
         if (empty($this->roles)) {
             $this->get_user_roles();
         }
-        if ($this->bbpress!==null) {
+        if ($this->bbpress->is_active()) {
             remove_filter('editable_roles', 'bbp_filter_blog_editable_roles');
         }
         $roles = apply_filters('editable_roles', $this->roles);
-        if ($this->bbpress!==null) {
+        if ($this->bbpress->is_active()) {
             add_filter('editable_roles', 'bbp_filter_blog_editable_roles');
         }
         
         return $roles;
-
     }
     // end of get_editable_user_roles()
     
      
-    protected function convert_caps_to_readable($caps_name) 
-    {
+    protected function convert_caps_to_readable($caps_name) {
 
         $caps_name = str_replace('_', ' ', $caps_name);
         $caps_name = ucfirst($caps_name);
@@ -892,7 +894,7 @@ class URE_Lib extends URE_Base_Lib {
      */
     protected function add_bbpress_caps() {
     
-        if (empty($this->bbpress)) {
+        if (!$this->bbpress->is_active()) {
             return;
         }
         

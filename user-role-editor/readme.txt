@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 4.9.4
-Stable tag: 4.40.1
+Tested up to: 4.9.5
+Stable tag: 4.40.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,11 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.40.3] 06.04.2018 =
+* Update: bbPress detection and code for integration with it was updated to support multisite installations when URE is network activated but bbPress is activated on some sites of the network only. (Free version does not support bbPress roles. It excludes them from processing as bbPress creates them dynamically.)
+
+= [4.40.2] 04.04.2018 =
+* Update: Load required .php files from the active bbPress plugin directly, as in some cases URE code may be executed earlier than they are loaded by bbPress.
 
 = [4.40.1] 09.03.2018 =
 * Update: wp_roles() function (introduced with WP 4.3) was included conditionally to URE code for backward compatibility with WordPress 4.0+
