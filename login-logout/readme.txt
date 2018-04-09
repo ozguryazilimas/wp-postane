@@ -4,7 +4,7 @@ Donate link: http://web-profile.net/donate/
 Tags: login, logout, widget, meta, sidebar, admin, register
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 3.7
+Stable tag: 3.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -43,49 +43,52 @@ Widget with login, logout, admin and register links. Replacement of the default 
 
 == Changelog ==
 
-= 3.7 - 2016-08-29 =
+= 3.8 =
+* Fixed the PHP 7.2 Deprecated Notice on create_function. Thanks to joneiseman - https://wordpress.org/support/users/joneiseman/
+
+= 3.7 =
 * Using wp_registration_url() instead of hardcoding registration link. Thanks to dmasin - https://profiles.wordpress.org/dmasin/
 
-= 3.6 - 2016-03-22 =
+= 3.6 =
 * Bugfixing
 
-= 3.5 - 2016-03-21 =
+= 3.5 =
 * Bugfixing
 * Code refactoring
 * Added LOGIN_LOGOUT_PLUGIN_VERSION constant
 
-= 3.4 - 2015-09-09 =
+= 3.4 =
 * Added 'https' support. Thanks to Sven
 
-= 3.3 - 2015-09-05 =
+= 3.3 =
 * Added 'login_logout_username_link' filter. Idea and code provided by Jon
 
-= 3.2 - 2015-08-20 =
+= 3.2 =
 * One more replace PHP4 style constructors with PHP5 constructors
 
-= 3.1 - 2015-08-14 =
+= 3.1 =
 * Replace PHP4 style constructors with PHP5 constructors - https://make.wordpress.org/core/2015/07/02/deprecating-php4-style-constructors-in-wordpress-4-3/
 
-= 3.0 - 2015-05-28 =
+= 3.0 =
 * Minor bugfixing
 * Code cleanup
 
-= 2.9 - 2014-11-04 =
+= 2.9 =
 * French translation made by Jean-Michel HAROUY - http://www.ceism-angers.fr/
 
-= 2.8 - 2014-09-11 =
+= 2.8 =
 * Czech translation made by Daniel Čermák - http://danielcermak.eu/
 
-= 2.7 - 2013-11-07 =
+= 2.7 =
 * Spanish translation made by Maria Ramos from WebHostingHub
 
-= 2.6 - 2013-10-17 =
+= 2.6 =
 * Serbian translation made by Borisa Djuraskovic from WebHostingHub
 
-= 2.5 - 2013-10-15 =
+= 2.5 =
 * minor changes
 
-= 2.4 - 2012-10-31 =
+= 2.4 =
 * minor changes
 
 = 2.3 =
