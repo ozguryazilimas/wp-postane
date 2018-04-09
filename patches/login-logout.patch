@@ -1,5 +1,5 @@
 diff --git a/login-logout/login-logout.php b/login-logout/login-logout.php
-index 5cc89d8..62f74a9 100644
+index b96f18ec..2c7565af 100644
 --- a/login-logout/login-logout.php
 +++ b/login-logout/login-logout.php
 @@ -20,6 +20,7 @@ class WP_Widget_Login_Logout extends WP_Widget {
@@ -19,7 +19,7 @@ index 5cc89d8..62f74a9 100644
  		} else {
  			$wrap_before = '<ul class="wrap_login_logout">';
  			$wrap_after = '</ul>';
-@@ -76,32 +77,81 @@ class WP_Widget_Login_Logout extends WP_Widget {
+@@ -76,32 +77,79 @@ class WP_Widget_Login_Logout extends WP_Widget {
  			if ( is_user_logged_in() ){
  				$current_user = wp_get_current_user();
  				$username = $current_user->display_name;
@@ -39,16 +39,15 @@ index 5cc89d8..62f74a9 100644
  		} else {
  			echo '"item_logout">';
 -			echo '<a href="'.esc_url( wp_logout_url( $logout_redirect_to ) ).'">'.$logout_text.'</a>';
-+
 +			$current_user = wp_get_current_user();
 +			$postane_threads = $wpdb->prefix . 'postane_threads';
 +			$postane_user_thread = $wpdb->prefix . 'postane_user_thread';
 +			$current_uid = $current_user->ID;
 +			$rows = $wpdb->get_results("SELECT count(*) as unread_msg_count from $postane_threads INNER JOIN $postane_user_thread ON $postane_user_thread.thread_id=$postane_threads.id where $postane_user_thread.user_id=$current_uid AND $postane_user_thread.last_read_time < $postane_threads.last_message_time", ARRAY_A);
 +
-+			$unread_message_count = 0;			
++			$unread_message_count = 0;
 +			foreach ( $rows as $row ) {
-+			    $unread_message_count = $row['unread_msg_count'];			
++			    $unread_message_count = $row['unread_msg_count'];
 +			}
 +			
 +			$unread_str = '';
@@ -88,7 +87,6 @@ index 5cc89d8..62f74a9 100644
 +			";
 +			echo '<a class="login_logout_postane_button kabartmatozu ' . $unread_class . '" href="/postane">postane' . $unread_str . '</a>' .
 +				' <a class="kabartmatozu" href="' . esc_url( wp_logout_url( $logout_redirect_to ) ) . '">' . $logout_text . '</a>';
-+
  		}
  		echo $item_after;
  		//wp_register();
@@ -107,3 +105,10 @@ index 5cc89d8..62f74a9 100644
  			}
  		}
  		
+@@ -277,4 +325,4 @@ if ( ! function_exists( 'login_logout_plugin_meta' ) ) :
+ 		return (array) $links;
+ 	}
+ 	add_filter( 'plugin_row_meta', 'login_logout_plugin_meta', 10, 2 );
+-endif;
+\ No newline at end of file
++endif;
