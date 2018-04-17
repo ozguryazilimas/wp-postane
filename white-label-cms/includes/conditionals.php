@@ -33,10 +33,10 @@ if (get_option('wlcms_o_dashboard_others') == 1)
 {
 	add_action('wp_dashboard_setup', 'wlcms_remove_others');
 }
- 
+
 if (get_option('wlcms_o_dashboard_remove_nag_update') == 1) 
 {
-	add_action( 'admin_init', create_function('', 'remove_action( \'admin_notices\', \'update_nag\', 3 );') );
+	add_action( 'admin_init', 'wlcms_remove_update_nag');
 }
  
 if (get_option('wlcms_o_hide_admin_bar') == 1) 
@@ -50,6 +50,10 @@ if (get_option('wlcms_o_hide_wpversion') == 1)
 	add_action( 'admin_head', 'wlcms_hide_wp_version');
 }
 
+function wlcms_remove_update_nag() {
+	remove_action('admin_notices', 'update_nag', 3);
+	remove_action('admin_notices', 'maintenance_nag', 10);
+}
 
 /*
  *	ADDITIONAL HEADER CSS
