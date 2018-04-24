@@ -278,28 +278,31 @@ function relevanssi_create_excerpt( $content, $terms, $query ) {
 		 * takes slices.
 		 */
 		$words       = array_filter( explode( ' ', $content ) );
-		$i           = 0;
+		$offset      = 0;
 		$tries       = 0;
 		$count_words = count( $words );
-		while ( $i < $count_words ) {
-			if ( $i + $excerpt_length > $count_words ) {
-				$i = $count_words - $excerpt_length;
-				if ( $i < 0 ) {
-					$i = 0;
+		while ( $offset < $count_words ) {
+			if ( $offset + $excerpt_length > $count_words ) {
+				$offset = $count_words - $excerpt_length;
+				if ( $offset < 0 ) {
+					$offset = 0;
 				}
 			}
 
-			$excerpt_slice = array_slice( $words, $i, $excerpt_length );
+			$excerpt_slice = array_slice( $words, $offset, $excerpt_length );
 			$excerpt_slice = ' ' . implode( ' ', $excerpt_slice );
 
 			$term_hits     = 0;
 			$count_matches = relevanssi_count_matches( array_keys( $terms ), $excerpt_slice );
-			if ( $count_matches > 0 ) {
-				$tries++;
-			}
 			if ( $count_matches > 0 && $count_matches > $best_excerpt_term_hits ) {
 				$best_excerpt_term_hits = $count_matches;
 				$excerpt                = $excerpt_slice;
+				if ( 0 === $offset ) {
+					$start = true;
+				}
+			}
+			if ( $count_matches > 0 ) {
+				$tries++;
 			}
 
 			/**
@@ -318,7 +321,7 @@ function relevanssi_create_excerpt( $content, $terms, $query ) {
 				}
 			}
 
-			$i += $excerpt_length;
+			$offset += $excerpt_length;
 		}
 
 		if ( '' === $excerpt ) {
@@ -461,6 +464,7 @@ function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
 
 	$remove_stopwords = true;
 	$terms            = array_keys( relevanssi_tokenize( $query, $remove_stopwords, $min_word_length ) );
+	array_walk( $terms, 'relevanssi_array_walk_trim' ); // Numeric search terms begin with a space.
 
 	if ( is_array( $query ) ) {
 		$query = implode( ' ', $query );
@@ -787,8 +791,8 @@ function relevanssi_count_matches( $words, $complete_text ) {
 
 	$count_words = count( $words );
 	for ( $t = 0; $t < $count_words; $t++ ) {
-		$word_slice = relevanssi_strtolower( $words[ $t ], 'UTF-8' );
-		$lines      = explode( $word_slice, $lowercase_text );
+		$word_slice = relevanssi_strtolower( relevanssi_add_accent_variations( $words[ $t ] ), 'UTF-8' );
+		$lines      = preg_split( "/$word_slice/", $lowercase_text );
 		if ( count( $lines ) > 1 ) {
 			$count_lines = count( $lines );
 			for ( $tt = 0; $tt < $count_lines; $tt++ ) {
@@ -1043,6 +1047,8 @@ function relevanssi_remove_page_builder_shortcodes( $content ) {
 		'/\[\/?fusion_.*?\]/',
 		// Max Mega Menu doesn't work in excerpts.
 		'/\[maxmegamenu.*?\]/',
+		// All-in-one Events Calendar shortcode doesn't look good.
+		'/\[ai1ec.*?\]/',
 	));
 	$content = preg_replace( $search_array, '', $content );
 	return $content;

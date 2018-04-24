@@ -120,7 +120,6 @@ jQuery(document).ready(function($){
 		$("#relevanssi_word_boundaries").attr('disabled', !this.checked);
 		$("#relevanssi_show_matches").attr('disabled', !this.checked);
 		$("#relevanssi_show_matches_text").attr('disabled', !this.checked);
-		$("#relevanssi_highlight_docs_external").attr('disabled', !this.checked);
 	});
 
 	$("#relevanssi_searchblogs_all").click(function() {
@@ -167,6 +166,7 @@ jQuery(document).ready(function($) {
 					'total_seconds' : 0,
 					'limit' : 10,
 					'extend' : true,
+					'security' : nonce.indexing_nonce,
 				};
 				process_indexing_step(args);
 			}

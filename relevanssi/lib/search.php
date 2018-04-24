@@ -345,7 +345,7 @@ function relevanssi_search( $args ) {
 	if ( ! empty( $expost ) ) {
 		$excluded_post_ids = explode( ',', $expost );
 		foreach ( $excluded_post_ids as $excluded_post_id ) {
-			$exid              = intval( trim( $excluded_post_id, ' -' ) );
+			$excluded_post_id  = intval( trim( $excluded_post_id, ' -' ) );
 			$posts_to_exclude .= " AND relevanssi.doc != $excluded_post_id";
 			// Clean: escaped.
 		}
@@ -611,36 +611,60 @@ function relevanssi_search( $args ) {
 	$link_boost    = floatval( get_option( 'relevanssi_link_boost' ) );
 	$comment_boost = floatval( get_option( 'relevanssi_comment_boost' ) );
 
+	$tag = $relevanssi_variables['post_type_weight_defaults']['post_tag'];
+	$cat = $relevanssi_variables['post_type_weight_defaults']['category'];
+	if ( ! empty( $post_type_weights['post_tag'] ) ) {
+		$tag = $post_type_weights['post_tag'];
+	}
+	if ( ! empty( $post_type_weights['category'] ) ) {
+		$cat = $post_type_weights['category'];
+	}
+
 	$include_these_posts = array();
+	$df_counts           = array();
 
 	do {
 		foreach ( $terms as $term ) {
-			$term = trim( $term ); // Numeric search terms will start with a space.
-			/**
-			 * Allows the use of one letter search terms.
-			 *
-			 * Return false to allow one letter searches.
-			 *
-			 * @param boolean True, if search term is one letter long and will be blocked.
-			 */
-			if ( apply_filters( 'relevanssi_block_one_letter_searches', relevanssi_strlen( $term ) < 2 ) ) {
+			$term_cond = relevanssi_generate_term_cond( $term, $o_term_cond );
+			if ( null === $term_cond ) {
 				continue;
 			}
-			$term = esc_sql( $term );
+			$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
+				$query_join WHERE $term_cond $query_restrictions";
+			// Clean: $query_restrictions is escaped, $term_cond is escaped.
+			/**
+			 * Filters the DF query.
+			 *
+			 * This query is used to calculate the df for the tf * idf calculations.
+			 *
+			 * @param string MySQL query to filter.
+			 */
+			$query = apply_filters( 'relevanssi_df_query_filter', $query );
 
-			if ( false !== strpos( $o_term_cond, 'LIKE' ) ) {
-				$term = $wpdb->esc_like( $term );
+			$df = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
+
+			if ( $df < 1 && 'sometimes' === $fuzzy ) {
+				$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
+					$query_join WHERE (relevanssi.term LIKE '$term%'
+					OR relevanssi.term_reverse LIKE CONCAT(REVERSE('$term'), '%')) $query_restrictions";
+				// Clean: $query_restrictions is escaped, $term is escaped.
+				/** Documented in lib/search.php. */
+				$query = apply_filters( 'relevanssi_df_query_filter', $query );
+				$df    = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
 			}
 
-			$term_cond = str_replace( '#term#', $term, $o_term_cond );
+			$df_counts[ $term ] = $df;
+		}
 
-			$tag = $relevanssi_variables['post_type_weight_defaults']['post_tag'];
-			$cat = $relevanssi_variables['post_type_weight_defaults']['category'];
-			if ( ! empty( $post_type_weights['post_tag'] ) ) {
-				$tag = $post_type_weights['post_tag'];
-			}
-			if ( ! empty( $post_type_weights['category'] ) ) {
-				$cat = $post_type_weights['category'];
+		// Sort the terms in ascending DF order, so that rarest terms are searched
+		// for first. This is to make sure the throttle doesn't cut off posts with
+		// rare search terms.
+		asort( $df_counts );
+
+		foreach ( $df_counts as $term => $df ) {
+			$term_cond = relevanssi_generate_term_cond( $term, $o_term_cond );
+			if ( null === $term_cond ) {
+				continue;
 			}
 
 			$query = "SELECT DISTINCT(relevanssi.doc), relevanssi.*, relevanssi.title * $title_boost +
@@ -660,7 +684,6 @@ function relevanssi_search( $args ) {
 			 */
 			$query   = apply_filters( 'relevanssi_query_filter', $query );
 			$matches = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok, the query is thoroughly escaped.
-
 			if ( count( $matches ) < 1 ) {
 				continue;
 			} else {
@@ -673,7 +696,7 @@ function relevanssi_search( $args ) {
 					}
 					$existing_ids = implode( ',', $existing_ids );
 					$query        = "SELECT relevanssi.*, relevanssi.title * $title_boost +
-					relevanssi.content + relevanssi.comment * $comment_boost +
+					relevanssi.content * $content_boost + relevanssi.comment * $comment_boost +
 					relevanssi.tag * $tag + relevanssi.link * $link_boost +
 					relevanssi.author + relevanssi.category * $cat + relevanssi.excerpt +
 					relevanssi.taxonomy + relevanssi.customfield + relevanssi.mysqlcolumn AS tf
@@ -689,30 +712,6 @@ function relevanssi_search( $args ) {
 			global $relevanssi_post_types;
 
 			$total_hits += count( $matches );
-
-			$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
-				$query_join WHERE $term_cond $query_restrictions";
-			// Clean: $query_restrictions is escaped, $term_cond is escaped.
-			/**
-			 * Filters the DF query.
-			 *
-			 * This query is used to calculate the df for the tf * idf calculations.
-			 *
-			 * @param string MySQL query to filter.
-			 */
-			$query = apply_filters( 'relevanssi_df_query_filter', $query );
-
-			$df = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
-
-			if ( $df < 1 && 'sometimes' === $fuzzy ) {
-				$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
-					$query_join WHERE (relevanssi.term LIKE '$term%'
-					OR relevanssi.term_reverse LIKE CONCAT(REVERSE('$term), %')) $query_restrictions";
-				// Clean: $query_restrictions is escaped, $term is escaped.
-				/** Documented in lib/search.php. */
-				$query = apply_filters( 'relevanssi_df_query_filter', $query );
-				$df    = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
-			}
 
 			$idf = log( $doc_count + 1 / ( 1 + $df ) );
 			$idf = $idf * $idf; // Adjustment to increase the value of IDF.
@@ -854,7 +853,6 @@ function relevanssi_search( $args ) {
 				 * @param int     The post ID.
 				 */
 				$post_ok = apply_filters( 'relevanssi_post_ok', $post_ok, $match->doc );
-
 				if ( $post_ok ) {
 					$doc_terms[ $match->doc ][ $term ] = true; // Count how many terms are matched to a doc.
 					if ( ! isset( $doc_weight[ $match->doc ] ) ) {
@@ -2102,4 +2100,39 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 	}
 
 	return array( $query_restrictions, $term_tax_ids, $not_term_tax_ids, $and_term_tax_ids );
+}
+
+/**
+ * Generates the WHERE condition for terms.
+ *
+ * Trims the term, escapes it and places it in the template.
+ *
+ * @param string $term        The search term.
+ * @param string $o_term_cond The search condition template.
+ *
+ * @return string The template with the term in place.
+ */
+function relevanssi_generate_term_cond( $term, $o_term_cond ) {
+	global $wpdb;
+
+	$term = trim( $term ); // Numeric search terms will start with a space.
+	/**
+	 * Allows the use of one letter search terms.
+	 *
+	 * Return false to allow one letter searches.
+	 *
+	 * @param boolean True, if search term is one letter long and will be blocked.
+	 */
+	if ( apply_filters( 'relevanssi_block_one_letter_searches', relevanssi_strlen( $term ) < 2 ) ) {
+		return null;
+	}
+	$term = esc_sql( $term );
+
+	if ( false !== strpos( $o_term_cond, 'LIKE' ) ) {
+		$term = $wpdb->esc_like( $term );
+	}
+
+	$term_cond = str_replace( '#term#', $term, $o_term_cond );
+
+	return $term_cond;
 }
