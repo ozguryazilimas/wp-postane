@@ -7,36 +7,21 @@
  * Copyright (c) 2008 - 2010 Janis Skarnelis
  * That said, it is hardly a one-person project. Many people have submitted bugs, code, and offered their advice freely. Their support is greatly appreciated.
  *
- * Version: 1.3.4 (11/11/2010) patched and appended to 1.3.9
+ * Version: 1.3.14 (23/04/2018)
  * Requires: jQuery v1.7+
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
- *
- * Patches applied:
- * Removed/replaced non-HTML5 attributes
- * Added parameter allowfullscreen for iframe, RavanH ravanhagen@gmail.com
- * Line 309, 714: patches for better centering on ipad etc.
- * Line 588: added support for tab key gallery browsing
- * Line 645: Check type = image for mousewheel
- * Line 820: qouted attribute selector, RavanH ravanhagen@gmail.com
- * Line 41, 622 and 1125: added isTouch variable and autoResize parameter, RavanH ravanhagen@gmail.com
- * Line 34: WebP image support, RavanH ravanhagen@gmail.com
- * Line 126, 677, 686: 'image' class forces image type, RavanH ravanhagen@gmail.com
- * Put focus on iframe at _finish
- * Patched for jQuery 1.9+ compat by Sabel http://sabel.bluegfx.de/wordpress/wp-content/uploads/2013/03/jquery.fancybox-1.3.4.js
- * Line 858: exclude more rel attribute values
- * Added SVG support by Simon Maillard simon@ogesta.fr
- * iframe content with fixed width/height settings respect aspect ratio on small screens
- * true frame resizing on screen reorientation, added recenter public method
  */
 (function($) {
 	var tmp, loading, overlay, wrap, outer, content, close, title, nav_left, nav_right, resize_timeout,
 
 		selectedIndex = 0, selectedOpts = {}, selectedArray = [], currentIndex = 0, currentOpts = {}, currentArray = [],
 
-		ajaxLoader = null, imgPreloader = new Image(), imgRegExp = /\.(jpg|gif|png|bmp|jpeg|webp)(.*)?$/i, swfRegExp = /[^\.]\.(swf)\s*$/i, svgRegExp = /[^\.]\.(svg)\s*$/i,
+		ajaxLoader = null, imgPreloader = new Image(),
+
+		imgRegExp = /\.(jpg|gif|png|bmp|jpeg|webp)(.*)?$/i, swfRegExp = /[^\.]\.(swf)\s*$/i, svgRegExp = /[^\.]\.(svg)\s*$/i, pdfRegExp = /[^\.]\.(pdf)\s*$/i,
 
 		loadingTimer, loadingFrame = 1,
 
@@ -62,11 +47,15 @@
 			tmp.empty();
 		},
 
-		_error = function() {
+		_error = function(msg) {
 			if (false === selectedOpts.onError(selectedArray, selectedIndex, selectedOpts)) {
 				$.fancybox.hideActivity();
 				busy = false;
 				return;
+			}
+
+			if ( typeof msg === 'undefined' ) {
+				msg = 'Please try again later.';
 			}
 
 			selectedOpts.titleShow = false;
@@ -74,7 +63,7 @@
 			selectedOpts.width = 'auto';
 			selectedOpts.height = 'auto';
 
-			tmp.html( '<p id="fancybox-error">The requested content cannot be loaded.<br />Please try again later.</p>' );
+			tmp.html( '<p id="fancybox-error">The requested content cannot be loaded.<br />' + msg + '</p>' );
 
 			_process_inline();
 		},
@@ -145,6 +134,9 @@
 				} else if (href.match(svgRegExp)) {
 					type = 'svg';
 
+				} else if (href.match(pdfRegExp)) {
+					type = 'pdf';
+
 				} else if (href.indexOf("#") === 0) {
 					type = 'inline';
 
@@ -154,7 +146,7 @@
 			}
 
 			if (!type) {
-				_error();
+				_error('No content type found.');
 				return;
 			}
 
@@ -213,9 +205,9 @@
 						.hide()
 						.insertBefore( $(obj) )
 						.on('fancybox-cleanup', function() {
-							$(this).replaceWith(content.children());
+							$(this).replaceWith(content.children('div:first'));
 						}).on('fancybox-cancel', function() {
-							$(this).replaceWith(tmp.children());
+							$(this).replaceWith(tmp.children('div:first'));
 						});
 
 					$(obj).appendTo(tmp);
@@ -233,7 +225,7 @@
 					imgPreloader = new Image();
 
 					imgPreloader.onerror = function() {
-						_error();
+						_error('No image found.');
 					};
 
 					imgPreloader.onload = function() {
@@ -251,7 +243,7 @@
 					selectedOpts.scrolling = 'no';
 					selectedOpts.keepRatio = true;
 
-					str = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + selectedOpts.width + '" height="' + selectedOpts.height + '"><param name="movie" value="' + href + '"></param>';
+					str = '<object type="application/x-shockwave-flash" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' + selectedOpts.width + '" height="' + selectedOpts.height + '"><param name="movie" value="' + href + '"></param>';
 					emb = '';
 
 					$.each(selectedOpts.swf, function(name, val) {
@@ -270,7 +262,17 @@
 					selectedOpts.scrolling = 'no';
 					selectedOpts.keepRatio = true;
 
-					str = '<object width="' + selectedOpts.width + '" height="' + selectedOpts.height + '" data="' + href + '"></object>';
+					str = '<object type="image/svg+xml" width="' + selectedOpts.width + '" height="' + selectedOpts.height + '" data="' + href + '"></object>';
+
+					tmp.html(str);
+
+					_process_inline();
+				break;
+
+				case 'pdf':
+					selectedOpts.scrolling = 'no';
+
+					str = '<object type="application/pdf" width="100%" height="100%" data="' + href + '"><a href="' + href + '" style="display:block;position:absolute;top:48%;width:100%;text-align:center">' + $(obj).html() + '</a></object>';
 
 					tmp.html(str);
 
@@ -289,7 +291,7 @@
 						data : selectedOpts.ajax.data || {},
 						error : function(XMLHttpRequest, textStatus, errorThrown) {
 							if ( XMLHttpRequest.status > 0 ) {
-								_error();
+								_error(errorThrown);
 							}
 						},
 						success : function(data, textStatus, XMLHttpRequest) {
@@ -306,12 +308,15 @@
 									}
 								}
 
-								tmp.html( data );
-								_process_inline();
+								if ( data.indexOf("<!DOCTYPE") > -1 || data.indexOf("<html") > -1 || data.indexOf("<body") > -1 ) {
+									_error('Unexpected response.');
+								} else {
+									tmp.html( data );
+									_process_inline();
+								}
 							}
 						}
 					}));
-
 				break;
 
 				case 'iframe':
@@ -658,7 +663,7 @@
 				$(window).on("resize.fb", $.fancybox.resize);
 			}
 
-			if (currentOpts.centerOnScroll) {
+			if (currentOpts.centerOnScroll && !isTouch) {
 				$(window).on("scroll.fb", $.fancybox.center);
 			}
 
@@ -690,28 +695,57 @@
 
 			currentOpts.onComplete(currentArray, currentIndex, currentOpts);
 
-			_preload_images();
+			if (currentArray.length > 1) {
+				_preload_next();
+				_preload_prev();
+			}
 		},
 
-		_preload_images = function() {
-			var obj, objNext;
+		_preload_next = function() {
+			var pos = typeof arguments[0] == 'number' ? arguments[0] : currentIndex + 1;
 
-			if ((currentArray.length -1) > currentIndex) {
-				obj = currentArray[ currentIndex + 1 ];
-
-				if (typeof obj !== 'undefined' && typeof obj.href !== 'undefined' && (obj.href.match(imgRegExp) || $(obj).hasClass("image")) ) {
-					objNext = new Image();
-					objNext.src = obj.href;
+			if (pos >= currentArray.length) {
+				if (currentOpts.cyclic) {
+					pos = 0;
+				} else {
+					return;
 				}
 			}
 
-			if (currentIndex > 0) {
-				obj = currentArray[ currentIndex - 1 ];
+			if ( _preload_image( pos ) ) {
+				return;
+			} else {
+				_preload_next( pos + 1 );
+			}
+		},
 
-				if (typeof obj !== 'undefined' && typeof obj.href !== 'undefined'  && (obj.href.match(imgRegExp) || $(obj).hasClass("image")) ) {
-					objNext = new Image();
-					objNext.src = obj.href;
+		_preload_prev = function() {
+			var pos = typeof arguments[0] == 'number' ? arguments[0] : currentIndex - 1;
+
+			if (pos < 0) {
+				if (currentOpts.cyclic) {
+					pos = currentArray.length - 1;
+				} else {
+					return;
 				}
+			}
+
+			if ( _preload_image( pos ) ) {
+				return;
+			} else {
+				_preload_prev( pos - 1 );
+			}
+		},
+
+		_preload_image = function(pos) {
+			var objNext, obj = currentArray[ pos ];
+
+			if ( typeof obj !== 'undefined' && typeof obj.href !== 'undefined' &&  obj.href !== currentOpts.href && (obj.href.match(imgRegExp) || $(obj).hasClass("image")) ) {
+				objNext = new Image();
+				objNext.src = obj.href;
+				return true;
+			} else {
+				return false;
 			}
 		},
 
@@ -737,9 +771,16 @@
 		},
 
 		_get_viewport = function() {
+			var w = !isTouch && window.innerWidth && document.documentElement.clientWidth ?
+					Math.min(window.innerWidth, document.documentElement.clientWidth) :
+					window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth,
+				h = !isTouch && window.innerHeight && document.documentElement.clientHeight ?
+					Math.min(window.innerHeight, document.documentElement.clientHeight) :
+					window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+
 			return [
-				document.documentElement.clientWidth - (currentOpts.margin * 2),
-				document.documentElement.clientHeight - (currentOpts.margin * 2),
+				w - (currentOpts.margin * 2),
+				h - (currentOpts.margin * 2),
 				$(document).scrollLeft() + currentOpts.margin,
 				$(document).scrollTop() + currentOpts.margin
 			];
@@ -879,7 +920,7 @@
 					selectedIndex = selectedArray.index( this );
 				}
 
-				_start(e);
+				_start();
 
 				return;
 			});
@@ -940,11 +981,47 @@
 	};
 
 	$.fancybox.next = function() {
-		return $.fancybox.pos( currentIndex + 1 );
+		var obj, pos = typeof arguments[0] == 'number' ? arguments[0] : currentIndex + 1;
+
+		if (pos >= currentArray.length) {
+			if (currentOpts.cyclic) {
+				pos = 0;
+			} else {
+				return;
+			}
+		}
+
+		obj = currentArray[pos];
+
+		if ( typeof obj !== 'undefined' && typeof obj.href !== 'undefined' && obj.href === currentOpts.href ) {
+			$.fancybox.next( pos + 1 );
+		} else {
+			$.fancybox.pos( pos );
+		}
+
+		return;
 	};
 
 	$.fancybox.prev = function() {
-		return $.fancybox.pos( currentIndex - 1 );
+		var obj, pos = typeof arguments[0] == 'number' ? arguments[0] : currentIndex - 1;
+
+		if (pos < 0) {
+			if (currentOpts.cyclic) {
+				pos = currentArray.length - 1;
+			} else {
+				return;
+			}
+		}
+
+		obj = currentArray[pos];
+
+		if ( typeof obj !== 'undefined' && typeof obj.href !== 'undefined' && obj.href === currentOpts.href ) {
+			$.fancybox.prev( pos - 1 );
+		} else {
+			$.fancybox.pos( pos );
+		}
+
+		return;
 	};
 
 	$.fancybox.pos = function(pos) {
@@ -958,9 +1035,6 @@
 
 		if (pos > -1 && pos < currentArray.length) {
 			selectedIndex = pos;
-			_start();
-		} else if (currentOpts.cyclic && currentArray.length > 1) {
-			selectedIndex = pos >= currentArray.length ? 0 : currentArray.length - 1;
 			_start();
 		}
 
@@ -1203,7 +1277,7 @@
 
 		autoScale : true,
 		autoDimensions : true,
-		centerOnScroll : !isTouch,
+		centerOnScroll : false,
 		autoResize : true,
 		keepRatio : false,
 		minViewportWidth : 0,

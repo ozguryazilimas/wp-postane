@@ -2,6 +2,7 @@
 /**
  * Easy FancyBox Options Class
  */
+
 class easyFancyBox_Options extends easyFancyBox {
 
 	public static function load_defaults() {
@@ -28,7 +29,7 @@ class easyFancyBox_Options extends easyFancyBox {
 								'id' => 'fancybox_enableImg',
 								'input' => 'checkbox',
 								'hide' => true,
-								'default' => ( function_exists('is_plugin_active_for_network') && is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) ? '' : '1',
+								'default' => ( function_exists('is_plugin_active_for_network') && is_plugin_active_for_network( parent::$plugin_basename ) ) ? '' : '1',
 								'description' => '<strong>' . __('Images','easy-fancybox') . '</strong>'
 							),
 							'Inline' => array (
@@ -137,7 +138,7 @@ class easyFancyBox_Options extends easyFancyBox {
 								'hide' => true,
 								'status' => get_option('fancybox_overlaySpotlight') ? '' : 'disabled',
 								'default' => '',
-								'description' => get_option('fancybox_overlaySpotlight') ? __('Spotlight effect','easy-fancybox') : __('Spotlight effect','easy-fancybox') . '. <em><a href="'.$url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em>'
+								'description' => __('Spotlight effect','easy-fancybox') . ( get_option('fancybox_overlaySpotlight') ? '' : '. <em><a href="'.$url.'">' . __('Make available &raquo;','easy-fancybox') ) . '</a></em>'
 							)
 						)
 					),
@@ -274,13 +275,13 @@ class easyFancyBox_Options extends easyFancyBox {
 								'hide' => true,
 								'description' => '<br /><strong>' . __('Behavior','easy-fancybox') . '</strong><br />'
 							),
-	/*						'centerOnScroll' => array (
+							'centerOnScroll' => array (
 								'id' => 'fancybox_centerOnScroll',
 								'input' => 'checkbox',
 								'noquotes' => true,
-								'default' => '1',
-								'description' => __('Center while scrolling','easy-fancybox')
-							),*/
+								'default' => '',
+								'description' => __('Center while scrolling (disabled on touch devices)','easy-fancybox')
+							),
 							'enableEscapeButton' => array (
 								'id' => 'fancybox_enableEscapeButton',
 								'input' => 'checkbox',
@@ -312,6 +313,13 @@ class easyFancyBox_Options extends easyFancyBox {
 								'class' => 'small-text',
 								'default' => '',
 								'description' => '<br />' . __('Duration in milliseconds. Higher is slower.','easy-fancybox') . ' <em>' . __('Default:','easy-fancybox')  . ' 300</em><br />'
+							),
+							'mouseWheel' => array (
+								'id' => 'fancybox_mouseWheel',
+								'hide' => true,
+								'input' => 'checkbox',
+								'default' => '1',
+								'description' => __('Include the Mousewheel jQuery extension script to allow gallery browsing by mousewheel action.','easy-fancybox')
 							)
 						)
 					),
@@ -378,7 +386,7 @@ class easyFancyBox_Options extends easyFancyBox {
 								'hide' => true,
 								'description' => '<br /><strong>' . __('Browser & device compatibility','easy-fancybox') . '</strong><br />'
 							),
-						'minViewportWidth' => array (
+							'minViewportWidth' => array (
 								'id' => 'fancybox_minViewportWidth',
 								'title' => __('Minimum browser/device viewport width','easy-fancybox'),
 								'label_for' => 'fancybox_minViewportWidth',
@@ -407,32 +415,45 @@ class easyFancyBox_Options extends easyFancyBox {
 								'description' => __('Include IE 8 compatibility style rules','easy-fancybox')
 							),
 
-	/*						'p2' => array (
+							'p2' => array (
 								'hide' => true,
 								'description' => '<br /><strong>' . __('Theme & plugins compatibility','easy-fancybox') . '</strong><br />'
+												. __('Try to deactivate all conflicting light box scripts in your theme or other plugins. If this is not possible, try a higher script priority number which means scripts are added later, wich may allow them to override conflicting scripts. A lower priority number, excluding WordPress standard jQuery, or even moving the plugin scripts to the header may work in cases where there are blocking errors occuring in other script.','easy-fancybox') . '<br /><br />'
+							),
+							'scriptPriority' => array (
+								'id' => 'fancybox_scriptPriority',
+								'title' => __('FancyBox script priority','easy-fancybox'),
+								'label_for' => 'fancybox_scriptPriority',
+								'input' => 'number',
+								'step' => '1',
+								'min' => '1',
+								'max' => '999',
+								'sanitize_callback' => 'intval',
+								'class' => 'small-text',
+								'default' => '10',
+								'description' => __('Default priority is 10.','easy-fancybox') . ' ' . __('Higher is later.','easy-fancybox') . '<br/>'
 							),
 							'noFooter' => array (
 								'id' => 'fancybox_noFooter',
 								'input' => 'checkbox',
 								'hide' => true,
 								'default' => '',
-								'description' => __('Move scripts from footer to theme head section','easy-fancybox')
+								'description' => __('Move scripts from footer to theme head section (not recommended for site load times!)','easy-fancybox')
 							),
 							'nojQuery' => array (
 								'id' => 'fancybox_nojQuery',
 								'input' => 'checkbox',
 								'hide' => true,
 								'default' => '',
-								'description' => __('Do not include standard WordPress jQuery library','easy-fancybox')
+								'description' => __('Do not include standard WordPress jQuery library (do this only if you are sure jQuery is included from another source!)','easy-fancybox')
 							),
-							'jqCompat' => array (
-								'id' => 'fancybox_jqCompat',
+							'pre45Compat' => array (
+								'id' => 'fancybox_pre45Compat',
 								'input' => 'checkbox',
 								'hide' => true,
-								'default' => '',
-								'description' => __('Use jQuery pre-1.7 compatibility mode','easy-fancybox')
+								'default' => function_exists( 'wp_add_inline_script' ) ? '' : '1',
+								'description' => __('Do not use wp_add_inline_script/style functions (may solve issues with older script minification plugins)','easy-fancybox')
 							),
-	*/
 							'p3' => array (
 								'hide' => true,
 								'description' => '<br /><strong>' . __('Advanced','easy-fancybox') . '</strong><br />'
@@ -443,7 +464,7 @@ class easyFancyBox_Options extends easyFancyBox {
 								'input' => 'checkbox',
 								'status' => get_option('fancybox_metaData') ? '' : 'disabled',
 								'default' =>  '',
-								'description' => get_option('fancybox_metaData') ? __('Include the Metadata jQuery extension script to allow passing custom parameters via link class.','easy-fancybox') : __('Include the Metadata jQuery extension script to allow passing custom parameters via link class.','easy-fancybox') . '. <em><a href="'.$url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em>'
+								'description' => __('Include the Metadata jQuery extension script to allow passing custom parameters via link class.','easy-fancybox') . ( get_option('fancybox_metaData') ? '' : '. <em><a href="'.$url.'">' . __('Make available &raquo;','easy-fancybox') ) . '</a></em>'
 							)
 						)
 					)
@@ -648,13 +669,6 @@ class easyFancyBox_Options extends easyFancyBox {
 						'default' => '1',
 						'description' => __('Arrow key strokes browse the gallery','easy-fancybox')
 					),
-					'mouseWheel' => array (
-						'id' => 'fancybox_mouseWheel',
-						'hide' => true,
-						'input' => 'checkbox',
-						'default' => '1',
-						'description' => __('Include the Mousewheel jQuery extension script to allow gallery browsing by mousewheel action.','easy-fancybox')
-					),
 					'cyclic' => array (
 						'id' => 'fancybox_cyclic',
 						'input' => 'checkbox',
@@ -691,7 +705,7 @@ class easyFancyBox_Options extends easyFancyBox {
 						'id' => 'fancybox_autoSelector',
 						'hide' => true,
 						'input' => 'hidden',
-						'default' => 'div.gallery ' // add div.tiled-gallery for Tiled Galleries support
+						'default' => 'div.gallery,div.wp-block-gallery,div.tiled-gallery' // add div.tiled-gallery for Tiled Galleries support
 					),
 					'onComplete' => array (
 						'id' => '',
@@ -856,16 +870,24 @@ class easyFancyBox_Options extends easyFancyBox {
 						'default' => 'fancybox-pdf'
 					),
 					'type' => array (
-						'id' => 'fancybox_PDFclassType',
+						'default' => 'iframe'
+					),
+					'onStart' => array (
+						'id' => 'fancybox_PDFonStart',
+						'noquotes' => true,
 						'title' => __('Embed with','easy-fancybox'),
-						'label_for' => 'fancybox_PDFclassType',
+						'label_for' => 'fancybox_PDFtitlePosition',
 						'input' => 'select',
 						'options' => array(
-							'html' => __('Object tag (plus fall-back link)','easy-fancybox'),
-							'iframe' => __('iFrame tag (let browser decide)','easy-fancybox')
+							'function(a,i,o){o.type=\'pdf\';}' => __('Object tag (plus fall-back link)','easy-fancybox'),
+							'function(a,i,o){o.content=\'<embed src="\'+a[i].href+\'" type="application/pdf" height="100%" width="100%" />\'}' => __('Embed tag','easy-fancybox'),
+							'' => __('iFrame tag (let browser decide)','easy-fancybox'),
+							'function(a,i,o){o.href=\'https://docs.google.com/viewer?embedded=true&url=\'+a[i].href;}' => __('Google Docs Viewer (external)','easy-fancybox')
 						),
-						'default' => 'iframe',
-						'description' => ' <em><a href="'.$url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br/><br/>'
+						'default' => '',
+										// 'function(a,i,o){o.content=\'<object data="\'+a[i].href+\'" type="application/pdf" height="100%" width="100%"><a href="\'+a[i].href+\'" style="display:block;position:absolute;top:48%;width:100%;text-align:center">\'+jQuery(a[i]).html()+\'</a></object>\'}'
+						// 'function(a, i, o) { o.content = \'<embed src="\' + a[i].href + \'#toolbar=1&navpanes=0&nameddest=self&page=1&view=FitH,0&zoom=80,0,0" type="application/pdf" height="100%" width="100%" />\' }'
+						'description' => __('Note:','easy-fancybox') . ' ' . __('External viewers have bandwidth, usage rate and and file size limits.','easy-fancybox') . '<br /><br />' //' <em><a href="'.$url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br /><br />'
 					),
 					'width' => array (
 						'id' => 'fancybox_PDFwidth',
@@ -932,12 +954,6 @@ class easyFancyBox_Options extends easyFancyBox {
 					),
 					'scrolling' => array (
 						'default' => 'no',
-					),
-					'onStart' => array (
-						'noquotes' => true,
-						// 'default' => 'function(selectedArray, selectedIndex, selectedOpts) { selectedOpts.content = \'<embed src="\' + selectedArray[selectedIndex].href + \'#toolbar=1&navpanes=0&nameddest=self&page=1&view=FitH,0&zoom=80,0,0" type="application/pdf" height="100%" width="100%" />\' }'
-						'default' => get_option('fancybox_PDFclassType','html') == 'iframe' ? '' : 'function(selectedArray,selectedIndex,selectedOpts){selectedOpts.content=\'<object data="\'+selectedArray[selectedIndex].href+\'" type="application/pdf" height="100%" width="100%"><a href="\'+selectedArray[selectedIndex].href+\'" style="display:block;position:absolute;top:48%;width:100%;text-align:center">\'+jQuery(selectedArray[selectedIndex]).html()+\'</a></object>\'}'
-						// 'default' => 'function(selectedArray, selectedIndex, selectedOpts) { selectedOpts.content = \'<embed src="\' + selectedArray[selectedIndex].href + \'" type="application/pdf" height="100%" width="100%" />\' }'
 					),
 				)
 			),
@@ -1160,6 +1176,13 @@ class easyFancyBox_Options extends easyFancyBox {
 					'type' => array(
 						'default' => 'iframe'
 					),
+					'noCookie' => array (
+						'id' => 'fancybox_YoutubenoCookie',
+						'input' => 'checkbox',
+						'hide' => true,
+						'default' => '',
+						'description' => __('Enable privacy-enhanced mode','easy-fancybox') . '<br />'
+					),
 					'width' => array (
 						'id' => 'fancybox_YoutubeWidth',
 						'title' => translate('Width'),
@@ -1231,7 +1254,9 @@ class easyFancyBox_Options extends easyFancyBox {
 					),
 					'onStart' => array (
 						'noquotes' => true,
-						'default' => 'function(selectedArray,selectedIndex,selectedOpts){selectedOpts.href=selectedArray[selectedIndex].href.replace(new RegExp(\'youtu.be\',\'i\'),\'www.youtube.com/embed\').replace(new RegExp(\'watch\\\?(.*)v=([a-z0-9\_\-]+)(&amp;|&|\\\?)?(.*)\',\'i\'),\'embed/$2?$1$4\');var splitOn=selectedOpts.href.indexOf(\'?\');var urlParms=(splitOn>-1)?selectedOpts.href.substring(splitOn):"";selectedOpts.allowfullscreen=(urlParms.indexOf(\'fs=0\')>-1)?false:true}'
+						'default' => get_option( 'fancybox_YoutubenoCookie' ) ?
+							'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'youtu.be\',\'i\'),\'www.youtube-nocookie.com/embed\').replace(new RegExp(\'youtube.com/watch\\\?(.*)v=([a-z0-9\_\-]+)(&amp;|&|\\\?)?(.*)\',\'i\'),\'youtube-nocookie.com/embed/$2?$1$4\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fs=0\')>-1)?false:true}' :
+							'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'youtu.be\',\'i\'),\'www.youtube.com/embed\').replace(new RegExp(\'watch\\\?(.*)v=([a-z0-9\_\-]+)(&amp;|&|\\\?)?(.*)\',\'i\'),\'embed/$2?$1$4\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fs=0\')>-1)?false:true}'
 					)
 				)
 			),
@@ -1334,7 +1359,7 @@ class easyFancyBox_Options extends easyFancyBox {
 					),
 					'onStart' => array (
 						'noquotes' => true,
-						'default' => 'function(selectedArray,selectedIndex,selectedOpts){selectedOpts.href=selectedArray[selectedIndex].href.replace(new RegExp(\'//(www\\.)?vimeo\\.com/([0-9]+)(&|\\\?)?(.*)\',\'i\'),\'//player.vimeo.com/video/$2?$4\');var splitOn=selectedOpts.href.indexOf(\'?\');var urlParms=(splitOn>-1)?selectedOpts.href.substring(splitOn):"";selectedOpts.allowfullscreen=(urlParms.indexOf(\'fullscreen=0\')>-1)?false:true}'
+						'default' => 'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'//(www\\.)?vimeo\\.com/([0-9]+)(&|\\\?)?(.*)\',\'i\'),\'//player.vimeo.com/video/$2?$4\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fullscreen=0\')>-1)?false:true}'
 					)
 				)
 			),
@@ -1437,7 +1462,7 @@ class easyFancyBox_Options extends easyFancyBox {
 					),
 					'onStart' => array (
 						'noquotes' => true,
-						'default' => 'function(selectedArray,selectedIndex,selectedOpts){selectedOpts.href=selectedArray[selectedIndex].href.replace(new RegExp(\'/video/(.*)\',\'i\'),\'/embed/video/$1\');var splitOn=selectedOpts.href.indexOf(\'?\');var urlParms=(splitOn>-1)?selectedOpts.href.substring(splitOn):"";selectedOpts.allowfullscreen=(urlParms.indexOf(\'fullscreen=0\')>-1)?false:true}'
+						'default' => 'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'/video/(.*)\',\'i\'),\'/embed/video/$1\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fullscreen=0\')>-1)?false:true}'
 					)
 				)
 			),
