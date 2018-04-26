@@ -1412,6 +1412,7 @@ class PgCache_Environment {
 		$lifetime = ( $browsercache ? $config->get_integer( 'browsercache.html.lifetime' ) : 0 );
 		$cache_control = ( $browsercache && $config->get_boolean( 'browsercache.html.cache.control' ) );
 		$w3tc = ( $browsercache && $config->get_integer( 'browsercache.html.w3tc' ) );
+		$hsts = ( $browsercache && $config->get_boolean( 'browsercache.hsts' ) );
 
 		$common_rules = '';
 
@@ -1424,6 +1425,9 @@ class PgCache_Environment {
 				Util_Environment::w3tc_header() . "\";\n";
 		}
 
+		if ( $hsts ) {
+			$common_rules .= " add_header Strict-Transport-Security \"max-age=31536000; preload\";\n";
+		}
 		if ( $expires ) {
 			$common_rules .= "    add_header Vary \"Accept-Encoding, Cookie\";\n";
 		}
@@ -1477,7 +1481,7 @@ class PgCache_Environment {
 			$maybe_xml = '';
 			if ($config->get_boolean('pgcache.cache.nginx_handle_xml')) {
 				$maybe_xml = "\n" .
-					"        text/xml xml_gzip\n" .
+					"        text/xml xml_gzip;\n" .
 					"    ";
 			}
 

@@ -54,7 +54,8 @@ class Root_Loader {
 
 			$plugins[] = new Cdn_Plugin_Admin();
 			$plugins[] = new Cdnfsd_Plugin_Admin();
-			if ( $c->get_string( 'cdn.engine' ) == 'highwinds' ) {
+			$cdn_engine = $c->get_string( 'cdn.engine' );
+			if ( $cdn_engine == 'highwinds' || $cdn_engine == 'stackpath' ) {
 			} else {
 				$plugins[] = new Cdn_Plugin_WidgetMaxCdn();
 			}

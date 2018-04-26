@@ -92,7 +92,9 @@ class Minify_Plugin {
 
 		if ( substr( $_SERVER['REQUEST_URI'], 0, strlen( $prefix ) ) == $prefix ) {
 			$w3_minify = Dispatcher::component( 'Minify_MinifiedFileRequestHandler' );
-			$w3_minify->process( substr( $_SERVER['REQUEST_URI'], strlen( $prefix ) ) );
+			$filename = Util_Environment::remove_query_all(
+				substr( $_SERVER['REQUEST_URI'], strlen( $prefix ) ) );
+			$w3_minify->process( $filename );
 			exit();
 		}
 
@@ -1272,6 +1274,15 @@ class _W3_MinifyHelpers {
 		}
 
 
+		if ( is_null( $file ) ) {
+			if ( $this->debug ) {
+				Minify_Core::log(
+					'is_file_for_minification: external not whitelisted url ' . $url );
+			}
+
+			return '';
+		}
+
 		$file_normalized = Util_Environment::remove_query_all( $file );
 		$ext = strrchr( $file_normalized, '.' );
 
@@ -1285,16 +1296,7 @@ class _W3_MinifyHelpers {
 			return '';
 		}
 
-		if ( Util_Environment::is_url( $file_normalized ) ) {
-			if ( $this->debug ) {
-				Minify_Core::log(
-					'is_file_for_minification: its url ' . $file . ' for url ' . $url );
-			}
-
-			return '';
-		}
-
-		$path = Util_Environment::document_root() . '/' . $file;
+		$path = Util_Environment::docroot_to_full_filename( $file );
 
 		if ( !file_exists( $path ) ) {
 			if ( $this->debug ) {
@@ -1533,7 +1535,11 @@ class _W3_MinifyJsAuto {
 		$script_src = Util_Environment::url_relative_to_full( $script_src );
 		$file = Util_Environment::url_to_docroot_filename( $script_src );
 
-		$step1_result = $this->minify_helpers->is_file_for_minification( $script_src, $file );
+		$step1_result = $this->minify_helpers->is_file_for_minification(
+			$script_src, $file );
+		if ( $step1_result == 'url' )
+			$file = $script_src;
+
 		$step1 = !empty( $step1_result );
 		$step2 = !in_array( $file, $this->ignore_js_files );
 

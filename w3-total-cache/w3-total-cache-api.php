@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 define( 'W3TC', true );
-define( 'W3TC_VERSION', '0.9.6' );
+define( 'W3TC_VERSION', '0.9.7' );
 define( 'W3TC_POWERED_BY', 'W3 Total Cache' );
 define( 'W3TC_EMAIL', 'w3tc@w3-edge.com' );
 define( 'W3TC_TEXT_DOMAIN', 'w3-total-cache' );
@@ -15,18 +15,20 @@ define( 'W3TC_FEED_URL', 'http://feeds.feedburner.com/W3TOTALCACHE' );
 define( 'W3TC_NEWS_FEED_URL', 'http://feeds.feedburner.com/W3EDGE' );
 define( 'W3TC_README_URL', 'http://plugins.svn.wordpress.org/w3-total-cache/trunk/readme.txt' );
 define( 'W3TC_SUPPORT_US_PRODUCT_URL', 'https://www.w3-edge.com/products/w3-total-cache/' );
-define( 'W3TC_SUPPORT_US_RATE_URL', 'http://wordpress.org/support/view/plugin-reviews/w3-total-cache?rate=5#postform' );
-define( 'W3TC_SUPPORT_US_TIMEOUT', 2592000 );   // 30 days
+define( 'W3TC_SUPPORT_US_RATE_URL', 'https://wordpress.org/support/plugin/w3-total-cache/reviews/#new-post' );
 define( 'W3TC_SUPPORT_US_TWEET', 'YES! I optimized the user experience of my website with the W3 Total Cache #WordPress #plugin by @w3edge! http://bit.ly/TeSBL3' );
 define( 'W3TC_EDGE_TIMEOUT', 7 * 24 * 60 * 60 );
 define( 'W3TC_SUPPORT_REQUEST_URL', 'https://www.w3-edge.com/w3tc-support/extra' );
 define( 'W3TC_SUPPORT_SERVICES_URL', 'https://www.w3-edge.com/w3tc/premium-widget.json' );
+define( 'W3TC_FAQ_URL', 'https://github.com/Auctollo/w3-total-cache-public/wiki/FAQ' );
 define( 'W3TC_TRACK_URL', 'https://www.w3-edge.com/w3tc/track/' );
 define( 'W3TC_MAILLINGLIST_SIGNUP_URL', 'https://www.w3-edge.com/w3tc/emailsignup/' );
 define( 'NEWRELIC_SIGNUP_URL', 'http://bit.ly/w3tc-partner-newrelic-signup' );
 define( 'MAXCDN_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-maxcdn-create-account' );
 define( 'MAXCDN_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-maxcdn-authorize' );
 define( 'NETDNA_AUTHORIZE_URL', 'https://cp.netdna.com/i/w3tc' );
+define( 'STACKPATH_SIGNUP_URL', 'http://bit.ly/w3tc-cdn-stackpath-create-account' );
+define( 'STACKPATH_AUTHORIZE_URL', 'http://bit.ly/w3tc-cdn-stackpath-authorize' );
 define( 'GOOGLE_DRIVE_AUTHORIZE_URL', 'https://www.w3-edge.com/w3tcoa/google-drive/' );
 
 // this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
@@ -113,8 +115,13 @@ define( 'W3TC_MARKER_END_CDN', '# END W3TC CDN' );
 define( 'W3TC_MARKER_END_NEW_RELIC_CORE', '# END W3TC New Relic core' );
 
 
-if ( !defined( 'W3TC_EXTENSION_DIR' ) )
+if ( !defined( 'W3TC_EXTENSION_DIR' ) ) {
 	define( 'W3TC_EXTENSION_DIR', ( defined( 'WP_PLUGIN_DIR' ) ? WP_PLUGIN_DIR : WP_CONTENT_DIR . '/plugins' ) );
+}
+
+if ( !defined( 'W3TC_WP_JSON_URI' ) ) {
+	define( 'W3TC_WP_JSON_URI', '/wp-json/' );
+}
 
 @ini_set( 'pcre.backtrack_limit', 4194304 );
 @ini_set( 'pcre.recursion_limit', 4194304 );
@@ -212,7 +219,7 @@ function w3tc_config() {
 }
 
 /**
- * Shortcut for url varnish flush
+ * Purges/Flushes everything
  */
 function w3tc_flush_all( $extras = null ) {
 	$o = \W3TC\Dispatcher::component( 'CacheFlush' );
@@ -241,6 +248,14 @@ function w3tc_flush_posts( $extras = null ) {
 function w3tc_flush_url( $url, $extras = null ) {
 	$o = \W3TC\Dispatcher::component( 'CacheFlush' );
 	$o->flush_url( $url, $extras );
+}
+
+/**
+ * Purges/Flushes separate cache group
+ */
+function w3tc_flush_group( $group, $extras = null ) {
+	$o = \W3TC\Dispatcher::component( 'CacheFlush' );
+	$o->flush_group( $group, $extras );
 }
 
 

@@ -450,19 +450,51 @@ class W3TotalCache_Command extends \WP_CLI_Command {
 	}
 
 	/**
-	 * Generally triggered from a cronjob, allows for manual Garbage collection of page cache to be triggered
+	 * Generally triggered from a cronjob, performs manual page cache Garbage collection
 	 */
 	function pgcache_cleanup() {
 		try {
-			$pgcache_cleanup = Dispatcher::component( 'PgCache_Plugin_Admin' );
-			$pgcache_cleanup->cleanup();
+			$o = Dispatcher::component( 'PgCache_Plugin_Admin' );
+			$o->cleanup();
 		} catch ( \Exception $e ) {
-			\WP_CLI::error( __( 'PageCache Garbage cleanup did not start with error %s',
-					'w3-total-cache' ), $e );
+			\WP_CLI::error( __( 'PageCache Garbage cleanup failed: %s',
+				'w3-total-cache' ), $e );
 		}
 
 		\WP_CLI::success( __( 'PageCache Garbage cleanup triggered successfully.',
-				'w3-total-cache' ) );
+			'w3-total-cache' ) );
+	}
+
+
+
+	/**
+	 * Generally triggered from a cronjob, performs manual page cache priming
+	 * ## OPTIONS
+	 * [--start=<start>]
+	 * : Start since <start> entry of sitemap
+	 *
+	 * [--limit=<limit>]
+	 * : load no more than <limit> pages
+	 *
+	 */
+	function pgcache_prime( $args = array(), $vars = array() ) {
+		try {
+			$log_callback = function($m) {
+				\WP_CLI::log($m);
+			};
+
+			$o = Dispatcher::component( 'PgCache_Plugin_Admin' );
+			$o->prime( ( isset( $vars['start'] ) ? $vars['start'] - 1 : null ),
+				( isset( $vars['limit'] ) ? $vars['limit'] : null ),
+				$log_callback );
+
+		} catch ( \Exception $e ) {
+			\WP_CLI::error( __( 'PageCache Priming did failed: %s',
+				'w3-total-cache' ), $e );
+		}
+
+		\WP_CLI::success( __( 'PageCache Priming triggered successfully.',
+			'w3-total-cache' ) );
 	}
 }
 
