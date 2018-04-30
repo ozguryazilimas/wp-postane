@@ -62,7 +62,7 @@ function relevanssi_do_excerpt( $t_post, $query ) {
 	$terms = relevanssi_tokenize( $query, $remove_stopwords, -1 );
 
 	// These shortcodes cause problems with Relevanssi excerpts.
-	$problem_shortcodes = array( 'layerslider', 'responsive-flipbook', 'breadcrumb', 'robogallery', 'gravityview' );
+	$problem_shortcodes = array( 'layerslider', 'responsive-flipbook', 'breadcrumb', 'robogallery', 'gravityview', 'wp_show_posts' );
 	/**
 	 * Filters the excerpt-building problem shortcodes.
 	 *
@@ -500,10 +500,9 @@ function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
 
 		if ( $word_boundaries ) {
 			$regex = "/(\b$pr_term\b)/iu";
-			if ( 'none' !== get_option( 'relevanssi_fuzzy' ) ) {
+			if ( 'never' !== get_option( 'relevanssi_fuzzy' ) ) {
 				$regex = "/(\b$pr_term|$pr_term\b)/iu";
 			}
-
 			$content = preg_replace( $regex, $start_emp_token . '\\1' . $end_emp_token, $content );
 			if ( empty( $content ) ) {
 				$content = preg_replace( $regex, $start_emp_token . '\\1' . $end_emp_token, $undecoded_content );
@@ -945,7 +944,18 @@ function relevanssi_add_accent_variations( $word ) {
 		'to'   => array( '(a|á|à|â)', '(c|ç)', '(e|é|è|ê|ë)', '(i|í|ì|î|ï)', '(o|ó|ò|ô|õ)', '(u|ú|ù|ü|û)', '(n|ñ)', '(ss|ß)' ),
 	));
 
+	$len        = mb_strlen( $word );
+	$word_array = array();
+	for ( $i = 0; $i < $len; $i++ ) {
+		$char         = mb_substr( $word, $i, 1 );
+		$word_array[] = $char;
+	}
+	$word = implode( '-?', $word_array );
+
 	$word = str_ireplace( $replacement_arrays['from'], $replacement_arrays['to'], $word );
+
+	$word = preg_replace( '/s$/', "(s|'s|’s)", $word );
+	$word = preg_replace( '/^o/', "(o|o'|o’)", $word );
 
 	return $word;
 }

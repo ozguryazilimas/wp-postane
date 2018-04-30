@@ -100,6 +100,8 @@ function relevanssi_generate_indexing_query( $valid_status, $extend = false, $re
 	global $wpdb, $relevanssi_variables;
 	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
 
+	$restriction = apply_filters( 'relevanssi_indexing_restriction', $restriction );
+
 	if ( ! $extend ) {
 		$q = "SELECT post.ID
 		FROM $wpdb->posts post
@@ -1024,7 +1026,7 @@ function relevanssi_index_taxonomy_terms( $post = null, $taxonomy = '', $insert_
 			foreach ( $tag_tokens as $token => $count ) {
 				$n++;
 
-				if ( 'post_tags' === $taxonomy ) {
+				if ( 'post_tag' === $taxonomy ) {
 					$insert_data[ $token ]['tag'] = $count;
 				} elseif ( 'category' === $taxonomy ) {
 					$insert_data[ $token ]['category'] = $count;
