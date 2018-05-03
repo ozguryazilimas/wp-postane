@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
-Tested up to: 4.9.4
-Stable tag: 1.8.2
+Tested up to: 4.9.5
+Stable tag: 1.8.3
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -62,6 +62,14 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.8.3 =
+* Added a couple of tutorial links to the settings page.
+* Fixed a potential crash that was caused by a bug in the "WP Editor" plugin version 1.2.6.3.
+* Fixed some obsolete callback syntax that was still using "&$this".
+* Changed the order of some menu settings and added separators between groups of settings.
+* Removed the "Screen Options" panel from AME tabs that didn't need it like "Plugins".
+* Tested with WP 4.9.5.
 
 = 1.8.2 =
 * Fixed the PHP warning "count(): Parameter must be an array or an object that implements Countable in menu-editor-core.php".
