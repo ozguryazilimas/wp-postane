@@ -9,7 +9,8 @@ class easyFancyBox_Options extends easyFancyBox {
 
 		$url = "https://premium.status301.net/downloads/easy-fancybox-pro/";
 
-		parent::$options = array (
+		if ( empty(parent::$options) )
+			parent::$options = array (
 
 			'Global' => array(
 				'title' => __('Global settings','easy-fancybox'),
@@ -426,7 +427,7 @@ class easyFancyBox_Options extends easyFancyBox {
 								'label_for' => 'fancybox_scriptPriority',
 								'input' => 'number',
 								'step' => '1',
-								'min' => '1',
+								'min' => '-999',
 								'max' => '999',
 								'sanitize_callback' => 'intval',
 								'class' => 'small-text',
@@ -1255,8 +1256,8 @@ class easyFancyBox_Options extends easyFancyBox {
 					'onStart' => array (
 						'noquotes' => true,
 						'default' => get_option( 'fancybox_YoutubenoCookie' ) ?
-							'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'youtu.be\',\'i\'),\'www.youtube-nocookie.com/embed\').replace(new RegExp(\'youtube.com/watch\\\?(.*)v=([a-z0-9\_\-]+)(&amp;|&|\\\?)?(.*)\',\'i\'),\'youtube-nocookie.com/embed/$2?$1$4\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fs=0\')>-1)?false:true}' :
-							'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'youtu.be\',\'i\'),\'www.youtube.com/embed\').replace(new RegExp(\'watch\\\?(.*)v=([a-z0-9\_\-]+)(&amp;|&|\\\?)?(.*)\',\'i\'),\'embed/$2?$1$4\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fs=0\')>-1)?false:true}'
+							'function(a,i,o){o.href=a[i].href.replace(/https?:\/\/youtu\.be/gi,"https://www.youtube-nocookie.com/embed").replace(/https?:\/\/(?:www\.)?youtube\.com\/watch\?(.*)v=([a-z0-9\_\-]+)(?:&|&amp;|\?)?(.*)/gi,"https://www.youtube-nocookie.com/embed/$2?$1$3");var splitOn=o.href.indexOf("?");var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf("fs=0")>-1)?false:true}' :
+							'function(a,i,o){o.href=a[i].href.replace(/https?:\/\/youtu\.be/gi,"https://www.youtube.com/embed").replace(/https?:\/\/(?:www\.)?youtube\.com\/watch\?(.*)v=([a-z0-9\_\-]+)(?:&amp;|&|\?)?(.*)/gi,"https://www.youtube.com/embed/$2?$1$3");var splitOn=o.href.indexOf("?");var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf("fs=0")>-1)?false:true}'
 					)
 				)
 			),
@@ -1359,7 +1360,7 @@ class easyFancyBox_Options extends easyFancyBox {
 					),
 					'onStart' => array (
 						'noquotes' => true,
-						'default' => 'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'//(www\\.)?vimeo\\.com/([0-9]+)(&|\\\?)?(.*)\',\'i\'),\'//player.vimeo.com/video/$2?$4\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fullscreen=0\')>-1)?false:true}'
+						'default' => 'function(a,i,o){o.href=a[i].href.replace(/https?:\/\/(?:www\.)?vimeo\.com\/([0-9]+)(?:&|&amp;|\?)?(.*)/gi,"https://player.vimeo.com/video/$1?$2");var splitOn=o.href.indexOf("?");var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf("fullscreen=0")>-1)?false:true}'
 					)
 				)
 			),
@@ -1462,7 +1463,7 @@ class easyFancyBox_Options extends easyFancyBox {
 					),
 					'onStart' => array (
 						'noquotes' => true,
-						'default' => 'function(a,i,o){o.href=a[i].href.replace(new RegExp(\'/video/(.*)\',\'i\'),\'/embed/video/$1\');var splitOn=o.href.indexOf(\'?\');var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf(\'fullscreen=0\')>-1)?false:true}'
+						'default' => 'function(a,i,o){o.href=a[i].href.replace(/^https?:\/\/(?:www\.)dailymotion.com\/video\/(.*)/gi,"https://www.dailymotion.com/embed/video/$1");var splitOn=o.href.indexOf("?");var urlParms=(splitOn>-1)?o.href.substring(splitOn):"";o.allowfullscreen=(urlParms.indexOf("fullscreen=0")>-1)?false:true}'
 					)
 				)
 			),
