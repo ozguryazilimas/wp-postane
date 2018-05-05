@@ -274,6 +274,9 @@ jQuery(document).ready(function() {
       if (aData['can_edit']) {
         jQuery(nRow).children('td.ugurcum_mediatable_edit').addClass('ugurcum_can_edit');
       }
+    },
+    "drawCallback": function(setttings) {
+      jQuery(easy_fancybox_handler);
     }
   });
 
