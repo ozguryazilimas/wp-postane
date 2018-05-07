@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.9.5
-Stable tag: 4.40.3
+Stable tag: 4.41
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,8 +79,12 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
-= [4.40.3] 06.04.2018 =
-* Update: bbPress detection and code for integration with it was updated to support multisite installations when URE is network activated but bbPress is activated on some sites of the network only. (Free version does not support bbPress roles. It excludes them from processing as bbPress creates them dynamically.)
+= [4.41] 07.05.2018 =
+* New: URE changes currently selected role via AJAX request, without full "Users->User Role Editor" page refresh.
+* Update: All [WPBakery Visual Composer](http://vc.wpbakery.com) plugin custom user capabilities (started from 'vc_access_rules_') were excluded from processing by User Role Editor. Visual Composer loses settings made via its own "Role Manager" after the role update by User Role Editor in other case. The reason - Visual Composer stores not boolean values with user capabilities granted to the roles via own "Role Manager". User Role Editor converted them to related boolean values during role(s) update.
+
+= [4.40.3] 05.04.2018 =
+* Update: bbPress detection and code for integration with it was updated to support multisite installations when URE is network activated but bbPress is activated on some sites of the network only. Free version does not support bbPress roles. It excludes them from processing as bbPress creates them dynamically.
 
 = [4.40.2] 04.04.2018 =
 * Update: Load required .php files from the active bbPress plugin directly, as in some cases URE code may be executed earlier than they are loaded by bbPress.
@@ -93,17 +97,6 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 * Update: use wp_roles() function from WordPress API instead of initializing $wp_roles global variable directly.
 * Fix: Bug was introduced by version 4.37 with users recalculation for "All" tab after excluding users with "administrator" role. Code worked incorrectly for Japanese locale.
 
-= [4.39] 19.12.2017 =
-* Update: Plugin settings management code moved to the separate URE_Settings class.
-* Update: 'create_posts', 'create_pages' user capabilities are not added by default to WordPress built-in capabilities groups as they are supported by the Pro version only.
-* Update: Type checking enhanced for values received from a user input and for variable arguments inside database queries.
-* Update: Own code to build usermeta db table name was excluded. A value from $wpdb->usermeta is used instead.
-
-= [4.38] 27.11.2017 =
-* Security: XSS vulnerability was fixed at URE's options page. Bug was discovered and fixed at tab index value numeric type checking. Tab index value is additionally escaped before output also.
-* Security: Deprecated code for debug output to the .log file in case of database query error was removed.
-* Security: Multiple select jQuery plugin (https://github.com/wenzhixin/multiple-select/) was updated to the latest available version 1.2.1, which fixed XSS vulnerability, existed in earlier versions.
-
 
 For full list of changes applied to User Role Editor plugin look changelog.txt file.
 
@@ -115,6 +108,8 @@ You can find more information about "User Role Editor" plugin at [this page](htt
 I am ready to answer on your questions about plugin usage. Use [plugin page comments](http://www.shinephp.com/user-role-editor-wordpress-plugin/) for that.
 
 == Upgrade Notice ==
-= [4.40.1] 09.03.2018 =
-* Update: wp_roles() function (introduced with WP 4.3) was included conditionally to URE code for backward compatibility with WordPress 4.0+
-* Fix: WordPress multisite: bbPress plugin detection code was changed from checking bbPress API function existence to checking WordPress active plugins list. bbPress plugin activated for the site was not available yet for the network activated User Role Editor at the point of URE instance creation. URE did not work with bbPress roles as it should by design for that reason. URE (free version) should ignore bbPress roles and capabilities as the special efforts are required for this.
+= [4.41] 07.05.2018 =
+* New: URE changes currently selected role via AJAX request, without full "Users->User Role Editor" page refresh.
+* Update: All [WPBakery Visual Composer](http://vc.wpbakery.com) plugin custom user capabilities (started from 'vc_access_rules_') were excluded from processing by User Role Editor. Visual Composer loses settings made via its own "Role Manager" after the role update by User Role Editor in other case. The reason - Visual Composer stores not boolean values with user capabilities granted to the roles via own "Role Manager". User Role Editor converted them to related boolean values during role(s) update.
+
+
