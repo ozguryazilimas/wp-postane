@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Google Analytics Dashboard for WP (GADWP)
- * Plugin URI: https://deconf.com
+ * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
- * Author: Alin Marcu
- * Version: 5.3.2
- * Author URI: https://deconf.com
+ * Author: ExactMetrics team
+ * Version: 5.3.3
+ * Author URI: https://exactmetrics.com
  * Text Domain: google-analytics-dashboard-for-wp
  * Domain Path: /languages
  */
@@ -16,11 +16,11 @@ if ( ! defined( 'ABSPATH' ) )
 
 // Plugin Version
 if ( ! defined( 'GADWP_CURRENT_VERSION' ) ) {
-	define( 'GADWP_CURRENT_VERSION', '5.3.2' );
+	define( 'GADWP_CURRENT_VERSION', '5.3.3' );
 }
 
 if ( ! defined( 'GADWP_ENDPOINT_URL' ) ) {
-	define( 'GADWP_ENDPOINT_URL', 'https://gadwp.deconf.com/' );
+	define( 'GADWP_ENDPOINT_URL', 'https://gadwp.exactmetrics.com/' );
 }
 
 
@@ -85,6 +85,9 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 				self::$instance = new self();
 				self::$instance->setup();
 				self::$instance->config = new GADWP_Config();
+				if ( is_admin() && class_exists( 'AM_Notification' ) && defined( 'GADWP_CURRENT_VERSION' ) ) {
+					new AM_Notification( 'exact-metrics', GADWP_CURRENT_VERSION );
+				}
 			}
 			return self::$instance;
 		}
@@ -107,6 +110,13 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 			// Plugin main File
 			if ( ! defined( 'GADWP_FILE' ) ) {
 				define( 'GADWP_FILE', __FILE__ );
+			}
+
+			/*
+			 * Load notifications class
+			 */
+			if ( is_admin() ) {
+				include_once ( GADWP_DIR . 'admin/class-am-notification.php' );
 			}
 
 			/*
