@@ -113,23 +113,23 @@ function ugurcum_get_media_links() {
     $can_edit_sql = 'SELECT 0';
   }
 
-  $get_media_links_sql = $wpdb->prepare("SELECT
-                                           um.id as id,
-                                           um.title as title,
-                                           um.description as description,
-                                           um.medialink as medialink,
-                                           um.visible as visible,
-                                           um.created_at as created_at,
-                                           um.user_id as user_id,
-                                           wpu.user_login as user_login,
-                                           ($can_edit_sql) as can_edit,
-                                           ($last_read_time_sql) as unread
-                                         FROM $ugurcum_db_main as um
-                                         JOIN
-                                           $wpdb->users as wpu
-                                         ON um.user_id = wpu.ID
-                                         ORDER BY um.created_at desc
-                                         ");
+  $get_media_links_sql = "SELECT
+                            um.id as id,
+                            um.title as title,
+                            um.description as description,
+                            um.medialink as medialink,
+                            um.visible as visible,
+                            um.created_at as created_at,
+                            um.user_id as user_id,
+                            wpu.user_login as user_login,
+                            ($can_edit_sql) as can_edit,
+                            ($last_read_time_sql) as unread
+                          FROM $ugurcum_db_main as um
+                          JOIN
+                            $wpdb->users as wpu
+                          ON um.user_id = wpu.ID
+                          ORDER BY um.created_at desc
+                          ";
 
   return $wpdb->get_results($get_media_links_sql);
 }
@@ -179,7 +179,7 @@ function ugurcum_insert_media_link($series, $description, $media_link) {
 
   $add_media_link_sql = "INSERT INTO $ugurcum_db_main
     (title, description, medialink, user_id, visible, created_at, updated_at)
-    VALUES ('$series', '$description', '$media_link', $user_ID, true, '$current_time', '$current_time');";
+    VALUES ('$series', '$description', '$media_link', $user_ID, true, '$current_time', '$current_time')";
 
   $success = $wpdb->query($add_media_link_sql);
 }
@@ -194,8 +194,7 @@ function ugurcum_update_media_link($media_link_id, $title, $description, $media_
     $user_check_sql = '';
   }
 
-  $update_media_link_sql = $wpdb->prepare("
-                            UPDATE $ugurcum_db_main
+  $update_media_link_sql = "UPDATE $ugurcum_db_main
                             SET
                                 title = '$title',
                                 description = '$description',
@@ -204,7 +203,7 @@ function ugurcum_update_media_link($media_link_id, $title, $description, $media_
                             WHERE
                                 id = $media_link_id
                                 $user_check_sql
-                            ");
+                            ";
 
   $success = $wpdb->query($update_media_link_sql);
 }
@@ -217,8 +216,8 @@ function ugurcum_delete_media_link($media_link_id) {
     $user_check_sql = '';
   }
 
-  $delete_media_link_sql = $wpdb->prepare("DELETE FROM $ugurcum_db_main
-                                           WHERE id = $media_link_id $user_check_sql");
+  $delete_media_link_sql = "DELETE FROM $ugurcum_db_main
+                            WHERE id = $media_link_id $user_check_sql";
 
   $success = $wpdb->query($delete_media_link_sql);
 }
@@ -227,11 +226,11 @@ function ugurcum_get_last_read_time() {
   global $wpdb, $user_ID, $ugurcum_db_user_reads;
 
   if ($user_ID != '') {
-    $user_last_read_sql = $wpdb->prepare("SELECT read_time
-                                          FROM $ugurcum_db_user_reads
-                                          WHERE
-                                            user_id = $user_ID
-                                            LIMIT 1;");
+    $user_last_read_sql = "SELECT read_time
+                           FROM $ugurcum_db_user_reads
+                           WHERE
+                             user_id = $user_ID
+                           LIMIT 1";
 
     $result = $wpdb->get_row($user_last_read_sql);
     $read_time = $result->read_time;
@@ -252,7 +251,7 @@ function ugurcum_set_time() {
     $update_read_time_sql = "INSERT INTO $ugurcum_db_user_reads
       (user_id, read_time)
       VALUES ($user_ID, '$read_time')
-      ON DUPLICATE KEY UPDATE read_time='$read_time';";
+      ON DUPLICATE KEY UPDATE read_time='$read_time'";
 
     $success = $wpdb->query($update_read_time_sql);
   }

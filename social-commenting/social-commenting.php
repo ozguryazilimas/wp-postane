@@ -88,7 +88,7 @@ function sc_user_subscribed($user_id,$post_id) {
   return $count > 0;
 }
 
-function sc_load_subscribe_button($content, $id) {
+function sc_load_subscribe_button($content) {
   if (in_the_loop() && !is_page() && is_single() && !empty($GLOBALS['post']) && get_the_ID() == $GLOBALS['post']->ID) {
     $plugin_dir = plugin_dir_url(__FILE__);
     wp_enqueue_script("sc_subscribe_button_js",$plugin_dir . "js/subscribe.php?sc_url=" . admin_url('admin-ajax.php'));
