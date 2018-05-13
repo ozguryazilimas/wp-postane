@@ -2,7 +2,7 @@
 get_header();
 
 echo "<div id='oy-unique' class='leftpane person-page'>";
-echo '<div id="oy-hide-button" class="oy-rotate"><img src="' . WP_PLUGIN_URL . '/oy-detailed-search/img/arrow.png"/></div>';
+echo '<div id="oy-hide-button" class="oy-rotate"><img src="' . plugins_url('img/arrow.png', __FILE__) . '"/></div>';
 echo '<div id="oy-hide-tip">Arama kutusunu açmak için tıklayın.</div>';
 echo '<div id="oy-arama-container">
         <h1 class="oy-ayrinti-text"> Ayrıntılı Arama </h1>
