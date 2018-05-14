@@ -69,7 +69,7 @@ foreach($ul_list as $list) {
  */
 
 $peyton_list_db = $wpdb->prefix . 'peyton_list';
-$sql_str = $wpdb->prepare("SELECT * FROM $peyton_list_db ORDER BY title");
+$sql_str = "SELECT * FROM $peyton_list_db ORDER BY title";
 $data = $wpdb->get_results($sql_str);
 
 foreach($data as $k) {
