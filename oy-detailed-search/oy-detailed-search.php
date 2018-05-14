@@ -158,7 +158,7 @@ class OY_Query {
 */
 function oy_get_userid_by_display_name($d_name) {
   global $wpdb;
-  $user = $wpdb->get_row($wpdb->prepare("SELECT ID FROM %s WHERE display_name = '%s'", array($wpdb->users, $d_name)));
+  $user = $wpdb->get_row($wpdb->prepare("SELECT ID FROM $wpdb->users WHERE display_name = '%s'", array($d_name)));
   if ($user) {
     return $user->ID;
   }
