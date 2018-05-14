@@ -22,7 +22,7 @@ function peyton_list_user_has_permission() {
 function peyton_list_similar_record($title) {
   global $wpdb, $peyton_list_db_main;
 
-  $similar_sql = $wpdb->prepare("SELECT * FROM $peyton_list_db_main WHERE title = %s", $title);
+  $similar_sql = $wpdb->prepare("SELECT * FROM %s WHERE title = %s", array($peyton_list_db_main, $title));
   $ret = $wpdb->get_row($similar_sql);
 
   return $ret;
@@ -170,8 +170,7 @@ function peyton_list_get_entries_raw($entry_id = false) {
               $where_statement
               ORDER BY PL.title";
 
-  $sql_statement = $wpdb->prepare($sql_str);
-  return $wpdb->get_results($sql_statement);
+  return $wpdb->get_results($sql_str);
 }
 
 function peyton_list_prepare_for_dt($data) {
