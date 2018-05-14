@@ -73,7 +73,7 @@ class OY_Query {
    * @param string $vars Variable for prepare to be added.
    * @param int $vars Variable for prepare, to be added.
   */
-  public function extend_query($added, $mess, $vars = array()) {
+  public function extend_query($added, $mess = '', $vars = array()) {
     $this->query   .= ' ' . $added;
     $this->message .= $mess;
 
