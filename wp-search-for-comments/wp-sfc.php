@@ -63,7 +63,7 @@
 		global $wpdb;
 		$length = 0;
 		$count = get_option('wp_sfc_limit');
-		$user = mysql_real_escape_string($_GET['user']);
+		$user = $wpdb->escape($_GET['user']);
 		$commenters = array();
 		if(isset($_GET['user']) and !empty($_GET['user']))
 			$results = $wpdb->get_results("SELECT comment_content, comment_date, comment_ID, user_id, comment_author, comment_author_url, comment_post_ID FROM $wpdb->comments WHERE comment_approved = '1' and comment_author = '$user'");	
