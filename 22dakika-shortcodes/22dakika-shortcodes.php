@@ -6,7 +6,7 @@ Description: Shortcode plugin for 22dakika.org
 Version: 1.2
 Author: Baskın Burak Şenbaşlar, Onur Küçük
 Author URI: http://ceng.metu.edu.tr/~e1942697
-License: GPL
+License: GPL2
 */
 
 function dizi_oyuncu_shortcode_button() {
