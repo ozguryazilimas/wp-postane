@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 4.9.5
-Stable tag: 4.41
+Stable tag: 4.42
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,9 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.42] 16.05.2018 =
+* Fix: Type checking was added (URE_Lib::restore_visual_composer_caps()) to fix "Warning: Invalid argument supplied for foreach() in .../user-role-editor-pro/includes/classes/ure-lib.php on line 315".
+
 = [4.41] 07.05.2018 =
 * New: URE changes currently selected role via AJAX request, without full "Users->User Role Editor" page refresh.
 * Update: All [WPBakery Visual Composer](http://vc.wpbakery.com) plugin custom user capabilities (started from 'vc_access_rules_') were excluded from processing by User Role Editor. Visual Composer loses settings made via its own "Role Manager" after the role update by User Role Editor in other case. The reason - Visual Composer stores not boolean values with user capabilities granted to the roles via own "Role Manager". User Role Editor converted them to related boolean values during role(s) update.
@@ -108,8 +111,8 @@ You can find more information about "User Role Editor" plugin at [this page](htt
 I am ready to answer on your questions about plugin usage. Use [plugin page comments](http://www.shinephp.com/user-role-editor-wordpress-plugin/) for that.
 
 == Upgrade Notice ==
-= [4.41] 07.05.2018 =
-* New: URE changes currently selected role via AJAX request, without full "Users->User Role Editor" page refresh.
-* Update: All [WPBakery Visual Composer](http://vc.wpbakery.com) plugin custom user capabilities (started from 'vc_access_rules_') were excluded from processing by User Role Editor. Visual Composer loses settings made via its own "Role Manager" after the role update by User Role Editor in other case. The reason - Visual Composer stores not boolean values with user capabilities granted to the roles via own "Role Manager". User Role Editor converted them to related boolean values during role(s) update.
+= [4.42] 13.05.2018 =
+* Fix: Type checking was added (URE_Lib::restore_visual_composer_caps()) to fix "Warning: Invalid argument supplied for foreach() in .../user-role-editor-pro/includes/classes/ure-lib.php on line 315".
+
 
 

@@ -311,7 +311,10 @@ class URE_Lib extends URE_Base_Lib {
     // Add existing WPBakery Visial Composer () plugin capabilities from this role to the list of capabiliteis for save with this role update -
     // Visual Composer capabilities are excluded from a role update as they may store not boolean values.
     protected function restore_visual_composer_caps() {
-
+        if (!isset($this->roles[$this->current_role]) || !is_array($this->roles[$this->current_role]['capabilities'])) {
+            return;
+        }
+        
         foreach($this->roles[$this->current_role]['capabilities'] as $cap=>$value) {
             if (strpos($cap, 'vc_access_rules_')!==false) {
                 $this->capabilities_to_save[$cap] = $value;
