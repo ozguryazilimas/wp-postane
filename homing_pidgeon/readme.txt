@@ -3,7 +3,7 @@ Contributors:
 Donate link:
 Tags: homing pidgeon, email, notify, notification, pending, post status change
 Requires at least: 4.3.1
-Tested up to: 4.4.2
+Tested up to: 4.9.6
 Stable tag: 0.5.0
 
 Notifies configured users when a post is submitted as pending
