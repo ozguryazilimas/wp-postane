@@ -3,7 +3,7 @@ Contributors:
 Donate link:
 Tags: emoji, mojimoji, moji, smiley, emoticon
 Requires at least: 4.3.1
-Tested up to: 4.4.2
+Tested up to: 4.9.6
 Stable tag: 0.1.0
 
 Extends Wordpress emoji library by using Emoji provided by Emoji One http://emojione.com
