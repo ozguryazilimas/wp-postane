@@ -3,31 +3,7 @@
  
 <div class="wlcms_opts" style="position:relative;">
 	<div id="wlcms-sidebar" style="position: absolute; top: 0; right: 0; z-index: 2; background-color:#FFFFFF; width: 250px; border: 1px solid #ccc; padding: 20px;">
-		<img src="<?php echo plugins_url('images/WPElevatoon-WP-Skyscraper-Image-232x337.jpg', dirname(__FILE__)); ?>" alt="Better Clients" title="Better Clients" />
-		<form method="post" accept-charset="UTF-8" onsubmit="return quickValidate()"  action="https://sk199.infusionsoft.com/app/form/process/6903821baa449ff51394d0f57cfd2cdb" target="_blank" name="Better WP ClickFunnels">
-		<div style="display: none;">
-			<input name="inf_form_xid" type="hidden" value="6903821baa449ff51394d0f57cfd2cdb" />
-			<input name="inf_form_name" type="hidden" value="White Label CMS Form" />
-			<input name="infusionsoft_version" type="hidden" value="1.56.0.55" />
-			<input name="inf_field_LeadSoruceId" type="hidden" value="148" />
-		</div>
-		<table style="text-align:left;margin-left: 20px;">
-		<tr>
-		<td><strong>Name: </strong><input id="sub_name" name="inf_field_FirstName" type="text" name="name" class="text"  tabindex="500" value="" style="width: 170px;"/></td>
-		</tr>
-		<tr>
-		<td><strong>Email: </strong>&nbsp;<input class="text" id="sub_email" type="text" name="inf_field_Email" tabindex="501"  value="" style="width: 170px;" /></td>
-		</tr>
-		<tr>
-		<td style="text-align:center"><span class="submit"><input name="submit" type="image" alt="submit" tabindex="502" src="<?php echo plugins_url('images/WPElevation-WP-Skyscaper-Button-157x40.gif', dirname(__FILE__)); ?>" width="157" height="40" style="background: none; border: 0;" /></span></td>
-		</tr>
-		<tr>
-		<td style="padding-top: 20px;text-align:center;">
-		<a title="Privacy Policy" href="http://www.wpelevation.com/privacy-policy/" target="_blank"><img src="<?php echo plugins_url('images/privacy.png', dirname(__FILE__)); ?>"  alt="" title="" /></a>
-		</td>
-		</tr>
-		</table>
-		</form>	
+		<a href="https://www.videousermanuals.com/blog/report/?utm_campaign=wlcms&utm_medium=plugin&utm_source=ebookad" target="_blank"><img src="<?php echo plugins_url('images/better-ebooks.jpg', dirname(__FILE__)); ?>" alt="Better Clients" title="Better Clients" /></a>
 	</div>
 	<div id="wlcms-container" style="margin-right: 320px;">
 			
