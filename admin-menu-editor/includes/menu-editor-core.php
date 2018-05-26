@@ -311,6 +311,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$this->access_test_runner = new ameAccessTestRunner($this, $this->get);
 		}
 
+		//Additional links below the plugin description.
+		add_filter('plugin_row_meta', array($this, 'add_plugin_row_meta_links'), 10, 2);
+
 		//Utility actions. Modules can use them in their templates.
 		add_action('admin_menu_editor-display_tabs', array($this, 'display_editor_tabs'));
 		add_action('admin_menu_editor-display_header', array($this, 'display_settings_page_header'));
@@ -4075,6 +4078,23 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		return $cap_power;
+	}
+
+	public function add_plugin_row_meta_links($pluginMeta, $pluginFile) {
+		$isRelevant = ($pluginFile == $this->plugin_basename);
+
+		if ( $isRelevant && $this->current_user_can_edit_menu() ) {
+			$documentationUrl = $this->is_pro_version()
+				? 'https://adminmenueditor.com/documentation/'
+				: 'https://adminmenueditor.com/free-version-docs/';
+			$pluginMeta[] = sprintf(
+				'<a href="%s">%s</a>',
+				esc_attr($documentationUrl),
+				'Documentation'
+			);
+		}
+
+		return $pluginMeta;
 	}
 
 	private function get_active_modules() {

@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
-Tested up to: 4.9.5
-Stable tag: 1.8.3
+Tested up to: 4.9.6
+Stable tag: 1.8.4
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -62,6 +62,10 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.8.4 =
+* Added a "Documentation" link below the plugin description. For people concerned about the recent GDPR legislation, the documentation now includes a page explaining [how the plugin processes personal data](https://adminmenueditor.com/free-version-docs/about-data-processing-free-version/). Short version: It usually doesn't.
+* Tested with WP 4.9.6.
 
 = 1.8.3 =
 * Added a couple of tutorial links to the settings page.
