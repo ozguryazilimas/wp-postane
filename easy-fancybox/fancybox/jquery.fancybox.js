@@ -7,7 +7,7 @@
  * Copyright (c) 2008 - 2010 Janis Skarnelis
  * That said, it is hardly a one-person project. Many people have submitted bugs, code, and offered their advice freely. Their support is greatly appreciated.
  *
- * Version: 1.3.17 (2018/05/12)
+ * Version: 1.3.19 (2018/05/18)
  * Requires: jQuery v1.7+
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -84,6 +84,10 @@
 			if ( document.documentElement.clientWidth < selectedOpts.minViewportWidth ) {
 				busy = false;
 				return;
+			}
+
+			if ('object' === typeof arguments[0] && 'click' === arguments[0].type) {
+				arguments[0].preventDefault();
 			}
 
 			ret = selectedOpts.onStart(selectedArray, selectedIndex, selectedOpts);
@@ -329,8 +333,7 @@
 		},
 
 		_process_inline = function() {
-			var
-				w = selectedOpts.width,
+			var w = selectedOpts.width,
 				h = selectedOpts.height,
 				ww = $(window).width() == 0 ? window.innerWidth : $(window).width(),
 				wh = $(window).height() == 0 ? window.innerHeight : $(window).height();
@@ -790,13 +793,16 @@
 					window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth,
 				h = !isTouch && window.innerHeight && document.documentElement.clientHeight ?
 					Math.min(window.innerHeight, document.documentElement.clientHeight) :
-					window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+					window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight,
+				margin;
+
+			margin = arguments[0] === true ? 0 : currentOpts.margin;
 
 			return [
-				w - (currentOpts.margin * 2),
-				h - (currentOpts.margin * 2),
-				$(document).scrollLeft() + currentOpts.margin,
-				$(document).scrollTop() + currentOpts.margin
+				w - (margin * 2),
+				h - (margin * 2),
+				$(document).scrollLeft() + margin,
+				$(document).scrollTop() + margin
 			];
 		},
 
@@ -912,8 +918,6 @@
 			.data('fancybox', $.extend({}, options, ($.metadata ? $(this).metadata() : {})))
 			.off('click.fb')
 			.on('click.fb', function(e) {
-				e.preventDefault();
-
 				if (busy) {
 					return;
 				}
@@ -934,7 +938,7 @@
 					selectedIndex = selectedArray.index( this );
 				}
 
-				_start();
+				_start(e);
 
 				return;
 			});
@@ -1213,9 +1217,9 @@
 		}
 
 		align = arguments[0] === true ? 1 : 0;
-		view = _get_viewport();
+		view = _get_viewport(true);
 
-		if (!align && (wrap.width() > view[0] || wrap.height() > view[1])) {
+		if (!align && ((wrap.width() + 40) > view[0] || (wrap.height() + 40) > view[1])) {
 			return;
 		}
 
