@@ -133,7 +133,7 @@ class URE_Ajax_Processor {
     protected function get_role_caps() {
         $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
         if (empty($role)) {
-            $answer = array('result'=>'error', 'message'=>'Provide new role');
+            $answer = array('result'=>'error', 'message'=>'Provide role ID');
             return $answer;
         }
         
@@ -143,13 +143,21 @@ class URE_Ajax_Processor {
             return $answer;
         }
         
+        $active_items = URE_Role_Additional_Options::get_active_items();
+        if (isset($active_items[$role])) {
+            $role_options = $active_items[$role];
+        } else {
+            $role_options = array();
+        }
+        
         $answer = array(
             'result'=>'success', 
             'message'=>'Role capabilities retrieved successfully', 
             'role_id'=>$role,
             'role_name'=>$wp_roles->roles[$role]['name'],
-            'caps'=>$wp_roles->roles[$role]['capabilities']
-                );
+            'caps'=>$wp_roles->roles[$role]['capabilities'],
+            'options'=>$role_options
+            );
         
         return $answer;
     }

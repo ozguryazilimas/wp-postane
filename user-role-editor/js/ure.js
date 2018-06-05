@@ -528,7 +528,7 @@ function ure_refresh_role_view(response) {
     ure_current_role = response.role_id;
     ure_current_role_name = response.role_name;        
     // Select capabilities included to a newly selected role and exclude others
-    jQuery('.ure-cap-cb').each(function () { // go through all checkboxes
+    jQuery('.ure-cap-cb').each(function () { // go through all capabilities checkboxes
         jQuery(this).prop('checked', response.caps.hasOwnProperty(this.id));
     }); 
     
@@ -540,6 +540,11 @@ function ure_refresh_role_view(response) {
         jQuery('#granted_only').prop('checked', false);
         ure_show_granted_caps_only();
     }
+    
+    // additional options section
+    jQuery('#additional_options').find(':checkbox').each(function() {   // go through all additional options checkboxes
+        jQuery(this).prop('checked', response.options.hasOwnProperty(this.id));
+    });
     
 }
 // end of refresh_role_view()
