@@ -1,10 +1,10 @@
-=== Google Analytics Dashboard for WP (GADWP) ===
+=== Google Analytics Dashboard for WP by ExactMetrics (formerly GADWP) ===
 Contributors: chriscct7, smub
 Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 5.3.3
+Stable tag: 5.3.4
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@ This Google Analytics for WordPress plugin enables you to track your site using 
 
 In addition to a set of general Google Analytics stats, in-depth Page reports and in-depth Post reports allow further segmentation of your analytics data, providing performance details for each post or page from your website.
 
-The Google Analytics tracking code is fully customizable through options and hooks, allowing advanced data collection like custom dimensions and events.    
+The Google Analytics tracking code is fully customizable through options and hooks, allowing advanced data collection like custom dimensions and events.
 
 = Google Analytics Real-Time Stats =
 
@@ -112,7 +112,7 @@ This plugin is fully compatible with multisite network installs, allowing three 
 - Mode 3: network deactivated using multiple Google Analytics accounts
 
 > <strong>Google Analytics Dashboard for WP on GitHub</strong><br>
-> You can submit feature requests or bugs on [Google Analytics Dashboard for WP](https://github.com/awesomemotive/Google-Analytics-Dashboard-for-WP) repository.
+> You can submit feature requests or bugs on [the Google Analytics Dashboard for WP by ExactMetrics Github repository](https://github.com/awesomemotive/Google-Analytics-Dashboard-for-WP).
 
 == Installation ==
 
@@ -139,7 +139,7 @@ You can submit pull requests, feature requests and bug reports on [our GitHub re
 
 = Documentation, Tutorials and FAQ =
 
-For documentation, tutorials, FAQ and videos check out: [Google Analytics Dashboard for WP documentation](https://exactmetrics.com/).
+For documentation, tutorials, FAQ and videos check out: [Google Analytics Dashboard for WP by ExactMetrics documentation](https://exactmetrics.com/).
 
 == Screenshots ==
 
@@ -166,6 +166,12 @@ Google Analytics Dashboard for WP it's released under the GPLv2, you can use it 
 == Changelog ==
 
 [GADWP v5.3 release notes](https://exactmetrics.com/adding-gtag-js-to-your-site/)
+
+= 5.3.4 =
+* Enhancements:
+	* Adds more robust settings to control various ExactMetrics configuration warnings.
+	* Adds the ability to opt-into usage tracking.
+	
 
 = 5.3.3 =
 * Bug Fixes:

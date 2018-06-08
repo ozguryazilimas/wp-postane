@@ -20,12 +20,20 @@ class GADWP_Uninstall {
 				switch_to_blog( $blog['blog_id'] );
 				$sqlquery = $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'gadwp_cache_%%'" );
 				delete_option( 'gadwp_options' );
+				delete_option( 'exactmetrics_tracking_notice');
+				delete_option( 'exactmetrics_usage_tracking_last_checkin');
+				delete_option( 'exactmetrics_usage_tracking_config');
+				wp_clear_scheduled_hook( 'exactmetrics_usage_tracking_cron' );
 				restore_current_blog();
 			}
 			delete_site_option( 'gadwp_network_options' );
 		} else { // Cleanup Single install
 			$sqlquery = $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'gadwp_cache_%%'" );
 			delete_option( 'gadwp_options' );
+			delete_option( 'exactmetrics_tracking_notice');
+			delete_option( 'exactmetrics_usage_tracking_last_checkin');
+			delete_option( 'exactmetrics_usage_tracking_config');
+				wp_clear_scheduled_hook( 'exactmetrics_usage_tracking_cron' );
 		}
 		GADWP_Tools::unset_cookie( 'default_metric' );
 		GADWP_Tools::unset_cookie( 'default_dimension' );

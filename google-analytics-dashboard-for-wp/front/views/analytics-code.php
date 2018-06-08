@@ -9,7 +9,7 @@
 ?>
 
 <?php if ( 0 == $data['ga_with_gtag'] ):?>
-<!-- BEGIN GADWP v<?php echo GADWP_CURRENT_VERSION; ?> Universal Analytics - https://exactmetrics.com/ -->
+<!-- BEGIN ExactMetrics v<?php echo GADWP_CURRENT_VERSION; ?> Universal Analytics - https://exactmetrics.com/ -->
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -17,9 +17,9 @@
 })(window,document,'script','<?php echo $data['tracking_script_path']?>','ga');
 <?php echo $data['trackingcode']?>
 </script>
-<!-- END GADWP Universal Analytics -->
+<!-- END ExactMetrics Universal Analytics -->
 <?php else:?>
-<!-- BEGIN GADWP v<?php echo GADWP_CURRENT_VERSION; ?> Global Site Tag - https://exactmetrics.com/ -->
+<!-- BEGIN ExactMetrics v<?php echo GADWP_CURRENT_VERSION; ?> Global Site Tag - https://exactmetrics.com/ -->
 <script async src="<?php echo $data['tracking_script_path']?>?id=<?php echo $data['uaid']?>"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -36,5 +36,5 @@
     });
   }
 </script>
-<!-- END GADWP Global Site Tag -->
+<!-- END ExactMetrics Global Site Tag -->
 <?php endif;?>

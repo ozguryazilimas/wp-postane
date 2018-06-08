@@ -28,8 +28,8 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			add_action( 'network_admin_menu', array( $this, 'network_menu' ) );
 			// Settings link
 			add_filter( "plugin_action_links_" . plugin_basename( GADWP_DIR . 'gadwp.php' ), array( $this, 'settings_link' ) );
-			// Updated admin notice
-			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+			// AM Notices
+			add_filter( "am_notifications_display", array( $this, 'notice_optout' ), 10, 1 );
 		}
 
 		/**
@@ -46,6 +46,16 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 				add_submenu_page( 'gadwp_settings', __( "Tracking Code", 'google-analytics-dashboard-for-wp' ), __( "Tracking Code", 'google-analytics-dashboard-for-wp' ), 'manage_options', 'gadwp_tracking_settings', array( 'GADWP_Settings', 'tracking_settings' ) );
 				add_submenu_page( 'gadwp_settings', __( "Errors & Debug", 'google-analytics-dashboard-for-wp' ), __( "Errors & Debug", 'google-analytics-dashboard-for-wp' ), 'manage_options', 'gadwp_errors_debugging', array( 'GADWP_Settings', 'errors_debugging' ) );
 			}
+		}
+
+		public function notice_optout( $super_admin ) {
+			if ( ( isset( $this->gadwp->config->options['hide_am_notices'] ) && $this->gadwp->config->options['hide_am_notices'] ) ||
+				( isset( $this->gadwp->config->options['network_hide_am_notices'] ) && $this->gadwp->config->options['network_hide_am_notices'] )
+			   )
+			{
+				return false;
+			}
+			return $super_admin;
 		}
 
 		/**
@@ -353,26 +363,6 @@ if ( ! class_exists( 'GADWP_Backend_Setup' ) ) {
 			$settings_link = '<a href="' . esc_url( get_admin_url( null, 'admin.php?page=gadwp_settings' ) ) . '">' . __( "Settings", 'google-analytics-dashboard-for-wp' ) . '</a>';
 			array_unshift( $links, $settings_link );
 			return $links;
-		}
-
-		/**
-		 *  Add an admin notice after a manual or atuomatic update
-		 */
-		function admin_notice() {
-			$currentScreen = get_current_screen();
-
-			if ( ! current_user_can( 'manage_options' ) || strpos( $currentScreen->base, '_gadwp_' ) === false ) {
-				return;
-			}
-
-			if ( get_option( 'gadwp_got_updated' ) ) :
-				?>
-<div id="gadwp-notice" class="notice is-dismissible">
-	<p><?php echo sprintf( __('Google Analytics Dashboard for WP has been updated to version %s.', 'google-analytics-dashboard-for-wp' ), GADWP_CURRENT_VERSION).' '.sprintf( __('For details, check out %1$s.', 'google-analytics-dashboard-for-wp' ), sprintf(' <a href="https://exactmetrics.com/?utm_source=gadwp_notice&utm_medium=link&utm_content=release_notice&utm_campaign=gadwp">%s</a>', __('the plugin documentation', 'google-analytics-dashboard-for-wp') ) ); ?></p>
-</div>
-
-			<?php
-			endif;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Author: ExactMetrics team
+ * Author: ExactMetrics
  * Author URI: https://exactmetrics.com
  * Copyright 2018 ExactMetrics team
  * License: GPLv2 or later
@@ -101,6 +101,9 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 								'tm_optout',
 								'tm_dnt_optout',
 								'ga_with_gtag',
+								'usage_tracking',
+								'hide_am_notices',
+								'network_hide_am_notices',
 			);
 			foreach ( $numerics as $key ) {
 				if ( isset( $options[$key] ) ) {
@@ -299,6 +302,9 @@ if ( ! class_exists( 'GADWP_Config' ) ) {
 								'frontend_item_reports',
 								'tm_optout', //v5.3.1.2
 								'tm_dnt_optout', //v5.3.1.2
+								'usage_tracking', //v5.3.4
+								'hide_am_notices', //v5.3.4
+								'network_hide_am_notices', //v5.3.4
 			);
 			foreach ( $zeros as $key ) {
 				if ( ! isset( $this->options[$key] ) ) {

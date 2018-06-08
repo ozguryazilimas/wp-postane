@@ -3,8 +3,8 @@
  * Plugin Name: Google Analytics Dashboard for WP (GADWP)
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
- * Author: ExactMetrics team
- * Version: 5.3.3
+ * Author: ExactMetrics
+ * Version: 5.3.4
  * Author URI: https://exactmetrics.com
  * Text Domain: google-analytics-dashboard-for-wp
  * Domain Path: /languages
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 // Plugin Version
 if ( ! defined( 'GADWP_CURRENT_VERSION' ) ) {
-	define( 'GADWP_CURRENT_VERSION', '5.3.3' );
+	define( 'GADWP_CURRENT_VERSION', '5.3.4' );
 }
 
 if ( ! defined( 'GADWP_ENDPOINT_URL' ) ) {
@@ -51,6 +51,8 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 		public $backend_item_reports = null;
 
 		public $gapi_controller = null;
+
+		public $usage_tracking = null;
 
 		/**
 		 * Construct forbidden
@@ -239,6 +241,9 @@ if ( ! class_exists( 'GADWP_Manager' ) ) {
 						include_once ( GADWP_DIR . 'admin/item-reports.php' );
 						self::$instance->backend_item_reports = new GADWP_Backend_Item_Reports();
 					}
+
+					include_once ( GADWP_DIR . 'admin/tracking.php' );
+					self::$instance->usage_tracking = new ExactMetrics_Tracking();
 				}
 			} else {
 				if ( GADWP_Tools::check_roles( self::$instance->config->options['access_front'] ) ) {
