@@ -157,14 +157,19 @@ function monsterinsights_network_page() {
                                 </th>
                                 <td>
                                     <p>
-                                        <?php echo sprintf( esc_html__( 'Already purchased an upgrade to MonsterInsights Pro? To unlock your Pro features and addons, %sfollow our upgrade guide%s to install MonsterInsights Pro.' ), '<a href="https://www.monsterinsights.com/docs/go-lite-pro/?utm_source=wpdashboard&utm_campaign=upgradedocinstall">', '</a>' ); ?>
+                                        <?php echo sprintf( esc_html__( 'Already purchased an upgrade to MonsterInsights Pro? To unlock your Pro features and addons, %sfollow our upgrade guide%s to install MonsterInsights Pro.' ), '<a href="'. monsterinsights_get_url( 'network-settings-page', 'go-lite-pro-link', "https://www.monsterinsights.com/docs/go-lite-pro" ) .'">', '</a>' ); ?>
                                     </p>
                                     <p>
-                                        <?php echo sprintf( esc_html__( "Don't yet have a Pro license? %sVisit our website%s to upgrade and learn more about all the amazing features, expanded report and powerful addons you unlock when you go Pro." ), '<a href="https://www.monsterinsights.com/lite/?utm_source=wpdashboard&utm_campaign=upgradedocbuy">', '</a>' ); ?>
+                                        <?php echo sprintf( esc_html__( "Don't yet have a Pro license? %sVisit our website%s to upgrade and learn more about all the amazing features, expanded report and powerful addons you unlock when you go Pro." ), '<a href="'. monsterinsights_get_upgrade_link( 'network-settings-page', 'upgrade-to-pro-link' ) .'">', '</a>' ); ?>
                                     </p>
                                 </td>
                             </tr>
                             <?php } ?>
+                            <?php
+                            $title       = esc_html__( 'Hide Announcements', 'google-analytics-for-wordpress' );
+                            $description = esc_html__( 'Hides plugin announcements and update details. This includes critical notices we use to inform about deprecations and important required configuration changes.', 'google-analytics-for-wordpress' );
+                            echo monsterinsights_make_checkbox( 'network_hide_am_notices', $title, $description );
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -219,6 +224,13 @@ function monsterinsights_network_settings_save_general() {
     } else {
         // Not UA before or after
             // Do nothing
+    }
+
+    $network_hide_am_notices     = isset( $_POST['network_hide_am_notices'] ) ? 1 : 0;
+    $network_hide_am_notices_old = monsterinsights_get_option( 'network_hide_am_notices', false );
+    if ( $network_hide_am_notices != $network_hide_am_notices_old ) {
+    monsterinsights_update_option( 'network_hide_am_notices', $network_hide_am_notices );
+       $throw_notice = true;
     }
 
     // Output an admin notice so the user knows what happened
