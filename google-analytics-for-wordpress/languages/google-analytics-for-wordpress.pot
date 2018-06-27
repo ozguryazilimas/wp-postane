@@ -4,7 +4,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: MonsterInsights Lite\n"
 "Report-Msgid-Bugs-To: https://github.com/awesomemotive/monsterinsights/issues\n"
-"POT-Creation-Date: 2018-06-19 10:25-0400\n"
+"POT-Creation-Date: 2018-06-26 09:08-0400\n"
 "PO-Revision-Date: 2016-07-21 17:01-0400\n"
 "Last-Translator: Chris Christoff <support@monsterinsights.com>\n"
 "Language-Team: Chris Christoff <support@monsterinsights.com>\n"
@@ -882,6 +882,10 @@ msgstr ""
 #: includes/admin/reports/abstract-report.php:329
 #, php-format
 msgid "Upgrading is easy! To upgrade, navigate to %sour pricing page%s, purchase the required license, and then follow the %sinstructions in the email receipt%s to upgrade. It only takes a few minutes to unlock the most powerful, yet easy to use analytics tracking system for WordPress."
+msgstr ""
+
+#: includes/admin/reports/abstract-report.php:369
+msgid "Visit addons page"
 msgstr ""
 
 #: includes/admin/reports/overview.php:34
