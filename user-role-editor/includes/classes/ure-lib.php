@@ -1793,9 +1793,7 @@ class URE_Lib extends URE_Base_Lib {
                 }
             }
         }
-
-        
-        
+                
         // add individual capabilities to user
         if (count($this->capabilities_to_save) > 0) {
             foreach ($this->capabilities_to_save as $key => $value) {
@@ -1803,8 +1801,9 @@ class URE_Lib extends URE_Base_Lib {
             }
         }
         $user->update_user_level_from_caps();
-        do_action('profile_update', $user->ID, $user);  // in order other plugins may hook to the user permissions update
-        
+                
+        do_action('ure_user_permissions_update', $user->ID, $user);  // in order other plugins may hook to the user permissions update
+                
         if ($this->apply_to_all) { // apply update to the all network
             if (!$this->network_update_user($user)) {
                 return false;

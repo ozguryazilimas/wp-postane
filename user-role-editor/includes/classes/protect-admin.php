@@ -116,7 +116,14 @@ class URE_Protect_Admin {
      * @return array
      */
     public function not_edit_admin($allcaps, $caps, $name) {
-        $cap = (is_array($caps) & count($caps)>0) ? $caps[0] : $caps;
+        
+        if (is_array($caps) & count($caps)>0) {
+            // 1st element of this array not always has index 0. Use workaround to extract it.
+            $caps_v = array_values($caps);
+            $cap = $caps_v[0];
+        } else {
+            $cap = $caps;
+        }
         $checked_caps = array('edit_users', 'delete_users', 'remove_users');
         if (!in_array($cap, $checked_caps)) {
             return $allcaps;
