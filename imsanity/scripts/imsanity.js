@@ -12,7 +12,7 @@ function imsanity_resize_images()
        images.push(this.value);
     });
 
-	var target = jQuery('#resize_results'); 
+	var target = jQuery('#resize_results');
 	target.html('');
 	//jQuery(document).scrollTop(target.offset().top);
 
@@ -20,22 +20,22 @@ function imsanity_resize_images()
 	imsanity_resize_next(images,0);
 }
 
-/** 
+/**
  * recursive function for resizing images
  */
 function imsanity_resize_next(images,next_index)
 {
 	if (next_index >= images.length) return imsanity_resize_complete();
-	
+
 	jQuery.post(
 		ajaxurl, // (defined by wordpress - points to admin-ajax.php)
-		{_wpnonce: imsanity_vars._wpnonce, action: 'imsanity_resize_image', id: images[next_index]}, 
-		function(response) 
+		{_wpnonce: imsanity_vars._wpnonce, action: 'imsanity_resize_image', id: images[next_index]},
+		function(response)
 		{
 			var result;
-			var target = jQuery('#resize_results'); 
+			var target = jQuery('#resize_results');
 			target.show();
-			
+
 			try {
 				result = JSON.parse(response);
 				target.append('<div>' + (next_index+1) + '/' + images.length + ' &gt;&gt; ' + result['message'] +'</div>');
@@ -60,12 +60,12 @@ function imsanity_resize_next(images,next_index)
  */
 function imsanity_resize_complete()
 {
-	var target = jQuery('#resize_results'); 
+	var target = jQuery('#resize_results');
 	target.append('<div><strong>' + imsanity_vars.resizing_complete + '</strong></div>');
 	target.animate({scrollTop: target.prop('scrollHeight')});
 }
 
-/** 
+/**
  * ajax post to return all images that are candidates for resizing
  * @param string the id of the html element into which results will be appended
  */
@@ -84,10 +84,18 @@ function imsanity_load_images(container_id)
 
 		jQuery.post(
 				ajaxurl, // (global defined by wordpress - points to admin-ajax.php)
-				{_wpnonce: imsanity_vars._wpnonce, action: 'imsanity_get_images'}, 
-				function(response) 
-				{
-					var images = JSON.parse(response); 
+				{_wpnonce: imsanity_vars._wpnonce, action: 'imsanity_get_images'},
+				function(response) {
+					var is_json = true;
+					try {
+						var images = jQuery.parseJSON(response);
+					} catch ( err ) {
+						is_json = false;
+					}
+					if ( ! is_json ) {
+						console.log( response );
+						return false;
+					}
 
 					jQuery('#imsanity_loading').hide();
 					if (images.length > 0)
@@ -105,7 +113,7 @@ function imsanity_load_images(container_id)
 					else
 					{
 						target.html('<div>' + imsanity_vars.none_found + '</div>');
-						
+
 					}
 				}
 			);

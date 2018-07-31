@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: image, scale, resize, space saver, quality
 Requires at least: 4.0
 Tested up to: 4.9.4
-Stable tag: 2.3.10
+Stable tag: 2.4.0
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually scaling? Imsanity to the rescue!
 
@@ -40,7 +40,7 @@ Imsanity is available in several languages, each of which will be downloaded aut
 
 Automatic Installation:
 
-1. Go to Admin - Plugins - Add New and search for "imsanity"
+1. Go to Admin -> Plugins -> Add New and search for "imsanity"
 2. Click the Install Button
 3. Click 'Activate'
 
@@ -70,8 +70,7 @@ the Imsanity settings page.  The "Bulk Image Resize" feature allows you to selec
 = 2. Why aren't all of my images detected when I try to use the bulk resize feature? =
 
 Imsanity doesn't search your file system to find large files, instead it looks at the "metadata"
-in the WordPress media library database.  When you upload files, WordPress stores all of the information 
-about the image.
+in the WordPress media library database. To override this behavior, enable deep scanning.
 
 = 3. Why am I getting an error saying that my "File is not an image" ? =
 
@@ -125,26 +124,14 @@ a size or value that is reasonable.
 
 = 9. Where do I go for support? =
 
-Questions may be posted on the support forum at https://wordpress.org/support/plugin/imsanity although I may move support to the helpscout platform we use for EWWW I.O.
-
-= TODO =
-
-* Add a network settings to override the individual plugin settings text
-
-== Upgrade Notice ==
-
-= 2.3.8 =
-* network settings page only available when plugin is network-activated, please let me know if that sounds crazy to you: https://ewww.io/contact-us/
-
-= 2.3.6	=
-* tested up to WP 4.4
-* if resized image is not smaller than original, then keep original
-* allow IMSANITY_AJAX_MAX_RECORDS to be overridden in wp-config.php
-* if png-to-jpg is enabled, replace png transparency with white
+Questions may be posted on the support forum at https://wordpress.org/support/plugin/imsanity but if you don't get an answer, please use https://ewww.io/contact-us/.
 
 == Changelog ==
 
-= 2.3.10 =
+= 2.4.0 =
+* added: deep scanning option for when attachment metadata isn't updating properly
+* fixed: uploads from Gutenberg not detected properly
+* fixed: some other plugin(s) trying to muck with the Imsanity settings links and breaking things
 * fixed: undefined notice for query during ajax operation
 * fixed: stale metadata could prevent further resizing
 
