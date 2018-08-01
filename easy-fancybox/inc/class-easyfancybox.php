@@ -81,7 +81,7 @@ class easyFancyBox {
 		$script .= ' };
 if(typeof easy_fancybox_handler===\'undefined\'){
 var easy_fancybox_handler=function(){
-jQuery(\'.nofancybox,a.pin-it-button,a[href*="pinterest.com/pin/create"]\').addClass(\'nolightbox\');';
+jQuery(\'.nofancybox,a.wp-block-file__button,a.pin-it-button,a[href*="pinterest.com/pin/create"]\').addClass(\'nolightbox\');';
 
 		foreach (self::$options as $key => $value) {
 			// check if not enabled or hide=true then skip
@@ -318,9 +318,9 @@ var easy_fancybox_auto=function(){setTimeout(function(){jQuery(\'a[class*="'.$tr
 		$min = ( defined('WP_DEBUG') && WP_DEBUG ) ? '' : '.min';
 
 		// ENQUEUE STYLE
-		wp_enqueue_style( 'fancybox', self::$plugin_url.'fancybox/jquery.fancybox'.$min.'.css', false, FANCYBOX_VERSION, 'screen' );
+		wp_enqueue_style( 'fancybox', self::$plugin_url.'fancybox/jquery.fancybox.'.FANCYBOX_VERSION.$min.'.css', false, null, 'screen' );
 		if ( !empty(self::$inline_style_ie) ) {
-			wp_enqueue_style( 'fancybox-ie', self::$plugin_url.'fancybox/jquery.fancybox-ie'.$min.'.css', false, FANCYBOX_VERSION, 'screen' );
+			wp_enqueue_style( 'fancybox-ie', self::$plugin_url.'fancybox/jquery.fancybox-ie.'.FANCYBOX_VERSION.$min.'.css', false, null, 'screen' );
 			$wp_styles->add_data( 'fancybox-ie', 'conditional', 'lt IE 9' );
 		}
 
@@ -329,7 +329,7 @@ var easy_fancybox_auto=function(){setTimeout(function(){jQuery(\'a[class*="'.$tr
 		$footer = get_option( 'fancybox_noFooter', false ) ? false : true;
 
 		// register main fancybox script
-		wp_enqueue_script( 'jquery-fancybox', self::$plugin_url.'fancybox/jquery.fancybox'.$min.'.js', $dep, FANCYBOX_VERSION, $footer );
+		wp_enqueue_script( 'jquery-fancybox', self::$plugin_url.'fancybox/jquery.fancybox.'.FANCYBOX_VERSION.$min.'.js', $dep, null, $footer );
 
 		// jQuery Easing, which is ot needed if jQueryUI Core Effects are loaded
 		if ( !wp_script_is( 'jquery-effects-core', 'enqueued' ) ) {
@@ -346,18 +346,18 @@ var easy_fancybox_auto=function(){setTimeout(function(){jQuery(\'a[class*="'.$tr
 				$add_easing = true;
 			// enqueue easing?
 			if ( $add_easing ) {
-				wp_enqueue_script( 'jquery-easing', self::$plugin_url.'js/jquery.easing'.$min.'.js', $dep, EASING_VERSION, $footer );
+				wp_enqueue_script( 'jquery-easing', self::$plugin_url.'js/jquery.easing.'.EASING_VERSION.$min.'.js', $dep, null, $footer );
 			}
 		}
 
 		// jQuery Mousewheel, which is not needed if jQueryUI Mouse is loaded
 		if ( get_option( 'fancybox_mouseWheel', true ) && !wp_script_is( 'jquery-ui-mouse', 'enqueued' ) ) {
-			wp_enqueue_script( 'jquery-mousewheel', self::$plugin_url.'js/jquery.mousewheel'.$min.'.js', $dep, MOUSEWHEEL_VERSION, $footer );
+			wp_enqueue_script( 'jquery-mousewheel', self::$plugin_url.'js/jquery.mousewheel.'.MOUSEWHEEL_VERSION.$min.'.js', $dep, null, $footer );
 		}
 
 		// metadata in Miscellaneous settings?
 		if ( get_option( 'fancybox_metaData' ) ) {
-			wp_enqueue_script( 'jquery-metadata',self::$plugin_url.'js/jquery.metadata'.$min.'.js', $dep, METADATA_VERSION, $footer );
+			wp_enqueue_script( 'jquery-metadata',self::$plugin_url.'js/jquery.metadata.'.METADATA_VERSION.$min.'.js', $dep, null, $footer );
 		}
 
 		if ( get_option( 'fancybox_pre45Compat', false ) || !function_exists( 'wp_add_inline_script' ) ) {
@@ -396,7 +396,7 @@ var easy_fancybox_auto=function(){setTimeout(function(){jQuery(\'a[class*="'.$tr
 	// Hack to fix missing wmode in Youtube oEmbed code based on David C's code in the comments on
 	// http://www.mehigh.biz/wordpress/adding-wmode-transparent-to-wordpress-3-media-embeds.html
 	// without the wmode, videos will float over the light box no matter what z-index is set.
-	public static function add_video_wmode_opaque($html, $url, $attr) {
+	public static function add_video_wmode_opaque($html) {
 		if ( strpos($html, "<embed src=" ) !== false ) {
 			$html = str_replace('</param><embed', '</param><param name="wmode" value="opaque"></param><embed wmode="opaque"', $html);
 		} elseif ( strpos($html, 'youtube' ) !== false && strpos($html, 'wmode' ) == false ) {
@@ -450,7 +450,7 @@ var easy_fancybox_auto=function(){setTimeout(function(){jQuery(\'a[class*="'.$tr
 			if ( is_numeric($priority) ) self::$priority = $priority;
 
 			add_action( 'wp_enqueue_scripts', array(__CLASS__,'enqueue_scripts'), self::$priority );
-			add_filter( 'embed_oembed_html', array(__CLASS__,'add_video_wmode_opaque'), 10, 3 );
+			add_filter( 'embed_oembed_html', array(__CLASS__,'add_video_wmode_opaque'), 10 );
 		} elseif ( defined('WP_DEBUG') && WP_DEBUG ) {
 			error_log('No active Easy FancyBox media types set.');
 		}
