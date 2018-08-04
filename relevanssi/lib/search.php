@@ -399,8 +399,7 @@ function relevanssi_search( $args ) {
 	// Go get the count from the options, but run the full query if it's not available.
 	$doc_count = get_option( 'relevanssi_doc_count' );
 	if ( ! $doc_count || $doc_count < 1 ) {
-		$doc_count = $wpdb->get_var( "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi" ); // WPCS: unprepared SQL ok, Relevanssi table name.
-		update_option( 'relevanssi_doc_count', $doc_count );
+		$doc_count = relevanssi_update_doc_count();
 	}
 
 	$total_hits = 0;
@@ -619,7 +618,6 @@ function relevanssi_search( $args ) {
 	if ( ! empty( $post_type_weights['category'] ) ) {
 		$cat = $post_type_weights['category'];
 	}
-
 	$include_these_posts = array();
 	$df_counts           = array();
 
@@ -728,14 +726,13 @@ function relevanssi_search( $args ) {
 				if ( ! empty( $match->taxonomy_detail ) ) {
 					relevanssi_taxonomy_score( $match, $post_type_weights );
 				} else {
-					// This shouldn't really happen, but let's still have a backup.
 					$tag_weight = 1;
-					if ( isset( $post_type_weights['post_tag'] ) ) {
+					if ( isset( $post_type_weights['post_tag'] ) && is_numeric( $post_type_weights['post_tag'] ) ) {
 						$tag_weight = $post_type_weights['post_tag'];
 					}
 
 					$category_weight = 1;
-					if ( isset( $post_type_weights['category'] ) ) {
+					if ( isset( $post_type_weights['category'] ) && is_numeric( $post_type_weights['category'] ) ) {
 						$category_weight = $post_type_weights['category'];
 					}
 
@@ -1657,20 +1654,21 @@ function relevanssi_do_query( &$query ) {
 	// Manipulating the array with array_unique() for example may mess with that.
 	$hits = array_values( $hits_filters_applied[0] );
 
-	$query->found_posts = count( $hits );
+	$hits_count         = count( $hits );
+	$query->found_posts = $hits_count;
 	if ( ! isset( $query->query_vars['posts_per_page'] ) || 0 === $query->query_vars['posts_per_page'] ) {
 		// Assume something sensible to prevent "division by zero error".
 		$query->query_vars['posts_per_page'] = -1;
 	}
 	if ( -1 === $query->query_vars['posts_per_page'] ) {
-		$query->max_num_pages = count( $hits );
+		$query->max_num_pages = $hits_count;
 	} else {
-		$query->max_num_pages = ceil( count( $hits ) / $query->query_vars['posts_per_page'] );
+		$query->max_num_pages = ceil( $hits_count / $query->query_vars['posts_per_page'] );
 	}
 
 	$update_log = get_option( 'relevanssi_log_queries' );
 	if ( 'on' === $update_log ) {
-		relevanssi_update_log( $q, count( $hits ) );
+		relevanssi_update_log( $q, $hits_count );
 	}
 
 	$make_excerpts = get_option( 'relevanssi_excerpts' );
@@ -1685,7 +1683,7 @@ function relevanssi_do_query( &$query ) {
 	}
 
 	if ( ! isset( $query->query_vars['posts_per_page'] ) || -1 === $query->query_vars['posts_per_page'] ) {
-		$search_high_boundary = count( $hits );
+		$search_high_boundary = $hits_count;
 	} else {
 		$search_high_boundary = $search_low_boundary + $query->query_vars['posts_per_page'] - 1;
 	}
@@ -1695,8 +1693,8 @@ function relevanssi_do_query( &$query ) {
 		$search_low_boundary  += $query->query_vars['offset'];
 	}
 
-	if ( $search_high_boundary > count( $hits ) ) {
-		$search_high_boundary = count( $hits );
+	if ( $search_high_boundary > $hits_count ) {
+		$search_high_boundary = $hits_count;
 	}
 
 	for ( $i = $search_low_boundary; $i <= $search_high_boundary; $i++ ) {
@@ -1729,7 +1727,6 @@ function relevanssi_do_query( &$query ) {
 			$post->original_excerpt = $post->post_excerpt;
 			$post->post_excerpt     = relevanssi_do_excerpt( $post, $q );
 		}
-
 		if ( 'on' === get_option( 'relevanssi_show_matches' ) && empty( $fields ) ) {
 			$post_id = $post->ID;
 			if ( 'user' === $post->post_type ) {
@@ -2007,9 +2004,11 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 				}
 				$kids = get_term_children( $t_id, $row['taxonomy'] );
 				foreach ( $kids as $kid ) {
-					$term            = get_term_by( 'id', $kid, $row['taxonomy'] );
 					$kid_term_tax_id = relevanssi_get_term_tax_id( $kid, $row['taxonomy'] );
-					$term_tax_id[]   = $kid_term_tax_id;
+					if ( $kid_term_tax_id ) {
+						// In some weird cases, this may be null. See: https://wordpress.org/support/topic/childrens-of-chosen-product_cat-not-showing-up/.
+						$term_tax_id[] = $kid_term_tax_id;
+					}
 				}
 			}
 		}

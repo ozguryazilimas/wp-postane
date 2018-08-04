@@ -180,7 +180,7 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 		$current_user = wp_get_current_user();
 		$post_ok      = Groups_Post_Access::user_can_read_post( $post_id, $current_user->ID );
 	}
-	if ( class_exists( 'MeprUpdateCtrl' ) && MeprUpdateCtrl::is_activated() ) {
+	if ( class_exists( 'MeprUpdateCtrl', false ) && MeprUpdateCtrl::is_activated() ) { // False, because class_exists() can be really slow sometimes otherwise.
 		// Memberpress.
 		$post = get_post( $post_id );
 		if ( MeprRule::is_locked( $post ) ) {
@@ -192,6 +192,10 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 		$access_ctrl = SwpmAccessControl::get_instance();
 		$post        = get_post( $post_id );
 		$post_ok     = $access_ctrl->can_i_read_post( $post );
+	}
+	if ( function_exists( 'wp_jv_prg_user_can_see_a_post' ) ) {
+		// WP JV Post Reading Groups.
+		$post_ok = wp_jv_prg_user_can_see_a_post( get_current_user_id(), $post_id );
 	}
 
 	/**
@@ -484,6 +488,7 @@ function relevanssi_remove_punct( $a ) {
 		return '';
 	}
 
+	$a = html_entity_decode( $a, ENT_QUOTES );
 	$a = preg_replace( '/<[^>]*>/', ' ', $a );
 
 	$punct_options = get_option( 'relevanssi_punctuation' );
@@ -530,6 +535,7 @@ function relevanssi_remove_punct( $a ) {
 		'€'                     => '',
 		'®'                     => '',
 		'©'                     => '',
+		'™'                     => '',
 		'&shy;'                 => '',
 		'&nbsp;'                => ' ',
 		chr( 194 ) . chr( 160 ) => ' ',
@@ -1085,11 +1091,13 @@ function relevanssi_get_the_title( $post_id ) {
  *
  * @global object $wpdb                 The WordPress database interface.
  * @global array  $relevanssi_variables The Relevanssi global variable, used for table names.
+ * @return int    The doc count.
  */
 function relevanssi_update_doc_count() {
 	global $wpdb, $relevanssi_variables;
-	$doc_count = $wpdb->get_var( 'SELECT COUNT(DISTINCT(relevanssi.doc)) FROM ' . $relevanssi_variables['relevanssi_table'] . ' AS relevanssi' ); // WPCS: unprepared SQL ok, Relevanssi table name.
+	$doc_count = $wpdb->get_var( 'SELECT COUNT(DISTINCT(doc)) FROM ' . $relevanssi_variables['relevanssi_table'] ); // WPCS: unprepared SQL ok, Relevanssi table name.
 	update_option( 'relevanssi_doc_count', $doc_count );
+	return $doc_count;
 }
 
 /**
@@ -1174,20 +1182,31 @@ function relevanssi_switch_blog( $new_blog, $prev_blog ) {
  * @global object $post The global post object.
  *
  * @param string $permalink The link to patch.
+ * @param object $link_post The post object for the current link, global $post if
+ * the parameter is set to null. Default null.
  *
  * @return string The link with the parameter added.
  */
-function relevanssi_add_highlight( $permalink ) {
+function relevanssi_add_highlight( $permalink, $link_post = null ) {
 	$highlight_docs = get_option( 'relevanssi_highlight_docs' );
 	$query          = get_search_query();
 	if ( isset( $highlight_docs ) && 'off' !== $highlight_docs && ! empty( $query ) ) {
-		global $post;
-		$frontpage_id = get_option( 'page_on_front' );
+		$frontpage_id = intval( get_option( 'page_on_front' ) );
 		// We won't add the highlight parameter for the front page, as that will break the link.
-		if ( is_object( $post ) && $post->ID !== $frontpage_id ) {
+		$front_page = false;
+		if ( is_object( $link_post ) ) {
+			if ( $link_post->ID === $frontpage_id ) {
+				$front_page = true;
+			}
+		} else {
+			global $post;
+			if ( is_object( $post ) && $post->ID === $frontpage_id ) {
+				$front_page = true;
+			}
+		}
+		if ( ! $front_page ) {
 			$query     = str_replace( '&quot;', '"', $query );
-			$permalink = esc_attr( add_query_arg( array( 'highlight' => rawurlencode( $query ) ), $permalink )
-			);
+			$permalink = esc_attr( add_query_arg( array( 'highlight' => rawurlencode( $query ) ), $permalink ) );
 		}
 	}
 	return $permalink;
@@ -1218,7 +1237,7 @@ function relevanssi_get_permalink() {
  * if necessary using relevanssi_add_highlight(), then echoes it out.
  */
 function relevanssi_the_permalink() {
-	echo esc_attr( relevanssi_get_permalink() );
+	echo esc_url( relevanssi_get_permalink() );
 }
 
 /**
@@ -1251,7 +1270,7 @@ function relevanssi_permalink( $link, $link_post = null ) {
 	}
 
 	if ( is_search() ) {
-		$link = relevanssi_add_highlight( $link );
+		$link = relevanssi_add_highlight( $link, $link_post );
 	}
 	return $link;
 }
