@@ -1,0 +1,24 @@
+
+#bududu_container {
+  height: 32px;
+}
+
+#bududu_whatsapp_icon {
+  height: 28px;
+}
+
+#bududu_whatsapp {
+  display: none;
+}
+
+.bududu_button {
+  float: left;
+  display: inline;
+  margin: 0 2px;
+}
+
+.bududu_button img {
+  display: inherit;
+  margin: 0;
+}
+
