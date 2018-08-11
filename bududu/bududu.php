@@ -3,7 +3,7 @@
 Plugin Name: Bududu
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: Shows social media buttons under posts. Note that this plugin does not track your site or users but the share buttons of the services shown may behave differently. Please refer to related service privacy and terms documents.
-Version: 0.5.0
+Version: 0.6.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
@@ -28,9 +28,13 @@ License: GPL2
 require_once(dirname(__FILE__) . '/includes/bududu_functions.php');
 
 function bududu_add_assets() {
-  wp_register_script('bududu', plugins_url('js/bududu.js', __FILE__), array(), '0.5.0');
+  wp_register_script('bududu', plugins_url('js/bududu.js', __FILE__), array(), '0.6.0');
   wp_enqueue_script('bududu');
-  wp_register_style('bududu', plugins_url('css/bududu.css', __FILE__), array(), '0.5.0');
+  wp_register_style('bududu_fontawesome', plugins_url('fontawesome/fontawesome.css', __FILE__), array(), '5.2.0');
+  wp_enqueue_style('bududu_fontawesome');
+  wp_register_style('bududu_fontawesome_brands', plugins_url('fontawesome/brands.css', __FILE__), array(), '5.2.0');
+  wp_enqueue_style('bududu_fontawesome_brands');
+  wp_register_style('bududu', plugins_url('css/bududu.css', __FILE__), array(), '0.6.0');
   wp_enqueue_style('bududu');
 }
 add_action('wp_enqueue_scripts', 'bududu_add_assets');

@@ -1,24 +1,88 @@
 
 #bududu_container {
-  height: 32px;
+  height: 48px;
+  margin: .2em 0 !default;
 }
 
-#bududu_whatsapp_icon {
-  height: 28px;
+.bududu_share {
+  // display: inline;
+  float: left;
+  margin: .3em .6em .3em 0;
+  vertical-align: top;
 }
 
-#bududu_whatsapp {
+.bududu_mobile {
   display: none;
 }
 
-.bududu_button {
-  float: left;
-  display: inline;
-  margin: 0 2px;
+.bududu_share_twitter .bududu_share_link {
+  background: #00aced;
 }
 
-.bududu_button img {
-  display: inherit;
-  margin: 0;
+.bududu_share_facebook .bududu_share_link {
+  background: #3b5998;
 }
+
+.bududu_share_googleplus .bududu_share_link {
+  background: #dd4b39;
+}
+
+.bududu_share_linkedin .bududu_share_link {
+  background: #007bb6;
+}
+
+.bududu_share_pinterest .bududu_share_link {
+  background: #cb2027;
+}
+
+.bududu_share_stumbleupon .bududu_share_link {
+  background: #eb4823;
+}
+
+.bududu_share_whatsapp .bududu_share_link {
+  background: #29a628;
+}
+
+.bududu_share_telegram .bududu_share_link {
+  background: #2ca5e0;
+}
+
+.bududu_share_viber .bududu_share_link {
+  background: #7b519d;
+}
+
+.bududu_share_pocket .bududu_share_link {
+  background: #ef4056;
+}
+
+
+.bududu_share_link {
+  // display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+  padding: .5em .6em !important;
+  border-radius: 50%;
+  border-radius: .3em !default;
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.15);
+  color: #FFF;
+  transition: background 200ms ease-in-out !default;
+}
+
+.bududu_share_link > i,
+.bududu_share_link:visited > i,
+.bududu_share_link:focus > i,
+.bududu_share_link:active > i {
+  color: #FFF !important;
+  width: 1em;
+  vertical-align: middle;
+  font-size: 1.5em;
+}
+
+.bududu_share_link:hover {
+  // box-shadow: 0 0 2px 3px #3D3D3D;
+  background: #a7a7a7;
+}
+
+
 
