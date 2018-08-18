@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 4.9.6
-Stable tag: 4.44
+Tested up to: 4.9.8
+Stable tag: 4.45
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ User Role Editor WordPress plugin makes user roles and capabilities changing eas
 
 == Description ==
 
-With User Role Editor WordPress plugin you can change user role (except Administrator) capabilities easy, with a few clicks.
+User Role Editor WordPress plugin allows you to change user roles and capabilities easy.
 Just turn on check boxes of capabilities you wish to add to the selected role and click "Update" button to save your changes. That's done. 
 Add new roles and customize its capabilities according to your needs, from scratch of as a copy of other existing role. 
 Unnecessary self-made role can be deleted if there are no users whom such role is assigned.
@@ -33,7 +33,7 @@ Do you need more functionality with quality support in a real time? Do you wish 
 <li>Block selected widgets under "Appearance" menu for role.</li>
 <li>Show widgets at front-end for selected roles.</li>
 <li>Block selected meta boxes (dashboard, posts, pages, custom post types) for role.</li>
-<li>"Export/Import" module. You can export user roles to the local file and import them then to any WordPress site or other sites of the multi-site WordPress network.</li> 
+<li>"Export/Import" module. You can export user role to the local file and import it to any WordPress site or other sites of the multi-site WordPress network.</li> 
 <li>Roles and Users permissions management via Network Admin  for multisite configuration. One click Synchronization to the whole network.</li>
 <li>"Other roles access" module allows to define which other roles user with current role may see at WordPress: dropdown menus, e.g assign role to user editing user profile, etc.</li>
 <li>Manage user access to editing posts/pages/custom post type using posts/pages, authors, taxonomies ID list.</li>
@@ -79,6 +79,10 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.45] 18.08.2018 =
+* Fix: Capability checkbox was shown as turned ON incorrectly for not granted capability included into a role, JSON: "caps":{"sample_cap":"false"}. Bug took place after the changing a currently selected role.
+* Fix: Custom capabilities groups "User Role Editor" and "WooCommerce" were registered at the wrong 3rd tree level - changed to 2. 
+
 = [4.44] 05.07.2018 =
 * Update: URE had executed 'profile_update' action after update of user permissions from the user permissions editor page: Users->selected user->Capabilities. 
   It was replaced with 'ure_user_permissions_update' action now. It will allow to exclude conflicts with other plugins - "WP Members" [lost checkbox fields values](https://wordpress.org/support/topic/conflict-with-wp-members-2/), for example.

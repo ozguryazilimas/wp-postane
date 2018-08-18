@@ -72,7 +72,7 @@ class URE_Capabilities_Groups_Manager {
     
     private function add_ure_group() {
         
-        $this->groups['user_role_editor'] = array('caption'=>esc_html__('User Role Editor', 'user-role-editor'), 'parent'=>'custom', 'level'=>3);
+        $this->groups['user_role_editor'] = array('caption'=>esc_html__('User Role Editor', 'user-role-editor'), 'parent'=>'custom', 'level'=>2);
         
     }
     // end of get_ure_group()
@@ -87,13 +87,13 @@ class URE_Capabilities_Groups_Manager {
         
         $post_types = get_post_types(array(), 'objects');
         
-        $this->groups['woocommerce'] = array('caption'=>esc_html__('WooCommerce', 'user-role-editor'), 'parent'=>'custom', 'level'=>3);
-        $this->groups['woocommerce_core'] = array('caption'=>esc_html__('Core', 'user-role-editor'), 'parent'=>'woocommerce', 'level'=>4);
+        $this->groups['woocommerce'] = array('caption'=>esc_html__('WooCommerce', 'user-role-editor'), 'parent'=>'custom', 'level'=>2);
+        $this->groups['woocommerce_core'] = array('caption'=>esc_html__('Core', 'user-role-editor'), 'parent'=>'woocommerce', 'level'=>3);
         foreach(URE_Woocommerce_Capabilities::$post_types as $post_type) {
             if (!isset($post_types[$post_type])) {
                 continue;                
             }    
-            $this->groups['woocommerce_'. $post_type] = array('caption'=>$post_types[$post_type]->labels->name, 'parent'=>'woocommerce', 'level'=>4);
+            $this->groups['woocommerce_'. $post_type] = array('caption'=>$post_types[$post_type]->labels->name, 'parent'=>'woocommerce', 'level'=>3);
         }
         
     }

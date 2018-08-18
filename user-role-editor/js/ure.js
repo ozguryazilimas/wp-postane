@@ -527,9 +527,9 @@ function ure_refresh_role_view(response) {
     
     ure_current_role = response.role_id;
     ure_current_role_name = response.role_name;        
-    // Select capabilities included to a newly selected role and exclude others
+    // Select capabilities granted to a newly selected role and exclude others
     jQuery('.ure-cap-cb').each(function () { // go through all capabilities checkboxes
-        jQuery(this).prop('checked', response.caps.hasOwnProperty(this.id));
+        jQuery(this).prop('checked', response.caps.hasOwnProperty(this.id) && response.caps[this.id]);
     }); 
     
     // Recalculate granted capabilities for capabilities groups
