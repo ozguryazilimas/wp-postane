@@ -1,0 +1,160 @@
+
+#daisy_fortune_main_list_filter.dataTables_filter input[type="search"] {
+  border: 0 none;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  height: 21px;
+  margin-bottom: 1px;
+  padding: 3px 0 3px 35px;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.7s ease 0s;
+  width: 200px;
+  background-color: #E3E3E3;
+  color: grey;
+  font-weight: bold;
+}
+
+#daisy_fortune_main_list_filter.dataTables_filter input[type="search"]:focus {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+  margin-bottom: 1px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  background-color: #DDF0E9;
+  color: grey;
+  font-weight: bold;
+}
+
+form#daisy_fortune_add_entry select,
+form#daisy_fortune_inner_update_form select,
+select[name=daisy_fortune_main_list_length] {
+  padding: 3px 7px;
+}
+
+#daisy_fortune_main_list_length,
+#daisy_fortune_main_list_filter {
+  margin-bottom: 10px;
+}
+
+table#daisy_fortune_main_list > tbody td a,
+table#daisy_fortune_main_list > tbody td a:link,
+table#daisy_fortune_main_list > tbody td a:visited,
+table#daisy_fortune_main_list > tbody td a:active {
+  display: block;
+  text-decoration: none;
+  color: #343434;
+}
+
+table#daisy_fortune_main_list > tbody td a:hover {
+  color: #20AADB;
+}
+
+#daisy_fortune_main_list_selector,
+#daisy_fortune_add_entry_wrapper,
+#daisy_fortune_main_list_length,
+#daisy_fortune_main_list_filter,
+table#daisy_fortune_inner_update_table,
+table#daisy_fortune_main_list {
+  font-size: 14px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  margin-top: 20px;
+}
+
+table#daisy_fortune_main_list > tbody > tr.odd {
+  background-color: #F3F3F3;
+}
+
+table#daisy_fortune_main_list thead tr {
+  background: linear-gradient(#FF950E, #FFDBAF) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+  color: #3D3D3D;
+}
+
+input[name=daisy_fortune_inner_update_delete],
+input[name=daisy_fortune_inner_update_update] {
+  padding: 5px 10px;
+}
+
+input[name=daisy_fortune_inner_update_update] {
+  float: right;
+}
+
+#daisy_fortune_add_entry_wrapper {
+  display: none;
+}
+
+#daisy_fortune_toggle_link_form {
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #3D3D3D;
+  padding: 5px 10px;
+  margin: 0 20px 0 auto;
+  border: 1px solid #A2A2A2;
+  background: linear-gradient(#FFDBAF, #FF950E) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+  width: 150px;
+  text-align: center;
+}
+
+input[name=daisy_fortune_submit] {
+  text-align: center;
+  margin: 0 20px 0 auto;
+  padding: 5px 15px;
+  display: block;
+}
+
+#daisy_fortune_add_entry_wrapper {
+  padding: 5px 10px;
+  margin: 0 10px;
+  border: 2px solid #A2A2A2;
+  border-radius: 5px;
+  box-shadow: 3px 3px #E2E2E2;
+  background: linear-gradient(#FFF, #DCDCDC) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+form#daisy_fortune_add_entry table#daisy_fortune_submit td {
+  padding: 5px 10px;
+}
+
+#daisy_fortune_link_form_error {
+  display: block;
+  text-align: center;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+#daisy_fortune_main_list_selector {
+  width: 90%;
+  margin: 30px auto 0 auto;
+  text-align: center;
+}
+
+#daisy_fortune_main_list_selector select {
+  font-size: 13px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  padding: 3px 7px;
+  margin: 0 7px;
+}
+
+img.daisy_fortune_onair_image {
+  width: 24px;
+  height: 24px;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 auto !important;
+  background: none !important;
+  padding: 0 !important;
+}
+
+img.daisy_fortune_onair_image_intro {
+  width: 40px;
+  height: 40px;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 8px;
+  background: none !important;
+  padding: 0 !important;
+}
+
+

@@ -22,18 +22,17 @@ function peyton_list_user_has_permission() {
 function peyton_list_similar_record($title) {
   global $wpdb, $peyton_list_db_main;
 
-  $similar_sql = $wpdb->prepare("SELECT * FROM %s WHERE title = %s", array($peyton_list_db_main, $title));
-  $ret = $wpdb->get_row($similar_sql);
+  $ret = $wpdb->get_row("SELECT * FROM $peyton_list_db_main WHERE title = '$title'");
 
   return $ret;
 }
 
 function peyton_list_initial_data() {
   return array(
-      'title' => '',
-      'category' => 1,
-      'status' => 1,
-      'link' => ''
+    'title' => '',
+    'category' => 1,
+    'status' => 1,
+    'link' => ''
   );
 }
 
@@ -364,7 +363,7 @@ function peyton_list_datatable($has_perm, $open_form) {
     <script language="javascript" type="text/javascript">
     //<![CDATA[
 
-      var dt_data;
+      var peyton_list_dt_data;
       var peyton_list_ajax_url = "' . admin_url('admin-ajax.php') . '";
       var peyton_list_table;
       var peyton_list_open_insert_form = ' . ($open_form ? 1 : 0) . ';
@@ -376,7 +375,7 @@ function peyton_list_datatable($has_perm, $open_form) {
       var peyton_list_category_color = ' . json_encode($peyton_list_category_color) . ';
       var peyton_list_default_edit_str = peyton_list_user_has_permission ? "+" : "&nbsp;";
 
-      var dt_str = {
+      var peyton_list_dt_str = {
         all: "' . __('All', 'peyton_list') . '",
         empty_table: "' . __('No results found', 'peyton_list') . '",
         search: "' . __('Search', 'peyton_list') . '",
@@ -403,7 +402,7 @@ function peyton_list_datatable($has_perm, $open_form) {
         connection_problem: "' .  __('Connection problem', 'peyton_list') . '"
       };
 
-      dt_data = ' . json_encode(peyton_list_get_entries()) . ';
+      peyton_list_dt_data = ' . json_encode(peyton_list_get_entries()) . ';
 
     //]]>
     </script>

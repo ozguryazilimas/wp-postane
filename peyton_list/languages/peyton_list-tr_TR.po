@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-21 22:00+0300\n"
-"PO-Revision-Date: 2014-12-28 19:12+0300\n"
+"PO-Revision-Date: 2018-08-22 00:56+0300\n"
 "Last-Translator: Onur Küçük <onur@ozguryazilim.com.tr>\n"
 "Language-Team: \n"
 "Language: Turkish \n"
@@ -18,110 +18,143 @@ msgstr ""
 "X-Generator: Vim 7.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: peyton_list.php:100
+msgid "Running"
+msgstr "Devam"
 
-#: includes/peyton_list_common.php:69
+#: peyton_list.php:101
+msgid "Mini"
+msgstr "Mini"
+
+#: peyton_list.php:102
+msgid "Canceled"
+msgstr "İptal"
+
+#: peyton_list.php:103
+msgid "Unclear"
+msgstr "Belirsiz"
+
+#: peyton_list.php:104
+msgid "Missing"
+msgstr "Girilmemiş"
+
+#: includes/daisy_fortune_common.php:69 includes/peyton_list_common.php:69
 msgid "Title can not be blank"
 msgstr "Dizi boş olamaz"
 
-#: includes/peyton_list_common.php:74
+#: includes/daisy_fortune_common.php:74 includes/peyton_list_common.php:74
 msgid "This record was already added"
 msgstr "Bu girdi daha önce eklendi"
 
-#: includes/peyton_list_common.php:220
+#: includes/daisy_fortune_common.php:218 includes/peyton_list_common.php:219
 msgid "Add New Entry"
 msgstr "Yeni Girdi Ekle"
 
-#: includes/peyton_list_common.php:238 includes/peyton_list_common.php:354
-#: includes/peyton_list_common.php:389
+#: includes/daisy_fortune_common.php:236 includes/daisy_fortune_common.php:328
+#: includes/daisy_fortune_common.php:360 includes/peyton_list_common.php:237
+#: includes/peyton_list_common.php:353 includes/peyton_list_common.php:388
 msgid "Title"
 msgstr "Dizi"
 
-#: includes/peyton_list_common.php:247 includes/peyton_list_common.php:323
-#: includes/peyton_list_common.php:356 includes/peyton_list_common.php:390
-msgid "Category"
-msgstr "Kategori"
+#: includes/daisy_fortune_common.php:245 includes/daisy_fortune_common.php:311
+#: includes/daisy_fortune_common.php:330 includes/daisy_fortune_common.php:361
+msgid "Onair"
+msgstr "Durum"
 
-#: includes/peyton_list_common.php:270 includes/peyton_list_common.php:335
-#: includes/peyton_list_common.php:358 includes/peyton_list_common.php:391
-msgid "Status"
-msgstr "Tanıtım"
-
-#: includes/peyton_list_common.php:293 includes/peyton_list_common.php:392
+#: includes/daisy_fortune_common.php:268 includes/daisy_fortune_common.php:362
+#: includes/peyton_list_common.php:292 includes/peyton_list_common.php:391
 msgid "Link"
 msgstr "Bağlantı"
 
-#: includes/peyton_list_common.php:304 includes/peyton_list_common.php:393
+#: includes/daisy_fortune_common.php:277 includes/daisy_fortune_common.php:331
+#: includes/daisy_fortune_common.php:363
+msgid "Comment"
+msgstr "Bilgi"
+
+#: includes/daisy_fortune_common.php:288 includes/daisy_fortune_common.php:364
+#: includes/peyton_list_common.php:303 includes/peyton_list_common.php:392
 msgid "Add"
 msgstr "Ekle"
 
-#: includes/peyton_list_common.php:325 includes/peyton_list_common.php:337
-#: includes/peyton_list_common.php:381
+#: includes/daisy_fortune_common.php:313 includes/daisy_fortune_common.php:352
+#: includes/peyton_list_common.php:324 includes/peyton_list_common.php:336
+#: includes/peyton_list_common.php:380
 msgid "All"
 msgstr "Hepsi"
 
-#: includes/peyton_list_common.php:382
+#: includes/daisy_fortune_common.php:353 includes/peyton_list_common.php:381
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
-#: includes/peyton_list_common.php:383
+#: includes/daisy_fortune_common.php:354 includes/peyton_list_common.php:382
 msgid "Search"
 msgstr "Ara"
 
-#: includes/peyton_list_common.php:384
+#: includes/daisy_fortune_common.php:355 includes/peyton_list_common.php:383
 msgid "First"
 msgstr "İlk"
 
-#: includes/peyton_list_common.php:385
+#: includes/daisy_fortune_common.php:356 includes/peyton_list_common.php:384
 msgid "Last"
 msgstr "Son"
 
-#: includes/peyton_list_common.php:386
+#: includes/daisy_fortune_common.php:357 includes/peyton_list_common.php:385
 msgid "Next"
 msgstr "Sonraki"
 
-#: includes/peyton_list_common.php:387
+#: includes/daisy_fortune_common.php:358 includes/peyton_list_common.php:386
 msgid "Previous"
 msgstr "Önceki"
 
-#: includes/peyton_list_common.php:388
+#: includes/daisy_fortune_common.php:359 includes/peyton_list_common.php:387
 msgid "_TOTAL_ total"
 msgstr "Toplam _TOTAL_"
 
-#: includes/peyton_list_common.php:394
+#: includes/daisy_fortune_common.php:365 includes/peyton_list_common.php:393
 msgid "Update"
 msgstr "Güncelle"
 
-#: includes/peyton_list_common.php:395
+#: includes/daisy_fortune_common.php:366 includes/peyton_list_common.php:394
 msgid "Delete"
 msgstr "Sil"
 
-#: includes/peyton_list_common.php:396 includes/peyton_list_common.php:397
+#: includes/daisy_fortune_common.php:367 includes/daisy_fortune_common.php:368
+#: includes/peyton_list_common.php:395 includes/peyton_list_common.php:396
 msgid "Created by"
 msgstr "Oluşturan"
 
-#: includes/peyton_list_common.php:398
+#: includes/daisy_fortune_common.php:369 includes/peyton_list_common.php:397
 msgid "Created at"
 msgstr "Oluşturulma zamanı"
 
-#: includes/peyton_list_common.php:399 includes/peyton_list_common.php:400
+#: includes/daisy_fortune_common.php:370 includes/daisy_fortune_common.php:371
+#: includes/peyton_list_common.php:398 includes/peyton_list_common.php:399
 msgid "Updated by"
 msgstr "Güncelleyen"
 
-#: includes/peyton_list_common.php:401
+#: includes/daisy_fortune_common.php:372 includes/peyton_list_common.php:400
 msgid "Updated at"
 msgstr "Güncelleme zamanı"
 
-#: includes/peyton_list_common.php:402
+#: includes/daisy_fortune_common.php:373 includes/peyton_list_common.php:401
 msgid "Update failed"
 msgstr "Güncelleme başarısız oldu"
 
-#: includes/peyton_list_common.php:403
+#: includes/daisy_fortune_common.php:374 includes/peyton_list_common.php:402
 msgid "Delete failed"
 msgstr "Silme başarısız oldu"
 
-#: includes/peyton_list_common.php:404
+#: includes/daisy_fortune_common.php:375 includes/peyton_list_common.php:403
 msgid "Connection problem"
-msgstr "Başlantı problemi"
+msgstr "Bağlantı problemi"
 
+#: includes/peyton_list_common.php:246 includes/peyton_list_common.php:322
+#: includes/peyton_list_common.php:355 includes/peyton_list_common.php:389
+msgid "Category"
+msgstr "Kategori"
 
+#: includes/peyton_list_common.php:269 includes/peyton_list_common.php:334
+#: includes/peyton_list_common.php:357 includes/peyton_list_common.php:390
+msgid "Status"
+msgstr "Tanıtım"
 

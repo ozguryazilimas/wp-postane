@@ -31,27 +31,6 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
 });
 
 
-// add external filter
-jQuery.fn.dataTable.ext.search.push(
-  function(settings, data, dataIndex) {
-    var category_matching =  true;
-    var status_matching = true;
-    var category_val = jQuery('select[name=peyton_list_main_list_selector_category]').val();
-    var status_val = jQuery('select[name=peyton_list_main_list_selector_status]').val();
-
-    if (category_val !== '0') {
-      category_matching = category_val === data[3];
-    }
-
-    if (status_val !== '0') {
-      status_matching = status_val === data[5];
-    }
-
-    return (category_matching && status_matching);
-  }
-);
-
-
 function peyton_list_format_peyton_list_table_form(row) {
   var d = row.data();
   var row_index = row.index();
@@ -62,11 +41,11 @@ function peyton_list_format_peyton_list_table_form(row) {
         '<input type="hidden" name="id" value="' + d.id + '" />' +
         '<table id="peyton_list_inner_update_table">' +
           '<tr>' +
-            '<td><label for="title">' + dt_str['form_title'] + '</label></td>' +
+            '<td><label for="title">' + peyton_list_dt_str['form_title'] + '</label></td>' +
             '<td><input type="text" name="title" size="50" required="true" value="' + d.title + '" /></td>' +
           '</tr>' +
           '<tr>' +
-            '<td><label for="category">' + dt_str['form_category'] + '</label></td>' +
+            '<td><label for="category">' + peyton_list_dt_str['form_category'] + '</label></td>' +
             '<td>' +
               '<select name="category">';
 
@@ -84,7 +63,7 @@ function peyton_list_format_peyton_list_table_form(row) {
             '</td>' +
           '</tr>' +
           '<tr>' +
-            '<td><label for="status">' + dt_str['form_status'] + '</label></td>' +
+            '<td><label for="status">' + peyton_list_dt_str['form_status'] + '</label></td>' +
             '<td>' +
               '<select name="status">';
 
@@ -102,20 +81,20 @@ function peyton_list_format_peyton_list_table_form(row) {
             '</td>' +
           '</tr>' +
           '<tr>' +
-            '<td><label for="link">' + dt_str['form_link'] + '</label></td>' +
+            '<td><label for="link">' + peyton_list_dt_str['form_link'] + '</label></td>' +
             '<td><input type="text" name="link" size="50" value="' + d.link + '" /></td>' +
           '</tr>';
 
   jQuery.each(['created_by_humanized', 'created_at', 'updated_by_humanized', 'updated_at'], function(ix, k) {
     ret += '<tr>' +
-             '<td><label for="' + k + '">' + dt_str['form_' + k] + '</label></td>' +
+             '<td><label for="' + k + '">' + peyton_list_dt_str['form_' + k] + '</label></td>' +
              '<td>' + d[k] + '</td>' +
            '</tr>';
   });
 
   ret +=  '<tr>' +
-            '<td><input type="submit" name="peyton_list_inner_update_delete" data-row_index="' + row_index + '" value="' + dt_str['form_delete'] + '"/></td>' +
-            '<td><input type="submit" name="peyton_list_inner_update_update" data-row_index="' + row_index + '" value="' + dt_str['form_update'] + '"/></td>' +
+            '<td><input type="submit" name="peyton_list_inner_update_delete" data-row_index="' + row_index + '" value="' + peyton_list_dt_str['form_delete'] + '"/></td>' +
+            '<td><input type="submit" name="peyton_list_inner_update_update" data-row_index="' + row_index + '" value="' + peyton_list_dt_str['form_update'] + '"/></td>' +
           '</tr>' +
         '</table>' +
       '</form>' +
@@ -124,11 +103,34 @@ function peyton_list_format_peyton_list_table_form(row) {
   return ret;
 }
 
-jQuery(document).ready(function() {
+function initialize_peyton_list() {
+  if (jQuery('table#peyton_list_main_list').length === 0) {
+    return;
+  }
+
+  // add external filter
+  jQuery.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
+      var category_matching =  true;
+      var status_matching = true;
+      var category_val = jQuery('select[name=peyton_list_main_list_selector_category]').val();
+      var status_val = jQuery('select[name=peyton_list_main_list_selector_status]').val();
+
+      if (category_val !== '0') {
+        category_matching = category_val === data[3];
+      }
+
+      if (status_val !== '0') {
+        status_matching = status_val === data[5];
+      }
+
+      return (category_matching && status_matching);
+    }
+  );
 
   peyton_list_table = jQuery('table#peyton_list_main_list').DataTable({
     iDisplayLength: 100,
-    lengthMenu: [[20, 50, 100, 250, -1], [20, 50, 100, 250, dt_str.all]],
+    lengthMenu: [[20, 50, 100, 250, -1], [20, 50, 100, 250, peyton_list_dt_str.all]],
     bPaginate: true,
     bSearchable: true,
     order: [[2, 'asc']],
@@ -181,16 +183,16 @@ jQuery(document).ready(function() {
     language: {
       search: '',
       lengthMenu: "_MENU_",
-      emptyTable: dt_str['empty_table'],
-      zeroRecords: dt_str['empty_table'],
-      info: dt_str['info'],
+      emptyTable: peyton_list_dt_str['empty_table'],
+      zeroRecords: peyton_list_dt_str['empty_table'],
+      info: peyton_list_dt_str['info'],
       infoEmpty: '',
       infoFiltered: '',
       paginate: {
-        first: dt_str['first'],
-        last: dt_str['last'],
-        next: dt_str['next'],
-        previous: dt_str['previous']
+        first: peyton_list_dt_str['first'],
+        last: peyton_list_dt_str['last'],
+        next: peyton_list_dt_str['next'],
+        previous: peyton_list_dt_str['previous']
       }
     },
     fnCreatedRow: function(nRow, aData, iDataIndex) {
@@ -201,8 +203,8 @@ jQuery(document).ready(function() {
     }
   });
 
-  jQuery('.dataTables_filter input').attr("placeholder", dt_str.search);
-  peyton_list_table.rows.add(dt_data).columns.adjust().draw();
+  jQuery('.dataTables_filter input').attr("placeholder", peyton_list_dt_str.search);
+  peyton_list_table.rows.add(peyton_list_dt_data).columns.adjust().draw();
 
   if (peyton_list_user_has_permission) {
     jQuery('a#peyton_list_toggle_link_form').on('click', function() {
@@ -268,10 +270,10 @@ jQuery(document).ready(function() {
 
     if (is_update) {
       ajax_data.peyton_list_action = 'update';
-      failed_str = dt_str['update_failed'];
+      failed_str = peyton_list_dt_str['update_failed'];
     } else {
       ajax_data.peyton_list_action = 'delete';
-      failed_str = dt_str['delete_failed'];
+      failed_str = peyton_list_dt_str['delete_failed'];
     }
 
     jQuery.ajax({
@@ -302,7 +304,7 @@ jQuery(document).ready(function() {
       },
       error: function(message) {
         console.log(message);
-        alert(dt_str['connection_problem']);
+        alert(peyton_list_dt_str['connection_problem']);
       }
     });
 
@@ -318,6 +320,9 @@ jQuery(document).ready(function() {
   if (peyton_list_open_insert_form) {
     jQuery('a#peyton_list_toggle_link_form').click();
   }
+}
 
+jQuery(document).ready(function() {
+  initialize_peyton_list();
 });
 
