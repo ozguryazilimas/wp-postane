@@ -293,9 +293,10 @@ function daisy_fortune_insert_form($formdata) {
       </form>
     </div>';
 
-  echo $output;
-
-  return ($error_msg != '');
+  return array(
+    $output,
+    ($error_msg != '')
+  );
 }
 
 function daisy_fortune_datatable($has_perm, $open_form) {
@@ -382,21 +383,24 @@ function daisy_fortune_datatable($has_perm, $open_form) {
     </script>
   ';
 
-  echo $output;
+  return $output;
 }
 
 function daisy_fortune_main() {
   // var_dump($_POST);
   $has_perm = daisy_fortune_user_has_permission();
   $open_form = false;
+  $form_output = '';
 
   if ($has_perm) {
     $formdata = daisy_fortune_process_post();
-    $open_form = daisy_fortune_insert_form($formdata);
+    $ret = daisy_fortune_insert_form($formdata);
+    $form_output = $ret[0];
+    $open_form = $ret[1];
   }
 
-  daisy_fortune_datatable($has_perm, $open_form);
+  $table_output =  daisy_fortune_datatable($has_perm, $open_form);
+  return "\n" . $form_output . "\n" . $table_output . "\n";
 }
-
 
 ?>

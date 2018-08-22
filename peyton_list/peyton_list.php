@@ -188,12 +188,12 @@ function peyton_list_init() {
 
 function peyton_list_get_main_data() {
   peyton_list_add_custom_assets();
-  peyton_list_main();
+  return peyton_list_main();
 }
 
 function daisy_fortune_get_main_data() {
   daisy_fortune_add_custom_assets();
-  daisy_fortune_main();
+  return daisy_fortune_main();
 }
 
 add_shortcode('peyton_list', 'peyton_list_get_main_data');

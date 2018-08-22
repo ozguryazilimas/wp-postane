@@ -306,9 +306,10 @@ function peyton_list_insert_form($formdata) {
       </form>
     </div>';
 
-  echo $output;
-
-  return ($error_msg != '');
+  return array(
+    $output,
+    ($error_msg != '')
+  );
 }
 
 function peyton_list_datatable($has_perm, $open_form) {
@@ -408,7 +409,7 @@ function peyton_list_datatable($has_perm, $open_form) {
     </script>
   ';
 
-  echo $output;
+  return $output;
 }
 
 function peyton_list_intro() {
@@ -447,22 +448,26 @@ function peyton_list_intro() {
     </div>
   ';
 
-  echo $output;
+  return $output;
 };
 
 function peyton_list_main() {
   // var_dump($_POST);
   $has_perm = peyton_list_user_has_permission();
   $open_form = false;
+  $form_output = '';
 
-  peyton_list_intro();
+  # peyton_list_intro();
 
   if ($has_perm) {
     $formdata = peyton_list_process_post();
-    $open_form = peyton_list_insert_form($formdata);
+    $ret = peyton_list_insert_form($formdata);
+    $form_output = $ret[0];
+    $open_form = $ret[1];
   }
 
-  peyton_list_datatable($has_perm, $open_form);
+  $table_output = peyton_list_datatable($has_perm, $open_form);
+  return "\n" . $form_output . "\n" . $table_output . "\n";
 }
 
 
