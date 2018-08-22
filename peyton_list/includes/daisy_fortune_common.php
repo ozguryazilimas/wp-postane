@@ -147,7 +147,8 @@ function daisy_fortune_get_entries_raw($entry_id = false) {
   if ($entry_id) {
     $where_statement = 'WHERE DF.id = ' . $entry_id;
   } else {
-    $where_statement = '';
+    # do not show reality shows
+    $where_statement = 'WHERE DF.category != 6';
   }
 
   $sql_str = "SELECT
