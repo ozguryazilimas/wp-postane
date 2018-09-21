@@ -7,7 +7,7 @@
  * Copyright (c) 2008 - 2010 Janis Skarnelis
  * That said, it is hardly a one-person project. Many people have submitted bugs, code, and offered their advice freely. Their support is greatly appreciated.
  *
- * Version: 1.3.21 (2018/08/01)
+ * Version: 1.3.22 (2018/09/14)
  * Requires: jQuery v1.7+
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -275,6 +275,8 @@
 
 				case 'pdf':
 					selectedOpts.scrolling = 'no';
+					selectedOpts.enableKeyboardNav = false;
+					selectedOpts.showNavArrows = false;
 
 					str = '<object type="application/pdf" width="100%" height="100%" data="' + href + '"><a href="' + href + '" style="display:block;position:absolute;top:48%;width:100%;text-align:center">' + $(obj).html() + '</a></object>';
 
@@ -324,6 +326,8 @@
 				break;
 
 				case 'iframe':
+					selectedOpts.enableKeyboardNav = false;
+					selectedOpts.showNavArrows = false;
 
 					$.fancybox.showActivity();
 
@@ -403,6 +407,8 @@
 			currentOpts = selectedOpts;
 
 			if (currentOpts.overlayShow) {
+				$('html').addClass('fancybox-active');
+
 				overlay.css({
 					'background-color' : currentOpts.overlayColor,
 					'opacity' : currentOpts.overlayOpacity,
@@ -1097,7 +1103,8 @@
 		$(window).off("orientationchange.fb resize.fb scroll.fb mousewheel.fb");
 		$(document).off('keydown.fb');
 
-		content.find('iframe#fancybox-frame').attr('src', isIE6 && /^https/i.test(window.location.href || '') ? 'javascript:void(false)' : 'about:blank');
+		/* causes an extra entry in the browser history. why is this needed at all?
+		content.find('iframe#fancybox-frame').attr('src', isIE6 && /^https/i.test(window.location.href || '') ? 'javascript:void(false)' : 'about:blank');*/
 
 		if (currentOpts.titlePosition !== 'inside') {
 			title.empty();
@@ -1155,6 +1162,7 @@
 			wrap.fadeOut( currentOpts.transitionOut == 'none' ? 0 : currentOpts.speedOut, _cleanup);
 		}
 
+		$('html').removeClass('fancybox-active');
 	};
 
 	$.fancybox.resize = function() {
