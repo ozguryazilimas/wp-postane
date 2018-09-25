@@ -1,5 +1,23 @@
 CHANGES LOG (full version).
 ===========================
+= [4.46] 20.09.2018
+* Update: "Users" page, "Without role" button: underlying SQL queries were replaced with more robust versions (about 10 times faster).
+  It is critical for sites with large quant of users.New query does not take into account though some cases with incorrect users data (usually imported from the external sources).
+  It's possible to use older (comprehensive but slower) query version defining a PHP constant: "define('URE_COUNT_USERS_WITHOUT_ROLE_THOROUGHLY', true);" or
+  return false from a custom 'ure_count_users_without_role_quick' filter.
+* Update: error checking was enhanced after default role change for the subsite under WordPress multisite.
+
+= [4.45] 18.08.2018 =
+* Fix: Capability checkbox was shown as turned ON incorrectly for not granted capability included into a role, JSON: "caps":{"sample_cap":"false"}. Bug took place after the changing a currently selected role.
+* Fix: Custom capabilities groups "User Role Editor" and "WooCommerce" were registered at the wrong 3rd tree level - changed to 2. 
+
+= [4.44] 05.07.2018 =
+* Update: URE had executed 'profile_update' action after update of user permissions from the user permissions editor page: Users->selected user->Capabilities. 
+  It was replaced with 'ure_user_permissions_update' action now. It will allow to exclude conflicts with other plugins - "WP Members" [lost checkbox fields values](https://wordpress.org/support/topic/conflict-with-wp-members-2/), for example.
+* Update: Additional options for role (like "Hide admin bar" at the bottom of URE page) did not applied to the user with 'ure_edit_roles' capability. This conditon was removed.
+* Update: fix PHP notice 'Undefined offset: 0 in ...' at includes/classes/protect-admin.php, not_edit_admin(), where the 1st element of $caps array not always has index 0.
+* Update: PHP required version was increased up to 5.4.
+
 = [4.43] 05.06.2018 =
 * Update: references to non-existed roles are removed from the URE role additional options data storage after any role update.
 * Fix: Additional options section view for the current role was not refreshed properly after other current role selection.
@@ -359,7 +377,7 @@ in case no one of the other active plugins load file with this function already 
 
 = 4.11 =
 * 06.04.2014
-* Single-site: It is possible to bulk move users without role (--No role for this site--) to the selected role or automatically created role "No rights" without any capabilities. Get more details at http://role-editor.com/no-role-for-this-site/
+* Single-site: It is possible to bulk move users without role (--No role for this site--) to the selected role or automatically created role "No rights" without any capabilities. Get more details at https://role-editor.com/no-role-for-this-site/
 * Plugin uses for dialogs jQuery UI CSS included into WordPress package.
 
 = 4.10 =

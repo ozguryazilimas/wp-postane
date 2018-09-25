@@ -363,7 +363,7 @@ class URE_Lib extends URE_Base_Lib {
                 if ($mess) {
                     $mess .= '<br/>';
                 }
-                $mess = esc_html__('Error occured during role(s) update', 'user-role-editor');
+                $mess = esc_html__('Error occurred during role(s) update', 'user-role-editor');
             }
         } else {
             if ($this->update_user($this->user_to_edit)) {
@@ -375,7 +375,7 @@ class URE_Lib extends URE_Base_Lib {
                 if ($mess) {
                     $mess .= '<br/>';
                 }
-                $mess = esc_html__('Error occured during user update', 'user-role-editor');
+                $mess = esc_html__('Error occurred during user update', 'user-role-editor');
             }
         }
         return $mess;
@@ -1595,25 +1595,26 @@ class URE_Lib extends URE_Base_Lib {
      * @return string
      */
     protected function change_default_role() {
-        global $wp_roles;
 
         if (!$this->multisite || is_network_admin()) {
             return 'Try to misuse the plugin functionality';
         }
+        
         $mess = '';
         if (!isset($wp_roles)) {
             $wp_roles = new WP_Roles();
+            $wp_roles = wp_roles();
         }
         if (!empty($_POST['user_role_id'])) {
             $user_role_id = $_POST['user_role_id'];
             unset($_POST['user_role_id']);
             if (isset($wp_roles->role_objects[$user_role_id]) && $user_role_id !== 'administrator') {
-                $result = update_option('default_role', $user_role_id);
-                if (empty($result)) {
-                    $mess = 'Error! ' . esc_html__('Error encountered during default role change operation', 'user-role-editor');
-                } else {
-                    $this->get_default_role();
+                update_option('default_role', $user_role_id);
+                $this->get_default_role();
+                if ($this->wp_default_role===$user_role_id) {
                     $mess = sprintf(esc_html__('Default role for new users is set to %s successfully', 'user-role-editor'), $wp_roles->role_names[$user_role_id]);
+                } else {
+                    $mess = 'Error! ' . esc_html__('Error encountered during default role change operation', 'user-role-editor');
                 }
             } elseif ($user_role_id === 'administrator') {
                 $mess = 'Error! ' . esc_html__('Can not set Administrator role as a default one', 'user-role-editor');

@@ -15,9 +15,13 @@ class URE_Advertisement {
 	function __construct() {
 		
 		$used = array(-1);
-		//$index = $this->rand_unique( $used );		
-  $index = 0;
+		
+		$index = $this->rand_unique( $used );
 		$this->slots[$index] = $this->admin_menu_editor();
+		$used[] = $index;
+		
+		$index = $this->rand_unique( $used );
+		$this->slots[$index] = $this->clearfy();
 		$used[] = $index;
     				
 	}
@@ -47,8 +51,9 @@ class URE_Advertisement {
 	
 		$output = '
 			<div style="text-align: center;">
-				<a href="http://w-shadow.com/admin-menu-editor-pro/?utm_source=UserRoleEditor&utm_medium=banner&utm_campaign=Plugins " target="_new" >
-					<img src="'. URE_PLUGIN_URL . 'images/admin-menu-editor-pro.jpg' .'" alt="Admin Menu Editor Pro" title="Move, rename, hide, add admin menu items, restrict access"/>
+				<a href="https://adminmenueditor.com/?utm_source=UserRoleEditor&utm_medium=banner&utm_campaign=Plugins" target="_new" >
+					<img src="'. URE_PLUGIN_URL . 'images/admin-menu-editor-pro.jpg' .'" alt="Admin Menu Editor Pro" 
+									title="Move, rename, hide, add admin menu items, restrict access" width="250" height="250" />
 				</a>
 			</div>  
 			';
@@ -56,6 +61,23 @@ class URE_Advertisement {
 		return $output;
 	}
 	// end of admin_menu_editor()
+	
+	
+	// content of Clearfy advertisement slot
+	private function clearfy() {
+	
+		$output = '
+			<div style="text-align: center;">
+				<a href="https://clearfy.pro/?utm_source=wordpress.org&utm_campaign=user-role-editor" target="_new" >
+					<img src="'. URE_PLUGIN_URL . 'images/clearfy.jpg' .'" alt="Clearfy" title="Disable unused WordPress features"
+									 width="250" height="250" />
+				</a>
+			</div>  
+			';
+		
+		return $output;
+	}
+	// end of clearfy()
 	  			
 	
 	/**
