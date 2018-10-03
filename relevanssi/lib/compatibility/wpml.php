@@ -84,8 +84,9 @@ function relevanssi_wpml_filter( $data ) {
 	return $data;
 }
 
-// add_action( 'wp_ajax_relevanssi_index_posts', 'relevanssi_wpml_remove_filters', 5 );
-// add_action( 'wp_ajax_relevanssi_index_taxonomies', 'relevanssi_wpml_remove_filters', 5 );
+add_action( 'wp_ajax_relevanssi_index_posts', 'relevanssi_wpml_remove_filters', 5 );
+add_action( 'wp_ajax_relevanssi_index_taxonomies', 'relevanssi_wpml_remove_filters', 5 );
+
 /**
  * Removes WPML filters from get_term().
  *

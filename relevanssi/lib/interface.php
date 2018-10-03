@@ -232,8 +232,17 @@ function update_relevanssi_options() {
 		if ( empty( $value ) ) {
 			$value = 0;
 		}
+
 		if ( 'relevanssi_weight_' === substr( $key, 0, strlen( 'relevanssi_weight_' ) ) ) {
 			$type                       = substr( $key, strlen( 'relevanssi_weight_' ) );
+			$post_type_weights[ $type ] = $value;
+		}
+		if ( 'relevanssi_taxonomy_weight_' === substr( $key, 0, strlen( 'relevanssi_taxonomy_weight_' ) ) ) {
+			$type                       = 'post_tagged_with_' . substr( $key, strlen( 'relevanssi_taxonomy_weight_' ) );
+			$post_type_weights[ $type ] = $value;
+		}
+		if ( 'relevanssi_term_weight_' === substr( $key, 0, strlen( 'relevanssi_term_weight_' ) ) ) {
+			$type                       = 'taxonomy_term_' . substr( $key, strlen( 'relevanssi_term_weight_' ) );
 			$post_type_weights[ $type ] = $value;
 		}
 		if ( 'relevanssi_index_type_' === substr( $key, 0, strlen( 'relevanssi_index_type_' ) ) ) {
@@ -454,6 +463,27 @@ function relevanssi_search_stats() {
 	} else {
 		printf( '<p>%s</p>', esc_html__( 'Enable query logging to see stats here.', 'relevanssi' ) );
 	}
+}
+
+/**
+ * Prints out the 'Admin search' page.
+ */
+function relevanssi_admin_search_page() {
+	global $relevanssi_variables;
+
+	$relevanssi_hide_branding = get_option( 'relevanssi_hide_branding' );
+
+	$options_txt = __( 'Admin Search', 'relevanssi' );
+
+	wp_enqueue_style( 'dashboard' );
+	wp_print_styles( 'dashboard' );
+	wp_enqueue_script( 'dashboard' );
+	wp_print_scripts( 'dashboard' );
+
+	printf( "<div class='wrap'><h2>%s</h2>", esc_html( $options_txt ) );
+
+	require_once dirname( $relevanssi_variables['file'] ) . '/lib/tabs/search-page.php';
+	relevanssi_search_tab();
 }
 
 /**
@@ -731,6 +761,7 @@ function relevanssi_options_form() {
 	<a href="<?php echo esc_attr( $this_page ); ?>&amp;tab=stopwords" class="nav-tab <?php echo 'stopwords' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Stopwords', 'relevanssi' ); ?></a>
 	<?php if ( RELEVANSSI_PREMIUM ) : ?>
 	<a href="<?php echo esc_attr( $this_page ); ?>&amp;tab=importexport" class="nav-tab <?php echo 'importexport' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Import / Export options', 'relevanssi' ); ?></a>
+	<a href="<?php echo esc_attr( $this_page ); ?>&amp;tab=search" class="nav-tab <?php echo 'search' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php echo esc_html_x( 'Search', 'noun', 'relevanssi' ); ?></a>
 	<?php endif; ?>
 </h2>
 
@@ -816,6 +847,7 @@ function relevanssi_add_admin_scripts( $hook ) {
 		'settings_page_relevanssi-premium/relevanssi',
 		'toplevel_page_relevanssi/relevanssi',
 		'settings_page_relevanssi/relevanssi',
+		'dashboard_page_relevanssi_admin_search',
 	);
 	if ( ! in_array( $hook, $acceptable_hooks, true ) ) {
 		return;
@@ -869,7 +901,8 @@ function relevanssi_add_admin_scripts( $hook ) {
 	wp_localize_script( 'relevanssi_admin_js', 'relevanssi', $localizations );
 
 	$nonce = array(
-		'indexing_nonce' => wp_create_nonce( 'relevanssi_indexing_nonce' ),
+		'indexing_nonce'  => wp_create_nonce( 'relevanssi_indexing_nonce' ),
+		'searching_nonce' => wp_create_nonce( 'relevanssi_admin_search_nonce' ),
 	);
 
 	wp_localize_script( 'relevanssi_admin_js', 'nonce', $nonce );
