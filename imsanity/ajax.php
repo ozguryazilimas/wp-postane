@@ -14,16 +14,24 @@ add_action( 'wp_ajax_imsanity_resize_image', 'imsanity_resize_image' );
  */
 function imsanity_verify_permission() {
 	if ( ! current_user_can( 'activate_plugins' ) ) { // this isn't a real capability, but super admins can do anything, so it works.
-		die( json_encode( array(
-			'success' => false,
-			'message' => esc_html__( 'Administrator permission is required', 'imsanity' ),
-		) ) );
+		die(
+			json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'Administrator permission is required', 'imsanity' ),
+				)
+			)
+		);
 	}
 	if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'imsanity-bulk' ) ) {
-		die( json_encode( array(
-			'success' => false,
-			'message' => esc_html__( 'Access token has expired, please reload the page.', 'imsanity' ),
-		) ) );
+		die(
+			json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'Access token has expired, please reload the page.', 'imsanity' ),
+				)
+			)
+		);
 	}
 }
 
@@ -48,6 +56,9 @@ function imsanity_get_images() {
 	while ( $images ) {
 
 		foreach ( $images as $image ) {
+			$imagew = false;
+			$imageh = false;
+
 			$meta = unserialize( $image->file_meta );
 			if ( imsanity_get_option( 'imsanity_deep_scan', false ) ) {
 				$file_path = imsanity_attachment_path( $meta, $image->ID, '', false );
@@ -94,10 +105,14 @@ function imsanity_resize_image() {
 	$id = (int) $_POST['id'];
 
 	if ( ! $id ) {
-		die( json_encode( array(
-			'success' => false,
-			'message' => esc_html__( 'Missing ID Parameter', 'imsanity' ),
-		) ) );
+		die(
+			json_encode(
+				array(
+					'success' => false,
+					'message' => esc_html__( 'Missing ID Parameter', 'imsanity' ),
+				)
+			)
+		);
 	}
 
 	$meta = wp_get_attachment_metadata( $id );
@@ -108,10 +123,14 @@ function imsanity_resize_image() {
 		if ( ! is_writable( $oldpath ) ) {
 			/* translators: %s: File-name of the image */
 			$msg = sprintf( esc_html__( '%s is not writable', 'imsanity' ), $oldpath );
-			die( json_encode( array(
-				'success' => false,
-				'message' => $msg,
-			) ) );
+			die(
+				json_encode(
+					array(
+						'success' => false,
+						'message' => $msg,
+					)
+				)
+			);
 		}
 
 		$maxw = imsanity_get_option( 'imsanity_max_width', IMSANITY_DEFAULT_MAX_WIDTH );

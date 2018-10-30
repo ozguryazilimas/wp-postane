@@ -2,9 +2,10 @@
 Contributors: nosilver4u,verysimple
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MKMQKCBFFG3WW
 Tags: image, scale, resize, space saver, quality
-Requires at least: 4.0
-Tested up to: 4.9.4
-Stable tag: 2.4.0
+Requires at least: 4.5
+Tested up to: 5.0
+Requires PHP: 5.6
+Stable tag: 2.4.1
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually scaling? Imsanity to the rescue!
 
@@ -128,6 +129,10 @@ Questions may be posted on the support forum at https://wordpress.org/support/pl
 
 == Changelog ==
 
+= 2.4.1 =
+* fixed: bulk resizer scan returning incorrect results
+* fixed: sprintf error during resizing and upload
+ 
 = 2.4.0 =
 * added: deep scanning option for when attachment metadata isn't updating properly
 * fixed: uploads from Gutenberg not detected properly

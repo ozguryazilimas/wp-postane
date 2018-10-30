@@ -12,9 +12,9 @@
 Plugin Name: Imsanity
 Plugin URI: https://wordpress.org/plugins/imsanity/
 Description: Imsanity stops insanely huge image uploads
-Author: Shane Bishop
+Author: Exactly WWW
 Text Domain: imsanity
-Version: 2.4.0
+Version: 2.4.1
 Author URI: https://ewww.io/
 License: GPLv3
 */
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'IMSANITY_VERSION', '2.4.0' );
+define( 'IMSANITY_VERSION', '2.4.1' );
 define( 'IMSANITY_SCHEMA_VERSION', '1.1' );
 
 define( 'IMSANITY_DEFAULT_MAX_WIDTH', 2048 );
@@ -181,16 +181,22 @@ function imsanity_handle_upload( $params ) {
 				}
 			} elseif ( false === $resizeresult ) {
 				return $params;
-			} else {
+			} elseif ( is_wp_error( $resizeresult ) ) {
 				// resize didn't work, likely because the image processing libraries are missing.
 				// remove the old image so we don't leave orphan files hanging around.
 				unlink( $oldpath );
 
 				$params = wp_handle_upload_error(
 					$oldpath,
-					/* translators: 1: error message 2: link to support forums */
-					sprintf( esc_html__( 'Imsanity was unable to resize this image for the following reason: %1$s. If you continue to see this error message, you may need to install missing server components. If you think you have discovered a bug, please report it on the Imsanity support forum: %$2s', 'imsanity' ), $resizeresult->get_error_message(), 'https://wordpress.org/support/plugin/imsanity' )
+					sprintf(
+						/* translators: 1: error message 2: link to support forums */
+						esc_html__( 'Imsanity was unable to resize this image for the following reason: %1$s. If you continue to see this error message, you may need to install missing server components. If you think you have discovered a bug, please report it on the Imsanity support forum: %2$s', 'imsanity' ),
+						$resizeresult->get_error_message(),
+						'https://wordpress.org/support/plugin/imsanity'
+					)
 				);
+			} else {
+				return $params;
 			}
 		}
 	}
