@@ -30,7 +30,7 @@ class User_Role_Editor {
     
     
     public static function get_instance() {
-        if (self::$instance===null) {        
+        if ( self::$instance===null ) {
             self::$instance = new User_Role_Editor();
         }
         

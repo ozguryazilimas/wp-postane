@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 4.9.8
-Stable tag: 4.46
+Tested up to: 5.0
+Stable tag: 4.47
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,7 +79,14 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
-= [4.46] 25.09.2018
+= [4.47] 12.11.2018 =
+* Fix: "Users->User Role Editor": Capabilities view was not refreshed properly for new selected role in case "Granted Only" filter was turned ON before other role selection.
+* Update: Unused code was removed from user-role-editor/includes/classes/bbpress.php
+* Update: Prevent sudden revoke role 'administrator' from a user(s) during capability with the same ID ('administrator') deletion from roles.
+* Update: Adding custom capability with ID 'administrator' was prohibited.
+* Update: Marked as compatible with WordPress version 5.0
+
+= [4.46] 25.09.2018 =
 * Update: "Users" page, "Without role" button: underlying SQL queries were replaced with more robust versions (about 10 times faster).
   It is critical for sites with large quant of users.New query does not take into account though some cases with incorrect users data (usually imported from the external sources).
   It's possible to use older (comprehensive but slower) query version defining a PHP constant: "define('URE_COUNT_USERS_WITHOUT_ROLE_THOROUGHLY', true);" or

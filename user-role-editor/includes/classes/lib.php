@@ -55,9 +55,9 @@ class URE_Lib extends URE_Base_Lib {
         $this->debug = defined('URE_DEBUG') && (URE_DEBUG==1 || URE_DEBUG==true);
  
         if ($this->is_pro()) {
-            $this->bbpress = new URE_bbPress_Pro($this);
+            $this->bbpress = new URE_bbPress_Pro();
         } else {
-            $this->bbpress = new URE_bbPress($this);
+            $this->bbpress = new URE_bbPress();
         }
         
         $this->upgrade();

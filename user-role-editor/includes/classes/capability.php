@@ -48,6 +48,13 @@ class URE_Capability {
                 'cap_id'=>'do_not_allow');
             return $data;
         }
+        if ($cap_id=='administrator') {
+            $data = array(
+                'result'=>false, 
+                'message'=>esc_html__('Error: this word is used by WordPress as a role ID', 'user-role-editor'),
+                'cap_id'=>'administrator');
+            return $data;
+        }
         
         $data = array(
             'result'=>true, 
@@ -122,15 +129,19 @@ class URE_Capability {
         return $caps;
     }
     // end of get_caps_for_deletion_from_post()
-    
-    
+            
         
     private static function revoke_caps_from_user($user_id, $caps) {
         $user = get_user_to_edit($user_id);
         foreach($caps as $cap_id) {
-            if (isset($user->caps[$cap_id])) {
-                $user->remove_cap($cap_id);
+            if (!isset($user->caps[$cap_id])) {
+                continue;
             }
+            // Prevent sudden revoke role 'administrator' from a user during 'administrator' capability deletion.
+            if ($cap_id=='administrator') { 
+                continue;
+            }
+            $user->remove_cap($cap_id);            
         }
     }
     // end of revoke_caps_from_user()

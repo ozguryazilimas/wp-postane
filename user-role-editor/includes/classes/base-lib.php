@@ -41,7 +41,7 @@ class URE_Base_Lib {
         $this->multisite = function_exists('is_multisite') && is_multisite();
         if ($this->multisite) {
             $this->blog_ids = $this->get_blog_ids();
-            // get Id of 1st (main) blog
+            // get Id of the 1st (main) blog
             $this->main_blog_id = $this->get_main_site();
         }
 
@@ -348,4 +348,4 @@ class URE_Base_Lib {
     // end of __wakeup()
 
 }
-// end of Garvs_WP_Lib class
+// end of URE_Base_Lib class
