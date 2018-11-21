@@ -1,0 +1,120 @@
+== Changelog ==
+
+= 2.0 =
+UX changes and added more functionalities
+
+= 1.6.4 =
+Update images directory
+
+= 1.6.3 =
+Removed opt-in form
+
+= 1.6.2 =
+Fixed deprecated php function
+
+= 1.6.1 =
+Fixed Import for php5.2
+
+= 1.6 =
+Fixed Import
+
+= 1.5.9 =
+Minor changes
+
+= 1.5.8 =
+Fixed minor bugs
+
+= 1.5.7 =
+Fixed issue with importer
+
+= 1.5.6 =
+Fixed bug with dashboard panels in wp-admin
+
+= 1.5.5 =
+WordPress v4.4.1 Compatibility
+
+= 1.5.4 =
+Fixed conflict with WP Mandrill plugin
+Added option to hide the activity panel in the dashboard
+Renamed Right Now widget to At a Glance
+
+= 1.5.3 =
+Security release. Better use of WordPress nonces and enhanced validation on import functionality. Disclosed by g0blin.
+
+= 1.5.2 =
+Login Logo width fixed for version WordPress 3.8
+fixed 16px logo in admin bar on front end
+Fixed advert on wlcms advert on the settings page
+Fixed Dashboard logo not appear on dashboard for WP 3.8
+Fixed Footer logo does not line up properly WP 3.8
+Fixed Hide WordPress Logos from admin bar
+
+
+= 1.5.1 =
+Security patch - added nonce to admin form for better security. Props PC SJJ. 
+
+= 1.5 =
+Added Custom RSS Feeds as new option
+Added Import/Export of settings feature.
+Updated CSS rules for wp-login.
+Minor bug fixes
+
+= 1.4.7 =
+Minor Bug introduced with WordPress 3.4 and custom login images. 
+Also added conditionals to prevent any errors with user capabilities. 
+
+= 1.4.6 =
+Patch submitted by Chris @ iThemes. Better support for users of iThemes.
+
+= 1.4.5 =
+Changed how media menu is hidden to allow both hiding the menu and still able to add content. (Small bug)
+
+= 1.4.4 =
+Better support for other languages, deactivating the plugin does not remove options, only deleting it will run the uninstall script. Other minor fixes.
+
+= 1.4.3 =
+Minor Bug Fixes and some improvements on how forms are saved.
+
+= 1.4.2 =
+Bug Fixes, hopefully the last ones for this version
+
+= 1.4.1 =
+Bug Fixes for radio buttons, media uploader and login style
+
+= 1.4 =
+Changes for WordPress 3.3
+Ability to brand the dashboard
+Lots of new changes and bug fixes
+
+= 1.3 =
+Changes for WordPress 3.2
+Restructure of menus
+Added classic header and footer for 3.2 to improve branding
+Header logo as site link
+Admin can view dashboards but hide them from editors
+Hide browser nag
+
+Bug fixes
+
+= 1.2 =
+Ability to show Menu & Widgets menu for Editors
+Removed WordPress link and ALT text from login page.
+Custom css for forgotten link on login page.
+Tested on multi user sites.
+Fixed a bug which was stopping the Profile from appearing.
+
+= 1.1 =
+Ability to remove menus
+Added widths for header and footer logos.
+
+= 1.0.5 =
+Updated terminology
+
+= 1.0.4 =
+Updated custom login image file height
+
+= 1.0.3 =
+Updated logo filename
+
+= 1.0.2 =
+Added update log!
