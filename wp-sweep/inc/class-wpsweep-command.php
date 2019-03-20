@@ -1,5 +1,13 @@
 <?php
+/**
+ * WP-Sweep WP-CLI
+ *
+ * @package wp-sweep
+ */
 
+/**
+ * Class WPSweep_Command
+ */
 class WPSweep_Command extends WP_CLI_Command {
 	/**
 	 * Clean up unused, orphaned and duplicated data in your WordPress
@@ -11,37 +19,43 @@ class WPSweep_Command extends WP_CLI_Command {
 	 *
 	 * Name of the items selected individually
 	 * Available Items =
-	 * 	revisions
-	 * 	auto_drafts
-	 * 	deleted_posts
-	 * 	unapproved_comments
-	 * 	spam_comments
-	 * 	deleted_comments
-	 * 	transient_options
-	 * 	orphan_postmeta
-	 * 	orphan_commentmeta
-	 * 	orphan_usermeta
-	 * 	orphan_termmeta
-	 * 	orphan_term_relationships
-	 * 	unused_terms
-	 * 	duplicated_postmeta
-	 * 	duplicated_commentmeta
-	 * 	duplicated_usermeta
-	 * 	duplicated_termmeta
-	 * 	optimize_database
-	 * 	oembed_postmet
+	 *  revisions
+	 *  auto_drafts
+	 *  deleted_posts
+	 *  unapproved_comments
+	 *  spam_comments
+	 *  deleted_comments
+	 *  transient_options
+	 *  orphan_postmeta
+	 *  orphan_commentmeta
+	 *  orphan_usermeta
+	 *  orphan_termmeta
+	 *  orphan_term_relationships
+	 *  unused_terms
+	 *  duplicated_postmeta
+	 *  duplicated_commentmeta
+	 *  duplicated_usermeta
+	 *  duplicated_termmeta
+	 *  optimize_database
+	 *  oembed_postmeta
 	 *
 	 * ## EXAMPLES
 	 *
 	 *  1. wp sweep --all
-	 *		- Run Sweep for all the items.
+	 *      - Run Sweep for all the items.
 	 *  2. wp sweep revisions
-	 *		- Sweep only Revision
+	 *      - Sweep only Revision
 	 *  3. wp sweep revisions auto_drafts deleted_posts unapproved_comments spam_comments deleted_comments transient_options orphan_postmeta orphan_commentmeta orphan_usermeta orphan_termmeta orphan_term_relationships unused_terms duplicated_postmeta duplicated_commentmeta duplicated_usermeta duplicated_termmeta optimize_database oembed_postmet
-	 *		- Sweep the selected items
+	 *      - Sweep the selected items
 	 *
+	 * @since 1.0.8
 	 *
-	*/
+	 * @access public
+	 *
+	 * @param array $args array Arguments passed to command. Generally unused.
+	 * @param array $assoc_args Parameters passed to command to be passed to callback.
+	 * @return void
+	 */
 	public function __invoke( $args, $assoc_args ) {
 
 		$items = array();
@@ -68,14 +82,14 @@ class WPSweep_Command extends WP_CLI_Command {
 			'18' => 'oembed_postmeta',
 		);
 
-		if ( isset( $assoc_args['all'] ) && true == $assoc_args['all'] ) {
+		if ( isset( $assoc_args['all'] ) && true === $assoc_args['all'] ) {
 			$this->run_sweep( $default_items );
 			WP_CLI::success( 'Sweep Complete' );
 
 			return;
 		} else {
 			foreach ( $default_items as $key => $item ) {
-				if ( in_array( $item, $args ) ) {
+				if ( in_array( $item, $args, true ) ) {
 					array_push( $items, $item );
 				}
 			}
@@ -88,6 +102,16 @@ class WPSweep_Command extends WP_CLI_Command {
 
 	}
 
+	/**
+	 * Run WP-Sweep
+	 *
+	 * @since 1.0.8
+	 *
+	 * @access public
+	 *
+	 * @param array $items Sweep items.
+	 * @return void
+	 */
 	public function run_sweep( $items ) {
 
 		$sweep = new WPSweep();
@@ -99,8 +123,5 @@ class WPSweep_Command extends WP_CLI_Command {
 				WP_CLI::success( $message );
 			}
 		}
-
 	}
 }
-
-WP_CLI::add_command( 'sweep', 'WPSweep_Command' );
