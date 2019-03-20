@@ -3,8 +3,8 @@ Contributors: RavanH
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=Easy%20FancyBox
 Tags: fancybox, lightbox, gallery, image, photo, video, flash, overlay, youtube, vimeo, dailymotion, pdf, svg, iframe, swf, jquery, webp
 Requires at least: 3.3
-Tested up to: 4.9
-Stable tag: 1.8.9
+Tested up to: 5.1
+Stable tag: 1.8.13
 
 Easily enable the FancyBox jQuery extension on just about all media links. Multi-Site compatible. Supports iFrame and Flash movies.
 
@@ -313,9 +313,9 @@ To create Youtube thumbnail galleries, install https://wordpress.org/plugins/you
 
 = Can I display web pages or HTML files in a FancyBox overlay? =
 
-Yes. First, enable the iFrame option on Settings > Media. Then, in your post or page content create a link with either `class="fancybox-iframe"` or `class="fancybox iframe"` (notice the space instead of the hyphen) to any web page or .htm(l) file in your content.
+Yes. First, enable the iFrame option on Settings > Media. Then, in your post or page content create a link to any web page or .htm(l) file in your content. Then switch to the Text tab in the Classic Editor or to Edit as HTML (under More options in the block menu) in Gutenberg, find the link `<a ... >` tag and give it a `class="fancybox-iframe"` attribute.
 
-NOTE: The difference between these two classes ('-' or space) is in size of the overlay window. Try it out and use the one that works best for you :)
+Note: Not all external web pages are allowed to be embedded in an iframe and may be blocked by a server response header or script. The result will be either an empty/blank light box or the target page "breaking out" of the light box and loading in the main browser tab.
 
 
 = Can I show PDF files in a FancyBox overlay? =
@@ -460,8 +460,8 @@ If, after activation, your images do not open in a FancyBox overlay, there are s
 
 = Basic checks =
 
-1. Make sure that thumbnail images are linked *directly* to their larger counterpart, not to a dynamic WordPress page that includes the larger image. This means when you insert an image in your posts or pages, you need to select `File URL` at the **Link** option instead of `Page URL`. You'll have to manually edit your old posts if you have always inserted images with `Page URL` before, FancyBox cannot do this for you.
-1. Make sure you have all the needed media and their *Auto-detect* options activated on your **Settings > Media** admin page. If you are using images in other formats that JPG, GIF or PNG, you need to add the extensions to the Auto-detect field for Images. Please note: The image file names must actaully *end* with that extension! This means that if you have an image file that (for example) has *no* extension (does not end with .jpg or any other) even if is in JPEG compressed format, the FancyBox will not be able to detect is as an image. You will need to manually give those links the class `fancybox` to trigger FancyBox.
+1. Make sure that thumbnail images are linked *directly* to their larger counterpart, not to a dynamic WordPress page that includes the larger image. This means when you insert an image in your posts or pages, you need to select **Media File** at the Link option instead of Page URL. You'll have to manually edit your old posts if you have always inserted images with `Page URL` before, FancyBox cannot do this for you.
+1. Make sure you have all the needed media and their *Auto-detect* options activated on your **Settings > Media** admin page. If you are using images in other formats that JPG, GIF or PNG, you need to add the extensions to the Auto-detect field for Images. Please note: The image file names must actaully _end_ with that extension! This means that if you have an image file that (for example) has _no_ extension (does not end with .jpg or any other) even if is in JPEG compressed format, the FancyBox will not be able to detect is as an image. You will need to manually give those links the class `fancybox image` to trigger FancyBox.
 
 = General trouble shooting steps =
 
@@ -494,11 +494,21 @@ If you still do not get to see your images in FancyBox, ask on the [Easy FancyBo
 
 == Upgrade Notice ==
 
-= 1.8.9 =
-Prevent gallery next/prev links to show dud target.
+= 1.8.13 =
+Prepare Visual Composer Masonry Grid Gallery compatibility option
 
 
 == Changelog ==
+
+= 1.8.13 =
+* Fix version constant issue
+* Prepare Visual Composer Masonry Grid Gallery compatibility option
+
+= 1.8.11 =
+* Fix Vimeo player direct links breaking
+
+= 1.8.10 =
+* Force default autoselector for galleries
 
 = 1.8.9 =
 * Prevent gallery next/prev links to show dud target
