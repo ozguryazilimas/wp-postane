@@ -60,6 +60,12 @@ function imsanity_get_images() {
 			$imageh = false;
 
 			$meta = unserialize( $image->file_meta );
+		
+			// If "noresize" is included in the filename then we will bypass imsanity scaling.
+			if ( ! empty( $meta['file'] ) && strpos( $meta['file'], 'noresize' ) !== false ) {
+				continue;
+			}
+
 			if ( imsanity_get_option( 'imsanity_deep_scan', false ) ) {
 				$file_path = imsanity_attachment_path( $meta, $image->ID, '', false );
 				if ( $file_path ) {
@@ -120,9 +126,9 @@ function imsanity_resize_image() {
 	if ( $meta && is_array( $meta ) ) {
 		$uploads = wp_upload_dir();
 		$oldpath = imsanity_attachment_path( $meta['file'], $id, '', false );
-		if ( ! is_writable( $oldpath ) ) {
+		if ( empty( $oldpath ) || ! is_writable( $oldpath ) ) {
 			/* translators: %s: File-name of the image */
-			$msg = sprintf( esc_html__( '%s is not writable', 'imsanity' ), $oldpath );
+			$msg = sprintf( esc_html__( '%s is not writable', 'imsanity' ), $meta['file'] );
 			die(
 				json_encode(
 					array(

@@ -166,7 +166,6 @@ function imsanity_maybe_created_custom_table() {
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
-		$data = imsanity_get_default_multisite_settings();
 
 		// Add the rows to the database.
 		$data = imsanity_get_default_multisite_settings();
@@ -377,6 +376,9 @@ function imsanity_get_multisite_settings() {
 			$_imsanity_multisite_settings->imsanity_max_width_library  = $_imsanity_multisite_settings->imsanity_max_width;
 			$_imsanity_multisite_settings->imsanity_max_height_other   = $_imsanity_multisite_settings->imsanity_max_height;
 			$_imsanity_multisite_settings->imsanity_max_width_other    = $_imsanity_multisite_settings->imsanity_max_width;
+		}
+		if ( ! property_exists( $_imsanity_multisite_settings, 'imsanity_deep_scan' ) ) {
+			$_imsanity_multisite_settings->imsanity_deep_scan = false;
 		}
 	}
 	return $_imsanity_multisite_settings;
