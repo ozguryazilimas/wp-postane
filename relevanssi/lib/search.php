@@ -702,6 +702,7 @@ function relevanssi_search( $args ) {
 					foreach ( $matches as $match ) {
 						$existing_ids[] = $match->doc;
 					}
+					$existing_ids = array_keys( array_flip( $existing_ids ) );
 					$existing_ids = implode( ',', $existing_ids );
 					$query        = "SELECT relevanssi.*, relevanssi.title * $title_boost +
 					relevanssi.content * $content_boost + relevanssi.comment * $comment_boost +
@@ -723,6 +724,7 @@ function relevanssi_search( $args ) {
 							$existing_items[] = $match->item;
 						}
 					}
+					$existing_items = array_keys( array_flip( $existing_items ) );
 					$existing_items = implode( ',', $existing_items );
 					if ( ! empty( $existing_items ) ) {
 						$existing_items = "AND relevanssi.item NOT IN ($existing_items) ";
@@ -919,10 +921,12 @@ function relevanssi_search( $args ) {
 						$scores[ $match->doc ] = 0;
 					}
 					$scores[ $match->doc ] += $match->weight;
-					if ( is_numeric( $match->doc ) ) {
+					// For AND searches, add the posts to the $include_these lists, so that
+					// nothing is missed.
+					if ( is_numeric( $match->doc ) && 'AND' === $operator ) {
 						// This is to weed out taxonomies and users (t_XXX, u_XXX).
 						$include_these_posts[ $match->doc ] = true;
-					} elseif ( 0 !== intval( $match->item ) ) {
+					} elseif ( 0 !== intval( $match->item ) && 'AND' === $operator ) {
 						$include_these_items[ $match->item ] = true;
 					}
 				}
@@ -1497,7 +1501,7 @@ function relevanssi_do_query( &$query ) {
 		if ( isset( $query->query_vars['post__in'] ) && is_array( $query->query_vars['post__in'] ) && ! empty( $query->query_vars['post__in'] ) ) {
 			$post_query = array( 'in' => $query->query_vars['post__in'] );
 		}
-		if ( isset( $query->query_vars['post_not__in'] ) && is_array( $query->query_vars['post__not_in'] ) && ! empty( $query->query_vars['post__not_in'] ) ) {
+		if ( isset( $query->query_vars['post__not_in'] ) && is_array( $query->query_vars['post__not_in'] ) && ! empty( $query->query_vars['post__not_in'] ) ) {
 			$post_query = array( 'not in' => $query->query_vars['post__not_in'] );
 		}
 
@@ -1926,6 +1930,7 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 	if ( ! isset( $row['field'] ) ) {
 		$row['field'] = 'term_id'; // In case 'field' is not set, go with the WP default of 'term_id'.
 	}
+	$row['field'] = strtolower( $row['field'] ); // In some cases, you can get 'ID' instead of 'id'.
 	if ( 'slug' === $row['field'] ) {
 		$slug          = $row['terms'];
 		$numeric_slugs = array();

@@ -168,12 +168,13 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 			$post_ok = true;
 		}
 
-		if ( function_exists( 'members_can_current_user_view_post' ) ) {
-			// Members.
-			$post_ok = members_can_current_user_view_post( $post_id );
+		if ( function_exists( 'members_content_permissions_enabled' ) && function_exists( 'members_can_current_user_view_post' ) ) {
+			// Members. Only use, if 'content permissions' feature is enabled.
+			if ( members_content_permissions_enabled() ) {
+				$post_ok = members_can_current_user_view_post( $post_id );
+			}
 		}
 	}
-
 	if ( defined( 'GROUPS_CORE_VERSION' ) ) {
 		// Groups.
 		$current_user = wp_get_current_user();
@@ -195,13 +196,6 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 	if ( function_exists( 'wp_jv_prg_user_can_see_a_post' ) ) {
 		// WP JV Post Reading Groups.
 		$post_ok = wp_jv_prg_user_can_see_a_post( get_current_user_id(), $post_id );
-	}
-	if ( class_exists( 'AAM', false ) ) {
-		$object = AAM::api()->getUser()->getObject( 'post', $post_id );
-		if ( $object->has( 'frontend.read' ) ) {
-			// Current user is not allowed to see this post.
-			$post_ok = false;
-		}
 	}
 	/**
 	 * Filters statuses allowed in admin searches.
@@ -246,6 +240,7 @@ function relevanssi_populate_array( $matches ) {
 		array_push( $ids, $match->doc );
 	}
 
+	$ids   = array_keys( array_flip( $ids ) ); // Remove duplicate IDs.
 	$ids   = implode( ',', $ids );
 	$posts = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE id IN ($ids)" ); // WPCS: unprepared SQL ok, no user-generated inputs.
 
@@ -493,6 +488,8 @@ function relevanssi_remove_punct( $a ) {
 		return '';
 	}
 
+	$a = preg_replace( '/&lt;(\d|\s)/', '\1', $a );
+
 	$a = html_entity_decode( $a, ENT_QUOTES );
 	$a = preg_replace( '/<[^>]*>/', ' ', $a );
 
@@ -647,7 +644,6 @@ function relevanssi_prevent_default_request( $request, $query ) {
 		}
 
 		$admin_search_ok = true;
-
 		/**
 		 * Filters the admin search.
 		 *
@@ -1402,10 +1398,10 @@ function relevanssi_simple_generate_suggestion( $query ) {
 	$q = 'SELECT query, count(query) as c, AVG(hits) as a FROM ' . $relevanssi_variables['log_table'] . ' WHERE hits > ' . $count . ' GROUP BY query ORDER BY count(query) DESC';
 	$q = apply_filters( 'relevanssi_didyoumean_query', $q );
 
-	$data = wp_cache_get( 'relevanssi_didyoumean_query' );
+	$data = get_transient( 'relevanssi_didyoumean_query' );
 	if ( empty( $data ) ) {
 		$data = $wpdb->get_results( $q ); // WPCS: unprepared SQL ok. No user-generated input involved.
-		wp_cache_set( 'relevanssi_didyoumean_query', $data );
+		set_transient( 'relevanssi_didyoumean_query', $data, 60 * 60 * 24 * 7 );
 	}
 
 	$query            = htmlspecialchars_decode( $query, ENT_QUOTES );
@@ -1538,4 +1534,97 @@ function relevanssi_sanitize_hex_color( $color ) {
 	}
 
 	return '';
+}
+
+/**
+ * Displays the list of most common words in the index.
+ *
+ * @global object $wpdb                 The WP database interface.
+ * @global array  $relevanssi_variables The global Relevanssi variables.
+ *
+ * @param int     $limit  How many words to display, default 25.
+ * @param boolean $wp_cli If true, return just a list of words. If false, print out
+ * HTML code.
+ *
+ * @return array A list of words, if $wp_cli is true.
+ */
+function relevanssi_common_words( $limit = 25, $wp_cli = false ) {
+	global $wpdb, $relevanssi_variables;
+
+	$plugin = 'relevanssi';
+	if ( RELEVANSSI_PREMIUM ) {
+		$plugin = 'relevanssi-premium';
+	}
+
+	if ( ! is_numeric( $limit ) ) {
+		$limit = 25;
+	}
+
+	$words = $wpdb->get_results( 'SELECT COUNT(*) as cnt, term FROM ' . $relevanssi_variables['relevanssi_table'] . " GROUP BY term ORDER BY cnt DESC LIMIT $limit" ); // WPCS: unprepared sql ok, Relevanssi table name and $limit is numeric.
+
+	if ( ! $wp_cli ) {
+		printf( '<h2>%s</h2>', esc_html__( '25 most common words in the index', 'relevanssi' ) );
+		printf( '<p>%s</p>', esc_html__( "These words are excellent stopword material. A word that appears in most of the posts in the database is quite pointless when searching. This is also an easy way to create a completely new stopword list, if one isn't available in your language. Click the word to add the word to the stopword list. The word will also be removed from the index, so rebuilding the index is not necessary.", 'relevanssi' ) );
+
+?>
+<input type="hidden" name="dowhat" value="add_stopword" />
+<table class="form-table">
+<tr>
+	<th scope="row"><?php esc_html_e( 'Stopword Candidates', 'relevanssi' ); ?></th>
+	<td>
+<ul>
+	<?php
+	$src = plugins_url( 'delete.png', $relevanssi_variables['file'] );
+
+	foreach ( $words as $word ) {
+		$stop = __( 'Add to stopwords', 'relevanssi' );
+		printf( '<li><input style="padding: 0; margin: 0" type="submit" src="%1$s" name="term" value="%2$s"/> (%3$d)</li>', esc_attr( $src ), esc_attr( $word->term ), esc_html( $word->cnt ) );
+	}
+	?>
+	</ul>
+	</td>
+</tr>
+</table>
+	<?php
+
+	}
+
+	return $words;
+}
+
+/**
+ * Returns a list of post types Relevanssi does not want to use.
+ *
+ * @return array An array of post type names.
+ */
+function relevanssi_get_forbidden_post_types() {
+	return array(
+		'nav_menu_item',        // Navigation menu items.
+		'revision',             // Never index revisions.
+		'acf-field',            // Advanced Custom Fields.
+		'acf-field-group',      // Advanced Custom Fields.
+		'oembed_cache',         // Mysterious caches.
+		'customize_changeset',  // Customizer change sets.
+		'user_request',         // User data request.
+		'custom_css',           // Custom CSS data.
+		'cpt_staff_lst_item',   // Staff List.
+		'cpt_staff_lst',        // Staff List.
+		'wp_block',             // Gutenberg block.
+		'amp_validated_url',    // AMP.
+		'jp_pay_order',         // Jetpack.
+		'jp_pay_product',       // Jetpack.
+	);
+}
+
+/**
+ * Returns a list of taxonomies Relevanssi does not want to use.
+ *
+ * @return array An array of taxonomy names.
+ */
+function relevanssi_get_forbidden_taxonomies() {
+	return array(
+		'nav_menu',               // Navigation menus.
+		'link_category',          // Link categories.
+		'amp_validation_error',   // AMP.
+	);
 }

@@ -21,7 +21,7 @@ function relevanssi_the_excerpt() {
 	if ( ! post_password_required( $post ) ) {
 		echo '<p>' . $post->post_excerpt . '</p>'; // WPCS: XSS ok.
 	} else {
-		echo esc_html__( 'There is no excerpt because this is a protected post.' );
+		esc_html_e( 'There is no excerpt because this is a protected post.', 'relevanssi' );
 	}
 }
 
@@ -536,7 +536,7 @@ function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
 			}
 		}
 
-		if ( preg_match_all( '/<(style|script|object|embed|pre|code).*<\/(style|script|object|embed|pre|code)>/U', $content, $matches ) > 0 ) {
+		if ( preg_match_all( '/<(style|script|object|embed|pre|code).*<\/(style|script|object|embed|pre|code)>/Us', $content, $matches ) > 0 ) {
 			// Remove highlights in style, object, embed, script and pre tags.
 			foreach ( $matches as $match ) {
 				$new_match = str_replace( $start_emp_token, '', $match );
@@ -1079,6 +1079,7 @@ function relevanssi_remove_page_builder_shortcodes( $content ) {
 		// Remove content.
 		'/\[et_pb_code.*?\].*\[\/et_pb_code\]/',
 		'/\[et_pb_sidebar.*?\].*\[\/et_pb_sidebar\]/',
+		'/\[et_pb_fullwidth_slider.*?\].*\[\/et_pb_fullwidth_slider\]/',
 		'/\[vc_raw_html.*?\].*\[\/vc_raw_html\]/',
 		// Remove only the tags.
 		'/\[\/?et_pb.*?\]/',
