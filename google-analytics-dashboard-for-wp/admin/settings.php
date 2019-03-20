@@ -111,7 +111,7 @@ final class GADWP_Settings {
 		if ( isset( $_POST['options']['gadwp_hidden'] ) ) {
 			$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Settings saved.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			if ( ! ( isset( $_POST['gadwp_security'] ) && wp_verify_nonce( $_POST['gadwp_security'], 'gadwp_form' ) ) ) {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( ! $gadwp->config->options['tableid_jail'] || ! $gadwp->config->options['token'] ) {
@@ -206,7 +206,7 @@ final class GADWP_Settings {
 		if ( isset( $_POST['options']['gadwp_hidden'] ) ) {
 			$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Settings saved.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			if ( ! ( isset( $_POST['gadwp_security'] ) && wp_verify_nonce( $_POST['gadwp_security'], 'gadwp_form' ) ) ) {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( ! $gadwp->config->options['tableid_jail'] || ! $gadwp->config->options['token'] ) {
@@ -403,7 +403,7 @@ final class GADWP_Settings {
 		if ( isset( $_POST['options']['gadwp_hidden'] ) ) {
 			$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Settings saved.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			if ( ! ( isset( $_POST['gadwp_security'] ) && wp_verify_nonce( $_POST['gadwp_security'], 'gadwp_form' ) ) ) {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( ! $gadwp->config->options['tableid_jail'] ) {
@@ -1293,7 +1293,7 @@ final class GADWP_Settings {
 				GADWP_Tools::clear_cache();
 				$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Cleared Cache.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['Reset'] ) ) {
@@ -1303,7 +1303,7 @@ final class GADWP_Settings {
 				$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Token Reseted and Revoked.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 				$options = self::update_options( 'Reset' );
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['Reset_Err'] ) ) {
@@ -1343,13 +1343,13 @@ final class GADWP_Settings {
 				delete_option( 'gadwp_got_updated' );
 				$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "All errors reseted.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['options']['gadwp_hidden'] ) && ! isset( $_POST['Clear'] ) && ! isset( $_POST['Reset'] ) && ! isset( $_POST['Reset_Err'] ) ) {
 			$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Settings saved.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			if ( ! ( isset( $_POST['gadwp_security'] ) && wp_verify_nonce( $_POST['gadwp_security'], 'gadwp_form' ) ) ) {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['Hide'] ) ) {
@@ -1359,7 +1359,7 @@ final class GADWP_Settings {
 				$gadwp->config->options['ga_profiles_list'] = array( $lock_profile );
 				$options = self::update_options( 'general' );
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		?>
@@ -1657,7 +1657,7 @@ final class GADWP_Settings {
 					}
 				}
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['Clear'] ) ) {
@@ -1665,7 +1665,7 @@ final class GADWP_Settings {
 				GADWP_Tools::clear_cache();
 				$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Cleared Cache.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['Reset'] ) ) {
@@ -1675,13 +1675,13 @@ final class GADWP_Settings {
 				$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Token Reseted and Revoked.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 				$options = self::update_options( 'Reset' );
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['options']['gadwp_hidden'] ) && ! isset( $_POST['Clear'] ) && ! isset( $_POST['Reset'] ) && ! isset( $_POST['Refresh'] ) ) {
 			$message = "<div class='updated' id='gadwp-autodismiss'><p>" . __( "Settings saved.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			if ( ! ( isset( $_POST['gadwp_security'] ) && wp_verify_nonce( $_POST['gadwp_security'], 'gadwp_form' ) ) ) {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		if ( isset( $_POST['Hide'] ) ) {
@@ -1691,7 +1691,7 @@ final class GADWP_Settings {
 				$gadwp->config->options['ga_profiles_list'] = array( $lock_profile );
 				$options = self::update_options( 'network' );
 			} else {
-				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "Cheating Huh?", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
+				$message = "<div class='error' id='gadwp-autodismiss'><p>" . __( "You don’t have permission to do this.", 'google-analytics-dashboard-for-wp' ) . "</p></div>";
 			}
 		}
 		?>
