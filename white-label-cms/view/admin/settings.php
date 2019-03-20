@@ -15,7 +15,7 @@ $views = array(
     <form method="post" enctype="multipart/form-data" class="wlcms-form" action="<?php echo wlcms()->admin_url(); ?>" >
         <?php wp_nonce_field('wlcms-settings-action', 'wlcms-settings_nonce'); ?>
         <div class="wlcms_header">
-            <h1 class="wlcms_page_title"><img src="<?php echo WLCMS_ASSETS_URL ?>images/wlcms-logo.png"><?php _e("White Label CMS", 'wlcms'); ?></h1>
+            <h1 class="wlcms_page_title"><img src="<?php echo WLCMS_ASSETS_URL ?>images/wlcms-logo.png"><?php _e("White Label CMS", 'white-label-cms'); ?></h1>
         </div>
         <div class="wlcms-navigation navigation">
             <ul>
@@ -23,7 +23,7 @@ $views = array(
                 foreach($views as $slug => $view):
                 ?>
                 <li>
-                    <a href="#tab-<?php echo $slug ?>" data-tab="tab-<?php echo $slug ?>" id="wlcms_tab-<?php echo $slug ?>"<?php $slug == 'branding' ? ' class="current"' : ''?>><?php echo $view ?></a>
+                    <a href="#tab-<?php echo $slug ?>" data-tab="tab-<?php echo $slug ?>" id="wlcms_tab-<?php echo $slug ?>"<?php $slug == 'branding' ? ' class="current"' : ''?>><?php _e($view, 'white-label-cms'); ?></a>
                 </li>
                 <?php
                 endforeach;
@@ -31,7 +31,7 @@ $views = array(
                 <?php do_action("wlcms_after_menu_tab"); ?>
             </ul>
             <span class="wlcms-pull-right">
-                <input type="submit" value="Save" class="button button-primary button-large" name="wlcms-settings" />
+                <input type="submit" value="<?php _e('Save', 'white-label-cms') ?>" class="button button-primary button-large" name="wlcms-settings" />
             </span>
         </div>
         <div class="wlcms_content">

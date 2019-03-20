@@ -9,12 +9,22 @@
 
 class WLCMS_I18n
 {
+    function __construct()
+    {
+        add_action('init', array($this, 'load_textdomain'));
+    }
+
     public function load_textdomain()
     {
+
+        $domain = 'white-label-cms';
+        $plugin_rel_path = $domain . '/languages/';
         load_plugin_textdomain(
-            'wlcms',
+            $domain,
             false,
-            WLCMS_DIR . '/languages/'
+            $plugin_rel_path
         );
     }
 }
+
+new WLCMS_I18n();

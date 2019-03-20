@@ -46,7 +46,7 @@ class WLCMS_Loader
 
         $this->require_class('Wizard');
         $this->wizard_class = new WLCMS_Wizard();
-        
+
         $this->require_class('Admin_Script');
         $this->admin_script_class = new WLCMS_Admin_Script();
 
@@ -88,6 +88,11 @@ class WLCMS_Loader
         return $this->settings_class;
     }
 
+    public function Upgrade()
+    {
+        return $this->upgrade_class;
+    }
+
     public function Admin_Dashboard()
     {
         return $this->admin_dashboard_class;
@@ -123,7 +128,7 @@ class WLCMS_Loader
         return $this->required(self::CLASS_DIR . $file);
     }
 
-    public function admin_url( $view = 'settings' )
+    public function admin_url($view = 'settings')
     {
         return admin_url('options-general.php?page=wlcms-plugin.php&view=' . $view);
     }
@@ -158,15 +163,15 @@ class WLCMS_Loader
     public function get_active_view()
     {
         $default = 'settings';
-        
-        if( ! isset($_GET['view']) ) {
+
+        if (!isset($_GET['view'])) {
             return $default;
         }
-        
+
         $available = array('wizard', 'settings');
         $view = wp_filter_kses($_GET['view']);
-        
-        return ( in_array($view, $available ) ) ? $view : $default;
+
+        return (in_array($view, $available)) ? $view : $default;
 
     }
 }

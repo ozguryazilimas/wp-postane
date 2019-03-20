@@ -13,13 +13,13 @@ class WLCMS_Previewable
             return;
         }
 
-        if($_GET['wlcms-action'] != 'preview') {
+        if ($_GET['wlcms-action'] != 'preview') {
             return;
         }
-    
+
         $this->is_preview = true;
         $this->preview_section = isset($_GET['preview_section']) ? wp_filter_kses($_GET['preview_section']) : '';
-        
+
     }
 
     public function place_holder()
@@ -35,7 +35,7 @@ class WLCMS_Previewable
     public function store_preview()
     {
 
-        check_ajax_referer( 'wlcms_ajax_nonce');
+        check_ajax_referer('wlcms_ajax_nonce');
 
         $settings = wlcms()->Settings();
 
@@ -44,7 +44,7 @@ class WLCMS_Previewable
             $settings->set($this->preview_setting_key_placeholder . $key, $setting_value);
         }
 
-        do_action( 'wlcms_before_save_preview', $settings, $this->preview_setting_key_placeholder );
+        do_action('wlcms_before_save_preview', $settings, $this->preview_setting_key_placeholder);
 
         $settings->save();
         exit;
@@ -61,7 +61,7 @@ class WLCMS_Previewable
         if ($this->is_preview) {
             $key = $this->preview_setting_key_placeholder . $key;
         }
-        
+
         return wlcms_field_setting($key);
     }
 }

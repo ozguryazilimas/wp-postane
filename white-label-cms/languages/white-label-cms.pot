@@ -1,0 +1,933 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: White Label CMS\n"
+"POT-Creation-Date: 2019-02-20 15:35+0800\n"
+"PO-Revision-Date: 2019-02-14 11:13+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: wlcms-plugin.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#. Plugin Name of the plugin/theme
+#: includes/classes/Admin_Core.php:19 includes/classes/Admin_Core.php:20
+#: view/admin/settings.php:18 view/admin/wizard.php:6
+msgid "White Label CMS"
+msgstr ""
+
+#: includes/classes/Branding.php:165
+#, php-format
+msgid "%1s %2$s"
+msgstr ""
+
+#: includes/classes/Settings.php:259
+msgid ""
+"<strong>Error!</strong> During the import process we almost imported a non "
+"White Label CMS setting - please ensure you uploaded the correct file and "
+"try again."
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:3
+msgid "Admin Bar Logo"
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:3
+msgid "Replace the WordPress logo in the admin bar. Max height 20px"
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:7
+msgid "Admin Bar Alt Text"
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:12
+msgid "Replace the \"WordPress\" Alt text."
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:17
+msgid "Replace Howdy Text"
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:22
+msgid ""
+"Add a space to completely remove it from the admin bar. Or replace it with "
+"something like: \"Hi,\""
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:27
+msgid "Admin Bar URL"
+msgstr ""
+
+#: view/admin/parts/branding-admin-bar.php:32
+msgid "Replace the link to WordPress.org."
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:3
+#: view/admin/parts/wizard-step-1.php:19
+msgid "Developer Name"
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:8
+#: view/admin/parts/wizard-step-1.php:24
+msgid "For use in footer and ALT text's."
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:13
+#: view/admin/parts/wizard-step-1.php:29
+msgid "Developer URL"
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:18
+#: view/admin/parts/wizard-step-1.php:34
+msgid "For use in footer and admin bar."
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:23
+msgid "Developer Icon"
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:23
+msgid "We recommend at 16 x 16 image"
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:29
+msgid "Use Developer Icon in Footer"
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:32
+msgid "If you wish to use a different image for the footer, you can."
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:37
+msgid "Developer Footer Icon"
+msgstr ""
+
+#: view/admin/parts/branding-developer.php:44
+msgid "Developer Side Menu Image"
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:2
+msgid "Footer Image"
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:2
+msgid ""
+"Image which will appear in the footer replacing \"Thank you for creating "
+"with WordPress. Max height 50px"
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:6 view/admin/parts/wizard-step-1.php:39
+msgid "Footer Text"
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:11
+#: view/admin/parts/wizard-step-1.php:44
+msgid "Text which will appear to the right of the Footer Image."
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:16
+msgid "Footer URL"
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:21
+#: view/admin/parts/branding-wordpress.php:28
+msgid "Replace WordPress in the page titles."
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:26
+msgid "or use HTML"
+msgstr ""
+
+#: view/admin/parts/branding-footer.php:31
+msgid ""
+"If you would like more control over what appears in the footer, add your own "
+"HTML.<br/>\n"
+"Note: this will overwrite anything set in the Footer Image, Footer Text and "
+"Footer URL."
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:2
+msgid "Side Menu Image"
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:2
+msgid "Image will appear at the top of the side menu. Max width 160px"
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:6
+msgid "Collapsed Side Menu Image"
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:6
+msgid ""
+"Image will appear at the top of the side menu when it is collapsed. Max "
+"width 36px"
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:9
+msgid "Side Menu Link URL"
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:14
+msgid "URL the Side Menu Image will link to."
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:18
+msgid "Side Menu Alt Text"
+msgstr ""
+
+#: view/admin/parts/branding-side-menu.php:23
+msgid "Alt text for the Side Menu Image link."
+msgstr ""
+
+#: view/admin/parts/branding-wordpress.php:5
+msgid "Hide WordPress Logo and Links"
+msgstr ""
+
+#: view/admin/parts/branding-wordpress.php:8
+msgid "Hide mentions of WordPress and hide the links to WordPress.org."
+msgstr ""
+
+#: view/admin/parts/branding-wordpress.php:15
+msgid "Hide WP Version"
+msgstr ""
+
+#: view/admin/parts/branding-wordpress.php:18
+msgid "Hide version number of WordPress which appears in the footer."
+msgstr ""
+
+#: view/admin/parts/branding-wordpress.php:23
+msgid "Custom Page Titles"
+msgstr ""
+
+#: view/admin/parts/branding.php:3
+msgid "WordPress Branding"
+msgstr ""
+
+#: view/admin/parts/branding.php:11
+msgid "Admin Bar Branding"
+msgstr ""
+
+#: view/admin/parts/branding.php:19
+msgid "Side Menu Branding"
+msgstr ""
+
+#: view/admin/parts/branding.php:27
+msgid "Footer Branding"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:7
+msgid ""
+"Add your own Welcome Panel to the Dashboard page. This will appear on the "
+"dashboard. We recommend providing your contact details and links to the help "
+"files you have made for your client."
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:11
+msgid "Add Your Own Welcome Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:14
+msgid "You can add your own welcome panel."
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:18
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:122
+msgid "Select the Roles the Welcome Panel Will Be Visible To"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:24
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:129
+msgid "Select the user roles this will be visible to."
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:50
+msgid "Template Type"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:53
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:142
+msgid "Basic HTML"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:56
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:144
+msgid "Elementor"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:58
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:146
+msgid "Beaver Builder Pro"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:63
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:139
+msgid "Template"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:72
+msgid "Title of Welcome Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:77
+msgid "Title of the Welcome Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:82
+msgid "Welcome Panel Description HTML"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:86
+msgid "You can add any HTML to the welcome panel."
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:92
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:180
+msgid "Make full-width"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:99
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:190
+msgid "Show Title"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:115
+msgid "Add Second Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:118
+msgid "Add a second custom panel to the Dashboard."
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:151
+msgid "Page Template"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:160
+msgid "Title of Second Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:165
+msgid "Title of the Second Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:170
+msgid "Second Panel Description (HTML)"
+msgstr ""
+
+#: view/admin/parts/dashboard-custom-welcome-dashboard-panel.php:174
+msgid "You can add any HTML to the second panel."
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:10
+msgid "Dashboard Icon"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:10
+msgid "Add a logo to the Dashboard. Suggested height 40px"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:14
+msgid "Dashboard Title"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:19
+msgid "Change the heading for the Dashboard"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:23
+msgid "Select the Roles the Dashboard Panels Will Be Hidden To"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:28
+msgid "Select the user roles this will be hidden to."
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:36
+msgid "Hide All Dashboard Panels"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:38
+msgid ""
+"This will hide all the WordPress default dashboard panels. Or you can "
+"specify which panels should appear."
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:43
+msgid "Hide 'At a Glance'"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:47
+msgid "Hide 'Activity'"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:51
+msgid "Hide 'Recent Comments'"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:55
+msgid "Remove 'Quick Draft'"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:59
+msgid "Remove WordPress Events and News Widget"
+msgstr ""
+
+#: view/admin/parts/dashboard-default-panels.php:63
+msgid "Remove Empty Dashboard Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:4
+msgid "Add Your Own RSS  Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:7
+msgid ""
+"This will appear on the dashboard. If you want your client to be kept up to "
+"date with what you are doing in your business, set up your RSS feed."
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:13
+msgid "RSS Title"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:18
+msgid "The title of the RSS Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:23
+msgid "Add Your Logo"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:23
+msgid "Add a logo to appear on the panel before the title."
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:27
+#: view/admin/parts/wizard-step-1.php:49
+msgid "RSS Feed"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:32
+msgid "The RSS feed address. For example feed://"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:37
+msgid "Number of Items to appear"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:48
+msgid "Number of RSS items to show."
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:55
+msgid "Show Post Contents"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:62
+msgid "Introduction HTML"
+msgstr ""
+
+#: view/admin/parts/dashboard-rss-dashboard-panel.php:67
+msgid "Add introduction text to appear above the RSS items. You can use HTML."
+msgstr ""
+
+#: view/admin/parts/dashboard.php:3
+msgid "Default Panels"
+msgstr ""
+
+#: view/admin/parts/dashboard.php:11
+msgid "Custom Welcome Dashboard Panel"
+msgstr ""
+
+#: view/admin/parts/dashboard.php:19
+msgid "RSS Dashboard Panel"
+msgstr ""
+
+#: view/admin/parts/import-settings.php:4 view/admin/settings.php:57
+msgid "Import Settings"
+msgstr ""
+
+#: view/admin/parts/import-settings.php:12
+msgid "To import the settings from another website"
+msgstr ""
+
+#: view/admin/parts/live-preview.php:5
+msgid "Close Preview"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:5
+msgid "Hide \"Register / Lost your password?\" link"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:8
+msgid ""
+"Hide the \"Register / Lost your password?\" link which appears below the "
+"login form."
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:14
+msgid "Hide \"Back to\" link"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:17
+msgid "Hide the \"Back to\" link which appears below the login form."
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:22
+msgid "Form Background Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:27
+msgid "Background color of the login form"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:32
+msgid "Form Label Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:37
+msgid "Color of the labels on the login form"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:42
+msgid "Form Button Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:47
+msgid "Color of the button on the login form"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:52
+msgid "Form Button Hover Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:57
+msgid "Hover color of the button on the login form"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:62
+msgid "Form Button Text Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:67
+msgid "Color of the text on the button on the login form"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:72
+msgid "Form Button Text Hover Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:77
+msgid "Hover color of the text on the button on the login form"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:82
+msgid "Back to / Register Link Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:87
+msgid "Color of the link text of Back to / Register"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:92
+msgid "Back to / Register Link Hover Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:97
+msgid "Hover color of the link text of Back to / Register"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:102
+msgid "Privacy Policy Link Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:107
+msgid "Color of the link text of Privacy Policy"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:112
+msgid "Privacy Policy Link Hover Color"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:117
+msgid "Hover color of the link text of Privacy Policy"
+msgstr ""
+
+#: view/admin/parts/login-advanced.php:121
+#: view/admin/parts/login-custom-css.php:18
+#: view/admin/parts/login-logo-and-background.php:96
+msgid "Live Preview"
+msgstr ""
+
+#: view/admin/parts/login-custom-css.php:6
+msgid "Completely customise the login page by entering your own CSS."
+msgstr ""
+
+#: view/admin/parts/login-custom-css.php:7
+msgid "For example"
+msgstr ""
+
+#: view/admin/parts/login-custom-css.php:12
+msgid "Or if you want to get fancy"
+msgstr ""
+
+#: view/admin/parts/login-live-preview.php:5
+msgid "Close Login"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:2
+msgid "Login Logo"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:2
+msgid "Replace the WordPress logo on the login page. Max width 320px"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:6
+#: view/admin/parts/wizard-step-2.php:24
+msgid "Retina Login Logo"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:6
+#: view/admin/parts/wizard-step-2.php:28
+msgid ""
+"Replace the Retina WordPress logo on the login page. Please make sure you "
+"use the standard retina format of x2"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:10
+msgid "Logo Width"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:15
+msgid "Add a width to your Login Logo. Max width 320px"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:19
+msgid "Logo Height"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:24
+msgid "Add a height to your Login Logo."
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:29
+msgid "Logo Bottom Margin"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:34
+msgid "Add a bottom margin to your Login Logo."
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:39
+msgid "Background Color"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:44
+msgid ""
+"Background color for the login page. Changing to White will help your logo "
+"standout."
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:49
+msgid "Background Image"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:49
+msgid "Adds a background image to the login page."
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:55
+msgid "Full Screen Background Image"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:58
+msgid "Stretch the background image to appear full screen."
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:63
+msgid "Background Position"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:78
+msgid "Specify the CSS background position."
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:83
+msgid "Background Repeat"
+msgstr ""
+
+#: view/admin/parts/login-logo-and-background.php:92
+msgid "Specify the CSS background-repeat."
+msgstr ""
+
+#: view/admin/parts/login.php:3
+msgid "Logo and Background"
+msgstr ""
+
+#: view/admin/parts/login.php:13
+msgid "Advanced"
+msgstr ""
+
+#: view/admin/parts/login.php:22
+msgid "Custom CSS"
+msgstr ""
+
+#: view/admin/parts/menus-admin-bar-menus.php:3
+msgid ""
+"Admin Bar Menus will be hidden to all User Roles up to and including Admins "
+"with the exception of White Label CMS Admins and Super Admins"
+msgstr ""
+
+#: view/admin/parts/menus-legacy.php:7
+msgid "White Label CMS Legacy Menus"
+msgstr ""
+
+#: view/admin/parts/menus-legacy.php:12
+msgid ""
+"You are seeing this because you have installed version 1 of the plugin in "
+"the past."
+msgstr ""
+
+#: view/admin/parts/menus-legacy.php:13
+msgid "In version 1 you could only change the menus for Editors."
+msgstr ""
+
+#: view/admin/parts/menus-legacy.php:14
+msgid ""
+"We recommend using the new White Label CMS Admin to manage the menus and in "
+"order to do so you must reset the menus to the WordPress Defaults.  If you "
+"do this, this section will disappear."
+msgstr ""
+
+#: view/admin/parts/menus-legacy.php:18
+msgid "Use the new version"
+msgstr ""
+
+#: view/admin/parts/menus-menus.php:3
+msgid ""
+"Menus will be hidden to all User Roles up to and including Admins (with the "
+"exception of White Label CMS Admins and Super Admins)."
+msgstr ""
+
+#: view/admin/parts/menus-menus.php:4
+msgid "Select which menus you want to appear."
+msgstr ""
+
+#: view/admin/parts/menus-white-label-cms-admin.php:6
+msgid "Want to hide menus for your client?"
+msgstr ""
+
+#: view/admin/parts/menus-white-label-cms-admin.php:11
+msgid ""
+"You are now a White Label CMS Admin. This allows you to modify the menus "
+"that other people will see."
+msgstr ""
+
+#: view/admin/parts/menus-white-label-cms-admin.php:12
+msgid "You"
+msgstr ""
+
+#: view/admin/parts/menus-white-label-cms-admin.php:24
+msgid "Other Admins:"
+msgstr ""
+
+#: view/admin/parts/menus-white-label-cms-admin.php:40
+msgid ""
+"By selecting a White Label CMS Admin it means that only the selected Admins "
+"will be able to modify the settings for White Label CMS, as it won't be "
+"visible in the menu to anybody else. <a href=\"https://www.videousermanuals."
+"com/white-label-cms/\" target=\"_blank\">Learn more about this feature</a>."
+msgstr ""
+
+#: view/admin/parts/menus.php:4
+msgid "White Label CMS Admin"
+msgstr ""
+
+#: view/admin/parts/menus.php:12 view/admin/settings.php:6
+msgid "Menus"
+msgstr ""
+
+#: view/admin/parts/menus.php:20
+msgid "Admin Bar Menus"
+msgstr ""
+
+#: view/admin/parts/settings-admin-bar-setting.php:5
+msgid "Hide Front-end Admin Bar"
+msgstr ""
+
+#: view/admin/parts/settings-admin-bar-setting.php:8
+msgid ""
+"This will disable the admin bar on the front-end for all logged in users"
+msgstr ""
+
+#: view/admin/parts/settings-admin-settings.php:5
+msgid "Hide Help Box"
+msgstr ""
+
+#: view/admin/parts/settings-admin-settings.php:8
+msgid "Hide the help tab which appears in the top right"
+msgstr ""
+
+#: view/admin/parts/settings-admin-settings.php:15
+msgid "Hide Screen Options"
+msgstr ""
+
+#: view/admin/parts/settings-admin-settings.php:18
+msgid "Hide the screen options which appear in the top right"
+msgstr ""
+
+#: view/admin/parts/settings-custom-css-for-admin.php:5
+msgid ""
+"Override or add to any of the styles in the WordPress admin enter your own "
+"custom css here"
+msgstr ""
+
+#: view/admin/parts/settings-custom-editor-stylesheet.php:2
+msgid "Custom Stylesheet URL"
+msgstr ""
+
+#: view/admin/parts/settings-custom-editor-stylesheet.php:7
+msgid ""
+"Create and upload a custom stylesheet with all style rules prefixed with ."
+"mceContentBody to your themes directory and enter the filename"
+msgstr ""
+
+#: view/admin/parts/settings-nag-messages.php:3
+msgid ""
+"Nag Messages will be hidden to all User Roles up to and including Admins"
+msgstr ""
+
+#: view/admin/parts/settings-nag-messages.php:7
+msgid "Nag Update Messages"
+msgstr ""
+
+#: view/admin/parts/settings.php:3
+msgid "Admin Bar"
+msgstr ""
+
+#: view/admin/parts/settings.php:11
+msgid "Admin Settings"
+msgstr ""
+
+#: view/admin/parts/settings.php:19
+msgid "Nag Messages"
+msgstr ""
+
+#: view/admin/parts/settings.php:27
+msgid "Custom CSS for Admin"
+msgstr ""
+
+#: view/admin/parts/settings.php:35
+msgid "Custom Editor Stylesheet"
+msgstr ""
+
+#: view/admin/parts/wizard-step-1.php:14
+msgid "Developer Branding"
+msgstr ""
+
+#: view/admin/parts/wizard-step-1.php:17
+msgid ""
+"You can set up White Label CMS quickly by adding your details below, and on "
+"the next page it will ask you about your clients details. Or you can click "
+"the Skip button and add these details later."
+msgstr ""
+
+#: view/admin/parts/wizard-step-1.php:54
+msgid "The RSS feed address. For example http://"
+msgstr ""
+
+#: view/admin/parts/wizard-step-2.php:3
+msgid "Clients Branding"
+msgstr ""
+
+#: view/admin/parts/wizard-step-2.php:9
+msgid "Clients Business Name"
+msgstr ""
+
+#: view/admin/parts/wizard-step-2.php:14
+msgid "For use in Admin Page Title and Dashboard Title."
+msgstr ""
+
+#: view/admin/parts/wizard-step-2.php:28
+msgid "Upload Login Logo"
+msgstr ""
+
+#: view/admin/settings.php:3
+msgid "Branding"
+msgstr ""
+
+#: view/admin/settings.php:4
+msgid "Login"
+msgstr ""
+
+#: view/admin/settings.php:5
+msgid "Dashboard"
+msgstr ""
+
+#: view/admin/settings.php:7
+msgid "Settings"
+msgstr ""
+
+#: view/admin/settings.php:34 view/admin/wizard.php:20
+msgid "Save"
+msgstr ""
+
+#: view/admin/settings.php:58
+msgid "Export Settings"
+msgstr ""
+
+#: view/admin/settings.php:59
+msgid "Reset Plugin"
+msgstr ""
+
+#: view/admin/wizard.php:11
+msgid "Quick Setup Wizard: Step 1 of 2 - Developers Branding"
+msgstr ""
+
+#: view/admin/wizard.php:13
+msgid "Skip"
+msgstr ""
+
+#: view/admin/wizard.php:14
+msgid "Next"
+msgstr ""
+
+#: view/admin/wizard.php:17
+msgid "Quick Setup Wizard: Step 2 of 2 - Clients Branding"
+msgstr ""
+
+#: view/admin/wizard.php:19
+msgid "Back to step 1"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid ""
+"http://www.videousermanuals.com/white-label-cms/?"
+"utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A plugin that allows you to brand WordPress CMS as your own"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "www.videousermanuals.com"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid ""
+"http://www.videousermanuals.com/?"
+"utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt"
+msgstr ""

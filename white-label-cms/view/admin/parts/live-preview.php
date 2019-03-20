@@ -2,5 +2,5 @@
     
 </div>
 <div id="lightbox-controls" class="short-animate">
-    <a id="close-lightbox" class="long-animate" href="#">Close Preview</a>
+    <a id="close-lightbox" class="long-animate" href="#"><?php _e('Close Preview')?></a>
 </div>

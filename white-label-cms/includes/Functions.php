@@ -14,11 +14,11 @@ if (!function_exists('wlcms_field_setting')) {
 }
 
 if (!function_exists('wlcms_welcome_value')) {
-    function wlcms_welcome_value($key = 0, $field , $default = false)
+    function wlcms_welcome_value($key = 0, $field, $default = false)
     {
-        $welcome_panel = wlcms_field_setting('welcome_panel');   
-        
-        return isset($welcome_panel[$key][$field] )  ? $welcome_panel[$key][$field]  : $default;    
+        $welcome_panel = wlcms_field_setting('welcome_panel');
+
+        return isset($welcome_panel[$key][$field]) ? $welcome_panel[$key][$field] : $default;
     }
 }
 
@@ -143,28 +143,28 @@ if (!function_exists('wlcms_select_pages')) {
     function wlcms_select_pages($args = array(), $selected = '', $query = false)
     {
 
-        if( ! $query ) {
+        if (!$query) {
             $post_type = array(
-                'post_type'         => 'page',
-                'posts_per_page'    => '-1',
-                'post_status'		=> 'publish'
+                'post_type' => 'page',
+                'posts_per_page' => '-1',
+                'post_status' => 'publish'
             );
         }
-        $pages = get_posts($query); 
+        $pages = get_posts($query);
 
         $return = '<select name="' . $args['name'] . '" id="' . $args['name'] . '" class="' . $args['class'] . '">';
         $return .= '<option value=""> </option>';
-        if( $pages ):
-            foreach ( $pages as $page ) {
-                $selected_val = '';
-                $key = $page->ID;
-                $title = $page->post_title;
+        if ($pages) :
+            foreach ($pages as $page) {
+            $selected_val = '';
+            $key = $page->ID;
+            $title = $page->post_title;
 
-                if ( $selected == $key ) {
-                    $selected_val = ' selected';
-                }
-                $return .= '<option value="' . $key . '" ' . $selected_val . '>' . $title . '</option>';
+            if ($selected == $key) {
+                $selected_val = ' selected';
             }
+            $return .= '<option value="' . $key . '" ' . $selected_val . '>' . $title . '</option>';
+        }
         endif;
         $return .= '</select>';
 
@@ -192,6 +192,13 @@ if (!function_exists('wlcms_kses')) {
     }
 }
 
+if (!function_exists('vum_fix_json')) {
+    function vum_fix_json($matches)
+    {
+        return "s:" . strlen($matches[2]) . ':"' . $matches[2] . '";';
+    }
+}
+
 if (!function_exists('wlcms_form_upload_field')) {
     /**
      * Upload image field generator
@@ -203,7 +210,7 @@ if (!function_exists('wlcms_form_upload_field')) {
      */
     function wlcms_form_upload_field($label = '', $key = '', $help = '')
     {
-        $html = '<label>' . __($label, 'wlcms') . '</label>
+        $html = '<label>' . $label . '</label>
                 <div class="wlcms-upload-thumbnail">';
 
         $key_setting = wlcms_field_setting($key);
@@ -216,7 +223,7 @@ if (!function_exists('wlcms_form_upload_field')) {
                         <input type="text" name="' . $key . '" class="wlcms-upload-input" value="' . $key_setting . '" />
                         <a href="#" class="wlcms_upload">Upload</a>
                     </div>
-                <div class="wlcms-help">' . __($help, 'wlcms') . '</div>';
+                <div class="wlcms-help">' . $help . '</div>';
 
         return $html;
 
@@ -226,17 +233,17 @@ if (!function_exists('wlcms_form_upload_field')) {
 if (!function_exists('wlcms_is_elementor_active')) {
     function wlcms_is_elementor_active()
     {
-        if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {
+        if (!version_compare(PHP_VERSION, '5.4', '>=')) {
             return false;
         }
-        return (function_exists( '_is_elementor_installed' ) && _is_elementor_installed()) ||  defined( 'ELEMENTOR_VERSION' ) ;
+        return (function_exists('_is_elementor_installed') && _is_elementor_installed()) || defined('ELEMENTOR_VERSION');
     }
 }
 
 if (!function_exists('wlcms_is_beaver_builder_active')) {
     function wlcms_is_beaver_builder_active()
     {
-        if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {
+        if (!version_compare(PHP_VERSION, '5.4', '>=')) {
             return false;
         }
         return class_exists('FLBuilder');
@@ -246,18 +253,18 @@ if (!function_exists('wlcms_is_beaver_builder_active')) {
 if (!function_exists('wlcms_has_pagebuilder')) {
     function wlcms_has_pagebuilder()
     {
-        return ( wlcms_is_beaver_builder_active() || wlcms_is_elementor_active() );
+        return (wlcms_is_beaver_builder_active() || wlcms_is_elementor_active());
     }
 }
 
 if (!function_exists('wlcms_css_metrics')) {
     function wlcms_css_metrics($value = 'auto')
     {
-        if( $value == 'auto' ) return $value;
+        if ($value == 'auto') return $value;
 
-        if( strpos($value, '%') !== false ) return $value;
+        if (strpos($value, '%') !== false) return $value;
 
-        if( strpos($value, 'px') !== false ) return $value;
+        if (strpos($value, 'px') !== false) return $value;
 
         return $value . 'px';
 

@@ -22,14 +22,14 @@ class WLCMS_Login extends WLCMS_Previewable
     public function save_preview_login($setting, $placeholder)
     {
         // ignore if it has width or height request
-        if( isset($_REQUEST['logo_width']) || isset($_REQUEST['logo_height']) )
-        return;
+        if (isset($_REQUEST['logo_width']) || isset($_REQUEST['logo_height']))
+            return;
 
         $logo = $setting->get($placeholder . 'login_logo');
-        
+
         if ($logo) {
             $imagesize = @getimagesize($logo);
-            if( $imagesize ) {
+            if ($imagesize) {
                 list($width, $height) = $imagesize;
                 $setting->set($placeholder . 'logo_width', $width);
                 $setting->set($placeholder . 'logo_height', $height);
@@ -41,13 +41,30 @@ class WLCMS_Login extends WLCMS_Previewable
 
     public function scripts()
     {
+
+        wp_print_scripts(array('jquery'));
+
+        echo '<script>';
+        echo 'jQuery(document).ready(function(){';
+        echo $this->get_js();
+        echo '});';
+        echo '</script>';
         echo '<style type="text/css">';
+        echo $this->set_custom_css();
         echo $this->set_background_css();
         echo $this->set_logo_css();
         echo $this->set_form_css();
         echo $this->set_links_css();
-        echo $this->set_custom_css();
         echo '</style>';
+    }
+
+    private function get_js()
+    {
+        $js = 'jQuery("#login").wrap("<div id=\'wlcms-login-wrapper\'></div>");';
+        if ($this->get_settings('login_logo')) {
+            $js .= ';jQuery(\'#login h1 a\').attr(\'title\',\'' . get_bloginfo('name') . '\');jQuery(\'#login h1 a\').attr(\'href\',\'' . get_bloginfo('url') . '\');';
+        }
+        return $js;
     }
 
     private function set_logo_css()
@@ -56,7 +73,7 @@ class WLCMS_Login extends WLCMS_Previewable
         if ($login_logo = $this->get_settings('login_logo')) {
             $logo_css .= 'background-image: url(' . $login_logo . ');';
         }
-        
+
         $has_width = false;
         if ($logo_width = $this->get_settings('logo_width')) {
             $logo_css .= 'width:' . wlcms_css_metrics($logo_width) . ';';
@@ -76,10 +93,10 @@ class WLCMS_Login extends WLCMS_Previewable
 
         //Add logo background size
         $logo_css_background_size = 'background-size:contain;background-position-y: center;';
-        if( $has_height && $has_width ) {
+        if ($has_height && $has_width) {
             $logo_css_background_size = sprintf('background-size:%s %s;', wlcms_css_metrics($logo_width), wlcms_css_metrics($logo_height));
         }
-        $logo_css .=  $logo_css_background_size;
+        $logo_css .= $logo_css_background_size;
 
         if ($logo_bottom_margin = $this->get_settings('logo_bottom_margin')) {
             $logo_css .= 'margin-bottom: ' . $logo_bottom_margin . 'px!important;';
@@ -222,10 +239,10 @@ class WLCMS_Login extends WLCMS_Previewable
 
     public function settings()
     {
-        if( $this->saving_preview_section() == 'wizard' ) {
+        if ($this->saving_preview_section() == 'wizard') {
             return $this->wizard_settings();
         }
-        
+
         return $this->complete_settings();
     }
 
@@ -276,7 +293,7 @@ class WLCMS_Login extends WLCMS_Previewable
             'privacy_policy_link_hover_color' => '',
             'login_custom_css' => ''
         );
-        
+
         return array_merge($settings, $this->wizard_settings());
     }
 
@@ -284,18 +301,18 @@ class WLCMS_Login extends WLCMS_Previewable
     {
         $sections = array('wizard', 'settings');
 
-        if( ! isset( $_REQUEST['form_section'] ) ) {
+        if (!isset($_REQUEST['form_section'])) {
             return;
         }
 
-        if( ! in_array($_REQUEST['form_section'], $sections ) ){
+        if (!in_array($_REQUEST['form_section'], $sections)) {
             return;
         }
 
         return wp_filter_kses($_REQUEST['form_section']);
     }
-    
-    public function setting_fields( $settings )
+
+    public function setting_fields($settings)
     {
         return array_merge($settings, $this->complete_settings());
     }

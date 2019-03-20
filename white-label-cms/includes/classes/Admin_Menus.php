@@ -12,11 +12,11 @@ class WLCMS_Admin_Menus
 
     public function __construct()
     {
-        add_action( 'init', array($this, 'set_wlcms_admin'), 10 );
-        add_action( 'admin_init', array($this, 'admin_init') );
-        add_action( 'wlcms_save_addtional_settings', array($this, 'save'), 12, 1 );
-        add_action( 'admin_init', array($this, 'rebuild_user_admin_menu'), 9999999 ); // rebuild sidebar menu
-        add_action( 'wp_before_admin_bar_render', array($this, 'init_admin_bar_menu'), 9999999 ); // setup admin bar menu
+        add_action('init', array($this, 'set_wlcms_admin'), 10);
+        add_action('admin_init', array($this, 'admin_init'));
+        add_action('wlcms_save_addtional_settings', array($this, 'save'), 12, 1);
+        add_action('admin_init', array($this, 'rebuild_user_admin_menu'), 9999999); // rebuild sidebar menu
+        add_action('wp_before_admin_bar_render', array($this, 'init_admin_bar_menu'), 9999999); // setup admin bar menu
     }
 
     public function admin_init()
@@ -28,43 +28,43 @@ class WLCMS_Admin_Menus
     public function set_wlcms_admin()
     {
         //Remove actions from preview mode
-        if ( defined('DOING_AJAX') && DOING_AJAX ) {
+        if (defined('DOING_AJAX') && DOING_AJAX) {
             remove_action('admin_init', array($this, 'admin_init'));
             remove_action('admin_init', array($this, 'rebuild_user_admin_menu'), 9999999);
             return;
         }
 
-        if( ! is_user_logged_in() ) { 
+        if (!is_user_logged_in()) {
             return;
         }
 
         $wlcms_admin = wlcms_field_setting('wlcms_admin');
 
-        if ( ! $wlcms_admin ) {
+        if (!$wlcms_admin) {
             return;
         }
 
         //Check if the current user is editor and with legacy menu
-        if( $this->is_legacy_menu_role() ) {
+        if ($this->is_legacy_menu_role()) {
             return;
         }
 
         $current_user = wp_get_current_user();
-        
+
         $this->is_wlcms_admin = in_array($current_user->ID, $wlcms_admin);
     }
 
-    public function is_legacy_menu_role() 
+    public function is_legacy_menu_role()
     {
-        
-        if( ! wlcms_field_setting('legacy_menu')  ) {
+
+        if (!wlcms_field_setting('legacy_menu')) {
             return false;
         }
-        
-        $user = wp_get_current_user();
-        $role = ( array ) $user->roles;
 
-        if ( ! in_array( 'editor', $role, true ) ) {
+        $user = wp_get_current_user();
+        $role = ( array )$user->roles;
+
+        if (!in_array('editor', $role, true)) {
             return false;
         }
 
@@ -77,13 +77,13 @@ class WLCMS_Admin_Menus
      */
     public function has_visible_roles()
     {
-        if ( is_multisite() && is_super_admin() ) {
+        if (is_multisite() && is_super_admin()) {
             return true;
         }
 
         return $this->is_wlcms_admin();
     }
-    
+
     public function enable_admin_menu()
     {
         return wlcms_field_setting('enable_wlcms_admin');
@@ -98,61 +98,70 @@ class WLCMS_Admin_Menus
         return $this->is_wlcms_admin;
     }
 
-    public function save( $settings )
+    public function save($settings)
     {
-        $this->save_sidemenu( $settings );
-        $this->save_admin_bar_menu( $settings );
 
-        if( ! isset( $_POST['remove_legacy_menu'] ) ) {
+        if (!isset($_POST['enable_wlcms_admin'])) {
+            $settings->remove('admin_menus');
+            $settings->remove('admin_bar_menus');
+            return;
+        }
+
+        $this->save_sidemenu($settings);
+        $this->save_admin_bar_menu($settings);
+
+        if (!isset($_POST['remove_legacy_menu'])) {
             return;
         }
 
         $settings->remove('legacy_menu');
     }
 
-    private function save_sidemenu( $settings )
+    private function save_sidemenu($settings)
     {
-        $menus          = $this->get_admin_menus();
-        $db_menu_main   = array();
-        $db_menu        = array();
+        $menus = $this->get_admin_menus();
+        $db_menu_main = array();
+        $db_menu = array();
 
         // No menu selected
-        if ( ! isset( $_POST['admin_menus'] ) ) {
-            $settings->remove( 'admin_menus' );
+        if (!isset($_POST['admin_menus'])) {
+            $settings->remove('admin_menus');
             return $settings;
         }
 
-        $post_main_menu = isset( $_POST['admin_menus']['main'] ) ? $_POST['admin_menus']['main'] : array();
-        $post_sub_menu = isset( $_POST['admin_menus']['sub'] ) ? $_POST['admin_menus']['sub'] : array();
+        $post_main_menu = isset($_POST['admin_menus']['main']) ? $_POST['admin_menus']['main'] : array();
+        $post_sub_menu = isset($_POST['admin_menus']['sub']) ? $_POST['admin_menus']['sub'] : array();
 
-        $sidebar_url = sanitize_title( wlcms()->Branding()->sidebar_menu_url() );
+        $sidebar_url = sanitize_title(wlcms()->Branding()->sidebar_menu_url());
 
-        foreach ( $menus as $main_key => $main_menu ) {
+        if (is_array($menus) && $menus > 0) :
+            foreach ($menus as $main_key => $main_menu) {
 
-            if ( $main_key == $sidebar_url ) {
+            if ($main_key == $sidebar_url) {
                 continue;
             }
 
-            if ( ! in_array($main_key, $post_main_menu) ) {
+            if (!in_array($main_key, $post_main_menu)) {
                 $db_menu['main'][] = $main_key;
             }
 
-            if ( isset( $main_menu['submenus']) && count($main_menu['submenus'] ) ) {
-                foreach ( $main_menu['submenus'] as $sub_key => $submenu ) {
-                    if ( $sub_key == $sidebar_url ) {
+            if (isset($main_menu['submenus']) && is_array($main_menu['submenus']) && count($main_menu['submenus'])) {
+                foreach ($main_menu['submenus'] as $sub_key => $submenu) {
+                    if ($sub_key == $sidebar_url) {
                         continue;
                     }
                     $submenu_value = $submenu['slug'];
 
-                    if ( ! in_array($submenu_value, $post_sub_menu) ) {
+                    if (!in_array($submenu_value, $post_sub_menu)) {
                         $db_menu['sub'][] = $submenu_value;
                     }
                 }
             }
         }
+        endif;
 
-        if ( count( $db_menu ) ) {
-            $settings->set( 'admin_menus', $db_menu );
+        if (count($db_menu)) {
+            $settings->set('admin_menus', $db_menu);
         } else {
             $settings->remove('admin_menus');
         }
@@ -160,28 +169,29 @@ class WLCMS_Admin_Menus
         return $settings;
     }
 
-    private function save_admin_bar_menu( $settings )
+    private function save_admin_bar_menu($settings)
     {
-        $menus = get_option( $this->wlcms_admin_bar_menus_option, array() );
+        $menus = get_option($this->wlcms_admin_bar_menus_option, array());
 
         // No menu selected
-        if ( ! isset( $_POST['admin_bar_menus'] ) ) {
-            $settings->remove( 'admin_bar_menus' );
+        if (!isset($_POST['admin_bar_menus'])) {
+            $settings->remove('admin_bar_menus');
             return;
         }
 
-        $post_menu = isset( $_POST['admin_bar_menus'] ) ? $_POST['admin_bar_menus'] : array();
+        $post_menu = isset($_POST['admin_bar_menus']) ? $_POST['admin_bar_menus'] : array();
 
         $db_menu = array();
-        foreach( $menus as $menu_key => $menu ){
+        if (is_array($menus) && $menus > 0) :
+            foreach ($menus as $menu_key => $menu) {
 
-            if ( ! in_array( $menu_key, $post_menu ) ) {
+            if (!in_array($menu_key, $post_menu)) {
                 $db_menu[] = $menu_key;
             }
         }
-
-        if( count( $db_menu ) ) {
-            $settings->set( 'admin_bar_menus', $db_menu );
+        endif;
+        if (count($db_menu)) {
+            $settings->set('admin_bar_menus', $db_menu);
         }
 
     }
@@ -194,45 +204,48 @@ class WLCMS_Admin_Menus
      */
     public function compile_menus()
     {
-        global $menu;
-        global $submenu;
+        global $menu, $submenu;
+
 
         $output = array();
 
         $sidebar_url = wlcms()->Branding()->sidebar_menu_url();
-        foreach ( $menu as $menu_item ) {
-            // some menu items are seperators, skip them
-            if ( $menu_item[0] == '' ) {
-                continue;
+
+        if (is_array($menu) && count($menu) > 0) {
+            foreach ($menu as $menu_item) {
+                // some menu items are seperators, skip them
+                if ($menu_item[0] == '') {
+                    continue;
+                }
+
+                if ($menu_item[2] == $sidebar_url) {
+                    continue;
+                }
+
+                $menu_name = preg_replace('#(<span.*?>).*?(</span>)#', '', $menu_item[0]);
+                $menu_key = $menu_item[2];
+                $output[$menu_key] = array(
+                    'name' => $menu_name,
+                    'slug' => $menu_item[2],
+                    'submenus' => array()
+                );
             }
-
-            if ( $menu_item[2] == $sidebar_url ) {
-                continue;
-            }
-
-            $menu_name = preg_replace( '#(<span.*?>).*?(</span>)#', '', $menu_item[0] );
-            $menu_key = $menu_item[2];
-            $output[ $menu_key ] = array(
-                'name' => $menu_name,
-                'slug' => $menu_item[2],
-                'submenus' => array()
-            );
-
         }
+        if (is_array($submenu) && count($submenu) > 0) :
 
-        foreach ( $submenu as $key => $submenu_item ) {
+            foreach ($submenu as $key => $submenu_item) {
 
             $mainmenu_key = $key;
 
-            // If a submenu does not have a valid parent, skip
-            if ( ! isset( $output[$mainmenu_key] ) ) {
+                // If a submenu does not have a valid parent, skip
+            if (!isset($output[$mainmenu_key])) {
                 continue;
             }
 
             foreach ($submenu_item as $sm_info) {
                 $submenu_item = remove_query_arg('return', $sm_info[2]);
                 $submenu_key = sanitize_title($submenu_item);
-                $menu_name = preg_replace('#(<span.*?>).*?(</span>)#', '', $sm_info[0] );
+                $menu_name = preg_replace('#(<span.*?>).*?(</span>)#', '', $sm_info[0]);
 
                 $slug = $mainmenu_key . $this->get_submenu_placeholder() . $submenu_key;
                 $output[$key]['submenus'][$submenu_key] = array(
@@ -242,6 +255,7 @@ class WLCMS_Admin_Menus
             }
 
         }
+        endif;
 
         $this->admin_menus = $output;
 
@@ -265,18 +279,18 @@ class WLCMS_Admin_Menus
     public function rebuild_user_admin_menu()
     {
         global $submenu;
-        
-        if( ! $this->enable_admin_menu() ) {
+
+        if (!$this->enable_admin_menu() && !$this->is_legacy_menu_role()) {
             return;
         }
-        
+
         if ($this->has_visible_roles()) {
             return;
         }
 
         $setting_admin_menus = wlcms_field_setting('admin_menus');
         if (isset($setting_admin_menus['main']) && is_array($setting_admin_menus['main'])) {
-            
+
             foreach ($setting_admin_menus['main'] as $menu_item) {
                 $this->remove_menu_page($menu_item);
             }
@@ -315,6 +329,10 @@ class WLCMS_Admin_Menus
     {
         global $menu;
 
+        if (!is_array($menu)) {
+            return false;
+        }
+
         foreach ($menu as $i => $item) {
 
             $menu_item = remove_query_arg('return', $item[2]);
@@ -325,7 +343,6 @@ class WLCMS_Admin_Menus
                 return $item;
             }
         }
-
         return false;
     }
 
@@ -342,7 +359,7 @@ class WLCMS_Admin_Menus
     {
         global $submenu;
 
-        if (!isset($submenu[$menu_slug]))
+        if (!isset($submenu[$menu_slug]) || !is_array($submenu[$menu_slug]))
             return false;
 
         foreach ($submenu[$menu_slug] as $i => $item) {
@@ -375,6 +392,9 @@ class WLCMS_Admin_Menus
 
         $nodes = $wp_admin_bar->get_nodes();
 
+        if (!$nodes || !is_array($nodes)) {
+            return;
+        }
 
         // Admin menus is not set from action hoo admin_init
         // Use for saving menus
@@ -401,12 +421,16 @@ class WLCMS_Admin_Menus
     private function _createMenuTree($flat, $root = 0)
     {
         $parents = array();
-        foreach ($flat as $a) {
+        $sub_root = array();
+        if (is_array($flat) && $flat > 0) :
+            foreach ($flat as $a) {
             if ($this->excluded_admin_menu($a->id)) continue;
             $parents[$a->parent][] = $a;
         }
+        $sub_root = isset($parents[$root]) ? $parents[$root] : array();
+        endif;
 
-        return $this->_createMenuBranch($parents, $parents[$root]);
+        return $this->_createMenuBranch($parents, $sub_root);
     }
 
     /**
@@ -419,7 +443,8 @@ class WLCMS_Admin_Menus
     private function _createMenuBranch(&$parents, $children)
     {
         $tree = array();
-        foreach ($children as $child) {
+        if (is_array($children) && $children > 0) :
+            foreach ($children as $child) {
 
             if (isset($parents[$child->id])) {
 
@@ -430,6 +455,7 @@ class WLCMS_Admin_Menus
             $tree[] = $child;
 
         }
+        endif;
 
         return $tree;
     }
@@ -472,15 +498,17 @@ class WLCMS_Admin_Menus
 
 
         $nodes = $wp_admin_bar->get_nodes();
-        
-        foreach ($nodes as $menu) {
+
+        if (is_array($nodes) && count($nodes) > 0) :
+            foreach ($nodes as $menu) {
 
             if ($this->excluded_admin_menu($menu->id)) continue;
 
-            if( in_array($menu->id, $admin_bar_menu ) ){
+            if (in_array($menu->id, $admin_bar_menu)) {
                 $wp_admin_bar->remove_menu($menu->id);
             }
         }
+        endif;
     }
 
     /**
@@ -530,12 +558,11 @@ class WLCMS_Admin_Menus
         }
 
         $ul_class_wrapper = '';
-        if( $depth > 0 )
-        {
+        if ($depth > 0) {
             $out .= '<a href="javascript:void(0)" class="wlcms-toggle-arrow"></a>';
             $ul_class_wrapper = ' class="sub_menu_wrapper"';
         }
-        $out .= '<ul'. $ul_class_wrapper .'>';
+        $out .= '<ul' . $ul_class_wrapper . '>';
         $out .= '<input type="hidden" value="top-secondary" name="admin_bar_menus[]">
         <input type="hidden" value="my-account" name="admin_bar_menus[]">
         <input type="hidden" value="user-actions" name="admin_bar_menus[]">
@@ -554,7 +581,7 @@ class WLCMS_Admin_Menus
             }
 
             $disabled = '';
-            if(  in_array($menu_key, array('top-secondary', 'my-account', 'user-actions', 'logout'))) {
+            if (in_array($menu_key, array('top-secondary', 'my-account', 'user-actions', 'logout'))) {
                 $disabled = ' disabled';
             }
 

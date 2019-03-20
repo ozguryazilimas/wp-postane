@@ -11,20 +11,37 @@ class WLCMS_Upgrades
 
     public function __construct()
     {
-        add_action('admin_init', array($this, 'upgrader_process_complete'), 999999); 
+        add_action('admin_init', array($this, 'upgrader_process_complete'), 999999);
     }
 
     public function upgrader_process_complete()
     {
+        global $wpdb;
 
         $this->settings = wlcms()->Settings();
 
         $legacy_version = get_option('wlcms_o_ver', false);
-        
-        if ( ! $legacy_version) {
+
+        if (!$legacy_version) {
             return;
         }
 
+        $new_wlcms_options = get_option('wlcms_options', false);
+        if ($legacy_version && $new_wlcms_options) {
+            return;
+        }
+
+        $newdbsetting = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->options WHERE option_name = 'wlcms_options'");
+
+        if ($legacy_version && $newdbsetting) {
+            return;
+        }
+
+        $this->do_import();
+    }
+
+    public function do_import()
+    {
         $this->get_settings();
         $this->perform();
     }
@@ -43,13 +60,21 @@ class WLCMS_Upgrades
         foreach ($results as $result) :
             if ($result->option_value == '') continue;
 
-            $this->legacy_db_setting[$result->option_name] = $result->option_value;
+        $this->legacy_db_setting[$result->option_name] = $result->option_value;
         endforeach;
+    }
+
+    public function upgrade_reset()
+    {
+        $this->settings = wlcms()->Settings();
     }
 
     private function perform()
     {
         $admin_bar_menu = array();
+
+        $this->upgrade_reset();
+
         $this->settings->reset();
         $this->settings->set('version', WLCMS_VERSION);
 
@@ -103,12 +128,12 @@ class WLCMS_Upgrades
         if (count($admin_bar_menu)) {
             $this->settings->set('admin_bar_menus', $admin_bar_menu);
         }
-        
+
         $this->hide_sidebar_menu('plugins.php');
         $this->hide_sidebar_menu('options-general.php');
 
         //Appearance
-        $this->get_legacy_appearance_menu_settings();        
+        $this->get_legacy_appearance_menu_settings();
         $this->settings->set('admin_menus', array('main' => $this->legacy_menus, 'sub' => $this->legacy_submenus));
 
         //Set Admin users to be wlcms admin
@@ -117,11 +142,11 @@ class WLCMS_Upgrades
         if (count($adminusers)) :
 
             $wlcms_admin = array();
-            foreach ($adminusers as $user) :
-                $wlcms_admin[] = $user->user_email;
-            endforeach;
+        foreach ($adminusers as $user) :
+            $wlcms_admin[] = $user->user_email;
+        endforeach;
 
-            $this->settings->set('wlcms_admin', $wlcms_admin);
+        $this->settings->set('wlcms_admin', $wlcms_admin);
 
         endif;
         
@@ -136,7 +161,7 @@ class WLCMS_Upgrades
                 'visible_to' => $this->get_legacy_roles($this->get_legacy_setting('wlcms_o_welcome_visible_to')),
                 'title' => $this->get_legacy_setting('wlcms_o_welcome_title'),
                 'description' => $this->get_legacy_setting('wlcms_o_welcome_text'),
-                
+
             );
         }
 
@@ -152,15 +177,15 @@ class WLCMS_Upgrades
                 'description' => $this->get_legacy_setting('wlcms_o_welcome_text1'),
             );
         }
-        
+
         $this->settings->set('welcome_panel', $welcome);
-        
-        if ($this->get_legacy_setting('wlcms_o_login_custom_logo')){
+
+        if ($this->get_legacy_setting('wlcms_o_login_custom_logo')) {
             $this->settings->set('logo_width', false);
             $this->settings->set('logo_height', false);
         }
-        
-        if ($this->get_legacy_setting('wlcms_o_loginbg_white')){
+
+        if ($this->get_legacy_setting('wlcms_o_loginbg_white')) {
             $this->settings->set('background_color', '#FFF');
         }
 
@@ -169,8 +194,13 @@ class WLCMS_Upgrades
 
         //Save new settings
         $this->settings->save();
-        
-        wp_redirect(wlcms()->admin_url());
+
+        $redirect_url = admin_url();
+        if (current_user_can('manage_options')) {
+            $redirect_url = wlcms()->admin_url();
+        }
+
+        wp_redirect($redirect_url);
         exit;
     }
 
@@ -185,6 +215,7 @@ class WLCMS_Upgrades
         $new_sub_menus = array();
         $get_submenu_placeholder = $this->menu_class->get_submenu_placeholder();
         $url = 'themes.php';
+        $count_sub_menus = 0;
         
         /*
             'wlcms_o_hide_links', //////          
@@ -194,8 +225,8 @@ class WLCMS_Upgrades
             'wlcms_o_subtemplate_hide_7', = Hide Widgets
             'wlcms_o_subtemplate_hide_6', = Hide Customize
             'wlcms_o_subtemplate_hide_5', = Hide Themes
-        */
-        
+         */
+
         $theme_subs = array(
             'wlcms_o_subtemplate_hide_16' => 'custom-header',
             'wlcms_o_subtemplate_hide_15' => 'customize-php038autofocus%5bcontrol%5dheader_image',
@@ -204,28 +235,28 @@ class WLCMS_Upgrades
             'wlcms_o_subtemplate_hide_6' => 'customize-php',
             'wlcms_o_subtemplate_hide_5' => 'themes-php'
         );
-        
-        if ($this->get_legacy_setting('wlcms_o_editor_template_access')== 0) {
+
+        if ($this->get_legacy_setting('wlcms_o_editor_template_access') == 0) {
             $theme_subs['wlcms_o_subtemplate_hide_theme-php'] = 'themes-php';
-            
+
             foreach ($theme_subs as $theme_sub_key => $theme_sub) {
                 $this->legacy_submenus[] = $url . $get_submenu_placeholder . $theme_sub;
                 $count_sub_menus++;
             }
 
             $this->legacy_menus[] = $url;
-            
+
             return;
         }
 
-        if ($this->get_legacy_setting('wlcms_o_editor_template_access')== 1) {
+        if ($this->get_legacy_setting('wlcms_o_editor_template_access') == 1) {
 
             $submenus = $this->menu_class->get_new_submenus($url);
 
             if ($submenus) {
 
                 $count_sub_menus = 0;
-                
+
                 foreach ($theme_subs as $theme_sub_key => $theme_sub) {
                     if ($this->get_legacy_setting($theme_sub_key)) {
                         $this->legacy_submenus[] = $url . $get_submenu_placeholder . $theme_sub;
@@ -255,11 +286,11 @@ class WLCMS_Upgrades
         $this->legacy_menus[] = $url;
 
         $submenus = $this->menu_class->get_new_submenus($url);
-        
-        if ( ! $submenus) {
+
+        if (!$submenus) {
             return;
         }
-        
+
         foreach ($submenus['submenus'] as $submenu) {
             $this->legacy_submenus[] = $submenu['slug'];
         }
@@ -267,7 +298,7 @@ class WLCMS_Upgrades
 
     private function get_legacy_roles($key)
     {
-        $roles = array('subscriber', 'contributor', 'author', 'editor', 'administrator');
+        $roles = array('administrator', 'editor', 'author', 'contributor', 'subscriber');
         $allowed_roles = array();
         foreach ($roles as $role) {
 
@@ -285,7 +316,8 @@ class WLCMS_Upgrades
     {
         global $wpdb;
 
-        $wpdb->get_results("DELETE FROM $wpdb->options WHERE option_name LIKE 'wlcms_o_%'");
+        delete_option('wlcms_o_ver');
+        $wpdb->get_results("DELETE FROM $wpdb->options WHERE option_name = 'wlcms_o_ver'");
     }
 
     private function legacy_settings()

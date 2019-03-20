@@ -7,18 +7,18 @@ class WLCMS_Settings
     function __construct()
     {
         $this->init_settings();
-        add_filter( 'wp_kses_allowed_html', array($this, 'kses_allowed_html'), 10, 2 );
+        add_filter('wp_kses_allowed_html', array($this, 'kses_allowed_html'), 10, 2);
         add_action('init', array($this, 'init'));
-        add_action('wlcms_after_body', array($this, 'add_import_html'));    
+        add_action('wlcms_after_body', array($this, 'add_import_html'));
     }
-    
+
     public function init()
     {
 
         // check or initiate import
         $this->import();
 
-        if ( ! isset($_GET['wlcms-action']) ) {
+        if (!isset($_GET['wlcms-action'])) {
             return;
         }
 
@@ -30,11 +30,10 @@ class WLCMS_Settings
 
     }
 
-    public function kses_allowed_html( $tags, $context ) {
+    public function kses_allowed_html($tags, $context)
+    {
 
-        if ( ! current_user_can( 'activate_plugins' ) ) return $tags;
-
-        if ( 'post' === $context ) {
+        if ('post' === $context) {
 
             $tags['iframe'] = array(
                 'align' => true,
@@ -50,10 +49,10 @@ class WLCMS_Settings
                 'marginwidth' => true,
                 'marginheight' => true,
                 'allowfullscreen' => true,
-                'mozallowfullscreen' => true, 
+                'mozallowfullscreen' => true,
                 'webkitallowfullscreen' => true,
             );
-            
+
             $tags['embed'] = array(
                 'src' => true,
                 'height' => true,
@@ -68,16 +67,16 @@ class WLCMS_Settings
 
     public function get($key = "", $default = false)
     {
-        if ( ! isset($this->settings[$key]) ) {
+        if (!isset($this->settings[$key])) {
             return $default;
         }
 
         $value = wlcms_removeslashes($this->settings[$key]);
-        if ( empty($value) || is_null($value) ) {
+        if (empty($value) || is_null($value)) {
             return false;
         }
 
-        if ( is_array($value) && count($value) == 0 ) {
+        if (is_array($value) && count($value) == 0) {
             return false;
         }
 
@@ -104,13 +103,13 @@ class WLCMS_Settings
         $this->settings[$key] = $value;
     }
 
-    public function remove( $key )
+    public function remove($key)
     {
-        if( isset($this->settings[$key] ) ) {
+        if (isset($this->settings[$key])) {
             unset($this->settings[$key]);
         }
     }
-    
+
     public function save()
     {
         update_option("wlcms_options", $this->settings);
@@ -153,39 +152,6 @@ class WLCMS_Settings
         $this->settings = $settings;
     }
 
-    public function reset_plugin()
-    {
-        if ($_GET['wlcms-action'] != 'reset') {
-            return;
-        }
-
-        delete_option("wlcms_options");
-
-        WLCMS_Queue('Settings reset.');
-        wp_redirect(wlcms()->admin_url());
-        exit;
-    }
-
-    public function export()
-    {
-        if ( ! isset($_GET['wlcms-action'] ) || (isset($_GET['wlcms-action'] ) && $_GET['wlcms-action'] != 'export')) {
-            return;
-        }
-
-        $settings = $this->getAll();
-
-        if (!is_array($settings)) {
-            $settings = array();
-        }
-
-        $settings = json_encode($settings);
-
-        header('Content-disposition: attachment; filename=wlcms-settings.json');
-        header('Content-type: application/json');
-        echo $settings;
-        exit;
-    }
-
     public function add_import_html()
     {
         wlcms()->admin_view('parts/import-settings');
@@ -194,7 +160,7 @@ class WLCMS_Settings
     public function import()
     {
         if (!isset($_POST['wlcms-settings_nonce'])) return;
-        
+
         if (!is_admin() && !current_user_can('manage_options')) {
             return;
         }
@@ -203,7 +169,7 @@ class WLCMS_Settings
             return;
         }
 
-        if( !isset($_FILES['import_file']) ) {
+        if (!isset($_FILES['import_file'])) {
             return;
         }
 
@@ -212,7 +178,7 @@ class WLCMS_Settings
         }
 
         // check nonce
-        if ( !wp_verify_nonce($_POST['wlcms-settings_nonce'], 'wlcms-settings-action')) {
+        if (!wp_verify_nonce($_POST['wlcms-settings_nonce'], 'wlcms-settings-action')) {
 
             WLCMS_Queue('Sorry, your nonce did not verify.', 'error');
             wp_redirect(wlcms()->admin_url());
@@ -220,10 +186,14 @@ class WLCMS_Settings
         }
 
         $import_field = 'import_file';
-        $temp_file = esc_attr($_FILES[$import_field]['tmp_name']);
+        $temp_file_raw = $_FILES[$import_field]['tmp_name'];
+        $temp_file = esc_attr($temp_file_raw);
         $arr_file_type = $_FILES[$import_field];
         $uploaded_file_type = $arr_file_type['type'];
         $allowed_file_types = array('application/json');
+
+		//Check if legacy
+        $this->legacy_import($temp_file, $uploaded_file_type);
 
         if (!in_array($uploaded_file_type, $allowed_file_types)) {
             WLCMS_Queue('Upload a valid .json file.', 'error');
@@ -255,9 +225,91 @@ class WLCMS_Settings
         exit;
     }
 
+    function legacy_import($temp_file, $uploaded_file_type)
+    {
+        global $wpdb;
+
+        if (!in_array($uploaded_file_type, array('text/plain'))) {
+            return false;
+        }
+
+        $import = file_get_contents($temp_file);
+        $import = preg_replace_callback('/s:([0-9]+):\"(.*?)\";/', 'vum_fix_json', $import);
+        $import = unserialize($import);
+
+        if (!is_array($import)) {
+            return false;
+        }
+
+
+        delete_option("wlcms_options");
+        $wpdb->get_results("DELETE FROM $wpdb->options WHERE option_name LIKE 'wlcms_o_%'");
+
+        $site_url = get_bloginfo('url');
+
+        foreach ($import as $name => $value) {
+
+			// If the value includes this shortcode, replace it.
+            $val = str_replace('{SITEURL}', $site_url, $value);
+
+			// Check that our option key starts with WLCMS
+            if (strpos($name, 'wlcms_o') === 0) {
+                update_option($name, $val);
+            } else {
+                wp_die(__('<strong>Error!</strong> During the import process we almost imported a non White Label CMS setting - please ensure you uploaded the correct file and try again.'));
+            }
+        }
+
+        WLCMS_Queue('Your Import has been completed.');
+        wp_redirect(wlcms()->admin_url());
+        exit;
+    }
+
+    public function export()
+    {
+        if (!isset($_GET['wlcms-action']) || (isset($_GET['wlcms-action']) && $_GET['wlcms-action'] != 'export')) {
+            return;
+        }
+
+        $settings = $this->getAll();
+
+        if (!is_array($settings)) {
+            $settings = array();
+        }
+
+        $settings = json_encode($settings);
+
+        header('Content-disposition: attachment; filename=wlcms-settings.json');
+        header('Content-type: application/json');
+        echo $settings;
+        exit;
+    }
+
+    public function reset_plugin()
+    {
+        global $wpdb;
+
+        if ($_GET['wlcms-action'] != 'reset') {
+            return;
+        }
+
+        delete_option("wlcms_options");
+        $wpdb->get_results("DELETE FROM $wpdb->options WHERE option_name LIKE 'wlcms_o_%'");
+
+        WLCMS_Queue('Settings reset.');
+        wp_redirect(wlcms()->admin_url());
+        exit;
+    }
+
     public function keys()
     {
         return array_keys($this->default_options());
+    }
+
+    public function get_default_option($key)
+    {
+        $settings = $this->default_options();
+        return isset($settings[$key]) ? $settings[$key] : null;
     }
 
     public function default_options()
@@ -287,6 +339,8 @@ class WLCMS_Settings
             'footer_html' => '',
             'dashboard_icon' => '',
             'dashboard_title' => 'Dashboard',
+            'dashboard_role_stat' => false,
+            'dashboard_widgets_visibility_roles' => array('administrator', 'editor', 'author', 'contributor', 'subscriber'),
             'hide_all_dashboard_panels' => false,
             'hide_at_a_glance' => false,
             'hide_activities' => false,
@@ -296,16 +350,17 @@ class WLCMS_Settings
             'remove_empty_dash_panel' => false,
             'welcome_panel' => array(
                 array(
-                'is_active' => false,
-                'show_title' => false,
-                'template_type' => 'html',
-                'visible_to' => array('administrator', 'editor','author','contributor','subscriber'),
-            ),array(
-                'is_active' => false,
-                'show_title' => false,
-                'template_type' => 'html',
-                'visible_to' => array('administrator', 'editor','author','contributor','subscriber'),
-            )),
+                    'is_active' => false,
+                    'show_title' => false,
+                    'template_type' => 'html',
+                    'visible_to' => array('administrator', 'editor', 'author', 'contributor', 'subscriber'),
+                ), array(
+                    'is_active' => false,
+                    'show_title' => false,
+                    'template_type' => 'html',
+                    'visible_to' => array('administrator', 'editor', 'author', 'contributor', 'subscriber'),
+                )
+            ),
             'add_own_rss_panel' => false,
             'rss_feed_number_of_item' => 3,
             'show_post_content' => false,
@@ -324,6 +379,6 @@ class WLCMS_Settings
             'settings_custom_css_url' => ''
         );
         return apply_filters('wlcms_setting_fields', $settings);
-        
+
     }
 }

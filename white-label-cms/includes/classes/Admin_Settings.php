@@ -9,7 +9,7 @@ class WLCMS_Admin_Settings
         add_action('admin_init', array($this, 'init'), 9999);
         add_filter('mce_css', array($this, 'custom_editor_stylesheet'));
         add_filter('contextual_help', array($this, 'remove_help_tabs'), 999, 3);
-        add_action('after_setup_theme', array($this, 'remove_nag_messages'));
+        add_action('admin_init', array($this, 'remove_nag_messages'));
         add_action('init', array($this, 'remove_admin_bar'));
     }
 
@@ -21,10 +21,9 @@ class WLCMS_Admin_Settings
 
     public function remove_admin_bar()
     {
-        
-        
-        if( ! wlcms_field_setting('hide_admin_bar_all') )
-        {
+
+
+        if (!wlcms_field_setting('hide_admin_bar_all')) {
             return;
         }
 
@@ -88,28 +87,14 @@ class WLCMS_Admin_Settings
 
     public function remove_nag_messages()
     {
-        if (wlcms()->Admin_menus()->has_visible_roles()) {
-            return;
-        }
 
         if (!wlcms_field_setting('hide_nag_messages')) {
             return;
         }
 
-        add_action('init', array($this, 'remove_core_updates'), 2);
-        add_filter('pre_option_update_core', '__return_null');
-        add_filter('pre_site_transient_update_core', '__return_null');
-        remove_action('load-update-core.php', 'wp_update_plugins');
-        add_filter('pre_site_transient_update_plugins', '__return_null');
-        add_filter('pre_site_transient_update_core', array($this, 'remove_core_updates'));
-        add_filter('pre_site_transient_update_plugins', array($this, 'remove_core_updates'));
-        add_filter('pre_site_transient_update_themes', array($this, 'remove_core_updates'));
-    }
-
-    public function remove_core_updates()
-    {
-        global $wp_version;
-        return (object)array('last_checked' => time(), 'version_checked' => $wp_version, );
+        remove_action('admin_notices', 'update_nag', 3);
+        remove_action('admin_notices', 'maintenance_nag', 10);
+        remove_action('network_admin_notices', 'update_nag', 3);
     }
 
     public function wp_version_check()

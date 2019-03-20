@@ -3,13 +3,13 @@
 Contributors: VideoUserManuals
 Plugin Name: White Label CMS
 Plugin URI: http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
-Tags: cms, custom, admin, branding, dashboard, administration, plugin, login, client, menu, navigation, appearance, menus, widgets
+Tags: cms, custom, admin, branding, dashboard, administration, plugin, login, client, menu, navigation, appearance, menus, widgets, custom login, custom login logo, custom wp-login, login customizer, wp login
 Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
-Tested up to: 5.0
-Stable tag: 2.0.1
+Tested up to: 5.1
+Stable tag: 2.1.1
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -27,6 +27,8 @@ For a overview of the changes in 2.0 version of the plugin please visit the Vide
 
 = Customize The Login Page =
 Impress your clients with a branded login page. Add yours or your client's logo, add a background image and even control the CSS if you wish. Personalising the back end of WordPress will give your client the feeling that this is their website, not a generic website.
+
+[youtube https://www.youtube.com/watch?v=LESxAuRdjBw]
 
 = Add Your Branding to the Header and Footer =
 Stay top of mind with your client by adding your branding to the admin bar, menu or footer. 
@@ -63,6 +65,29 @@ There is so much that you can do with White Label CMS, but we want the experienc
 7. An example of a custom login
 
 == Changelog ==
+
+= 2.1.1 =
+* Fixed Dashboard for Beaver Builder margin and padding
+
+= 2.1 =
+* Support Internationalization
+* Added a body class to differentiate WLCMS Admin or not, by adding body.not-wlcms-admin or and body.wlcms-admin
+* Minor fixes
+
+= 2.0.2.2 =
+* Use space to remove howdy
+* Change login logo url if custom logo setup
+* Moved wlcms style to header
+* Hiding Dashboard widgets can now configured by user role
+* Minor fixes
+
+= 2.0.2.1 =
+
+* Bug fixed involving object cache which is causing redirect loop
+* Fixed unable to upgrade themes and plugins
+* Fixed legacy custom welcome dashboard
+* Fixed legacy import
+* Minor fixes
 
 = 2.0 =
 

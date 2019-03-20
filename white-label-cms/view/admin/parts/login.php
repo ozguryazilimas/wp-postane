@@ -1,6 +1,6 @@
 <div class="wlcms-body-wrapper">
     <div class="wlcms-body-header">
-        <h2><?php _e('Logo and Background', 'wlcms') ?></h2>
+        <h2><?php _e('Logo and Background', 'white-label-cms') ?></h2>
     </div>
     <div class="wlcms-body-main">
         <input type="hidden" name="form_section" value="setting" />
@@ -10,7 +10,7 @@
 
 <div class="wlcms-body-wrapper">
     <div class="wlcms-body-header">
-        <h2><?php _e('Advanced', 'wlcms') ?></h2>
+        <h2><?php _e('Advanced', 'white-label-cms') ?></h2>
     </div>
     <div class="wlcms-body-main">
         <?php wlcms()->admin_view('parts/login-advanced'); ?>
@@ -19,7 +19,7 @@
 
 <div class="wlcms-body-wrapper">
     <div class="wlcms-body-header">
-        <h2><?php _e('Custom CSS', 'wlcms') ?></h2>
+        <h2><?php _e('Custom CSS', 'white-label-cms') ?></h2>
     </div>
     <div class="wlcms-body-main">
         <?php wlcms()->admin_view('parts/login-custom-css'); ?>

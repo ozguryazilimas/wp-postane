@@ -1,6 +1,6 @@
 <div class="wlcms-input-group wlcms-toggle-wrapper wlcms-menus-settings">
     <div class="wlcms-help">
-        <p><?php _e('Admin Bar Menus will be hidden to all User Roles up to and including Admins with the exception of White Label CMS Admins and Super Admins', 'wlcms') ?></p>
+        <p><?php _e('Admin Bar Menus will be hidden to all User Roles up to and including Admins with the exception of White Label CMS Admins and Super Admins', 'white-label-cms') ?></p>
     </div>
     <?php
 

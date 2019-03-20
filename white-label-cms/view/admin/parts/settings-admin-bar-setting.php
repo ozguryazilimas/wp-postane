@@ -5,6 +5,6 @@
         <label class="wlcms-toggle-btn" for="hide_admin_bar_all"></label><label class="toggle-label" for="hide_admin_bar_all"><?php _e('Hide Front-end Admin Bar'); ?></label> 
     </div>
     <div class="wlcms-help">
-        <?php _e('This will disable the admin bar on the front-end for all logged in users', 'wlcms') ?>
+        <?php _e('This will disable the admin bar on the front-end for all logged in users', 'white-label-cms') ?>
     </div>
 </div>
