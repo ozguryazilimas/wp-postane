@@ -80,8 +80,8 @@ class URE_Capabilities_Groups_Manager {
     
     private function add_woocommerce_groups() {
         
-        $full_caps = $this->lib->get('full_capabilities');
-        if (!isset($full_caps['manage_woocommerce'])) {
+        $full_caps = $this->lib->init_full_capabilities( 'role' );
+        if ( !isset( $full_caps['manage_woocommerce'] ) ) {
             return;
         }
         
@@ -387,6 +387,30 @@ class URE_Capabilities_Groups_Manager {
         return $groups;
     }
     // end of get_cap_groups()
+    
+    
+    /**
+     * Private clone method to prevent cloning of the instance of the
+     * *Singleton* instance.
+     *
+     * @return void
+     */
+    private function __clone() {
+        
+    }
+    // end of __clone()
+    
+    /**
+     * Private unserialize method to prevent unserializing of the *Singleton*
+     * instance.
+     *
+     * @return void
+     */
+    private function __wakeup() {
+        
+    }
+    // end of __wakeup()
+    
         
 }
 // end of class URE_Capabilities_Groups_Manager
