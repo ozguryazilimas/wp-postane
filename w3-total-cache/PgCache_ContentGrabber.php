@@ -1414,7 +1414,7 @@ class PgCache_ContentGrabber {
 					$page_key_extension['content_type'] : '';
 
 				if ( @preg_match( "~(text/xml|text/xsl|application/rdf\+xml|application/rss\+xml|application/atom\+xml)~i", $content_type ) ||
-					strpos( $request_url, "/feed/" ) !== false ||
+					preg_match( "~/feed(/|$)~", $request_url ) ||
 					strpos( $request_url, ".xsl" ) !== false ) {
 					$key_postfix = '.xml';
 				}
@@ -1901,11 +1901,6 @@ class PgCache_ContentGrabber {
 	 * @return array
 	 */
 	private function _maybe_save_cached_result( $buffer, $has_dynamic ) {
-		if ( empty( $buffer ) ) {
-			$this->cache_reject_reason = 'Empty response';
-			return $buffer;
-		}
-
 		$mobile_group = $this->_page_key_extension['useragent'];
 		$referrer_group = $this->_page_key_extension['referrer'];
 		$encryption = $this->_page_key_extension['encryption'];
@@ -1931,6 +1926,11 @@ class PgCache_ContentGrabber {
 
 		if ( !empty( $response_headers['kv']['Content-Encoding'] ) ) {
 			$this->cache_reject_reason = 'Response is compressed';
+			return $buffer;
+		}
+
+		if ( empty( $buffer ) && empty( $response_headers['kv']['Location'] ) ) {
+			$this->cache_reject_reason = 'Empty response';
 			return $buffer;
 		}
 
