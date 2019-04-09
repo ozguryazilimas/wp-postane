@@ -2,10 +2,10 @@
 Contributors: msaari
 Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
-Requires at least: 4.0
-Tested up to: 5.0.3
+Requires at least: 4.8.3
+Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 4.1.3
+Stable tag: 4.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,7 +53,6 @@ Do note that using Relevanssi may require large amounts (hundreds of megabytes) 
 * Assign weights to any post types and taxonomies.
 * Assign extra weight to new posts.
 * Let the user choose between AND and OR searches, use + and - operator (AND and NOT).
-* Highlighting search terms for visitors from external search engines.
 * Export and import settings.
 * [WP CLI commands](https://www.relevanssi.com/user-manual/wp-cli/).
 * Related posts.
@@ -130,6 +129,18 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.1.4 =
+* `EXISTS` and `NOT EXISTS` didn’t work for taxonomy terms in searches.
+* WPML post type handling has been improved. If post type allows fallback for default language, Relevanssi will support that.
+* Relevanssi now reminds you to set up automatic trimming for the logs. It’s a really good idea, otherwise the logs will become bloated, which will hurt search performance.
+* The Groups posts filter is only applied to public posts to avoid drafts being shown to people who shouldn’t see them.
+* The `posts_per_page` query variable didn’t work; it’s now added to the introduced query variables so that it works.
+* Relevanssi won’t log empty queries anymore.
+* The default tax query relation was switched from `OR` to `AND` to match the WP_Query default behaviour.
+* When used with WP 5.1, Relevanssi will now use `wp_insert_site` instead of the now-deprecated `wpmu_new_blog`.
+* Multisite blog creation is handled better in WP 5.1+.
+* Relevanssi now supports Restrict Content Pro permissions.
+
 = 4.1.3 =
 * Improvements to meta key sorting.
 * Relevanssi settings page won't let you exclude categories you have restricted the search to.
@@ -182,6 +193,9 @@ Each document database is full of useless words. All the little words that appea
 * WP Search Suggest compatibility added.
 
 == Upgrade notice ==
+= 4.1.4 =
+* Restrict Content Pro support, bug fixes and small improvements.
+
 = 4.1.3 =
 * Small improvements here and there.
 

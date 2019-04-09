@@ -175,8 +175,8 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 			}
 		}
 	}
-	if ( defined( 'GROUPS_CORE_VERSION' ) ) {
-		// Groups.
+	if ( defined( 'GROUPS_CORE_VERSION' ) && 'publish' === $status ) {
+		// Groups. Only apply to published posts, don't apply to drafts.
 		$current_user = wp_get_current_user();
 		$post_ok      = Groups_Post_Access::user_can_read_post( $post_id, $current_user->ID );
 	}
@@ -196,6 +196,10 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 	if ( function_exists( 'wp_jv_prg_user_can_see_a_post' ) ) {
 		// WP JV Post Reading Groups.
 		$post_ok = wp_jv_prg_user_can_see_a_post( get_current_user_id(), $post_id );
+	}
+	if ( function_exists( 'rcp_user_can_access' ) ) {
+		// Restrict Content Pro.
+		$post_ok = rcp_user_can_access( get_current_user_id(), $post_id );
 	}
 	/**
 	 * Filters statuses allowed in admin searches.
@@ -894,7 +898,7 @@ function relevanssi_the_tags( $before = null, $separator = ', ', $after = '', $e
  * @param string $after     What is printed after the tags, default ''.
  */
 function relevanssi_get_the_tags( $before = null, $separator = ', ', $after = '' ) {
-	return relevanssi_the_tags( $before, $sep, $after, false );
+	return relevanssi_the_tags( $before, $separator, $after, false );
 }
 
 /**
