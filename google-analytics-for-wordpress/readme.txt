@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: WordPress analytics, google analytics, google analytics dashboard, google analytics widget, WooCommerce stats, analytics dashboard, universal google analytics, statistics, tracking, stats, google, google analytics by yoast, ga, monster insights, monsterinsights, universal analytics, web stats, ecommerce, ecommerce tracking
 Requires at least: 3.8.0
 Tested up to: 5.1.1
-Stable tag: 7.5.0
+Stable tag: 7.5.1
 License: GPL v3
 
 The best Google Analytics plugin for WordPress. See how visitors find and use your website, so you can keep them coming back.
@@ -273,6 +273,10 @@ You can also learn about other <a href="http://www.wpbeginner.com/category/plugi
 4. Want more features? <a href="https://www.monsterinsights.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase MonsterInsights Pro</a>!
 
 == Changelog ==
+= 7.5.1: April 3, 2019 =
+- Tweaked: Fix for Javascript error thrown by vendor min file causing breaking JS error on some hosting providers which breaks our plugin's VueJS app.
+- Tweaked: Fix a conflict with a date.js file loaded by another plugin.
+
 = 7.5.0: April 2, 2019 =
 - New: Updated Reports area using VueJS for better loading times and more consistency.
 - New: Updated Dashboard widget which now shows overview reports and is powered by VueJS.

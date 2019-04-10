@@ -191,6 +191,24 @@ class MonsterInsights_Dashboard_Widget {
 					'plugin_version'    => MONSTERINSIGHTS_VERSION,
 				)
 			);
+
+			$this->remove_conflicting_asset_files();
+		}
+	}
+
+	/**
+	 * Remove assets added by other plugins which conflict.
+	 */
+	public function remove_conflicting_asset_files() {
+		$scripts = array(
+			'jetpack-onboarding-vendor', // Jetpack Onboarding Bluehost.
+		);
+
+		if ( ! empty( $scripts ) ) {
+			foreach ( $scripts as $script ) {
+				wp_dequeue_script( $script ); // Remove JS file.
+				wp_deregister_script( $script );
+			}
 		}
 	}
 

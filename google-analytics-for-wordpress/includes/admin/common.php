@@ -470,6 +470,8 @@ function monsterinsights_remove_conflicting_asset_files() {
 		'repuso_js_admin', // Social testimonials and reviews by Repuso
 		'chart', // Video Mate Pro Theme
 		'reuse_vendor', // RedQ Reuse Form
+		'jetpack-onboarding-vendor', // Jetpack Onboarding Bluehost
+		'date-js', // Google Analytics by Web Dorado
 	);
 
 	if ( ! empty( $styles ) ) {
