@@ -262,8 +262,8 @@ function monsterinsights_admin_scripts() {
 				// Used to add notices for future deprecations.
 				'versions'             => array(
 					'php_version'          => phpversion(),
-					'php_version_below_54' => version_compare( phpversion(), '5.4', '<' ),
-					'php_version_below_56' => version_compare( phpversion(), '5.6', '<' ),
+					'php_version_below_54' => apply_filters( 'monsterinsights_temporarily_hide_php_52_and_53_upgrade_warnings', version_compare( phpversion(), '5.4', '<' ) ),
+					'php_version_below_56' => apply_filters( 'monsterinsights_temporarily_hide_php_54_and_55_upgrade_warnings', version_compare( phpversion(), '5.6', '<' ) ),
 					'php_update_link'      => monsterinsights_get_url( 'settings-notice', 'settings-page', 'https://www.monsterinsights.com/docs/update-php/' ),
 					'wp_version'           => $wp_version,
 					'wp_version_below_46'  => version_compare( $wp_version, '4.6', '<' ),
@@ -304,8 +304,8 @@ function monsterinsights_admin_scripts() {
 				// Used to add notices for future deprecations.
 				'versions'       => array(
 					'php_version'          => phpversion(),
-					'php_version_below_54' => version_compare( phpversion(), '5.4', '<' ),
-					'php_version_below_56' => version_compare( phpversion(), '5.6', '<' ),
+					'php_version_below_54' => apply_filters( 'monsterinsights_temporarily_hide_php_52_and_53_upgrade_warnings', version_compare( phpversion(), '5.4', '<' ) ),
+					'php_version_below_56' => apply_filters( 'monsterinsights_temporarily_hide_php_54_and_55_upgrade_warnings', version_compare( phpversion(), '5.6', '<' ) ),
 					'php_update_link'      => monsterinsights_get_url( 'settings-notice', 'settings-page', 'https://www.monsterinsights.com/docs/update-php/' ),
 					'wp_version'           => $wp_version,
 					'wp_version_below_46'  => version_compare( $wp_version, '4.6', '<' ),

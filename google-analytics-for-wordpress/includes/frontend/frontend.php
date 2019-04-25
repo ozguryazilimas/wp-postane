@@ -128,7 +128,7 @@ function monsterinsights_add_admin_bar_menu() {
 	}
 }
 
-//add_action( 'admin_bar_menu', 'monsterinsights_add_admin_bar_menu', 999 );
+add_action( 'admin_bar_menu', 'monsterinsights_add_admin_bar_menu', 999 );
 
 /**
  * Load the scripts needed for the admin bar.
@@ -174,4 +174,4 @@ function monsterinsights_frontend_admin_bar_scripts() {
 	);
 }
 
-//add_action( 'wp_enqueue_scripts', 'monsterinsights_frontend_admin_bar_scripts' );
+add_action( 'wp_enqueue_scripts', 'monsterinsights_frontend_admin_bar_scripts' );

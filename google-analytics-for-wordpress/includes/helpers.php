@@ -314,11 +314,11 @@ function monsterinsights_is_dev_url( $url = '' ) {
 			$is_local_url = true;
 		}
 
-		$tlds_to_check = array( '.dev', '.local', ':8888' );
+		$tlds_to_check = array( '.local', ':8888', ':8080', ':8081', '.invalid', '.example', '.test' );
 		foreach ( $tlds_to_check as $tld ) {
 				if ( false !== strpos( $host, $tld ) ) {
 					$is_local_url = true;
-					continue;
+					break;
 				}
 
 		}
@@ -329,7 +329,7 @@ function monsterinsights_is_dev_url( $url = '' ) {
 				$subdomain = str_replace( array( '*', '(.)' ), '(.*)', $subdomain );
 				if ( preg_match( '/^(' . $subdomain . ')/', $host ) ) {
 					$is_local_url = true;
-					continue;
+					break;
 				}
 			}
 		}
