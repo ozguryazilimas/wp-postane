@@ -1,15 +1,13 @@
 === Yet Another Related Posts Plugin (YARPP) ===
-Contributors: jeffparker
-Author: Adknowledge
-Author URI: http://www.yarpp.com/
-Plugin URI: http://www.yarpp.com/
+Contributors: jeffparker, shareaholic
 Tags: feeds, pages, posts, related, rss, yarpp, ads, multisite, multilingual, thumbnails, related posts, related content
 Requires at least: 3.3
-Tested up to: 4.7
-Stable tag: 4.4
+Requires PHP: 5.2
 License: GPLv2 or later
+Tested up to: 5.2
+Stable tag: 4.5
 
-Display a list of related posts on your site based on a powerful unique algorithm.
+Display a list of related posts on your site based on a powerful unique algorithm. Earn money by including sponsored content!
 
 == Description ==
 
@@ -282,6 +280,8 @@ YARPP is currently localized in the following languages:
 * Uzbek (`uz_UZ`) by Ali Safarov of [comfi.com](http://www.comfi.com/)
 
 == Changelog ==
+= 4.5 =
+* After a bit of a hiatus, we're back! 
 
 = 4.4 =
 * Discontinuing the YARPP Pro service
@@ -910,10 +910,6 @@ YARPP is currently localized in the following languages:
 * Initial upload
 
 == Upgrade Notice ==
-= 3.3 =
-Some YARPP options are now hidden by default. You can show them again from the Screen Options tab.
-
-= 3.2.2 =
-Requires PHP 5.
-
+= 4.5 =
+We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
