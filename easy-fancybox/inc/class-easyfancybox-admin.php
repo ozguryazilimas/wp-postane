@@ -6,7 +6,7 @@ class easyFancyBox_Admin extends easyFancyBox {
 
 	public static $pagehook;
 
-	public static $compat_pro_min = '1.5.3';
+	public static $compat_pro_min = '1.8';
 
 	public static $do_compat_warning = false;
 
@@ -224,7 +224,10 @@ class easyFancyBox_Admin extends easyFancyBox {
 	    ACTIONS & FILTERS
 	 ***********************/
 
-	public static function admin_notice() {
+	public static function admin_notice()
+	{
+		global $current_user;
+
 		/* Version Nag */
 		if ( self::$do_compat_warning && current_user_can( 'install_plugins' ) && !get_user_meta($current_user->ID, 'easy_fancybox_ignore_notice') ) {
 			echo '<div class="update-nag"><p>';
