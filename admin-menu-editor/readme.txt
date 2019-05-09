@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
-Tested up to: 5.1
-Stable tag: 1.8.8
+Tested up to: 5.2
+Stable tag: 1.9
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -62,6 +62,11 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.9 =
+* Added an option to automatically hide new plugins. It was already possible, but previously this option was tied to the "show all plugins" checkbox. Now there is a separate "New plugins" checkbox.
+* Fixed a bug where trying to change the icon of the Jetpack menu caused a JavaScript error that prevented the icon selector from being displayed.
+* Tested up to WP 5.2.
 
 = 1.8.8 =
 * Added the ability to edit more plugin details like author name, site URL and version number. Note that this feature only changes how plugins are displayed. It doesn't actually modify plugin files.

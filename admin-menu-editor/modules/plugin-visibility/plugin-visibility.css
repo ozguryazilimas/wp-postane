@@ -67,4 +67,20 @@
   line-height: 2.5;
   font-weight: 600; }
 
+/*
+ The "New Plugins" option is displayed in the table footer.
+ It needs to override some default footer styles.
+ */
+.plugins tfoot .ame-pv-new-plugin-visibility-row th.ame-check-column {
+  padding-top: 8px;
+  vertical-align: top; }
+  .plugins tfoot .ame-pv-new-plugin-visibility-row th.ame-check-column input[type=checkbox] {
+    margin-top: 4px; }
+.plugins tfoot .ame-pv-new-plugin-visibility-row ul {
+  list-style: inside disc;
+  margin-left: 1em;
+  margin-top: 0.8em; }
+.plugins tfoot .ame-pv-new-plugin-visibility-row th, .plugins tfoot .ame-pv-new-plugin-visibility-row td {
+  border-top: none; }
+
 /*# sourceMappingURL=plugin-visibility.css.map */

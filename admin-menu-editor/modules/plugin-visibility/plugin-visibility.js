@@ -41,17 +41,50 @@ var AmePluginVisibilityModule = /** @class */ (function () {
         if (this.isMultisite) {
             this.privilegedActors.push(AmeActors.getSuperAdmin());
         }
-        this.areAllPluginsChecked = ko.computed({
+        this.areNewPluginsVisible = ko.computed({
             read: function () {
-                return _.every(_this.plugins, function (plugin) {
-                    return _this.isPluginVisible(plugin);
+                if (_this.selectedActor() !== null) {
+                    var canSeePluginsByDefault = _this.getGrantAccessByDefault(_this.selectedActor());
+                    return canSeePluginsByDefault();
+                }
+                return _.every(_this.actorSelector.getVisibleActors(), function (actor) {
+                    //Only consider roles than can manage plugins.
+                    if (!_this.canManagePlugins(actor)) {
+                        return true;
+                    }
+                    var canSeePluginsByDefault = _this.getGrantAccessByDefault(actor.getId());
+                    return canSeePluginsByDefault();
                 });
             },
             write: function (isChecked) {
                 if (_this.selectedActor() !== null) {
                     var canSeePluginsByDefault = _this.getGrantAccessByDefault(_this.selectedActor());
                     canSeePluginsByDefault(isChecked);
+                    return;
                 }
+                //Update everyone except the current user and Super Admin.
+                _.forEach(_this.actorSelector.getVisibleActors(), function (actor) {
+                    var isAllowed = _this.getGrantAccessByDefault(actor.getId());
+                    if (!_this.canManagePlugins(actor)) {
+                        isAllowed(false);
+                    }
+                    else if (_.includes(_this.privilegedActors, actor)) {
+                        isAllowed(true);
+                    }
+                    else {
+                        isAllowed(isChecked);
+                    }
+                });
+            }
+        });
+        this.areAllPluginsChecked = ko.computed({
+            read: function () {
+                return _.every(_this.plugins, function (plugin) {
+                    return _this.isPluginVisible(plugin);
+                }) && _this.areNewPluginsVisible();
+            },
+            write: function (isChecked) {
+                _this.areNewPluginsVisible(isChecked);
                 _.forEach(_this.plugins, function (plugin) {
                     _this.setPluginVisibility(plugin, isChecked);
                 });

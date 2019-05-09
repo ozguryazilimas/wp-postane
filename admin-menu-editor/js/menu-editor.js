@@ -2861,7 +2861,9 @@ function ameOnDomReady() {
 		}
 
 		//Activate the tab that contains the icon.
-		var activeTabId = selectedIcon.closest('.ws_tool_tab').prop('id'),
+		var activeTabId = ((selectedIcon !== null)
+				? selectedIcon.closest('.ws_tool_tab').prop('id')
+				: 'ws_core_icons_tab'),
 			activeTabItem = iconSelectorTabs.find('a[href="#' + activeTabId + '"]').closest('li');
 		if (activeTabItem.length > 0) {
 			iconSelectorTabs.tabs('option', 'active', activeTabItem.index());

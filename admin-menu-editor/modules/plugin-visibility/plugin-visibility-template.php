@@ -72,7 +72,8 @@
 
 				<td><p data-bind="text: description"></p></td>
 			</tr>
-			<tr class="inline-edit-row" data-bind="if: isBeingEdited">
+			<tr class="inline-edit-row" data-bind="if: isBeingEdited, visible: true"
+			    style="display: none;">
 				<td class="colspanchange" colspan="3">
 					<fieldset class="ame-pv-inline-edit-left">
 						<legend class="inline-edit-legend" data-bind="text: defaultProperties['name']">
@@ -151,6 +152,30 @@
 			</tbody>
 
 			<tfoot>
+				<tr class="inactive ame-pv-new-plugin-visibility-row">
+					<th scope="row" class="ame-check-column">
+						<input
+							type="checkbox"
+							data-bind="checked: areNewPluginsVisible"
+							id="ame-pv-new-plugin-visibility">
+					</th>
+					<td class="plugin-title">
+						<label for="ame-pv-new-plugin-visibility">
+							<strong>[New Plugins]</strong>
+						</label>
+					</td>
+					<td>
+						<p>
+							This setting controls whether the selected role will be able
+							to see newly installed plugins.
+						</p>
+						<ul>
+							<li>Checked: New plugins will be visible by default.</li>
+							<li>Unchecked: New plugins will be automatically hidden.</li>
+						</ul>
+					</td>
+				</tr>
+
 				<tr>
 					<th scope="col" class="ame-check-column">
 						<!--suppress HtmlFormInputWithoutLabel -->

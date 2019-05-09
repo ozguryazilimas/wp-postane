@@ -60,6 +60,7 @@ class AmePluginVisibilityModule {
 	settingsData: KnockoutObservable<string>;
 
 	areAllPluginsChecked: KnockoutComputed<boolean>;
+	areNewPluginsVisible: KnockoutComputed<boolean>;
 
 	/**
 	 * Actors that don't lose access to a plugin when you uncheck it in the "All" view.
@@ -112,17 +113,51 @@ class AmePluginVisibilityModule {
 			this.privilegedActors.push(AmeActors.getSuperAdmin());
 		}
 
-		this.areAllPluginsChecked = ko.computed({
+		this.areNewPluginsVisible = ko.computed({
 			read: () => {
-				return _.every(this.plugins, (plugin) => {
-					return this.isPluginVisible(plugin);
+				if (this.selectedActor() !== null) {
+					let canSeePluginsByDefault = this.getGrantAccessByDefault(this.selectedActor());
+					return canSeePluginsByDefault();
+				}
+
+				return _.every(this.actorSelector.getVisibleActors(), (actor: AmeBaseActor) => {
+					//Only consider roles than can manage plugins.
+					if (!this.canManagePlugins(actor)) {
+						return true;
+					}
+					let canSeePluginsByDefault = this.getGrantAccessByDefault(actor.getId());
+					return canSeePluginsByDefault();
 				});
 			},
 			write: (isChecked) => {
 				if (this.selectedActor() !== null) {
 					let canSeePluginsByDefault = this.getGrantAccessByDefault(this.selectedActor());
 					canSeePluginsByDefault(isChecked);
+					return;
 				}
+
+				//Update everyone except the current user and Super Admin.
+				_.forEach(this.actorSelector.getVisibleActors(), (actor: AmeBaseActor) => {
+					let isAllowed = this.getGrantAccessByDefault(actor.getId());
+					if (!this.canManagePlugins(actor)) {
+						isAllowed(false);
+					} else if (_.includes(this.privilegedActors, actor)) {
+						isAllowed(true);
+					} else {
+						isAllowed(isChecked);
+					}
+				});
+			}
+		});
+
+		this.areAllPluginsChecked = ko.computed({
+			read: () => {
+				return _.every(this.plugins, (plugin) => {
+					return this.isPluginVisible(plugin);
+				}) && this.areNewPluginsVisible();
+			},
+			write: (isChecked) => {
+				this.areNewPluginsVisible(isChecked);
 				_.forEach(this.plugins, (plugin) => {
 					this.setPluginVisibility(plugin, isChecked);
 				});
