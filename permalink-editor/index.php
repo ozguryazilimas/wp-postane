@@ -69,7 +69,8 @@ class Permalink_Editor
 	 * use priority 11 here to try and catch anything that may have been added
 	 * on or before the default priority of 10 (such as custom post types).
 	 */
-	function Permalink_Editor()
+	// function Permalink_Editor()
+	function __construct()
 	{
 		add_action( 'init', array( &$this, 'init' ), 11 );
 		add_action( 'admin_init', array( &$this, 'admin_init' ) );
