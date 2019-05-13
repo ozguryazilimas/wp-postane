@@ -62,11 +62,8 @@ jQuery( document ).ready( function( $ ) {
 			items: '> li',
 			cursor: 'move',
 			stop: function( event, ui ) {
-				var toolbar_id;
-
-				if ( ui && ( toolbar_id = ui.item.parent().attr( 'id' ) ) ) {
-					ui.item.find( 'input.tadv-button' ).attr( 'name', toolbar_id + '[]' );
-				}
+				var toolbar_id = ui.item.parent().attr( 'id' );
+				resetItemName( toolbar_id, ui.item );
 			},
 			activate: function( event, ui ) {
 				$(this).parent().addClass( 'highlighted' );
@@ -85,18 +82,9 @@ jQuery( document ).ready( function( $ ) {
 			items: '> li',
 			cursor: 'move',
 			stop: function( event, ui ) {
-				var parent = ui.item.parent();
-				var toolbar_id = parent.attr( 'id' );
+				var toolbar_id = ui.item.parent().attr( 'id' );
 
-				if ( ui.item.is( '.core-link' ) && parent.is( '#toolbar_block_side' ) ) {
-					blockToolbar.sortable( 'cancel' );
-					return;
-				}
-
-				if ( toolbar_id ) {
-					ui.item.find( 'input[type="hidden"]' ).attr( 'name', toolbar_id + '[]' );
-				}
-
+				resetItemName( toolbar_id, ui.item );
 				sortBlockToolbar();
 			},
 			activate: function( event, ui ) {
@@ -116,18 +104,9 @@ jQuery( document ).ready( function( $ ) {
 			items: '> li',
 			cursor: 'move',
 			stop: function( event, ui ) {
-				var parent = ui.item.parent();
-				var toolbar_id = parent.attr( 'id' );
+				var toolbar_id = ui.item.parent().attr( 'id' );
 
-				if ( ui.item.is( '.core-link' ) && parent.is( '#toolbar_block_side' ) ) {
-					block.sortable( 'cancel' );
-				}
-
-				if ( toolbar_id ) {
-					ui.item.find( 'input[type="hidden"]' ).attr( 'name', toolbar_id + '[]' );
-				}
-
-				blockToolbar.css( 'min-width', '' );
+				resetItemName( toolbar_id, ui.item );
 				sortBlockToolbar();
 			},
 			activate: function( event, ui ) {
@@ -136,11 +115,9 @@ jQuery( document ).ready( function( $ ) {
 			deactivate: function( event, ui ) {
 				$(this).parent().removeClass( 'highlighted' );
 			},
-			start: function( event, ui ) {
-				var width = parseInt( blockToolbar.css( 'width' ), 10 );
-
-				if ( width ) {
-					blockToolbar.css( 'min-width', 36 + width );
+			receive: function( event, ui ) {
+				if ( $( event.target ).is( '#toolbar_block_side' ) && ui.item.is( 'li.core-image' ) ) {
+					block.sortable( 'cancel' );
 				}
 			},
 			revert: 300,
@@ -150,18 +127,24 @@ jQuery( document ).ready( function( $ ) {
 		});
 	}
 
+	function resetItemName( name, item ) {
+		if ( name ) {
+			item.find( 'input[type="hidden"]' ).attr( 'name', name + '[]' );
+		}
+	}
+
 	function sortBlockToolbar() {
-		var toolbar = $( '#toolbar_block' );
-		var sort = [ 'core-strikethrough', 'core-link', 'core-italic', 'core-bold' ];
+		var container = $( '#toolbar_block' );
+		var items = container.find( 'li' );
 
-		$.each( sort, function( i, className ) {
-			var button = toolbar.find( '> li.' + className )
+		items.sort( function ( a, b ) {
+			var aa = $( a ).find( 'div' ).attr( 'title' );
+			var bb = $( b ).find( 'div' ).attr( 'title' );
 
-			if ( button.length ) {
-				button.prependTo( toolbar );
-			}
+			return ( aa > bb ) ? 1 : -1;
+		});
 
-		} );
+		container.append( items );
 	}
 
 	// Make block editor tab sortable on load
@@ -206,7 +189,7 @@ jQuery( document ).ready( function( $ ) {
 			$( '.panel-block-background-color' ).addClass( 'disabled' );
 		}
 	} );
-	
+
 	$( '.tadv-popout-help-toggle, .tadv-popout-help-close' ).on( 'click', function( event ) {
 		$( '.tadv-popout-help' ).toggleClass( 'hidden' );
 	} );
