@@ -147,6 +147,16 @@ class User_Role_Editor {
     // end of is_pro()
         
     
+    public function load_users_page() {
+        
+        add_action('restrict_manage_users', array($this, 'show_move_users_from_no_role_button'));
+        add_action('admin_head', array($this, 'add_css_to_users_page'));
+        add_action('admin_footer', array($this, 'add_js_to_users_page'));        
+        
+    }
+    // end of load_users_page()
+    
+    
     /**
      * Plugin initialization
      * 
@@ -182,9 +192,7 @@ class User_Role_Editor {
         } else {
             $count_users_without_role = $this->lib->get_option('count_users_without_role', 0);
             if ($count_users_without_role) {
-                add_action('restrict_manage_users', array($this, 'move_users_from_no_role_button'));
-                add_action('admin_head', array($this, 'add_css_to_users_page'));
-                add_action('admin_footer', array($this, 'add_js_to_users_page'));
+                add_action( 'load-users.php', array($this, 'load_users_page') );                
             }
         }
 
@@ -235,12 +243,9 @@ class User_Role_Editor {
   // end of allow_add_user_as_superadmin()
   
   
-  public function move_users_from_no_role_button() {
+  public function show_move_users_from_no_role_button() {
       
-      if (!$this->lib->is_right_admin_path('users.php')) {      
-            return;
-      }
-      if (!current_user_can('edit_users')) {
+      if ( !current_user_can( 'promote_users' ) ) {
           return;
       }
       
@@ -249,33 +254,19 @@ class User_Role_Editor {
       
   }
   // end of move_users_from_no_role()
-  
+      
   
   public function add_css_to_users_page() {
       
-      if (isset($_GET['page'])) {
-          return;
-      }
-      if (!$this->lib->is_right_admin_path('users.php')) {
-          return;
-      }                  
-
-      wp_enqueue_style('wp-jquery-ui-dialog');
-      wp_enqueue_style('ure-admin-css', URE_PLUGIN_URL . 'css/ure-admin.css', array(), false, 'screen');
+      wp_enqueue_style( 'wp-jquery-ui-dialog' );
+      wp_enqueue_style( 'ure-admin-css', URE_PLUGIN_URL . 'css/ure-admin.css', array(), false, 'screen' );
       
   }
   // end of add_css_to_users_page()
   
   
   public function add_js_to_users_page() {
-  
-      if (isset($_GET['page'])) {
-          return;
-      }
-      if (!$this->lib->is_right_admin_path('users.php')) {
-          return;
-      }             
-      
+              
       wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core','jquery-ui-button', 'jquery') );
       wp_register_script( 'ure-users', plugins_url( '/js/users.js', URE_PLUGIN_FULL_PATH ) );
       wp_enqueue_script ( 'ure-users' );      
