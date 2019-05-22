@@ -632,7 +632,7 @@ ul.container,
 	border: 1px solid #bbb;
 	background-color: #fff;
 	margin: 2px 1px 1px;
-	padding: 3px 3px 0;
+	padding: 5px 4px 0;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	white-space: nowrap;
@@ -696,14 +696,14 @@ div.tadv-error {
 }
 
 .tadv-mce-menu.tadv-block-editor.mce-menubar {
-	background-image: url(../images/toolbar-actions.png);
+	background-image: url(images/toolbar-actions.png);
 	background-position: right;
 	background-repeat: no-repeat;
 	background-size: 84px 37px;
 }
 
 .rtl .tadv-mce-menu.tadv-block-editor.mce-menubar {
-	background-image: url(../images/toolbar-actions-rtl.png);
+	background-image: url(images/toolbar-actions-rtl.png);
 	background-position: left;
 }
 
@@ -973,5 +973,5 @@ div.tadv-error {
 }
 
 .tadvmodule .the-button {
-	margin: 2px 0;
+	margin: 0;
 }

@@ -47,6 +47,11 @@ Best is to install directly from WordPress. If manual installation is required, 
 
 == Changelog ==
 
+= 5.2.1 =
+* Updated for WordPress 5.2.1 and TinyMCE 4.9.4.
+* Fixed resetting of the advanced options on update when all were unselected.
+* Fixed and improved keepig of paragraph tags in the Classic block.
+
 = 5.2.0 =
 * Updated for WordPress 5.2.
 * Updated the buttons settings for the block editor toolbar. There are a few new limitations there: most buttons are now hidden in a drop-down and the users are not allowed to arrange the buttons.

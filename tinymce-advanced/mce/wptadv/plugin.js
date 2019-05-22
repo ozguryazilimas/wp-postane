@@ -186,13 +186,22 @@
 
 			if ( editor.settings.classic_block_editor ) {
 				editor.on( 'beforeGetContent', function( event ) {
-					// Mark all paragraph tags so they are not stripped by the Block Editor...
-					if ( event.format !== 'raw' ) {
+					if ( event.format === 'raw' ) {
+						return;
+					}
+
+					var blocks = tinymce.$( '.block-editor-block-list__block' );
+
+					if ( blocks.length === 1 && blocks.attr( 'data-type' ) === 'core/freeform' ) {
+						// Mark all paragraph tags inside a single freeform block so they are not stripped by the block editor...
 						editor.$( 'p' ).each( function ( i, node ) {
 							if ( ! node.hasAttributes() ) {
 								editor.$( node ).attr( 'data-tadv-p', 'keep' );
 							}
-						} )
+						} );
+					} else {
+						// Remove the above ugliness...
+						editor.$( 'p[data-tadv-p]' ).removeAttr( 'data-tadv-p' );
 					}
 				}, true );
 			}

@@ -18,7 +18,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 $message = '';
 $tadv_options_updated = false;
 $settings = $admin_settings = array();
-$images_url = plugins_url( 'images', __FILE__ );
+$images_url = plugins_url( 'plugin-assets/images', __FILE__ );
 $form_action = esc_url( remove_query_arg( array( 'tadv-import-file-complete' ), wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
 
 if ( isset( $_POST['tadv-save'] ) ) {
@@ -841,15 +841,8 @@ if ( ! is_multisite() || current_user_can( 'manage_sites' ) ) {
 		?>
 	</div>
 	<div>
-		<input type="checkbox" name="admin_options[]" value="block_editor_no_autop" id="block_editor_no_autop" <?php if ( $this->check_admin_setting( 'block_editor_no_autop' ) ) echo ' checked'; ?> />
-		<label for="block_editor_no_autop"><?php _e( 'Keep paragraph tags in the Classic Paragraph and Classic blocks in the Block Editor', 'tinymce-advanced' ); ?></label>
-		<p>
-			<?php _e( 'Stop removing &lt;p&gt; and &lt;br&gt; tags in the Block Editor when using the Classic Paragraph or Classic blocks.', 'tinymce-advanced' ); ?>
-		</p>
-	</div>
-	<div>
 		<input type="checkbox" name="admin_options[]" value="no_autop" id="no_autop" <?php if ( $this->check_admin_setting( 'no_autop' ) ) echo ' checked'; ?> />
-		<label for="no_autop"><?php _e( 'Keep paragraph tags in the Classic Editor (TinyMCE)', 'tinymce-advanced' ); ?></label>
+		<label for="no_autop"><?php _e( 'Keep paragraph tags in the Classic block and the Classic Editor', 'tinymce-advanced' ); ?></label>
 		<p>
 			<?php _e( 'Stop removing &lt;p&gt; and &lt;br&gt; tags in the Classic Editor and show them in the Text tab.', 'tinymce-advanced' ); ?>
 			<?php _e( 'This will make it possible to use more advanced coding in the Text tab without the back-end filtering affecting it much.', 'tinymce-advanced' ); ?>
@@ -896,7 +889,7 @@ if ( ! is_multisite() || current_user_can( 'manage_sites' ) ) {
 		<h4><?php _e( 'Advanced options for tables', 'tinymce-advanced' ); ?></h4>
 		<div>
 			<input type="checkbox" name="admin_options[]" value="table_resize_bars" id="table_resize_bars" <?php if ( $this->check_admin_setting( 'table_resize_bars' ) ) echo ' checked'; ?> />
-			<label for="table_resize_bars"><?php _e( 'Enable resizing of tables, rows, and columns by dragging with the mouse.', 'tinymce-advanced' ); ?></label>
+			<label for="table_resize_bars"><?php _e( 'Enable resizing of tables, rows, and columns by dragging with the mouse', 'tinymce-advanced' ); ?></label>
 			<p>
 				<?php _e( 'When enabled the whole table, rows, and columns can be resized by dragging but the sizes are set with inline CSS styles.', 'tinymce-advanced' ); ?>
 				<?php _e( 'This may override some styles that are set by your theme and usually makes the table non-responsive when viewed on a small screen like a smartphone.', 'tinymce-advanced' ); ?>
@@ -913,7 +906,7 @@ if ( ! is_multisite() || current_user_can( 'manage_sites' ) ) {
 		</div>
 		<div>
 			<input type="checkbox" name="admin_options[]" value="table_default_attributes" id="table_default_attributes" <?php if ( $this->check_admin_setting( 'table_default_attributes' ) ) echo ' checked'; ?> />
-			<label for="table_default_attributes"><?php _e( 'When inserting a table set the HTML border attribute to 1.', 'tinymce-advanced' ); ?></label>
+			<label for="table_default_attributes"><?php _e( 'When inserting a table set the HTML border attribute to 1', 'tinymce-advanced' ); ?></label>
 			<p>
 				<?php _e( 'This will add a border around the table unless it is overriden by your theme.', 'tinymce-advanced' ); ?>
 				<?php _e( 'To set other default attributes or inline styles use the Advanced TinyMCE Configuration plugin.', 'tinymce-advanced' ); ?>
@@ -921,21 +914,21 @@ if ( ! is_multisite() || current_user_can( 'manage_sites' ) ) {
 		</div>
 		<div>
 			<input type="checkbox" name="admin_options[]" value="table_grid" id="table_grid" <?php if ( $this->check_admin_setting( 'table_grid' ) ) echo ' checked'; ?> />
-			<label for="table_grid"><?php _e( 'When inserting a table show a grid where the number of rows and columns can be selected by dragging with the mouse.', 'tinymce-advanced' ); ?></label>
+			<label for="table_grid"><?php _e( 'When inserting a table show a grid where the number of rows and columns can be selected by dragging with the mouse', 'tinymce-advanced' ); ?></label>
 			<p>
 				<?php _e( 'If the grid is disabled the number of rows and columns can be typed in the Insert Table dialog.', 'tinymce-advanced' ); ?>
 			</p>
 		</div>
 		<div>
 			<input type="checkbox" name="admin_options[]" value="table_tab_navigation" id="table_tab_navigation" <?php if ( $this->check_admin_setting( 'table_tab_navigation' ) ) echo ' checked'; ?> />
-			<label for="table_tab_navigation"><?php _e( 'Jump to the next cell when pressing the tab key while editing a table.', 'tinymce-advanced' ); ?></label>
+			<label for="table_tab_navigation"><?php _e( 'Jump to the next cell when pressing the tab key while editing a table', 'tinymce-advanced' ); ?></label>
 			<p>
 				<?php _e( 'When disabled, pressing the tab key will jump outside the editor area.', 'tinymce-advanced' ); ?>
 			</p>
 		</div>
 		<div>
 			<input type="checkbox" name="admin_options[]" value="table_advtab" id="table_advtab" <?php if ( $this->check_admin_setting( 'table_advtab' ) ) echo ' checked'; ?> />
-			<label for="table_advtab"><?php _e( 'Show the advanced tabs in the table properties dialogs.', 'tinymce-advanced' ); ?></label>
+			<label for="table_advtab"><?php _e( 'Show the advanced tabs in the table properties dialogs', 'tinymce-advanced' ); ?></label>
 			<p>
 				<?php _e( 'The advanced tabs allow setting of inline CSS styles on the table, each row, and each cell. They have fields for easier setting of border, border color and background color styles.', 'tinymce-advanced' ); ?>
 			</p>
