@@ -140,8 +140,12 @@ function relevanssi_init() {
 		require_once 'compatibility/wp-search-suggest.php';
 	}
 
-	if ( defined( 'GUTENBERG_VERSION' ) ) {
+	if ( function_exists( 'do_blocks' ) ) {
 		require_once 'compatibility/gutenberg.php';
+	}
+
+	if ( defined( 'WPFD_VERSION' ) ) {
+		require_once 'compatibility/wp-file-download.php';
 	}
 }
 

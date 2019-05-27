@@ -20,6 +20,17 @@ function relevanssi_stopwords_tab() {
 
 	relevanssi_show_stopwords();
 
+	?>
+
+	<h3 id="bodystopwords"><?php esc_html_e( 'Content stopwords', 'relevanssi' ); ?></h3>
+
+	<?php
+	if ( function_exists( 'relevanssi_show_body_stopwords' ) ) {
+		relevanssi_show_body_stopwords();
+	} else {
+		printf( '<p>%s</p>', esc_html__( 'Content stopwords are a premium feature where you can set stopwords that only apply to the post content. Those stopwords will still be indexed if they appear in post titles, tags, categories, custom fields or other parts of the post. To use content stopwords, you need Relevanssi Premium.', 'relevanssi' ) );
+	}
+
 	/**
 	 * Filters whether the common words list is displayed or not.
 	 *
@@ -44,11 +55,6 @@ function relevanssi_stopwords_tab() {
  */
 function relevanssi_show_stopwords() {
 	global $wpdb, $relevanssi_variables;
-
-	$plugin = 'relevanssi';
-	if ( RELEVANSSI_PREMIUM ) {
-		$plugin = 'relevanssi-premium';
-	}
 
 	printf( '<p>%s</p>', esc_html__( 'Enter a word here to add it to the list of stopwords. The word will automatically be removed from the index, so re-indexing is not necessary. You can enter many words at the same time, separate words with commas.', 'relevanssi' ) );
 ?>

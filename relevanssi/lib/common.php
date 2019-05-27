@@ -167,9 +167,16 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 			// Current user has the required capabilities and can see the page.
 			$post_ok = true;
 		}
-
+		$current_user = wp_get_current_user();
+		if ( ! $post_ok && $current_user->ID > 0 ) {
+			$post = relevanssi_get_post( $post_id );
+			if ( $current_user->ID === (int) $post->post_author ) {
+				// Allow authors to see their own private posts.
+				$post_ok = true;
+			}
+		}
 		if ( function_exists( 'members_content_permissions_enabled' ) && function_exists( 'members_can_current_user_view_post' ) ) {
-			// Members. Only use, if 'content permissions' feature is enabled.
+			// Members. Only use if 'content permissions' feature is enabled.
 			if ( members_content_permissions_enabled() ) {
 				$post_ok = members_can_current_user_view_post( $post_id );
 			}
@@ -201,6 +208,13 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 		// Restrict Content Pro.
 		$post_ok = rcp_user_can_access( get_current_user_id(), $post_id );
 	}
+	// User Access Manager.
+	global $userAccessManager; // phpcs:ignore WordPress.NamingConventions.ValidVariableName
+	if ( isset( $userAccessManager ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName
+		$type    = relevanssi_get_post_type( $post_id );
+		$post_ok = $userAccessManager->getAccessHandler()->checkObjectAccess( $type, $post_id ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName
+	}
+
 	/**
 	 * Filters statuses allowed in admin searches.
 	 *
@@ -293,23 +307,26 @@ function relevanssi_extract_phrases( $query ) {
 		$substr_function = 'mb_substr';
 	}
 
-	$pos = call_user_func( $strpos_function, $query, '"' );
+	// iOS uses “” as the default quotes, so Relevanssi needs to understand that as
+	// well.
+	$normalized_query = str_replace( array( '”', '“' ), '"', $query );
+	$pos              = call_user_func( $strpos_function, $normalized_query, '"' );
 
 	$phrases = array();
 	while ( false !== $pos ) {
 		$start = $pos;
-		$end   = call_user_func( $strpos_function, $query, '"', $start + 1 );
+		$end   = call_user_func( $strpos_function, $normalized_query, '"', $start + 1 );
 
 		if ( false === $end ) {
 			// Just one " in the query.
 			$pos = $end;
 			continue;
 		}
-		$phrase = call_user_func( $substr_function, $query, $start + 1, $end - $start - 1 );
+		$phrase = call_user_func( $substr_function, $normalized_query, $start + 1, $end - $start - 1 );
 		$phrase = trim( $phrase );
 
 		// Do not count single-word phrases as phrases.
-		if ( ! empty( $phrase ) && str_word_count( $phrase ) > 1 ) {
+		if ( ! empty( $phrase ) && count( explode( ' ', $phrase ) ) > 1 ) {
 			$phrases[] = $phrase;
 		}
 		$pos = $end;
@@ -705,9 +722,13 @@ function relevanssi_prevent_default_request( $request, $query ) {
  * source material. If the parameter is an array of string, each string is
  * tokenized separately and the resulting tokens are combined into one array.
  *
- * @param string|array $string          The string, or an array of strings, to tokenize.
- * @param boolean      $remove_stops    If true, stopwords are removed. Default true.
- * @param int          $min_word_length The minimum word length to include. Default -1.
+ * @param string|array   $string          The string, or an array of strings, to
+ *                                        tokenize.
+ * @param boolean|string $remove_stops    If true, stopwords are removed. If 'body',
+ *                                        also removes the body stopwords. Default
+ *                                        true.
+ * @param int            $min_word_length The minimum word length to include.
+ *                                        Default -1.
  */
 function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = -1 ) {
 	$tokens = array();
@@ -730,6 +751,9 @@ function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = 
 	$stopword_list = array();
 	if ( $remove_stops ) {
 		$stopword_list = relevanssi_fetch_stopwords();
+	}
+	if ( 'body' === $remove_stops && function_exists( 'relevanssi_fetch_body_stopwords' ) ) {
+		$stopword_list = array_merge( $stopword_list, relevanssi_fetch_body_stopwords() );
 	}
 
 	if ( function_exists( 'relevanssi_apply_thousands_separator' ) ) {
@@ -854,16 +878,21 @@ function relevanssi_get_post_status( $post_id ) {
  */
 function relevanssi_get_post_type( $post_id ) {
 	global $relevanssi_post_array;
-
 	if ( isset( $relevanssi_post_array[ $post_id ] ) ) {
 		return $relevanssi_post_array[ $post_id ]->post_type;
 	} else {
 		// No hit from the cache; let's add this post to the cache.
-		$post = get_post( $post_id );
+		$post = relevanssi_get_post( $post_id );
 
-		$relevanssi_post_array[ $post_id ] = $post;
-
-		return $post->post_type;
+		if ( is_wp_error( $post ) ) {
+			$post->add_data( 'not_found', "relevanssi_get_post_type() didn't get a post, relevanssi_get_post() returned null." );
+			return $post;
+		} elseif ( $post ) {
+			$relevanssi_post_array[ $post_id ] = $post;
+			return $post->post_type;
+		} else {
+			return new WP_Error( 'not_found', 'Something went wrong.' );
+		}
 	}
 }
 
@@ -1026,6 +1055,7 @@ function relevanssi_stripos( $haystack, $needle, $offset = 0 ) {
  * @return string The HTML code, with tags closed.
  */
 function relevanssi_close_tags( $html ) {
+	$result = array();
 	preg_match_all( '#<(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result );
 	$opened_tags = $result[1];
 	preg_match_all( '#</([a-z]+)>#iU', $html, $result );
@@ -1330,7 +1360,7 @@ function relevanssi_didyoumean( $query, $pre, $post, $n = 5, $echo = true ) {
  * @return string The suggestion HTML code, null if nothing found.
  */
 function relevanssi_simple_didyoumean( $query, $pre, $post, $n = 5 ) {
-	global $wpdb, $relevanssi_variables, $wp_query;
+	global $wp_query;
 
 	$total_results = $wp_query->found_posts;
 
@@ -1425,13 +1455,16 @@ function relevanssi_simple_generate_suggestion( $query ) {
 				$closest = '';
 				break;
 			} else {
-				$lev = levenshtein( $token, $row->query );
-				if ( $lev < 3 && ( $lev < $distance || $distance < 0 ) ) {
-					if ( $row->a > 0 ) {
-						$distance = $lev;
-						$closest  = $row->query;
-						if ( $lev < 2 ) {
-							break; // get the first with distance of 1 and go.
+				if ( relevanssi_strlen( $token ) < 255 ) {
+					// The levenshtein() function has a max length of 255 characters.
+					$lev = levenshtein( $token, $row->query );
+					if ( $lev < 3 && ( $lev < $distance || $distance < 0 ) ) {
+						if ( $row->a > 0 ) {
+							$distance = $lev;
+							$closest  = $row->query;
+							if ( $lev < 2 ) {
+								break; // get the first with distance of 1 and go.
+							}
 						}
 					}
 				}
@@ -1555,11 +1588,6 @@ function relevanssi_sanitize_hex_color( $color ) {
 function relevanssi_common_words( $limit = 25, $wp_cli = false ) {
 	global $wpdb, $relevanssi_variables;
 
-	$plugin = 'relevanssi';
-	if ( RELEVANSSI_PREMIUM ) {
-		$plugin = 'relevanssi-premium';
-	}
-
 	if ( ! is_numeric( $limit ) ) {
 		$limit = 25;
 	}
@@ -1578,11 +1606,14 @@ function relevanssi_common_words( $limit = 25, $wp_cli = false ) {
 	<td>
 <ul>
 	<?php
-	$src = plugins_url( 'delete.png', $relevanssi_variables['file'] );
-
 	foreach ( $words as $word ) {
 		$stop = __( 'Add to stopwords', 'relevanssi' );
-		printf( '<li><input style="padding: 0; margin: 0" type="submit" src="%1$s" name="term" value="%2$s"/> (%3$d)</li>', esc_attr( $src ), esc_attr( $word->term ), esc_html( $word->cnt ) );
+		printf( '<li>%1$s (%2$d) <button name="term" value="%1$s" />%3$s</button>', esc_attr( $word->term ), esc_html( $word->cnt ), esc_html( $stop ) );
+		if ( RELEVANSSI_PREMIUM ) {
+			$body = __( 'Add to content stopwords', 'relevanssi' );
+			printf( ' <button name="body_term" value="%1$s" />%3$s</button>', esc_attr( $word->term ), esc_html( $word->cnt ), esc_html( $body ) );
+		}
+		echo '</li>';
 	}
 	?>
 	</ul>
@@ -1605,6 +1636,7 @@ function relevanssi_get_forbidden_post_types() {
 	return array(
 		'nav_menu_item',        // Navigation menu items.
 		'revision',             // Never index revisions.
+		'acf',                  // Advanced Custom Fields.
 		'acf-field',            // Advanced Custom Fields.
 		'acf-field-group',      // Advanced Custom Fields.
 		'oembed_cache',         // Mysterious caches.
@@ -1617,6 +1649,10 @@ function relevanssi_get_forbidden_post_types() {
 		'amp_validated_url',    // AMP.
 		'jp_pay_order',         // Jetpack.
 		'jp_pay_product',       // Jetpack.
+		'tablepress_table',     // TablePress.
+		'shop_order',           // WooCommerce.
+		'shop_order_refund',    // WooCommerce.
+		'shop_webhook',         // WooCommerce.
 	);
 }
 
@@ -1630,5 +1666,6 @@ function relevanssi_get_forbidden_taxonomies() {
 		'nav_menu',               // Navigation menus.
 		'link_category',          // Link categories.
 		'amp_validation_error',   // AMP.
+		'product_visibility',     // WooCommerce.
 	);
 }
