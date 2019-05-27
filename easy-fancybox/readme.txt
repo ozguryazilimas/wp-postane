@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravan
 Tags: fancybox, lightbox, gallery, image, photo, video, flash, overlay, youtube, vimeo, dailymotion, pdf, svg, iframe, swf, jquery, webp
 Requires at least: 3.3
 Tested up to: 5.2
-Stable tag: 1.8.16
+Stable tag: 1.8.17
 
 Easily enable the FancyBox jQuery extension on just about all media links. Multi-Site compatible. Supports iFrame and Flash movies.
 
@@ -47,7 +47,7 @@ Additional features:
 - Fade or Elastic popup effects
 - Styling options for light box overlay (color and opacity) and window (border size and color)
 
-For **advanced options** and **priority support**, there is a **[Pro extension](https://premium.status301.net/downloads/easy-fancybox-pro/)** available. See Pro features below.
+For **advanced options** and **priority support**, there is a **[Pro extension](https://premium.status301.com/downloads/easy-fancybox-pro/)** available. See Pro features below.
 
 See [FAQ's](https://wordpress.org/plugins/easy-fancybox/#faq) for instructions to manage YouTube, Dailymotion and Vimeo movies (and similar services) and tips to make inline content display in a FancyBox overlay.
 
@@ -68,7 +68,7 @@ Visit [FancyBox](http://fancybox.net/) for more information and examples.
 - Show/hide image title on mouse hover
 - Fine-tune media link and gallery autodetection to match your theme source markup to allow galleries per post for example
 
-For these additional features, you need to install the **[Pro extension](https://premium.status301.net/downloads/easy-fancybox-pro/)** alongside this free plugin.
+For these additional features, you need to install the **[Pro extension](https://premium.status301.com/downloads/easy-fancybox-pro/)** alongside this free plugin.
 
 
 = Contribute =
@@ -181,7 +181,7 @@ The original FancyBox 1.3.4 script was not developed with mobile devices in mind
 
 = Can I make a slideshow from my gallery? =
 
-In the [Pro extension](https://premium.status301.net/downloads/easy-fancybox-pro/), there is an Advanced option called "Gallery Auto-rotation" for that.
+In the [Pro extension](https://premium.status301.com/downloads/easy-fancybox-pro/), there is an Advanced option called "Gallery Auto-rotation" for that.
 
 
 = Can I exclude images or other links from auto-attribution? =
@@ -336,7 +336,7 @@ If you don't have *Auto-detect* checked under **SWF** on Settings > Media admin 
 
 FancyBox tries to detect the size of the content automatically but if it can not find a size, it will default to the settings for that particular content type as set on the Settings > Media page.
 
-The **[Pro extension](https://premium.status301.net/downloads/easy-fancybox-pro/)** provides an extra option to allow you to manually override this by defining the width and height wrapped in curly braces in the class attribute of the link itself. Make sure the option "Include the Metadata jQuery extension script..." under FancyBox | Miscellaneous | Advanced on Settings > Media is enabled.
+The **[Pro extension](https://premium.status301.com/downloads/easy-fancybox-pro/)** provides an extra option to allow you to manually override this by defining the width and height wrapped in curly braces in the class attribute of the link itself. Make sure the option "Include the Metadata jQuery extension script..." under FancyBox | Miscellaneous | Advanced on Settings > Media is enabled.
 
 For example, a Flash movie with different size:
 
@@ -494,11 +494,15 @@ If you still do not get to see your images in FancyBox, ask on the [Easy FancyBo
 
 == Upgrade Notice ==
 
-= 1.8.16 =
-Fix Trying to get property 'ID' of non-object
+= 1.8.17 =
+Fix compat messages and links
 
 
 == Changelog ==
+
+= 1.8.17 =
+* Pro compatibility messages
+* Support forum link
 
 = 1.8.16 =
 * FIX: Trying to get property 'ID' of non-object
