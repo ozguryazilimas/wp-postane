@@ -549,7 +549,7 @@ function ure_refresh_role_view(response) {
             return;
         }
         jQuery(this).prop('checked', response.caps.hasOwnProperty(this.id) && response.caps[this.id]);
-        if ( ure_data.do_not_revoke_from_admin ) {  
+        if ( ure_data.do_not_revoke_from_admin==1 ) {  
             var el = document.getElementById(this.id);
             if ( 'administrator'===ure_current_role ) {
                 el.addEventListener( 'click', ure_turn_it_back );

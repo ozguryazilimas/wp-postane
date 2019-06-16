@@ -1,6 +1,9 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.51.1] 15.06.2019 =
+* Fix: Superadmin could not revoke capabilities from 'administrator' role under WordPress multisite.
+
 = [4.51] 21.05.2019 =
 * New: Bulk actions were added to the Users page: "Add Role", "Revoke Role". Select role from the related drop-down menu and add/revoke it to/from the list of pre-selected users.
 * Update: Bulk grant roles feature ("Grant roles" button at the "Users" page) and Bulk grant role to users without role ("Without role" button at the "Users" page) are protected by 'promote_users' capability instead of 'edit_users', exactly the same way as WordPress itself does for its "Change role to".

@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 5.2
-Stable tag: 4.51
+Tested up to: 5.2.1
+Stable tag: 4.51.1
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -81,6 +81,9 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog =
 
+= [4.51.1] 15.06.2019 =
+* Fix: Superadmin could not revoke capabilities from 'administrator' role under WordPress multisite.
+
 = [4.51] 21.05.2019 =
 * New: Bulk actions were added to the Users page: "Add Role", "Revoke Role". Select role from the related drop-down menu and add/revoke it to/from the list of pre-selected users.
 * Update: Bulk grant roles feature ("Grant roles" button at the "Users" page) and Bulk grant role to users without role ("Without role" button at the "Users" page) are protected by 'promote_users' capability instead of 'edit_users', exactly the same way as WordPress itself does for its "Change role to".
@@ -112,11 +115,8 @@ I am ready to answer on your questions about plugin usage. Use [plugin page comm
 
 == Upgrade Notice ==
 
-= [4.51] 21.05.2019 =
-* New: Bulk actions were added to the Users page: "Add Role", "Revoke Role". Select role from the related drop-down menu and add/revoke it to/from the list of pre-selected users.
-* Update: Bulk grant roles feature ("Grant roles" button at the "Users" page) and Bulk grant role to users without role ("Without role" button at the "Users" page) are protected by 'promote_users' capability instead of 'edit_users', exactly the same way as WordPress itself does for its "Change role to".
-* Update: 'load-users.php' action is used instead of 'admin_init' to load support code for "Without role" and "Grant roles" button at the "Users" page.
-* Update: URE ignores now a capability without ID in case it was added to the database somehow (other plugin bug, etc.). Such incorrect empty capability is removed from the capabilities list as a result after any role update.
+= [4.51.1] 15.06.2019 =
+* Fix: Superadmin could not revoke capabilities from 'administrator' role under WordPress multisite.
 
 
 
