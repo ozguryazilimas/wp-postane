@@ -1,23 +1,39 @@
 === Auto Post Thumbnail ===
-Contributors: tariquesani
+Contributors: creativemotion
 Tags: Post, thumbnail, automatic, posts, featured image, image, featured, images, admin
-Requires at least: 3.6.1
-Tested up to: 4.6.x
-Stable tag: 3.4.1
+Requires at least: 4.2
+Tested up to: 5.2.2
+Stable tag: 3.4.2
 
 Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post or any custom post type only if Post Thumbnail is not set manually.
 
 == Description ==
 
-Go PRO! A premium version of the plugin has been launched with many more features - [See for details](http://codecanyon.net/item/auto-post-thumbnail-pro/4322624?ref=sanisoft)
+Auto Post Thumbnails didn’t please you with updated lately. However, great news today! We are about to tell you about all the spectacular changes that are planned for our plugin! 
 
-Auto post thumbnail is a plugin to generate post thumbnail from first image in post or any custom post type. If the first image doesn't work it will automatically search for the next one and so on until the post thumbnail is inserted.
+First of all, we proudly announce that a new group of developers, Creative Motion, are helping us with plugin improvement.
+Auto Post Thumbnails has perfectly fit in our close family of popular plugins with more than 600,000 users worldwide.
+What you can expect soon:
 
-If the post thumbnail is already present, the plugin will do nothing.
-If you don't want a post thumbnail for some post with images, just add a custom field *skip_post_thumb* to the post and the plugin will restrain itself from generating post thumbnail.
-The plugin also provides a Batch Processing capability to generate post thumbnails for already published posts. A new menu item **Gen. Post Thumbnails** will get added under Tools menu after this plugin is installed.
+3.4.2
+As you’ve already noticed, we haven’t updated the plugin for more than 2 years. This new version fixes existing problems. APT becomes a fully functional plugin.
 
-For more details, see http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-thumbnail/
+3.5.0
+In the next release, you can automatically generate featured images from any image in the post, not only the first one.
+Besides, we offer you an advanced tool – choose an image for the featured image right from the Posts tab. You no longer need to edit each post to install or change the featured image. Feel free to do it right from the list of posts. It saves much time and efforts.
+
+3.5.1
+Starting from this version, the APT plugin evolves from being an aiding tool to the full-featured search & image editing system with a Creative Commons license for your website.
+It means that you get:
+Image search through the 5 popular stock services from the plugin interface. Just enter a search query and choose an image(images) you like.
+Advanced APT editor. You can edit images using layers. It means that you can overlay text, logo, or mask, adjust color, brightness, and contract and use other great features. Save presets and apply them on any image in one click.
+The editor doesn’t replace the default WordPress editor.
+
+3.5.2
+Upload images from the external URL to your post or product (for Woocommerce).
+Compatibility with the most popular builders.
+
+
 
 == Installation ==
 
