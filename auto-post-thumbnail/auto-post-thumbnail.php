@@ -2,16 +2,15 @@
 
 /*
 Plugin Name: Auto Post Thumbnail
-Plugin URI: http://cm-wp.com/apt/
+Plugin URI: http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-thumbnail/
 Description: Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post (or any custom post type) only if Post Thumbnail is not set manually.
-Version: 3.4.2
-Author: Сreativemotion
-Author URI: http://cm-wp.com
-Text Domain: apt
-Domain Path: /languages
+Version: 3.4.1
+Author: Aditya Mooley <adityamooley@sanisoft.com>, Tarique Sani <tarique@sanisoft.com>
+Author URI: http://www.sanisoft.com/blog/author/adityamooley/
+Modified by Dr. Tarique Sani <tarique@sanisoft.com> to make it work with Wordpress 3.4
 */
 
-/*  Copyright 2019  Сreativemotion  (email : cmwp@gmail.com)
+/*  Copyright 2009  Aditya Mooley  (email : adityamooley@sanisoft.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,485 +27,405 @@ Domain Path: /languages
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-
-defined( 'APT_PLUGIN_FILE' ) or define( 'APT_PLUGIN_FILE', __FILE__ );
-defined( 'APT_ABSPATH' ) or define( 'APT_ABSPATH', dirname( __FILE__ ) );
-defined( 'APT_PLUGIN_BASENAME' ) or define( 'APT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-defined( 'APT_PLUGIN_URL' ) or define( 'APT_PLUGIN_URL', plugins_url( null, __FILE__ ) );
-
-/**
- * Class AutoPostThumbnails
- *
- * @author Alexander Teshabaev <sasha.tesh@gmail.com>
- * @copyright (c) 2018, Webcraftic Ltd
- */
-class AutoPostThumbnails {
-
-	/**
-	 * @var AutoPostThumbnails
-	 */
-	public static $instance;
-
-	/**
-	 * AutoPostThumbnails constructor.
-	 */
-	public function __construct () {
-
-		$this->init_includes();
-		$this->init();
-		$this->init_textdomain();
-	}
-
-	/**
-	 * Get existing instance or create new one.
-	 *
-	 * @return AutoPostThumbnails
-	 */
-	public static function instance () {
-		if ( static::$instance === null ) {
-			static::$instance = new self();
-		}
-
-		return static::$instance;
-	}
-
-	/**
-	 * Init includes.
-	 */
-	private function init_includes () {
-		require __DIR__ . '/src/class.template.php';
-	}
-
-	/**
-	 * Initiate all required hooks.
-	 */
-	private function init () {
-		$apt_ag = get_option( 'wbcr_apt_auto_generation' );
-
-		if ( $apt_ag ) {
-			add_action( 'publish_post', [ $this, 'publish_post' ] );
-
-			// This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
-			add_action( 'transition_post_status', [ $this, 'check_required_transition' ], 10, 3 );
-		}
-
-		add_action( 'admin_notices', [ $this, 'check_perms' ] );
-		add_action( 'admin_menu', [ $this, 'init_admin_menu' ] );
-
-		// Plugin hook for adding CSS and JS files required for this plugin
-		add_action( 'admin_enqueue_scripts', [
-			$this,
-			'enqueue_assets',
-		] );
-
-		// Hook to implement AJAX request
-		add_action( 'wp_ajax_generatepostthumbnail', [
-			$this,
-			'ajax_process_post',
-		] );
-	}
-
-	/**
-	 * Init language support.
-	 */
-	public function init_textdomain () {
-		load_plugin_textdomain( "apt", false, basename( dirname( __FILE__ ) ) . '/languages' );
-	}
-
-	/**
-	 * Register the management page
-	 */
-	public function init_admin_menu () {
-		add_options_page(
-			'Auto Post Thumbnail',
-			'Auto Post Thumbnail',
-			'manage_options',
-			'generate-post-thumbnails',
-			[ $this, 'render' ]
-		);
-	}
-
-	/**
-	 * Enqueue assets.
-	 *
-	 * @param $hook_suffix
-	 *
-	 * @return void
-	 */
-	public function enqueue_assets ( $hook_suffix ) {
-		if ( 'settings_page_generate-post-thumbnails' != $hook_suffix ) {
-			return;
-		}
-
-		// WordPress 3.1 vs older version compatibility
-		if ( wp_script_is( 'jquery-ui-widget', 'registered' ) ) {
-			wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/jquery.ui.progressbar.min.js', __FILE__ ), array(
-				'jquery-ui-core',
-				'jquery-ui-widget',
-			), '1.7.2' );
-		} else {
-			wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/ui.progressbar.js', __FILE__ ), array( 'jquery-ui-core' ), '1.7.2' );
-		}
-
-		wp_enqueue_style( 'style', plugins_url( 'css/style.css', __FILE__ ) );
-
-		wp_enqueue_style( 'jquery-ui-genpostthumbs', plugins_url( 'jquery-ui/redmond/jquery-ui-1.7.2.custom.css', __FILE__ ), array(), '1.7.2' );
-	}
-
-	/**
-	 * Renders main HTML content of the admin page.
-	 */
-	public function render () {
-		echo APT_Template::render( 'index' );
-	}
-
-	/**
-	 * Process single post to generate the post thumbnail
-	 *
-	 * @return void
-	 */
-	public function ajax_process_post () {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			die( '-1' );
-		}
-
-		$id    = (int) $_POST['id'];
-
-		if ( empty( $id ) ) {
-			die( '-1' );
-		}
-
-		set_time_limit( 60 );
-
-		// Pass on the id to our 'publish' callback function.
-		echo $this->publish_post( $id );
-
-		die( - 1 );
-	}
-
-	/**
-	 * Check whether the required directory structure is available so that the plugin can create thumbnails if needed.
-	 * If not, don't allow plugin activation.
-	 */
-	public function check_perms () {
-		$uploads = wp_upload_dir( current_time( 'mysql' ) );
-
-		if ( $uploads['error'] ) {
-			echo '<div class="updated"><p>';
-			echo $uploads['error'];
-
-			if ( function_exists( 'deactivate_plugins' ) ) {
-				deactivate_plugins( 'auto-post-thumbnail/auto-post-thumbnail.php', 'auto-post-thumbnail.php' );
-				echo '<br /> ' . esc_html__( 'This plugin has been automatically deactivated.', 'apt' );
-			}
-
-			echo '</p></div>';
-		}
-	}
-
-	/**
-	 * Function to check whether scheduled post is being published. If so, apt_publish_post should be called.
-	 *
-	 * @param $new_status
-	 * @param $old_status
-	 * @param WP_Post $post Instance of post.
-	 *
-	 * @return void
-	 */
-	public function check_required_transition ( $new_status = '', $old_status = '', $post = '' ) {
-
-		if ( 'publish' == $new_status ) {
-			$this->publish_post( $post->ID );
-		}
-	}
-
-	/**
-	 * Return sql query, which allows to receive all the posts without thumbnails
-	 *
-	 * @return string
-	 */
-	public function get_posts_query() {
-		global $wpdb;
-
-		return "SELECT * FROM {$wpdb->posts} p WHERE p.post_status = 'publish' AND p.post_type = 'post' AND (
- 			p.ID NOT IN (
-				SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_thumbnail_id', 'skip_post_thumb')
-			) OR
-			NOT EXISTS (SELECT p2.ID FROM {$wpdb->posts} p2 WHERE p2.ID = (SELECT meta_value FROM {$wpdb->postmeta} WHERE meta_key = '_thumbnail_id' AND post_id = p.ID) AND p2.post_type = 'attachment')
-		)";
-	}
-
-	/**
-	 * Function to save first image in post as post thumbmail.
-	 *
-	 * @param int $post_id Post ID.
-	 *
-	 * @return bool
-	 */
-	public function publish_post( $post_id ) {
-		global $wpdb;
-
-		// First check whether Post Thumbnail is already set for this post.
-		$_thumbnail_id = get_post_meta( $post_id, '_thumbnail_id', true );
-		if (
-			$_thumbnail_id && $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE id = '$_thumbnail_id' AND post_type = 'attachment'" )
-			|| get_post_meta( $post_id, 'skip_post_thumb', true )
-		) {
-			return true;
-		}
-
-		$post = $wpdb->get_results( "SELECT * FROM {$wpdb->posts} WHERE id = $post_id" );
-
-		// Initialize variable used to store list of matched images as per provided regular expression
-		$matches = array();
-
-		$thumb_id = false;
-
-		// Get all images from post's body
-		preg_match_all( '/<\s*img [^\>]*src\s*=\s*[\""\']?([^\""\'>]*)/i', $post[0]->post_content, $matches );
-
-		if ( count( $matches ) ) {
-			foreach ( $matches[0] as $key => $image ) {
-				/**
-				 * If the image is from the WordPress own media gallery, then it appends the thumbnail id to a css class.
-				 * Look for this id in the IMG tag.
-				 */
-				preg_match( '/wp-image-([\d]*)/i', $image, $thumb_id );
-
-				if ( $thumb_id ) {
-					$thumb_id = $thumb_id[1];
-				}
-
-				if ( ! get_post( $thumb_id ) ) {
-					$thumb_id = false;
-				}
-
-				// If thumb id is not found, try to look for the image in DB. Thanks to "Erwin Vrolijk" for providing this code.
-				if ( ! $thumb_id ) {
-					$image  = substr( $image, strpos( $image, '"' ) + 1 );
-					$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE guid = '" . $image . "'" );
-					if ( $result ) {
-						$thumb_id = $result[0]->ID;
-					}
-				}
-
-				// Still no id found? Try found by post_name
-				if ( ! $thumb_id ) {
-					if ( isset( $matches[0][ $key ] ) && ! empty( $matches[0][ $key ] ) ) {
-						$image_url = trim( $matches[0][ $key ] );
-						$_parts    = explode( '/', $image_url );
-						$image_url = array_pop( $_parts );
-						$_parts    = explode( '.', $image_url );
-						$image_url = array_shift( $_parts );
-
-						if ( $image_url ) {
-							$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE post_name = '" . $image_url . "' AND post_type = 'attachment'" );
-							if ( $result ) {
-								$thumb_id = $result[0]->ID;
-							}
-						}
-					}
-				}
-
-				// Ok. Still no id found. Some other way used to insert the image in post. Now we must fetch the image from URL and do the needful.
-				if ( ! $thumb_id ) {
-					$thumb_id = $this->generate_post_thumb( $matches, $key, $post[0]->post_content, $post_id );
-				}
-
-				// If we succeed in generating thumb, let's update post meta
-				if ( $thumb_id ) {
-					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
-					break;
-				}
-			}
-		}
-
-		return (bool) $thumb_id;
-	}
-
-	/**
-	 * Search through an array for a matching key.
-	 *
-	 * Examples:
-	 * <code>
-	 *      $array = array(
-	 *          "database.name" => "my_db_name",
-	 *          "database.host" => "myhost.com",
-	 *          "database.user" => "admin",
-	 *          "database.pass" => "a secret."
-	 *      );
-	 *
-	 *      $search = array_contains_key($array, "database");
-	 *      var_dump($search);
-	 *
-	 *      Result:
-	 *      array (size=4)
-	 *          'database.name' => string 'my_db_name' (length=10)
-	 *          'database.host' => string 'myhost.com' (length=10)
-	 *          'database.user' => string 'admin' (length=5)
-	 *          'database.pass' => string 'a secret.' (length=9)
-	 * </code>
-	 *
-	 * https://gist.github.com/steve-todorov/3671626
-	 *
-	 * @param array  $input_array
-	 * @param string $search_value
-	 * @param bool   $case_sensitive
-	 *
-	 * @return array
-	 */
-	function array_contains_key( array $input_array, $search_value, $case_sensitive = false ) {
-		if ( $case_sensitive ) {
-			$preg_match = '/' . $search_value . '/';
-		} else {
-			$preg_match = '/' . $search_value . '/i';
-		}
-		$return_array = array();
-		$keys         = array_keys( $input_array );
-		foreach ( $keys as $k ) {
-			if ( preg_match( $preg_match, $k ) ) {
-				$return_array[ $k ] = $input_array[ $k ];
-			}
-		}
-
-		return $return_array;
-	}
-
-	/**
-	 * Fetch image from URL and generate required thumbnails.
-	 *
-	 * @param $matches
-	 * @param $key
-	 * @param $post_content
-	 * @param $post_id
-	 *
-	 * @return int|WP_Error|null
-	 */
-	public function generate_post_thumb ( $matches, $key, $post_content, $post_id ) {
-		// Make sure to assign correct title to the image. Extract it from img tag
-		$imageTitle = '';
-		preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\""\']?([^\""\'>]*)/i', $post_content, $matchesTitle );
-
-		if ( count( $matchesTitle ) && isset( $matchesTitle[1] ) && isset( $matchesTitle[1][ $key ] ) ) {
-			$imageTitle = $matchesTitle[1][ $key ];
-		}
-
-		// Get the URL now for further processing
-		$imageUrl = $matches[1][ $key ];
-
-		// Get the file name
-		$filename = substr( $imageUrl, ( strrpos( $imageUrl, '/' ) ) + 1 );
-
-		if ( ! ( ( $uploads = wp_upload_dir( current_time( 'mysql' ) ) ) && false === $uploads['error'] ) ) {
-			return null;
-		}
-
-		// Generate unique file name
-		$filename = wp_unique_filename( $uploads['path'], $filename );
-
-		// Move the file to the uploads dir
-		$new_file = $uploads['path'] . "/$filename";
-
-		if ( ! ini_get( 'allow_url_fopen' ) ) {
-			$file_data = $this->curl_get_file_contents( $imageUrl );
-		} else {
-			$file_data = @file_get_contents( $imageUrl );
-		}
-
-		if ( ! $file_data ) {
-			return null;
-		}
-
-		//Fix for checking file extensions
-		$exts = explode( ".", $filename );
-		if ( count( $exts ) > 2 ) {
-			return null;
-		}
-
-		$allowed = get_allowed_mime_types();
-		$ext     = pathinfo( $new_file, PATHINFO_EXTENSION );
-		if ( ! $this->array_contains_key( $allowed, $ext ) ) {
-			return null;
-		}
-
-		file_put_contents( $new_file, $file_data );
-
-		// Set correct file permissions
-		$stat  = stat( dirname( $new_file ) );
-		$perms = $stat['mode'] & 0000666;
-		@ chmod( $new_file, $perms );
-
-		$mimes = $type = $file = null;
-
-		// Get the file type. Must to use it as a post thumbnail.
-		$wp_filetype = wp_check_filetype( $filename, $mimes );
-
-		extract( $wp_filetype );
-
-		// No file type! No point to proceed further
-		if ( ( ! $type || ! $ext ) && ! current_user_can( 'unfiltered_upload' ) ) {
-			return null;
-		}
-
-		// Compute the URL
-		$url = $uploads['url'] . "/$filename";
-
-		// Construct the attachment array
-		$attachment = array(
-			'post_mime_type' => $type,
-			'guid'           => $url,
-			'post_parent'    => null,
-			'post_title'     => $imageTitle,
-			'post_content'   => '',
-		);
-
-		$thumb_id = wp_insert_attachment( $attachment, $file, $post_id );
-		if ( ! is_wp_error( $thumb_id ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/image.php' );
-
-			// Added fix by misthero as suggested
-			wp_update_attachment_metadata( $thumb_id, wp_generate_attachment_metadata( $thumb_id, $new_file ) );
-			update_attached_file( $thumb_id, $new_file );
-
-			return $thumb_id;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Function to fetch the contents of URL using curl in absence of allow_url_fopen.
-	 *
-	 * Copied from user comment on php.net (http://in.php.net/manual/en/function.file-get-contents.php#82255)
-	 */
-	public function curl_get_file_contents ( $URL ) {
-		$c = curl_init();
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $c, CURLOPT_URL, $URL );
-		$contents = curl_exec( $c );
-		curl_close( $c );
-
-		if ( $contents ) {
-			return $contents;
-		}
-
-		return false;
-	}
+add_action('publish_post', 'apt_publish_post');
+
+// This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
+add_action('transition_post_status', 'apt_check_required_transition', 10, 3);
+
+add_action('admin_notices', 'apt_check_perms');
+add_action('admin_menu', 'apt_add_admin_menu'); // Add batch process capability
+add_action('admin_enqueue_scripts', 'apt_admin_enqueues'); // Plugin hook for adding CSS and JS files required for this plugin
+add_action('wp_ajax_generatepostthumbnail', 'apt_ajax_process_post'); // Hook to implement AJAX request
+
+// Register the management page
+function apt_add_admin_menu() {
+    add_options_page('Auto Post Thumbnail', 'Auto Post Thumbnail', 'manage_options', 'generate-post-thumbnails', 'apt_interface');
 }
 
 /**
- * Get instance of the core class.
+ * Admin user interface plus post thumbnail generator
  *
- * @return AutoPostThumbnails
+ * Most of the code in this function is copied from -
+ * Regenerate Thumbnails plugin (http://www.viper007bond.com/wordpress-plugins/regenerate-thumbnails/)
+ *
+ * @return void
  */
-function auto_post_thumbnails () {
-	return AutoPostThumbnails::instance();
+function apt_interface() {
+    global $wpdb;
+?>
+<div>
+    <div style="margin-right:260px;">
+        <div style='float:left; width: 100%'>
+            <div id="message" class="updated fade" style="display:none"></div>
+
+            <div class="wrap genpostthumbs">
+                <h2>Generate Post Thumbnails</h2>
+
+<?php
+                // If the button was clicked
+                    if ( !empty($_POST['generate-post-thumbnails']) ) {
+                        // Capability check
+                        if ( !current_user_can('manage_options') )
+                            wp_die('Cheatin&#8217; uh?');
+
+                        // Form nonce check
+                        check_admin_referer( 'generate-post-thumbnails' );
+
+                        // Get id's of all the published posts for which post thumbnails does not exist.
+                        $query = "SELECT * FROM {$wpdb->posts} p where p.post_status = 'publish' AND p.ID NOT IN (
+                                    SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_thumbnail_id', 'skip_post_thumb')
+                                  )";
+                        $posts = $wpdb->get_results($query);
+
+                        if (empty($posts)) {
+                            echo '<p>Currently there are no published posts available to generate thumbnails.</p>';
+                        } else {
+                            echo '<p>We are generating post thumbnails. Please be patient!</p>';
+
+                            // Generate the list of IDs
+                            $ids = array();
+                            foreach ( $posts as $post )
+                                $ids[] = $post->ID;
+                            $ids = implode( ',', $ids );
+
+                            $count = count( $posts );
+?>
+                <noscript><p><em>You must enable Javascript in order to proceed!</em></p></noscript>
+
+                <div id="genpostthumbsbar" style="position:relative;height:25px;">
+                    <div id="genpostthumbsbar-percent" style="position:absolute;left:50%;top:50%;width:50px;margin-left:-25px;height:25px;margin-top:-9px;font-weight:bold;text-align:center;"></div>
+                </div>
+
+                <script type="text/javascript">
+                    // <![CDATA[
+                    jQuery(document).ready(function($){
+                        var i;
+                        var rt_images = [<?php echo $ids; ?>];
+                        var rt_total = rt_images.length;
+                        var rt_count = 1;
+                        var rt_percent = 0;
+
+                        $("#genpostthumbsbar").progressbar();
+                        $("#genpostthumbsbar-percent").html( "0%" );
+
+                        function genPostThumb( id ) {
+                            $.post( "admin-ajax.php", { action: "generatepostthumbnail", id: id }, function() {
+                                rt_percent = ( rt_count / rt_total ) * 100;
+                                $("#genpostthumbsbar").progressbar( "value", rt_percent );
+                                $("#genpostthumbsbar-percent").html( Math.round(rt_percent) + "%" );
+                                rt_count = rt_count + 1;
+
+                                if ( rt_images.length ) {
+                                    genPostThumb( rt_images.shift() );
+                                } else {
+                                    $("#message").html("<p><strong><?php echo js_escape( sprintf('All done! Processed %d posts.', $count ) ); ?></strong></p>");
+                                    $("#message").show();
+                                }
+
+                            });
+                        }
+
+                        genPostThumb( rt_images.shift() );
+                    });
+                // ]]>
+                </script>
+<?php
+                    }
+                    } else {
+?>
+
+                <p>Use this tool to generate Post Thumbnail (Featured Thumbnail) for your Published posts.</p>
+                <p>If the script stops executing for any reason, just <strong>Reload</strong> the page and it will continue from where it stopped.</p>
+
+                <form method="post" action="">
+                <?php wp_nonce_field('generate-post-thumbnails') ?>
+
+
+                    <p><input type="submit" class="button hide-if-no-js" name="generate-post-thumbnails" id="generate-post-thumbnails" value="Generate Thumbnails" /></p>
+
+                    <noscript><p><em>You must enable Javascript in order to proceed!</em></p></noscript>
+
+                </form>
+                <p>Note: Thumbnails won't be generated for posts that already have post thumbnail or <strong><em>skip_post_thumb</em></strong> custom field set.</p>
+            <?php } ?>
+            </div>
+        </div>
+        <?php if( !is_plugin_active( 'auto-post-thumbnail-pro/index.php' ) ) { ?>
+        <div class="apt_pro_advertisement">
+            <div>
+                <div class="apt_pro_logo">
+                    <img align="middle" src=" <?php echo plugins_url( 'img/apt_logo.jpg' , __FILE__); ?>" />
+                </div>
+                <div class="apt_pro_check_out"><i>Upgrade Now</i></div>
+            </div>
+            <div class="apt_pro_features">
+                <ul>
+                    <li>Auto set first image in post as featured</li>
+                    <li>Auto set first attachment as featured</li>
+                    <li>Featured images from videos</li>
+                    <li>Several video services supported</li>
+                    <li>External images, shortcode ready</li>
+                    <li>Support for Custom Post Type</li>
+                    <li>Ability to delete featured images</li>
+                    <li>Multilingual ready</li>
+                    <li>Free updates, guaranteed support</li>
+                    <li>Works with any theme</li>
+                    <li>Very reasonably priced</li>
+                </ul>
+            </div>
+            <div class="apt_pro_buy_now">
+                <a href="http://codecanyon.net/item/auto-post-thumbnail-pro/4322624?ref=sanisoft" target=" _blank"><input type="button" value="Upgrade" class="button-primary"/></a>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+</div>
+<?php
+} //End apt_interface()
+
+/**
+ * Add our JS and CSS files
+ *
+ * @param $hook_suffix
+ * @return void
+ */
+function apt_admin_enqueues($hook_suffix) {
+    if ( 'settings_page_generate-post-thumbnails' != $hook_suffix ) {
+        return;
+    }
+
+    // WordPress 3.1 vs older version compatibility
+    if ( wp_script_is( 'jquery-ui-widget', 'registered' ) ) {
+        wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/jquery.ui.progressbar.min.js', __FILE__ ), array( 'jquery-ui-core', 'jquery-ui-widget' ), '1.7.2' );
+    }
+    else {
+        wp_enqueue_script( 'jquery-ui-progressbar', plugins_url( 'jquery-ui/ui.progressbar.js', __FILE__ ), array( 'jquery-ui-core' ), '1.7.2' );
+    }
+
+    wp_enqueue_style( 'style', plugins_url( 'css/style.css', __FILE__ ) );
+
+    wp_enqueue_style( 'jquery-ui-genpostthumbs', plugins_url( 'jquery-ui/redmond/jquery-ui-1.7.2.custom.css', __FILE__ ), array(), '1.7.2' );
+} //End apt_admin_enqueues
+
+/**
+ * Process single post to generate the post thumbnail
+ *
+ * @return void
+ */
+function apt_ajax_process_post() {
+    if ( !current_user_can( 'manage_options' ) ) {
+        die('-1');
+    }
+
+    $id = (int) $_POST['id'];
+
+    if ( empty($id) ) {
+        die('-1');
+    }
+
+    set_time_limit( 60 );
+
+    // Pass on the id to our 'publish' callback function.
+    apt_publish_post($id);
+
+    die(-1);
+} //End apt_ajax_process_post()
+
+
+/**
+ * Check whether the required directory structure is available so that the plugin can create thumbnails if needed.
+ * If not, don't allow plugin activation.
+ */
+function apt_check_perms() {
+    $uploads = wp_upload_dir(current_time('mysql'));
+
+    if ($uploads['error']) {
+        echo '<div class="updated"><p>';
+        echo $uploads['error'];
+
+        if ( function_exists('deactivate_plugins') ) {
+            deactivate_plugins('auto-post-thumbnail/auto-post-thumbnail.php', 'auto-post-thumbnail.php' );
+            echo '<br /> This plugin has been automatically deactivated.';
+        }
+
+        echo '</p></div>';
+    }
 }
 
-// Bootstrap
-auto_post_thumbnails();
+/**
+ * Function to check whether scheduled post is being published. If so, apt_publish_post should be called.
+ *
+ * @param $new_status
+ * @param $old_status
+ * @param $post
+ * @return void
+ */
+function apt_check_required_transition($new_status='', $old_status='', $post='') {
 
+    if ('publish' == $new_status) {
+        apt_publish_post($post->ID);
+    }
+}
 
+/**
+ * Function to save first image in post as post thumbmail.
+ */
+function apt_publish_post($post_id)
+{
+    global $wpdb;
+
+    // First check whether Post Thumbnail is already set for this post.
+    if (get_post_meta($post_id, '_thumbnail_id', true) || get_post_meta($post_id, 'skip_post_thumb', true)) {
+        return;
+    }
+
+    $post = $wpdb->get_results("SELECT * FROM {$wpdb->posts} WHERE id = $post_id");
+
+    // Initialize variable used to store list of matched images as per provided regular expression
+    $matches = array();
+
+    // Get all images from post's body
+    preg_match_all('/<\s*img [^\>]*src\s*=\s*[\""\']?([^\""\'>]*)/i', $post[0]->post_content, $matches);
+
+    if (count($matches)) {
+        foreach ($matches[0] as $key => $image) {
+            /**
+             * If the image is from wordpress's own media gallery, then it appends the thumbmail id to a css class.
+             * Look for this id in the IMG tag.
+             */
+            preg_match('/wp-image-([\d]*)/i', $image, $thumb_id);
+            if($thumb_id){
+                $thumb_id = $thumb_id[1];
+            }
+
+            // If thumb id is not found, try to look for the image in DB. Thanks to "Erwin Vrolijk" for providing this code.
+            if (!$thumb_id) {
+                $image = substr($image, strpos($image, '"')+1);
+                $result = $wpdb->get_results("SELECT ID FROM {$wpdb->posts} WHERE guid = '".$image."'");
+                if($result){
+                    $thumb_id = $result[0]->ID;
+                }
+                
+            }
+
+            // Ok. Still no id found. Some other way used to insert the image in post. Now we must fetch the image from URL and do the needful.
+            if (!$thumb_id) {
+                $thumb_id = apt_generate_post_thumb($matches, $key, $post[0]->post_content, $post_id);
+            }
+
+            // If we succeed in generating thumg, let's update post meta
+            if ($thumb_id) {
+                update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
+                break;
+            }
+        }
+    }
+}// end apt_publish_post()
+
+/**
+ * Function to fetch the image from URL and generate the required thumbnails
+ */
+function apt_generate_post_thumb($matches, $key, $post_content, $post_id)
+{
+    // Make sure to assign correct title to the image. Extract it from img tag
+    $imageTitle = '';
+    preg_match_all('/<\s*img [^\>]*title\s*=\s*[\""\']?([^\""\'>]*)/i', $post_content, $matchesTitle);
+
+    if (count($matchesTitle) && isset($matchesTitle[1])) {
+        $imageTitle = $matchesTitle[1][$key];
+    }
+
+    // Get the URL now for further processing
+    $imageUrl = $matches[1][$key];
+
+    // Get the file name
+    $filename = substr($imageUrl, (strrpos($imageUrl, '/'))+1);
+
+    if (!(($uploads = wp_upload_dir(current_time('mysql')) ) && false === $uploads['error'])) {
+        return null;
+    }
+
+    // Generate unique file name
+    $filename = wp_unique_filename( $uploads['path'], $filename );
+
+    // Move the file to the uploads dir
+    $new_file = $uploads['path'] . "/$filename";
+
+    if (!ini_get('allow_url_fopen')) {
+        $file_data = curl_get_file_contents($imageUrl);
+    } else {
+        $file_data = @file_get_contents($imageUrl);
+    }
+
+    if (!$file_data) {
+        return null;
+    }
+
+    //Fix for checking file extensions
+    $exts = explode(".",$filename);
+	if(count($exts)>2)return null;
+	$allowed=get_allowed_mime_types();
+	$ext=pathinfo($new_file,PATHINFO_EXTENSION);
+	if(!array_key_exists($ext,$allowed))return null;
+
+    file_put_contents($new_file, $file_data);
+
+    // Set correct file permissions
+    $stat = stat( dirname( $new_file ));
+    $perms = $stat['mode'] & 0000666;
+    @ chmod( $new_file, $perms );
+
+    // Get the file type. Must to use it as a post thumbnail.
+    $wp_filetype = wp_check_filetype( $filename, $mimes );
+
+    extract( $wp_filetype );
+
+    // No file type! No point to proceed further
+    if ( ( !$type || !$ext ) && !current_user_can( 'unfiltered_upload' ) ) {
+        return null;
+    }
+
+    // Compute the URL
+    $url = $uploads['url'] . "/$filename";
+
+    // Construct the attachment array
+    $attachment = array(
+        'post_mime_type' => $type,
+        'guid' => $url,
+        'post_parent' => null,
+        'post_title' => $imageTitle,
+        'post_content' => '',
+    );
+
+    $thumb_id = wp_insert_attachment($attachment, $file, $post_id);
+    if ( !is_wp_error($thumb_id) ) {
+        require_once(ABSPATH . '/wp-admin/includes/image.php');
+
+        // Added fix by misthero as suggested
+        wp_update_attachment_metadata( $thumb_id, wp_generate_attachment_metadata( $thumb_id, $new_file ) );
+        update_attached_file( $thumb_id, $new_file );
+
+        return $thumb_id;
+    }
+
+    return null;
+}
+
+/**
+ * Function to fetch the contents of URL using curl in absense of allow_url_fopen.
+ *
+ * Copied from user comment on php.net (http://in.php.net/manual/en/function.file-get-contents.php#82255)
+ */
+function curl_get_file_contents($URL) {
+    $c = curl_init();
+    curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($c, CURLOPT_URL, $URL);
+    $contents = curl_exec($c);
+    curl_close($c);
+
+    if ($contents) {
+        return $contents;
+    }
+
+    return FALSE;
+}
