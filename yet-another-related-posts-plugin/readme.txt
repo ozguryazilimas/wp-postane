@@ -1,13 +1,13 @@
 === Yet Another Related Posts Plugin (YARPP) ===
 Contributors: jeffparker, shareaholic
-Tags: feeds, pages, posts, related, rss, yarpp, ads, multisite, multilingual, thumbnails, related posts, related content
-Requires at least: 3.3
+Tags: related, related posts, similar posts, posts, pages, thumbnails, feeds, multisite, multilingual
+Requires at least: 3.7
 Requires PHP: 5.2
 License: GPLv2 or later
 Tested up to: 5.2
-Stable tag: 4.5
+Stable tag: 5.0.0
 
-Display a list of related posts on your site based on a powerful unique algorithm. Earn money by including sponsored content!
+Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
 == Description ==
 
@@ -20,6 +20,8 @@ Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post 
 * **Templating**: The YARPP templating system gives you advanced control of how your results are displayed.
 * **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. [Learn More.](http://wordpress.tv/2011/01/29/michael-%E2%80%9Cmitcho%E2%80%9D-erlewine-the-yet-another-related-posts-plugin-algorithm-explained/)  
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
+
+The Yet Another Related Posts Plugin is the most popular Related Posts plugin for WordPress, encouraging Discovery and Engagement since 2008.
 
 This plugin requires PHP 5, MySQL 4.1, and WordPress 3.3 or greater. See [the FAQ](http://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
 
@@ -231,57 +233,19 @@ Yes. Any taxonomy, including custom taxonomies, may be specified in the `weight`
 
 If you would like to choose custom taxonomies to choose in the YARPP settings UI, either to exclude certain terms or to consider them in the relatedness formula via the UI, the taxonomy must (a) have either the `show_ui` or `yarpp_support` attribute set to true and (b) must apply to either the post types `post` or `page` or both.
 
-= Which languages does YARPP support? =
-
-YARPP is currently localized in the following languages:
-
-* Egyptian Arabic (`ar_EG`) by Bishoy Antoun of [cdmazika.com](http://www.cdmazika.com).
-* Standard Arabic (`ar`) by [led](http://led24.de)
-* Belarussian (`by_BY`) by [Fat Cow](http://www.fatcow.com)
-* Bulgarian (`bg_BG`) by [Flash Gallery](http://www.flashgallery.org)
-* Simplified Chinese (`zh_CN`) by Jor Wang of [jorwang.com](http://jorwang.com)
-* Traditional Chinese (Taiwan, `zh_TW`) by [Pseric](http://www.freegroup.org/)
-* Croatian (`hr`) by [GoCroatia.com](http://gocroatia.com)
-* Czech (`cs_CZ`) by [Zdenek Hejl](http://www.zdenek-hejl.com)
-* Dutch (`nl_NL`) by Sybrand van der Werf
-* Estonian (`est_EST`) by [JOURNAL](http://journal24.info/)
-* Farsi/Persian (`fa_IR`) by [Moshen Derakhshan](http://webdesigner.downloadkar.com/)
-* French (`fr_FR`) by Lionel Chollet
-* Georgian (`ge_KA`) by Kasia Ciszewski of [Find My Hosting](www.findmyhosting.com)
-* German (`de_DE`) by Michael Kalina of [3th.be](http://3th.be) and Nils Armgart of [movie-blog.de.ms](http://www.movie-blog.de.ms)
-* Cypriot Greek (`el_CY`) by Aristidis Tonikidis of [akouseto.gr](http://www.akouseto.gr)
-* Greek (`el_EL`) by Aristidis Tonikidis of [akouseto.gr](http://www.akouseto.gr)
-* Gujrati (`gu_IN`) by [Vikas Arora](http://www.wiznicworld.com/)
-* Hebrew (`he_IL`) by Mickey Zelansky of [simpleidea.us](http://simpleidea.us) and [Hadas Kotek](http://web.mit.edu/hkotek/www)
-* Hindi (`hi_IN`) by [Outshine Solutions](http://outshinesolutions.com/)
-* Italian (`it_IT`) by Gianni Diurno of [gidibao.net](http://gidibao.net)
-* Irish (`gb_IR`) by [Ray Gren](http://letsbefamous.com)
-* Bahasa Indonesia (`id_ID`) by [Hendry Lee](http://hendrylee.com/) of [Kelayang](http://kelayang.com/)
-* Japanese (`ja`) by [Michael Yoshitaka Erlewine](http://mitcho.com)
-* Kazakh (`kk_KZ`) by [DachaDecor](http://DachaDecor.ru)
-* Korean (`ko_KR`) by [Jong-In Kim](http://incommunity.codex.kr)
-* Latvian (`lv_LV`) by [Mike](http://antsar.info)
-* Lithuanian (`lt_LT`) by [Karolis Vycius](http://vycius.co.cc) and [Mantas Malcius](http://mantas.malcius.lt)
-* Macedonian (`mk_MK`) by [WPdiscounts](http://wpdiscounts.com)
-* Norwegian (`nb_NO`) by [Tom Arne Sundtjønn](http://www.datanerden.no)
-* Polish (`pl_PL`) by [Perfecta](http://perfecta.pro/wp-pl/)
-* (European) Portuguese (`pt_PT`) by Stefan Mueller of [fernstadium-net](http://www.fernstudium-net.de)
-* Brazilian Portuguese (`pt_BR`) by Rafael Fischmann of [macmagazine.br](http://macmagazine.com.br/)
-* Romanian (`ro_RO`) by [Uhren Shop](http://uhrenstore.de/)
-* Russian (`ru_RU`) by Marat Latypov of [blogocms.ru](http://blogocms.ru)
-* Serbian (`sr_RS`) by [Zarko Zivkovic](http://www.zarkozivkovic.com/)
-* Slovak (`sk_SK`) by [Forex](http://www.eforex.sk/)
-* Slovenian (`sl_SI`) by [Silvo Katalenic](http://www.twitter.com/silvoslaf)
-* Spanish (`es_ES`) by Rene of [WordPress Webshop](http://wpwebshop.com)
-* Swedish (`sv_SE`) by Max Elander
-* Turkish (`tr_TR`) by [Nurullah](http://www.ndemir.com) and [Baris Ünver](http://beyn.org/)
-* Vietnamese (`vi_VN`) by Vu Nguyen of [Rubik Integration](http://rubikintegration.com/)
-* Ukrainian (`uk_UA`) by [Onore(Alexander Musevich)](http://Onore.kiev.ua)
-* Uzbek (`uz_UZ`) by Ali Safarov of [comfi.com](http://www.comfi.com/)
-
 == Changelog ==
-= 4.5 =
-* After a bit of a hiatus, we're back! 
+= 5.0.0 (2019-07-01) =
+* [Bugfix](https://wordpress.org/support/topic/php-notice-get_currentuserinfo-is-deprecated-since-version-4-5-0/): Fix warning from using get_currentuserinfo()
+
+= 4.6 (2019-07-01) =
+* [Bugfix](https://wordpress.org/support/topic/plugin-flagged-by-wordfence/): Removed links from Plugin Readme to resolve WordFence false positive.
+
+= 4.5 (2019-05-18) =
+After a bit of a hiatus, we're back! The plugin had been delisted due to a minor [email address issue](https://make.wordpress.org/plugins/2018/10/22/reminder-plugins-are-closed-if-emails-bounce/). This has been resolved with this release and the plugin has been reinstated. We consider this to be a big step, and yes, after a 6-month hiatus of not being in the plugin directory.🙂
+
+The plugin is also no longer maintained by Adknowledge. A group of us with **deep expertise in Content Recommendations** and **10+ years experience with maintaining very popular plugins** have very recently taken Yarpp over from Adknowlege. More on this will be shared very soon.
+
+After a break of many years, the plugin is 100% supported now that the baton has been passed on. A larger update (hand-in-hand with proper communication) is being carefully worked on with a focus on a host of bug fixes and compatibility updates which will be available once it is properly tested, ready and updates properly communicated. Stay tuned.❤️
 
 = 4.4 =
 * Discontinuing the YARPP Pro service
@@ -910,6 +874,6 @@ YARPP is currently localized in the following languages:
 * Initial upload
 
 == Upgrade Notice ==
-= 4.5 =
+= 5.0.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

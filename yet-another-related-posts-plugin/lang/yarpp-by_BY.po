@@ -43,7 +43,7 @@ msgstr "%f - гэта каэфіцыент \"падобнасці\" паста �
 #, php-format
 #@ yarpp
 msgid "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
-msgstr "Спіс падобных пастоў прадстаўлены вам убудовай <a href='%s'>YARPP</a>."
+msgstr "Спіс падобных пастоў прадстаўлены вам убудовай <a href='%s' title='WordPress Related Posts Plugin'>YARPP</a>."
 
 #: yarpp_options.php:54
 #@ yarpp

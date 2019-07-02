@@ -43,7 +43,7 @@ msgstr "%f - это коэффициэнт \"похожести\" текущго
 #, php-format
 #@ yarpp
 msgid "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
-msgstr "Список похожих постов предоставлен вам плагином <a href='%s'>YARPP</a>."
+msgstr "Список похожих постов предоставлен вам плагином <a href='%s' title='WordPress Related Posts Plugin'>YARPP</a>."
 
 #: yarpp_options.php:54
 #@ yarpp

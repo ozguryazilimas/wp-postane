@@ -7,22 +7,19 @@
  * More information on the custom templates is available at http://mitcho.com/blog/projects/yarpp-3-templates/
 */
 
-get_currentuserinfo();
-
 $options = array(
         'before_title',
         'after_title',
         'show_excerpt',
-        'excerpt_length', 
-        'before_post', 
-        'after_post', 
-        'before_related', 
-        'after_related', 
-        'no_results' 
+        'excerpt_length',
+        'before_post',
+        'after_post',
+        'before_related',
+        'after_related',
+        'no_results'
     );
 
 extract($this->parse_args($args, $options));
-
 
 if (have_posts()) {
     

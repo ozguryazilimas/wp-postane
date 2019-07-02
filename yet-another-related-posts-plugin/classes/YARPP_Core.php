@@ -1145,7 +1145,7 @@ class YARPP {
                 '<p>'.
                     sprintf(
                         __(
-                            "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>.",
+                            "Related posts brought to you by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
                             'yarpp'
                         ),
                         'https://wordpress.org/plugins/yet-another-related-posts-plugin/'
@@ -1321,7 +1321,7 @@ class YARPP {
                 '<p>'.
                     sprintf(
                         __(
-                            "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>.",
+                            "Related posts brought to you by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
                             'yarpp'
                         ),
                         'https://wordpress.org/plugins/yet-another-related-posts-plugin/'

@@ -43,7 +43,7 @@ msgstr "%f - bu joriy xabar va aloqador xabar o'rtasidagi o'xshashlik koeffitsie
 #, php-format
 #@ yarpp
 msgid "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
-msgstr "Aloqador xabarlar Sizga <a href='%s'>YARPP</a> plagini tomonidan taqdim etildi."
+msgstr "Aloqador xabarlar Sizga <a href='%s' title='WordPress Related Posts Plugin'>YARPP</a> plagini tomonidan taqdim etildi."
 
 #: yarpp_options.php:54
 #@ yarpp

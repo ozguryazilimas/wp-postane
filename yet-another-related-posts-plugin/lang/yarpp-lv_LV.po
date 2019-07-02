@@ -43,7 +43,7 @@ msgstr "%f - eto koefficient \"pohojesti\" tekuschgo posta i svyazanogo s nim. V
 #, php-format
 #@ yarpp
 msgid "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
-msgstr "Spisok pohojih postov predostavlen vam plaginom <a href='%s'>YARPP</a>."
+msgstr "Spisok pohojih postov predostavlen vam plaginom <a href='%s' title='WordPress Related Posts Plugin'>YARPP</a>."
 
 #: yarpp_options.php:54
 #@ yarpp

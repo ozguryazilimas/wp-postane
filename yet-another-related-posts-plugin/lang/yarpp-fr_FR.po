@@ -159,7 +159,7 @@ msgstr "Il n’y a pas d’entrée similaire."
 #, php-format
 #@ yarpp
 msgid "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
-msgstr "La liste des entrées similaires est établie par le module d’extension <a href='%s'>YARPP</a>."
+msgstr "La liste des entrées similaires est établie par le module d’extension <a href='%s' title='WordPress Related Posts Plugin'>YARPP</a>."
 
 #: class-widget.php:92
 #: options-meta-boxes.php:35
