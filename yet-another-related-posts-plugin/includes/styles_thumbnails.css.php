@@ -11,11 +11,14 @@ $width_with_margins = ($margin * 2) + $width;
 $height_with_text   = $height + 50;
 $extra_margin        = 7;
 
+$seconds_to_cache = 604800; // 1 week
+$ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+header("Expires: $ts");
+header("Cache-Control: public, max-age=$seconds_to_cache");
 header('Content-Type: text/css');
 ?>
 .yarpp-thumbnails-horizontal .yarpp-thumbnail, .yarpp-thumbnail-default, .yarpp-thumbnail-title {
 	display: inline-block;
-	*display: inline;
 }
 .yarpp-thumbnails-horizontal .yarpp-thumbnail {
 	border: 1px solid rgba(127,127,127,0.1);

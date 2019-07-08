@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.2
 License: GPLv2 or later
 Tested up to: 5.2
-Stable tag: 5.0.0
+Stable tag: 5.0.1
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -18,12 +18,12 @@ Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post 
 * **Thumbnail or list view** of related content.
 * **Related posts, pages, and custom post types.**
 * **Templating**: The YARPP templating system gives you advanced control of how your results are displayed.
-* **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. [Learn More.](http://wordpress.tv/2011/01/29/michael-%E2%80%9Cmitcho%E2%80%9D-erlewine-the-yet-another-related-posts-plugin-algorithm-explained/)  
+* **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. [Learn More.](https://wordpress.tv/2011/01/29/michael-mitcho-erlewine-the-yet-another-related-posts-plugin-algorithm-explained/)  
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
 
-The Yet Another Related Posts Plugin is the most popular Related Posts plugin for WordPress, encouraging Discovery and Engagement since 2008.
+The Yet Another Related Posts Plugin is the most popular [WordPress Related Posts plugin](https://wordpress.org/plugins/yet-another-related-posts-plugin/), encouraging Discovery and Engagement since 2008.
 
-This plugin requires PHP 5, MySQL 4.1, and WordPress 3.3 or greater. See [the FAQ](http://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
+This plugin requires PHP 5, MySQL 4.1, and WordPress 3.3 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
 
 == Installation ==
 
@@ -53,7 +53,7 @@ YARPP allows the advanced user with knowledge of PHP to customize the display of
 
 Below are Frequently Asked Questions about YARPP basic.
 
-If your question isn't here, ask your own question at [the WordPress.org forums](http://wordpress.org/support/plugin/yet-another-related-posts-plugin).
+If your question isn't here, ask your own question at [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin).
 
 = Many pages list "no related posts." =
 
@@ -108,7 +108,7 @@ Once you save any CSS changes, empty your browser's cache and reload your page t
 
 The default YARPP thumbnail size is 120px by 120px. The thumbnail size can be specified programmatically by adding `add_image_size('yarpp-thumbnail', $width, $height, true);` to your theme's `functions.php` file with appropriate width and height variables. In the future I may add some UI to the settings to also set this. Feedback is requested on whether this is a good idea.
 
-Each time you change YARPP's thumbnail dimensions like this, you will probably want to have WordPress regenerate appropriate sized thumbnails for all of your images. I highly recommend the [Regenerate Thumbnails](http://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin for this purpose.
+Each time you change YARPP's thumbnail dimensions like this, you will probably want to have WordPress regenerate appropriate sized thumbnails for all of your images. I highly recommend the [Regenerate Thumbnails](https://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin for this purpose.
 
 = I'm using the Thumbnails display. Why aren't the right size thumbnails being served? =
 
@@ -116,13 +116,13 @@ By default, if an appropriately sized thumbnail is not available in WordPress, a
 
 There are two options for doing so:
 
-* First, you can use the [Regenerate Thumbnails](http://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin to generate all these thumbnail-sized images in a batch process. This puts you in control of when this resizing process happens on your server (which is good because it can be processor-intensive). New images which are uploaded to WordPress should automatically get the appropriate thumbnail generated when the image is uploaded.
+* First, you can use the [Regenerate Thumbnails](https://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin to generate all these thumbnail-sized images in a batch process. This puts you in control of when this resizing process happens on your server (which is good because it can be processor-intensive). New images which are uploaded to WordPress should automatically get the appropriate thumbnail generated when the image is uploaded.
 
 * Second, you can turn on a feature in YARPP to auto-generate appropriate size thumbnails on the fly, if they have not yet been created. Doing this type of processing on the fly does not scale well, so this feature is turned off by default. But if you run a smaller site with less traffic, it may work for you. Simply add `define('YARPP_GENERATE_THUMBNAILS', true);` to your theme's `functions.php` file.
 
 = I'm using the Thumbnails display. Why are some of my posts missing appropriate images? =
 
-YARPP's thumbnail view requires that a WordPress "featured image" be set for each post. If you have many posts that never had a featured image set, I recommend the plugin [Auto Post Thumbnail](http://wordpress.org/extend/plugins/auto-post-thumbnail/), which will generate post thumbnails for you.
+YARPP's thumbnail view requires that a WordPress "featured image" be set for each post. If you have many posts that never had a featured image set, I recommend the plugin [Auto Post Thumbnail](https://wordpress.org/extend/plugins/auto-post-thumbnail/), which will generate post thumbnails for you.
 
 = How can I use the custom template feature? =
 
@@ -146,18 +146,18 @@ However, YARPP does have difficulty with languages that don't place spaces betwe
 
 The YARPP calculation of related content does make a little impact, yes. However, YARPP caches all of its results, so any post's results need only be calculated once. YARPP's queries have been significantly optimized since version 3.5.
 
-If you are running a large site and need to throttle YARPP's computation, try the official [YARPP Experiments](http://wordpress.org/extend/plugins/yarpp-experiments/) plugin which adds this throttling functionality. If you are looking for a hosting provider whose databases will not balk under YARPP, I personally have had great success with [MediaTemple](http://www.mediatemple.net/#a_aid=4ed59d7ac5dae).
+If you are running a large site and need to throttle YARPP's computation, try the official [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin which adds this throttling functionality. If you are looking for a hosting provider whose databases will not balk under YARPP, I personally have had great success with [MediaTemple](http://www.mediatemple.net/#a_aid=4ed59d7ac5dae).
 
 = Are there any plugins that are incompatible with YARPP? =
 
 * [DISQUS](https://wordpress.org/extend/plugins/disqus-comment-system/): go to the DISQUS plugin advanced settings and turn on the "Check this if you have a problem with comment counts not showing on permalinks".
-* [SEO_Pager plugin](http://wordpress.org/support/topic/267966): turn off the automatic display option in SEO Pager and instead add the code manually.
+* [SEO_Pager plugin](https://wordpress.org/support/topic/267966): turn off the automatic display option in SEO Pager and instead add the code manually.
 * [Pagebar 2](http://www.elektroelch.de/hacks/wp/pagebar/);
-* [WP Contact Form III plugin and Contact Form Plugin](http://wordpress.org/support/topic/392605);
+* [WP Contact Form III plugin and Contact Form Plugin](https://wordpress.org/support/topic/392605);
 * [WPML](http://wpml.org): various incompatibilities have been reported. The multilingual plugin [Polylang](https://polylang.wordpress.com/) has great support for YARPP and is suggested as a replacement for WPML.
 * Other related posts plugins, obviously, may also be incompatible.
 
-Please submit similar bugs by starting a new thread on [the WordPress.org forums](http://wordpress.org/support/plugin/yet-another-related-posts-plugin). I check the forums regularly and will try to release a quick bugfix.
+Please submit similar bugs by starting a new thread on [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin). I check the forums regularly and will try to release a quick bugfix.
 
 = YARPP seems to be broken since I upgraded to WordPress X.X. =
 
@@ -165,11 +165,11 @@ Before upgrading to a new WordPress version, you should first deactivate all plu
 
 1. Visit the "Related Posts (YARPP)" settings page to verify your settings.
 2. Deactivate YARPP, replace the YARPP files on the server with a fresh copy of the new version, and then reactivate it.
-3. Install the official [YARPP Experiments](http://wordpress.org/extend/plugins/yarpp-experiments/) plugin to flush the cache.
+3. Install the official [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin to flush the cache.
 
 = Can I clear my cache? Can I build up the cache manually? =
 
-The official [YARPP Experiments](http://wordpress.org/extend/plugins/yarpp-experiments/) plugin adds manual cache controls, letting you flush the cache and build it up manually.
+The official [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin adds manual cache controls, letting you flush the cache and build it up manually.
 
 = I removed the YARPP plugin but I still see YARPP-related database tables. Shouldn't those be removed, too? =
 
@@ -234,8 +234,12 @@ Yes. Any taxonomy, including custom taxonomies, may be specified in the `weight`
 If you would like to choose custom taxonomies to choose in the YARPP settings UI, either to exclude certain terms or to consider them in the relatedness formula via the UI, the taxonomy must (a) have either the `show_ui` or `yarpp_support` attribute set to true and (b) must apply to either the post types `post` or `page` or both.
 
 == Changelog ==
+= 5.0.1 (2019-07-08) =
+* [Bugfix](https://wordpress.org/support/topic/styles_thumbnails-css-php-invalid-value/): Fixed invalid CSS rule
+* Enhancement: Set Cache headers for CSS file
+
 = 5.0.0 (2019-07-01) =
-* [Bugfix](https://wordpress.org/support/topic/php-notice-get_currentuserinfo-is-deprecated-since-version-4-5-0/): Fix warning from using get_currentuserinfo()
+* [Bugfix](https://wordpress.org/support/topic/php-notice-get_currentuserinfo-is-deprecated-since-version-4-5-0/): Fixed warning from using get_currentuserinfo()
 
 = 4.6 (2019-07-01) =
 * [Bugfix](https://wordpress.org/support/topic/plugin-flagged-by-wordfence/): Removed links from Plugin Readme to resolve WordFence false positive.
@@ -330,19 +334,19 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Updated plugin de-activate/delete functionality to drop all tables. Prior to fix some legacy tables remained which required manual deletion in wp_options from phpmyadmin.
 * Updated FAQs section.
 * Update to YARPP's data collection terms and conditions.
-* Added Macedonian (`mk_MK`) localization by [WPdiscounts] (http://wpdiscounts.com).
+* Added Macedonian (`mk_MK`) localization by WPdiscounts.
 
 = 4.0.6 =
 * YARPP's automatic display will not run on posts which include the HTML comment `<!--noyarpp-->` [by request](https://wordpress.org/support/topic/disabling-yarrp-on-specific-pages).
 * More robust activation handling, particularly when network-activated.
 * Improved handling of exceptions, for example when fulltext indexes cannot be created or non-MyISAM tables are used.
 * YARPP no longer triggers the generation of YARPP-thumbnail-sized images (120x120) when YARPP thumbnails are not used.
-	* If you are using YARPP programmatically and using the thumbnails view and having troubles with YARPP's thumbnail size being registered, a manual control to force image size registration has been added to the [YARPP Experiments](http://wordpress.org/extend/plugins/yarpp-experiments/) plugin.
+	* If you are using YARPP programmatically and using the thumbnails view and having troubles with YARPP's thumbnail size being registered, a manual control to force image size registration has been added to the [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin.
 * [Bugfix](https://wordpress.org/support/topic/yarpp_related_exist-and-begin_yarpp_time-error): calls to `yarpp_related_exist()` type functions were causing errors.
 * Bundled `yarpp-template-wpml.php` is now called `yarpp-template-multilingual.php`, following [discussion with the author of the Polylang plugin](https://wordpress.org/support/topic/better-integration-of-yarpp-and-polylang).
 * Localizations
-	* Added Estonian (`est_EST`) by [JOURNAL](http://journal24.info/)
-	* Added Gujrati (`gu_IN`) by [Vikas Arora](http://www.wiznicworld.com/)
+	* Added Estonian (`est_EST`) by journal24.info
+	* Added Gujrati (`gu_IN`) by Vikas Arora of wiznicworld.com
 
 = 4.0.5 =
 * [Bugfix](https://wordpress.org/support/topic/bug-in-upgrading-from-yarp-3_5_2b2): Some upgrade code would try to access the global $yarpp before it was properly initialized
@@ -356,20 +360,20 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Added the filter `yarpp_results`
 * Localizations:
 	* Updated French localization and stopword list
-	* Added Slovenian (`sl_SI`) localization by [Silvo Katalenić](http://www.twitter.com/silvoslaf)
+	* Added Slovenian (`sl_SI`) localization by [Silvo Katalenić](https://twitter.com/silvoslaf)
 * Bugfix: forces the DB Cache Reloaded (Fix) plugins to flush when necessary
 
 = 4.0.3 =
 * Bugfix: on sites where custom templates are not available, the "thumbnails" display option would get reset when visiting the YARPP settings page
-* [Bugfix](http://wordpress.org/support/topic/yarpp-css-is-delayed-or-doesnt-load): the CSS for YARPP's thumbnails display would load at the foot of the page, and therefore would cause some style-flashing. This is fixed for automatic includes, but not for widgets or manual calls.
+* [Bugfix](https://wordpress.org/support/topic/yarpp-css-is-delayed-or-doesnt-load): the CSS for YARPP's thumbnails display would load at the foot of the page, and therefore would cause some style-flashing. This is fixed for automatic includes, but not for widgets or manual calls.
 * Restoration of the `$post` global after YARPP is now more robust. Fixes the display of incorrect metadata on some complex themes.
 * YARPP template files no longer recognize `Template Name` fields in their headers, instead using `YARPP Template`. This is to avoid confusion with regular page templates.
 * Added "Related Posts" meta box to other "auto display" post types
 * Updated Polish localization
 
 = 4.0.2 =
-* [Bugfix](http://wordpress.org/support/topic/yarpp-doesnt-update-suggestions-with-older-posts): cache should be cleared when the "show only previous posts?" option is changed
-* [Bugfix](http://wordpress.org/support/topic/no-default-image-showing?replies=4): In the thumbnail display, sometimes the default image was not displayed, even though no post thumbnail was available.
+* [Bugfix](https://wordpress.org/support/topic/yarpp-doesnt-update-suggestions-with-older-posts): cache should be cleared when the "show only previous posts?" option is changed
+* [Bugfix](https://wordpress.org/support/topic/no-default-image-showing?replies=4): In the thumbnail display, sometimes the default image was not displayed, even though no post thumbnail was available.
 * Localization updates
 	* Updated Polish, Japanese, Hebrew localizations
 	* Better right-to-left layout support
@@ -382,8 +386,8 @@ After a break of many years, the plugin is 100% supported now that the baton has
 	* Fixed a typo and simplified an item in the dynamic `styles-thumbnails.php` styles
 	* Code to generate thumbnails of appropriate size on the fly has been added, but is turned off by default for performance reasons (see FAQ)
 * Bugfix: a class of `yarpp-related-` with a stray hyphen was sometimes being produced. Now fixed so it produces `yarpp-related`.
-* [Bugfix](http://wordpress.org/support/topic/bug-in-sql-function-in-yarpp_cache): `term_relationships` table was being joined when unnecessary
-* [Bugfix](http://wordpress.org/support/topic/no-option-to-add-widget-title-in-theme-using-hybrid-core-framework): widget options would not display if custom templates were not available
+* [Bugfix](https://wordpress.org/support/topic/bug-in-sql-function-in-yarpp_cache): `term_relationships` table was being joined when unnecessary
+* [Bugfix](https://wordpress.org/support/topic/no-option-to-add-widget-title-in-theme-using-hybrid-core-framework): widget options would not display if custom templates were not available
 * Bugfix: some transients expired too soon if object caching was used
 * The `yarpp_map_post_types` filter now also applies to feeds and takes an extra argument to know whether the context is `website` or `rss`.
 
@@ -416,7 +420,7 @@ After a break of many years, the plugin is 100% supported now that the baton has
 
 = 3.5.6 =
 * Typo fix for postmeta cache
-* Added Traditional Chinese (Taiwan, `zh_TW`) localization by [Pseric](http://www.freegroup.org/)
+* Added Traditional Chinese (Taiwan, `zh_TW`) localization by Pseric
 
 = 3.5.5 =
 * Quick bugfix for how admin screen code was loaded in in WordPress < 3.3.
@@ -424,7 +428,7 @@ After a break of many years, the plugin is 100% supported now that the baton has
 = 3.5.4 =
 * New Help tab, which displays help text from the readme.
 * Retina icons! Now served faster, in sprite form.
-* Added Croatian (`hr`) localization by [gocroatia.com](http://gocroatia.com)
+* Added Croatian (`hr`) localization by gocroatia.com
 * Cleanup:
 	* Bugfix: stopwords would not be loaded if WPLANG is defined but blank.
 	* Added new `stats` method to `YARPP_Cache_*` objects.
@@ -443,25 +447,25 @@ After a break of many years, the plugin is 100% supported now that the baton has
 	* Various functions now refer to the `enforce` method which will activate if it's a new install, or else upgrade if necessary. (Part of the fix for the network activation above.)
 
 = 3.5.2 =
-* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-bug-found-with-solution): fix an unfortunate typo which caused "no related posts" on many environments with non-MyISAM tables
+* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-bug-found-with-solution): fix an unfortunate typo which caused "no related posts" on many environments with non-MyISAM tables
 * Fixed a bug where related posts would not be recomputed on post update, on environments using the `table` YARPP cache method and a persistent object caching system, like W3 Total Cache or memcached
-* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-351-error-call-to-a-member-function): reference to `get_post_types()` failed in ajax display
+* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-351-error-call-to-a-member-function): reference to `get_post_types()` failed in ajax display
 * Fixed a bug where some RSS display options were not being obeyed
 * Fixed a bug where the "automatic display" was being displayed on some custom post types without any control.
 * Localizations:
-	* Added Czech (`cs_CZ`) localization by [Zdenek Hejl](http://www.zdenek-hejl.com)
-	* Added Serbian (`sr_RS`) by [Zarko Zivkovic](http://www.zarkozivkovic.com/)
+	* Added Czech (`cs_CZ`) localization by Zdenek Hejl
+	* Added Serbian (`sr_RS`) by Zarko Zivkovic
 	* Fixed bug in Dutch localization
 * Clarified readme to require WordPress 3.1
 * Code cleanup:
 	* PHP 5.3+: replaced an instance of `ereg_replace`
 	* Removed warning on settings save
-	* Sometimes [a warning]((http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-warning-invalid-argument-supplied-for-foreach)) was printed on upgrade from YARPP < 3.4.4
-	* Fixed [PHP warning](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-php-warning) when no taxonomies are considered
+	* Sometimes [a warning]((https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-warning-invalid-argument-supplied-for-foreach)) was printed on upgrade from YARPP < 3.4.4
+	* Fixed [PHP warning](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-php-warning) when no taxonomies are considered
 	* No longer using `clear_pre` function which has been deprecated since WordPress 3.4.
 
 = 3.5.1 =
-* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-catchable-fatal-error-object-of-class-stdclass-could-not-be-converted-to-string): change `$yarpp->get_post_types()` to return array of names by default
+* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-catchable-fatal-error-object-of-class-stdclass-could-not-be-converted-to-string): change `$yarpp->get_post_types()` to return array of names by default
 * Ensure that all supported post types are used when "display results from all post types" is set
 = 3.5 =
 * New public YARPP query API, which supports custom post types
@@ -479,8 +483,8 @@ After a break of many years, the plugin is 100% supported now that the baton has
 	* Further use of utility functions from 3.1 like `wp_list_pluck()`
 	* New constant, `YARPP_EXTRA_WEIGHT` to define the "extra weight." By default, it's 3.
 * Localizations:
-	* Added Slovak (`sk_SK`) localization by [Forex](http://www.eforex.sk/)
-	* Added Romanian (`ro_RO`) localization by [Uhren Shop](http://uhrenstore.de/)
+	* Added Slovak (`sk_SK`) localization by Forex
+	* Added Romanian (`ro_RO`) localization by Uhren Shop
 	* Updated `it_IT`, `ko_KR`, `fr_FR`, `sv_SE`, `ja` localizations
 
 = 3.4.3 =
@@ -488,23 +492,23 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Postmeta cache: make sure to clear keyword cache on flush too
 * Make welcome pointer more robust
 * More custom post type support infrastructure
-* Updated Turkish localization by [Barış Ünver](http://beyn.org/).
+* Updated Turkish localization by Barış Ünver
 
 = 3.4.2 =
-* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-not-working-version-341-and-custom-template): 3.4 and 3.4.1 assumed existence of `wp_posts` table.
+* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-not-working-version-341-and-custom-template): 3.4 and 3.4.1 assumed existence of `wp_posts` table.
 * Fix typo in `yarpp-template-random.php` example template file
 * Improve compatibility with DB Cache Reloaded plugin which doesn't properly implement `set_charset` method.
 
 = 3.4.1 =
-* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-34-images-problem-using-template): restore `global $post` access to custom templates
-* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-some-clarification-assistance) for missing `join_filter` on bypass cache
+* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-34-images-problem-using-template): restore `global $post` access to custom templates
+* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-some-clarification-assistance) for missing `join_filter` on bypass cache
 * Bugfixes to query changes:
-	* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-34-images-problem-using-template/page/2?replies=36#post-2498791): Shared taxonomy terms were not counted correctly
-	* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-use-2-times-related_posts-in-the-singlephp-longer-works): exclusion was not working
-* [Bugfix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-34-images-problem-using-template/page/2?replies=36#post-2498791): "disallow" terms were not being displayed for custom taxonomies.
+	* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-34-images-problem-using-template/page/2?replies=36#post-2498791): Shared taxonomy terms were not counted correctly
+	* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-use-2-times-related_posts-in-the-singlephp-longer-works): exclusion was not working
+* [Bugfix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-34-images-problem-using-template/page/2?replies=36#post-2498791): "disallow" terms were not being displayed for custom taxonomies.
 * Add defaults for the `post_type` arg
 * Strengthen default post ID values for `related_*` functions
-* Added nonce to cache flushing. If you would like to manually flush the cache now, you must use the [YARPP Experiments](http://wordpress.org/extend/plugins/yarpp-experiments/) plugin.
+* Added nonce to cache flushing. If you would like to manually flush the cache now, you must use the [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin.
 * Updated `sv_SE`, `ko_KR`, `fr_FR` localizations
 
 = 3.4 =
@@ -512,7 +516,7 @@ After a break of many years, the plugin is 100% supported now that the baton has
 	* Performance improvements on pages with "no related posts"
 * Now can consider custom taxonomies (of posts and pages), in addition to tags and cateogories! Custom taxonomies can also be used to exclude certain content from The Pool.
 * Add welcome message, inviting users to check out the settings page
-* [Bug fix](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-version-333-breaks-templates-in-widget): Custom templates could not be used in widget display
+* [Bug fix](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-version-333-breaks-templates-in-widget): Custom templates could not be used in widget display
 * Significant code cleanup
 	* Move many internal functions into a global object `$yarpp` of class `YARPP`; references to the global `$yarpp_cache` should now be to global `$yarpp->cache`
 	* Created the "bypass" cache engine which is used when custom arguments are specified.
@@ -531,28 +535,28 @@ After a break of many years, the plugin is 100% supported now that the baton has
 	* Don't compute related posts for the metabox on the edit screen; display them via ajax instead
 	* Only clear cache on post save, not recompute
 * Added `yarpp_get_related()` function can be used similar to `get_posts()`
-* Support for [YARPP Experiments](http://wordpress.org/extend/plugins/yarpp-experiments/).
+* Support for [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/).
 * Fix formatting of the Related Posts meta box
 * Localizations
 	* Updated `it_IT` localization
-	* Added Portuguese stopwords by Leandro Coelho ([Logística Descomplicada](http://www.logisticadescomplicada.com))
+	* Added Portuguese stopwords by Leandro Coelho Logística Descomplicada
 
 = 3.3.3 =
-* [Bug fix](http://wordpress.org/support/topic/no-related-posts-1): a fix for keyword computation for pages; should improve results on pages. May require flushing of cache: see FAQ for instructions.
+* [Bug fix](https://wordpress.org/support/topic/no-related-posts-1): a fix for keyword computation for pages; should improve results on pages. May require flushing of cache: see FAQ for instructions.
 * Init YARPP on the `init` action, [for compatibility with WPML](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-load-sequence-yarpp-starts-before-the-wordpress-init-completes)
 * Updated Polish, Italian, and Japanese localizations; added Dutch stopwords by Paul Kessels
 * Code cleanup:
 	* Minor speedup to unnecessarily slow i18n code
 	* Fixed fatal error in postmeta keyword caching code
 	* Fewer `glob`s
-	* [Bug fix](http://wordpress.org/support/topic/the-problem-when-publish-a-post): ignore empty `blog_charset`s
+	* [Bug fix](https://wordpress.org/support/topic/the-problem-when-publish-a-post): ignore empty `blog_charset`s
 
 = 3.3.2 =
-* [Bugfix](http://wordpress.org/support/topic/missing-translate-strings): removed an unlocalized string
+* [Bugfix](https://wordpress.org/support/topic/missing-translate-strings): removed an unlocalized string
 * Bugfix for users of WordPress 3.0.x.
 
 = 3.3.1 =
-* Quick bugfix to [relatedness options panel bug](http://wordpress.org/support/topic/relatedness-options-for-titles-and-bodies-cant-be-changed)
+* Quick bugfix to [relatedness options panel bug](https://wordpress.org/support/topic/relatedness-options-for-titles-and-bodies-cant-be-changed)
 
 = 3.3 =
 * Pretty major rewrite to the options page for extensibility and screen options support
@@ -560,34 +564,34 @@ After a break of many years, the plugin is 100% supported now that the baton has
 	* Removed the "reset options" button, because it wasn't actually doing anything.
 * Rebuilt the new version notice to actually have a link which triggers the WordPress plugin updater, at least for new full versions
 * Changed default "relatedness" settings to not consider categories, to improve performance
-* Added [BlogGlue](http://blogglue.com) partnership module
+* Added BlogGlue partnership module
 * Localizations
 	* Quick fix to Czech word list file name
 	* Updated Italian localization (`it_IT`)
-	* Added Hungarian (`hu_HU`) by [daSSad](http://dassad.com)
-	* Added Kazakh (`kk_KZ`) by [DachaDecor](http://DachaDecor.ru)
-	* Added Irish (`gb_IR`) by [Ray Gren](http://letsbefamous.com)
+	* Added Hungarian (`hu_HU`) by daSSad
+	* Added Kazakh (`kk_KZ`) by DachaDecor
+	* Added Irish (`gb_IR`) by Ray Gren
 
 = 3.2.2 =
-* Now [ignores soft hyphens](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-french-overused-words) in keyword construction
+* Now [ignores soft hyphens](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-french-overused-words) in keyword construction
 * Minor fix for "cross-relate posts and pages" option and more accurate `related_*()` results across post types
 * Localization updates:
 	* Updated `de_DE` German localization files
 	* Fixed an encoding issue in the `pt_PT` Portuguese localization files
-	* Added `es_ES` Spanish localization by Rene of [WordPress Webshop](http://wpwebshop.com)
-	* Added `ge_KA` Georgian by Kasia Ciszewski of [Find My Hosting](www.findmyhosting.com)
-	* Added Czech (`cs_CZ`) overused words list [by berniecz](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-french-overused-words)
+	* Added `es_ES` Spanish localization by Rene of WordPress Webshop
+	* Added `ge_KA` Georgian by Kasia Ciszewski of Find My Hosting
+	* Added Czech (`cs_CZ`) overused words list [by berniecz](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-french-overused-words)
 
 = 3.2.1 =
-* Bugfix: [Duplicate results shown for some users](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-yarpp-post-duplicate-related-articles)
-* Bugfix: [With PHP4, the "related posts" would simply show the current post](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-yarpp-showing-same-post)
+* Bugfix: [Duplicate results shown for some users](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-yarpp-post-duplicate-related-articles)
+* Bugfix: [With PHP4, the "related posts" would simply show the current post](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-yarpp-showing-same-post)
 	* This was due to an issue with [object references in PHP4](http://www.obdev.at/developers/articles/00002.html). What a pain!
-	* A big thanks to Brendon Held of [inMotion Graphics](http://www.imgwebdesign.com) for being incredibly patient and letting me try out different diagnostics on his server.
-* Better handling of [`post_status` transitions](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-changed-post-to-draft-still-showing-up-as-related-to-other-posts).
-* Bugfix: [the widget was not working on pages](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-showing-yarp-widget-in-pages-and-subpages)
-* Added overused words list for French, thanks to [saymonz](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-french-overused-words)
+	* A big thanks to Brendon Held of inMotion Graphics for being incredibly patient and letting me try out different diagnostics on his server.
+* Better handling of [`post_status` transitions](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-changed-post-to-draft-still-showing-up-as-related-to-other-posts).
+* Bugfix: [the widget was not working on pages](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-showing-yarp-widget-in-pages-and-subpages)
+* Added overused words list for French, thanks to [saymonz](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-french-overused-words)
 * Minor code cleanup:
-	* Fixed [a bug in `yarpp_related_exists()`](http://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-fatal-error-call-to-undefined-method-yarpp_cache_tablesstart_yarpp_time)
+	* Fixed [a bug in `yarpp_related_exists()`](https://wordpress.org/support/topic/plugin-yet-another-related-posts-plugin-fatal-error-call-to-undefined-method-yarpp_cache_tablesstart_yarpp_time)
 	* Removed legacy code for gracefully upgrading from YARPP versions < 1.5 and working with WordPress versions < 2.8.
 	* Cleanup of `yarpp_upgrade_check()` calling
 	* Cleanup of `yarpp_version_json()`, including caching and minor security fix
@@ -602,20 +606,20 @@ After a break of many years, the plugin is 100% supported now that the baton has
   * Caching is no longer performed while batch-importing posts.
 * A new object-based abstraction for the caching system. YARPP by default uses custom database tables (same behavior as 3.1.x), but you now have an option to use the `postmeta` table instead. To use `postmeta` caching, add `define('YARPP_CACHE_TYPE', 'postmeta');` to your `wp-config.php` file.<!--YARPP no longer uses custom tables! Both custom tables (`yarpp_related_cache` and `yarpp_keywords_cache`) are automatically removed if you have them. WordPress Post Meta is used instead for caching.-->
 * Localizations:
-	* added Bulgarian (`bg_BG`) by [Flash Gallery](http://www.flashgallery.org);
-	* added Farsi/Persian (`fa_IR`) by [Moshen Derakhshan](http://webdesigner.downloadkar.com/);
-	* added Bahasa Indonesia (`id_ID`) by [Hendry Lee](http://hendrylee.com/) of [Kelayang](http://kelayang.com/)
-	* added Norwegian (`nb_NO`) by [Tom Arne Sundtjønn](www.datanerden.no);
-	* added Portuguese (`pt_PT`) by [Stefan Mueller](http://www.fernstudium-net.de).
-	* updated Lithuanian (`lt_LT`) by [Mantas Malcius](http://mantas.malcius.lt/)
-* Added [WordPress HelpCenter](http://wphelpcenter.com/) widget for quick access to professional support.
+	* added Bulgarian (`bg_BG`) by Flash Gallery
+	* added Farsi/Persian (`fa_IR`) by Moshen Derakhshan
+	* added Bahasa Indonesia (`id_ID`) by Hendry Lee of Kelayang
+	* added Norwegian (`nb_NO`) by Tom Arne Sundtjønn
+	* added Portuguese (`pt_PT`) by Stefan Mueller
+	* updated Lithuanian (`lt_LT`) by Mantas Malcius
+* Added WordPress HelpCenter widget for quick access to professional support.
 * Some code cleanup (bug [#1246](http://plugins.trac.wordpress.org/ticket/1246))
 * No longer supporting WordPress versions before 3.0, not because I suddenly started using something that requires 3.0, but in order to simplify testing.
 
 = 3.1.9 =
-* Added Standard Arabic localization (`ar`) by [led](http://led24.de)
+* Added Standard Arabic localization (`ar`) by led
 * The Related Posts Widget now can also use custom templates. ([#1143](http://plugins.trac.wordpress.org/ticket/1143))
-* Fixed a [conflict with the Magazine Premium theme](http://wordpress.org/support/topic/419174)
+* Fixed a [conflict with the Magazine Premium theme](https://wordpress.org/support/topic/419174)
 * Fixes a WordPress warning of "unexpected output" on plugin installation.
 * Fixes a PHP warning message regarding `array_key`.
 * Fixed a strict WordPress warning about capabilities.
@@ -628,7 +632,7 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Some bare minimum changes for Multisite (WPMU) support.
 * Reimplemented the old "show only previous posts" option. May improve performance for sites with frequent new posts, as there is then no longer a need to recompute the previous posts' related posts set, as it cannot include the new post anyway.
 * Minor bugfix to threshold limiting.
-* Minor fix which may help reduce [`strip_tags()` errors](http://wordpress.org/support/topic/353588).
+* Minor fix which may help reduce [`strip_tags()` errors](https://wordpress.org/support/topic/353588).
 * Updated FAQ.
 * Code cleanup.
 
@@ -648,37 +652,37 @@ After a break of many years, the plugin is 100% supported now that the baton has
 = 3.1.4 =
 * Improved widget code
 * Localization improvements - descriptions can now be localized
-* [Compatibility with PageBar](http://wordpress.org/support/topic/346714) - thanks to Latz for the patch!
-* Bugfix: [`related_posts_exist` was giving incorrect values](http://wordpress.org/support/topic/362347)
-* Bugfix: [SQL error for setups with blank DB_CHARSET](http://wordpress.org/support/topic/358757)
+* [Compatibility with PageBar](https://wordpress.org/support/topic/346714) - thanks to Latz for the patch!
+* Bugfix: [`related_posts_exist` was giving incorrect values](https://wordpress.org/support/topic/362347)
+* Bugfix: [SQL error for setups with blank DB_CHARSET](https://wordpress.org/support/topic/358757)
 
 = 3.1.3 =
 * Performance improvements:
   * Turning off cache expiration, made possible by smarter caching system of 3.1 - should improve caching database performance over time.
-  * [updated primary key for cache](http://wordpress.org/support/topic/345070) by Pinoy.ca - improves client-side pageload times.
+  * [updated primary key for cache](https://wordpress.org/support/topic/345070) by Pinoy.ca - improves client-side pageload times.
 * Code cleanup
   * Rewrote `include` and `require` paths
-* Bugfix: localizations were not working with WordPress 2.9 ([a CodeStyling Localizations bug](http://wordpress.org/support/topic/343389))
-* Bugfix: [redundant entries for "unrelatedness" were being inserted](http://wordpress.org/support/topic/344859)
-* Bugfix: [`yarpp_clear_cache` bug on empty input](http://wordpress.org/support/topic/343001)
+* Bugfix: localizations were not working with WordPress 2.9 ([a CodeStyling Localizations bug](https://wordpress.org/support/topic/343389))
+* Bugfix: [redundant entries for "unrelatedness" were being inserted](https://wordpress.org/support/topic/344859)
+* Bugfix: [`yarpp_clear_cache` bug on empty input](https://wordpress.org/support/topic/343001)
 * Version checking code no longer uses Snoopy.
-* New localization: Hindi by [Outshine Solutions](http://outshinesolutions.com/)
+* New localization: Hindi by Outshine Solutions
 
 = 3.1.2 =
-* Bugfix: [saving posts would sometimes timeout](http://wordpress.org/support/topic/343001)
+* Bugfix: [saving posts would sometimes timeout](https://wordpress.org/support/topic/343001)
 
 = 3.1.1 =
-* [Possible fix for the "no related posts" issue](http://wordpress.org/support/topic/284209/page/2) by [vkovalcik](http://wordpress.org/support/profile/5032111)
-* Bugfix: [slight optimization to keyword function](http://wordpress.org/support/topic/284209/page/2) by [vkovalcik](http://wordpress.org/support/profile/5032111)
-* Bugfix: [regex issue with br-stripping](http://wordpress.org/support/topic/323823)
+* [Possible fix for the "no related posts" issue](https://wordpress.org/support/topic/284209/page/2) by [vkovalcik](https://wordpress.org/support/profile/5032111)
+* Bugfix: [slight optimization to keyword function](https://wordpress.org/support/topic/284209/page/2) by [vkovalcik](https://wordpress.org/support/profile/5032111)
+* Bugfix: [regex issue with br-stripping](https://wordpress.org/support/topic/323823)
 
 = 3.1 =
 * New snazzy options screen
 * Smarter, less confusing caching
   * No more manual caching option—"on the fly" caching is always on now.
-* Bugfix: [fixed related pages functionality](http://wordpress.org/support/topic/273008)
-* Bugfix: [an issue with options saving](http://wordpress.org/support/topic/312637)
-* Bugfix: [a slash escaping bug](http://wordpress.org/support/topic/315560)
+* Bugfix: [fixed related pages functionality](https://wordpress.org/support/topic/273008)
+* Bugfix: [an issue with options saving](https://wordpress.org/support/topic/312637)
+* Bugfix: [a slash escaping bug](https://wordpress.org/support/topic/315560)
 * Minor fixes:
   * Fixed `yarpp_settings_link` dependency when disabled.
   * Breaks (&lt;br /&gt;) are now stripped out of titles.
@@ -690,7 +694,7 @@ After a break of many years, the plugin is 100% supported now that the baton has
 
 = 3.0.12 =
 * Yet another DISQUS note... sigh.
-* Changed [default markup](http://wordpress.org/support/topic/307890) to be make the output validate better.
+* Changed [default markup](https://wordpress.org/support/topic/307890) to be make the output validate better.
 * Reformatted the version log in readme.txt
 * Added a Settings link to the plugins page
 * Some initial WPML support:
@@ -703,40 +707,40 @@ After a break of many years, the plugin is 100% supported now that the baton has
 
 = 3.0.10 =
 * Added Ukrainian localization
-* Incorporated a quick update for the widget display [thanks to doodlebee](http://wordpress.org/support/topic/281575).
+* Incorporated a quick update for the widget display [thanks to doodlebee](https://wordpress.org/support/topic/281575).
 * Now properly uses `compare_version` in lieu of old hacky versioning.
 
 = 3.0.9 =
 * Added Uzbek, Greek, Cypriot Greek, and Vietnamese localizations
-* Further bugfixes for the [pagination issue](http://wordpress.org/support/topic/267350)
+* Further bugfixes for the [pagination issue](https://wordpress.org/support/topic/267350)
 
 = 3.0.8 =
-* Bugfix: [a pagination issue](http://wordpress.org/support/topic/267350) (may not be completely fixed yet)
+* Bugfix: [a pagination issue](https://wordpress.org/support/topic/267350) (may not be completely fixed yet)
 * Bugfix: a quick bugfix for widgets, thanks to Chris Northwood
 * Added Korean and Lithuanian localizations
-* Bugfix: [when ad-hoc caching was off, the cached status would always say "0% cached" ](http://wordpress.org/support/topic/286395)
-* Bugfix: enabled Polish and Italian stopwords and [fixed encoding of Italian stopwords](http://wordpress.org/support/topic/288808).
-* Bugfix: `is_single` and other such flags are now set properly within the related posts Loop (as a result, now [compatible with WP Greet Box](http://wordpress.org/support/topic/288230))
+* Bugfix: [when ad-hoc caching was off, the cached status would always say "0% cached" ](https://wordpress.org/support/topic/286395)
+* Bugfix: enabled Polish and Italian stopwords and [fixed encoding of Italian stopwords](https://wordpress.org/support/topic/288808).
+* Bugfix: `is_single` and other such flags are now set properly within the related posts Loop (as a result, now [compatible with WP Greet Box](https://wordpress.org/support/topic/288230))
 * Confirmed compatibility with 2.8.2
-* Bugfix: [the Related Posts metabox now respects the Screen Options](http://wordpress.org/support/topic/289290)
+* Bugfix: [the Related Posts metabox now respects the Screen Options](https://wordpress.org/support/topic/289290)
 
 = 3.0.7 =
 * Bugfix: additional bugfix for widgets.
 * Reinstating excerpt length by number of words (was switched to letters in 3.0.6 without accompanying documentation)
 * Localizations:
   * Updated Italian
-  * Added Belarussian by [Fat Cow](http://www.fatcow.com)
+  * Added Belarussian by Fat Cow
 * Confirmed compatibility with 2.8.1
 
 = 3.0.6 =
-* Bugfix: [updated excerpting to use `wp_html_excerpt`](http://wordpress.org/support/topic/268934) (for WP 2.5+)
-* Bugfix: [fixed broken widget display](http://wordpress.org/support/topic/276031)
+* Bugfix: [updated excerpting to use `wp_html_excerpt`](https://wordpress.org/support/topic/268934) (for WP 2.5+)
+* Bugfix: [fixed broken widget display](https://wordpress.org/support/topic/276031)
 * Added Russian (`ru_RU`) localization by Marat Latypov
 * Confirmed 2.8 compatibility
-* Added note on [incompatibility with SEO Pager plugin](http://wordpress.org/support/topic/267966)
+* Added note on [incompatibility with SEO Pager plugin](https://wordpress.org/support/topic/267966)
 
 = 3.0.5 =
-* Added link to manual SQL setup information [by request](http://wordpress.org/support/topic/266752)
+* Added link to manual SQL setup information [by request](https://wordpress.org/support/topic/266752)
 * Added Portuguese localization
 * Updated info on "on the fly" caching - it is *strongly recommended* for larger blogs.
 * Updated "incomplete cache" warning message so it is only displayed when the "on the fly" option is off.
@@ -752,11 +756,11 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Added Polish localization
 * Added note on DISQUS in readme
 * Making some extra strings localizable
-* Bugfix: [a problem with the Italian localization](http://wordpress.org/support/topic/265952)
+* Bugfix: [a problem with the Italian localization](https://wordpress.org/support/topic/265952)
 
 = 3.0.2 =
-* Bugfix: [Templating wasn't working with child templates.](http://wordpress.org/support/topic/265515)
-* Bugfix: In some situations, [SQL errors were printed in the AJAX preview displays](http://wordpress.org/support/topic/265728).
+* Bugfix: [Templating wasn't working with child templates.](https://wordpress.org/support/topic/265515)
+* Bugfix: In some situations, [SQL errors were printed in the AJAX preview displays](https://wordpress.org/support/topic/265728).
 
 = 3.0.1 =
 * Bugfix: In some situations before YARPP options were updated, an `include` PHP error was displayed.
@@ -772,46 +776,46 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Versioning bugfix - same as 2.1.5
 
 = 2.1.5 =
-* Bugfix: In certain scenarios, [related posts would be displayed in RSS feeds even when that option was off](http://wordpress.org/support/topic/216145)
+* Bugfix: In certain scenarios, [related posts would be displayed in RSS feeds even when that option was off](https://wordpress.org/support/topic/216145)
 * Bugfix: The `related_*()` functions were missing the `echo` parameter
 * Some localization bugfixes
 * Localizations:
-	* Japanese (`ja`) by [Michael Yoshitaka Erlewine](http://mitcho.com)
+	* Japanese (`ja`) by Michael Yoshitaka Erlewine
 
 = 2.1.4 =
-* Bugfix: [Settings' sumbmit button took you to PayPal](http://wordpress.org/support/topic/214090)
-* Bugfix: Fixed [keyword algorithm for users without `mbstring`](http://wordpress.org/support/topic/216420)
+* Bugfix: [Settings' sumbmit button took you to PayPal](https://wordpress.org/support/topic/214090)
+* Bugfix: Fixed [keyword algorithm for users without `mbstring`](https://wordpress.org/support/topic/216420)
 * Bugfix: `title` attributes were not properly escaped
-* Bugfix: [keywords did not filter tags](http://wordpress.org/support/topic/218211). (This bugfix may vastly improve "relatedness" on some blogs.)
+* Bugfix: [keywords did not filter tags](https://wordpress.org/support/topic/218211). (This bugfix may vastly improve "relatedness" on some blogs.)
 * Localizations:
-	* Simplified Chinese (`zh_CN`) by Jor Wang (mail at jorwang dot com) of [jorwang.com](http://jorwang.com)
-	* German (`de_DE`) by Michael Kalina of [3th.be](http://3th.be)
-* The "show excerpt" option now shows the first `n` words of the excerpt, rather than the content ([by request](http://wordpress.org/support/topic/212577))
+	* Simplified Chinese (`zh_CN`) by Jor Wang (mail at jorwang dot com) of jorwang.com
+	* German (`de_DE`) by Michael Kalina of 3th.be
+* The "show excerpt" option now shows the first `n` words of the excerpt, rather than the content ([by request](https://wordpress.org/support/topic/212577))
 * Added an `echo` parameter to the `related_*()` functions, with default value of `true`. If `false`, the function will simply return the output.
-* Added support for the [AllWebMenus Pro](http://wordpress.org/extend/plugins/allwebmenus-wordpress-menu-plugin/) plugin
+* Added support for the [AllWebMenus Pro](https://wordpress.org/extend/plugins/allwebmenus-wordpress-menu-plugin/) plugin
 * Further internationalization:
 	* the donate button! ^^
-	* overused words lists ([by request](http://wordpress.org/support/topic/159359))), with a German word list.
+	* overused words lists ([by request](https://wordpress.org/support/topic/159359))), with a German word list.
 
 = 2.1.3 =
-* Bugfix: Turned off [the experimental caching](http://wordpress.org/support/topic/216194#post-894440) which shouldn't have been on in this release...
-* Bugfix: an issue with the [keywords algorithm for non-ASCII characters](http://wordpress.org/support/topic/216078)
+* Bugfix: Turned off [the experimental caching](https://wordpress.org/support/topic/216194#post-894440) which shouldn't have been on in this release...
+* Bugfix: an issue with the [keywords algorithm for non-ASCII characters](https://wordpress.org/support/topic/216078)
 
 = 2.1.2 =
 * Bugfix: MyISAM override handling bug
 
 = 2.1.1 =
 * Bugfix: keywords with forward slashes (\) could make the main SQL query ill-formed.
-* Bugfix: Added an override option for the [false MyISAM warnings](http://wordpress.org/support/topic/211043).
+* Bugfix: Added an override option for the [false MyISAM warnings](https://wordpress.org/support/topic/211043).
 * Preparing for localization! (See note at the bottom of the FAQ.)
 * Adding a debug mode--just try adding `&yarpp_debug=1` to your URL's and look at the HTML source.
 
 = 2.1 - The RSS edition! =
-* RSS feed support!: the option to automagically show related posts in RSS feeds and to customize their display, [by popular request](http://wordpress.org/support/topic/151766).
-* A link to [the Yet Another Related Posts Plugin RSS feed](http://wordpress.org/support/topic/208469).
+* RSS feed support!: the option to automagically show related posts in RSS feeds and to customize their display, [by popular request](https://wordpress.org/support/topic/151766).
+* A link to [the Yet Another Related Posts Plugin RSS feed](https://wordpress.org/support/topic/208469).
 * Further optimization of the main SQL query in cases where not all of the match criteria (title, body, tags, categories) are chosen.
 * A new format for pushing arguments to the `related_posts()` functions.
-* Bugfix: [compatibility](http://wordpress.org/support/topic/207286) with the [dzoneZ-Et](http://wordpress.org/extend/plugins/dzonez-et/) and [reddZ-Et](http://wordpress.org/extend/plugins/reddz-et/) plugins.
+* Bugfix: [compatibility](https://wordpress.org/support/topic/207286) with the [dzoneZ-Et](https://wordpress.org/extend/plugins/dzonez-et/) and [reddZ-Et](https://wordpress.org/extend/plugins/reddz-et/) plugins.
 * Bugfix: `related_*_exist()` functions produced invalid queries
 * A warning for `wp_posts` with non-MyISAM engines and semi-compatibility with non-MyISAM setups.
 * Bugfix: [a better notice for users of Wordpress < 2.5](http://www.mattcutts.com/blog/wordpress-plugin-related-posts/#comment-131194) regarding the "compare tags" and "compare categories" features.
@@ -822,9 +826,9 @@ After a break of many years, the plugin is 100% supported now that the baton has
 = 2.0.5 =
 * Further optimized algorithm - should be faster on most systems. Good bye [subqueries](http://dev.mysql.com/doc/refman/5.0/en/unnamed-views.html)!
 * Bugfix: restored MySQL 4.0 support
-* Bugfix: [widgets required the "auto display" option](http://wordpress.org/support/topic/190454)
+* Bugfix: [widgets required the "auto display" option](https://wordpress.org/support/topic/190454)
 * Bugfix: sometimes default values were not set properly on (re)activation
-* Bugfix: [quotes in HTML tag options would get escaped](http://wordpress.org/support/topic/199139)
+* Bugfix: [quotes in HTML tag options would get escaped](https://wordpress.org/support/topic/199139)
 * Bugfix: `user_level` was being checked in a deprecated manner
 * A helpful little tooltip for the admin-only threshold display
 
@@ -833,21 +837,21 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Bugfix: updated `apply_filters` to work with WP 2.6
 
 = 2.0.3 =
-* Bugfix: [2.0.2 accidentally required some tags or categories to be disabled](http://wordpress.org/support/topic/188745)
+* Bugfix: [2.0.2 accidentally required some tags or categories to be disabled](https://wordpress.org/support/topic/188745)
 
 = 2.0.2 =
 * Versioning bugfix (rerelease of 2.0.1)
 
 = 2.0.1 =
 * Bugfix: [`admin_menu` instead of `admin_head`](http://konstruktors.com/blog/wordpress/277-fixing-postpost-and-ozh-absolute-comments-plugins/)
-* Bugfix: [a variable scope issue](http://wordpress.org/support/topic/188550) crucial for 2.0 upgrading
+* Bugfix: [a variable scope issue](https://wordpress.org/support/topic/188550) crucial for 2.0 upgrading
 
 = 2.0 =
 * New algorithm which considers tags and categories, by frequent request
-* Order by score, date, or title, [by request](http://wordpress.org/support/topic/158459)
-* Excluding certain tags or categories, [by request](http://wordpress.org/support/topic/161263)
+* Order by score, date, or title, [by request](https://wordpress.org/support/topic/158459)
+* Excluding certain tags or categories, [by request](https://wordpress.org/support/topic/161263)
 * Sample output displayed in the options screen
-* Bugfix: [an excerpt length bug](http://wordpress.org/support/topic/155034?replies=5)
+* Bugfix: [an excerpt length bug](https://wordpress.org/support/topic/155034?replies=5)
 * Bugfix: now compatible with the following plugins:
 	- diggZEt
 	- WP-Syntax
@@ -874,6 +878,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.0.0 =
+= 5.0.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
