@@ -89,27 +89,6 @@ a{
     text-align: center;
 }
 
-#yarpp_pro_dashboard_wrapper{
-    position: relative;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    height:1024px;
-    width:100%;
-    overflow: hidden;
-}
-
-#yarpp_pro_dashboard{
-    position: relative;
-    width: 105%;
-    height: 100%;
-    border: 1px solid #dfdfdf;
-    border-radius: 4px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    z-index: 5;
-}
-
 #yarpp_pro_api_settings input[type="text"]{
     font-family: monospace;
     border-radius: 3px;
@@ -164,7 +143,7 @@ a{
     width: 100%;
     margin: 0;
     padding: 0;
-    z-index: 1000;
+    z-index: 100000;
 }
 
 #yarpp_pro_disable_confirm{
@@ -178,5 +157,5 @@ a{
     width: 25%;
     margin: 0;
     padding:1em 2em;
-    z-index: 1001;
+    z-index: 100001;
 }

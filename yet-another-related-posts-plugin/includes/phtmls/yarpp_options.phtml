@@ -38,14 +38,14 @@
                 <?php do_meta_boxes('settings_page_yarpp', 'normal', array()) ?>
             </div>
 
-            <script language="javascript">
-                var spinner = '<?php echo esc_url(admin_url('images/wpspin_light.gif')) ?>',
-                    loading = '<img class="loading" src="'+spinner+'" alt="loading..."/>';
+            <script>
+                var spinner = '<?php echo esc_url(admin_url('images/spinner-2x.gif')) ?>',
+                    loading = '<img height="20px" width="20px" class="loading" src="'+spinner+'" alt="loading..."/>';
             </script>
 
             <div>
                 <input type="submit" class='button-primary' name="update_yarpp" value="<?php _e('Save Changes')?>" />
-				<?php wp_nonce_field( 'update_yarpp', 'update_yarpp-nonce' ); ?>
+                <?php wp_nonce_field( 'update_yarpp', 'update_yarpp-nonce' ); ?>
             </div>
 
         </div><!--#poststuff-->

@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.2
 License: GPLv2 or later
 Tested up to: 5.2
-Stable tag: 5.0.1
+Stable tag: 5.1.0
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -21,7 +21,7 @@ Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post 
 * **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. [Learn More.](https://wordpress.tv/2011/01/29/michael-mitcho-erlewine-the-yet-another-related-posts-plugin-algorithm-explained/)  
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
 
-The Yet Another Related Posts Plugin is the most popular [WordPress Related Posts plugin](https://wordpress.org/plugins/yet-another-related-posts-plugin/), encouraging Discovery and Engagement since 2008.
+The **Yet Another Related Posts Plugin** is the most popular [WordPress Related Posts plugin](https://wordpress.org/plugins/yet-another-related-posts-plugin/), encouraging Discovery and Engagement since 2008.
 
 This plugin requires PHP 5, MySQL 4.1, and WordPress 3.3 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
 
@@ -234,6 +234,14 @@ Yes. Any taxonomy, including custom taxonomies, may be specified in the `weight`
 If you would like to choose custom taxonomies to choose in the YARPP settings UI, either to exclude certain terms or to consider them in the relatedness formula via the UI, the taxonomy must (a) have either the `show_ui` or `yarpp_support` attribute set to true and (b) must apply to either the post types `post` or `page` or both.
 
 == Changelog ==
+= 5.1.0 (2019-07-10) =
+* [Bugfix](https://wordpress.org/support/topic/yarpp-broken-in-gutenberg-editor/): Related Posts metabox did not load within Gutenberg Editor
+* Bugfix: Fixed 'Deactivate YARPP Pro' button, including moving functionality to proper WP AJAX functions
+* Enhancement: Related Post thumbnails should not be 'pinnable' to Pinterest
+* Enhancement: Review Notice
+* Enhancement: Modernized Editor Metabox design
+* Enhancement: Added 'Refresh' button to Editor Metabox
+
 = 5.0.1 (2019-07-08) =
 * [Bugfix](https://wordpress.org/support/topic/styles_thumbnails-css-php-invalid-value/): Fixed invalid CSS rule
 * Enhancement: Set Cache headers for CSS file
@@ -878,6 +886,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.0.1 =
+= 5.1.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

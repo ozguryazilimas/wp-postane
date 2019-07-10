@@ -14,8 +14,8 @@
             <p>
                 <?php if ($yarpp->yarppPro['active']): ?>
                 Welcome to your <strong>YARPP Pro</strong> dashboard! Here you have access to the most powerful features of YARPP.
+                <?php wp_nonce_field( 'yarpp_switch', 'yarpp_switch-nonce' ); ?>
                 <a
-                    href="<?php echo plugins_url('/', dirname(__FILE__))?>/yarpp_switch.php"
                     class="yarpp_switch_button button to_corner" data-go="basic">
                     Deactivate &nbsp;<strong>YARPP Pro</strong>&nbsp;
                 </a>
@@ -42,7 +42,6 @@
             <?php if (!$yarpp->yarppPro['active']): ?>
             <p>
                 <a
-                    href="<?php echo plugins_url('/', dirname(__FILE__))?>yarpp_switch.php"
                     class="yarpp_switch_button button-primary" data-go="pro">
                     Activate <strong>YARPP Pro</strong> Now
                 </a>
@@ -86,19 +85,6 @@
                 Widgets are located under &nbsp;<a href="widgets.php">&ldquo;Appearance&rdquo; > &ldquo;Widgets&rdquo;</a>.
             </span>
         </div>
-    </div>
-
-    <div id="yarpp_pro_dashboard_wrapper">
-        <iframe
-            style="border: 0"
-            id="yarpp_pro_dashboard"
-            src="<?php echo $url ?>"
-            frameborder="0"
-            border="0"
-            cellspacing="0"
-            scrolling="yes"
-            >
-        </iframe>
     </div>
 
     <script>jQuery("#screen-options-link-wrap").hide();</script>

@@ -7,7 +7,7 @@ class YARPP_Meta_Box_Optin extends YARPP_Meta_Box {
             'Enable the free <a href="http://www.yarpp.com" target="_blank">YARPP Pro enhancements</a> to add even '.
             'more power to your blog or website!'.
             '<br/><br/>'.
-            '<a href="'.plugins_url('/', dirname(__FILE__)).'includes/yarpp_switch.php" class="yarpp_switch_button button" data-go="pro">Turn them on now</a>&nbsp;&nbsp;'.
+            '<a class="yarpp_switch_button button" data-go="pro">Turn them on now</a>&nbsp;&nbsp;'.
             '<a href="http://www.yarpp.com" target="_blank" style="float:right;text-decoration:underline">Learn more</a>'.
             '</p>'.
             '<p>'.

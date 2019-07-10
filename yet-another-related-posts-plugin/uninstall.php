@@ -22,7 +22,8 @@ $optNames = array(
     'yarpp_version_info_timeout',
     'yarpp_activated',
     'widget_yarpp_widget',
-    'yarpp_upgraded'
+    'yarpp_upgraded',
+    'yarpp_activate_timestamp'
 );
 
 /* Select right procedure for single or multi site */

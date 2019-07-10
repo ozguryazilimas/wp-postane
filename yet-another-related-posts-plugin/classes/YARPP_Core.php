@@ -453,7 +453,7 @@ class YARPP {
             )
         );
 
-        $url = plugins_url('includes/styles_thumbnails.css.php?'.$queryStr, dirname(__FILE__));
+    $url = plugins_url('includes/styles_thumbnails.css.php?'.$queryStr, dirname(__FILE__));
 		wp_enqueue_style("yarpp-thumbnails-".$dimensions['size'], $url, array(), YARPP_VERSION, 'all');
 	}
 
@@ -468,10 +468,10 @@ class YARPP {
 		if ($dimensions['crop'] && $downsized[1] && $downsized[2]
             && ($downsized[1] != $dimensions['width'] || $downsized[2] != $dimensions['height'])
         ) {
-            /*
+      /*
 			 * We want to trigger re-computation of the thumbnail here.
-             * (only if downsized width and height are specified, for Photon behavior)
-             */
+       * (only if downsized width and height are specified, for Photon behavior)
+       */
 			$fullSizePath = get_attached_file($thumbnail_id);
 			if ($fullSizePath !== false && file_exists($fullSizePath)) {
 				require_once(ABSPATH.'wp-admin/includes/image.php');
@@ -590,7 +590,7 @@ class YARPP {
 			'rss_excerpt_display' => true,
 			'promote_yarpp' => false,
 			'rss_promote_yarpp' => false
-        );
+      );
 	
 		$yarpp_options = array();
 		foreach ($yarpp_3_3_options as $key => $default) {
@@ -1493,7 +1493,7 @@ class YARPP {
 		if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) != 200 || !isset($remote['body'])){
 			$this->set_transient('yarpp_version_info', null, 60*60);
 			return false;
-        }
+    }
 		
 		if ($result = @unserialize($remote['body'])) $this->set_transient('yarpp_version_info', $result, 60*60*24);
 
