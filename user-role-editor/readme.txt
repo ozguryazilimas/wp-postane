@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 5.2.1
-Stable tag: 4.51.1
+Tested up to: 5.2.2
+Stable tag: 4.51.2
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,10 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+
+= [4.51.2] 15.07.2019 =
+* Fix: Dialog button labels inside User Role Editor ('Cancel' buttons especially) were shown with not correct translation or not translated at all. Thanks to @lucaboccianti for [this bug report](https://wordpress.org/support/topic/buttons-delete-role-cancel-dont-delete-role-inverted-functions-italian/).
+* Update: Roles inside WordPress roles dropdown lists are sorted by alphabet. 
 
 = [4.51.1] 15.06.2019 =
 * Fix: Superadmin could not revoke capabilities from 'administrator' role under WordPress multisite.
