@@ -85,10 +85,16 @@ function relevanssi_index_posts_ajax_wrapper() {
 
 	$response['feedback'] = sprintf(
 		// translators: Number of posts indexed on this go, total number of posts indexed so far, number of posts processed on this go, total number of posts to process.
-		_n( 'Indexed %1$d post (total %2$d), processed %3$d / %4$d.', 'Indexed %1$d posts (total %2$d), processed %3$d / %4$d.',
-			$indexing_response['indexed'], 'relevanssi'
+		_n(
+			'Indexed %1$d post (total %2$d), processed %3$d / %4$d.',
+			'Indexed %1$d posts (total %2$d), processed %3$d / %4$d.',
+			$indexing_response['indexed'],
+			'relevanssi'
 		),
-		$indexing_response['indexed'], $completed, $processed, $total
+		$indexing_response['indexed'],
+		$completed,
+		$processed,
+		$total
 	) . "\n";
 	$response['offset'] = $offset;
 
@@ -124,10 +130,12 @@ function relevanssi_count_missing_posts_ajax_wrapper() {
  * AJAX wrapper for get_categories().
  */
 function relevanssi_list_categories() {
-	$categories = get_categories( array(
-		'taxonomy'   => 'category',
-		'hide_empty' => false,
-	) );
+	$categories = get_categories(
+		array(
+			'taxonomy'   => 'category',
+			'hide_empty' => false,
+		)
+	);
 	echo wp_json_encode( $categories );
 	wp_die();
 }
@@ -152,6 +160,10 @@ function relevanssi_admin_search() {
 			$args['posts_per_page'] = $posts_per_page;
 		}
 	}
+	if ( isset( $_POST['post_types'] ) ) {
+		$post_type          = $_POST['post_types'];
+		$args['post_types'] = $post_type;
+	}
 	if ( isset( $_POST['offset'] ) ) {
 		$offset = intval( $_POST['offset'] );
 		if ( $offset > 0 ) {
@@ -165,6 +177,7 @@ function relevanssi_admin_search() {
 	$query = new WP_Query();
 	$query->parse_query( $args );
 	$query->set( 'relevanssi_admin_search', true );
+	$query = apply_filters( 'relevanssi_modify_wp_query', $query );
 	relevanssi_do_query( $query );
 
 	$results = relevanssi_admin_search_debugging_info( $query );
@@ -197,15 +210,17 @@ function relevanssi_admin_search() {
  */
 function relevanssi_admin_search_format_posts( $posts, $total, $offset, $query ) {
 	$result = '<h3>' . __( 'Results', 'relevanssi' ) . '</h3>';
+	$start  = $offset + 1;
+	$end    = $offset + count( $posts );
 	// Translators: %1$d is the total number of posts found, %2$d is the current search result count, %3$d is the offset.
-	$result .= '<p>' . sprintf( __( 'Found a total of %1$d posts, showing %2$d posts from offset %3$s.', 'relevanssi' ), $total, count( $posts ), '<span id="offset">' . $offset . '</span>' ) . '</p>';
+	$result .= '<p>' . sprintf( __( 'Found a total of %1$d posts, showing posts %2$d–%3$s.', 'relevanssi' ), $total, $start, '<span id="offset">' . $end . '</span>' ) . '</p>';
 	if ( $offset > 0 ) {
 		$result .= sprintf( '<button type="button" id="prev_page">%s</button>', __( 'Previous page', 'relevanssi' ) );
 	}
 	if ( count( $posts ) + $offset < $total ) {
 		$result .= sprintf( '<button type="button" id="next_page">%s</button>', __( 'Next page', 'relevanssi' ) );
 	}
-	$result .= '<ol>';
+	$result .= '<ol start="' . $start . '">';
 
 	$score_label = __( 'Score:', 'relevanssi' );
 
@@ -229,8 +244,12 @@ function relevanssi_admin_search_format_posts( $posts, $total, $offset, $query )
 				$edit_url = get_edit_term_link( $post->term_id, $post->post_type );
 			}
 		}
-		$view_link       = sprintf( '<a href="%1$s">%2$s %3$s</a>', $permalink, __( 'View', 'relevanssi' ), $post_type );
-		$edit_link       = sprintf( '<a href="%1$s">%2$s %3$s</a>', $edit_url, __( 'Edit', 'relevanssi' ), $post_type );
+		$title     = sprintf( '<a href="%1$s">%2$s %3$s</a>', $permalink, $post->post_title, $post_type );
+		$edit_link = '';
+		if ( current_user_can( 'edit_post', $post->ID ) ) {
+			$edit_link = sprintf( '(<a href="%1$s">%2$s %3$s</a>)', $edit_url, __( 'Edit', 'relevanssi' ), $post_type );
+		}
+
 		$pinning_buttons = '';
 		$pinned          = '';
 
@@ -240,7 +259,7 @@ function relevanssi_admin_search_format_posts( $posts, $total, $offset, $query )
 		}
 
 		$post_element = <<<EOH
-<li>$blog_name <strong>$post->post_title</strong> ($view_link) ($edit_link) $pinning_buttons <br />
+<li>$blog_name <strong>$title</strong> $edit_link $pinning_buttons <br />
 $post->post_excerpt<br />
 $score_label $post->relevance_score $pinned</li>
 EOH;
@@ -273,20 +292,44 @@ EOH;
  * @since 2.2.0
  */
 function relevanssi_admin_search_debugging_info( $query ) {
-	$result  = '<h3>' . __( 'Query variables', 'relevanssi' ) . '</h3>';
+	$result  = '<div id="debugging">';
+	$result .= '<h3>' . __( 'Query variables', 'relevanssi' ) . '</h3>';
 	$result .= '<ul style="list-style: disc; margin-left: 1.5em">';
 	foreach ( $query->query_vars as $key => $value ) {
-		if ( is_array( $value ) ) {
-			$value = relevanssi_flatten_array( $value );
+		if ( 'tax_query' === $key ) {
+			$result .= '<li>tax_query:<ul style="list-style: disc; margin-left: 1.5em">';
+			$result .= implode(
+				'',
+				array_map(
+					function ( $row ) {
+						$result = '';
+						if ( is_array( $row ) ) {
+							foreach ( $row as $row_key => $row_value ) {
+								$result .= "<li>$row_key: $row_value</li>";
+							}
+						}
+						return $result;
+					},
+					$value
+				)
+			);
+			$result .= '</ul></li>';
+		} else {
+			if ( is_array( $value ) ) {
+				$value = relevanssi_flatten_array( $value );
+			}
+			if ( empty( $value ) ) {
+				continue;
+			}
+			$result .= "<li>$key: $value</li>";
 		}
-		if ( empty( $value ) ) {
-			continue;
-		}
-		$result .= "<li>$key: $value</li>";
 	}
 	if ( ! empty( $query->tax_query ) ) {
-		$result .= '<li><strong>tax_query</strong>:<ul style="list-style: disc; margin-left: 1.5em">';
+		$result .= '<li>tax_query:<ul style="list-style: disc; margin-left: 1.5em">';
 		foreach ( $query->tax_query as $tax_query ) {
+			if ( ! is_array( $tax_query ) ) {
+				continue;
+			}
 			foreach ( $tax_query as $key => $value ) {
 				if ( is_array( $value ) ) {
 					$value = relevanssi_flatten_array( $value );
@@ -335,6 +378,7 @@ function relevanssi_admin_search_debugging_info( $query ) {
 			$result .= '</ul>';
 		}
 	}
+	$result .= '</div>';
 	$result .= '</div>';
 
 	return $result;

@@ -47,7 +47,6 @@ function relevanssi_indexing_tab() {
 	$fields_select_none    = '';
 	$fields_select_some    = 'selected';
 	$fields_select_visible = '';
-	$original_index_fields = $index_fields;
 
 	if ( empty( $index_fields ) ) {
 		$fields_select_none = 'selected';
@@ -88,13 +87,13 @@ function relevanssi_indexing_tab() {
 	$punct_hyphens_remove     = relevanssi_select( $punctuation['hyphens'], 'remove' );
 	$punct_hyphens_keep       = relevanssi_select( $punctuation['hyphens'], 'keep' );
 
-	$docs_count  = $wpdb->get_var( 'SELECT COUNT(DISTINCT doc) FROM ' . $relevanssi_variables['relevanssi_table'] . ' WHERE doc != -1' ); // WPCS: unprepared SQL ok, Relevanssi table name.
-	$terms_count = $wpdb->get_var( 'SELECT COUNT(*) FROM ' . $relevanssi_variables['relevanssi_table'] ); // WPCS: unprepared SQL ok, Relevanssi table name.
-	$lowest_doc  = $wpdb->get_var( 'SELECT doc FROM ' . $relevanssi_variables['relevanssi_table'] . ' WHERE doc > 0 ORDER BY doc ASC LIMIT 1' ); // WPCS: unprepared SQL ok, Relevanssi table name.
+	$docs_count  = $wpdb->get_var( 'SELECT COUNT(DISTINCT doc) FROM ' . $relevanssi_variables['relevanssi_table'] . ' WHERE doc != -1' );  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+	$terms_count = $wpdb->get_var( 'SELECT COUNT(*) FROM ' . $relevanssi_variables['relevanssi_table'] );  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+	$lowest_doc  = $wpdb->get_var( 'SELECT doc FROM ' . $relevanssi_variables['relevanssi_table'] . ' WHERE doc > 0 ORDER BY doc ASC LIMIT 1' );  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 
 	if ( RELEVANSSI_PREMIUM ) {
-		$user_count    = $wpdb->get_var( 'SELECT COUNT(DISTINCT item) FROM ' . $relevanssi_variables['relevanssi_table'] . " WHERE type = 'user'" ); // WPCS: unprepared SQL ok, Relevanssi table name.
-		$taxterm_count = $wpdb->get_var( 'SELECT COUNT(DISTINCT item) FROM ' . $relevanssi_variables['relevanssi_table'] . " WHERE (type != 'post' AND type != 'attachment' AND type != 'user')" ); // WPCS: unprepared SQL ok, Relevanssi table name.
+		$user_count    = $wpdb->get_var( 'SELECT COUNT(DISTINCT item) FROM ' . $relevanssi_variables['relevanssi_table'] . " WHERE type = 'user'" );  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+		$taxterm_count = $wpdb->get_var( 'SELECT COUNT(DISTINCT item) FROM ' . $relevanssi_variables['relevanssi_table'] . " WHERE (type != 'post' AND type != 'attachment' AND type != 'user')" );  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	?>
@@ -102,11 +101,11 @@ function relevanssi_indexing_tab() {
 
 	<table class="form-table">
 	<tr>
-		<th scope="row">
+		<td scope="row">
 			<input type='submit' name='submit' value='<?php esc_attr_e( 'Save the options', 'relevanssi' ); ?>' class='button button-primary' /><br /><br />
 			<input type="button" id="build_index" name="index" value="<?php esc_attr_e( 'Build the index', 'relevanssi' ); ?>" class='button-primary' /><br /><br />
 			<input type="button" id="continue_indexing" name="continue" value="<?php esc_attr_e( 'Index unindexed posts', 'relevanssi' ); ?>" class='button-primary' />
-		</th>
+		</td>
 		<td>
 			<div id='indexing_button_instructions'>
 				<?php // Translators: %s is "Build the index". ?>
@@ -123,7 +122,7 @@ function relevanssi_indexing_tab() {
 			<div id='relevanssi-note' style='display: none'></div>
 			<div id='relevanssi-progress' class='rpi-progress'><div class="rpi-indicator"></div></div>
 			<div id='relevanssi-timer'><?php esc_html_e( 'Time elapsed', 'relevanssi' ); ?>: <span id="relevanssi_elapsed">0:00:00</span> | <?php esc_html_e( 'Time remaining', 'relevanssi' ); ?>: <span id="relevanssi_estimated"><?php esc_html_e( 'some time', 'relevanssi' ); ?></span></div>
-			<textarea id='results' rows='10' cols='80'></textarea>
+			<label for="results" class="screen-reader-text"><?php esc_html_e( 'Results', 'relevanssi' ); ?></label><textarea id='results' rows='10' cols='80'></textarea>
 			<div id='relevanssi-indexing-instructions' style='display: none'><?php esc_html_e( "Indexing should respond quickly. If nothing happens in couple of minutes, it's probably stuck. The most common reasons for indexing issues are incompatible shortcodes, so try disabling the shortcode expansion setting and try again. Also, if you've just updated Relevanssi, doing a hard refresh in your browser will make sure your browser is not trying to use an outdated version of the Relevanssi scripts.", 'relevanssi' ); ?></div>
 		</td>
 	</tr>
@@ -133,7 +132,7 @@ function relevanssi_indexing_tab() {
 	<?php if ( RELEVANSSI_PREMIUM ) : ?>
 		<br /><?php echo esc_html( $user_count ); ?> <?php echo esc_html( _n( 'user in the index.', 'users in the index.', $user_count, 'relevanssi' ) ); ?><br />
 		<?php echo esc_html( $taxterm_count ); ?> <?php echo esc_html( _n( 'taxonomy term in the index.', 'taxonomy terms in the index.', $taxterm_count, 'relevanssi' ) ); ?>
-	<?php endif; ?>	
+	<?php endif; ?>
 		</p>
 		<p><?php echo esc_html( $terms_count ); ?> <?php echo esc_html( _n( 'term in the index.', 'terms in the index.', $terms_count, 'relevanssi' ) ); ?><br />
 		<?php echo esc_html( $lowest_doc ); ?> <?php esc_html_e( 'is the lowest post ID indexed.', 'relevanssi' ); ?></p>
@@ -187,13 +186,18 @@ function relevanssi_indexing_tab() {
 			$excluded_from_search = __( 'no', 'relevanssi' );
 		}
 		$name_id = 'relevanssi_index_type_' . $type;
-		printf( '<tr><td>%1$s</td><td><input type="checkbox" name="%2$s" id="%2$s" %3$s /></td><td>%4$s</td></tr>',
-		esc_html( $label ), esc_attr( $name_id ), esc_html( $checked ), esc_html( $excluded_from_search ) );
+		printf(
+			'<tr><td><label for="%2$s">%1$s</label></td><td><input type="checkbox" name="%2$s" id="%2$s" %3$s /></td><td>%4$s</td></tr>',
+			esc_html( $label ),
+			esc_attr( $name_id ),
+			esc_html( $checked ),
+			esc_html( $excluded_from_search )
+		);
 	}
 	?>
 	<tr style="display:none">
 		<td>
-			Helpful little control field
+			<label for="relevanssi_index_type_bogus">Helper control field to make sure settings are saved if no post types are selected.</label>
 		</td>
 		<td>
 			<input type='checkbox' name='relevanssi_index_type_bogus' id='relevanssi_index_type_bogus' checked="checked" />
@@ -205,6 +209,7 @@ function relevanssi_indexing_tab() {
 	</table>
 		<?php // Translators: %1$s is 'attachment', %2$s opens the link, %3$s closes it. ?>
 		<p class="description"><?php printf( esc_html__( '%1$s includes all attachment types. If you want to index only some attachments, see %2$sControlling attachment types in the Knowledge base%3$s.', 'relevanssi' ), '<code>attachment</code>', '<a href="https://www.relevanssi.com/knowledge-base/controlling-attachment-types-index/">', '</a>' ); ?></p>
+		<p class="description"><?php esc_html_e( "If you want to index a post type that's marked 'Excluded from search', you can do that without worrying about it – but you need to uncheck the 'Respect exclude_from_search' setting from the Searching tab.", 'relevanssi' ); ?></p>
 	</td>
 	</tr>
 
@@ -239,8 +244,13 @@ function relevanssi_indexing_tab() {
 			$public = __( 'yes', 'relevanssi' );
 		}
 		$name_id = 'relevanssi_index_taxonomy_' . $taxonomy->name;
-		printf( '<tr><td>%1$s</td><td><input type="checkbox" name="%2$s" id="%2$s" %3$s /></td><td>%4$s</td></tr>',
-		esc_html( $label ), esc_attr( $name_id ), esc_html( $checked ), esc_html( $public ) );
+		printf(
+			'<tr><td><label for="%2$s">%1$s</label></td><td><input type="checkbox" name="%2$s" id="%2$s" %3$s /></td><td>%4$s</td></tr>',
+			esc_html( $label ),
+			esc_attr( $name_id ),
+			esc_html( $checked ),
+			esc_html( $public )
+		);
 	}
 	?>
 			</table>
@@ -252,7 +262,7 @@ function relevanssi_indexing_tab() {
 
 	<tr>
 		<th scope="row">
-			<label for='relevanssi_index_comments'><?php esc_html_e( 'Comments', 'relevanssi' ); ?></label>		
+			<label for='relevanssi_index_comments'><?php esc_html_e( 'Comments', 'relevanssi' ); ?></label>
 		</th>
 		<td>
 			<select name='relevanssi_index_comments' id='relevanssi_index_comments'>
@@ -266,7 +276,7 @@ function relevanssi_indexing_tab() {
 
 	<tr>
 		<th scope="row">
-			<label for='relevanssi_index_fields'><?php esc_html_e( 'Custom fields', 'relevanssi' ); ?></label>
+			<label for='relevanssi_index_fields_select'><?php esc_html_e( 'Custom fields', 'relevanssi' ); ?></label>
 		</th>
 		<td>
 			<select name='relevanssi_index_fields_select' id='relevanssi_index_fields_select'>
@@ -298,12 +308,13 @@ function relevanssi_indexing_tab() {
 			}
 			?>
 			>
+				<label for="relevanssi_index_fields" class="screen-reader-text"><?php esc_html__( 'Custom fields to index', 'relevanssi' ); ?></label>
 				<input type='text' name='relevanssi_index_fields' id='relevanssi_index_fields' size='60' value='<?php echo esc_attr( $index_fields ); ?>' />
 				<p class="description"><?php esc_html_e( "Enter a comma-separated list of custom fields to include in the index. With Relevanssi Premium, you can also use 'fieldname_%_subfieldname' notation for ACF repeater fields.", 'relevanssi' ); ?></p>
 				<p class="description"><?php esc_html_e( "You can use 'relevanssi_index_custom_fields' filter hook to adjust which custom fields are indexed.", 'relevanssi' ); ?></p>
 			</div>
 			<?php if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) : ?>
-			<?php // Translators: %1$s is the 'some' option and %2$s is '_sku'. ?>
+				<?php // Translators: %1$s is the 'some' option and %2$s is '_sku'. ?>
 			<p class="description"><?php printf( esc_html__( 'If you want the SKU included, choose %1$s and enter %2$s. Also see the contextual help for more details.', 'relevanssi' ), esc_html( "'" . __( 'some', 'relevanssi' ) . "'" ), '<code>_sku</code>' ); ?></p>
 			<?php endif; ?>
 		</td>
@@ -311,7 +322,7 @@ function relevanssi_indexing_tab() {
 
 	<tr>
 		<th scope="row">
-			<label for='relevanssi_index_author'><?php esc_html_e( 'Author display names', 'relevanssi' ); ?></label>
+			<?php esc_html_e( 'Author display names', 'relevanssi' ); ?>
 		</th>
 		<td>
 		<fieldset>
@@ -327,7 +338,7 @@ function relevanssi_indexing_tab() {
 
 	<tr>
 		<th scope="row">
-			<label for='relevanssi_index_excerpt'><?php esc_html_e( 'Excerpts', 'relevanssi' ); ?></label>
+			<?php esc_html_e( 'Excerpts', 'relevanssi' ); ?>
 		</th>
 		<td>
 		<fieldset>
@@ -351,7 +362,7 @@ function relevanssi_indexing_tab() {
 	<table class="form-table">
 	<tr>
 		<th scope="row">
-			<label for='relevanssi_expand_shortcodes'><?php esc_html_e( 'Expand shortcodes', 'relevanssi' ); ?></label>
+			<?php esc_html_e( 'Expand shortcodes', 'relevanssi' ); ?>
 		</th>
 		<td>
 		<fieldset>
@@ -487,5 +498,5 @@ function relevanssi_indexing_tab() {
 	<p><button type="button" style="display: none" id="hide_advanced_indexing"><?php esc_html_e( 'Hide advanced settings', 'relevanssi' ); ?></button></p>
 
 	</div>
-<?php
+	<?php
 }

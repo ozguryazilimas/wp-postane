@@ -171,14 +171,13 @@ jQuery(document).ready(function($) {
 			count_response = JSON.parse(response)
 			console.log("Counted " + count_response + " posts.")
 			results.value += count_response + " " + relevanssi.posts_found + "\n"
-
 			if (count_response > 0) {
 				var args = {
 					completed: 0,
 					total: count_response,
 					offset: 0,
 					total_seconds: 0,
-					limit: 10,
+					limit: relevanssi_params.indexing_limit,
 					extend: true,
 					security: nonce.indexing_nonce
 				}
@@ -351,6 +350,7 @@ jQuery(document).ready(function($) {
 				action: "relevanssi_admin_search",
 				args: document.getElementById("args").value,
 				posts_per_page: document.getElementById("posts_per_page").value,
+				post_types: document.getElementById("post_types").value,
 				s: document.getElementById("s").value,
 				security: nonce.searching_nonce
 			},
@@ -376,11 +376,10 @@ jQuery(document).ready(function($) {
 	})
 
 	$(document).on("click", "#next_page", function(e) {
-		var results = document.getElementById("results")
 		e.preventDefault()
+		var results = document.getElementById("results")
 		var offset = parseInt(document.getElementById("offset").innerHTML)
 		var posts = parseInt(document.getElementById("posts_per_page").value)
-		offset = offset + posts
 		results.innerHTML = "Searching..."
 		jQuery.ajax({
 			type: "POST",
@@ -388,7 +387,7 @@ jQuery(document).ready(function($) {
 			data: {
 				action: "relevanssi_admin_search",
 				args: document.getElementById("args").value,
-				posts_per_page: document.getElementById("posts_per_page").value,
+				posts_per_page: posts,
 				s: document.getElementById("s").value,
 				offset: offset,
 				security: nonce.searching_nonce
@@ -401,11 +400,11 @@ jQuery(document).ready(function($) {
 	})
 
 	$(document).on("click", "#prev_page", function(e) {
-		var results = document.getElementById("results")
 		e.preventDefault()
+		var results = document.getElementById("results")
 		var offset = parseInt(document.getElementById("offset").innerHTML)
 		var posts = parseInt(document.getElementById("posts_per_page").value)
-		offset = offset - posts
+		offset = offset - posts - posts
 		if (offset < 0) offset = 0
 		results.innerHTML = "Searching..."
 		jQuery.ajax({

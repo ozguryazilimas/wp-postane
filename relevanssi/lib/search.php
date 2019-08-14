@@ -122,7 +122,6 @@ function relevanssi_search( $args ) {
 	$orderby       = $filtered_args['orderby'];
 	$order         = $filtered_args['order'];
 	$fields        = $filtered_args['fields'];
-	$meta_query    = $filtered_args['meta_query'];
 
 	$hits = array();
 
@@ -139,16 +138,18 @@ function relevanssi_search( $args ) {
 	$remove_stopwords = apply_filters( 'relevanssi_remove_stopwords_in_titles', true );
 
 	$terms = relevanssi_tokenize( $q, $remove_stopwords );
-	if ( count( $terms ) < 1 ) {
-		// Tokenizer killed all the search terms.
-		return $hits;
-	}
 	$terms = array_keys( $terms ); // Don't care about tf in query.
 
 	if ( function_exists( 'relevanssi_process_terms' ) ) {
 		$process_terms_results = relevanssi_process_terms( $terms, $q );
 		$query_restrictions   .= $process_terms_results['query_restrictions'];
 		$terms                 = $process_terms_results['terms'];
+	}
+
+	$no_terms = false;
+	if ( count( $terms ) < 1 && empty( $q ) ) {
+		$no_terms = true;
+		$terms[]  = 'term';
 	}
 
 	/**
@@ -192,25 +193,6 @@ function relevanssi_search( $args ) {
 	$fuzzy = get_option( 'relevanssi_fuzzy' );
 
 	$no_matches = true;
-	if ( 'always' === $fuzzy ) {
-		/**
-		 * Filters the partial matching search query.
-		 *
-		 * By default partial matching matches the beginnings and the ends of the
-		 * words. If you want it to match inside words, add a function to this
-		 * hook that returns '(relevanssi.term LIKE '%#term#%')'.
-		 *
-		 * @param string The partial matching query.
-		 */
-		$o_term_cond = apply_filters( 'relevanssi_fuzzy_query', "(relevanssi.term LIKE '#term#%' OR relevanssi.term_reverse LIKE CONCAT(REVERSE('#term#'), '%')) " );
-	} else {
-		$o_term_cond = " relevanssi.term = '#term#' ";
-	}
-
-	if ( count( $terms ) < 1 ) {
-		$o_term_cond = ' relevanssi.term = relevanssi.term ';
-		$terms[]     = 'term';
-	}
 
 	$post_type_weights = get_option( 'relevanssi_post_type_weights' );
 
@@ -231,10 +213,13 @@ function relevanssi_search( $args ) {
 		 * @param array The title bonus under 'title' (default 5) and the content
 		 * bonus under 'content' (default 2).
 		 */
-		$exact_match_boost = apply_filters( 'relevanssi_exact_match_bonus', array(
-			'title'   => 5,
-			'content' => 2,
-		));
+		$exact_match_boost = apply_filters(
+			'relevanssi_exact_match_bonus',
+			array(
+				'title'   => 5,
+				'content' => 2,
+			)
+		);
 
 	}
 
@@ -257,13 +242,16 @@ function relevanssi_search( $args ) {
 		$cat = $post_type_weights['post_tagged_with_category'];
 	}
 
-	/* Legacy code, improvement introduced in 2.1.8, remove at some point. */
+	// Legacy code, improvement introduced in 2.1.8, remove at some point.
+	// phpcs:ignore Squiz.Commenting.InlineComment
+	// @codeCoverageIgnoreStart
 	if ( ! empty( $post_type_weights['post_tag'] ) ) {
 		$tag = $post_type_weights['post_tag'];
 	}
 	if ( ! empty( $post_type_weights['category'] ) ) {
 		$cat = $post_type_weights['category'];
 	}
+	// @codeCoverageIgnoreEnd
 	/* End legacy code. */
 
 	$include_these_posts = array();
@@ -273,7 +261,7 @@ function relevanssi_search( $args ) {
 
 	do {
 		foreach ( $terms as $term ) {
-			$term_cond = relevanssi_generate_term_cond( $term, $o_term_cond );
+			$term_cond = relevanssi_generate_term_where( $term, $search_again, $no_terms );
 			if ( null === $term_cond ) {
 				continue;
 			}
@@ -289,16 +277,18 @@ function relevanssi_search( $args ) {
 			 */
 			$query = apply_filters( 'relevanssi_df_query_filter', $query );
 
-			$df = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
+			$df = $wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 			if ( $df < 1 && 'sometimes' === $fuzzy ) {
-				$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
-					$query_join WHERE (relevanssi.term LIKE '$term%'
-					OR relevanssi.term_reverse LIKE CONCAT(REVERSE('$term'), '%')) $query_restrictions";
+				$term_cond = relevanssi_generate_term_where( $term, true, $no_terms );
+				$query     = "
+				SELECT COUNT(DISTINCT(relevanssi.doc))
+					FROM $relevanssi_table AS relevanssi
+					$query_join WHERE $term_cond $query_restrictions";
 				// Clean: $query_restrictions is escaped, $term is escaped.
 				/** Documented in lib/search.php. */
 				$query = apply_filters( 'relevanssi_df_query_filter', $query );
-				$df    = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
+				$df    = $wpdb->get_var( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 
 			$df_counts[ $term ] = $df;
@@ -310,10 +300,7 @@ function relevanssi_search( $args ) {
 		asort( $df_counts );
 
 		foreach ( $df_counts as $term => $df ) {
-			$term_cond = relevanssi_generate_term_cond( $term, $o_term_cond );
-			if ( null === $term_cond ) {
-				continue;
-			}
+			$term_cond = relevanssi_generate_term_where( $term, $search_again, $no_terms );
 
 			$query = "SELECT DISTINCT(relevanssi.doc), relevanssi.*, relevanssi.title * $title_boost +
 				relevanssi.content * $content_boost + relevanssi.comment * $comment_boost +
@@ -331,7 +318,7 @@ function relevanssi_search( $args ) {
 			 * @param string MySQL query for the Relevanssi search.
 			 */
 			$query   = apply_filters( 'relevanssi_query_filter', $query );
-			$matches = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok, the query is thoroughly escaped.
+			$matches = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			if ( count( $matches ) < 1 ) {
 				continue;
 			} else {
@@ -360,7 +347,7 @@ function relevanssi_search( $args ) {
 								AND $term_cond";
 
 								// Clean: no unescaped user inputs.
-								$matches_to_add = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
+								$matches_to_add = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 								$matches        = array_merge( $matches, $matches_to_add );
 							}
 							$offset += $slice_length;
@@ -387,7 +374,7 @@ function relevanssi_search( $args ) {
 						AND $term_cond";
 
 						// Clean: no unescaped user inputs.
-						$matches_to_add = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
+						$matches_to_add = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 						$matches        = array_merge( $matches, $matches_to_add );
 					}
 				}
@@ -426,7 +413,9 @@ function relevanssi_search( $args ) {
 						$category_weight = $post_type_weights['post_tagged_with_category'];
 					}
 
-					/* Legacy code from 2.1.8. Remove at some point. */
+					// Legacy code from 2.1.8. Remove at some point.
+					// phpcs:ignore Squiz.Commenting.InlineComment
+					// @codeCoverageIgnoreStart
 					if ( isset( $post_type_weights['post_tag'] ) && is_numeric( $post_type_weights['post_tag'] ) ) {
 						$tag_weight = $post_type_weights['post_tag'];
 					}
@@ -435,6 +424,7 @@ function relevanssi_search( $args ) {
 					if ( isset( $post_type_weights['category'] ) && is_numeric( $post_type_weights['category'] ) ) {
 						$category_weight = $post_type_weights['category'];
 					}
+					// @codeCoverageIgnoreEnd
 					/* End legacy code. */
 
 					$taxonomy_weight = 1;
@@ -480,12 +470,14 @@ function relevanssi_search( $args ) {
 
 				if ( $exact_match_bonus ) {
 					$post    = relevanssi_get_post( $match->doc );
-					$clean_q = str_replace( '"', '', $q );
-					if ( stristr( $post->post_title, $clean_q ) !== false ) {
-						$match->weight *= $exact_match_boost['title'];
-					}
-					if ( stristr( $post->post_content, $clean_q ) !== false ) {
-						$match->weight *= $exact_match_boost['content'];
+					$clean_q = str_replace( array( '"', '”', '“' ), '', $q );
+					if ( $post && $clean_q ) {
+						if ( stristr( $post->post_title, $clean_q ) !== false ) {
+							$match->weight *= $exact_match_boost['title'];
+						}
+						if ( stristr( $post->post_content, $clean_q ) !== false ) {
+							$match->weight *= $exact_match_boost['content'];
+						}
 					}
 				}
 
@@ -584,10 +576,6 @@ function relevanssi_search( $args ) {
 			}
 		}
 
-		if ( ! isset( $doc_weight ) ) {
-			$doc_weight = array();
-			$no_matches = true;
-		}
 		if ( $no_matches ) {
 			if ( $search_again ) {
 				// No hits even with fuzzy search!
@@ -595,7 +583,6 @@ function relevanssi_search( $args ) {
 			} else {
 				if ( 'sometimes' === $fuzzy ) {
 					$search_again = true;
-					$o_term_cond  = "(term LIKE '%#term#' OR term LIKE '#term#%') ";
 				}
 			}
 		} else {
@@ -605,7 +592,6 @@ function relevanssi_search( $args ) {
 			'no_matches'   => $no_matches,
 			'doc_weight'   => $doc_weight,
 			'terms'        => $terms,
-			'o_term_cond'  => $o_term_cond,
 			'search_again' => $search_again,
 		);
 		/**
@@ -620,7 +606,6 @@ function relevanssi_search( $args ) {
 		$params       = apply_filters( 'relevanssi_search_again', $params );
 		$search_again = $params['search_again'];
 		$terms        = $params['terms'];
-		$o_term_cond  = $params['o_term_cond'];
 		$doc_weight   = $params['doc_weight'];
 		$no_matches   = $params['no_matches'];
 	} while ( $search_again );
@@ -693,7 +678,6 @@ function relevanssi_search( $args ) {
 			$category_matches = $return['category_matches'];
 			$taxonomy_matches = $return['taxonomy_matches'];
 			$comment_matches  = $return['comment_matches'];
-			$body_matches     = $return['body_matches'];
 			$link_matches     = $return['link_matches'];
 			$term_hits        = $return['term_hits'];
 			$q                = $return['query'];
@@ -1234,6 +1218,42 @@ function relevanssi_do_query( &$query ) {
 			$date_query = new WP_Date_Query( $query->query_vars['date_query'] );
 		}
 
+		if ( ! $date_query ) {
+			$date_query = array();
+			if ( ! empty( $query->query_vars['year'] ) ) {
+				$date_query['year'] = intval( $query->query_vars['year'] );
+			}
+			if ( ! empty( $query->query_vars['monthnum'] ) ) {
+				$date_query['month'] = intval( $query->query_vars['monthnum'] );
+			}
+			if ( ! empty( $query->query_vars['w'] ) ) {
+				$date_query['week'] = intval( $query->query_vars['w'] );
+			}
+			if ( ! empty( $query->query_vars['day'] ) ) {
+				$date_query['day'] = intval( $query->query_vars['day'] );
+			}
+			if ( ! empty( $query->query_vars['hour'] ) ) {
+				$date_query['hour'] = intval( $query->query_vars['hour'] );
+			}
+			if ( ! empty( $query->query_vars['minute'] ) ) {
+				$date_query['minute'] = intval( $query->query_vars['minute'] );
+			}
+			if ( ! empty( $query->query_vars['second'] ) ) {
+				$date_query['second'] = intval( $query->query_vars['second'] );
+			}
+			if ( ! empty( $query->query_vars['m'] ) ) {
+				if ( 6 === strlen( $query->query_vars['m'] ) ) {
+					$date_query['year']  = intval( substr( $query->query_vars['m'], 0, 4 ) );
+					$date_query['month'] = intval( substr( $query->query_vars['m'], -2, 2 ) );
+				}
+			}
+			if ( ! empty( $date_query ) ) {
+				$date_query = new WP_Date_Query( $date_query );
+			} else {
+				$date_query = false;
+			}
+		}
+
 		$search_blogs = false;
 		if ( isset( $query->query_vars['search_blogs'] ) ) {
 			$search_blogs = $query->query_vars['search_blogs'];
@@ -1430,12 +1450,8 @@ function relevanssi_do_query( &$query ) {
 		}
 
 		if ( 'on' === get_option( 'relevanssi_hilite_title' ) && empty( $fields ) ) {
-			if ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) ) {
-				$post->post_highlighted_title = strip_tags( qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage( $post->post_title ) );
-			} else {
-				$post->post_highlighted_title = strip_tags( $post->post_title );
-			}
-			$highlight = get_option( 'relevanssi_highlight' );
+			$post->post_highlighted_title = wp_strip_all_tags( $post->post_title );
+			$highlight                    = get_option( 'relevanssi_highlight' );
 			if ( 'none' !== $highlight ) {
 				if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 					$post->post_highlighted_title = relevanssi_highlight_terms( $post->post_highlighted_title, $q );
@@ -1562,34 +1578,74 @@ function relevanssi_get_negative_post_type( $include_attachments ) {
  *
  * Tested.
  *
- * @param string $term        The search term.
- * @param string $o_term_cond The search condition template.
+ * @param string  $term            The search term.
+ * @param boolean $force_fuzzy     If true, force fuzzy search. Default false.
+ * @param boolean $no_terms        If true, no search term is used. Default false.
+ * @param string  $option_override If set, won't read the value from the
+ * 'relevanssi_fuzzy' option but will use this instead. Used in multisite searching.
+ * Default null.
  *
  * @return string The template with the term in place.
  */
-function relevanssi_generate_term_cond( $term, $o_term_cond ) {
+function relevanssi_generate_term_where( $term, $force_fuzzy = false, $no_terms = false, $option_override = null ) {
 	global $wpdb;
 
-	$term = trim( $term ); // Numeric search terms will start with a space.
-	/**
-	 * Allows the use of one letter search terms.
-	 *
-	 * Return false to allow one letter searches.
-	 *
-	 * @param boolean True, if search term is one letter long and will be blocked.
-	 */
-	if ( apply_filters( 'relevanssi_block_one_letter_searches', relevanssi_strlen( $term ) < 2 ) ) {
-		return null;
+	$fuzzy = get_option( 'relevanssi_fuzzy' );
+	if ( $option_override &&
+	in_array( $option_override, array( 'always', 'sometimes', 'never' ), true ) ) {
+		$fuzzy = $option_override;
 	}
+
+	/**
+	 * Filters the partial matching search query.
+	 *
+	 * By default partial matching matches the beginnings and the ends of the
+	 * words. If you want it to match inside words, add a function to this
+	 * hook that returns '(relevanssi.term LIKE '%#term#%')'.
+	 *
+	 * @param string The partial matching query.
+	 */
+	$fuzzy_query = apply_filters(
+		'relevanssi_fuzzy_query',
+		"(relevanssi.term LIKE '#term#%' OR relevanssi.term_reverse LIKE CONCAT(REVERSE('#term#'), '%')) "
+	);
+	$basic_query = " relevanssi.term = '#term#' ";
+
+	if ( 'always' === $fuzzy || $force_fuzzy ) {
+		$term_where_template = $fuzzy_query;
+	} else {
+		$term_where_template = $basic_query;
+	}
+	if ( $no_terms ) {
+		$term_where_template = ' relevanssi.term = relevanssi.term ';
+	}
+
+	$term = trim( $term ); // Numeric search terms will start with a space.
+
+	if ( relevanssi_strlen( $term ) < 2 ) {
+		/**
+		 * Allows the use of one letter search terms.
+		 *
+		 * Return false to allow one letter searches.
+		 *
+		 * @param boolean True, if search term is one letter long and will be blocked.
+		 */
+		if ( apply_filters( 'relevanssi_block_one_letter_searches', true ) ) {
+			return null;
+		}
+		// No fuzzy matching for one-letter search terms.
+		$term_where_template = $basic_query;
+	}
+
 	$term = esc_sql( $term );
 
-	if ( false !== strpos( $o_term_cond, 'LIKE' ) ) {
+	if ( false !== strpos( $term_where_template, 'LIKE' ) ) {
 		$term = $wpdb->esc_like( $term );
 	}
 
-	$term_cond = str_replace( '#term#', $term, $o_term_cond );
+	$term_where = str_replace( '#term#', $term, $term_where_template );
 
-	return $term_cond;
+	return $term_where;
 }
 
 /**
@@ -1613,7 +1669,10 @@ function relevanssi_taxonomy_score( &$match, $post_type_weights ) {
 		foreach ( $match->taxonomy_detail as $tax => $count ) {
 			if ( empty( $post_type_weights[ 'post_tagged_with_' . $tax ] ) ) {
 				if ( ! empty( $post_type_weights[ $tax ] ) ) { // Legacy code, needed for 2.1.8, remove later.
+					// phpcs:ignore Squiz.Commenting.InlineComment
+					// @codeCoverageIgnoreStart
 					$match->taxonomy_score += $count * $post_type_weights[ $tax ];
+					// @codeCoverageIgnoreEnd
 				} else {
 					$match->taxonomy_score += $count * 1;
 				}
