@@ -822,6 +822,7 @@ a#ws-ame-delete-color-preset:hover {
   height: 26px;
   width: 190px;
   margin-right: 5px;
+  margin-left: 1px;
   padding: 2px 4px;
   font-size: 12px;
   border: 1px solid #ddd;

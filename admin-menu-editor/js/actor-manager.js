@@ -132,9 +132,9 @@ var AmeSuperAdmin = /** @class */ (function (_super) {
 }(AmeBaseActor));
 var AmeActorManager = /** @class */ (function () {
     function AmeActorManager(roles, users, isMultisite, suspectedMetaCaps) {
+        var _this = this;
         if (isMultisite === void 0) { isMultisite = false; }
         if (suspectedMetaCaps === void 0) { suspectedMetaCaps = {}; }
-        var _this = this;
         this.roles = {};
         this.users = {};
         this.grantedCapabilities = {};

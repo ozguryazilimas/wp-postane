@@ -1817,11 +1817,16 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$trueAccess = isset($this->page_access_lookup[$topmenu['url']]) ? $this->page_access_lookup[$topmenu['url']] : null;
 			if ( ($trueAccess === 'do_not_allow') && ($topmenu['access_level'] !== $trueAccess) ) {
 				$topmenu['access_level'] = $trueAccess;
+				$reason = sprintf(
+					'There is a hidden menu item with the same URL (%1$s) but a higher priority.',
+					$topmenu['url']
+				);
+				$item['access_decision_reason'] = $reason;
+
 				if ( isset($topmenu['access_check_log']) ) {
 					$topmenu['access_check_log'][] = sprintf(
-						'+ Override: There is a hidden menu item with the same URL (%1$s) but a higher priority.' .
-						' Setting the capability to "%2$s".',
-						$topmenu['url'],
+						'+ Override: %1$s Setting the capability to "%2$s".',
+						$reason,
 						$trueAccess
 					);
 					$topmenu['access_check_log'][] = str_repeat('=', 79);
@@ -1837,11 +1842,16 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				$trueAccess = isset($this->page_access_lookup[$item['url']]) ? $this->page_access_lookup[$item['url']] : null;
 				if ( ($trueAccess === 'do_not_allow') && ($item['access_level'] !== $trueAccess) ) {
 					$item['access_level'] = $trueAccess;
+					$reason = sprintf(
+						'There is a hidden menu item with the same URL (%1$s) but a higher priority.',
+						$item['url']
+					);
+					$item['access_decision_reason'] = $reason;
+
 					if ( isset($item['access_check_log']) ) {
 						$item['access_check_log'][] = sprintf(
-							'+ Override: There is a hidden menu item with the same URL (%1$s) but a higher priority.' .
-							' Setting the capability to "%2$s".',
-							$item['url'],
+							'+ Override: %1$s Setting the capability to "%2$s".',
+							$reason,
 							$trueAccess
 						);
 						$item['access_check_log'][] = str_repeat('=', 79);
@@ -2273,6 +2283,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			}
 
 			echo "Fetch option {$option}<br>";
+			/** @noinspection SqlResolve */
 			$row = $wpdb->get_row($wpdb->prepare(
 				"SELECT * FROM {$wpdb->sitemeta} WHERE meta_key = %s LIMIT 1",
 				$option
@@ -2566,7 +2577,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 */
 	private function get_default_menu() {
 		$default_tree = ameMenu::wp2tree($this->default_wp_menu, $this->default_wp_submenu, $this->menu_url_blacklist);
-		$default_menu = ameMenu::load_array($default_tree);
+		try {
+			$default_menu = ameMenu::load_array($default_tree);
+		} catch (InvalidMenuException $e) {
+			throw new LogicException(
+				'An unexpected exception was thrown while loading the default admin menu. '
+				. 'This is most likely a bug. The default menu should always be valid.'
+			);
+		}
 		return $default_menu;
 	}
 
@@ -2723,7 +2741,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			return $this->cached_virtual_caps[$mode];
 		}
 
-		$custom_menu = $this->load_custom_menu();
+		try {
+			$custom_menu = $this->load_custom_menu();
+		} catch (InvalidMenuException $e) {
+			return array();
+		}
 		if ( $custom_menu === null ){
 			return array();
 		}
@@ -3462,7 +3484,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 					'ame-force-dashicons',
 					plugins_url('css/force-dashicons.css', $this->plugin_file),
 					array(),
-					'20170607'
+					'20190810'
 				);
 			}
 		}
