@@ -1,19 +1,20 @@
 <?php
 /**
- * /lib/compatibility/yoast-seo.php
+ * /lib/compatibility/seopress.php
  *
- * Yoast SEO noindex filtering function.
+ * SEOPress noindex filtering function.
  *
  * @package Relevanssi
- * @author  Mikko Saari
+ * @author  Benjamin Denis
+ * @source ./yoast-seo.php (Mikko Saari)
  * @license https://wordpress.org/about/gpl/ GNU General Public License
  * @see     https://www.relevanssi.com/
  */
 
-add_filter( 'relevanssi_do_not_index', 'relevanssi_yoast_noindex', 10, 2 );
+add_filter( 'relevanssi_do_not_index', 'relevanssi_seopress_noindex', 10, 2 );
 
 /**
- * Blocks indexing of posts marked "noindex" in the Yoast SEO settings.
+ * Blocks indexing of posts marked "noindex" in the SEOPress settings.
  *
  * Attaches to the 'relevanssi_do_not_index' filter hook.
  *
@@ -22,9 +23,9 @@ add_filter( 'relevanssi_do_not_index', 'relevanssi_yoast_noindex', 10, 2 );
  *
  * @return boolean True, if the post shouldn't be indexed.
  */
-function relevanssi_yoast_noindex( $do_not_index, $post_id ) {
-	$noindex = get_post_meta( $post_id, '_yoast_wpseo_meta-robots-noindex', true );
-	if ( '1' === $noindex ) {
+function relevanssi_seopress_noindex( $do_not_index, $post_id ) {
+	$noindex = get_post_meta( $post_id, '_seopress_robots_index', true );
+	if ( 'yes' === $noindex ) {
 		$do_not_index = true;
 	}
 	return $do_not_index;
