@@ -1,6 +1,15 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.51.3] 02.09.2019 =
+* Fix:  line #281 at /includes/classes/view.php contained a call to the not existing class property.
+* Fix: Roles have saved in alphabet order after any role update. Roles order in the database is not changed now. Sorting is made for a view purpose only.
+* Update: Roles sorting inside WordPress roles dropdown lists is switched OFF by default. In order to switch WP roles dropdown lists sorting ON, return TRUE from 'ure_sort_wp_roles_list' filter.
+
+= [4.51.2] 15.07.2019 =
+* Fix: Dialog button labels inside User Role Editor ('Cancel' buttons especially) were shown with not correct translation or not translated at all. Thanks to @lucaboccianti for [this bug report](https://wordpress.org/support/topic/buttons-delete-role-cancel-dont-delete-role-inverted-functions-italian/).
+* Update: Roles inside WordPress roles dropdown lists are sorted by alphabet. 
+
 = [4.51.1] 15.06.2019 =
 * Fix: Superadmin could not revoke capabilities from 'administrator' role under WordPress multisite.
 
