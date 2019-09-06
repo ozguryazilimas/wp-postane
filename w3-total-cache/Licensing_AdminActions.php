@@ -17,9 +17,7 @@ class Licensing_AdminActions {
 	 *  test action
 	 */
 	function w3tc_licensing_buy_plugin() {
-		$state = Dispatcher::config_state_master();
-		$iframe_url = W3TC_PURCHASE_URL .
-			'?install_date=' . esc_attr( $state->get_integer( 'common.install' ) );
+		$iframe_url = Licensing_Core::purchase_url();
 
 		include W3TC_INC_DIR . '/lightbox/purchase.php';
 	}
@@ -30,6 +28,11 @@ class Licensing_AdminActions {
 	 * Self test action
 	 */
 	function w3tc_licensing_upgrade() {
+		$data_src = '';
+		if ( isset( $_REQUEST['data_src'] ) ) {
+			$data_src = preg_replace( '/[^0-9a-z_]/', '', $_REQUEST['data_src'] );
+		}
+
 		include W3TC_INC_DIR . '/lightbox/upgrade.php';
 	}
 

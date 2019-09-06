@@ -382,13 +382,14 @@ function w3tc_lightbox_self_test(nonce) {
 	});
 }
 
-function w3tc_lightbox_upgrade(nonce) {
+function w3tc_lightbox_upgrade(nonce, data_src) {
   W3tc_Lightbox.open({
 	id: 'w3tc-overlay',
 	close: '',
 	width: 800,
 	height: 350,
-	url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_upgrade&_wpnonce=' + nonce,
+	url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_upgrade&_wpnonce=' +
+		encodeURIComponent(nonce) + '&data_src=' + encodeURIComponent(data_src),
 	callback: function(lightbox) {
 		lightbox.options.height = jQuery('#w3tc-upgrade').height() - 57;
 		jQuery('.button-primary', lightbox.container).click(function() {
@@ -397,6 +398,13 @@ function w3tc_lightbox_upgrade(nonce) {
 		jQuery('#w3tc-purchase', lightbox.container).click(function() {
 			lightbox.close();
 			w3tc_lightbox_buy_plugin(nonce);
+		});
+		jQuery('#w3tc-purchase-link', lightbox.container).click(function() {
+			lightbox.close();
+
+			jQuery([document.documentElement, document.body]).animate({
+				scrollTop: jQuery("#licensing").offset().top
+			}, 2000);
 		});
 		lightbox.resize();
 	}
@@ -463,20 +471,6 @@ function w3tc_lightbox_save_licence_key(license_key, nonce, callback) {
   }, 'json').fail(callback);
 }
 
-function w3tc_lightbox_cdn_s3_bucket_location(type, nonce) {
-	W3tc_Lightbox.open({
-		width: 500,
-		height: 130,
-		url: 'admin.php?page=w3tc_dashboard&w3tc_cdn_s3_bucket_location&type=' + type + '&_wpnonce=' + nonce,
-		callback: function(lightbox) {
-			jQuery('.button', lightbox.container).click(function() {
-				lightbox.close();
-			});
-		}
-	});
-}
-
-
 jQuery(function() {
 	jQuery('.button-minify-recommendations').click(function() {
 		var nonce = jQuery(this).metadata().nonce;
@@ -491,22 +485,9 @@ jQuery(function() {
 	});
 
 	jQuery('.button-buy-plugin').click(function() {
-		w3tc_lightbox_upgrade(w3tc_nonce);
+		var data_src = jQuery(this).attr('data-src');
+		w3tc_lightbox_upgrade(w3tc_nonce, data_src);
 		jQuery('#w3tc-license-instruction').show();
-		return false;
-	});
-
-	jQuery('.button-cdn-s3-bucket-location,.button-cdn-cf-bucket-location').click(function() {
-		var type = '';
-		var nonce = jQuery(this).metadata().nonce;
-
-		if (jQuery(this).hasClass('cdn_s3')) {
-			type = 's3';
-		} else if (jQuery(this).hasClass('cdn_cf')) {
-			type = 'cf';
-		}
-
-		w3tc_lightbox_cdn_s3_bucket_location(type, nonce);
 		return false;
 	});
 

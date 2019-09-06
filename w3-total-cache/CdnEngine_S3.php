@@ -11,6 +11,31 @@ if ( !defined( 'W3TC_SKIPLIB_AWS' ) ) {
 class CdnEngine_S3 extends CdnEngine_Base {
 	private $api;
 
+	static public function regions_list() {
+		return array(
+			'us-east-1' => __( 'US East (N. Virginia)', 'w3-total-cache' ),
+			'us-east-2' => __( 'US East (Ohio)', 'w3-total-cache' ),
+			'us-west-1' => __( 'US-West (N. California)', 'w3-total-cache' ),
+			'us-west-2' => __( 'US-West (Oregon)', 'w3-total-cache' ),
+			'ap-east-1' => __( 'Asia Pacific (Hong Kong)', 'w3-total-cache' ),
+			'ap-northeast-1'=> __( 'Asia Pacific (Tokyo)', 'w3-total-cache' ),
+			'ap-northeast-2' => __( 'Asia Pacific (Seoul)', 'w3-total-cache' ),
+			'ap-northeast-3' => __( 'Asia Pacific (Osaka-Local)', 'w3-total-cache' ),
+			'ap-south-1' => __( 'Asia Pacific (Mumbai)', 'w3-total-cache' ),
+			'ap-southeast-1' => __( 'Asia Pacific (Singapore)', 'w3-total-cache' ),
+			'ap-southeast-2' => __( 'Asia Pacific (Sydney)', 'w3-total-cache' ),
+			'ca-central-1' => __( 'Canada (Central)', 'w3-total-cache' ),
+			'cn-northwest-1.cn' => __( 'China (Ningxia)', 'w3-total-cache' ),
+			'eu-central-1' => __( 'EU (Frankfurt)', 'w3-total-cache' ),
+			'eu-north-1' => __( 'EU (Stockholm)', 'w3-total-cache' ),
+			'eu-west-1' => __( 'EU (Ireland)', 'w3-total-cache' ),
+			'eu-west-2' => __( 'EU (London)', 'w3-total-cache' ),
+			'eu-west-3' => __( 'EU (Paris)', 'w3-total-cache' ),
+			'me-south-1' => __( 'Middle East (Bahrain)', 'w3-total-cache' ),
+			'sa-east-1' => __( 'South America (São Paulo)', 'w3-total-cache' ),
+		);
+	}
+
 	public function __construct( $config = array() ) {
 		$config = array_merge( array(
 				'key' => '',
@@ -161,8 +186,7 @@ class CdnEngine_S3 extends CdnEngine_Base {
 			$result = $this->_put_object( array(
 					'Key' => $remote_path,
 					'SourceFile' => $local_path,
-					'Metadata' => $headers
-				)
+				), $headers
 			);
 
 			return $this->_get_result( $local_path, $remote_path,
@@ -232,9 +256,8 @@ class CdnEngine_S3 extends CdnEngine_Base {
 
 			$result = $this->_put_object( array(
 					'Key' => $remote_path,
-					'Body' => $data,
-					'Metadata' => $headers
-				)
+					'Body' => $data
+				), $headers
 			);
 
 			return $this->_get_result( $local_path, $remote_path,
@@ -250,18 +273,18 @@ class CdnEngine_S3 extends CdnEngine_Base {
 	/**
 	 * Wrapper to set headers well
 	 */
-	private function _put_object( $data ) {
+	private function _put_object( $data, $headers ) {
 		$data['ACL'] = 'public-read';
 		$data['Bucket'] = $this->_config['bucket'];
 
-		if ( isset( $data['Metadata']['Content-Type'] ) ) {
-			$data['ContentType'] = $data['Metadata']['Content-Type'];
+		if ( isset( $headers['Content-Type'] ) ) {
+			$data['ContentType'] = $headers['Content-Type'];
 		}
-		if ( isset( $data['Metadata']['Content-Encoding'] ) ) {
-			$data['ContentEncoding'] = $data['Metadata']['Content-Encoding'];
+		if ( isset( $headers['Content-Encoding'] ) ) {
+			$data['ContentEncoding'] = $headers['Content-Encoding'];
 		}
-		if ( isset( $data['Metadata']['Cache-Control'] ) ) {
-			$data['CacheControl'] = $data['Metadata']['Cache-Control'];
+		if ( isset( $headers['Cache-Control'] ) ) {
+			$data['CacheControl'] = $headers['Cache-Control'];
 		}
 
 		return $this->api->putObject( $data );
@@ -429,8 +452,21 @@ class CdnEngine_S3 extends CdnEngine_Base {
 		}
 
 		try {
-			$result = $this->api->createBucket( array(
+			$this->api->createBucket( array(
 				'Bucket' => $this->_config['bucket'],
+			) );
+
+			$this->api->putBucketCors( array(
+				'Bucket' => $this->_config['bucket'],
+				'CORSConfiguration' => array(
+					'CORSRules' => array(
+						array(
+							'AllowedHeaders' => array( '*' ),
+							'AllowedMethods' => array( 'GET' ),
+							'AllowedOrigins' => array( '*' )
+						)
+					)
+				)
 			) );
 		} catch ( \Exception $e) {
 			throw new \Exception( 'Failed to create bucket: ' . $ex->getMessage() );

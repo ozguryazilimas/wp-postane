@@ -48,8 +48,19 @@ class CdnEngine_CloudFront extends CdnEngine_Base {
 	 * Formats URL
 	 */
 	function _format_url( $path ) {
-		// the same limitation as S3 has
-		return $this->s3->_format_url( $path );
+		$domain = $this->get_domain( $path );
+
+		if ( $domain ) {
+			$scheme = $this->_get_scheme();
+
+			// it does not support '+', requires '%2B'
+			$path = str_replace( '+', '%2B', $path );
+			$url = sprintf( '%s://%s/%s', $scheme, $domain, $path );
+
+			return $url;
+		}
+
+		return false;
 	}
 
 	/**
@@ -334,9 +345,12 @@ class CdnEngine_CloudFront extends CdnEngine_Base {
 
 		$items = $dists['DistributionList']['Items'];
 		foreach ( $items as $dist ) {
-			if ( isset( $dist['Origins']['Items'][0]['DomainName'] ) &&
-				 $dist['Origins']['Items'][0]['DomainName'] == $origin ) {
-				return $dist;
+			if ( isset( $dist['Origins']['Items'] ) ) {
+				foreach ( $dist['Origins']['Items'] as $o ) {
+					if ( isset( $o['DomainName'] ) && $o['DomainName'] == $origin ) {
+						return $dist;
+					}
+				}
 			}
 		}
 
