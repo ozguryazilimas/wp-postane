@@ -1,0 +1,166 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Auto Post Thumbnail\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-05 19:26+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.0; wp-4.9.8"
+
+#: auto-post-thumbnail.php:201
+msgid "This plugin has been automatically deactivated."
+msgstr ""
+
+#: views/tab-main.php:18
+msgid ""
+"Currently there are no published posts available to generate thumbnails."
+msgstr ""
+
+#: views/tab-main.php:20
+msgid "We are generating post thumbnails. Please be patient!"
+msgstr ""
+
+#: views/tab-main.php:32 views/tab-main.php:92
+msgid "You must enable Javascript in order to proceed!"
+msgstr ""
+
+#: views/tab-main.php:64
+#, php-format
+msgid "All done! Processed %d posts."
+msgstr ""
+
+#: views/tab-main.php:79
+msgid ""
+"Use this tool to generate Post Thumbnail (Featured Thumbnail) for your "
+"Published posts."
+msgstr ""
+
+#: views/tab-main.php:81
+msgid ""
+"If the script stops executing for any reason, just <strong>Reload</strong> "
+"the page and it will continue from where it stopped."
+msgstr ""
+
+#: views/tab-main.php:88 views/index.php:13
+msgid "Generate Thumbnails"
+msgstr ""
+
+#: views/tab-main.php:97
+msgid ""
+"Note: Thumbnails won't be generated for posts that already have post "
+"thumbnail or <strong><em>skip_post_thumb</em></strong> custom field set."
+msgstr ""
+
+#. Name of the plugin
+#: views/tab-about.php:81
+msgid "Auto Post Thumbnail"
+msgstr ""
+
+#: views/tab-about.php:83
+msgid ""
+"We didn’t please you with updated lately. However, great news today! We are "
+"about to tell you about all the spectacular changes that are planned for our "
+"plugin!"
+msgstr ""
+
+#: views/tab-about.php:85
+msgid ""
+"First of all, we proudly announce that a new group of developers, <span "
+"style=\"text-decoration: underline;\"><strong>Creative Motion</strong></span>"
+", are helping us with plugin improvement."
+msgstr ""
+
+#: views/tab-about.php:87
+msgid ""
+"Auto Post Thumbnails has perfectly fit in our close family of popular "
+"plugins with more than 600,000 users worldwide."
+msgstr ""
+
+#: views/tab-about.php:89
+msgid "What you can expect soon:"
+msgstr ""
+
+#: views/tab-about.php:100
+msgid ""
+"As you’ve already noticed, we haven’t updated the plugin for more than 2 "
+"years. This new version fixes existing problems. APT becomes a fully "
+"functional plugin."
+msgstr ""
+
+#: views/tab-about.php:103
+msgid ""
+"In the next release, you can automatically generate featured images from any "
+"image in the post, not only the first one. Besides, we offer you an advanced "
+"tool – choose an image for the featured image right from the Posts tab. You "
+"no longer need to edit each post to install or change the featured image. "
+"Feel free to do it right from the list of posts. It saves much time and "
+"efforts. ​"
+msgstr ""
+
+#: views/tab-about.php:108
+msgid ""
+"Starting from this version, the APT plugin evolves from being an aiding tool "
+"to the full-featured search & image editing system with a Creative Commons "
+"license for your website. <strong>It means that you get:</strong>"
+msgstr ""
+
+#: views/tab-about.php:111
+msgid ""
+"Image search through the 5 popular stock services from the plugin interface. "
+"Just enter a search query and choose an image(images) you like."
+msgstr ""
+
+#: views/tab-about.php:112
+msgid ""
+"Advanced APT editor. You can edit images using layers. It means that you can "
+"overlay text, logo, or mask, adjust color, brightness, and contract and use "
+"other great features. Save presets and apply them on any image in one click. "
+"The editor doesn’t replace the default WordPress editor."
+msgstr ""
+
+#: views/tab-about.php:118
+msgid ""
+"Upload images from the external URL to your post or product (for Woocommerce)"
+"."
+msgstr ""
+
+#: views/tab-about.php:119
+msgid "Compatibility with the most popular builders."
+msgstr ""
+
+#: views/index.php:6
+msgid "Generate Post Thumbnails"
+msgstr ""
+
+#: views/index.php:17
+msgid "About"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Automatically generate the Post Thumbnail (Featured Thumbnail) from the "
+"first image in post (or any custom post type) only if Post Thumbnail is not "
+"set manually."
+msgstr ""
+
+#. URI of the plugin
+msgid ""
+"http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-"
+"thumbnail/"
+msgstr ""
+
+#. Author of the plugin
+msgid "Webcraftic <wordpress.webraftic@gmail.com>"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "webcraftic.com"
+msgstr ""

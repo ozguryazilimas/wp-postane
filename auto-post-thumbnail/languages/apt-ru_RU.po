@@ -1,0 +1,249 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Auto Post Thumbnail\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-05 19:26+0000\n"
+"PO-Revision-Date: 2019-06-19 13:13+0300\n"
+"Last-Translator: admin <sasha.tesh@gmail.com>\n"
+"Language-Team: Русский\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && n"
+"%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Loco-Version: 2.2.0; wp-4.9.8\n"
+
+#: auto-post-thumbnail.php:201
+msgid "This plugin has been automatically deactivated."
+msgstr "Этот плагин был автоматически деактивирован."
+
+#: views/tab-main.php:18
+msgid ""
+"Currently there are no published posts available to generate thumbnails."
+msgstr ""
+"На данный момент у вас нет опубликованных записей для генерации изображений."
+
+#: views/tab-main.php:20
+msgid "We are generating post thumbnails. Please be patient!"
+msgstr "Начилась генерация изображений. Пожалуйста, подождите!"
+
+#: views/tab-main.php:32 views/tab-main.php:92
+msgid "You must enable Javascript in order to proceed!"
+msgstr "Вам нужно включить JavaScript чтобы продолжить!"
+
+#: views/tab-main.php:64
+#, php-format
+msgid "All done! Processed posts: %d"
+msgstr "Завершено! Обработано записей: %d"
+
+#: views/tab-main.php:79
+msgid ""
+"Use this tool to generate Post Thumbnail (Featured Thumbnail) for your "
+"Published posts."
+msgstr ""
+"Используйте этот инструмент для автоматической генерации изображений для "
+"опубликованных записей."
+
+#: views/tab-main.php:81
+msgid ""
+"If the script stops executing for any reason, just <strong>Reload</strong> "
+"the page and it will continue from where it stopped."
+msgstr ""
+"Если скрипт перестанет работать по какой-то причине, вы можете "
+"<strong>перезагрузить</strong> эту страницу и он продолжит свою работу с "
+"места где остановился."
+
+#: views/tab-main.php:88 views/index.php:13
+msgid "Generate Thumbnails"
+msgstr "Генерировать изображения"
+
+#: views/tab-main.php:97
+msgid ""
+"Note: Thumbnails won't be generated for posts that already have post "
+"thumbnail or <strong><em>skip_post_thumb</em></strong> custom meta field."
+msgstr ""
+"Обратите внимание: Изображения не будут сгенерированы для записей у которых "
+"уже есть изображение или имеют заполненное мета поле "
+"<strong><em>skip_post_thumb</em></strong>."
+
+#. Name of the plugin
+#: views/tab-about.php:81
+msgid "Auto Post Thumbnail"
+msgstr "Auto Post Thumbnail"
+
+#: views/tab-about.php:83
+msgid ""
+"We didn’t please you with updated lately. However, great news today! We are "
+"about to tell you about all the spectacular changes that are planned for our "
+"plugin!"
+msgstr ""
+"Мы давно не радовал Вас обновлениями, но сегодня у нас отличные новости ! Мы "
+"расскажем Вам о потрясающих изменениях, которые ждут наш плагин!"
+
+#: views/tab-about.php:85
+msgid ""
+"First of all, we proudly announce that a new group of developers, <span "
+"style=\"text-decoration: underline;\"><strong>Creative Motion</strong></"
+"span>, are helping us with plugin improvement."
+msgstr ""
+"Прежде всего, хотим сообщить, что теперь над улучшением плагина работает "
+"новая команда разработчиков  <span style=\"text-decoration: underline;"
+"\"><strong>Creative Motion</strong></span>."
+
+#: views/tab-about.php:87
+msgid ""
+"Auto Post Thumbnails has perfectly fit in our close family of popular "
+"plugins with more than 600,000 users worldwide."
+msgstr ""
+"Auto Post Thumbnails влился в нашу дружную семью плагинов, которыми "
+"пользуется более 600 тыс пользователей по всему миру."
+
+#: views/tab-about.php:89
+msgid "What you can expect soon:"
+msgstr "Что нового появится в ближайших релизах:"
+
+#: views/tab-about.php:100
+msgid ""
+"As you’ve already noticed, we haven’t updated the plugin for more than 2 "
+"years. This new version fixes existing problems. APT becomes a fully "
+"functional plugin."
+msgstr ""
+"Как вы могли заметить, плагин не обновлялся более 2 лет. В версии, которую "
+"вы только что установили, мы исправили существующие проблемы, теперь APT "
+"полностью работоспособен."
+
+#: views/tab-about.php:103
+msgid ""
+"In the next release, you can automatically generate featured images from any "
+"image in the post, not only the first one. Besides, we offer you an advanced "
+"tool – choose an image for the featured image right from the Posts tab. You "
+"no longer need to edit each post to install or change the featured image. "
+"Feel free to do it right from the list of posts. It saves much time and "
+"efforts. ​"
+msgstr ""
+"В следующем релизе плагина мы осуществили возможность автоматически "
+"генерировать изображение записи для ваших записей не только из первой "
+"картинке записи, но и из любой картинки записи. Кроме того, вам будет "
+"доступен продвинутый инструмент - выбор картинки для feature image прямо во "
+"вкладке “записи”. Больше не нужно редактировать каждую запись по "
+"отдельности, чтобы установить или изменить feature image, это можно сделать "
+"прямо в списке записей. Это значительно сэкономит ваше время и усилия."
+
+#: views/tab-about.php:108
+msgid ""
+"Starting from this version, the APT plugin evolves from being an aiding tool "
+"to the full-featured search & image editing system with a Creative Commons "
+"license for your website. <strong>It means that you get:</strong>"
+msgstr ""
+"Начиная с этой версии, плагин APT превращается из помощника в полноценную "
+"систему поиска и редактирования изображений с лицензией Creative Commons для "
+"вашего сайта. <strong>Что это означает</strong>:"
+
+#: views/tab-about.php:111
+msgid ""
+"Image search through the 5 popular stock services from the plugin interface. "
+"Just enter a search query and choose an image(images) you like."
+msgstr ""
+"Появится возможность поиска изображений из пяти популярных стоковых сервисов "
+"прямо в интерфейсе плагина. Просто введите поисковый запрос и выберите "
+"подходящее изображение или несколько изображений."
+
+#: views/tab-about.php:112
+msgid ""
+"Advanced APT editor. You can edit images using layers. It means that you can "
+"overlay text, logo, or mask, adjust color, brightness, and contract and use "
+"other great features. Save presets and apply them on any image in one click. "
+"The editor doesn’t replace the default WordPress editor."
+msgstr ""
+"Продвинутый редактор APT даст возможность редактировать изображения, "
+"используя слои. Это означает, что вы сможете наложить текст, логотип, маску "
+"на изображение, откорректировать яркости и контраст, сделать цветокоррекцию "
+"и еще много возможностей. Сохраняйте пресеты и применяйте их к любым "
+"картинками одним кликом. Редактор не заменяет стандартный редактор WordPress."
+
+#: views/tab-about.php:118
+msgid ""
+"Upload images from the external URL to your post or product (for "
+"Woocommerce)."
+msgstr ""
+"Возможность установки в качестве изображения в статью или товар (для "
+"Woocommerce) картинки из внешнего URL."
+
+#: views/tab-about.php:119
+msgid "Compatibility with the most popular builders."
+msgstr "Совместимость с самыми популярными билдерами."
+
+#: views/index.php:6
+msgid "Generate Post Thumbnails"
+msgstr "Генерация изображений для записей"
+
+#: views/index.php:17
+msgid "About"
+msgstr "О нас"
+
+#. Description of the plugin
+msgid ""
+"Automatically generate the Post Thumbnail (Featured Thumbnail) from the "
+"first image in post (or any custom post type) only if Post Thumbnail is not "
+"set manually."
+msgstr ""
+"Автоматически генерировать изображения для записи из ее первой картинки (или "
+"кастомных типов записей) только если изображение не установлено вручную."
+
+#. URI of the plugin
+msgid ""
+"http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-"
+"thumbnail/"
+msgstr ""
+"http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-"
+"thumbnail/"
+
+#. Author of the plugin
+msgid "Webcraftic <wordpress.webraftic@gmail.com>"
+msgstr "Webcraftic <wordpress.webraftic@gmail.com>"
+
+#. Author URI of the plugin
+msgid "webcraftic.com"
+msgstr "webcraftic.com"
+
+#. text
+msgid "Settings"
+msgstr "Настройки"
+
+#. text
+msgid "Custom generation"
+msgstr "Выборочная генерация"
+
+#. text
+msgid "Title"
+msgstr "Заголовок"
+
+#. text
+msgid "Author"
+msgstr "Автор"
+
+#. text
+msgid "Date"
+msgstr "Дата"
+
+#. text
+msgid "Enable automatic post thumbnail generation"
+msgstr "Включить автоматическую генерацию миниатюры поста"
+
+#. text
+msgid "Delete settings when removing the plugin"
+msgstr "Удалять настройки при удалении плагина"
+
+#. text
+msgid "Save settings"
+msgstr "Сохранить настройки"
+
+#. text
+msgid "Generate Thumbnail"
+msgstr "Генерировать изображение"
+
+#. text
+msgid "All done! Success processed posts: %d"
+msgstr "Завершено! Успешно обработано записей: %d"
