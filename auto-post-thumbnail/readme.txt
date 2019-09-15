@@ -1,54 +1,31 @@
 === Auto Post Thumbnail ===
-Contributors: creativemotion
-Tags: post thumbnail, post thumbnails, featured image, thumbnail, thumbnails
-Requires at least: 4.2
-Tested up to: 5.2
-Requires PHP: 5.4
-Stable tag: trunk
-License: GPLv2
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Contributors: tariquesani
+Tags: Post, thumbnail, automatic, posts, featured image, image, featured, images, admin
+Requires at least: 3.6.1
+Tested up to: 4.6.x
+Stable tag: 3.4.1
 
-Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post or any custom post type only if Post Thumbnail is not set manually. 
+Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post or any custom post type only if Post Thumbnail is not set manually.
 
 == Description ==
 
-Bulk Featured Images generation.
-Featured Images selective generation.
-Manual Featured Images Selection.
-Image search in Google, Unsplash, Pixabay.
-Compatibility with Elementor and Gutenberg. 
+Go PRO! A premium version of the plugin has been launched with many more features - [See for details](http://codecanyon.net/item/auto-post-thumbnail-pro/4322624?ref=sanisoft)
 
-In this tutorial you can get more information about new features.
-https://youtu.be/rucqKNdVQGY
+Auto post thumbnail is a plugin to generate post thumbnail from first image in post or any custom post type. If the first image doesn't work it will automatically search for the next one and so on until the post thumbnail is inserted.
+
+If the post thumbnail is already present, the plugin will do nothing.
+If you don't want a post thumbnail for some post with images, just add a custom field *skip_post_thumb* to the post and the plugin will restrain itself from generating post thumbnail.
+The plugin also provides a Batch Processing capability to generate post thumbnails for already published posts. A new menu item **Gen. Post Thumbnails** will get added under Tools menu after this plugin is installed.
+
+For more details, see http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-thumbnail/
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Use the Settings->APT - disable unused features screen to configure the plugin
-
-== Screenshots ==
-
-1. New image generation tools
-2. Bulk Featured Images generation
-3. Featured Images selective generation
-4. Manual Featured Images Selection
-5. Image search in Google, Unsplash, Pixabay
-6. Compatibility with Elementor and Gutenberg
+1. Upload directory 'auto-post-thumbnail' to the '/wp-content/plugins/' directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Sorry, no more steps :)
 
 == Changelog ==
-= 3.5.0 (2019-09-11) =
-* Fixed: Php warning "is_readable(): open_basedir restriction in effect". [more](https://wordpress.org/support/topic/today-after-the-update/)
-
-= 3.5.0 =
-* Fixed: Errors in the plugin on user requests
-* New: Bulk Featured Images generation
-* New: Featured Images selective generation
-* New: Manual Featured Images Selection
-* New: Image search in Google, Unsplash, Pixabay
-* New: Compatibility with Elementor and Gutenberg.
 
 = 3.4.1 =
 * Fix for unchecked extension of uploaded files
