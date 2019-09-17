@@ -276,7 +276,7 @@ var easy_fancybox_auto=function(){setTimeout(function(){jQuery(\'a[class*="'.$tr
 			$styles .= '#fancybox-title,#fancybox-title-float-main{color:'.$titleColor.'}';
 
 		if ( !empty($styles) )
-			self::$inline_style = $styles;
+			self::$inline_style = wp_strip_all_tags( $styles, true );
 
 		// running our IE alphaimageloader relative path styles here
 		if ( isset($compatIE8) && 'true' == $compatIE8 ) {
@@ -431,7 +431,7 @@ var easy_fancybox_auto=function(){setTimeout(function(){jQuery(\'a[class*="'.$tr
 	{
 		if ( !$old_version ) { // upgrade from 1.7 or older
 			if ( 'html' === get_option('fancybox_PDFclassType') ) {
-				update_option('fancybox_PDFonStart', 'function(selectedArray,selectedIndex,selectedOpts){selectedOpts.type=\'pdf\';}');
+				update_option('fancybox_PDFonStart', 'function(a,i,o){o.type=\'pdf\';}');
 				delete_option('fancybox_PDFclassType');
 			}
 		}
