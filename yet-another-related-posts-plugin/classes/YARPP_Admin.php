@@ -6,7 +6,7 @@ class YARPP_Admin {
   
   const ACTIVATE_TIMESTAMP_OPTION = 'yarpp_activate_timestamp';
   const REVIEW_DISMISS_OPTION = 'yarpp_review_notice';
-  const REVIEW_FIRST_PERIOD = 604800; // 7 days in seconds
+  const REVIEW_FIRST_PERIOD = 518400; // 6 days in seconds
   const REVIEW_LATER_PERIOD = 5184000; // 60 days in seconds
   const REVIEW_FOREVER_PERIOD = 63113904; // 2 years in seconds
   
@@ -78,7 +78,7 @@ class YARPP_Admin {
     $user_id = $current_user->ID;
     
     if (!is_admin() ||
-        !current_user_can('edit_posts') ||
+        !current_user_can('publish_posts') ||
         !isset($_GET['_wpnonce']) ||
         !wp_verify_nonce($_GET['_wpnonce'], 'review-nonce') ||
         !isset($_GET['yarpp_defer_t']) ||
@@ -166,13 +166,22 @@ class YARPP_Admin {
          }
         }
       </style>
+      
+      <script>
+        function yarpp_openWindowReload(link, reload) {
+          window.open(link, "_blank");
+          document.location.href = reload;
+        }
+      </script>	
+      
     <div class="notice notice-info is-dismissible yarpp-review-notice">
       <p class="yarpp-review-notice-text">' . __('Hey there! We noticed that you have had success using ', 'yarpp') . '<a href="' . admin_url('options-general.php?page=yarpp') . '">YARPP - Related Posts</a>! ' . __('Could you please do us a BIG favor and give us a quick 5-star rating on WordPress? It will boost our motivation and spread the word. We would really appreciate it 🤗 — Team YARPP', 'yarpp') . '
         <br />
         <br />
-        <a onclick="location.href=\'' . $dismiss_forever_url . '\';" class="button button-primary" href="' . esc_url('https://wordpress.org/support/plugin/yet-another-related-posts-plugin/reviews/?rate=5#new-post') . '" target="_blank">' . __('Ok, you deserve it', 'yarpp') . '</a> &nbsp; 
-        <a href="' . $dismiss_forlater_url . '">' . __('No, maybe later', 'yarpp') . '</a> &nbsp;
-        <a href="' . $dismiss_forever_url . '">' . __('I already did', 'yarpp') . '</a>
+        <a onClick="' . "yarpp_openWindowReload('https://wordpress.org/support/plugin/yet-another-related-posts-plugin/reviews/?rate=5#new-post', '$dismiss_forever_url')" . '" class="button button-primary">' . __('Ok, you deserve it', 'shareaholic') . '</a> &nbsp;
+        <a href="' . $dismiss_forlater_url . '">' . __('No, not good enough', 'yarpp') . '</a> &nbsp;
+        <a href="' . $dismiss_forever_url . '">' . __('I already did', 'yarpp') . '</a>  &nbsp;
+        <a href="' . $dismiss_forever_url . '">' . __('Dismiss', 'yarpp') . '</a>
       </p>
     </div>';
   }

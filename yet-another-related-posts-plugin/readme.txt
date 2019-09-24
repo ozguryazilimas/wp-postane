@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.2
 License: GPLv2 or later
 Tested up to: 5.2
-Stable tag: 5.1.0
+Stable tag: 5.1.1
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -233,7 +233,25 @@ Yes. Any taxonomy, including custom taxonomies, may be specified in the `weight`
 
 If you would like to choose custom taxonomies to choose in the YARPP settings UI, either to exclude certain terms or to consider them in the relatedness formula via the UI, the taxonomy must (a) have either the `show_ui` or `yarpp_support` attribute set to true and (b) must apply to either the post types `post` or `page` or both.
 
+= Can I disable the Review Notice forever? =
+
+If you want to prevent the Review Notice from appearing you can use the function below:
+
+`
+/**
+ * Disable YARPP Review Notice
+ *
+ */
+function yarpp_disable_review_notice() {
+  remove_action('admin_notices', array('YARPP_Admin', 'display_review_notice'));
+}
+add_action('admin_init', 'yarpp_disable_review_notice', 11);
+`
+
 == Changelog ==
+= 5.1.1 (2019-09-23) =
+* Enhancement: Review Notice updates + instructions on how to disable it programmatically
+
 = 5.1.0 (2019-07-10) =
 * [Bugfix](https://wordpress.org/support/topic/yarpp-broken-in-gutenberg-editor/): Related Posts metabox did not load within Gutenberg Editor
 * Bugfix: Fixed 'Deactivate YARPP Pro' button, including moving functionality to proper WP AJAX functions
@@ -886,6 +904,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.1.0 =
+= 5.1.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
