@@ -2,109 +2,194 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Auto Post Thumbnail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-05 19:26+0000\n"
-"PO-Revision-Date: 2019-06-19 13:13+0300\n"
-"Last-Translator: admin <sasha.tesh@gmail.com>\n"
+"POT-Creation-Date: 2019-10-03 11:05+0000\n"
+"PO-Revision-Date: 2019-10-03 11:08+0000\n"
+"Last-Translator: admin <webtemyk@yandex.ru>\n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && n"
-"%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
+"n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
-"X-Loco-Version: 2.2.0; wp-4.9.8\n"
-
-#: auto-post-thumbnail.php:201
-msgid "This plugin has been automatically deactivated."
-msgstr "Этот плагин был автоматически деактивирован."
-
-#: views/tab-main.php:18
-msgid ""
-"Currently there are no published posts available to generate thumbnails."
-msgstr ""
-"На данный момент у вас нет опубликованных записей для генерации изображений."
-
-#: views/tab-main.php:20
-msgid "We are generating post thumbnails. Please be patient!"
-msgstr "Начилась генерация изображений. Пожалуйста, подождите!"
-
-#: views/tab-main.php:32 views/tab-main.php:92
-msgid "You must enable Javascript in order to proceed!"
-msgstr "Вам нужно включить JavaScript чтобы продолжить!"
-
-#: views/tab-main.php:64
-#, php-format
-msgid "All done! Processed posts: %d"
-msgstr "Завершено! Обработано записей: %d"
-
-#: views/tab-main.php:79
-msgid ""
-"Use this tool to generate Post Thumbnail (Featured Thumbnail) for your "
-"Published posts."
-msgstr ""
-"Используйте этот инструмент для автоматической генерации изображений для "
-"опубликованных записей."
-
-#: views/tab-main.php:81
-msgid ""
-"If the script stops executing for any reason, just <strong>Reload</strong> "
-"the page and it will continue from where it stopped."
-msgstr ""
-"Если скрипт перестанет работать по какой-то причине, вы можете "
-"<strong>перезагрузить</strong> эту страницу и он продолжит свою работу с "
-"места где остановился."
-
-#: views/tab-main.php:88 views/index.php:13
-msgid "Generate Thumbnails"
-msgstr "Генерировать изображения"
-
-#: views/tab-main.php:97
-msgid ""
-"Note: Thumbnails won't be generated for posts that already have post "
-"thumbnail or <strong><em>skip_post_thumb</em></strong> custom meta field."
-msgstr ""
-"Обратите внимание: Изображения не будут сгенерированы для записей у которых "
-"уже есть изображение или имеют заполненное мета поле "
-"<strong><em>skip_post_thumb</em></strong>."
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.3.0; wp-5.2.3"
 
 #. Name of the plugin
-#: views/tab-about.php:81
+#: auto-post-thumbnail.php:48 includes/class-wapt-base.php:908
+#: admin/pages/generate.php:100
 msgid "Auto Post Thumbnail"
 msgstr "Auto Post Thumbnail"
 
-#: views/tab-about.php:83
+#: includes/class-wapt-base.php:200
+msgid "Use as thumbnail"
+msgstr "Применить изображение"
+
+#: includes/class-wapt-base.php:201 includes/class-wapt-base.php:865
+msgid "Change featured image"
+msgstr "Изменить изображение"
+
+#: includes/class-wapt-base.php:385
+msgid "This plugin has been automatically deactivated."
+msgstr "Этот плагин был автоматически деактивирован."
+
+#: includes/class-wapt-base.php:773
+msgid "Image"
+msgstr "Изображение"
+
+#: includes/class-wapt-base.php:862
+msgid "No image"
+msgstr "Нет изображений"
+
+#: includes/class-wapt-base.php:882
+msgid "Auto Post Thumbnails"
+msgstr "Auto Post Thumbnails"
+
+#: includes/class-wapt-base.php:882
+msgid "Add from APT"
+msgstr "Добавить через APT"
+
+#: includes/class-wapt-base.php:1090
+#, php-format
 msgid ""
-"We didn’t please you with updated lately. However, great news today! We are "
-"about to tell you about all the spectacular changes that are planned for our "
-"plugin!"
+"You have reached the limit at the moment. Try again in an 1 hour or <a "
+"href=\"%s\">Upgrade to Premium</a>"
 msgstr ""
-"Мы давно не радовал Вас обновлениями, но сегодня у нас отличные новости ! Мы "
-"расскажем Вам о потрясающих изменениях, которые ждут наш плагин!"
+"На данный момент Вы достигли лимита запросов. Повторите попытку через 1 час "
+"или <a href=\"%s\">обновите до Premium</a>"
 
-#: views/tab-about.php:85
+#: includes/class-wapt-base.php:1150
+#, php-format
 msgid ""
-"First of all, we proudly announce that a new group of developers, <span "
-"style=\"text-decoration: underline;\"><strong>Creative Motion</strong></"
-"span>, are helping us with plugin improvement."
+"To download images from Google, specify Google API keys in the <a href='%s'>"
+"settings</a>."
 msgstr ""
-"Прежде всего, хотим сообщить, что теперь над улучшением плагина работает "
-"новая команда разработчиков  <span style=\"text-decoration: underline;"
-"\"><strong>Creative Motion</strong></span>."
+"Чтобы загружать изображения из Google, укажите ключи API Google в <a "
+"href='%s'>настройках</a>."
 
-#: views/tab-about.php:87
+#: includes/class-wapt-plugin.php:122
+msgid "Generate featured image"
+msgstr "Генерировать изображение"
+
+#: includes/class-wapt-plugin.php:123
+msgid "Unset featured image"
+msgstr "Убрать изображение"
+
+#: includes/class-wapt-plugin.php:167
+msgid "Processed posts: "
+msgstr "Обработано постов:"
+
+#: includes/class-wapt-plugin.php:186
+msgid "Featured Image"
+msgstr "Изображение"
+
+#: includes/class-wapt-plugin.php:187
+msgid "With image"
+msgstr "С изображением"
+
+#: includes/class-wapt-plugin.php:188
+msgid "Without image"
+msgstr "Без изображения"
+
+#: includes/class-wapt-plugin.php:227
+msgid "Without featured image"
+msgstr "Без изображения"
+
+#: admin/ajax/check-license.php:27
+msgid "Licensing action not passed or this action is prohibited!"
+msgstr "Licensing action not passed or this action is prohibited!"
+
+#: admin/ajax/check-license.php:39
 msgid ""
-"Auto Post Thumbnails has perfectly fit in our close family of popular "
-"plugins with more than 600,000 users worldwide."
+"License key is empty or license key too long (license key is 32 characters "
+"long)"
 msgstr ""
-"Auto Post Thumbnails влился в нашу дружную семью плагинов, которыми "
-"пользуется более 600 тыс пользователей по всему миру."
+"Лицензионный ключ пуст или слишком длинный (длина лицензионного ключа "
+"составляет 32 символа)"
 
-#: views/tab-about.php:89
-msgid "What you can expect soon:"
-msgstr "Что нового появится в ближайших релизах:"
+#: admin/ajax/check-license.php:42
+msgid "Your license has been successfully activated"
+msgstr "Ваша лицензия успешно активирована"
 
-#: views/tab-about.php:100
+#: admin/ajax/check-license.php:47
+msgid "The license is deactivated"
+msgstr "Ваша лицензия деактивирована"
+
+#: admin/ajax/check-license.php:51
+msgid "The license has been updated"
+msgstr "Ваша лицензия была обновлена"
+
+#: admin/ajax/check-license.php:55
+msgid "Subscription success cancelled"
+msgstr "Подписка успешно отменена"
+
+#: admin/pages/about.php:45
+msgid "About APT"
+msgstr "О плагине Auto Post Thumbnail"
+
+#: admin/pages/about.php:46
+msgid "About"
+msgstr "О плагине"
+
+#: admin/pages/generate.php:101
+msgid "Generate featured images"
+msgstr "Генератор изображений"
+
+#: admin/pages/license.php:91
+msgid "License of APT"
+msgstr "Лицензия Auto Post Thumbnail"
+
+#: admin/pages/settings.php:46
+msgid "Settings of APT"
+msgstr "Настройки Auto Post Thumbnail"
+
+#. text
+#: admin/pages/settings.php:47
+msgid "Settings"
+msgstr "Настройки"
+
+#: admin/pages/settings.php:79
+msgid "Automatic post thumbnail generation"
+msgstr "Автоматическая генерация изображения поста"
+
+#. text
+#: admin/pages/settings.php:81
+msgid "Enable automatic post thumbnail generation"
+msgstr "Включает автоматическую генерацию изображений постов"
+
+#. text
+#: admin/pages/settings.php:88 admin/pages/settings.php:90
+msgid "Delete settings when removing the plugin"
+msgstr "Удалять настройки при удалении плагина"
+
+#: admin/pages/settings.php:95
+msgid "How to get google api key & custom search engine id"
+msgstr "Как получить Google API key и Custom Search Engine ID"
+
+#: admin/pages/settings.php:112
+msgid "API key for Google"
+msgstr "API ключ Google"
+
+#: admin/pages/settings.php:120
+msgid "Google Custom Search Engine ID"
+msgstr "Google Custom Search Engine ID"
+
+#: admin/pages/settings.php:121
+msgid "You can get API key after registration on the site"
+msgstr "Вы можете получить API ключ на сайте"
+
+#: admin/views/tab-about.php:110
+#, php-format
+msgid ""
+"We suppose you’ve noticed the changes which happened with <a href=\"%s\" "
+"target=\"_blank\" rel=\"noopener\">Auto Post Thumbnail</a>. In this tutorial "
+"you can get more information about new features."
+msgstr ""
+"Мы предполагаем, что вы заметили изменения, которые произошли с <a "
+"href=\"%s\" target=\"_blank\" rel=\"noopener\">Auto Post Thumbnail</a>. В "
+"этом уроке вы можете получить дополнительную информацию о новых функциях."
+
+#: admin/views/tab-about.php:118
 msgid ""
 "As you’ve already noticed, we haven’t updated the plugin for more than 2 "
 "years. This new version fixes existing problems. APT becomes a fully "
@@ -114,43 +199,47 @@ msgstr ""
 "вы только что установили, мы исправили существующие проблемы, теперь APT "
 "полностью работоспособен."
 
-#: views/tab-about.php:103
-msgid ""
-"In the next release, you can automatically generate featured images from any "
-"image in the post, not only the first one. Besides, we offer you an advanced "
-"tool – choose an image for the featured image right from the Posts tab. You "
-"no longer need to edit each post to install or change the featured image. "
-"Feel free to do it right from the list of posts. It saves much time and "
-"efforts. ​"
-msgstr ""
-"В следующем релизе плагина мы осуществили возможность автоматически "
-"генерировать изображение записи для ваших записей не только из первой "
-"картинке записи, но и из любой картинки записи. Кроме того, вам будет "
-"доступен продвинутый инструмент - выбор картинки для feature image прямо во "
-"вкладке “записи”. Больше не нужно редактировать каждую запись по "
-"отдельности, чтобы установить или изменить feature image, это можно сделать "
-"прямо в списке записей. Это значительно сэкономит ваше время и усилия."
-
-#: views/tab-about.php:108
+#: admin/views/tab-about.php:120
 msgid ""
 "Starting from this version, the APT plugin evolves from being an aiding tool "
 "to the full-featured search & image editing system with a Creative Commons "
-"license for your website. <strong>It means that you get:</strong>"
+"license for your website. It means that you get:"
 msgstr ""
-"Начиная с этой версии, плагин APT превращается из помощника в полноценную "
-"систему поиска и редактирования изображений с лицензией Creative Commons для "
-"вашего сайта. <strong>Что это означает</strong>:"
+"Начиная с этой версии, плагин APT превращается из вспомогательного "
+"инструмента в полнофункциональную систему поиска и редактирования "
+"изображений с лицензией Creative Commons для вашего сайта. Это означает, что "
+"вы получаете:"
 
-#: views/tab-about.php:111
+#: admin/views/tab-about.php:122
+msgid "Search and download images from Google"
+msgstr "Поиск и загрузка изображений из Google"
+
+#: admin/views/tab-about.php:123
+msgid "Auto generate feature image in editor"
+msgstr "Автоматическая генерация изображения в редакторе"
+
+#: admin/views/tab-about.php:124
 msgid ""
-"Image search through the 5 popular stock services from the plugin interface. "
-"Just enter a search query and choose an image(images) you like."
+"Image search through the 3 popular stock services from the plugin interface. "
+"Just enter a search query and choose an image (images) you like."
 msgstr ""
-"Появится возможность поиска изображений из пяти популярных стоковых сервисов "
-"прямо в интерфейсе плагина. Просто введите поисковый запрос и выберите "
-"подходящее изображение или несколько изображений."
+"Поиск изображений через три популярных фотостока из интерфейса плагина. "
+"Просто введите поисковый запрос и выберите понравившееся изображение "
+"(картинку)."
 
-#: views/tab-about.php:112
+#: admin/views/tab-about.php:128
+msgid ""
+"Upload images from the external URL to your post or product (for Woocommerce)"
+"."
+msgstr ""
+"Возможность установки в качестве изображения в статью или товар (для "
+"Woocommerce) картинки из внешнего URL."
+
+#: admin/views/tab-about.php:129
+msgid "Compatibility with the most popular builders."
+msgstr "Совместимость с самыми популярными билдерами."
+
+#: admin/views/tab-about.php:133
 msgid ""
 "Advanced APT editor. You can edit images using layers. It means that you can "
 "overlay text, logo, or mask, adjust color, brightness, and contract and use "
@@ -163,25 +252,173 @@ msgstr ""
 "и еще много возможностей. Сохраняйте пресеты и применяйте их к любым "
 "картинками одним кликом. Редактор не заменяет стандартный редактор WordPress."
 
-#: views/tab-about.php:118
-msgid ""
-"Upload images from the external URL to your post or product (for "
-"Woocommerce)."
+#: admin/views/tab-license.php:11
+#, php-format
+msgid "Activate %s"
 msgstr ""
-"Возможность установки в качестве изображения в статью или товар (для "
-"Woocommerce) картинки из внешнего URL."
 
-#: views/tab-about.php:119
-msgid "Compatibility with the most popular builders."
-msgstr "Совместимость с самыми популярными билдерами."
+#: admin/views/tab-license.php:22
+#, php-format
+msgid "Upgrade to Premium for $%s"
+msgstr ""
 
-#: views/index.php:6
-msgid "Generate Post Thumbnails"
-msgstr "Генерация изображений для записей"
+#: admin/views/tab-license.php:25
+#, php-format
+msgid "Your current license for %1$s:"
+msgstr ""
 
-#: views/index.php:17
-msgid "About"
-msgstr "О нас"
+#: admin/views/tab-license.php:31
+msgid "Delete Key"
+msgstr ""
+
+#: admin/views/tab-license.php:35
+msgid "Synchronization"
+msgstr ""
+
+#: admin/views/tab-license.php:54
+msgid ""
+"Public License is a GPLv2 compatible license allowing you to change and use "
+"this version of the plugin for free. Please keep in mind this license covers "
+"only free edition of the plugin. Premium versions are distributed with other "
+"type of a license."
+msgstr ""
+
+#: admin/views/tab-license.php:58
+msgid ""
+"You use a paid subscription for the plugin updates. In case you don’t want "
+"to receive paid updates, please, click <a data-action=\"unsubscribe\" "
+"class=\"wapt-control-btn\" href=\"#\">cancel subscription</a>"
+msgstr ""
+
+#: admin/views/tab-license.php:64
+msgid ""
+"Your license has expired, please extend the license to get updates and "
+"support."
+msgstr ""
+
+#: admin/views/tab-license.php:72
+msgid "domain"
+msgstr ""
+
+#: admin/views/tab-license.php:76
+msgid "plan"
+msgstr ""
+
+#: admin/views/tab-license.php:82
+msgid "of"
+msgstr ""
+
+#: admin/views/tab-license.php:84
+msgid "active sites"
+msgstr ""
+
+#: admin/views/tab-license.php:89
+msgid "version"
+msgstr ""
+
+#: admin/views/tab-license.php:94
+msgid "EXPIRED!"
+msgstr ""
+
+#: admin/views/tab-license.php:95
+msgid "please update the key"
+msgstr ""
+
+#: admin/views/tab-license.php:105
+msgid "day(s)"
+msgstr ""
+
+#: admin/views/tab-license.php:107
+msgid "remained"
+msgstr ""
+
+#: admin/views/tab-license.php:118
+msgid "Have a key to activate the premium version? Paste it here:"
+msgstr ""
+
+#: admin/views/tab-license.php:120
+msgid "Have a key to activate the plugin? Paste it here:"
+msgstr ""
+
+#: admin/views/tab-license.php:126
+msgid "Submit Key"
+msgstr ""
+
+#: admin/views/tab-license.php:134
+#, php-format
+msgid ""
+"<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Lean more</a> about the "
+"premium version and get the license key to activate it now!"
+msgstr ""
+
+#: admin/views/tab-license.php:138
+#, php-format
+msgid ""
+"Can’t find your key? Go to <a href=\"%s\" target=\"_blank\" rel=\"noopener\">"
+"this page</a> and login using the e-mail address associated with your "
+"purchase."
+msgstr ""
+
+#: admin/views/tab-main.php:2
+msgid "Generate Featured images for posts"
+msgstr "Генератор изображений для постов"
+
+#: admin/views/tab-main.php:22
+msgid "Generate Featured images"
+msgstr "Сгенерировать изображения"
+
+#: admin/views/tab-main.php:25
+msgid "Delete Featured images"
+msgstr "Убрать изображения"
+
+#: admin/views/tab-main.php:42
+msgid ""
+"Note: Thumbnails won't be generated for posts that already have post "
+"thumbnail or <strong><em>skip_post_thumb</em></strong> custom meta field."
+msgstr ""
+"Обратите внимание: Изображения не будут сгенерированы для записей у которых "
+"уже есть изображение или имеют заполненное мета поле <strong><em>"
+"skip_post_thumb</em></strong>."
+
+#: admin/views/tab-main.php:44
+msgid "You must enable Javascript in order to proceed!"
+msgstr "Вам нужно включить JavaScript чтобы продолжить!"
+
+#: admin/views/tab-main.php:103 admin/views/tab-main.php:164
+msgid "All done! Processed posts:"
+msgstr "Завершено! Обработано постов: "
+
+#: admin/views/tab-main.php:103
+msgid "Set featured image in posts:"
+msgstr "Добавлены изображения в посты:"
+
+#: admin/views/tab-main.php:164
+msgid "Delete featured image in posts:"
+msgstr "Убраны изображения из постов:"
+
+#: admin/views/sources/google.php:40
+msgid "No hits"
+msgstr "Нет результатов"
+
+#: admin/views/sources/google.php:156
+msgid "Search..."
+msgstr "Запрос для поиска"
+
+#: admin/views/sources/google.php:158
+msgid "Search"
+msgstr "Поиск"
+
+#: admin/views/sources/google.php:165
+msgid "Prev"
+msgstr "Предыдущая"
+
+#: admin/views/sources/google.php:168
+msgid "Next"
+msgstr "Следующая"
+
+#: admin/views/sources/google.php:177
+msgid "API key is missing. Add it in APT settings"
+msgstr "Ключ API не задан. Добавьте его в настройках Auto Post Thumbnail"
 
 #. Description of the plugin
 msgid ""
@@ -189,61 +426,17 @@ msgid ""
 "first image in post (or any custom post type) only if Post Thumbnail is not "
 "set manually."
 msgstr ""
-"Автоматически генерировать изображения для записи из ее первой картинки (или "
-"кастомных типов записей) только если изображение не установлено вручную."
+"Автоматически генерировать изображения для записи из ее первой картинки, "
+"только если изображение не установлено вручную."
 
 #. URI of the plugin
-msgid ""
-"http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-"
-"thumbnail/"
-msgstr ""
-"http://www.sanisoft.com/blog/2010/04/19/wordpress-plugin-automatic-post-"
-"thumbnail/"
+msgid "https://cm-wp.com/apt"
+msgstr "https://cm-wp.com/apt"
 
 #. Author of the plugin
-msgid "Webcraftic <wordpress.webraftic@gmail.com>"
-msgstr "Webcraftic <wordpress.webraftic@gmail.com>"
+msgid "Creativemotion <support@cm-wp.com>"
+msgstr "Creativemotion <support@cm-wp.com>"
 
 #. Author URI of the plugin
-msgid "webcraftic.com"
-msgstr "webcraftic.com"
-
-#. text
-msgid "Settings"
-msgstr "Настройки"
-
-#. text
-msgid "Custom generation"
-msgstr "Выборочная генерация"
-
-#. text
-msgid "Title"
-msgstr "Заголовок"
-
-#. text
-msgid "Author"
-msgstr "Автор"
-
-#. text
-msgid "Date"
-msgstr "Дата"
-
-#. text
-msgid "Enable automatic post thumbnail generation"
-msgstr "Включить автоматическую генерацию миниатюры поста"
-
-#. text
-msgid "Delete settings when removing the plugin"
-msgstr "Удалять настройки при удалении плагина"
-
-#. text
-msgid "Save settings"
-msgstr "Сохранить настройки"
-
-#. text
-msgid "Generate Thumbnail"
-msgstr "Генерировать изображение"
-
-#. text
-msgid "All done! Success processed posts: %d"
-msgstr "Завершено! Успешно обработано записей: %d"
+msgid "cm-wp.com"
+msgstr "cm-wp.com"

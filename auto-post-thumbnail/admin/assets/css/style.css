@@ -84,14 +84,16 @@
 .img
 {
     border-radius: 5px;
-    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.2);
 }
 .checked-img
- {
-     border: 3px solid #0079a9;
-     border-radius: 5px;
-     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
- }
+{
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+    border-radius: 5px;
+    /*border: 1px solid #0079a9;
+    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);*/
+}
 input
 {
     padding:7px 7px 7px 9px;
@@ -151,4 +153,45 @@ input
 {
     font-weight: bold;
     color: red;
+}
+/*Filters block*/
+.apt-filter-row
+{
+    background: #ffffff;
+    padding: 20px 10px 20px 10px;
+    margin: 10px 0px 10px 0px !important;
+    border: 1px solid #0085ba;
+    border-radius: 10px;
+}
+
+.apt-filter-input
+{
+    width: 150px;
+}
+
+.apt-filter-label
+{
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.checked_api_key_ok
+{
+    border: 2px solid green !important;
+}
+.checked_api_key_fail
+{
+    border: 2px solid red !important;
+}
+.checked_api_key_proccess
+{
+    background: #fff url('../img/ajax-loader.gif') 98%/25px no-repeat !important;
+}
+.grid-item {
+    background: url('../img/selected.png') center center no-repeat !important; /*icon by Icons8 https://icons8.ru/icons/set/ok */
+    float: left;
+    margin-bottom: 5px;
+    margin-right: 5px;
 }

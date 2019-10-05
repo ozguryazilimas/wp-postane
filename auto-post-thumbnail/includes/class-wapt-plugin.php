@@ -138,7 +138,7 @@ class WAPT_Plugin extends Wbcr_Factory421_Plugin {
 			switch($doaction)
 			{
 				case 'apt_generate_thumb':
-					auto_post_thumbnails()->publish_post($post_id);
+					$thumb = auto_post_thumbnails()->publish_post($post_id);
 					break;
 				case 'apt_delete_thumb':
 					delete_post_thumbnail($post_id);
@@ -146,7 +146,11 @@ class WAPT_Plugin extends Wbcr_Factory421_Plugin {
 			}
 		}
 
-		$redirect_to = add_query_arg( 'apt_bulk_action', count( $post_ids ), $redirect_to );
+		$redirect_to = add_query_arg(
+			array(
+				'apt_bulk_action' => count( $post_ids ),
+			),
+			$redirect_to );
 
 		return $redirect_to;
 	}
@@ -216,37 +220,13 @@ class WAPT_Plugin extends Wbcr_Factory421_Plugin {
 	 */
 	public function add_filter_link($views)
 	{
-		$args = array(
-			'post_type'  => 'post',
-			'meta_query' => array(
-				array(
-					'key'     => '_thumbnail_id',
-					'compare' => 'NOT EXISTS',
-				),
-			),
-		);
-		$my = new WP_Query($args);
+		$query = auto_post_thumbnails()->get_posts_query(false, 'publish','post');
+		$posts =  $query->post_count;
+
 		$q = add_query_arg( array('apt_is_image' => '0', 'post_type' => 'post'), 'edit.php' );
-		$views['apt_filter'] = '<a href="'.$q.'">'.__('Without featured image','apt').'</a> ('.$my->post_count.')';
+		$views['apt_filter'] = '<a href="'.$q.'">'.__('Without featured image','apt').'</a> ('.$posts.')';
 		unset($my);
 		return $views;
 
-	}
-
-	/**
-	 * Adding button fields
-	 * @param \Elementor\Widget_Base $button
-	 * @param array                  $args
-	 */
-	public function elementor_gallery_custom_button($button, $args)
-	{
-		$button->add_control( 'custom_button_type',
-			[
-				'label' => __( 'Add image from APT', 'apt' ),
-				'type' => \Elementor\Controls_Manager::BUTTON,
-				'text' => 'Add image',
-				'event' => 'apt:editor:gallery'
-			]
-		);
 	}
 }

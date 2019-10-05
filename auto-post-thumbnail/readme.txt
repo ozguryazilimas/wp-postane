@@ -12,14 +12,34 @@ Automatically generate the Post Thumbnail (Featured Thumbnail) from the first im
 
 == Description ==
 
-Bulk Featured Images generation.
-Featured Images selective generation.
-Manual Featured Images Selection.
-Image search in Google, Unsplash, Pixabay.
-Compatibility with Elementor and Gutenberg. 
+New image generation tools:
+You can generate featured images by single click as you did in the past. But comparing with last release  here appeared some new additional tools, so you can:
+Bulk generate or delete featured images.
+Selective generation and deletion of featured images using filters (PRO).
+Disable automatic post thumbnail generation.
+If you do not want the plug-in settings to be saved, after uninstalling, click “delete settings”.
+
+Bulk featured Images generation or unset in post list:
+Use bulk actions when you set featured images. For example Generate or Unset all of them.
+Also we changed the Posts list interface in dashboard and added a Column for displaying featured images. If any post stays without any featured image you’ll see this from the posts list. Opening post is unnecessary, that’s why It makes the process easier.
+
+Featured Images selective generation:
+Execute custom generation or unset featured images applying this tool for single or some posts.
+
+Manual Featured Images Selection:
+Select featured images from the post images when you are in dashboard’s Posts list. This feature is available for users who have PRO account.
+You can add featured images even if the picture is not uploaded to the medialibrary but inserted into the post using an external link or shortcode.
+
+Image search in Google, Unsplash, Pixabay:
+Search for images with Creative Commons license.
+It appeared new tab in the Media Library => Add from APT. There you can find images using popular free stock sites:  Google, Pixabay (pro), Unsplash (pro). Just enter a search query, choose the image and insert it into the Media library by single click.
+
+Compatibility with Elementor and Gutenberg:
+Auto Post Thumbnail is compatible with Classic Editor, Gutenberg and Elementor plugins.
 
 In this tutorial you can get more information about new features.
-https://youtu.be/rucqKNdVQGY
+
+http://cm-wp.com/apt/
 
 == Installation ==
 
@@ -39,6 +59,13 @@ This section describes how to install the plugin and get it working.
 6. Compatibility with Elementor and Gutenberg
 
 == Changelog ==
+= 3.6.0 =
+* New: Bulk delete thumbnails
+* New: Before searching images in the text of the post, the shortcodes are executed
+* Updated About page
+* Translation into Russian language
+* Other minor changes and bugfixes
+
 = 3.5.0 (2019-09-11) =
 * Fixed: Php warning "is_readable(): open_basedir restriction in effect". [more](https://wordpress.org/support/topic/today-after-the-update/)
 

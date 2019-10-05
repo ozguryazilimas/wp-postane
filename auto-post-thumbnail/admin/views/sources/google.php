@@ -1,5 +1,5 @@
 <?php  $ajaxloader = WAPT_PLUGIN_URL."/admin/assets/img/ajax-loader-line.gif";
-$apt_google_nonce = wp_create_nonce( 'apt_upload' );
+$apt_google_nonce = wp_create_nonce( 'apt_api' );
 
 $apt_google_key = WAPT_Plugin::app()->getOption('google_apikey');
 $apt_google_cse = WAPT_Plugin::app()->getOption('google_cse');
@@ -11,30 +11,50 @@ if($apt_google_key && $apt_google_cse)
 {
 ?>
 <script type="text/javascript">
-    var thisModal = window.parent.window.parent.window.wp.media.frame;
-    var API_KEY = '<?php  echo $apt_google_key;?>';
-    var CSE = '<?php  echo $apt_google_cse;?>';
-    function call_api(query, page = 1) {
-        if (page < 1) page = 1; //защита
-        var start = ((page-1)*10) + 1;
-        var URL = "https://www.googleapis.com/customsearch/v1?searchType=image&start="+start+"&q=" + encodeURIComponent(query) + "&key=" + API_KEY + "&cx=" + CSE;
 
-        jQuery.getJSON(URL, function (data) {
-            if (!parseInt(data.searchInformation.totalResults) > 0) {
-                jQuery('#loader_flex').hide();
-                jQuery('#page_num_div').hide();
-                jQuery('#prev_page').hide();
-                jQuery('#next_page').hide();
-                jQuery('#google_results').html('<?php  echo __( 'No hits', 'apt' ); ?>');
-                return false;
-            }
-            show_images(data, page);
-        });
+    function call_api(query, page = 1) {
+        jQuery.post(ajaxurl,
+            {
+                action: 'apt_api_google',
+                query: query,
+                page: page,
+                nonce: '<?php  echo $apt_google_nonce; ?>'
+            },
+            function (data) {
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    jQuery('#loader_flex').hide();
+                    jQuery('#page_num_div').hide();
+                    jQuery('#prev_page').hide();
+                    jQuery('#next_page').hide();
+                    jQuery('#google_results').html(data);
+                    return false;
+                }
+
+                if (!parseInt(data.searchInformation.totalResults) > 0) {
+                    jQuery('#loader_flex').hide();
+                    jQuery('#page_num_div').hide();
+                    jQuery('#prev_page').hide();
+                    jQuery('#next_page').hide();
+                    jQuery('#google_results').html('<?php  echo __( 'No hits', 'apt' ); ?>');
+                    return false;
+                }
+                show_images(data, page);
+            });
     }
 
     function show_images(data, page) {
         var s = '';
-        var totalhits = data.searchInformation.totalResults;
+        var totalhits = 100; //google limit
+        if (page > 1) jQuery('#prev_page').show();
+        else jQuery('#prev_page').hide();
+        if (page < parseInt(totalhits, 10) / 10) jQuery('#next_page').show();
+        else jQuery('#next_page').hide();
+
+        jQuery('#page_num_div').html(page);
+        jQuery('#page_num_div').show();
+
         jQuery.each(data.items, function (k, v) {
             descr = v.title;
             if(!descr) descr = "google_image";
@@ -57,13 +77,6 @@ if($apt_google_key && $apt_google_cse)
         jQuery('#google_results').html(jQuery('#google_results').html() + s);
         jQuery('.flex-images').flexImages({rowHeight: 160});
         jQuery('#loader_flex').hide();
-
-        if (page > 1) jQuery('#prev_page').show();
-        else jQuery('#prev_page').hide();
-        if (page < parseInt(totalhits, 10) / 20) jQuery('#next_page').show();
-
-        jQuery('#page_num_div').html(page);
-        jQuery('#page_num_div').show();
     }
 
     function do_submit() {

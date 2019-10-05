@@ -490,7 +490,8 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_AdminPage' ) ) {
 				if ( preg_match( '/\\\f\d{3}/', $this->menu_icon ) ) {
 					$icon_code = $this->menu_icon;
 				} else {
-					$icon_url         = str_replace( '~/', $this->plugin->get_paths()->url . '/', $this->menu_icon );
+					$plugin_path_info = $this->plugin->getPluginPathInfo();
+					$icon_url         = str_replace( '~/', $plugin_path_info->plugin_url . '/', $this->menu_icon );
 				}
 			}
 

@@ -23,6 +23,14 @@ class WAPT_Activation extends Wbcr_Factory421_Activator {
 	 */
 	public function activate() {
 		// Code to be executed during plugin activation
+		$limit = array(
+			'count' => 10,
+			'expires' => time(),
+		);
+		$google_limit = WAPT_Plugin::app()->getOption('google_limit');
+		if(!$google_limit) WAPT_Plugin::app()->updateOption('google_limit', $limit);
+
+		update_option( $this->plugin->getOptionName( 'whats_new_v360' ), 1 );
 	}
 
 	/**

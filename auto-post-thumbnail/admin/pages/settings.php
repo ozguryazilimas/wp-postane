@@ -76,7 +76,7 @@ class WAPT_Settings extends WAPT_Page {
 			'type'    => 'checkbox',
 			'way'     => 'buttons',
 			'name'    => 'auto_generation',
-			'title'   => __( 'Enable automatic post thumbnail generation', 'apt' ),
+			'title'   => __( 'Automatic post thumbnail generation', 'apt' ),
 			'default' => false,
 			'hint'    => __( 'Enable automatic post thumbnail generation', 'apt' )
 		];
@@ -97,6 +97,12 @@ class WAPT_Settings extends WAPT_Page {
 
 		$options[] = [
 			'type' => 'separator'
+		];
+
+		$options[] = [
+			'type'    => 'hidden',
+			'name'    => 'ajax_nonce',
+			'value' => wp_create_nonce( 'check-api-key' )
 		];
 
 		// Текстовое поле

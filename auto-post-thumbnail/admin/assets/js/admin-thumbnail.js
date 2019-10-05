@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
         //$modal.html('');
         $('.imgs').find('> p').html(''); //очистка всех модальных окон, чтобы исключить конфликты
 
-        tb_show( apt_thumb.modal_title, '/?TB_inline&inlineId=post_imgs_'+postid+'&width=600&height=500' );
+        tb_show( apt_thumb.modal_title, '/?TB_inline&inlineId=post_imgs_'+postid+'&width=620&height=500' );
 
         $ajaximg.show();
         // AJAX запрос для загрузки контента окна
@@ -34,7 +34,7 @@ jQuery(document).ready(function($){
             $modal.html(html);
             $('#apt_thumbid2').autocolumnlist({
                 columns: 3,
-                classname: 'column-apt',
+                classname: 'grid-item',
                 min: 1
             });
         });

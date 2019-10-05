@@ -11,7 +11,7 @@
  * @version       2.0.0
  * @since         4.0.9
  */
-// @formatter:off
+
 if ( ! class_exists( 'Wbcr_Factory421_Requirements' ) ) {
 	class Wbcr_Factory421_Requirements {
 
@@ -121,11 +121,11 @@ if ( ! class_exists( 'Wbcr_Factory421_Requirements' ) ) {
 			$this->plugin_basename = plugin_basename( $plugin_file );
 			$this->plugin_url      = plugins_url( null, $plugin_file );
 
-			$plugin_info = get_file_data( $this->plugin_file, array(
+			$plugin_info = get_file_data( $this->plugin_file, [
 				'Version'          => 'Version',
 				'FrameworkVersion' => 'Framework Version',
 				'TextDomain'       => 'Text Domain'
-			), 'plugin' );
+			], 'plugin' );
 
 			if ( isset( $plugin_info['FrameworkVersion'] ) ) {
 				$this->factory_version = $plugin_info['FrameworkVersion'];
@@ -139,7 +139,7 @@ if ( ! class_exists( 'Wbcr_Factory421_Requirements' ) ) {
 				$this->plugin_text_domain = $plugin_info['TextDomain'];
 			}
 
-			add_action( 'admin_init', array( $this, 'register_notices' ) );
+			add_action( 'admin_init', [ $this, 'register_notices' ] );
 		}
 
 		public function get_plugin_version() {
@@ -158,13 +158,13 @@ if ( ! class_exists( 'Wbcr_Factory421_Requirements' ) ) {
 			if ( current_user_can( 'activate_plugins' ) && current_user_can( 'edit_plugins' ) && current_user_can( 'install_plugins' ) ) {
 
 				if ( is_multisite() ) {
-					add_action( 'network_admin_notices', array( $this, 'show_notice' ) );
+					add_action( 'network_admin_notices', [ $this, 'show_notice' ] );
 
-					if ( ! empty( $this->plugin_basename ) && in_array( $this->plugin_basename, (array) get_option( 'active_plugins', array() ) ) ) {
-						add_action( 'admin_notices', array( $this, 'show_notice' ) );
+					if ( ! empty( $this->plugin_basename ) && in_array( $this->plugin_basename, (array) get_option( 'active_plugins', [] ) ) ) {
+						add_action( 'admin_notices', [ $this, 'show_notice' ] );
 					}
 				} else {
-					add_action( 'admin_notices', array( $this, 'show_notice' ) );
+					add_action( 'admin_notices', [ $this, 'show_notice' ] );
 				}
 			}
 		}
@@ -291,4 +291,3 @@ if ( ! class_exists( 'Wbcr_Factory421_Requirements' ) ) {
 		}
 	}
 }
-// @formatter:on

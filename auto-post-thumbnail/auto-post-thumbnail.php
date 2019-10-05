@@ -3,7 +3,7 @@
 Plugin Name: Auto Post Thumbnail
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post (or any custom post type) only if Post Thumbnail is not set manually.
-Version: 3.5.1
+Version: 3.6.0
 Author: Creativemotion <support@cm-wp.com>
 Author URI: cm-wp.com
 Text Domain: apt
