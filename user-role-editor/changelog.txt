@@ -1,6 +1,9 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.52] 07.10.2019 =
+* New:  Multisite: WordPress (tested up to version 5.2.3) shows "Change role to..." drop-down list at "Network Admin->Sites->selected site->Users tab" with roles filled from the main site, but should use roles list from the selected site. URE replaces this roles list with roles from the selected site and excludes error with message "Sorry, you are not allowed to give users that role.", when you try to grant to a user a role from the main site, which does not exist at the selected site.
+
 = [4.51.3] 02.09.2019 =
 * Fix:  line #281 at /includes/classes/view.php contained a call to the not existing class property.
 * Fix: Roles have saved in alphabet order after any role update. Roles order in the database is not changed now. Sorting is made for a view purpose only.

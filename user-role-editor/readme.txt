@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 5.2.2
-Stable tag: 4.51.3
+Tested up to: 5.2.3
+Stable tag: 4.52
 Requires PHP: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -81,6 +81,9 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog =
 
+= [4.52] 07.10.2019 =
+* New:  Multisite: WordPress (tested up to version 5.2.3) shows "Change role to..." drop-down list at "Network Admin->Sites->selected site->Users tab" with roles filled from the main site, but should use roles list from the selected site. URE replaces this roles list with roles from the selected site and excludes error with message "Sorry, you are not allowed to give users that role.", when you try to grant to a user a role from the main site, which does not exist at the selected site.
+
 = [4.51.3] 02.09.2019 =
 * Fix:  line #281 at /includes/classes/view.php contained a call to the not existing class property.
 * Fix: Roles have saved in alphabet order after any role update. Roles order in the database is not changed now. Sorting is made for a view purpose only.
@@ -89,9 +92,6 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 = [4.51.2] 15.07.2019 =
 * Fix: Dialog button labels inside User Role Editor ('Cancel' buttons especially) were shown with not correct translation or not translated at all. Thanks to @lucaboccianti for [this bug report](https://wordpress.org/support/topic/buttons-delete-role-cancel-dont-delete-role-inverted-functions-italian/).
 * Update: Roles inside WordPress roles dropdown lists are sorted by alphabet. 
-
-= [4.51.1] 15.06.2019 =
-* Fix: Superadmin could not revoke capabilities from 'administrator' role under WordPress multisite.
 
 File changelog.txt contains the full list of changes.
 
@@ -103,7 +103,5 @@ I am ready to answer on your questions about plugin usage. Use [plugin page comm
 
 == Upgrade Notice ==
 
-= [4.51.3] 02.09.2019 =
-* Fix:  line #281 at /includes/classes/view.php contained a call to the not existing class property.
-* Fix: Roles have saved in alphabet order after any role update. Roles order in the database is not changed now. Sorting is made for a view purpose only.
-* Update: Roles sorting inside WordPress roles dropdown lists is switched OFF by default. In order to switch WP roles dropdown lists sorting ON, return TRUE from 'ure_sort_wp_roles_list' filter.
+= [4.52] 07.10.2019 =
+* New:  Multisite: WordPress (tested up to version 5.2.3) shows "Change role to..." drop-down list at "Network Admin->Sites->selected site->Users tab" with roles filled from the main site, but should use roles list from the selected site. URE replaces this roles list with roles from the selected site and excludes error with message "Sorry, you are not allowed to give users that role.", when you try to grant to a user a role from the main site, which does not exist at the selected site.
