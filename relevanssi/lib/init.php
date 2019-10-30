@@ -26,8 +26,9 @@ add_action( 'delete_post', 'relevanssi_remove_doc' );
 
 // Comment indexing.
 add_action( 'comment_post', 'relevanssi_index_comment' );
-add_action( 'edit_comment', 'relevanssi_comment_edit' );
-add_action( 'delete_comment', 'relevanssi_comment_remove' );
+add_action( 'edit_comment', 'relevanssi_index_comment' );
+add_action( 'trashed_comment', 'relevanssi_index_comment' );
+add_action( 'deleted_comment', 'relevanssi_index_comment' );
 
 // Attachment indexing.
 add_action( 'delete_attachment', 'relevanssi_remove_doc' );
@@ -42,6 +43,7 @@ add_filter( 'relevanssi_remove_punctuation', 'relevanssi_remove_punct' );
 add_filter( 'relevanssi_post_ok', 'relevanssi_default_post_ok', 9, 2 );
 add_filter( 'relevanssi_query_filter', 'relevanssi_limit_filter' );
 add_action( 'relevanssi_trim_logs', 'relevanssi_trim_logs' );
+add_action( 'relevanssi_custom_field_value', 'relevanssi_filter_custom_fields', 10, 2 );
 
 // Plugin and theme compatibility.
 add_filter( 'relevanssi_pre_excerpt_content', 'relevanssi_remove_page_builder_shortcodes', 9 );
@@ -194,6 +196,10 @@ function relevanssi_init() {
 
 	// Always required, the functions check if TablePress is active.
 	require_once 'compatibility/tablepress.php';
+
+	if ( defined( 'NINJA_TABLES_VERSION' ) ) {
+		require_once 'compatibility/ninjatables.php';
+	}
 }
 
 /**
