@@ -4,8 +4,8 @@ Tags: related, related posts, similar posts, posts, pages, thumbnails, feeds, mu
 Requires at least: 3.7
 Requires PHP: 5.2
 License: GPLv2 or later
-Tested up to: 5.2
-Stable tag: 5.1.1
+Tested up to: 5.3
+Stable tag: 5.1.2
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -249,6 +249,9 @@ add_action('admin_init', 'yarpp_disable_review_notice', 11);
 `
 
 == Changelog ==
+= 5.1.2 (2019-11-06) =
+* Support for WordPress 5.3+
+
 = 5.1.1 (2019-09-23) =
 * Enhancement: Review Notice updates + instructions on how to disable it programmatically
 
@@ -904,6 +907,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.1.1 =
+= 5.1.2 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
