@@ -496,6 +496,66 @@ var AmeActorManager = /** @class */ (function () {
     AmeActorManager._ = wsAmeLodash;
     return AmeActorManager;
 }());
+var AmeObservableActorSettings = /** @class */ (function () {
+    function AmeObservableActorSettings(initialData) {
+        this.items = {};
+        this.numberOfObservables = ko.observable(0);
+        if (initialData) {
+            this.setAll(initialData);
+        }
+    }
+    AmeObservableActorSettings.prototype.get = function (actor, defaultValue) {
+        if (defaultValue === void 0) { defaultValue = null; }
+        if (this.items.hasOwnProperty(actor)) {
+            var value = this.items[actor]();
+            if (value === null) {
+                return defaultValue;
+            }
+            return value;
+        }
+        this.numberOfObservables(); //Establish a dependency.
+        return defaultValue;
+    };
+    AmeObservableActorSettings.prototype.set = function (actor, value) {
+        if (!this.items.hasOwnProperty(actor)) {
+            this.items[actor] = ko.observable(value);
+            this.numberOfObservables(this.numberOfObservables() + 1);
+        }
+        else {
+            this.items[actor](value);
+        }
+    };
+    AmeObservableActorSettings.prototype.getAll = function () {
+        var result = {};
+        for (var actorId in this.items) {
+            if (this.items.hasOwnProperty(actorId)) {
+                var value = this.items[actorId]();
+                if (value !== null) {
+                    result[actorId] = value;
+                }
+            }
+        }
+        return result;
+    };
+    AmeObservableActorSettings.prototype.setAll = function (values) {
+        for (var actorId in values) {
+            if (values.hasOwnProperty(actorId)) {
+                this.set(actorId, values[actorId]);
+            }
+        }
+    };
+    /**
+     * Reset all values to null.
+     */
+    AmeObservableActorSettings.prototype.resetAll = function () {
+        for (var actorId in this.items) {
+            if (this.items.hasOwnProperty(actorId)) {
+                this.items[actorId](null);
+            }
+        }
+    };
+    return AmeObservableActorSettings;
+}());
 if (typeof wsAmeActorData !== 'undefined') {
     AmeActors = new AmeActorManager(wsAmeActorData.roles, wsAmeActorData.users, wsAmeActorData.isMultisite, wsAmeActorData.suspectedMetaCaps);
     if (typeof wsAmeActorData['capPower'] !== 'undefined') {

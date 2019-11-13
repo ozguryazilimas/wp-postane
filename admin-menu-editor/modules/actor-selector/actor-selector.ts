@@ -280,4 +280,24 @@ class AmeActorSelector {
 		}
 		return name;
 	}
+
+	/**
+	 * Wrap the selected actor in a computed observable so that it can be used with Knockout.
+	 * @param ko
+	 */
+	createKnockoutObservable(ko: KnockoutStatic): KnockoutComputed<string> {
+		const internalObservable = ko.observable(this.selectedActor);
+		const publicObservable = ko.computed<string>({
+			read: function () {
+				return internalObservable();
+			},
+			write: (newActor: string) => {
+				this.setSelectedActor(newActor);
+			}
+		});
+		this.onChange((newSelectedActor: string) => {
+			internalObservable(newSelectedActor);
+		});
+		return publicObservable;
+	}
 }

@@ -657,6 +657,71 @@ interface AmeActorManagerInterface {
 	actorExists(actorId: string): boolean;
 }
 
+class AmeObservableActorSettings {
+	private items: { [actorId: string] : KnockoutObservable<boolean>; } = {};
+	private readonly numberOfObservables: KnockoutObservable<number>;
+
+	constructor(initialData?: AmeDictionary<boolean>) {
+		this.numberOfObservables = ko.observable(0);
+		if (initialData) {
+			this.setAll(initialData);
+		}
+	}
+
+	get(actor: string, defaultValue = null): boolean {
+		if (this.items.hasOwnProperty(actor)) {
+			let value = this.items[actor]();
+			if (value === null) {
+				return defaultValue;
+			}
+			return value;
+		}
+		this.numberOfObservables(); //Establish a dependency.
+		return defaultValue;
+	}
+
+	set(actor: string, value: boolean) {
+		if (!this.items.hasOwnProperty(actor)) {
+			this.items[actor] = ko.observable(value);
+			this.numberOfObservables(this.numberOfObservables() + 1);
+		} else {
+			this.items[actor](value);
+		}
+	}
+
+	getAll(): AmeDictionary<boolean> {
+		let result: AmeDictionary<boolean> = {};
+		for (let actorId in this.items) {
+			if (this.items.hasOwnProperty(actorId)) {
+				let value = this.items[actorId]();
+				if (value !== null) {
+					result[actorId] = value;
+				}
+			}
+		}
+		return result;
+	}
+
+	setAll(values: AmeDictionary<boolean>) {
+		for (let actorId in values) {
+			if (values.hasOwnProperty(actorId)) {
+				this.set(actorId, values[actorId]);
+			}
+		}
+	}
+
+	/**
+	 * Reset all values to null.
+	 */
+	resetAll() {
+		for (let actorId in this.items) {
+			if (this.items.hasOwnProperty(actorId)) {
+				this.items[actorId](null);
+			}
+		}
+	}
+}
+
 if (typeof wsAmeActorData !== 'undefined') {
 	AmeActors = new AmeActorManager(
 		wsAmeActorData.roles,

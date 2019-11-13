@@ -205,6 +205,26 @@ var AmeActorSelector = /** @class */ (function () {
         }
         return name;
     };
+    /**
+     * Wrap the selected actor in a computed observable so that it can be used with Knockout.
+     * @param ko
+     */
+    AmeActorSelector.prototype.createKnockoutObservable = function (ko) {
+        var _this = this;
+        var internalObservable = ko.observable(this.selectedActor);
+        var publicObservable = ko.computed({
+            read: function () {
+                return internalObservable();
+            },
+            write: function (newActor) {
+                _this.setSelectedActor(newActor);
+            }
+        });
+        this.onChange(function (newSelectedActor) {
+            internalObservable(newSelectedActor);
+        });
+        return publicObservable;
+    };
     AmeActorSelector._ = wsAmeLodash;
     return AmeActorSelector;
 }());

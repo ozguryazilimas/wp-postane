@@ -113,6 +113,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 */
 	private $access_test_runner = null;
 
+	/**
+	 * @var Exception|null
+	 */
+	private $last_menu_exception = null;
+
 	function init(){
 		$this->sitewide_options = true;
 
@@ -1276,24 +1281,46 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			return $this->test_menu;
 		}
 
-		if ( $config_id === 'network-admin' ) {
-			if ( empty($this->options['custom_network_menu']) ) {
-				return null;
+		try {
+			if ( $config_id === 'network-admin' ) {
+				if ( empty($this->options['custom_network_menu']) ) {
+					return null;
+				}
+				$this->cached_custom_menu = ameMenu::load_array($this->options['custom_network_menu']);
+			} else if ( $config_id === 'site' ) {
+				$site_specific_options = get_option($this->option_name, null);
+				if ( is_array($site_specific_options) && isset($site_specific_options['custom_menu']) ) {
+					$this->cached_custom_menu = ameMenu::load_array($site_specific_options['custom_menu']);
+				}
+			} else {
+				if ( empty($this->options['custom_menu']) ) {
+					return null;
+				}
+				$this->cached_custom_menu = ameMenu::load_array($this->options['custom_menu']);
 			}
-			$this->cached_custom_menu = ameMenu::load_array($this->options['custom_network_menu']);
-		} else if ( $config_id === 'site' ) {
-			$site_specific_options = get_option($this->option_name, null);
-			if ( is_array($site_specific_options) && isset($site_specific_options['custom_menu']) ) {
-				$this->cached_custom_menu = ameMenu::load_array($site_specific_options['custom_menu']);
+		} catch (InvalidMenuException $exception) {
+			if ( is_admin() && is_user_logged_in() && !did_action('all_admin_notices') ) {
+				add_action('all_admin_notices', array($this, 'show_config_corruption_error'));
+				$this->last_menu_exception = $exception;
 			}
-		} else {
-			if ( empty($this->options['custom_menu']) ) {
-				return null;
-			}
-			$this->cached_custom_menu = ameMenu::load_array($this->options['custom_menu']);
+			return null;
 		}
 
 		return $this->cached_custom_menu;
+	}
+
+	/**
+	 * Display a notice about the exception that was thrown when loading the menu configuration.
+	 */
+	public function show_config_corruption_error() {
+		if ( !$this->current_user_can_edit_menu() || is_null($this->last_menu_exception) ) {
+			return;
+		}
+		printf(
+			'<div class="notice notice-error"><p>%s</p></div>',
+			'<strong>Admin Menu Editor encountered an error while trying to load the menu configuration!</strong><br> '
+			. esc_html($this->last_menu_exception->getMessage())
+		);
 	}
 
 	private function guess_menu_config_id() {
@@ -2615,6 +2642,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$wrap_classes[] = 'ame-is-pro-version';
 		} else {
 			$wrap_classes[] = 'ame-is-free-version';
+		}
+		if ( isset($GLOBALS['wp_version']) && version_compare($GLOBALS['wp_version'], '5.3-RC1', '>=') ) {
+			$wrap_classes[] = 'ame-is-wp53-plus';
 		}
 
 		echo '<div class="', implode(' ', $wrap_classes), '">';
@@ -4177,11 +4207,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				'relativePath' => 'modules/admin-css/admin-css.php',
 				'className' => 'ameAdminCss',
 				'title' => 'Admin CSS',
-			),*/
-			/*'tweaks' => array(
-				'relativePath' => 'modules/tweaks/tweaks.php',
-				'className' => 'ameTweakManager',
-				'title' => 'Tweaks',
 			),*/
 			'hide-admin-menu' => array(
 				'relativePath' => 'extras/modules/hide-admin-menu/hide-admin-menu.php',

@@ -40,7 +40,7 @@ abstract class ameMenu {
 				$compared = version_compare($arr['format']['version'], self::format_version);
 				if ( $compared > 0 ) {
 					throw new InvalidMenuException(sprintf(
-						"Can't load a menu created by a newer version of the plugin. Menu format: '%s', newest supported format: '%s'.",
+						"Can't load a menu created by a newer version of the plugin. Menu format: '%s', newest supported format: '%s'. Try updating the plugin.",
 						$arr['format']['version'],
 						self::format_version
 					));
@@ -99,7 +99,7 @@ abstract class ameMenu {
 				$is_valid_preset = true;
 				foreach($preset as $property => $color) {
 					//Note: It would good to check $property against a list of known color names.
-					if ( !is_string($property) || !is_string($color) || !preg_match('/^\#[0-9a-f]{6}$/i', $color) ) {
+					if ( !is_string($property) || !is_string($color) || !preg_match('/^#[0-9a-f]{6}$/i', $color) ) {
 						$is_valid_preset = false;
 						break;
 					}
@@ -206,7 +206,22 @@ abstract class ameMenu {
 	 */
 	public static function to_json($menu) {
 		$menu = self::add_format_header($menu);
-		return json_encode($menu);
+		$result = json_encode($menu);
+		if ( !is_string($result) ) {
+			$message = sprintf(
+				'Failed to encode the menu configuration as JSON. json_encode returned a %s.',
+				gettype($result)
+			);
+			if ( function_exists('json_last_error') ) {
+				/** @noinspection PhpComposerExtensionStubsInspection */
+				$message .= sprintf(' JSON error code: %d.', json_last_error());
+			}
+			if ( function_exists('json_last_error_msg') ) {
+				$message .= sprintf(' JSON error message: %s', json_last_error_msg());
+			}
+			throw new RuntimeException($message);
+		}
+		return $result;
 	}
 
   /**
