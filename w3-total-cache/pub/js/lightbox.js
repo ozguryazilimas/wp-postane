@@ -16,7 +16,7 @@ var W3tc_Lightbox = {
 			display: 'none'
 		});
 
-		jQuery('#w3tc').append(this.container);
+		jQuery('body').append(this.container);
 		me.resize();
 		this.window.resize(function() {
 			me.resize();
@@ -382,14 +382,23 @@ function w3tc_lightbox_self_test(nonce) {
 	});
 }
 
-function w3tc_lightbox_upgrade(nonce, data_src) {
-  W3tc_Lightbox.open({
-	id: 'w3tc-overlay',
-	close: '',
-	width: 800,
-	height: 350,
-	url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_upgrade&_wpnonce=' +
-		encodeURIComponent(nonce) + '&data_src=' + encodeURIComponent(data_src),
+function w3tc_lightbox_upgrade(nonce, data_src, renew_key) {
+	var client_id = '';
+	if (window.w3tc_ga) {
+		w3tc_ga(function(tracker) {
+			client_id = tracker.get('clientId');
+		});
+	}
+
+  	W3tc_Lightbox.open({
+		id: 'w3tc-overlay',
+		close: '',
+		width: 800,
+		height: 350,
+		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_upgrade&_wpnonce=' +
+		encodeURIComponent(nonce) + '&data_src=' + encodeURIComponent(data_src) +
+		(renew_key ? '&renew_key=' + encodeURIComponent(renew_key) : '') +
+		(client_id ? '&client_id=' + encodeURIComponent(client_id) : ''),
 	callback: function(lightbox) {
 		lightbox.options.height = jQuery('#w3tc-upgrade').height() - 57;
 		jQuery('.button-primary', lightbox.container).click(function() {
@@ -397,7 +406,7 @@ function w3tc_lightbox_upgrade(nonce, data_src) {
 		});
 		jQuery('#w3tc-purchase', lightbox.container).click(function() {
 			lightbox.close();
-			w3tc_lightbox_buy_plugin(nonce);
+			w3tc_lightbox_buy_plugin(nonce, data_src, renew_key, client_id);
 		});
 		jQuery('#w3tc-purchase-link', lightbox.container).click(function() {
 			lightbox.close();
@@ -411,13 +420,17 @@ function w3tc_lightbox_upgrade(nonce, data_src) {
   });
 }
 
-function w3tc_lightbox_buy_plugin(nonce) {
+function w3tc_lightbox_buy_plugin(nonce, data_src, renew_key, client_id) {
 	W3tc_Lightbox.open({
 		width: 800,
 		minHeight: 350,
 		maxWidth: jQuery(window).width() - 40,
 		maxHeight: jQuery(window).height() - 40,
-		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_buy_plugin&_wpnonce=' + nonce,
+		url: 'admin.php?page=w3tc_dashboard&w3tc_licensing_buy_plugin' +
+			'&_wpnonce=' + encodeURIComponent(nonce) +
+			'&data_src=' + encodeURIComponent(data_src) +
+			(renew_key ? '&renew_key=' + encodeURIComponent(renew_key) : '') +
+			(client_id ? '&client_id=' + encodeURIComponent(client_id) : ''),
 		callback: function(lightbox) {
 			var w3tc_license_listener = function(event) {
 				if (event.origin.substr(event.origin.length - 12) !== ".w3-edge.com")
@@ -486,7 +499,13 @@ jQuery(function() {
 
 	jQuery('.button-buy-plugin').click(function() {
 		var data_src = jQuery(this).attr('data-src');
-		w3tc_lightbox_upgrade(w3tc_nonce, data_src);
+		var nonce = jQuery(this).attr('data-nonce');
+		if (!nonce) {
+			nonce = w3tc_nonce;
+		}
+		var renew_key = jQuery(this).attr('data-renew-key');
+
+		w3tc_lightbox_upgrade(nonce, data_src, renew_key);
 		jQuery('#w3tc-license-instruction').show();
 		return false;
 	});

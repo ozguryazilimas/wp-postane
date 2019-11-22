@@ -60,9 +60,7 @@ class Minify_Plugin {
 			array( $this, 'w3tc_admin_bar_menu' ) );
 
 		add_filter( 'w3tc_footer_comment', array(
-				$this,
-				'w3tc_footer_comment'
-			) );
+				$this, 'w3tc_footer_comment' ) );
 
 		if ( $this->_config->get_string( 'minify.engine' ) == 'file' ) {
 			add_action( 'w3_minify_cleanup', array(
@@ -70,6 +68,8 @@ class Minify_Plugin {
 					'cleanup'
 				) );
 		}
+		add_filter( 'w3tc_pagecache_set_header',
+			array( $this, 'w3tc_pagecache_set_header' ), 20, 2 );
 
 		// usage statistics handling
 		add_action( 'w3tc_usage_statistics_of_request', array(
@@ -199,7 +199,7 @@ class Minify_Plugin {
 					$this->remove_styles_group( $buffer, 'include' );
 				}
 
-				if ( $this->_config->get_boolean( 'minify.css.http2push' ) ) {
+				if ( $this->_config->getf_boolean( 'minify.css.http2push' ) ) {
 					$this->minify_helpers->http2_header_add( $style['url'],
 						'style' );
 				}
@@ -207,7 +207,7 @@ class Minify_Plugin {
 
 			if ( $js_enable ) {
 				$embed_type = $this->_config->get_string( 'minify.js.header.embed_type' );
-				$http2push = $this->_config->get_boolean( 'minify.js.http2push' );
+				$http2push = $this->_config->getf_boolean( 'minify.js.http2push' );
 
 				$script = $this->get_script_group( 'include', $embed_type );
 
@@ -987,16 +987,33 @@ class Minify_Plugin {
 	}
 
 
+
 	public function w3tc_usage_statistics_of_request( $storage ) {
 		$o = Dispatcher::component( 'Minify_MinifiedFileRequestHandler' );
 		$o->w3tc_usage_statistics_of_request( $storage );
 	}
+
+
 
 	public function w3tc_usage_statistics_metrics( $metrics ) {
 		return array_merge( $metrics, array(
 				'minify_requests_total',
 				'minify_original_length_css', 'minify_output_length_css',
 				'minify_original_length_js', 'minify_output_length_js', ) );
+	}
+
+
+
+	public function w3tc_pagecache_set_header( $header, $header_original ) {
+		if ( $header_original['n'] == 'Link' &&
+				false !== strpos( $header_original['v'], 'rel=preload' ) ) {
+			// store preload Link headers in cache
+			$new = $header_original;
+			$new['files_match'] = '\\.html[_a-z]*$';
+			return $new;
+		}
+
+		return $header;
 	}
 }
 

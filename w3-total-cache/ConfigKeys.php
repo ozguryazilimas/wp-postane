@@ -83,6 +83,10 @@ $keys = array(
 		'type' => 'string',
 		'default' => ''
 	),
+	'dbcache.memcached.binary_protocol' => array(
+		'type' => 'boolean',
+		'default' => true
+	),
 	'dbcache.redis.persistent' => array(
 		'type' => 'boolean',
 		'default' => true
@@ -153,6 +157,49 @@ $keys = array(
 		)
 	),
 
+	'lazyload.enabled' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
+	'lazyload.process_img' => array(
+		'type' => 'boolean',
+		'default' => true
+	),
+	'lazyload.process_background' => array(
+		'type' => 'boolean',
+		'default' => true
+	),
+	'lazyload.exclude' => array(
+		'type' => 'array',
+		'default' => array(
+			'avia-bg-style-fixed',
+			'data-bgposition=',
+			'data-envira-src=',
+			'data-large_image=',
+			'data-lazy-original=',
+			'data-lazy-src=',
+			'data-lazyload=',
+			'data-lazysrc=',
+			'data-no-lazy=',
+			'data-src=',
+			'data-srcset=',
+			'fullurl=',
+			'lazy-slider-img=',
+			'loading="eager"',
+			'no-lazy',
+			'rev-slidebg',
+			'soliloquy-image',
+			'swatch-img',
+			'w3-total-cache',
+			'woocommerce/assets/images/placeholder.png',
+			'wpcf7_captcha',
+		)
+	),
+	'lazyload.embed_method' => array(
+		'type' => 'string',
+		'default' => 'async_head'
+	),
+
 	'objectcache.configuration_overloaded' => array(
 		'type' => 'boolean',
 		'default' => false
@@ -206,6 +253,10 @@ $keys = array(
 	'objectcache.memcached.password' => array(
 		'type' => 'string',
 		'default' => ''
+	),
+	'objectcache.memcached.binary_protocol' => array(
+		'type' => 'boolean',
+		'default' => true
 	),
 	'objectcache.redis.persistent' => array(
 		'type' => 'boolean',
@@ -315,6 +366,10 @@ $keys = array(
 	'pgcache.memcached.password' => array(
 		'type' => 'string',
 		'default' => ''
+	),
+	'pgcache.memcached.binary_protocol' => array(
+		'type' => 'boolean',
+		'default' => true
 	),
 	'pgcache.redis.persistent' => array(
 		'type' => 'boolean',
@@ -681,6 +736,10 @@ $keys = array(
 	'minify.memcached.password' => array(
 		'type' => 'string',
 		'default' => ''
+	),
+	'minify.memcached.binary_protocol' => array(
+		'type' => 'boolean',
+		'default' => true
 	),
 	'minify.redis.persistent' => array(
 		'type' => 'boolean',
@@ -2309,7 +2368,6 @@ $keys = array(
 	'extensions.active' => array(
 		'type' => 'array',
 		'default' => array(
-			'newrelic' => 'w3-total-cache/Extension_NewRelic_Plugin.php',
 			'fragmentcache' => 'w3-total-cache/Extension_FragmentCache_Plugin.php'
 		)
 	),

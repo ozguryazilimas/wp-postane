@@ -101,11 +101,7 @@ class BrowserCache_Environment {
 	 * @return array
 	 */
 	public function get_mime_types() {
-		$a = array(
-			'cssjs' => include W3TC_INC_DIR . '/mime/cssjs.php',
-			'html' => include W3TC_INC_DIR . '/mime/html.php',
-			'other' => include W3TC_INC_DIR . '/mime/other.php'
-		);
+		$a = Util_Mime::sections_to_mime_types_map();
 
 		$other_compression = $a['other'];
 		unset( $other_compression['asf|asx|wax|wmv|wmx'] );
@@ -510,10 +506,6 @@ class BrowserCache_Environment {
 		$rules = '';
 		$headers_rules = '';
 
-		if ( $section == 'html' ) {
-			$headers_rules .= "        Header append Vary User-Agent env=!dont-vary\n";
-		}
-
 		if ( $cache_control ) {
 			$cache_policy = $config->get_string( 'browsercache.' . $section . '.cache.policy' );
 
@@ -658,8 +650,8 @@ class BrowserCache_Environment {
 			unset( $brotli_types['odp'] );
 
 			$rules .= "brotli on;\n";
-			$rules .= "brotli_types " .
-			          implode( ' ', array_unique( $brotli_types ) ) . ";\n";
+			$rules .= 'brotli_types ' .
+				implode( ' ', array_unique( $brotli_types ) ) . ";\n";
 		}
 
 		$cssjs_compression = $config->get_boolean( 'browsercache.cssjs.compression' );

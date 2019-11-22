@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 define( 'W3TC', true );
-define( 'W3TC_VERSION', '0.10.2' );
+define( 'W3TC_VERSION', '0.11.0' );
 define( 'W3TC_POWERED_BY', 'W3 Total Cache' );
 define( 'W3TC_EMAIL', 'w3tc@w3-edge.com' );
 define( 'W3TC_TEXT_DOMAIN', 'w3-total-cache' );
@@ -127,6 +127,10 @@ if ( !defined( 'W3TC_EXTENSION_DIR' ) ) {
 if ( !defined( 'W3TC_WP_JSON_URI' ) ) {
 	define( 'W3TC_WP_JSON_URI', '/wp-json/' );
 }
+if ( !defined( 'W3TC_FEED_REGEXP' ) ) {
+	define( 'W3TC_FEED_REGEXP', '~/feed(/|$)~' );
+}
+
 
 @ini_set( 'pcre.backtrack_limit', 4194304 );
 @ini_set( 'pcre.recursion_limit', 4194304 );

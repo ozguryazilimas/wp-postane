@@ -200,40 +200,43 @@ class ObjectCache_WpObjectCache_Regular {
 		/**
 		 * Add debug info
 		 */
-		if ( !$in_incall_cache && ( $this->_debug || $this->stats_enabled ) ) {
-			$time = Util_Debug::microtime() - $time_start;
-			$this->time_total += $time;
+		if ( !$in_incall_cache ) {
 			$this->cache_total += $cache_total_inc;
 			$this->cache_hits += $cache_hits_inc;
 
-			if ( $this->_debug ) {
-				if ( $fallback_used ) {
-					if ( !$found ) {
-						$returned = 'not in db';
-					} else {
-						$returned = 'from db fallback';
-					}
-				} else {
-					if ( !$found ) {
-						if ( $cache_total_inc <= 0 ) {
-							$returned = 'not tried cache';
+			if ( $this->_debug || $this->stats_enabled ) {
+				$time = Util_Debug::microtime() - $time_start;
+				$this->time_total += $time;
+
+				if ( $this->_debug ) {
+					if ( $fallback_used ) {
+						if ( !$found ) {
+							$returned = 'not in db';
 						} else {
-							$returned = 'not in cache';
+							$returned = 'from db fallback';
 						}
 					} else {
-						$returned = 'from persistent cache';
+						if ( !$found ) {
+							if ( $cache_total_inc <= 0 ) {
+								$returned = 'not tried cache';
+							} else {
+								$returned = 'not in cache';
+							}
+						} else {
+							$returned = 'from persistent cache';
+						}
 					}
-				}
 
-				$this->log_call( array(
-					date( 'r' ),
-					'get',
-					$group,
-					$id,
-					$returned,
-					( $value ? strlen( serialize( $value ) ) : 0 ),
-					(int)($time * 1000000)
-				) );
+					$this->log_call( array(
+						date( 'r' ),
+						'get',
+						$group,
+						$id,
+						$returned,
+						( $value ? strlen( serialize( $value ) ) : 0 ),
+						(int)($time * 1000000)
+					) );
+				}
 			}
 		}
 
@@ -682,7 +685,8 @@ class ObjectCache_WpObjectCache_Regular {
 				'persistent' => $this->_config->get_boolean( 'objectcache.memcached.persistent' ),
 				'aws_autodiscovery' => $this->_config->get_boolean( 'objectcache.memcached.aws_autodiscovery' ),
 				'username' => $this->_config->get_string( 'objectcache.memcached.username' ),
-				'password' => $this->_config->get_string( 'objectcache.memcached.password' )
+				'password' => $this->_config->get_string( 'objectcache.memcached.password' ),
+				'binary_protocol' => $this->_config->get_boolean( 'objectcache.memcached.binary_protocol' )
 			);
 			break;
 
@@ -729,7 +733,8 @@ class ObjectCache_WpObjectCache_Regular {
 						'objectcache.memcached.persistent' ),
 					'aws_autodiscovery' => $this->_config->get_boolean( 'objectcache.memcached.aws_autodiscovery' ),
 					'username' => $this->_config->get_string( 'objectcache.memcached.username' ),
-					'password' => $this->_config->get_string( 'objectcache.memcached.password' )
+					'password' => $this->_config->get_string( 'objectcache.memcached.password' ),
+					'binary_protocol' => $this->_config->get_boolean( 'objectcache.memcached.binary_protocol' )
 				);
 				break;
 
