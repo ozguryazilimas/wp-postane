@@ -45,8 +45,9 @@ add_filter( 'relevanssi_query_filter', 'relevanssi_limit_filter' );
 add_action( 'relevanssi_trim_logs', 'relevanssi_trim_logs' );
 add_action( 'relevanssi_custom_field_value', 'relevanssi_filter_custom_fields', 10, 2 );
 
-// Plugin and theme compatibility.
+// Page builder shortcodes.
 add_filter( 'relevanssi_pre_excerpt_content', 'relevanssi_remove_page_builder_shortcodes', 9 );
+add_filter( 'relevanssi_post_content', 'relevanssi_remove_page_builder_shortcodes', 9 );
 
 // Permalink handling.
 add_filter( 'the_permalink', 'relevanssi_permalink', 10, 2 );
@@ -199,6 +200,11 @@ function relevanssi_init() {
 
 	if ( defined( 'NINJA_TABLES_VERSION' ) ) {
 		require_once 'compatibility/ninjatables.php';
+	}
+
+	// For problems in 2.5.0 / 4.4.0. Remove eventually.
+	if ( empty( get_option( 'relevanssi_stopwords', '' ) ) ) {
+		relevanssi_populate_stopwords();
 	}
 }
 
@@ -424,7 +430,7 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		update_option( 'relevanssi_db_version', $relevanssi_db_version );
 	}
 
-	if ( $wpdb->get_var( "SELECT COUNT(*) FROM $relevanssi_stopword_table WHERE 1" ) < 1 ) { // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
+	if ( empty( get_option( 'relevanssi_stopwords', '' ) ) ) {
 		relevanssi_populate_stopwords();
 	}
 }

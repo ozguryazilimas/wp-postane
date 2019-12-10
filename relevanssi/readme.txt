@@ -2,10 +2,10 @@
 Contributors: msaari
 Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search
-Requires at least: 4.8.3
+Requires at least: 4.9
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 4.3.4
+Stable tag: 4.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,7 @@ Do note that using Relevanssi may require large amounts (hundreds of megabytes) 
 * Search comments, tags, categories and custom fields.
 * Multisite friendly.
 * bbPress support.
+* Gutenberg friendly.
 
 = Advanced features =
 * Adjust the weighting for titles, tags and comments.
@@ -38,7 +39,7 @@ Do note that using Relevanssi may require large amounts (hundreds of megabytes) 
 * Index the contents of shortcodes.
 * Google-style "Did you mean?" suggestions based on successful user searches.
 * Support for [WPML multi-language plugin](http://wpml.org/) and [Polylang](https://wordpress.org/plugins/polylang/).
-* Support for [s2member membership plugin](http://www.s2member.com/), [Members](https://wordpress.org/plugins/members/), [Groups](https://wordpress.org/plugins/groups/) and [Simple Membership](https://wordpress.org/plugins/simple-membership/).
+* Support for [s2member membership plugin](http://www.s2member.com/), [Members](https://wordpress.org/plugins/members/), [Groups](https://wordpress.org/plugins/groups/), [Simple Membership](https://wordpress.org/plugins/simple-membership/) and other membership plugins.
 * Advanced filtering to help hacking the search results the way you want.
 * Search result throttling to improve performance on large databases.
 * Disable indexing of post content and post titles with a simple filter hook.
@@ -55,7 +56,8 @@ Do note that using Relevanssi may require large amounts (hundreds of megabytes) 
 * Let the user choose between AND and OR searches, use + and - operator (AND and NOT).
 * Export and import settings.
 * [WP CLI commands](https://www.relevanssi.com/user-manual/wp-cli/).
-* Related posts.
+* [Related posts](https://www.relevanssi.com/knowledge-base/related-posts/).
+* [Redirects for searches](https://www.relevanssi.com/user-manual/redirects/).
 
 = Relevanssi in Facebook =
 You can find [Relevanssi in Facebook](https://www.facebook.com/relevanssi).
@@ -121,6 +123,8 @@ Thus, the weight of the word for a document increases the more often it appears 
 
 Each document database is full of useless words. All the little words that appear in just about every document are completely useless for information retrieval purposes. Basically, their inverted document frequency is really low, so they never have much power in matching. Also, removing those words helps to make the index smaller and searching faster.
 
+[](http://coderisk.com/wp/plugin/relevanssi/RIPS-XC1ekC4JKr)
+
 == Thanks ==
 * Cristian Damm for tag indexing, comment indexing, post/page exclusion and general helpfulness.
 * Marcus Dalgren for UTF-8 fixing.
@@ -129,6 +133,20 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.4.1 =
+* Major fix: Returns the missing stopwords.
+
+= 4.4.0 =
+* New feature: It's now possible to exclude image attachments from the index with a simple setting on the indexing settings page.
+* New feature: Page builder short codes are now removed in Relevanssi indexing. This should reduce the amount of garbage data indexed for posts in Divi, Avada and other page builder themes.
+* Changed behaviour: The `relevanssi_page_builder_shortcodes` filter hook is now applied both in indexing and excerpts, and has a second parameter that will inform you of the current context.
+* Minor fix: Stopwords weren't case insensitive like they should. They are now. Also, stopwords are no longer stored in the `wp_relevanssi_stopwords` database table, but are now stored in the `relevanssi_stopwords` option.
+* Minor fix: A comma at the end of the custom field indexing setting made Relevanssi index all custom fields. This doesn't happen anymore and trailing commas are automatically removed, too.
+* Minor fix: Accessibility improvements all around the admin interface. Screen reader support should be better, feel free to report any further ways to make this better.
+* Minor fix: Doing searches without search terms and with the throttle disabled could cause problems. Relevanssi now makes sure throttle is always on when doing termless searches.
+* Minor fix: Untokenized search terms are used for building excerpts, which makes highlighting in excerpts work better.
+* Minor fix: Indexing did not adjust the number of posts indexed at one go like it should.
+
 = 4.3.4 =
 * New feature: You can now give Gutenberg blocks a CSS class `relevanssi_noindex` to exclude them from being indexed. Relevanssi will not index Gutenberg blocks that have the class.
 * New feature: Relevanssi automatically skips some custom fields from common plugins that only contain unnecessary metadata.
@@ -183,6 +201,12 @@ Each document database is full of useless words. All the little words that appea
 * Deprecated: `relevanssi_get_term_taxonomy()` function is deprecated and will be removed at some point in the future.
 
 == Upgrade notice ==
+= 4.4.1 =
+* Fixes missing stopwords problem in 4.4.0.
+
+= 4.4.0 =
+* Changes in relevanssi_page_builder_shortcodes filter hook, page builder indexing and image attachments.
+
 = 4.3.4 =
 * Comment indexing bug fix, compatibility improvements and minor bug fixes and improvements.
 

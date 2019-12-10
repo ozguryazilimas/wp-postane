@@ -99,6 +99,14 @@ function relevanssi_generate_indexing_query( $valid_status, $extend = false, $re
 	global $wpdb, $relevanssi_variables;
 	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
 
+	if ( 'off' === get_option( 'relevanssi_index_image_files', 'off' ) ) {
+		$restriction .= "
+		AND post.ID NOT IN (
+		SELECT ID FROM $wpdb->posts WHERE post_type = 'attachment'
+		AND post_mime_type LIKE 'image%' )
+	";
+	}
+
 	/**
 	 * Filters the WHERE restriction for indexing queries.
 	 *
@@ -1176,6 +1184,8 @@ function relevanssi_index_custom_fields( &$insert_data, $post_id, $custom_fields
 		relevanssi_add_repeater_fields( $custom_fields, $post_id );
 	}
 
+	$custom_fields = array_filter( $custom_fields );
+
 	if ( $debug ) {
 		relevanssi_debug_echo( 'Custom fields to index: ' . implode( ', ', $custom_fields ) );
 	}
@@ -1518,6 +1528,7 @@ function relevanssi_disable_shortcodes() {
 		'gravityform', // Gravity Forms.
 		'sdm_latest_downloads', // SDM Simple Download Monitor.
 		'slimstat', // Slimstat Analytics.
+		'ninja_tables', // Ninja Tables.
 	);
 
 	$disable_shortcodes = get_option( 'relevanssi_disable_shortcodes' );
