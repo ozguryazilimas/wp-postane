@@ -1689,6 +1689,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//Move orphaned items back to their original parents.
 		foreach($orphans as $item) {
 			$defaultParent = $item['defaults']['parent'];
+			//TODO: Apparently 'parent' might not exist in some configurations. Unknown bug.
 			if ( isset($defaultParent) && isset($tree[$defaultParent]) ) {
 				$tree[$defaultParent]['items'][] = $item;
 			} else {
@@ -3450,8 +3451,11 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$this->post = $this->originalPost = $_POST;
 		$this->get = $_GET;
 
-		/** @noinspection PhpDeprecationInspection */
-		if ( function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() ) {
+		if (
+			version_compare(phpversion(), '7.4.0alpha1', '<')
+			&& function_exists('get_magic_quotes_gpc')
+			&& get_magic_quotes_gpc()
+		) {
 			$this->post = stripslashes_deep($this->post);
 			$this->get = stripslashes_deep($this->get);
 		}

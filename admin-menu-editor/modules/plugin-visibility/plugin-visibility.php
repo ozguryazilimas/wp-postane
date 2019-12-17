@@ -154,6 +154,10 @@ class amePluginVisibility extends amePersistentModule {
 	 * @return array
 	 */
 	public function filterPluginList($plugins) {
+		if ( !is_array($plugins) && !($plugins instanceof ArrayAccess) ) {
+			return $plugins;
+		}
+
 		$user = wp_get_current_user();
 		$settings = $this->loadSettings();
 
