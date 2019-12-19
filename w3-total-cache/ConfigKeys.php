@@ -2267,10 +2267,6 @@ $keys = array(
 	),
 
 
-	'common.support' => array(
-		'type' => 'string',
-		'default' => ''
-	),
 	'common.track_usage' => array(
 		'type' => 'boolean',
 		'default' => false
@@ -2372,6 +2368,10 @@ $keys = array(
 		)
 	),
 	'extensions.active_frontend' => array(
+		'type' => 'array',
+		'default' => array()
+	),
+	'extensions.active_dropin' => array(
 		'type' => 'array',
 		'default' => array()
 	),
