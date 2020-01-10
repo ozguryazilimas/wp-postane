@@ -152,8 +152,8 @@ function monsterinsights_admin_scripts() {
 		'monsterinsights-admin-common-script',
 		'monsterinsights_admin_common',
 		array(
-			'ajax'                 => admin_url( 'admin-ajax.php' ),
-			'dismiss_notice_nonce' => wp_create_nonce( 'monsterinsights-dismiss-notice' ),
+			'ajax'                  => admin_url( 'admin-ajax.php' ),
+			'dismiss_notice_nonce'  => wp_create_nonce( 'monsterinsights-dismiss-notice' ),
 		)
 	);
 
