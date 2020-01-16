@@ -5,12 +5,15 @@
     <div class="wlcms-help">
         <p><?php _e('Completely customise the login page by entering your own CSS.', 'white-label-cms') ?></p>
         <p><?php _e('For example', 'white-label-cms') ?>:<br/>
+        <code>
         .login form { background-color: #0013FF }<br/>
-        .login #login p#nav a { color: #333 !important }<br/>
+        &nbsp;.login #login p#nav a { color: #333 !important }</code>
         </p>
         <p>
         <?php _e('Or if you want to get fancy', 'white-label-cms') ?>:<br/>
+        <code>
         #wlcms-login-wrapper{ background: url('wp-content/plugins/white-label-cms/images/footergrass.jpg') repeat-x fixed center bottom transparent; display: block; height: 100%; left: 0; overflow: auto; position: absolute; top: 0; width: 100%;}
+</code>
         </p>
     </div>
 </div>

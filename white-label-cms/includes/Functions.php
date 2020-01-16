@@ -87,6 +87,19 @@ if (!function_exists('wlcms_add_js')) {
         wlcms()->Admin_Script()->appendJs($js);
     }
 }
+
+if (!function_exists('is_wlcms_super_admin')) {
+    function is_wlcms_super_admin()
+    {
+        if( ! current_user_can( 'install_plugins' ) ) return false;
+
+        $enable_wlcms_admin = (bool) wlcms_field_setting('enable_wlcms_admin');
+        if( ! is_wlcms_admin() && $enable_wlcms_admin ) return false;
+
+        return true;
+    }
+}
+
 if (!function_exists('is_wlcms_admin')) {
     function is_wlcms_admin()
     {

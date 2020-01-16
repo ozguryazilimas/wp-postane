@@ -61,11 +61,12 @@ class WLCMS_Admin_Settings
 
     private function set_admin_css()
     {
+
         if (!$admin_style = wlcms_field_setting('settings_custom_css_admin')) {
             return;
         }
 
-        wlcms()->Admin_Script()->appendCss($admin_style);
+        wlcms()->Admin_Script()->appendAdminCss($admin_style);
 
     }
 

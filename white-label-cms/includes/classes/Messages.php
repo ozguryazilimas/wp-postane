@@ -27,7 +27,6 @@ class WLCMS_Messages
 
         $errors = "";
         if (is_array($group_messages)) {
-
             foreach ($group_messages as $class => $messages) {
                 $errors .= '<div class="notice notice-' . $class . ' is-dismissible"">';
                 foreach ($messages as $message) {
@@ -50,5 +49,3 @@ if (class_exists('WLCMS_Messages') && !function_exists('WLCMS_Queue')) {
         WLCMS_Messages::queue($message, $class);
     }
 }
-
-add_action('admin_notices', array('WLCMS_Messages', 'show'));

@@ -425,7 +425,8 @@ class WLCMS_Admin_Menus
         if (is_array($flat) && $flat > 0) :
             foreach ($flat as $a) {
             if ($this->excluded_admin_menu($a->id)) continue;
-            $parents[$a->parent][] = $a;
+            $menu_parent = ($a->parent == '') ? false : $a->parent; 
+            $parents[$menu_parent][] = $a;
         }
         $sub_root = isset($parents[$root]) ? $parents[$root] : array();
         endif;

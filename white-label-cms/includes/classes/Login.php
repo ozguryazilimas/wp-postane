@@ -46,6 +46,7 @@ class WLCMS_Login extends WLCMS_Previewable
 
         echo '<script>';
         echo 'jQuery(document).ready(function(){';
+        echo $this->set_custom_login_js();
         echo $this->get_js();
         echo '});';
         echo '</script>';
@@ -237,6 +238,10 @@ class WLCMS_Login extends WLCMS_Previewable
         return $this->get_settings('login_custom_css');
     }
 
+    private function set_custom_login_js()
+    {
+        return $this->get_settings('login_custom_js');
+    }
     public function settings()
     {
         if ($this->saving_preview_section() == 'wizard') {
@@ -291,7 +296,8 @@ class WLCMS_Login extends WLCMS_Previewable
             'back_to_register_link_hover_color' => '',
             'privacy_policy_link_color' => '',
             'privacy_policy_link_hover_color' => '',
-            'login_custom_css' => ''
+            'login_custom_css' => '',
+            'login_custom_js' => ''
         );
 
         return array_merge($settings, $this->wizard_settings());

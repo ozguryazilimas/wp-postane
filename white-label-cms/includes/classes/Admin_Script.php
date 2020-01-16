@@ -4,6 +4,7 @@ class WLCMS_Admin_Script
 {
 
     private $css = array();
+    private $admin_css = '';
     private $bulk_css = array();
     private $hidded_elements = array();
     private $js = array();
@@ -24,9 +25,10 @@ class WLCMS_Admin_Script
         if (!is_user_logged_in()) {
             return;
         }
+        
         $scripts = "<!-- WLCMS Style-->\n";
-        if (count($this->css) || count($this->hidded_elements) || count($this->bulk_css)) {
-            $scripts .= sprintf('<style type="text/css">%s %s</style>', $this->compileCss(), $this->additional_css);
+        if (count($this->css) || count($this->hidded_elements) || count($this->bulk_css) || !empty($this->admin_css) ) {
+            $scripts .= sprintf('<style type="text/css">%s %s %s</style>', $this->admin_css, $this->compileCss(), $this->additional_css);
         }
         $scripts .= "\n<!-- WLCMS End Style-->";
         echo $scripts;
@@ -74,15 +76,15 @@ class WLCMS_Admin_Script
 
     private function _setHiddenCss()
     {
-        $hidden = implode($this->hidded_elements, ',');
+        $hidden = implode(',', $this->hidded_elements);
         if (!empty($hidden)) {
-            $this->setCss($hidden, array('display' => 'none'));
+            $this->setCss($hidden, array('display' => 'none!important'));
         }
     }
 
     private function _setBulkCss()
     {
-        return implode($this->bulk_css, '');
+        return implode('', $this->bulk_css);
     }
 
     public function appendJs($js)
@@ -92,14 +94,18 @@ class WLCMS_Admin_Script
 
     function compileJs()
     {
-        return implode($this->js, '');
+        return implode('', $this->js);
     }
 
+    function appendAdminCss($admin_css)
+    {
+        $this->admin_css = $admin_css;
+    }
     function compileCss()
     {
         $this->_setHiddenCss();
 
-        if (!count($this->css)) {
+        if (!count($this->css) && !$this->bulk_css) {
             return;
         }
 

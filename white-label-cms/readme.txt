@@ -8,8 +8,8 @@ Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugi
 Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
-Tested up to: 5.1
-Stable tag: 2.1.1
+Tested up to: 5.3.2
+Stable tag: 2.1.2
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -66,40 +66,11 @@ There is so much that you can do with White Label CMS, but we want the experienc
 
 == Changelog ==
 
-= 2.1.1 =
-* Fixed Dashboard for Beaver Builder margin and padding
-
-= 2.1 =
-* Support Internationalization
-* Added a body class to differentiate WLCMS Admin or not, by adding body.not-wlcms-admin or and body.wlcms-admin
+= 2.1.2 =
+* Support fonts import
+* Added custom javascript for the login page
+* Fixed PHP implode function compatibility
 * Minor fixes
-
-= 2.0.2.2 =
-* Use space to remove howdy
-* Change login logo url if custom logo setup
-* Moved wlcms style to header
-* Hiding Dashboard widgets can now configured by user role
-* Minor fixes
-
-= 2.0.2.1 =
-
-* Bug fixed involving object cache which is causing redirect loop
-* Fixed unable to upgrade themes and plugins
-* Fixed legacy custom welcome dashboard
-* Fixed legacy import
-* Minor fixes
-
-= 2.0 =
-
-**Major Enhancements**
-* Re-designed Setting form
-* Added a wizard setting
-* Added Side Menu logo
-* Added more design control on the login form
-* Login live preview
-* Custom Welcome Panel now supports Elementor and Beaver Builder Pro Templates
-* Revised menus system visibility
-* Added Hide Front-end Admin Bar
 
 == Frequently Asked Questions ==
 = Who is this plugin for?=

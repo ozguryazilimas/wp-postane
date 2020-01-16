@@ -1,7 +1,39 @@
 == Changelog ==
 
+= 2.1.1 =
+* Fixed Dashboard for Beaver Builder margin and padding
+
+= 2.1 =
+* Support Internationalization
+* Added a body class to differentiate WLCMS Admin or not, by adding body.not-wlcms-admin or and body.wlcms-admin
+* Minor fixes
+
+= 2.0.2.2 =
+* Use space to remove howdy
+* Change login logo url if custom logo setup
+* Moved wlcms style to header
+* Hiding Dashboard widgets can now configured by user role
+* Minor fixes
+
+= 2.0.2.1 =
+
+* Bug fixed involving object cache which is causing redirect loop
+* Fixed unable to upgrade themes and plugins
+* Fixed legacy custom welcome dashboard
+* Fixed legacy import
+* Minor fixes
+
 = 2.0 =
-UX changes and added more functionalities
+
+**Major Enhancements**
+* Re-designed Setting form
+* Added a wizard setting
+* Added Side Menu logo
+* Added more design control on the login form
+* Login live preview
+* Custom Welcome Panel now supports Elementor and Beaver Builder Pro Templates
+* Revised menus system visibility
+* Added Hide Front-end Admin Bar
 
 = 1.6.4 =
 Update images directory

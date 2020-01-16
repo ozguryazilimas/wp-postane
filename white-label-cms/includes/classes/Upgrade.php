@@ -344,6 +344,7 @@ class WLCMS_Upgrades
             'retina_login_logo' => 'wlcms_o_login_custom_logo',
             'background_color' => 'wlcms_o_loginbg_white',
             'login_custom_css' => 'wlcms_o_login_bg_css',
+            'login_custom_js' => 'wlcms_o_login_bg_js',
             'dashboard_icon' => 'wlcms_o_header_custom_logo',
             'dashboard_title' => 'wlcms_o_dashboard_override',
             'hide_all_dashboard_panels' => 'wlcms_o_dashboard_others',
