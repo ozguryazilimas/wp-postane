@@ -67,6 +67,12 @@ function relevanssi_options() {
 			relevanssi_remove_all_stopwords();
 		}
 
+		if ( isset( $_REQUEST['repopulatestopwords'] ) ) {
+			check_admin_referer( plugin_basename( $relevanssi_variables['file'] ), 'relevanssi_options' );
+			$verbose = true;
+			relevanssi_populate_stopwords( $verbose );
+		}
+
 		if ( isset( $_REQUEST['addbodystopword'] ) ) {
 			check_admin_referer( plugin_basename( $relevanssi_variables['file'] ), 'relevanssi_options' );
 			relevanssi_add_body_stopword( $_REQUEST['addbodystopword'] );
@@ -403,7 +409,7 @@ function update_relevanssi_options() {
 		update_option( 'relevanssi_class', $_REQUEST['relevanssi_class'] );
 	}
 	if ( isset( $_REQUEST['relevanssi_expst'] ) ) {
-		update_option( 'relevanssi_exclude_posts', $_REQUEST['relevanssi_expst'] );
+		update_option( 'relevanssi_exclude_posts', trim( $_REQUEST['relevanssi_expst'], ' ,' ) );
 	}
 	if ( isset( $_REQUEST['relevanssi_hilite_title'] ) ) {
 		update_option( 'relevanssi_hilite_title', $_REQUEST['relevanssi_hilite_title'] );
@@ -749,7 +755,12 @@ function relevanssi_date_queries( $days, $title, $version = 'good' ) {
 		$url = get_bloginfo( 'url' );
 		foreach ( $queries as $query ) {
 			$search_parameter = rawurlencode( $query->query );
-			$query_url        = $url . '/?s=' . $search_parameter;
+			/**
+			 * Filters the query URL for the user searches page.
+			 *
+			 * @param string Query URL.
+			 */
+			$query_url = apply_filters( 'relevanssi_user_searches_query_url', $url . '/?s=' . $search_parameter );
 			printf(
 				"<tr><td><a href='%s'>%s</a></td><td style='padding: 3px 5px; text-align: center'>%d</td><td style='padding: 3px 5px; text-align: center'>%d</td></tr>",
 				esc_attr( $query_url ),

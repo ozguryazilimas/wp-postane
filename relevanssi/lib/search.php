@@ -192,7 +192,6 @@ function relevanssi_search( $args ) {
 	$mysqlcolumn_matches = array();
 	$author_matches      = array();
 	$excerpt_matches     = array();
-	$scores              = array();
 	$term_hits           = array();
 
 	$fuzzy = get_option( 'relevanssi_fuzzy' );
@@ -581,10 +580,6 @@ function relevanssi_search( $args ) {
 						$doc_weight[ $match->doc ] = 0;
 					}
 					$doc_weight[ $match->doc ] += $match->weight;
-					if ( ! isset( $scores[ $match->doc ] ) ) {
-						$scores[ $match->doc ] = 0;
-					}
-					$scores[ $match->doc ] += $match->weight;
 					// For AND searches, add the posts to the $include_these lists, so that
 					// nothing is missed.
 					if ( is_numeric( $match->doc ) && 'AND' === $operator ) {
@@ -706,6 +701,7 @@ function relevanssi_search( $args ) {
 			$mysqlcolumn_matches = $return['mysqlcolumn_matches'];
 			$excerpt_matches     = $return['excerpt_matches'];
 			$term_hits           = $return['term_hits'];
+			$doc_weight          = $return['doc_weights'];
 			$q                   = $return['query'];
 		}
 		$params = array( 'args' => $args );
@@ -735,6 +731,7 @@ function relevanssi_search( $args ) {
 			$mysqlcolumn_matches = $return['mysqlcolumn_matches'];
 			$excerpt_matches     = $return['excerpt_matches'];
 			$term_hits           = $return['term_hits'];
+			$doc_weight          = $return['doc_weights'];
 			$q                   = $return['query'];
 		}
 	}
@@ -747,10 +744,10 @@ function relevanssi_search( $args ) {
 		/**
 		 * Filters the 'orderby' value just before sorting.
 		 *
-		 * Relevanssi can use both array orderby ie. array( orderby => order ) with
-		 * multiple orderby parameters, or a single pair of orderby and order
-		 * parameters. To avoid problems, try sticking to one and don't use this
-		 * filter to make surprising changes between different formats.
+		 * Relevanssi can use both array orderby ie. array( orderby => order )
+		 * with multiple orderby parameters, or a single pair of orderby and
+		 * order parameters. To avoid problems, try sticking to one and don't
+		 * use this filter to make surprising changes between different formats.
 		 *
 		 * @param string The 'orderby' parameter.
 		 */
@@ -794,9 +791,9 @@ function relevanssi_search( $args ) {
 		'mysqlcolumn_matches' => $mysqlcolumn_matches,
 		'author_matches'      => $author_matches,
 		'excerpt_matches'     => $excerpt_matches,
-		'scores'              => $scores,
 		'term_hits'           => $term_hits,
 		'query'               => $q,
+		'doc_weights'         => $doc_weight,
 	);
 
 	return $return;
@@ -938,17 +935,34 @@ function relevanssi_do_query( &$query ) {
 			$highlight                    = get_option( 'relevanssi_highlight' );
 			if ( 'none' !== $highlight ) {
 				if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-					$post->post_highlighted_title = relevanssi_highlight_terms( $post->post_highlighted_title, $q );
+					$post->post_highlighted_title = relevanssi_highlight_terms(
+						$post->post_highlighted_title,
+						$q
+					);
 				}
 			}
 		}
+
+		/*
+		 * If you need to modify these on the go, use
+		 * 'pre_option_relevanssi_excerpt_length' and
+		 * pre_option_relevanssi_excerpt_type' filters.
+		 */
+		$excerpt_length = get_option( 'relevanssi_excerpt_length' );
+		$excerpt_type   = get_option( 'relevanssi_excerpt_type' );
 
 		if ( 'on' === $make_excerpts && empty( $search_params['fields'] ) ) {
 			if ( isset( $post->blog_id ) ) {
 				switch_to_blog( $post->blog_id );
 			}
 			$post->original_excerpt = $post->post_excerpt;
-			$post->post_excerpt     = relevanssi_do_excerpt( $post, $q );
+			$post->post_excerpt     = relevanssi_do_excerpt(
+				$post,
+				$q,
+				$excerpt_length,
+				$excerpt_type
+			);
+
 			if ( isset( $post->blog_id ) ) {
 				restore_current_blog();
 			}
@@ -957,28 +971,7 @@ function relevanssi_do_query( &$query ) {
 			relevanssi_add_matches( $post, $return );
 		}
 		if ( 'on' === get_option( 'relevanssi_show_matches' ) && empty( $search_params['fields'] ) ) {
-			$post_id = $post->ID;
-			if ( 'user' === $post->post_type ) {
-				$post_id = 'u_' . $post->user_id;
-			} elseif ( 'post_type' === $post->post_type ) {
-				$post_id = 'p_' . $post->ID;
-			} elseif ( isset( $post->term_id ) ) {
-				$post_id = '**' . $post->post_type . '**' . $post->term_id;
-			}
-			if ( isset( $post->blog_id ) ) {
-				$post_id = $post->blog_id . '|' . $post->ID;
-			}
 			$post->post_excerpt .= relevanssi_show_matches( $post );
-		}
-
-		if ( empty( $search_params['fields'] ) ) {
-			$post_id = $post->ID;
-			if ( isset( $post->blog_id ) ) {
-				$post_id = $post->blog_id . '|' . $post->ID;
-			}
-			if ( isset( $return['scores'][ $post_id ] ) ) {
-				$post->relevance_score = round( $return['scores'][ $post_id ], 2 );
-			}
 		}
 
 		$posts[] = $post;

@@ -51,6 +51,30 @@ function relevanssi_strtolower( $string ) {
 }
 
 /**
+ * Multibyte friendly substr.
+ *
+ * If multibyte string functions are available, returns mb_substr() and falls
+ * back to substr() if multibyte functions are not available.
+ *
+ * @param string $string The source string.
+ * @param int    $start  If start is non-negative, the returned string will
+ * start at the start'th position in str, counting from zero. If start is
+ * negative, the returned string will start at the start'th character from the
+ * end of string.
+ * @param int    $length Maximum number of characters to use from string. If
+ * omitted or null is passed, extract all characters to the end of the string.
+ *
+ * @return string $string The string in lowercase.
+ */
+function relevanssi_substr( $string, $start, $length = null ) {
+	if ( ! function_exists( 'mb_substr' ) ) {
+		return substr( $string, $start, $length );
+	} else {
+		return mb_substr( $string, $start, $length );
+	}
+}
+
+/**
  * Adds the search result match breakdown to the post object.
  *
  * Reads in the number of matches and stores it in the relevanssi_hits filed
@@ -107,8 +131,8 @@ function relevanssi_add_matches( &$post, $data ) {
 	if ( isset( $data['mysqlcolumn_matches'][ $post->ID ] ) ) {
 		$hits['mysqlcolumn'] = $data['mysqlcolumn_matches'][ $post->ID ];
 	}
-	if ( isset( $data['scores'][ $post->ID ] ) ) {
-		$hits['score'] = round( $data['scores'][ $post->ID ], 2 );
+	if ( isset( $data['doc_weights'][ $post->ID ] ) ) {
+		$hits['score'] = round( $data['doc_weights'][ $post->ID ], 2 );
 	}
 	if ( isset( $data['term_hits'][ $post->ID ] ) ) {
 		$hits['terms'] = $data['term_hits'][ $post->ID ];
@@ -431,6 +455,7 @@ function relevanssi_recognize_phrases( $search_query, $operator = 'AND' ) {
 			$keys = '';
 
 			if ( is_array( $custom_fields ) ) {
+				array_push( $custom_fields, '_relevanssi_pdf_content' );
 				$custom_fields_escaped = implode( "','", array_map( 'esc_sql', $custom_fields ) );
 				$keys                  = "AND m.meta_key IN ('$custom_fields_escaped')";
 			}
@@ -447,6 +472,18 @@ function relevanssi_recognize_phrases( $search_query, $operator = 'AND' ) {
 				AND p.post_status IN ($status))";
 
 			$queries[] = $query;
+		} elseif ( RELEVANSSI_PREMIUM ) {
+			$index_post_types = get_option( 'relevanssi_index_post_types', array() );
+			if ( in_array( 'attachment', $index_post_types, true ) ) {
+				$query = "(SELECT ID
+				FROM $wpdb->posts AS p, $wpdb->postmeta AS m
+				WHERE p.ID = m.post_id
+				AND m.meta_key = '_relevanssi_pdf_content'
+				AND m.meta_value LIKE '%$phrase%'
+				AND p.post_status IN ($status))";
+
+				$queries[] = $query;
+			}
 		}
 
 		if ( 'on' === get_option( 'relevanssi_index_pdf_parent' ) ) {
@@ -524,7 +561,10 @@ function relevanssi_get_custom_fields() {
 			return $custom_fields;
 		} else {
 			$custom_fields_raw = explode( ',', $custom_fields );
-			$custom_fields     = array_filter( array_map( 'trim', $custom_fields_raw ) );
+			$custom_fields     = false;
+			if ( is_array( $custom_fields_raw ) ) {
+				$custom_fields = array_filter( array_map( 'trim', $custom_fields_raw ) );
+			}
 		}
 	} else {
 		$custom_fields = false;
@@ -795,11 +835,13 @@ function relevanssi_prevent_default_request( $request, $query ) {
  *
  * @param string|array   $string          The string, or an array of strings, to
  *                                        tokenize.
- * @param boolean|string $remove_stops    If true, stopwords are removed. If 'body',
- *                                        also removes the body stopwords. Default
- *                                        true.
+ * @param boolean|string $remove_stops    If true, stopwords are removed. If
+ * 'body', also removes the body stopwords. Default true.
  * @param int            $min_word_length The minimum word length to include.
- *                                        Default -1.
+ * Default -1.
+ *
+ * @return int[] An array of tokens as the keys and their frequency as the
+ * value.
  */
 function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = -1 ) {
 	$tokens = array();
@@ -825,6 +867,15 @@ function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = 
 	}
 	if ( 'body' === $remove_stops && function_exists( 'relevanssi_fetch_body_stopwords' ) ) {
 		$stopword_list = array_merge( $stopword_list, relevanssi_fetch_body_stopwords() );
+	}
+
+	/**
+	 * Disables stopwords completely.
+	 *
+	 * @param boolean If true, stopwords are not used. Default false.
+	 */
+	if ( apply_filters( 'relevanssi_disable_stopwords', false ) ) {
+		$stopword_list = array();
 	}
 
 	if ( function_exists( 'relevanssi_apply_thousands_separator' ) ) {

@@ -66,10 +66,9 @@ register_activation_hook( $relevanssi_variables['file'], 'relevanssi_install' );
  *
  * @global string $pagenow              Current admin page.
  * @global array  $relevanssi_variables The global Relevanssi variables array.
- * @global object $wpdb                 The WP database interface.
  */
 function relevanssi_init() {
-	global $pagenow, $relevanssi_variables, $wpdb;
+	global $pagenow, $relevanssi_variables;
 
 	$plugin_dir = dirname( plugin_basename( $relevanssi_variables['file'] ) );
 	load_plugin_textdomain( 'relevanssi', false, $plugin_dir . '/languages' );
@@ -200,11 +199,6 @@ function relevanssi_init() {
 
 	if ( defined( 'NINJA_TABLES_VERSION' ) ) {
 		require_once 'compatibility/ninjatables.php';
-	}
-
-	// For problems in 2.5.0 / 4.4.0. Remove eventually.
-	if ( empty( get_option( 'relevanssi_stopwords', '' ) ) ) {
-		relevanssi_populate_stopwords();
 	}
 }
 
