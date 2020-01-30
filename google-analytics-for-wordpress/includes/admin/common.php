@@ -815,7 +815,7 @@ function monsterinsights_yearinreview_admin_menu_tooltip() {
 	$activated				= get_option( 'monsterinsights_over_time', array() );
 	$ua_code 				= monsterinsights_get_ua();
 	$dashboards_disabled 	= monsterinsights_get_option( 'dashboards_disabled', false );
-	
+
 	if ( $dashboards_disabled ) {
 		return;
 	}
@@ -834,14 +834,14 @@ function monsterinsights_yearinreview_admin_menu_tooltip() {
 
 	// equivalent to: 01/02/2020 @ 12:00am (UTC)
 	$start_time = '1577923200';
-	
+
 	// equivalent to: 01/13/2020 @ 12:00am (UTC)
 	$end_time = '1578873600';
 
 	if ( $dismiss_tooltip )  {
 		return;
 	}
-	
+
 	// don't show before January 02, 2020
 	if ( $start_time > time() ) {
 		return;
@@ -1064,3 +1064,29 @@ function monsterinsights_mark_yearinreview_tooltip_hidden() {
 }
 
 add_action( 'wp_ajax_monsterinsights_yearinreview_hide_admin_tooltip', 'monsterinsights_mark_yearinreview_tooltip_hidden' );
+
+/**
+ * Prevent plugins/themes from removing the version number from scripts loaded by our plugin.
+ * Ideally those plugins/themes would follow WordPress coding best practices, but in lieu of that
+ * we can at least attempt to prevent 99% of them from doing bad things.
+ *
+ * @param string $src The script source.
+ *
+ * @return string
+ */
+function monsterinsights_prevent_version_number_removal( $src ) {
+	// Apply this only to admin-side scripts.
+	if ( ! is_admin() ) {
+		return $src;
+	}
+
+	// Make sure are only changing our scripts and only if the version number is missing.
+	if ( ( false !== strpos( $src, 'monsterinsights' ) || false !== strpos( $src, 'google-analytics-for-wordpress' ) || false !== strpos( $src, 'google-analytics-premium' ) ) && false === strpos( $src, '?ver' ) ) {
+		$src = add_query_arg( 'ver', monsterinsights_get_asset_version(), $src );
+	}
+
+	return $src;
+}
+
+add_filter( 'script_loader_src', 'monsterinsights_prevent_version_number_removal', 9999, 1 );
+add_filter( 'style_loader_src', 'monsterinsights_prevent_version_number_removal', 9999, 1 );
