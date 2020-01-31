@@ -22,7 +22,7 @@ class Util_Request {
 		if ( isset( $request[$key] ) ) {
 			$value = $request[$key];
 
-			if ( defined( 'TEMPLATEPATH' ) || get_magic_quotes_gpc() ) {
+			if ( defined( 'TEMPLATEPATH' ) ) {
 				$value = Util_Environment::stripslashes( $value );
 			}
 
@@ -44,6 +44,11 @@ class Util_Request {
 		$value = (string) Util_Request::get( $key, $default );
 
 		return ( $trim ) ? trim( $value ) : $value;
+	}
+
+	static function get_label( $key, $default = '' ) {
+		$v = self::get_string( $key, $default);
+		return preg_replace('/[^A-Za-z0-9_\\-]/', '', $v);
 	}
 
 	/**
