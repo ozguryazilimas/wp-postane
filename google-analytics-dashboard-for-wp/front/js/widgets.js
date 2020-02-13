@@ -1,1 +1,0 @@
-jQuery(window).resize(function(){if(typeof gadwp_drawFrontWidgetChart=="function"&&typeof gadwpFrontWidgetData!=="undefined"&&!jQuery.isNumeric(gadwpFrontWidgetData)){gadwp_drawFrontWidgetChart(gadwpFrontWidgetData)}});

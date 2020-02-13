@@ -1,0 +1,48 @@
+.exactmetrics-wooedd-upsell-left {
+	width: 50%;
+	display: table-cell;
+	float: left;
+}
+
+.exactmetrics-wooedd-upsell-right {
+	width: 50%;
+	display: table-cell;
+	float: left;
+}
+
+.exactmetrics-wooedd-upsell-image {
+	width: 100%;
+	height: auto;
+	padding: 20px;
+}
+
+.exactmetrics-wooedd-upsell-image-small {
+	display: none;
+}
+
+.exactmetrics-wooedd-upsell-row {
+	display: table;
+}
+
+.exactmetrics-wooedd-upsell-left p {
+	margin: 1em 0;
+	font-size: 16px;
+}
+
+@media (max-width: 900px) {
+	.exactmetrics-wooedd-upsell-left {
+		width: 100%;
+	}
+
+	.exactmetrics-wooedd-upsell-right {
+		display: none;
+	}
+
+	.exactmetrics-wooedd-upsell-image-small {
+		display: block;
+	}
+
+	.exactmetrics-wooedd-upsell-image-large {
+		display: none;
+	}
+}
