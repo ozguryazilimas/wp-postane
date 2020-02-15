@@ -75,7 +75,7 @@ class ExactMetrics_Welcome {
 	public function maybe_redirect() {
 
 		// Bail if no activation redirect.
-		if ( ! get_transient( '_exactmetrics_activation_redirect' ) ) {
+		if ( ! get_transient( '_exactmetrics_activation_redirect' ) || isset( $_GET['exactmetrics-redirect'] ) ) {
 			return;
 		}
 
@@ -89,7 +89,7 @@ class ExactMetrics_Welcome {
 
 		$upgrade = get_option( 'exactmetrics_version_upgraded_from', false );
 		if ( apply_filters( 'exactmetrics_enable_onboarding_wizard', false === $upgrade ) ) {
-			$redirect = admin_url( 'index.php?page=exactmetrics-getting-started' );
+			$redirect = admin_url( 'index.php?page=exactmetrics-getting-started&exactmetrics-redirect=1' );
 			wp_safe_redirect( $redirect );
 			exit;
 		}
@@ -157,6 +157,8 @@ class ExactMetrics_Welcome {
 				),
 				'plugin_version'       => EXACTMETRICS_VERSION,
 				'first_name'           => ! empty( $user_data->first_name ) ? $user_data->first_name : '',
+				'exit_url'             => add_query_arg( 'page', 'exactmetrics_settings', admin_url( 'admin.php' ) ),
+				'had_ecommerce'        => exactmetrics_get_option( 'gadwp_ecommerce', false ),
 			)
 		);
 	}

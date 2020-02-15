@@ -228,10 +228,10 @@ class ExactMetrics_Tracking_Analytics extends ExactMetrics_Tracking_Abstract {
 } ?>
 <?php if ( $ua ) { ?>
 <script<?php echo $attr_string;?>>
-	var mi_version         = '<?php echo EXACTMETRICS_VERSION; ?>';
-	var mi_track_user      = <?php echo ( $track_user ? 'true' : 'false' ); ?>;
-	var mi_no_track_reason = <?php echo ( $reason ? "'" . esc_js( $reason)  . "'": "''" ); ?>;
-	<?php do_action( 'exactmetrics_tracking_analytics_frontend_output_after_mi_track_user' ); ?>
+	var em_version         = '<?php echo EXACTMETRICS_VERSION; ?>';
+	var em_track_user      = <?php echo ( $track_user ? 'true' : 'false' ); ?>;
+	var em_no_track_reason = <?php echo ( $reason ? "'" . esc_js( $reason)  . "'": "''" ); ?>;
+	<?php do_action( 'exactmetrics_tracking_analytics_frontend_output_after_em_track_user' ); ?>
 
 <?php if ( $this->should_do_optout() ) { ?>
 	var disableStr = 'ga-disable-<?php echo exactmetrics_get_ua(); ?>';
@@ -259,7 +259,7 @@ class ExactMetrics_Tracking_Analytics extends ExactMetrics_Tracking_Abstract {
 	}
 	<?php } ?>
 
-	if ( mi_track_user ) {
+	if ( em_track_user ) {
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -307,7 +307,7 @@ class ExactMetrics_Tracking_Analytics extends ExactMetrics_Tracking_Abstract {
 				}
 				var f = arguments[len-1];
 				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
-					console.log( '<?php echo esc_js( __("Not running function", "google-analytics-dashboard-for-wp" ) );?> __gaTracker(' + arguments[0] + " ....) <?php echo esc_js( __( "because you are not being tracked.", 'google-analytics-dashboard-for-wp' ) );?> " + mi_no_track_reason );
+					console.log( '<?php echo esc_js( __("Not running function", "google-analytics-dashboard-for-wp" ) );?> __gaTracker(' + arguments[0] + " ....) <?php echo esc_js( __( "because you are not being tracked.", 'google-analytics-dashboard-for-wp' ) );?> " + em_no_track_reason );
 					return;
 				}
 				try {
@@ -341,6 +341,6 @@ class ExactMetrics_Tracking_Analytics extends ExactMetrics_Tracking_Abstract {
 	}
 
 	public function should_do_optout() {
-		return ! ( defined( 'MI_NO_TRACKING_OPTOUT' ) && MI_NO_TRACKING_OPTOUT );
+		return ! ( defined( 'EM_NO_TRACKING_OPTOUT' ) && EM_NO_TRACKING_OPTOUT );
 	}
 }

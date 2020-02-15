@@ -1115,7 +1115,7 @@ function exactmetrics_get_shareasale_url( $shareasale_id, $shareasale_redirect )
 
 	// Whether we have an ID or not, filter the ID.
 	$shareasale_redirect = apply_filters( 'exactmetrics_shareasale_redirect_url', $shareasale_redirect, $custom );
-	$shareasale_url      = sprintf( 'https://www.shareasale.com/r.cfm?B=971799&U=%s&M=69975&urllink=%s', $shareasale_id, $shareasale_redirect );
+	$shareasale_url      = sprintf( 'https://www.shareasale.com/r.cfm?B=1494714&U=%s&M=94980&urllink=%s', $shareasale_id, $shareasale_redirect );
 	$shareasale_url      = apply_filters( 'exactmetrics_shareasale_redirect_entire_url', $shareasale_url, $shareasale_id, $shareasale_redirect );
 	return $shareasale_url;
 }

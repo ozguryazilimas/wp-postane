@@ -363,8 +363,13 @@ class ExactMetrics_Install {
 		}
 
 		// Transfer enhanced eCommerce
-		if ( ! empty( $em_legacy_options['ecommerce_mode'] ) && 'enhanced' === $em_legacy_options['ecommerce_mode'] ) {
-			$settings['enhanced_ecommerce'] = true;
+		if ( ! empty( $em_legacy_options['ecommerce_mode'] ) ) {
+			if ( 'disabled' !== $em_legacy_options['ecommerce_mode'] ) {
+				$settings['gadwp_ecommerce'] = true;
+			}
+			if ( 'enhanced' === $em_legacy_options['ecommerce_mode'] ) {
+				$settings['enhanced_ecommerce'] = true;
+			}
 		}
 
 		// Transfer Demographics
@@ -375,6 +380,20 @@ class ExactMetrics_Install {
 
 
 		$settings['gadwp_migrated'] = time();
+
+		// Hide the dashboard widget reports for migrating users.
+		if ( ! exactmetrics_is_pro_version() ) {
+			$dashboard_settings = array(
+				'reports' => array(
+					'overview' => array(
+						'toppages'    => false,
+						'newvsreturn' => false,
+						'devices'     => false,
+					),
+				),
+			);
+			update_user_meta( get_current_user_id(), 'exactmetrics_user_preferences', $dashboard_settings );
+		}
 
 		// Add transient to trigger redirect.
 		set_transient( '_exactmetrics_activation_redirect', 1, 60 );

@@ -73,7 +73,7 @@ class ExactMetrics_Tracking {
 		}
 
 		$data['php_version']   = phpversion();
-		$data['mi_version']    = EXACTMETRICS_VERSION;
+		$data['em_version']    = EXACTMETRICS_VERSION;
 		$data['wp_version']    = get_bloginfo( 'version' );
 		$data['server']        = isset( $_SERVER['SERVER_SOFTWARE'] ) ? $_SERVER['SERVER_SOFTWARE'] : '';
 		$data['over_time']     = get_option( 'exactmetrics_over_time', array() );

@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
 Tested up to: 5.3
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 License: GPL v3
 
 Connects Google Analytics with your WordPress site. Displays stats to help you understand your users and site content on a whole new level!
@@ -154,6 +154,13 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.0.1: February 14, 2020 =
+- New: The dashboard widget now shows the reports chart.
+- Fixed: We changed animation timing as that was preventing certain Safari users from accessing the onboarding wizard.
+- Fixed: We fixed a bug with the dashboard widget settings layout for mobile in full-width mode.
+- Tweak: We simplified the migration wizard based on previous settings.
+
+
 = 6.0.0: February 12, 2020 =
 - New: Welcome to the new ExactMetrics. Redesigned from the ground up, the new ExactMetrics is easier to use than ever before featuring a clean slate design, a new ultra fast Javascript based settings panel, helpful wizards, and thorough documentation, backed by new (and complimentary) lite support for all users.
 - New: Settings panel has been completely redesigned to make it easier than ever to use. We got rid of the multiple settings pages with multiple subpages of the old version and introduced a new settings panel with all of the settings all in a single location. We've updated the settings we offer based on data from our opt-in usage tracking feature, eliminating cumbersome settings that weren't being used, and introducing long demanded new options. We've added helpful new descriptions, tooltips, and validation to make it easier than ever.

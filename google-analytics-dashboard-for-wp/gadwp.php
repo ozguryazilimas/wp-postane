@@ -4,7 +4,7 @@
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: ExactMetrics
- * Version: 6.0.0
+ * Version: 6.0.1
  * Author URI: https://exactmetrics.com
  * Text Domain: google-analytics-dashboard-for-wp
  * Domain Path: /languages
@@ -42,7 +42,7 @@ final class ExactMetrics_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.0.0';
+	public $version = '6.0.1';
 
 	/**
 	 * Plugin file.
@@ -179,8 +179,8 @@ final class ExactMetrics_Lite {
 			self::$instance->require_files();
 
 			// This does the version to version background upgrade routines and initial install
-			$mi_version = get_option( 'exactmetrics_current_version', '5.5.3' );
-			if ( version_compare( $mi_version, '6.0.0', '<' ) ) {
+			$em_version = get_option( 'exactmetrics_current_version', '5.5.3' );
+			if ( version_compare( $em_version, '6.0.0', '<' ) ) {
 				exactmetrics_lite_call_install_and_upgrade();
 			}
 
@@ -656,7 +656,7 @@ function exactmetrics_lite_install_and_upgrade() {
 		}
 	}
 
-	// Don't run if MI Pro is installed
+	// Don't run if ExactMetrics Pro is installed
 	if ( class_exists( 'ExactMetrics' ) ) {
 		if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) {
 			return;

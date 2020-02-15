@@ -150,6 +150,7 @@ class ExactMetrics_Onboarding_Wizard {
 					'wp_update_link'       => exactmetrics_get_url( 'settings-notice', 'settings-page', 'https://www.exactmetrics.com/docs/update-wordpress/' ),
 				),
 				'plugin_version'       => EXACTMETRICS_VERSION,
+				'migrated'             => exactmetrics_get_option( 'gadwp_migrated', false ),
 			)
 		);
 
