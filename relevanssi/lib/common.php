@@ -413,6 +413,8 @@ function relevanssi_recognize_phrases( $search_query, $operator = 'AND' ) {
 		return $all_queries;
 	}
 
+	$phrase_queries = array();
+
 	foreach ( $phrases as $phrase ) {
 		$queries = array();
 		$phrase  = $wpdb->esc_like( $phrase );
@@ -501,6 +503,8 @@ function relevanssi_recognize_phrases( $search_query, $operator = 'AND' ) {
 		$queries       = implode( ' OR relevanssi.doc IN ', $queries );
 		$queries       = "(relevanssi.doc IN $queries)";
 		$all_queries[] = $queries;
+
+		$phrase_queries[ $phrase ] = $queries;
 	}
 
 	$operator = strtoupper( $operator );
@@ -512,7 +516,10 @@ function relevanssi_recognize_phrases( $search_query, $operator = 'AND' ) {
 		$all_queries = ' AND ( ' . implode( ' ' . $operator . ' ', $all_queries ) . ' ) ';
 	}
 
-	return $all_queries;
+	return array(
+		'and' => $all_queries,
+		'or'  => $phrase_queries,
+	);
 }
 
 /**
@@ -1913,6 +1920,8 @@ function relevanssi_remove_page_builder_shortcodes( $content ) {
 			'/\[et_pb_sidebar.*?\].*\[\/et_pb_sidebar\]/im',
 			'/\[et_pb_fullwidth_slider.*?\].*\[\/et_pb_fullwidth_slider\]/im',
 			'/\[vc_raw_html.*?\].*\[\/vc_raw_html\]/im',
+			'/\[fusion_imageframe.*?\].*\[\/fusion_imageframe\]/im',
+			'/\[fusion_code.*?\].*\[\/fusion_code\]/im',
 			// Remove only the tags.
 			'/\[\/?et_pb.*?\]/im',
 			'/\[\/?vc.*?\]/im',
