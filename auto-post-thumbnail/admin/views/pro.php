@@ -6,7 +6,7 @@ if(!WAPT_Plugin::app()->premium->is_activate())
     <a href="<?php echo WAPT_Plugin::app()->get_support()->get_pricing_url( true, 'license_page' ); ?>"
        class="purchase-premium" target="_blank" rel="noopener">
     <span class="btn btn-gold">
-    <?php printf( __( 'Upgrade to Premium for $%s', 'insert-php' ), WAPT_Plugin::app()->premium->get_price() ) ?>
+    <?php printf( __( 'Upgrade to Premium', 'insert-php' ), WAPT_Plugin::app()->premium->get_price() ) ?>
     </span><br>
     </a>
 	<?php

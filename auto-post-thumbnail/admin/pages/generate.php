@@ -20,7 +20,7 @@ class WAPT_Generate extends WAPT_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages421_AdminPage
+	 * @see   FactoryPages425_AdminPage
 	 *
 	 * @var string
 	 */

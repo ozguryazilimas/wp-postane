@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Auto Post Thumbnail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 11:05+0000\n"
+"POT-Creation-Date: 2020-02-10 11:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,78 +16,93 @@ msgstr ""
 "X-Loco-Version: 2.2.0; wp-4.9.8"
 
 #. Name of the plugin
-#: auto-post-thumbnail.php:48 includes/class-wapt-base.php:908
+#: auto-post-thumbnail.php:48 includes/class-wapt-base.php:959
 #: admin/pages/generate.php:100
 msgid "Auto Post Thumbnail"
 msgstr ""
 
-#: includes/class-wapt-base.php:200
+#: includes/class-wapt-base.php:207
 msgid "Use as thumbnail"
 msgstr ""
 
-#: includes/class-wapt-base.php:201 includes/class-wapt-base.php:865
+#: includes/class-wapt-base.php:208 includes/class-wapt-base.php:916
 msgid "Change featured image"
 msgstr ""
 
-#: includes/class-wapt-base.php:385
+#: includes/class-wapt-base.php:411
 msgid "This plugin has been automatically deactivated."
 msgstr ""
 
-#: includes/class-wapt-base.php:773
+#: includes/class-wapt-base.php:819 admin/pages/settings.php:154
 msgid "Image"
 msgstr ""
 
-#: includes/class-wapt-base.php:862
+#: includes/class-wapt-base.php:913
 msgid "No image"
 msgstr ""
 
-#: includes/class-wapt-base.php:882
+#: includes/class-wapt-base.php:933
 msgid "Auto Post Thumbnails"
 msgstr ""
 
-#: includes/class-wapt-base.php:882
+#: includes/class-wapt-base.php:933
 msgid "Add from APT"
 msgstr ""
 
-#: includes/class-wapt-base.php:1090
+#: includes/class-wapt-base.php:1176
 #, php-format
 msgid ""
 "You have reached the limit at the moment. Try again in an 1 hour or <a "
 "href=\"%s\">Upgrade to Premium</a>"
 msgstr ""
 
-#: includes/class-wapt-base.php:1150
+#: includes/class-wapt-base.php:1236
 #, php-format
 msgid ""
 "To download images from Google, specify Google API keys in the <a href='%s'>"
 "settings</a>."
 msgstr ""
 
-#: includes/class-wapt-plugin.php:122
+#: includes/class-wapt-base.php:1265
+#, php-format
+msgid ""
+"What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on "
+"our website."
+msgstr ""
+
+#: includes/class-wapt-base.php:1291
+msgid "Standard"
+msgstr ""
+
+#: includes/class-wapt-base.php:1302
+msgid "Uploaded"
+msgstr ""
+
+#: includes/class-wapt-plugin.php:140
 msgid "Generate featured image"
 msgstr ""
 
-#: includes/class-wapt-plugin.php:123
+#: includes/class-wapt-plugin.php:141
 msgid "Unset featured image"
 msgstr ""
 
-#: includes/class-wapt-plugin.php:167
+#: includes/class-wapt-plugin.php:185
 msgid "Processed posts: "
 msgstr ""
 
-#: includes/class-wapt-plugin.php:186
+#: includes/class-wapt-plugin.php:204
 msgid "Featured Image"
 msgstr ""
 
-#: includes/class-wapt-plugin.php:187
+#: includes/class-wapt-plugin.php:205
 msgid "With image"
 msgstr ""
 
-#: includes/class-wapt-plugin.php:188
+#: includes/class-wapt-plugin.php:206
 msgid "Without image"
 msgstr ""
 
-#: includes/class-wapt-plugin.php:227
+#: includes/class-wapt-plugin.php:245
 msgid "Without featured image"
 msgstr ""
 
@@ -137,90 +152,270 @@ msgstr ""
 msgid "Settings of APT"
 msgstr ""
 
-#: admin/pages/settings.php:47
+#: admin/pages/settings.php:47 admin/views/tab-settings.php:40
 msgid "Settings"
 msgstr ""
 
-#: admin/pages/settings.php:79
-msgid "Automatic post thumbnail generation"
+#: admin/pages/settings.php:100
+msgid "Automatic set featured image on save"
 msgstr ""
 
-#: admin/pages/settings.php:81
-msgid "Enable automatic post thumbnail generation"
+#: admin/pages/settings.php:102
+msgid "Set the first image in a post as the featured image"
 msgstr ""
 
-#: admin/pages/settings.php:88 admin/pages/settings.php:90
+#: admin/pages/settings.php:109 admin/pages/settings.php:111
 msgid "Delete settings when removing the plugin"
 msgstr ""
 
-#: admin/pages/settings.php:95
-msgid "How to get google api key & custom search engine id"
-msgstr ""
-
-#: admin/pages/settings.php:112
-msgid "API key for Google"
+#: admin/pages/settings.php:118
+msgid "Generate featured image from title"
 msgstr ""
 
 #: admin/pages/settings.php:120
+msgid ""
+"A featured image will be created automatically from the title on a colored "
+"background"
+msgstr ""
+
+#: admin/pages/settings.php:141
+msgid "Background settings"
+msgstr ""
+
+#: admin/pages/settings.php:153
+msgid "Color"
+msgstr ""
+
+#: admin/pages/settings.php:157
+msgid "Background type"
+msgstr ""
+
+#: admin/pages/settings.php:158
+msgid "Select the background type for the featured image"
+msgstr ""
+
+#: admin/pages/settings.php:166
+msgid "Background color for the image"
+msgstr ""
+
+#: admin/pages/settings.php:167
+msgid "Set the background color for the featured image"
+msgstr ""
+
+#: admin/pages/settings.php:174
+msgid "Select image"
+msgstr ""
+
+#: admin/pages/settings.php:175
+msgid "Background image"
+msgstr ""
+
+#: admin/pages/settings.php:176
+msgid "Set the background image. Only JPG or PNG"
+msgstr ""
+
+#: admin/pages/settings.php:186
+msgid "JPEG"
+msgstr ""
+
+#: admin/pages/settings.php:187
+msgid "PNG"
+msgstr ""
+
+#: admin/pages/settings.php:190
+msgid "Image format"
+msgstr ""
+
+#: admin/pages/settings.php:191
+msgid "Set format to save images"
+msgstr ""
+
+#: admin/pages/settings.php:196
+msgid "Font settings"
+msgstr ""
+
+#: admin/pages/settings.php:208
+msgid "Font name"
+msgstr ""
+
+#: admin/pages/settings.php:209
+msgid "Select a font for the text in the featured image"
+msgstr ""
+
+#: admin/pages/settings.php:219
+msgid "Font size"
+msgstr ""
+
+#: admin/pages/settings.php:220
+msgid "Set the font size for the featured image"
+msgstr ""
+
+#: admin/pages/settings.php:226
+msgid "Font color"
+msgstr ""
+
+#: admin/pages/settings.php:227
+msgid "Set the font color for the featured image"
+msgstr ""
+
+#: admin/pages/settings.php:233
+msgid "Text settings"
+msgstr ""
+
+#: admin/pages/settings.php:245
+msgid "Text shadow"
+msgstr ""
+
+#: admin/pages/settings.php:246
+msgid "Use text shadow?"
+msgstr ""
+
+#: admin/pages/settings.php:258
+msgid "Shadow color"
+msgstr ""
+
+#: admin/pages/settings.php:259
+msgid "Set the shadow color for the text"
+msgstr ""
+
+#: admin/pages/settings.php:267
+msgid "No transform"
+msgstr ""
+
+#: admin/pages/settings.php:268
+msgid "Uppercase"
+msgstr ""
+
+#: admin/pages/settings.php:269
+msgid "Lowercase"
+msgstr ""
+
+#: admin/pages/settings.php:272
+msgid "Text transform"
+msgstr ""
+
+#: admin/pages/settings.php:273
+msgid "Select type of text transformation"
+msgstr ""
+
+#: admin/pages/settings.php:280
+msgid "chars"
+msgstr ""
+
+#: admin/pages/settings.php:282
+msgid "Text length"
+msgstr ""
+
+#: admin/pages/settings.php:283
+msgid "Set the maximum text length"
+msgstr ""
+
+#: admin/pages/settings.php:292
+msgid "Line spacing"
+msgstr ""
+
+#: admin/pages/settings.php:293
+msgid "Set the line spacing"
+msgstr ""
+
+#: admin/pages/settings.php:299
+msgid "Alignment"
+msgstr ""
+
+#: admin/pages/settings.php:311
+msgid "Left"
+msgstr ""
+
+#: admin/pages/settings.php:312 admin/pages/settings.php:327
+msgid "Center"
+msgstr ""
+
+#: admin/pages/settings.php:313
+msgid "Right"
+msgstr ""
+
+#: admin/pages/settings.php:316
+msgid "Horizontal text alignment"
+msgstr ""
+
+#: admin/pages/settings.php:317
+msgid "Select how to horizontally align the text on the image"
+msgstr ""
+
+#: admin/pages/settings.php:326
+msgid "Top"
+msgstr ""
+
+#: admin/pages/settings.php:328
+msgid "Bottom"
+msgstr ""
+
+#: admin/pages/settings.php:331
+msgid "Vertical text alignment"
+msgstr ""
+
+#: admin/pages/settings.php:332
+msgid "Select how to vertically align the text on the image"
+msgstr ""
+
+#: admin/pages/settings.php:339
+msgid "Padding"
+msgstr ""
+
+#: admin/pages/settings.php:350 admin/pages/settings.php:361
+msgid "px"
+msgstr ""
+
+#: admin/pages/settings.php:352
+msgid "Top/bottom text padding"
+msgstr ""
+
+#: admin/pages/settings.php:353
+msgid "Padding at the top and bottom of the text"
+msgstr ""
+
+#: admin/pages/settings.php:363
+msgid "Left/right text padding"
+msgstr ""
+
+#: admin/pages/settings.php:364
+msgid "Padding at the left and right of the text"
+msgstr ""
+
+#: admin/pages/settings.php:371
+msgid "Addition of text"
+msgstr ""
+
+#: admin/pages/settings.php:382
+msgid "String before text"
+msgstr ""
+
+#: admin/pages/settings.php:383
+msgid "Additional string before text. For a line break, use <b>[br]</b>"
+msgstr ""
+
+#: admin/pages/settings.php:392
+msgid "String after text"
+msgstr ""
+
+#: admin/pages/settings.php:393
+msgid "Additional string after text. For a line break, use <b>[br]</b>"
+msgstr ""
+
+#: admin/pages/settings.php:419
+msgid "How to get google api key & custom search engine id"
+msgstr ""
+
+#: admin/pages/settings.php:436
+msgid "API key for Google"
+msgstr ""
+
+#: admin/pages/settings.php:444
 msgid "Google Custom Search Engine ID"
 msgstr ""
 
-#: admin/pages/settings.php:121
+#: admin/pages/settings.php:445
 msgid "You can get API key after registration on the site"
-msgstr ""
-
-#: admin/views/tab-about.php:110
-#, php-format
-msgid ""
-"We suppose you’ve noticed the changes which happened with <a href=\"%s\" "
-"target=\"_blank\" rel=\"noopener\">Auto Post Thumbnail</a>. In this tutorial "
-"you can get more information about new features."
-msgstr ""
-
-#: admin/views/tab-about.php:118
-msgid ""
-"As you’ve already noticed, we haven’t updated the plugin for more than 2 "
-"years. This new version fixes existing problems. APT becomes a fully "
-"functional plugin."
-msgstr ""
-
-#: admin/views/tab-about.php:120
-msgid ""
-"Starting from this version, the APT plugin evolves from being an aiding tool "
-"to the full-featured search & image editing system with a Creative Commons "
-"license for your website. It means that you get:"
-msgstr ""
-
-#: admin/views/tab-about.php:122
-msgid "Search and download images from Google"
-msgstr ""
-
-#: admin/views/tab-about.php:123
-msgid "Auto generate feature image in editor"
-msgstr ""
-
-#: admin/views/tab-about.php:124
-msgid ""
-"Image search through the 3 popular stock services from the plugin interface. "
-"Just enter a search query and choose an image (images) you like."
-msgstr ""
-
-#: admin/views/tab-about.php:128
-msgid ""
-"Upload images from the external URL to your post or product (for Woocommerce)"
-"."
-msgstr ""
-
-#: admin/views/tab-about.php:129
-msgid "Compatibility with the most popular builders."
-msgstr ""
-
-#: admin/views/tab-about.php:133
-msgid ""
-"Advanced APT editor. You can edit images using layers. It means that you can "
-"overlay text, logo, or mask, adjust color, brightness, and contract and use "
-"other great features. Save presets and apply them on any image in one click. "
-"The editor doesn’t replace the default WordPress editor."
 msgstr ""
 
 #: admin/views/tab-license.php:11
@@ -229,8 +424,7 @@ msgid "Activate %s"
 msgstr ""
 
 #: admin/views/tab-license.php:22
-#, php-format
-msgid "Upgrade to Premium for $%s"
+msgid "Upgrade to Premium"
 msgstr ""
 
 #: admin/views/tab-license.php:25

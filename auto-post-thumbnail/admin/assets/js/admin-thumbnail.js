@@ -9,9 +9,21 @@
  *
  * global ajaxurl, apt_thumb - language array
  */
-
+(function($){
 //Отображение окна со всеми картинками в тексте поста
 jQuery(document).ready(function($){
+
+    jQuery(document).on('click', '#hide_notice_auto_generation', function(e) {
+        e.preventDefault();
+        jQuery('#notice_auto_generation').animate({opacity: 'hide' , height: 'hide'}, 200);
+        jQuery.post ( ajaxurl, {
+            action:         'hide_notice_auto_generation',
+        }).done( function( html ) {
+            console.log('Hided');
+        });
+
+    });
+
 
     window.aptModalShow = function(that, postid, wpnonce){
 
@@ -32,9 +44,9 @@ jQuery(document).ready(function($){
         }).done( function( html ) {
             $ajaximg.hide();
             $modal.html(html);
-            $('#apt_thumbid2').autocolumnlist({
+            $('#wapt_thumbs').autocolumnlist({
                 columns: 3,
-                classname: 'grid-item',
+                classname: 'wapt-grid-item',
                 min: 1
             });
         });
@@ -42,3 +54,4 @@ jQuery(document).ready(function($){
         //return false; // для ссылки
     }
 });
+})(jQuery);

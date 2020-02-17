@@ -1,5 +1,5 @@
 <div class="wrap">
-	<div class="factory-bootstrap-422 factory-fontawesome-000">
+	<div class="factory-bootstrap-426 factory-fontawesome-000">
 		<?php wp_nonce_field( 'license' ); ?>
 		<div id="wapt-license-wrapper"
 		     data-loader="<?php echo WAPT_PLUGIN_URL . '/admin/assets/img/loader.gif'; ?>"
@@ -19,7 +19,7 @@
 							<a href="<?php echo $this->plugin->get_support()->get_pricing_url( true, 'license_page' ); ?>"
 							   class="purchase-premium" target="_blank" rel="noopener">
                             <span class="btn btn-gold btn-inner-wrap">
-                            <?php printf( __( 'Upgrade to Premium for $%s', 'apt' ), $this->premium->get_price() ) ?>
+                            <?php printf( __( 'Upgrade to Premium', 'apt' ), $this->premium->get_price() ) ?>
                             </span>
 							</a>
 							<p><?php printf( __( 'Your current license for %1$s:', 'apt' ), $this->plugin->getPluginTitle() ) ?></p>

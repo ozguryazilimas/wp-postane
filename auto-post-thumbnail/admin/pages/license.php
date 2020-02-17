@@ -52,7 +52,7 @@ class WAPT_License extends WAPT_Page {
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_413\Premium\Provider
+	 * @var \WBCR\Factory_425\Premium\Provider
 	 */
 	protected $premium;
 
@@ -70,7 +70,7 @@ class WAPT_License extends WAPT_Page {
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_413\Premium\Interfaces\License
+	 * @var \WBCR\Factory_425\Premium\Interfaces\License
 	 */
 	protected $premium_license;
 
@@ -79,9 +79,9 @@ class WAPT_License extends WAPT_Page {
 
 	/**
 	 * {@inheritdoc}
-	 * @param Wbcr_Factory421_Plugin $plugin
+	 * @param WAPT_Plugin $plugin
 	 */
-	public function __construct ( Wbcr_Factory421_Plugin $plugin ) {
+	public function __construct ( $plugin ) {
 		$this->plugin = $plugin;
 
 		parent::__construct( $plugin );

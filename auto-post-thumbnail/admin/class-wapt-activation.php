@@ -4,7 +4,7 @@
  *
  * @author        Webcraftic <wordpress.webraftic@gmail.com>
  * @copyright (c) 02.12.2018, Webcraftic
- * @see           Wbcr_Factory421_Activator
+ * @see           Wbcr_Factory425_Activator
  *
  * @version       1.0.1
  */
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WAPT_Activation extends Wbcr_Factory421_Activator {
+class WAPT_Activation extends Wbcr_Factory425_Activator {
 
 	/**
 	 * Method is executed during the activation of the plugin.
@@ -30,7 +30,7 @@ class WAPT_Activation extends Wbcr_Factory421_Activator {
 		$google_limit = WAPT_Plugin::app()->getOption('google_limit');
 		if(!$google_limit) WAPT_Plugin::app()->updateOption('google_limit', $limit);
 
-		update_option( $this->plugin->getOptionName( 'whats_new_v360' ), 1 );
+		//update_option( $this->plugin->getOptionName( 'whats_new_v360' ), 1 );
 	}
 
 	/**

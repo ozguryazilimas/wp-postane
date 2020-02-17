@@ -3,8 +3,8 @@
 /**
  * Class AutoPostThumbnails
  *
- * @author        Alexander Teshabaev <sasha.tesh@gmail.com>
- * @copyright (c) 2018, Webcraftic Ltd
+ * @author        Artem Prihodko <webtemyk@yandex.ru>, Github: https://github.com/temyk
+ * @copyright (c) 2019, Webcraftic Ltd
  */
 class AutoPostThumbnails {
 
@@ -88,14 +88,22 @@ class AutoPostThumbnails {
 		$apt_ag = WAPT_Plugin::app()->getOption( 'auto_generation' );
 
 		if ( $apt_ag ) {
-			add_action( 'publish_post', [ $this, 'publish_post' ], 10, 1 );
-
+			//add_action( 'publish_post', [ $this, 'publish_post' ], 10, 1 );
+			add_action( 'save_post', [ $this, 'publish_post' ], 10, 1 );
+			// This hook handle update post via rest api. for example Wordpress mobile apps
+			add_action( 'rest_api_inserted_post', [ $this, 'publish_post' ], 10, 1 );
 			// This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
 			add_action( 'transition_post_status', [ $this, 'check_required_transition' ], 10, 3 );
+		}
+		else {
+		    if(WAPT_Plugin::app()->getOption( 'auto_generation_notice', 1 )) {
+			    add_action( 'admin_notices', [ $this, 'notice_auto_generation' ] );
+		    }
 		}
 
 		add_action( 'admin_notices', [ $this, 'check_perms' ] );
 		add_action( 'wbcr/factory/admin_notices', [ $this, 'check_api_notice' ], 10, 2 );
+		add_action( 'wbcr/factory/admin_notices', [ $this, 'show_about_notice' ], 10, 2 );
 		//add_action( 'admin_menu', [ $this, 'init_admin_menu' ] );
 
 		// Plugin hook for adding CSS and JS files required for this plugin
@@ -133,10 +141,12 @@ class AutoPostThumbnails {
 		add_action( 'wp_ajax_apt_get_thumbnail', [ $this, 'apt_get_thumbnail' ] );
 		add_action( 'wp_ajax_source_content', [ $this, 'source_content' ] );
 		add_action( 'wp_ajax_upload_to_library', [ $this, 'upload_to_library' ] );
+		add_action( 'wp_ajax_wapt_upload_font', [ $this, 'upload_font' ] );
 
 		//APIs
 		add_action( 'wp_ajax_apt_api_google', [ $this, 'apt_api_google' ] );
 		add_action( 'wp_ajax_apt_check_api_key', [ $this, 'apt_check_api_key' ] );
+		add_action( 'wp_ajax_hide_notice_auto_generation', [ $this, 'hide_notice_auto_generation' ] );
 	}
 
 	/**
@@ -235,7 +245,7 @@ class AutoPostThumbnails {
 				if ( $need_show_about && !(defined( 'DOING_AJAX' ) && DOING_AJAX) && !(defined( 'DOING_CRON' ) && DOING_CRON) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages421' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages425' ) ) {
 							$redirect_url = admin_url("admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1");
 						}
 						if ( $redirect_url ) {
@@ -258,13 +268,7 @@ class AutoPostThumbnails {
 	 */
 	public function is_premium()
 	{
-		if(WAPT_Plugin::app()->premium->is_install_package() &&
-		   is_plugin_active( 'auto-post-thumbnail-premium/auto-post-thumbnail-premium.php' ) &&
-		   WAPT_Plugin::app()->premium->is_active() &&
-		   WAPT_Plugin::app()->premium->is_activate())
-			return true;
-		else
-			return false;
+		return WAPT_Plugin::app()->is_premium();
 	}
 	/**
 	 * Get posts id's
@@ -276,6 +280,12 @@ class AutoPostThumbnails {
 			die( '-1' );
 		}
 		check_ajax_referer( 'get-posts' );
+
+		$generate = WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
+		if($generate == 'find') $auto_generate = false;
+		else if($generate == 'generate' || $generate == 'both') $auto_generate = true;
+		else $auto_generate = false;
+
 
 		$has_thumb  = (bool) $_POST['withThumb'];
 		if(auto_post_thumbnails()->is_premium()) {
@@ -300,7 +310,7 @@ class AutoPostThumbnails {
 				//если запрошены посты без тамбнеила, значит пользователь хочет сгенерировать их
 				if(!$has_thumb) {
 					$images = $this->get_images_from_post( $post->ID );
-					if ( isset( $images['urls'] ) && count( $images['urls'] ) ) {
+					if ( (isset( $images['urls'] ) && count( $images['urls'] )) || $auto_generate ) {
 						$ids[] = $post->ID;
 					}
 				}
@@ -367,6 +377,30 @@ class AutoPostThumbnails {
 			die( - 1 );
 		}
 		die( - 1 );
+	}
+
+	/**
+	 *
+	 */
+	public function notice_auto_generation() {
+		?>
+		<div class="notice notice-warning is-dismissible" id="notice_auto_generation">
+			<p><b>Auto Post Thumbnail:</b> Do you want to enable automatic post thumbnail generation? Enable this option in
+                <a href="<?php echo admin_url('admin.php?page=wapt_settings-wbcr_apt&tab=general'); ?>">settings</a><br>
+                <a href="#" id="hide_notice_auto_generation">Don't ask again</a>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 *
+	 */
+	public function hide_notice_auto_generation() {
+        if( isset($_POST['action']) && $_POST['action'] === 'hide_notice_auto_generation')
+        {
+	        WAPT_Plugin::app()->updateOption( 'auto_generation_notice', 0 );
+        }
 	}
 
 	/**
@@ -492,14 +526,12 @@ class AutoPostThumbnails {
 	/**
 	 * Get thumbnail id for image
 	 *
-	 * @param       $post_id
-	 * @param       $image
-	 * @param       $key
-	 * @param array $images_urls
+	 * @param string $image
+	 * @param string $url
 	 *
 	 * @return bool|int
 	 */
-	public function get_thumbnail_id( $image, $key ) {
+	public function get_thumbnail_id( $image, $url ) {
 		global $wpdb;
 
 		/**
@@ -518,8 +550,8 @@ class AutoPostThumbnails {
 
 		// If thumb id is not found, try to look for the image in DB. Thanks to "Erwin Vrolijk" for providing this code.
 		if ( ! $thumb_id ) {
-			$image  = substr( $image, strpos( $image, '"' ) + 1 );
-			$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE guid = '" . $image . "'" );
+			//$image  = substr( $image, strpos( $image, '"' ) + 1 );
+			$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE guid = '" . $url . "'" );
 			if ( $result ) {
 				$thumb_id = $result[0]->ID;
 			}
@@ -527,8 +559,8 @@ class AutoPostThumbnails {
 
 		// Still no id found? Try found by post_name
 		if ( ! $thumb_id ) {
-			if ( isset( $images['tags'][ $key ] ) && ! empty( $images['tags'][ $key ] ) ) {
-				$image_url = trim( $images['tags'][ $key ] );
+			if ( isset( $image ) && ! empty( $image ) ) {
+				$image_url = trim( $image );
 				$_parts    = explode( '/', $image_url );
 				$image_url = array_pop( $_parts );
 				$_parts    = explode( '.', $image_url );
@@ -563,12 +595,12 @@ class AutoPostThumbnails {
 		}
 
 		$thumb_id = 0;
-
+		$autoimage = WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
 		$images = $this->get_images_from_post( $post_id );
-		if ( isset( $images['tags'] ) && count( $images['tags'] ) ) {
+		if ( (isset( $images['tags'] ) && count( $images['tags'] )) && $autoimage !== 'generate') {
 
 			foreach ( $images['tags'] as $key => $image ) {
-				$thumb_id = $this->get_thumbnail_id( $image, $key );
+				$thumb_id = $this->get_thumbnail_id( $image, $images['urls'][$key] );
 				// If we succeed in generating thumb, let's update post meta
 				if ( $thumb_id ) {
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
@@ -586,6 +618,18 @@ class AutoPostThumbnails {
 							return $thumb_id;
 						}
 					}
+				}
+			}
+		}
+		else {
+			// создаём свою картинку с заголовком на цветном фоне
+			if ( $autoimage == 'generate' || $autoimage == 'both' ) {
+
+				$thumb_id = $this->generate_and_attachment($post_id);
+				if ( $thumb_id ) {
+					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
+
+					return $thumb_id;
 				}
 			}
 		}
@@ -676,8 +720,15 @@ class AutoPostThumbnails {
 		if ( ! ini_get( 'allow_url_fopen' ) ) {
 			$file_data = $this->curl_get_file_contents( $imageUrl );
 		} else {
-			$file_data = @file_get_contents( $imageUrl );
+			$arrContextOptions = array (
+				"ssl" => array(
+					"verify_peer" => false,
+					"verify_peer_name" => false,
+				),
+			);
+			$file_data = file_get_contents( $imageUrl, false, stream_context_create($arrContextOptions) );
 		}
+
 
 		if ( ! $file_data ) {
 			return null;
@@ -749,6 +800,8 @@ class AutoPostThumbnails {
 		$c = curl_init();
 		curl_setopt( $c, CURLOPT_RETURNTRANSFER, 1 );
 		curl_setopt( $c, CURLOPT_URL, $URL );
+		curl_setopt( $c, CURLOPT_SSL_VERIFYHOST, 0 );
+		curl_setopt( $c, CURLOPT_SSL_VERIFYPEER, false );
 		$contents = curl_exec( $c );
 		curl_close( $c );
 
@@ -807,6 +860,11 @@ class AutoPostThumbnails {
 				check_ajax_referer( 'set_post_thumbnail-' . $post_id );
 				if ( isset( $_POST['thumbnail_id'] ) && ! empty( $_POST['thumbnail_id'] ) ) {
 					$thumb_id = intval( $_POST['thumbnail_id'] );
+
+					if($thumb_id == -1) //generate image
+					{
+						$thumb_id = $this->generate_and_attachment($post_id);
+					}
 				}
 				else if ( isset( $_POST['image'] ) && ! empty( $_POST['image'] ) )
 				{
@@ -1037,8 +1095,8 @@ class AutoPostThumbnails {
 
 			$attach_data = wp_generate_attachment_metadata( $attach_id, $target_file_name );
 			$result      = wp_update_attachment_metadata( $attach_id, $attach_data );
-			if ( $result === false ) {
-				die( 'Error: File attachment metadata error' );
+			if (! $result ) {
+				//die( 'Error: File attachment metadata error' );
 			}
 
 			$image_data                 = [];
@@ -1053,7 +1111,42 @@ class AutoPostThumbnails {
 	}
 
 	/**
-	 * AJAX загрузка выбраного изображения
+	 * AJAX загрузка шрифта
+	 *
+	 */
+	public function upload_font() {
+		if ( ! wp_verify_nonce( $_POST['wpnonce'], 'wapt_upload_font' ) ) {
+			die( 'Error: Invalid request.' );
+		}
+
+		if( isset( $_POST['is_font_upload'] ) && count($_FILES) > 0){
+			$file = $_FILES[0];
+			$upload_dir = wp_upload_dir();
+			$upload_dir = $upload_dir['basedir']."/apt_fonts";
+			if( ! is_dir( $upload_dir ) ) mkdir( $upload_dir, 0777 );
+
+			$done_files = array();
+			$file_name = $file['name'];
+
+			// Проверка, что файл является шрифтом TrueType
+			$header = file_get_contents($file['tmp_name'], false, null, null, 4);
+			if( $header !== "\x00\x01\x00\x00" && $header !== "true" && $header !== "typ1" )
+				die( json_encode( array('error' => "The uploaded file is not a TrueType font") ) );
+            //-----
+
+			if( move_uploaded_file( $file['tmp_name'], "$upload_dir/$file_name" ) ){
+				if(realpath( "$upload_dir/$file_name" ))
+					$data = array('files' => $file );
+				else
+					$data = array('error' => "Unable to copy the file to the font folder: $upload_dir");
+			}
+
+			die( json_encode( $data ) );
+		}
+	}
+
+	/**
+	 * AJAX загрузка google
 	 *
 	 */
 	public function apt_api_google() {
@@ -1137,7 +1230,7 @@ class AutoPostThumbnails {
 
 	public function check_api_notice($notices, $plugin_name)
 	{
-		// Если экшен вызывал плагин не Cyrlitera, то не выводим это уведомления
+		// Если экшен вызывал не этот плагин, то не выводим это уведомления
 		if ( $plugin_name != WAPT_Plugin::app()->getPluginName() ) {
 			return $notices;
 		}
@@ -1147,7 +1240,7 @@ class AutoPostThumbnails {
 		if(!WAPT_Plugin::app()->getOption( 'google_apikey') && !WAPT_Plugin::app()->getOption( 'google_cse') )
 		{
 			// Задаем текст уведомления
-			$notice_text = '<b>'.$plugin_title.':</b> <br>' . sprintf(__( "To download images from Google, specify Google API keys in the <a href='%s'>settings</a>.", 'apt' ), admin_url('admin.php?page=wapt_settings-wbcr_apt'));
+			$notice_text = '<p><b>'.$plugin_title.':</b> <br>' . sprintf(__( "To download images from Google, specify Google API keys in the <a href='%s'>settings</a>.", 'apt' ), admin_url('admin.php?page=wapt_settings-wbcr_apt'))."</p>";
 
 			// Задаем настройки уведомления
 			$notices[] = [
@@ -1166,4 +1259,195 @@ class AutoPostThumbnails {
 	    return $notices;
 	}
 
+	public function show_about_notice($notices, $plugin_name)
+	{
+		// Если экшен вызывал не этот плагин, то не выводим это уведомления
+		if ( $plugin_name != WAPT_Plugin::app()->getPluginName() ) {
+			return $notices;
+		}
+		// Получаем заголовок плагина
+		$plugin_title = WAPT_Plugin::app()->getPluginTitle();
+
+        $notice_text = '<p><b>'.$plugin_title.':</b> ' .
+                       sprintf(__( "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on our website.", 'apt' ), 'https://cm-wp.com/auto-featured-image-from-title/')."</p>";
+        $notices[] = [
+            'id'              => 'apt_show_about_370',
+            //error, success, warning
+            'type'            => 'info',
+            'dismissible'     => true,
+            // На каких страницах показывать уведомление ('plugins', 'dashboard', 'edit')
+            'where'           => array('plugins', 'dashboard', 'edit'),
+            // Через какое время уведомление снова появится?
+            'dismiss_expires' => 0,
+            'text'            => $notice_text,
+            'classes'       => array()
+        ];
+	    return $notices;
+	}
+	/**
+	 * Получение списка шрифтов из папок
+	 *
+	 * @return array
+	 */
+	public static function get_fonts() {
+		$upload_dir = wp_upload_dir();
+		$upload_dir_fonts = $upload_dir['basedir']."/apt_fonts";
+		$plugin_dir_fonts = WAPT_PLUGIN_DIR."/fonts";
+		$fonts = array();
+
+		$fonts[] = array( 'title' => __('Standard','apt'), 'type' => 'group');
+		$files = scandir($plugin_dir_fonts);
+		foreach ( $files as $file ) {
+			if($file == '.' || $file == '..') continue;
+			$name = pathinfo($plugin_dir_fonts.'/'.$file);
+			$name = $name['filename'];
+			$fonts[] = array( 'value' => $file, 'title' => $name);
+		}
+
+		if(is_dir( $upload_dir_fonts )) $files = scandir($upload_dir_fonts);
+		if(count($files) && AutoPostThumbnails::instance()->is_premium()) {
+			$fonts[] = array( 'title' => __('Uploaded','apt'), 'type' => 'group');
+			foreach ( $files as $file ) {
+				if ( $file == '.' || $file == '..' ) {
+					continue;
+				}
+				$name    = pathinfo( $upload_dir_fonts . '/' . $file );
+				$name    = $name['filename'];
+				$fonts[] = array( 'value' => $file, 'title' => $name );
+			}
+		}
+
+		return $fonts;
+
+	}
+
+	/**
+	 * Генерация изображения с текстом.
+	 * Если $pathToSave задан, то файл сохранится по этому пути.
+	 *
+	 * @param string $text
+	 * @param string $pathToSave
+	 * @param string $format
+	 * @param int $width
+	 * @param int $height
+	 *
+	 * @return WAPT_Image
+	 */
+	public static function generate_image_with_text($text, $pathToSave = '', $format = 'jpg', $width = 800, $height = 600) {
+	    $font              = WAPT_PLUGIN_DIR."/fonts/Arial.ttf";
+		$font_size         = WAPT_Plugin::app()->getOption( 'font-size', 25);
+		$font_color        = WAPT_Plugin::app()->getOption( 'font-color', "#ffffff");
+		$before_text       = '';
+		$after_text        = '';
+		$shadow            = WAPT_Plugin::app()->getOption( 'shadow', 0);
+		if(!$shadow)
+			$shadow_color  = '';
+		else
+			$shadow_color  = WAPT_Plugin::app()->getOption( 'shadow-color', "#ffffff");
+
+		$background_type   = "color";
+		$background = WAPT_Plugin::app()->getOption( 'background-color', "#ff6262");
+
+		$text_transform     = WAPT_Plugin::app()->getOption( 'text-transform', "no");;
+		switch($text_transform) {
+			case 'upper':
+				$text = strtoupper( $text );
+				break;
+			case 'lower':
+				$text = strtolower( $text );
+				break;
+		}
+
+		$text_crop         = WAPT_Plugin::app()->getOption( 'text-crop', 100);
+		if($text_crop > 0) {
+			if ( strlen($text) > $text_crop) {
+				$temp = substr( $text, 0, $text_crop);
+				$text = substr( $temp, 0, strrpos( $temp, ' ' ) );
+			}
+
+		}
+
+		$align        = 'center';
+		$valign       = 'center';
+		$padding_tb   = 15;
+		$padding_lr   = 15;
+		$line_spacing = WAPT_Plugin::app()->getOption( 'text-line-spacing', 1.5);
+
+		$params = array(
+			'text' => $text,
+			'pathToSave' => $pathToSave,
+			'format' => $format,
+			'width' => $width,
+			'height' => $height,
+		);
+		$image = new WAPT_Image( $width, $height, $background, $font, $font_size, $font_color );
+		$image->params = $params;
+		$image->setPadding( $padding_lr, $padding_tb );
+		$image->write_text( $before_text.$text.$after_text, '', '', '', $align, $valign,$line_spacing, $shadow_color );
+		if(!empty($pathToSave)) $image->save( $pathToSave, 100, $format );
+
+		return $image;
+
+	}
+	/**
+	 * Генерация изображения с текстом.
+	 * Если $pathToSave задан, то файл сохранится по этому пути.
+	 *
+	 * @param integer $post_id
+	 *
+	 * @return integer $thumb_id
+	 */
+	public function generate_and_attachment($post_id) {
+		$format = WAPT_Plugin::app()->getOption( "image-type", "jpg" );
+		switch($format)
+		{
+			case 'png':
+				$extension = 'png';
+				$mime_type  = "image/png";
+				break;
+			case 'jpg':
+			case 'jpeg':
+			default:
+				$extension = 'jpg';
+				$mime_type  = "image/jpeg";
+				break;
+		}
+		$post    = get_post( $post_id, 'OBJECT' );
+
+		$uploads = wp_upload_dir( current_time( 'mysql' ) );
+
+		// Generate unique file name
+		$filename = "wapt_image_{$post_id}.{$extension}";
+		$filename = wp_unique_filename( $uploads['path'], $filename );
+
+		// Move the file to the uploads dir
+		$image = apply_filters('wapt/generate/image', $this->generate_image_with_text($post->post_title, $uploads['path'] . "/$filename", $extension), $post->post_title, $uploads['path'] . "/$filename", $extension);
+
+		if(file_exists( $uploads['path'] . "/$filename")) {
+			// Compute the URL
+			$file_url  = $uploads['url'] . "/$filename";
+			$file_path = $uploads['path'] . "/$filename";
+
+			// Construct the attachment array
+			$attachment = [
+				'post_mime_type' => $mime_type,
+				'guid'           => $file_url,
+				'post_parent'    => $post_id,
+				'post_title'     => $post->post_title,
+				'post_content'   => '',
+			];
+
+			$thumb_id = wp_insert_attachment( $attachment, $file_path, $post_id );
+			if ( ! is_wp_error( $thumb_id ) ) {
+				require_once( ABSPATH . '/wp-admin/includes/image.php' );
+
+				// Added fix by misthero as suggested
+				wp_update_attachment_metadata( $thumb_id, wp_generate_attachment_metadata( $thumb_id, $file_path ) );
+				update_attached_file( $thumb_id, $file_path );
+				return $thumb_id;
+			}
+		}
+		return 0;
+
+	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-use WBCR\Factory_Adverts_103\Base;
+use WBCR\Factory_Adverts_106\Base;
 
 /**
  * Factory Adverts
@@ -20,31 +20,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( defined( 'FACTORY_ADVERTS_103_LOADED' ) || ( defined( 'FACTORY_ADVERTS_BLOCK' ) && FACTORY_ADVERTS_BLOCK ) ) {
+if ( defined( 'FACTORY_ADVERTS_106_LOADED' ) || ( defined( 'FACTORY_ADVERTS_BLOCK' ) && FACTORY_ADVERTS_BLOCK ) ) {
 	return;
 }
 
 # Устанавливаем константу, что модуль уже загружен
-define( 'FACTORY_ADVERTS_103_LOADED', true );
+define( 'FACTORY_ADVERTS_106_LOADED', true );
 
 # Устанавливаем версию модуля
-define( 'FACTORY_ADVERTS_103_VERSION', '1.0.3' );
+define( 'FACTORY_ADVERTS_106_VERSION', '1.0.6' );
 
 # Регистрируем тектовый домен, для интернализации интерфейса модуля
-load_plugin_textdomain( 'wbcr_factory_adverts_103', false, dirname( plugin_basename( __FILE__ ) ) . '/langs' );
+load_plugin_textdomain( 'wbcr_factory_adverts_106', false, dirname( plugin_basename( __FILE__ ) ) . '/langs' );
 
 # Устанавливаем директорию модуля
-define( 'FACTORY_ADVERTS_103_DIR', dirname( __FILE__ ) );
+define( 'FACTORY_ADVERTS_106_DIR', dirname( __FILE__ ) );
 
 # Устанавливаем url модуля
-define( 'FACTORY_ADVERTS_103_URL', plugins_url( null, __FILE__ ) );
+define( 'FACTORY_ADVERTS_106_URL', plugins_url( null, __FILE__ ) );
 
-require_once( FACTORY_ADVERTS_103_DIR . '/includes/class-rest-request.php' );
-require_once( FACTORY_ADVERTS_103_DIR . '/includes/class-base.php' );
+require_once( FACTORY_ADVERTS_106_DIR . '/includes/class-rest-request.php' );
+require_once( FACTORY_ADVERTS_106_DIR . '/includes/class-base.php' );
 
 /**
- * @param Wbcr_Factory421_Plugin $plugin
+ * @param Wbcr_Factory425_Plugin $plugin
  */
-add_action( 'wbcr_factory_adverts_103_plugin_created', function ( $plugin ) {
-	$plugin->set_adverts_manager( "WBCR\Factory_Adverts_103\Base" );
+add_action( 'wbcr_factory_adverts_106_plugin_created', function ( $plugin ) {
+	$plugin->set_adverts_manager( "WBCR\Factory_Adverts_106\Base" );
 } );

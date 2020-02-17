@@ -3,7 +3,7 @@
 Plugin Name: Auto Post Thumbnail
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Post Thumbnail (Featured Thumbnail) from the first image in post (or any custom post type) only if Post Thumbnail is not set manually.
-Version: 3.6.0
+Version: 3.7.0
 Author: Creativemotion <support@cm-wp.com>
 Author URI: cm-wp.com
 Text Domain: apt
@@ -101,15 +101,16 @@ $plugin_info = array(
 	// Подключаемые модуль фреймворка
 	// Необходимые для ускоренной разработки продуктов Webcrfatic
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_422', 'admin' ), // Модуль позволяет использовать различные js виджеты и стили оформление форм.
-		array( 'libs/factory/forms', 'factory_forms_419', 'admin' ), // Модуль позволяет быстро создавать формы и готовые поля настроек
-		array( 'libs/factory/pages', 'factory_pages_421', 'admin' ), // Модуль позволяет создавать страницы плагина, в том числе шаблонизированные страницы
-		array( 'libs/factory/freemius', 'factory_freemius_109', 'all' ), // Модуль для работы с freemius.com, содержит api библиотеку и провайдеры для премиум менеджера
-		array( 'libs/factory/adverts', 'factory_adverts_103', 'admin') // Модуль для показа рекламы в админпанели Wordpress, вся реклама вытягивается через API Creative Motion
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_426', 'admin' ), // Модуль позволяет использовать различные js виджеты и стили оформление форм.
+		array( 'libs/factory/forms', 'factory_forms_423', 'admin' ), // Модуль позволяет быстро создавать формы и готовые поля настроек
+		array( 'libs/factory/pages', 'factory_pages_425', 'admin' ), // Модуль позволяет создавать страницы плагина, в том числе шаблонизированные страницы
+		array( 'libs/factory/freemius', 'factory_freemius_113', 'all' ), // Модуль для работы с freemius.com, содержит api библиотеку и провайдеры для премиум менеджера
+		array( 'libs/factory/adverts', 'factory_adverts_106', 'admin'), // Модуль для показа рекламы в админпанели Wordpress, вся реклама вытягивается через API Creative Motion
+		array( 'libs/factory/feedback', 'factory_feedback_102', 'admin'),
 	)
 );
 
-$wapt_compatibility = new Wbcr_Factory421_Requirements( __FILE__, array_merge( $plugin_info, array(
+$wapt_compatibility = new Wbcr_Factory425_Requirements( __FILE__, array_merge( $plugin_info, array(
 	'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
 	'required_php_version' => '5.4',
 	'required_wp_version' => '4.2.0',
@@ -182,6 +183,7 @@ try {
  */
 function auto_post_thumbnails() {
 	require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-base.php' );
+	require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-image.php' );
 
 	return AutoPostThumbnails::instance();
 }

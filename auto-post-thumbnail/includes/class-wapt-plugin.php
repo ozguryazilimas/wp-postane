@@ -13,11 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @version       1.0
  */
 
-class WAPT_Plugin extends Wbcr_Factory421_Plugin {
+class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory421_Plugin
+	 * @var Wbcr_Factory425_Plugin
 	 */
 	private static $app;
 
@@ -58,6 +58,7 @@ class WAPT_Plugin extends Wbcr_Factory421_Plugin {
 			add_filter( 'bulk_actions-edit-post', [ $this, 'register_bulk_action_generate'] );
 			add_filter( 'handle_bulk_actions-edit-post', [ $this, 'bulk_action_generate_handler'], 10, 3 );
 			add_action( 'admin_notices', [ $this, 'apt_bulk_action_admin_notice'] );
+			add_action( 'admin_notices', [ $this, 'update_admin_notice'] );
 		}
 		$this->global_scripts();
 	}
@@ -71,10 +72,28 @@ class WAPT_Plugin extends Wbcr_Factory421_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return Wbcr_Factory421_Plugin
+	 * @return Wbcr_Factory425_Plugin
 	 */
 	public static function app() {
 		return self::$app;
+	}
+
+	/**
+	 * Метод проверяет активацию премиум плагина и наличие действующего лицензионнного ключа
+	 *
+	 * @return bool
+	 */
+	public function is_premium()
+	{
+		if(
+			$this->premium->is_active() &&
+			$this->premium->is_activate() &&
+			is_plugin_active( "{$this->premium->get_setting('slug')}/{$this->premium->get_setting('slug')}.php" )
+			//$this->premium->is_install_package()
+		)
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -166,6 +185,17 @@ class WAPT_Plugin extends Wbcr_Factory421_Plugin {
 		$data = $_GET['apt_bulk_action'];
 		$msg = __('Processed posts: ','apt').intval($data);
 		echo '<div id="message" class="updated"><p>'. $msg .'</p></div>';
+	}
+	/**
+	 * Admin notice
+	 *
+	 */
+	public function update_admin_notice()
+	{
+		if( defined( 'WAPTP_PLUGIN_VERSION') && str_replace( '.', '', WAPTP_PLUGIN_VERSION) < 130  ) {
+			$msg  = __( 'To use premium features, update the <b>Auto Post Thumbnail Premium</b> plugin!', 'apt' );
+			echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . $msg . '</p></div>';
+		}
 	}
 	/**
 	 * Add filter on the Posts list tables.

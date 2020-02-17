@@ -1,8 +1,8 @@
 <?php
 
-namespace WBCR\Factory_421;
+namespace WBCR\Factory_425;
 
-use Wbcr_Factory421_Plugin;
+use Wbcr_Factory425_Plugin;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Notices {
 
 	/**
-	 * @var Wbcr_Factory421_Plugin
+	 * @var Wbcr_Factory425_Plugin
 	 */
 	protected $plugin;
 	/**
@@ -58,7 +58,7 @@ class Notices {
 	/**
 	 * Инициализируем уведомлений сразу после загрузки модуля уведомлений
 	 *
-	 * @param Wbcr_Factory421_Plugin $plugin
+	 * @param Wbcr_Factory425_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
 		//default notices
@@ -86,13 +86,13 @@ class Notices {
 		/**
 		 * @since 2.1.2 - является устаревшим
 		 */
-		$this->notices = wbcr_factory_421_apply_filters_deprecated( 'wbcr_factory_notices_000_list', [
+		$this->notices = wbcr_factory_425_apply_filters_deprecated( 'wbcr_factory_notices_000_list', [
 			$this->notices,
 			$this->plugin->getPluginName(),
 		], '2.1.2', 'wbcr/factory/admin_notices' );
 
 		/**
-		 * @since 2.1.2 - Добавлен, модуль factory_notices_000 был удален. Поэтому в этому хуке мы заменили префикс на factory_421
+		 * @since 2.1.2 - Добавлен, модуль factory_notices_000 был удален. Поэтому в этому хуке мы заменили префикс на factory_425
 		 */
 		$this->notices = apply_filters( 'wbcr/factory/admin_notices', $this->notices, $this->plugin->getPluginName() );
 

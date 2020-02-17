@@ -4,7 +4,7 @@
  *
  * @author        Webcraftic <wordpress.webraftic@gmail.com>
  * @copyright (c) 02.12.2018, Webcraftic
- * @see           Wbcr_FactoryPages421_AdminPage
+ * @see           Wbcr_FactoryPages425_AdminPage
  *
  * @version       1.0.0
  */
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WAPT_Page extends Wbcr_FactoryPages421_AdminPage {
+class WAPT_Page extends Wbcr_FactoryPages425_AdminPage {
 
 	/**
 	 * Name of the template to get content of. It will be based on plugins /admin/views/ dir.
@@ -59,7 +59,10 @@ class WAPT_Page extends Wbcr_FactoryPages421_AdminPage {
 
 		$this->scripts->request( [
 			'control.checkbox',
-			'control.dropdown'
+			'control.dropdown',
+			'control.integer',
+			'plugin.nouislider',
+			'bootstrap.dropdown'
 		], 'bootstrap' );
 
 		$this->styles->request( [
@@ -68,6 +71,8 @@ class WAPT_Page extends Wbcr_FactoryPages421_AdminPage {
 			'bootstrap.separator',
 			'control.dropdown',
 			'control.checkbox',
+			'control.integer',
+			'plugin.nouislider',
 		], 'bootstrap' );
 	}
 

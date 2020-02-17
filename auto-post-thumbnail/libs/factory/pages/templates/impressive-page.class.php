@@ -14,11 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
+if ( ! class_exists( 'Wbcr_FactoryPages425_ImpressiveThemplate' ) ) {
 	/**
-	 * Class Wbcr_FactoryPages421_ImpressiveThemplate
+	 * Class Wbcr_FactoryPages425_ImpressiveThemplate
 	 */
-	abstract class Wbcr_FactoryPages421_ImpressiveThemplate extends Wbcr_FactoryPages421_AdminPage {
+	abstract class Wbcr_FactoryPages425_ImpressiveThemplate extends Wbcr_FactoryPages425_AdminPage {
 
 		/**
 		 * Тип страницы:
@@ -112,11 +112,11 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		public $page_menu = [];
 
 		/**
-		 * @param Wbcr_Factory421_Plugin $plugin
+		 * @param Wbcr_Factory425_Plugin $plugin
 		 */
-		public function __construct( Wbcr_Factory421_Plugin $plugin ) {
-			$this->menuIcon = FACTORY_PAGES_421_URL . '/templates/assets/img/webcraftic-plugin-icon.png';
-			//$allow_multisite = apply_filters('wbcr_factory_421_core_admin_allow_multisite', false);
+		public function __construct( Wbcr_Factory425_Plugin $plugin ) {
+			$this->menuIcon = FACTORY_PAGES_425_URL . '/templates/assets/img/webcraftic-plugin-icon.png';
+			//$allow_multisite = apply_filters('wbcr_factory_425_core_admin_allow_multisite', false);
 
 			if ( is_multisite() && $this->available_for_multisite && $plugin->isNetworkActive() ) {
 				$this->network     = true;
@@ -126,7 +126,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 
 			parent::__construct( $plugin );
 
-			$this->title_plugin_action_link = __( 'Settings', 'wbcr_factory_pages_421' );
+			$this->title_plugin_action_link = __( 'Settings', 'wbcr_factory_pages_425' );
 
 			$this->setPageMenu();
 		}
@@ -168,9 +168,9 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		/**
 		 * Requests assets (js and css) for the page.
 		 *
-		 * @since 1.0.0
 		 * @return void
-		 * @see   FactoryPages421_AdminPage
+		 * @since 1.0.0
+		 * @see   FactoryPages425_AdminPage
 		 *
 		 */
 		public function assets( $scripts, $styles ) {
@@ -191,7 +191,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 				'control.checkbox'
 			], 'bootstrap' );
 
-			$this->styles->add( FACTORY_PAGES_421_URL . '/templates/assets/css/impressive.page.template.css' );
+			$this->styles->add( FACTORY_PAGES_425_URL . '/templates/assets/css/impressive.page.template.css' );
 		}
 
 		/**
@@ -204,7 +204,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 			 * @since 4.0.8 - добавлен
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$plugin_title = wbcr_factory_421_apply_filters_deprecated( 'wbcr/factory/imppage/plugin_title', [
+			$plugin_title = wbcr_factory_425_apply_filters_deprecated( 'wbcr/factory/imppage/plugin_title', [
 				$this->plugin->getPluginTitle(),
 				$this->plugin->getPluginName()
 			], '4.0.9', 'wbcr/factory/pages/impressive/plugin_title' );
@@ -287,15 +287,15 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 			/**
 			 * @since 4.0.1 - является устаревшим
 			 */
-			wbcr_factory_421_do_action_deprecated( 'wbcr_factory_421_imppage_flush_cache', [
+			wbcr_factory_425_do_action_deprecated( 'wbcr_factory_425_imppage_flush_cache', [
 				$this->plugin->getPluginName(),
 				$this->getResultId()
-			], '4.0.1', 'wbcr_factory_421_imppage_after_form_save' );
+			], '4.0.1', 'wbcr_factory_425_imppage_after_form_save' );
 
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			wbcr_factory_421_do_action_deprecated( 'wbcr_factory_421_imppage_after_form_save', [
+			wbcr_factory_425_do_action_deprecated( 'wbcr_factory_425_imppage_after_form_save', [
 				$this->plugin,
 				$this
 			], '4.0.9', 'wbcr/factory/pages/impressive/after_form_save' );
@@ -314,7 +314,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$redirect_args = wbcr_factory_421_apply_filters_deprecated( 'wbcr_factory_421_imppage_after_form_save_redirect_args', [ $redirect_args ], '4.0.9', 'wbcr/factory/pages/impressive/save_redirect_args' );
+			$redirect_args = wbcr_factory_425_apply_filters_deprecated( 'wbcr_factory_425_imppage_after_form_save_redirect_args', [ $redirect_args ], '4.0.9', 'wbcr/factory/pages/impressive/save_redirect_args' );
 
 			/**
 			 * @since 4.0.1 - добавлен
@@ -331,7 +331,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		 */
 		protected function warningNotice() {
 			/*if( WP_CACHE ) {
-				$this->printWarningNotice(__("It seems that a caching/performance plugin is active on this site. Please manually invalidate that plugin's cache after making any changes to the settings below.", 'wbcr_factory_pages_421'));
+				$this->printWarningNotice(__("It seems that a caching/performance plugin is active on this site. Please manually invalidate that plugin's cache after making any changes to the settings below.", 'wbcr_factory_pages_425'));
 			}*/
 			// Метод предназначен для вызова в дочернем классе
 		}
@@ -339,11 +339,11 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		/**
 		 * Вызывается всегда при загрузке страницы, перед опциями формы с типом страницы options
 		 *
-		 * @since 4.0.0
-		 *
 		 * @param array $notices
 		 *
 		 * @return array
+		 * @since 4.0.0
+		 *
 		 */
 		protected function getActionNotices( $notices ) {
 			// Метод предназначен для вызова в дочернем классе
@@ -353,8 +353,8 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		/**
 		 * Вызывается перед сохранением опций формы
 		 *
-		 * @since 4.0.0
 		 * @return void
+		 * @since 4.0.0
 		 */
 		protected function beforeFormSave() {
 			// Метод предназначен для вызова в дочернем классе
@@ -363,8 +363,8 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		/**
 		 * Вызывается после сохранением опций формы, когда выполнен сброс кеша и совершен редирект
 		 *
-		 * @since 4.0.0
 		 * @return void
+		 * @since 4.0.0
 		 */
 		protected function afterFormSave() {
 			// Метод предназначен для вызова в дочернем классе
@@ -373,8 +373,8 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		/**
 		 * Вызывается в процессе выполнения сохранения, но после сохранения всех опций
 		 *
-		 * @since 4.0.0
 		 * @return void
+		 * @since 4.0.0
 		 */
 		protected function formSaved() {
 			// Метод предназначен для вызова в дочернем классе
@@ -403,7 +403,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			wbcr_factory_421_do_action_deprecated( 'wbcr_factory_pages_421_imppage_print_all_notices', [
+			wbcr_factory_425_do_action_deprecated( 'wbcr_factory_pages_425_imppage_print_all_notices', [
 				$this->plugin,
 				$this
 			], '4.0.9', 'wbcr/factory/pages/impressive/print_all_notices' );
@@ -422,14 +422,14 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 						$this->plugin->getPluginName() . '_saved' => '1'
 					],
 					'type'       => 'success',
-					'message'    => __( 'The settings have been updated successfully!', 'wbcr_factory_pages_421' ) . ( WP_CACHE ? '<br>' . __( "It seems that a caching/performance plugin is active on this site. Please manually invalidate that plugin's cache after making any changes to the settings below.", 'wbcr_factory_pages_421' ) : '' )
+					'message'    => __( 'The settings have been updated successfully!', 'wbcr_factory_pages_425' ) . ( WP_CACHE ? '<br>' . __( "It seems that a caching/performance plugin is active on this site. Please manually invalidate that plugin's cache after making any changes to the settings below.", 'wbcr_factory_pages_425' ) : '' )
 				]
 			];
 
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$notices = wbcr_factory_421_apply_filters_deprecated( 'wbcr_factory_pages_421_imppage_actions_notice', [
+			$notices = wbcr_factory_425_apply_filters_deprecated( 'wbcr_factory_pages_425_imppage_actions_notice', [
 				$notices,
 				$this->plugin,
 				$this->id
@@ -494,7 +494,8 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 					}
 					?>
                     <li class="wbcr-factory-nav-tab<?= $active_tab ?>">
-                        <a href="<?php echo $page['url'] ?>" id="<?= $page_screen ?>-tab" class="wbcr-factory-tab__link">
+                        <a href="<?php echo $page['url'] ?>" id="<?= $page_screen ?>-tab"
+                           class="wbcr-factory-tab__link">
                             <div class="wbcr-factory-tab__title">
 								<?php echo $page['title'] ?>
                             </div>
@@ -572,7 +573,8 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 						$active_tab = ' nav-tab-active';
 					}
 					?>
-                    <a href="<?php echo $page['url'] ?>" id="<?= esc_attr( $page_screen ) ?>-tab" class="nav-tab<?= esc_attr( $active_tab ) ?>">
+                    <a href="<?php echo $page['url'] ?>" id="<?= esc_attr( $page_screen ) ?>-tab"
+                       class="nav-tab<?= esc_attr( $active_tab ) ?>">
 						<?php echo $page['title'] ?>
                     </a>
 				<?php endforeach; ?>
@@ -601,7 +603,9 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 					<?php do_action( 'wbcr/factory/pages/impressive/header', $this->plugin->getPluginName() ) ?>
 
 					<?php if ( $this->type == 'options' ): ?>
-                        <input name="<?= $this->plugin->getPluginName() ?>_save_action" class="wbcr-factory-button wbcr-factory-type-save" type="submit" value="<?php _e( 'Save', 'wbcr_factory_pages_421' ); ?>">
+                        <input name="<?= $this->plugin->getPluginName() ?>_save_action"
+                               class="wbcr-factory-button wbcr-factory-type-save" type="submit"
+                               value="<?php _e( 'Save', 'wbcr_factory_pages_425' ); ?>">
 						<?php wp_nonce_field( 'wbcr_factory_' . $this->getResultId() . '_save_action' ); ?>
 					<?php endif; ?>
                 </div>
@@ -656,7 +660,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$widgets = wbcr_factory_421_apply_filters_deprecated( 'wbcr_factory_pages_421_imppage_get_widgets', [
+			$widgets = wbcr_factory_425_apply_filters_deprecated( 'wbcr_factory_pages_425_imppage_get_widgets', [
 				$widgets,
 				$position,
 				$this->plugin,
@@ -673,19 +677,19 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		}
 
 		protected function showOptions() {
-			$form = new Wbcr_FactoryForms419_Form( [
+			$form = new Wbcr_FactoryForms423_Form( [
 				'scope' => rtrim( $this->plugin->getPrefix(), '_' ),
 				'name'  => $this->getResultId() . "-options"
 			], $this->plugin );
 
-			$form->setProvider( new Wbcr_FactoryForms419_OptionsValueProvider( $this->plugin ) );
+			$form->setProvider( new Wbcr_FactoryForms423_OptionsValueProvider( $this->plugin ) );
 
 			$options = $this->getPageOptions();
 
 			if ( isset( $options[0] ) && isset( $options[0]['items'] ) && is_array( $options[0]['items'] ) ) {
 				foreach ( $options[0]['items'] as $key => $value ) {
 
-					if ( $value['type'] == 'div' ) {
+					if ( $value['type'] == 'div' || $value['type'] == 'more-link' ) {
 						if ( isset( $options[0]['items'][ $key ]['items'] ) && ! empty( $options[0]['items'][ $key ]['items'] ) ) {
 							foreach ( $options[0]['items'][ $key ]['items'] as $group_key => $group_value ) {
 								$options[0]['items'][ $key ]['items'][ $group_key ]['layout']['column-left']  = '4';
@@ -718,14 +722,14 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 				check_admin_referer( 'wbcr_factory_' . $this->getResultId() . '_save_action' );
 
 				if ( ! current_user_can( 'administrator' ) && ! current_user_can( $this->capabilitiy ) ) {
-					wp_die( __( 'You do not have permission to edit page.', 'wbcr_factory_pages_421' ) );
+					wp_die( __( 'You do not have permission to edit page.', 'wbcr_factory_pages_425' ) );
 					exit;
 				}
 
 				/**
 				 * @since 4.0.9 - является устаревшим
 				 */
-				wbcr_factory_421_do_action_deprecated( 'wbcr_factory_421_imppage_before_form_save', [
+				wbcr_factory_425_do_action_deprecated( 'wbcr_factory_425_imppage_before_form_save', [
 					$form,
 					$this->plugin,
 					$this
@@ -744,7 +748,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 				/**
 				 * @since 4.0.9 - является устаревшим
 				 */
-				wbcr_factory_421_do_action_deprecated( 'wbcr_factory_421_imppage_form_saved', [
+				wbcr_factory_425_do_action_deprecated( 'wbcr_factory_425_imppage_form_saved', [
 					$form,
 					$this->plugin,
 					$this
@@ -765,7 +769,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 
 			?>
             <div id="WBCR" class="wrap">
-                <div class="wbcr-factory-pages-421-impressive-page-template factory-bootstrap-422 factory-fontawesome-000">
+                <div class="wbcr-factory-pages-425-impressive-page-template factory-bootstrap-426 factory-fontawesome-000">
                     <div class="wbcr-factory-options wbcr-factory-options-<?= esc_attr( $this->id ) ?>">
                         <div class="wbcr-factory-left-navigation-bar">
 							<?php $this->showPageMenu() ?>
@@ -810,7 +814,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 
 		protected function showPage( $content = null ) { ?>
             <div id="WBCR" class="wrap">
-                <div class="wbcr-factory-pages-421-impressive-page-template factory-bootstrap-422 factory-fontawesome-000">
+                <div class="wbcr-factory-pages-425-impressive-page-template factory-bootstrap-426 factory-fontawesome-000">
                     <div class="wbcr-factory-page wbcr-factory-page-<?= $this->id ?>">
 						<?php $this->showHeader(); ?>
                         <div class="wbcr-factory-left-navigation-bar">
@@ -873,7 +877,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages421_ImpressiveThemplate' ) ) {
 		public function confirmPageTemplate( $data ) {
 			?>
             <div id="WBCR" class="wrap">
-                <div class="wbcr-factory-pages-421-impressive-page-template factory-bootstrap-422 factory-fontawesome-000">
+                <div class="wbcr-factory-pages-425-impressive-page-template factory-bootstrap-426 factory-fontawesome-000">
                     <div id="wbcr-factory-confirm-dialog">
                         <h2><?php echo $data['title'] ?></h2>
                         <p class="wbcr-factory-confirm-description"><?php echo $data['description'] ?></p>

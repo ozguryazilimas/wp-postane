@@ -1,6 +1,6 @@
 <div class="wrap">
     <h2><?php esc_html_e( 'Generate Featured images for posts', 'apt' ) ?></h2>
-    <div class="factory-bootstrap-422 factory-fontawesome-000">
+    <div class="factory-bootstrap-426 factory-fontawesome-000">
         <div class="row">
             <div class="col-md-9">
 
@@ -31,7 +31,7 @@
                     <div class="col-md-12">
                         <div id="genpostthumbsbar" style="position:relative;height:40px;display: none;">
                             <div id="genpostthumbsbar-percent"
-                                 style="position:absolute;left:50%;top:50%;width:50px;margin-left:-25px;height:25px;margin-top:-9px;font-weight:bold;text-align:center;"></div>
+                                 style="position:absolute;left:50%;top:50%;margin-left:-25px;height:25px;margin-top:-9px;font-weight:bold;text-align:center;"></div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                                             }
                                             rt_percent = (rt_count / rt_total) * 100;
                                             $("#genpostthumbsbar").progressbar("value", rt_percent);
-                                            $("#genpostthumbsbar-percent").html(Math.round(rt_percent) + "%");
+                                            $("#genpostthumbsbar-percent").html(Math.round(rt_percent) + "% ("+ rt_count + "/" + rt_total +")");
                                             rt_count = rt_count + 1;
 
                                             if( rt_images.length ) {
@@ -161,6 +161,8 @@
                                                 delPostThumb(rt_images.shift());
                                             } else {
                                                 $("#genpostthumbsbar").hide();
+                                                $("#generate-post-thumbnails").removeAttr('disabled');
+                                                $("#delete-post-thumbnails").removeAttr('disabled');
                                                 $("#message").html("<p><strong><?php echo esc_html__( 'All done! Processed posts:', 'apt' ); ?> " + rt_total + "<br><?php echo esc_html__( 'Delete featured image in posts:', 'apt' ); ?> " + posted_count + "</strong></p>");
                                                 $("#message").show();
                                             }
