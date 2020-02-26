@@ -389,18 +389,27 @@ function exactmetrics_admin_setup_notices() {
     }
 
     // 6. Authenticate, not manual
-    $authed   = ExactMetrics()->auth->is_authed() || ExactMetrics()->auth->is_network_authed();
-    $url      = is_network_admin() ? network_admin_url( 'admin.php?page=exactmetrics_network' ) : admin_url( 'admin.php?page=exactmetrics_settings' );
+	$authed      = ExactMetrics()->auth->is_authed() || ExactMetrics()->auth->is_network_authed();
+	$url         = is_network_admin() ? network_admin_url( 'admin.php?page=exactmetrics_network' ) : admin_url( 'admin.php?page=exactmetrics_settings' );
+	// Translators: Placeholders add links to the settings panel.
+	$manual_text = sprintf( esc_html__( 'Important: You are currently using manual UA code output. We highly recommend %1$sauthenticating with ExactMetrics%2$s so that you can access our new reporting area and take advantage of new ExactMetrics features.', 'google-analytics-dashboard-for-wp' ), '<a href="' . $url . '">', '</a>' );
+	$migrated    = exactmetrics_get_option( 'gadwp_migrated', 0 );
+	if ( $migrated > 0 ) {
+		$url         = admin_url( 'admin.php?page=exactmetrics-getting-started&exactmetrics-migration=1' );
+		// Translators: Placeholders add links to the settings panel.
+		$text        = esc_html__( 'Click %1$shere%2$s to reauthenticate to be able to access reports. For more information why this is required, see our %3$sblog post%4$s.', 'google-analytics-dashboard-for-wp' );
+		$manual_text = sprintf( $text, '<a href="' . $url . '">', '</a>', '<a href="' . exactmetrics_get_url( 'notice', 'manual-ua', 'https://www.exactmetrics.com/why-did-we-implement-the-new-google-analytics-authentication-flow-challenges-explained/' ) . '" target="_blank">', '</a>' );
+	}
 
-    if ( empty( $authed ) && ! isset( $notices['exactmetrics_auth_not_manual' ] ) ) {
-        echo '<div class="notice notice-info is-dismissible exactmetrics-notice" data-notice="exactmetrics_auth_not_manual">';
-            echo '<p>';
-            // Translators: Placeholders add links to the settings panel.
-            echo sprintf( esc_html__( 'Important: You are currently using manual UA code output. We highly recommend %1$sauthenticating with ExactMetrics%2$s so that you can access our new reporting area and take advantage of new ExactMetrics features.', 'google-analytics-dashboard-for-wp' ), '<a href="' . $url .'">', '</a>' );
-            echo '</p>';
-        echo '</div>';
-        return;
-    }
+	if ( empty( $authed ) && ! isset( $notices['exactmetrics_auth_not_manual'] ) ) {
+		echo '<div class="notice notice-info is-dismissible exactmetrics-notice" data-notice="exactmetrics_auth_not_manual">';
+		echo '<p>';
+		echo $manual_text;
+		echo '</p>';
+		echo '</div>';
+
+		return;
+	}
 
     // 7. Automatic updates not configured
     // if ( ! is_network_admin() ) {

@@ -182,7 +182,7 @@ class ExactMetrics_Report {
 		$ms_auth     = is_multisite() && ExactMetrics()->auth->get_network_viewname();
 		$transient   = 'exactmetrics_report_' . $this->name . '_' . $start . '_' . $end;
 		// Set to same time as MI cache. MI caches same day to 15 and others to 1 day, so there's no point pinging MI before then.
-		$expiration = date( 'Y-m-d' ) === $end ? apply_filters( 'exactmetrics_report_transient_expiration', 15 * MINUTE_IN_SECONDS, $this->name ) : DAY_IN_SECONDS;
+		$expiration = date( 'Y-m-d' ) === $end ? apply_filters( 'exactmetrics_report_transient_expiration', 15 * MINUTE_IN_SECONDS, $this->name ) : HOUR_IN_SECONDS;
 
 		// Default date range, check.
 		if ( $site_auth || $ms_auth ) {

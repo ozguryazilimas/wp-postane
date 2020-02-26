@@ -183,7 +183,7 @@ class ExactMetrics_Welcome {
 
 		if ( defined( 'EXACTMETRICS_VERSION' ) && function_exists( 'ExactMetrics' ) ) {
 			$migrated = exactmetrics_get_option( 'gadwp_migrated', 0 );
-			if ( time() - $migrated < HOUR_IN_SECONDS ) {
+			if ( time() - $migrated < HOUR_IN_SECONDS || isset( $_GET['exactmetrics-migration'] ) ) {
 				$screen_id = 'exactmetrics-migration-wizard';
 			}
 		}

@@ -395,9 +395,6 @@ class ExactMetrics_Install {
 			update_user_meta( get_current_user_id(), 'exactmetrics_user_preferences', $dashboard_settings );
 		}
 
-		// Add transient to trigger redirect.
-		set_transient( '_exactmetrics_activation_redirect', 1, 60 );
-
 		return $settings;
 	}
 

@@ -227,6 +227,9 @@ function exactmetrics_administrator_tracking_notice() {
 		return;
 	}
 
+	// Automatically dismiss when loaded.
+	update_option( 'exactmetrics_frontend_tracking_notice_viewed', 1 );
+
 	?>
 	<div class="exactmetrics-tracking-notice exactmetrics-tracking-notice-hide">
 		<div class="exactmetrics-tracking-notice-icon">

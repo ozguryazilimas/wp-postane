@@ -310,6 +310,7 @@ function exactmetrics_admin_scripts() {
 				'activate_nonce'  => wp_create_nonce( 'exactmetrics-activate' ),
 				'deactivate_nonce'=> wp_create_nonce( 'exactmetrics-deactivate' ),
 				'update_settings' => current_user_can( 'exactmetrics_save_settings' ),
+				'migrated'        => exactmetrics_get_option( 'gadwp_migrated', 0 ),
 			)
 		);
 

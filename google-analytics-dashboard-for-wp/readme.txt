@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
 Tested up to: 5.3
-Stable tag: 6.0.1
+Stable tag: 6.0.2
 License: GPL v3
 
 Connects Google Analytics with your WordPress site. Displays stats to help you understand your users and site content on a whole new level!
@@ -154,6 +154,13 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.0.2: February 25, 2020 =
+- New: We added a new "classic" mode to the dashboard based on user feedback. This new mode allows for a more compact, compressed widget to see all the most important information at a glance..
+- Tweak: We disabled the eCommerce settings and reports for users that are not using any eCommerce plugin.
+- Tweak: We updated the caching interval for reports data to avoid confusion due to timezone settings in Google Analytics.
+- Tweak: We updated the administrator not tracking notice to dismiss permanently on first view or button click in addition to the existing "x" icon
+
+
 = 6.0.1: February 14, 2020 =
 - New: The dashboard widget now shows the reports chart.
 - Fixed: We changed animation timing as that was preventing certain Safari users from accessing the onboarding wizard.
