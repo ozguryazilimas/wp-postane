@@ -159,6 +159,7 @@ var AmePluginVisibilityModule = /** @class */ (function () {
         return this.grantAccessByDefault[actorId];
     };
     AmePluginVisibilityModule.prototype.getSettings = function () {
+        var _this = this;
         var _ = AmePluginVisibilityModule._;
         var result = {};
         result.grantAccessByDefault = _.mapValues(this.grantAccessByDefault, function (allow) {
@@ -172,9 +173,24 @@ var AmePluginVisibilityModule = /** @class */ (function () {
                     return allow();
                 })
             };
+            //Filter out grants that match the default settings.
+            result.plugins[plugin.fileName].grantAccess = _.pick(result.plugins[plugin.fileName].grantAccess, function (allowed, actorId) {
+                var defaultState = _this.getGrantAccessByDefault(actorId)() && plugin.isVisibleByDefault();
+                return (allowed !== defaultState);
+            });
+            //Don't store the "grantAccess" map if it's empty.
+            if (_.isEmpty(result.plugins[plugin.fileName].grantAccess)) {
+                delete result.plugins[plugin.fileName].grantAccess;
+            }
+            //All plugins are visible by default, so it's not necessary to store this flag if it's TRUE.
+            if (result.plugins[plugin.fileName].isVisibleByDefault) {
+                delete result.plugins[plugin.fileName].isVisibleByDefault;
+            }
             for (var i = 0; i < AmePlugin.editablePropertyNames.length; i++) {
-                var key = AmePlugin.editablePropertyNames[i], upperKey = key.substring(0, 1).toUpperCase() + key.substring(1);
-                result.plugins[plugin.fileName]['custom' + upperKey] = plugin.customProperties[key]();
+                var key = AmePlugin.editablePropertyNames[i], upperKey = key.substring(0, 1).toUpperCase() + key.substring(1), value = plugin.customProperties[key]();
+                if (value !== '') {
+                    result.plugins[plugin.fileName]['custom' + upperKey] = value;
+                }
             }
         });
         return result;
@@ -185,7 +201,13 @@ var AmePluginVisibilityModule = /** @class */ (function () {
         //Remove settings associated with roles and users that no longer exist or are not visible.
         var _ = AmePluginVisibilityModule._, visibleActorIds = _.pluck(this.actorSelector.getVisibleActors(), 'id');
         _.forEach(settings.plugins, function (plugin) {
-            plugin.grantAccess = _.pick(plugin.grantAccess, visibleActorIds);
+            if (plugin.grantAccess) {
+                plugin.grantAccess = _.pick(plugin.grantAccess, visibleActorIds);
+            }
+        });
+        //Remove plugins that don't have any custom settings.
+        settings.plugins = _.pick(settings.plugins, function (value) {
+            return !_.isEmpty(value);
         });
         //Populate form field(s).
         this.settingsData(jQuery.toJSON(settings));

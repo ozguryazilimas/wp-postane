@@ -22,7 +22,8 @@ class MenuEd_ShadowPluginFramework {
 	public $option_name = ''; //should be set or overridden by the plugin
 	protected $defaults = array(); //should be set or overridden by the plugin
 	protected $sitewide_options = false; //WPMU only : save the setting in a site-wide option
-	protected $serialize_with_json = false; //Use the JSON format for option storage 
+	protected $serialize_with_json = false; //Use the JSON format for option storage
+	protected $zlib_compression = false;
 	
 	public $plugin_file = ''; //Filename of the plugin.
 	public $plugin_basename = ''; //Basename of the plugin, as returned by plugin_basename().
@@ -120,7 +121,18 @@ class MenuEd_ShadowPluginFramework {
 		} else {
 			$this->options = get_option($option_name);
 		}
-		
+
+		$prefix = 'gzcompress:';
+		if (
+			is_string($this->options)
+			&& (substr($this->options, 0, strlen($prefix)) === $prefix)
+			&& function_exists('gzuncompress')
+		) {
+			//TODO: Maybe this would be faster if we stored the flag separately?
+			/** @noinspection PhpComposerExtensionStubsInspection */
+			$this->options = unserialize(gzuncompress(base64_decode(substr($this->options, strlen($prefix)))));
+		}
+
 		if ( $this->serialize_with_json || is_string($this->options) ){
 			$this->options = $this->json_decode($this->options, true);
 		}
@@ -146,7 +158,12 @@ class MenuEd_ShadowPluginFramework {
 			if ( $this->serialize_with_json ){
 				$stored_options = $this->json_encode($stored_options);
 			}
-			
+
+			if ( $this->zlib_compression && function_exists('gzcompress') ) {
+				/** @noinspection PhpComposerExtensionStubsInspection */
+				$stored_options = 'gzcompress:' . base64_encode(gzcompress(serialize($stored_options)));
+			}
+
 			if ( $this->sitewide_options && is_multisite() ) {
 				return self::atomic_update_site_option($this->option_name, $stored_options);
 			} else {

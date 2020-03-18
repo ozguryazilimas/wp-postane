@@ -1,11 +1,12 @@
 $amePostboxBorderColor: #ccd0d4; //Was #e5e5e5 before WP 5.3.
+$amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 
 @mixin ame-emulated-postbox($toggleWidth: 36px, $horizontalPadding: 12px) {
 	$borderColor: $amePostboxBorderColor;
 	$headerBackground: #fff;
 
 	position: relative;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	box-shadow: $amePostboxShadow;
 	background: $headerBackground;
 
 	margin-bottom: 20px;

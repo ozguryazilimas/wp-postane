@@ -27,6 +27,7 @@ $icons = array(
 foreach($icons as $name => $url) {
 	$icons[$name] = $images_url . $url;
 }
+$icons = apply_filters('admin_menu_editor-toolbar_icons', $icons, $images_url);
 
 $hide_button_extra_tooltip = 'When "All" is selected, this will hide the menu from everyone except the current user'
 	. ($is_multisite ? ' and Super Admin' : '') . '.';
@@ -144,18 +145,7 @@ function ame_output_sort_buttons($icons) {
 				}
 				?>
 
-				<?php  if ( $is_pro_version ): ?>
-					<div class="ws_separator">&nbsp;</div>
-
-					<a id='ws_toggle_all_menus' class='ws_button' href='javascript:void(0)'
-					   title='Toggle all menus for the selected role'><img src='<?php echo $icons['toggle-all']; ?>' alt="Toggle all" /></a>
-
-					<a id='ws_copy_role_permissions' class='ws_button' href='javascript:void(0)'
-					   title='Copy all menu permissions from one role to another'><img src='<?php echo $icons['copy-permissions']; ?>' alt="Copy permissions" /></a>
-
-					<div class="ws_separator">&nbsp;</div>
-				<?php endif; ?>
-
+				<?php do_action('admin_menu_editor-toolbar_row_2', $icons); ?>
 				<div class="clear"></div>
 			</div>
 		</div>

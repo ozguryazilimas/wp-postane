@@ -151,6 +151,8 @@ window.AmeEditorApi = AmeEditorApi;
 
 var actorSelectorWidget = new AmeActorSelector(AmeActors, wsEditorData.wsMenuEditorPro);
 
+AmeEditorApi.actorSelectorWidget = actorSelectorWidget;
+
 var itemTemplates = {
 	templates: wsEditorData.itemTemplates,
 
@@ -1380,6 +1382,9 @@ function updateItemEditor(containerNode) {
 		}
     });
 }
+
+AmeEditorApi.updateParentAccessUi = updateParentAccessUi;
+AmeEditorApi.updateItemEditor = updateItemEditor;
 
 function isEmptyObject(obj) {
     for (var prop in obj) {

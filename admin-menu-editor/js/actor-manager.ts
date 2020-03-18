@@ -1,4 +1,5 @@
 /// <reference path="lodash-3.10.d.ts" />
+/// <reference path="knockout.d.ts" />
 /// <reference path="common.d.ts" />
 
 declare let wsAmeActorData: any;
@@ -58,7 +59,7 @@ abstract class AmeBaseActor implements IAmeActor {
 
 	static getActorSpecificity(actorId: string) {
 		let actorType = actorId.substring(0, actorId.indexOf(':')),
-			specificity = 0;
+			specificity;
 		switch (actorType) {
 			case 'role':
 				specificity = 1;
@@ -474,6 +475,19 @@ class AmeActorManager implements AmeActorManagerInterface {
 		if (AmeActorManager._.has(context, [actor, capability])) {
 			delete context[actor][capability];
 		}
+	}
+
+	/**
+	 * Reset all capabilities granted to an actor.
+	 * @param actor
+	 * @return boolean TRUE if anything was reset or FALSE if the actor didn't have any granted capabilities.
+	 */
+	resetActorCaps(actor: string): boolean {
+		if (AmeActorManager._.has(this.grantedCapabilities, actor)) {
+			delete this.grantedCapabilities[actor];
+			return true;
+		}
+		return false;
 	}
 
 	/**

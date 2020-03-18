@@ -1,4 +1,5 @@
 /// <reference path="lodash-3.10.d.ts" />
+/// <reference path="knockout.d.ts" />
 /// <reference path="common.d.ts" />
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -42,7 +43,7 @@ var AmeBaseActor = /** @class */ (function () {
         return null;
     };
     AmeBaseActor.getActorSpecificity = function (actorId) {
-        var actorType = actorId.substring(0, actorId.indexOf(':')), specificity = 0;
+        var actorType = actorId.substring(0, actorId.indexOf(':')), specificity;
         switch (actorType) {
             case 'role':
                 specificity = 1;
@@ -356,6 +357,18 @@ var AmeActorManager = /** @class */ (function () {
         if (AmeActorManager._.has(context, [actor, capability])) {
             delete context[actor][capability];
         }
+    };
+    /**
+     * Reset all capabilities granted to an actor.
+     * @param actor
+     * @return boolean TRUE if anything was reset or FALSE if the actor didn't have any granted capabilities.
+     */
+    AmeActorManager.prototype.resetActorCaps = function (actor) {
+        if (AmeActorManager._.has(this.grantedCapabilities, actor)) {
+            delete this.grantedCapabilities[actor];
+            return true;
+        }
+        return false;
     };
     /**
      * Remove redundant granted capabilities.

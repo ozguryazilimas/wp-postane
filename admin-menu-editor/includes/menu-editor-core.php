@@ -245,6 +245,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'admin.php?page=WPCW_showPage_UserCourseAccess'        => true,
 			'admin.php?page=WPCW_showPage_UserProgess'             => true,
 			'admin.php?page=WPCW_showPage_UserProgess_quizAnswers' => true,
+			//Extended Widget Options
+			'index.php?page=extended-widget-opts-getting-started' => true,
 		);
 
 		//AJAXify screen options
@@ -322,6 +324,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$this->import_settings();
 			$should_save_options = true;
 		}
+		$this->zlib_compression = $this->options['compress_custom_menu'];
 
 		//Track first install time.
         if ( !isset($this->options['first_install_time']) ) {
@@ -352,6 +355,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		if ( $this->options['security_logging_enabled'] ) {
 			add_action('admin_notices', array($this, 'display_security_log'));
 		}
+
+		//Compatibility fix for MailPoet 3.
+		$this->apply_mailpoet_compat_fix();
 
 		if ( did_action('plugins_loaded') ) {
 			$this->load_modules();
@@ -840,7 +846,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		//Any capability that's assigned to a role probably isn't a meta capability.
-		$allRealCaps = ameRoleUtils::get_all_capabilities();
+		$allRealCaps = ameRoleUtils::get_all_capabilities(true);
 		//Similarly, capabilities that are directly assigned to users are probably real.
 		foreach($users as $user) {
 			$allRealCaps = array_merge($allRealCaps, $user['capabilities']);
@@ -2569,7 +2575,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$editor_data['custom_menu_js'] = ameMenu::to_json($custom_menu);
 
 		//Create a list of all known capabilities and roles. Used for the drop-down list on the access field.
-		$all_capabilities = ameRoleUtils::get_all_capabilities();
+		$all_capabilities = ameRoleUtils::get_all_capabilities(is_multisite());
 		//"level_X" capabilities are deprecated so we don't want people using them.
 		//This would look better with array_filter() and an anonymous function as a callback.
 		for($level = 0; $level <= 10; $level++){
@@ -3849,6 +3855,29 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				unset($this->default_wp_submenu['index.php'][$index]);
 			}
 		}
+	}
+
+	/**
+	 * Compatibility fix for MailPoet 3. Last tested with MailPoet 3.44.0.
+	 *
+	 * MailPoet deliberately removes all third-party stylesheets from its admin pages.
+	 * As a result, some AME features that use stylesheets - like custom menu icons and admin
+	 * menu colors - don't work on those pages. Let's fix that by whitelisting our styles.
+	 */
+	private function apply_mailpoet_compat_fix() {
+		add_filter('mailpoet_conflict_resolver_whitelist_style', array($this, '_whitelist_ame_styles_for_mailpoet'));
+	}
+
+	/**
+	 * @internal
+	 * @param array $styles
+	 * @return array
+	 */
+	public function _whitelist_ame_styles_for_mailpoet($styles) {
+		$styles[] = 'ame_output_menu_color_css';
+		$styles[] = 'font-awesome\.css';
+		$styles[] = 'force-dashicons\.css';
+		return $styles;
 	}
 
 	/**

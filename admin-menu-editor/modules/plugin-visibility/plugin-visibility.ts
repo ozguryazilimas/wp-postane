@@ -21,8 +21,8 @@ interface PluginVisibilitySettings {
 	grantAccessByDefault: GrantAccessMap,
 	plugins: {
 		[fileName : string] : {
-			isVisibleByDefault: boolean,
-			grantAccess: GrantAccessMap,
+			isVisibleByDefault?: boolean,
+			grantAccess?: GrantAccessMap,
 			customName?: string,
 			customDescription?: string;
 			customAuthor?: string;
@@ -251,10 +251,32 @@ class AmePluginVisibilityModule {
 				})
 			};
 
+			//Filter out grants that match the default settings.
+			result.plugins[plugin.fileName].grantAccess = _.pick(
+				result.plugins[plugin.fileName].grantAccess,
+				(allowed, actorId) => {
+					const defaultState = this.getGrantAccessByDefault(actorId)() && plugin.isVisibleByDefault();
+					return (allowed !== defaultState);
+				}
+			);
+
+			//Don't store the "grantAccess" map if it's empty.
+			if (_.isEmpty(result.plugins[plugin.fileName].grantAccess)) {
+				delete result.plugins[plugin.fileName].grantAccess;
+			}
+
+			//All plugins are visible by default, so it's not necessary to store this flag if it's TRUE.
+			if (result.plugins[plugin.fileName].isVisibleByDefault) {
+				delete result.plugins[plugin.fileName].isVisibleByDefault;
+			}
+
 			for (let i = 0; i < AmePlugin.editablePropertyNames.length; i++) {
 				let key = AmePlugin.editablePropertyNames[i],
-					upperKey = key.substring(0, 1).toUpperCase() + key.substring(1);
-				result.plugins[plugin.fileName]['custom' + upperKey] = plugin.customProperties[key]();
+					upperKey = key.substring(0, 1).toUpperCase() + key.substring(1),
+					value = plugin.customProperties[key]();
+				if (value !== '') {
+					result.plugins[plugin.fileName]['custom' + upperKey] = value;
+				}
 			}
 		});
 
@@ -269,7 +291,14 @@ class AmePluginVisibilityModule {
 		const _ = AmePluginVisibilityModule._,
 			visibleActorIds = _.pluck(this.actorSelector.getVisibleActors(), 'id');
 		_.forEach(settings.plugins, (plugin) => {
-			plugin.grantAccess = _.pick<GrantAccessMap, GrantAccessMap>(plugin.grantAccess, visibleActorIds);
+			if (plugin.grantAccess) {
+				plugin.grantAccess = _.pick<GrantAccessMap, GrantAccessMap>(plugin.grantAccess, visibleActorIds);
+			}
+		});
+
+		//Remove plugins that don't have any custom settings.
+		settings.plugins = _.pick(settings.plugins, (value) => {
+			return !_.isEmpty(value);
 		});
 
 		//Populate form field(s).
