@@ -117,9 +117,25 @@ function relevanssi_generate_indexing_query( $valid_status, $extend = false, $re
 	 *
 	 * @param string The WHERE restriction.
 	 *
-	 * @return string The modified WHERE restriction.
+	 * @param array $restriction An array with two values: 'mysql' for the MySQL
+	 * query restriction to modify, 'reason' for the reason of restriction.
 	 */
-	$restriction = apply_filters( 'relevanssi_indexing_restriction', $restriction );
+	$restriction = apply_filters(
+		'relevanssi_indexing_restriction',
+		array(
+			'mysql'  => $restriction,
+			'reason' => '',
+		)
+	);
+
+	/**
+	 * Backwards compatibility for the change in filter parameters in Premium
+	 * 2.8.0 in March 2020. Remove this eventually.
+	 */
+	if ( is_string( $restriction ) ) {
+		$restriction['mysql']  = $restriction;
+		$restriction['reason'] = 'relevanssi_indexing_restriction filter';
+	}
 
 	if ( ! $extend ) {
 		$q = "SELECT post.ID
@@ -135,7 +151,7 @@ function relevanssi_generate_indexing_query( $valid_status, $extend = false, $re
 				)
 			))
 		AND post.ID NOT IN (SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_relevanssi_hide_post' AND meta_value = 'on')
-		$restriction ORDER BY post.ID DESC $limit";
+		{$restriction['mysql']} ORDER BY post.ID DESC $limit";
 	} else {
 		$processed_post_filter = 'r.doc is null';
 		if ( 'noindex' !== get_option( 'relevanssi_internal_links', 'noindex' ) ) {
@@ -159,7 +175,7 @@ function relevanssi_generate_indexing_query( $valid_status, $extend = false, $re
 			)
 		)
 		AND post.ID NOT IN (SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_relevanssi_hide_post' AND meta_value = 'on')
-		$restriction ORDER BY post.ID DESC $limit";
+		{$restriction['mysql']} ORDER BY post.ID DESC $limit";
 	}
 
 	/**
@@ -443,6 +459,11 @@ function relevanssi_index_doc( $index_post, $remove_first = false, $custom_field
 			if ( $previous_post || $post_was_null ) {
 				$post = $previous_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			}
+			update_post_meta(
+				$post->ID,
+				'_relevanssi_noindex_reason',
+				__( 'Relevanssi index exclude', 'relevanssi' )
+			);
 			return 'hide';
 		}
 	}
@@ -460,14 +481,21 @@ function relevanssi_index_doc( $index_post, $remove_first = false, $custom_field
 	 *
 	 * Allows you to filter whether a post is indexed or not.
 	 *
-	 * @param boolean If true, the post is not indexed. Default false.
-	 * @param int     The post ID.
+	 * @param boolean|string If not false, the post is not indexed. The value
+	 * can be a boolean, or a string containing an explanation for the
+	 * exclusion. Default false.
+	 * @param int            The post ID.
 	 */
-	if ( true === apply_filters( 'relevanssi_do_not_index', false, $post->ID ) ) {
+	$do_not_index = apply_filters( 'relevanssi_do_not_index', false, $post->ID );
+	if ( $do_not_index ) {
 		// Filter says no.
-		if ( $debug ) {
-			relevanssi_debug_echo( 'relevanssi_do_not_index returned true.' );
+		if ( true === $do_not_index ) {
+			$do_not_index = __( 'Blocked by a filter function', 'relevanssi' );
 		}
+		if ( $debug ) {
+			relevanssi_debug_echo( 'relevanssi_do_not_index says exclude, because: ' . $do_not_index );
+		}
+		update_post_meta( $post->ID, '_relevanssi_noindex_reason', $do_not_index );
 		$index_this_post = false;
 	}
 
@@ -558,6 +586,8 @@ function relevanssi_index_doc( $index_post, $remove_first = false, $custom_field
 		$wpdb->query( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
+	delete_post_meta( $post->ID, '_relevanssi_noindex_reason' );
+
 	if ( $previous_post || $post_was_null ) {
 		$post = $previous_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 	}
@@ -609,7 +639,14 @@ function relevanssi_index_taxonomy_terms( &$insert_data, $post_id, $taxonomy, $d
 	 * @param int    The post ID.
 	 */
 	$term_string = apply_filters( 'relevanssi_tag_before_tokenize', trim( $term_string ), $post_term, $taxonomy, $post_id );
-	$term_tokens = relevanssi_tokenize( $term_string, true, $min_word_length );
+
+	/** This filter is documented in lib/indexing.php */
+	$term_tokens = apply_filters(
+		'relevanssi_indexing_tokens',
+		relevanssi_tokenize( $term_string, true, $min_word_length ),
+		'taxonomy-' . $taxonomy
+	);
+
 	if ( count( $term_tokens ) > 0 ) {
 		foreach ( $term_tokens as $token => $count ) {
 			$n++;
@@ -794,11 +831,19 @@ function relevanssi_insert_edit( $post_id ) {
 	$index_this_post = true;
 
 	/* Documented in lib/indexing.php. */
-	$restriction = apply_filters( 'relevanssi_indexing_restriction', '' );
-	if ( ! empty( $restriction ) ) {
+	$restriction = apply_filters(
+		'relevanssi_indexing_restriction',
+		array(
+			'mysql'  => '',
+			'reason' => '',
+		)
+	);
+	if ( ! empty( $restriction['mysql'] ) ) {
 		// Check the indexing restriction filter: if the post passes the filter, this
 		// should return the post ID.
-		$is_unrestricted = $wpdb->get_var( "SELECT ID FROM $wpdb->posts AS post WHERE ID = $post_id $restriction" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$is_unrestricted = $wpdb->get_var(
+			"SELECT ID FROM $wpdb->posts AS post WHERE ID = $post_id {$restriction['mysql']}" // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		);
 		if ( ! $is_unrestricted ) {
 			$index_this_post = false;
 		}
@@ -816,6 +861,11 @@ function relevanssi_insert_edit( $post_id ) {
 	} else {
 		// The post isn't supposed to be indexed anymore, remove it from index.
 		relevanssi_remove_doc( $post_id );
+		update_post_meta(
+			$post_id,
+			'_relevanssi_noindex_reason',
+			trim( $restriction['reason'] )
+		);
 		$return_value = 'removed';
 	}
 
@@ -1440,6 +1490,17 @@ function relevanssi_index_content( &$insert_data, $post, $min_word_length, $debu
 	remove_shortcode( 'noindex' );
 	add_shortcode( 'noindex', 'relevanssi_noindex_shortcode' );
 
+	/**
+	 * Filters the post content after shortcodes but before HTML stripping.
+	 *
+	 * @param string $contents The post content.
+	 * @param object $post     The full post object.
+	 */
+	$contents = apply_filters(
+		'relevanssi_post_content_after_shortcodes',
+		$contents,
+		$post
+	);
 	$contents = relevanssi_strip_invisibles( $contents );
 
 	// Premium feature for better control over internal links.
@@ -1449,7 +1510,6 @@ function relevanssi_index_content( &$insert_data, $post, $min_word_length, $debu
 
 	$contents = preg_replace( '/<[a-zA-Z\/][^>]*>/', ' ', $contents );
 	$contents = wp_strip_all_tags( $contents );
-	$contents = wp_encode_emoji( $contents );
 
 	/**
 	 * Filters the post content in indexing before tokenization.
@@ -1570,6 +1630,7 @@ function relevanssi_disable_shortcodes() {
  * insert query values before and after the conversion.
  *
  * @global $wpdb The WordPress database interface.
+ * @global $relevanssi_variables Used for the Relevanssi db table name.
  *
  * @param array  $insert_data An array of term => data pairs, where data has
  * token counts for the term in different contexts.
@@ -1578,7 +1639,12 @@ function relevanssi_disable_shortcodes() {
  * @return array An array of values clauses for an INSERT query.
  */
 function relevanssi_convert_data_to_values( $insert_data, $post ) {
-	global $wpdb;
+	global $wpdb, $relevanssi_variables;
+
+	$charset = $wpdb->get_col_charset(
+		$relevanssi_variables['relevanssi_table'],
+		'term'
+	);
 
 	/**
 	 * Sets the indexed post 'type' column in the index.
@@ -1614,6 +1680,10 @@ function relevanssi_convert_data_to_values( $insert_data, $post ) {
 		$mysqlcolumn        = isset( $data['mysqlcolumn'] ) ? $data['mysqlcolumn'] : 0;
 		$taxonomy_detail    = isset( $data['taxonomy_detail'] ) ? $data['taxonomy_detail'] : '';
 		$customfield_detail = isset( $data['customfield_detail'] ) ? $data['customfield_detail'] : '';
+
+		if ( 'utf8' === $charset ) {
+			$term = wp_encode_emoji( $term );
+		}
 
 		$term = trim( $term );
 

@@ -50,13 +50,6 @@ function relevanssi_query( $posts, $query = false ) {
 		$search_ok = false; // No search term.
 	}
 
-	// Disable Relevanssi in the media library search.
-	if ( $search_ok ) {
-		if ( 'attachment' === $query->query_vars['post_type'] && 'inherit,private' === $query->query_vars['post_status'] ) {
-			$search_ok = false;
-		}
-	}
-
 	/**
 	 * Filters whether Relevanssi search can be run or not.
 	 *
@@ -132,6 +125,8 @@ function relevanssi_search( $args ) {
 	$q_no_synonyms      = $query_data['query_no_synonyms'];
 	$phrase_queries     = $query_data['phrase_queries'];
 
+	$min_length = get_option( 'relevanssi_min_word_length' );
+
 	/**
 	 * Filters whether stopwords are removed from titles.
 	 *
@@ -139,7 +134,7 @@ function relevanssi_search( $args ) {
 	 */
 	$remove_stopwords = apply_filters( 'relevanssi_remove_stopwords_in_titles', true );
 
-	$terms = relevanssi_tokenize( $q, $remove_stopwords );
+	$terms = relevanssi_tokenize( $q, $remove_stopwords, $min_length );
 	$terms = array_keys( $terms ); // Don't care about tf in query.
 
 	if ( function_exists( 'relevanssi_process_terms' ) ) {
@@ -227,8 +222,6 @@ function relevanssi_search( $args ) {
 		);
 
 	}
-
-	$min_length = get_option( 'relevanssi_min_word_length' );
 
 	$search_again = false;
 
@@ -1318,8 +1311,8 @@ function relevanssi_compile_search_args( $query, $q ) {
 	}
 
 	$parent_query = array();
-	if ( isset( $query->query_vars['post_parent'] ) ) {
-		$parent_query = array( 'parent in' => array( $query->query_vars['post_parent'] ) );
+	if ( isset( $query->query_vars['post_parent'] ) && '' !== $query->query_vars['post_parent'] ) {
+		$parent_query = array( 'parent in' => array( (int) $query->query_vars['post_parent'] ) );
 	}
 	if ( isset( $query->query_vars['post_parent__in'] ) && is_array( $query->query_vars['post_parent__in'] ) && ! empty( $query->query_vars['post_parent__in'] ) ) {
 		$parent_query = array( 'parent in' => $query->query_vars['post_parent__in'] );

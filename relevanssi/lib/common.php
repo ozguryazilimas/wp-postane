@@ -671,6 +671,7 @@ function relevanssi_remove_punct( $a ) {
 
 	$replacement_array = array(
 		'ß'                     => 'ss',
+		'₂'                     => '2',
 		'·'                     => '',
 		'…'                     => '',
 		'€'                     => '',
@@ -755,13 +756,6 @@ function relevanssi_remove_punct( $a ) {
  */
 function relevanssi_prevent_default_request( $request, $query ) {
 	if ( $query->is_search ) {
-		if ( isset( $query->query_vars['post_type'] ) && isset( $query->query_vars['post_status'] ) ) {
-			if ( 'attachment' === $query->query_vars['post_type'] && 'inherit,private' === $query->query_vars['post_status'] ) {
-				// This is a media library search; do not meddle.
-				return $request;
-			}
-		}
-
 		if ( in_array( $query->query_vars['post_type'], array( 'topic', 'reply' ), true ) ) {
 			// This is a BBPress search; do not meddle.
 			return $request;
@@ -1375,7 +1369,7 @@ function relevanssi_switch_blog( $new_blog, $prev_blog ) {
  * @return string The link with the parameter added.
  */
 function relevanssi_add_highlight( $permalink, $link_post = null ) {
-	$highlight_docs = get_option( 'relevanssi_highlight_docs' );
+	$highlight_docs = get_option( 'relevanssi_highlight_docs', 'off' );
 	$query          = get_search_query();
 	if ( isset( $highlight_docs ) && 'off' !== $highlight_docs && ! empty( $query ) ) {
 		$frontpage_id = intval( get_option( 'page_on_front' ) );
@@ -1938,4 +1932,44 @@ function relevanssi_remove_page_builder_shortcodes( $content ) {
 	);
 	$content      = preg_replace( $search_array, ' ', $content );
 	return $content;
+}
+
+/**
+ * Blocks Relevanssi from the admin searches on specific post types.
+ *
+ * This function is added to relevanssi_search_ok, relevanssi_admin_search_ok,
+ * and relevanssi_prevent_default_request hooks. When a search is made with
+ * one of the listed post types, these filters will get a false response, which
+ * means Relevanssi won't search and won't block the default request.
+ *
+ * @see relevanssi_prevent_default_request
+ * @see relevanssi_search
+ *
+ * @param boolean  $allow Should the admin search be allowed.
+ * @param WP_Query $query The query object.
+ */
+function relevanssi_block_on_admin_searches( $allow, $query ) {
+	$blocked_post_types = array(
+		'rc_blocks', // Reusable Content Blocks.
+	);
+	/**
+	 * Filters the post types that are blocked in the admin search.
+	 *
+	 * In some cases you may want to enable Relevanssi in the admin backend,
+	 * but don't want Relevanssi to search certain post types. To block
+	 * Relevanssi from a specific post type, add the post type to this filter.
+	 *
+	 * @param array List of post types Relevanssi shouldn't try searching.
+	 */
+	$blocked_post_types = apply_filters(
+		'relevanssi_admin_search_blocked_post_types',
+		$blocked_post_types
+	);
+	if (
+		isset( $query->query_vars['post_type'] ) &&
+		in_array( $query->query_vars['post_type'], $blocked_post_types, true )
+		) {
+		$allow = false;
+	}
+	return $allow;
 }

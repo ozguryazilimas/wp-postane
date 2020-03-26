@@ -58,7 +58,7 @@ function relevanssi_do_excerpt( $t_post, $query, $excerpt_length = null, $excerp
 	}
 	$post = $t_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
-	$remove_stopwords = true;
+	$remove_stopwords = 'body';
 
 	/**
 	 * Filters the search query before excerpt-building.
@@ -88,7 +88,10 @@ function relevanssi_do_excerpt( $t_post, $query, $excerpt_length = null, $excerp
 	} else {
 		$untokenized_terms = array_filter( explode( ' ', $query ) );
 	}
-	$terms = array_merge( array_flip( $untokenized_terms ), $terms );
+	$untokenized_terms = array_flip(
+		relevanssi_remove_stopwords_from_array( $untokenized_terms )
+	);
+	$terms             = array_merge( $untokenized_terms, $terms );
 
 	// These shortcodes cause problems with Relevanssi excerpts.
 	$problem_shortcodes = array( 'layerslider', 'responsive-flipbook', 'breadcrumb', 'robogallery', 'gravityview', 'wp_show_posts' );
@@ -102,9 +105,7 @@ function relevanssi_do_excerpt( $t_post, $query, $excerpt_length = null, $excerp
 	 * @param array $problem_shortcodes Array of problematic shortcode names.
 	 */
 	$problem_shortcodes = apply_filters( 'relevanssi_disable_shortcodes_excerpt', $problem_shortcodes );
-	foreach ( $problem_shortcodes as $shortcode ) {
-		remove_shortcode( $shortcode );
-	}
+	array_walk( $problem_shortcodes, 'remove_shortcode' );
 
 	/**
 	 * Filters the post content before 'the_content'.
@@ -117,6 +118,9 @@ function relevanssi_do_excerpt( $t_post, $query, $excerpt_length = null, $excerp
 	 * @param string $query   The search query.
 	 */
 	$content = apply_filters( 'relevanssi_pre_excerpt_content', $post->post_content, $post, $query );
+
+	$pattern = get_shortcode_regex( $problem_shortcodes );
+	$content = preg_replace_callback( "/$pattern/", 'strip_shortcode_tag', $content );
 
 	// Add the custom field content.
 	if ( 'on' === get_option( 'relevanssi_excerpt_custom_fields' ) ) {
@@ -450,7 +454,7 @@ function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
 		$min_word_length = 1;
 	}
 
-	$remove_stopwords = true;
+	$remove_stopwords = 'body';
 	$terms            = array_keys(
 		relevanssi_tokenize(
 			$query,
@@ -459,27 +463,27 @@ function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
 		)
 	);
 
-	if ( is_array( $query ) ) {
-		$untokenized_terms = array_filter(
-			$query,
-			function( $value ) use ( $min_word_length ) {
-				if ( relevanssi_strlen( $value ) > $min_word_length ) {
-					return true;
-				}
-				return false;
-			}
-		);
-	} else {
-		$untokenized_terms = array_filter(
-			explode( ' ', $query ),
-			function( $value ) use ( $min_word_length ) {
-				if ( relevanssi_strlen( $value ) > $min_word_length ) {
-					return true;
-				}
-				return false;
-			}
-		);
+	if ( ! is_array( $query ) ) {
+		$query = explode( ' ', $query );
 	}
+
+	$body_stopwords = function_exists( 'relevanssi_fetch_body_stopwords' )
+		? relevanssi_fetch_body_stopwords()
+		: array();
+
+	$untokenized_terms = array_filter(
+		$query,
+		function( $value ) use ( $min_word_length, $body_stopwords ) {
+			if ( in_array( $value, $body_stopwords, true ) ) {
+				return false;
+			}
+			if ( relevanssi_strlen( $value ) > $min_word_length ) {
+				return true;
+			}
+			return false;
+		}
+	);
+
 	$terms = array_unique( array_merge( $untokenized_terms, $terms ) );
 	array_walk( $terms, 'relevanssi_array_walk_trim' ); // Numeric search terms begin with a space.
 
@@ -503,9 +507,9 @@ function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
 
 	usort( $terms, 'relevanssi_strlen_sort' );
 
-	$word_boundaries_available = true;
+	$word_boundaries_available = false;
 	if ( 'on' === get_option( 'relevanssi_word_boundaries', 'off' ) ) {
-		$word_boundaries_available = false;
+		$word_boundaries_available = true;
 	}
 
 	$content = html_entity_decode( $content, ENT_QUOTES, 'UTF-8' );
@@ -1116,7 +1120,7 @@ function relevanssi_add_accent_variations( $word ) {
 	$escaped    = false;
 	for ( $i = 0; $i < $len; $i++ ) {
 		$char = relevanssi_substr( $word, $i, 1 );
-		if ( '\\' === $char ) {
+		if ( '\\' === $char && ! $escaped ) {
 			$escaped = true;
 			continue;
 		}

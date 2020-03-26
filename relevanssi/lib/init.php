@@ -19,6 +19,9 @@ add_action( 'admin_menu', 'relevanssi_menu' );
 // Taking over the search.
 add_filter( 'the_posts', 'relevanssi_query', 99, 2 );
 add_filter( 'posts_request', 'relevanssi_prevent_default_request', 10, 2 );
+add_filter( 'relevanssi_search_ok', 'relevanssi_block_on_admin_searches', 10, 2 );
+add_filter( 'relevanssi_admin_search_ok', 'relevanssi_block_on_admin_searches', 10, 2 );
+add_filter( 'relevanssi_prevent_default_request', 'relevanssi_block_on_admin_searches', 10, 2 );
 
 // Post indexing.
 add_action( 'wp_insert_post', 'relevanssi_insert_edit', 99, 1 );
@@ -288,6 +291,7 @@ function relevanssi_query_vars( $qv ) {
 	$qv[] = 'by_date';
 	$qv[] = 'highlight';
 	$qv[] = 'posts_per_page';
+	$qv[] = 'post_parent';
 
 	return $qv;
 }
