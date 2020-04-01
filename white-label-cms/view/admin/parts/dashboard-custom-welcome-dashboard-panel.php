@@ -102,12 +102,6 @@ $welcome_panel_is_active = wlcms_welcome_value(0, 'is_active');
         <?php
         endif;
         ?>
-        <div class="wlcms-input-group">
-            <div class="wlcms-input">
-            <input class="wlcms-toggle wlcms-toggle-light" id="own_welcome_panel_dismissible" value="1" name="welcome_panel[0][dismissible]" <?php checked(wlcms_welcome_value(0, 'dismissible'), 1, true) ?> type="checkbox"/>
-            <label class="wlcms-toggle-btn" for="own_welcome_panel_dismissible"></label><label class="toggle-label" for="own_welcome_panel_dismissible"><?php _e('Dismissible'); ?></label> 
-            </div>
-        </div>
     </div>
 </div>
 
@@ -199,11 +193,5 @@ $welcome_panel_is_active = wlcms_welcome_value(1, 'is_active');
         <?php
         endif;
         ?>
-        <div class="wlcms-input-group">
-            <div class="wlcms-input">
-            <input class="wlcms-toggle wlcms-toggle-light" id="second_welcome_panel_dismissible" value="1" name="welcome_panel[1][dismissible]" <?php checked(wlcms_welcome_value(1, 'dismissible'), 1, true) ?> type="checkbox"/>
-            <label class="wlcms-toggle-btn" for="second_welcome_panel_dismissible"></label><label class="toggle-label" for="second_welcome_panel_dismissible"><?php _e('Dismissible'); ?></label> 
-            </div>
-        </div>
     </div>
 </div>

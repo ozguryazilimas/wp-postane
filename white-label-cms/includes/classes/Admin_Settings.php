@@ -8,7 +8,6 @@ class WLCMS_Admin_Settings
         add_action('admin_menu', array($this, 'admin_menu'), 9999);
         add_action('admin_init', array($this, 'init'), 9999);
         add_filter('mce_css', array($this, 'custom_editor_stylesheet'));
-        add_filter('contextual_help', array($this, 'remove_help_tabs'), 999, 3);
         add_action('admin_init', array($this, 'remove_nag_messages'));
         add_action('init', array($this, 'remove_admin_bar'));
     }
@@ -51,16 +50,12 @@ class WLCMS_Admin_Settings
         }
     }
 
-    public function remove_help_tabs($help, $screen_id, $screen)
-    {
-        if (wlcms_field_setting('hide_help_box')) {
-            $screen->remove_help_tabs();
-        }
-        return $help;
-    }
-
     private function set_admin_css()
     {
+
+        if (wlcms_field_setting('hide_help_box')) {
+            wlcms_set_hidden_css("#contextual-help-link-wrap");
+        }
 
         if (!$admin_style = wlcms_field_setting('settings_custom_css_admin')) {
             return;
