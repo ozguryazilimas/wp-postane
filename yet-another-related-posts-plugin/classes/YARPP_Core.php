@@ -1488,7 +1488,7 @@ class YARPP {
 		if (!$enforce_cache && false !== ($result = $this->get_transient('yarpp_version_info'))) return $result;
 
 		$version = YARPP_VERSION;
-		$remote = wp_remote_post("http://yarpp.org/checkversion.php?format=php&version={$version}");
+		$remote = wp_remote_post("https://yarpp.org/checkversion.php?format=php&version={$version}");
 
 		if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) != 200 || !isset($remote['body'])){
 			$this->set_transient('yarpp_version_info', null, 60*60);
@@ -1506,7 +1506,7 @@ class YARPP {
 	public function optin_ping() {
 		if ($this->get_transient('yarpp_optin')) return true;
 
-		$remote = wp_remote_post('http://yarpp.org/optin/2/', array('body' => $this->optin_data()));
+		$remote = wp_remote_post('https://yarpp.org/optin/2/', array('body' => $this->optin_data()));
 
 		if (is_wp_error($remote)
             || wp_remote_retrieve_response_code($remote) != 200

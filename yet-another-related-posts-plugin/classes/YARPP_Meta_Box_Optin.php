@@ -4,11 +4,11 @@ class YARPP_Meta_Box_Optin extends YARPP_Meta_Box {
     public function display() {
         $output =
             '<p>'.
-            'Enable the free <a href="http://www.yarpp.com" target="_blank">YARPP Pro enhancements</a> to add even '.
+            'Enable the free <a href="https://yarpp.com" target="_blank">YARPP Pro enhancements</a> to add even '.
             'more power to your blog or website!'.
             '<br/><br/>'.
             '<a class="yarpp_switch_button button" data-go="pro">Turn them on now</a>&nbsp;&nbsp;'.
-            '<a href="http://www.yarpp.com" target="_blank" style="float:right;text-decoration:underline">Learn more</a>'.
+            '<a href="https://yarpp.com" target="_blank" style="float:right;text-decoration:underline">Learn more</a>'.
             '</p>'.
             '<p>'.
             'We can continue to improve the YARPP product for you if we know how it&#39;s used. Please help us by '.
