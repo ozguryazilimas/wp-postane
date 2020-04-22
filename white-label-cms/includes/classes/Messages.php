@@ -21,6 +21,7 @@ class WLCMS_Messages
     public static function show()
     {
         $group_messages = maybe_unserialize(get_option('_wlcms_messages'));
+        
         if (!$group_messages) {
             return;
         }
@@ -29,9 +30,11 @@ class WLCMS_Messages
         if (is_array($group_messages)) {
             foreach ($group_messages as $class => $messages) {
                 $errors .= '<div class="notice notice-' . $class . ' is-dismissible"">';
+                $prev_message = '';
                 foreach ($messages as $message) {
+                    if( $prev_message !=  $message)
                     $errors .= '<p>' . $message . '</p>';
-
+                    $prev_message =  $message;
                 }
                 $errors .= '</div>';
             }
@@ -49,3 +52,4 @@ if (class_exists('WLCMS_Messages') && !function_exists('WLCMS_Queue')) {
         WLCMS_Messages::queue($message, $class);
     }
 }
+add_action('admin_notices', array('WLCMS_Messages', 'show'));

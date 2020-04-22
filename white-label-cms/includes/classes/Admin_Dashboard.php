@@ -16,6 +16,8 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         $this->check_preview();
 
         add_action('wp_dashboard_setup', array($this, 'dashboard_setup'), 999);
+        add_action("wp_ajax_hide_vum_dashboard", array($this, "hide_vum_dashboard"));
+        add_action("admin_init", array($this, "reset_welcome_dashboard"));
     }
 
     public function dashboard_setup()
@@ -31,6 +33,7 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
             if (is_wlcms_admin()) return;
         } else {
             $dashboard_widgets_visibility_roles = wlcms_field_setting('dashboard_widgets_visibility_roles');
+            if( ! $dashboard_widgets_visibility_roles ) return;
             if (!$this->has_current_user_role($dashboard_widgets_visibility_roles))
                 return;
         }
@@ -49,7 +52,8 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
             .wlcms-welcome-panel-content .elementor h2,
             .wlcms-welcome-panel-content .elementor h3
             .wlcms-welcome-panel-content .elementor h4
-            .wlcms-welcome-panel-content .elementor h5', 
+            .wlcms-welcome-panel-content .elementor h5
+            .wlcms-welcome-panel-content .fl-builder-content p', 
             array(
                 'border' => '0',
                 'font-size' => '100%',
@@ -57,6 +61,13 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
                 'line-height' => 'inherit',
                 'vertical-align' => 'baseline',
                 'color' => 'inherit'
+                )
+            );
+        
+        wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-content > h2', 
+            array(
+                'width' => '95%',
+                'padding-bottom' => '21px'
                 )
             );
     }
@@ -172,6 +183,12 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
     private function set_welcome_metabox()
     {
 
+        $user_id = get_current_user_id();
+        if( $user_id == 0 )
+        {
+            return false;
+        }
+
         $welcome_panels = wlcms_field_setting('welcome_panel');
 
         if (!$welcome_panels || !is_array($welcome_panels)) {
@@ -182,20 +199,29 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
             return;
         }
 
-
+        
+        $admin_Dashboard_Welcome_Message = wlcms()->require_class("Admin_Dashboard_Welcome_Message");
+        $admin_Dashboard_Welcome_Message = new Admin_Dashboard_Welcome_Message();
+        
         foreach ($welcome_panels as $key => $welcome_panel) {
-
             if (!$this->is_welcome_panel_visible($welcome_panel) || !is_array($welcome_panel)) {
+                continue;
+            }
+            
+            $welcome_content_hidden = get_user_meta($user_id, 'vum_hide_dashboard' . $key ,true);
+            
+            if( $welcome_content_hidden && isset($welcome_panel['dismissible']) ) {
 
                 continue;
             }
 
-            $this->set_welcome_panel_content($welcome_panel);
-            $this->make_welcome_panel($key);
+            $admin_Dashboard_Welcome_Message->set($welcome_panel, $key);
+            $admin_Dashboard_Welcome_Message->handle();
         }
 
+        $admin_Dashboard_Welcome_Message->make_welcome_panel($welcome_panels);
+
         wlcms_set_css('.index-php .wlcms-welcome-panel-content', array('margin' => '13px', 'padding-bottom' => '25px!important'));
-        add_action('admin_footer', array($this, 'welcome_panel_footer'));
     }
 
     private function is_welcome_panel_visible($setting)
@@ -225,109 +251,6 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         $user_role = wlcms_current_user_roles();
 
         return in_array($user_role, $roles);
-    }
-
-    private function set_welcome_panel_content($config)
-    {
-        $this->is_fullwidth = true;
-
-        $this->welcome_show_title = isset($config['show_title']) && $config['show_title'] == 1;
-        $template_type = isset($config['template_type']) ? $config['template_type'] : 'html';
-
-        if ($template_type == 'Elementor' && wlcms_is_elementor_active()) :
-            $id = isset($config['page_id_elementor']) ? $config['page_id_elementor'] : null;
-        $desciption = $this->page_builder_elementor($id);
-        $title = get_the_title($id);
-        elseif ($template_type == 'Beaver Builder' && wlcms_is_beaver_builder_active()) :
-            $id = isset($config['page_id_beaver']) ? $config['page_id_beaver'] : null;
-        $desciption = $this->page_builder_beaver_builder($id);
-        $title = get_the_title($id);
-        else :
-            $title = isset($config['title']) ? $config['title'] : null;
-        $desciption = isset($config['description']) ? $config['description'] : null;
-        $this->is_fullwidth = isset($config['is_fullwidth']) ? $config['is_fullwidth'] : false;
-        $this->welcome_show_title = true;
-        endif;
-
-        $this->welcome_title = $title;
-
-        $this->set_welcom_description($desciption);
-
-    }
-
-    public function set_welcom_description($des)
-    {
-        $this->welcome_description = $des;
-    }
-
-    public function get_welcom_description()
-    {
-        return $this->welcome_description;
-    }
-
-    public function compile_welcome_content($key)
-    {
-        $title = ($this->welcome_show_title) ? sprintf("<h2>%s</h2>", $this->welcome_title) : '';
-        $content = sprintf(
-            "<div id=\"welcome-panel%1\$d\" class=\"welcome-panel\" style=\"display:none\"><div class=\"wlcms-welcome-panel-content\">%2\$s<div class=\"welcome-panel-column-container\">%3\$s</div></div></div>",
-            $key,
-            $title,
-            $this->welcome_description
-        );
-
-        $this->welcome_content .= $content;
-    }
-
-    public function welcome_panel_footer()
-    {
-        echo $this->welcome_content;
-    }
-
-    private function make_welcome_panel($key)
-    {
-
-        if ($this->is_fullwidth) {
-            $this->compile_welcome_content($key);
-            $welcome = sprintf(";jQuery('#welcome-panel%1\$d').insertBefore('#dashboard-widgets-wrap');jQuery('#welcome-panel%1\$d').show();", $key);
-            wlcms_add_js($welcome);
-            return;
-        }
-
-        wp_add_dashboard_widget(
-            'custom_help_widget' . $key,
-            $this->welcome_title,
-            array($this, 'welcome_description'),
-            null,
-            array('desc' => $this->get_welcom_description())
-        );
-
-    }
-
-    public function welcome_description($post, $callback_args)
-    {
-        echo $callback_args['args']['desc'];
-    }
-
-    public function page_builder_beaver_builder($template = false)
-    {
-        if (!$template) return;
-
-        add_action('admin_enqueue_scripts', 'FLBuilder::register_layout_styles_scripts');
-        return do_shortcode('[fl_builder_insert_layout id="' . $template . '"]');
-    }
-
-    public function page_builder_elementor($template = false)
-    {
-        if (!$template) return;
-
-        $elementor = @Elementor\Plugin::instance();
-
-        $elementor->frontend->register_styles();
-        $elementor->frontend->enqueue_styles();
-
-        $elementor->frontend->register_scripts();
-        $elementor->frontend->enqueue_scripts();
-        return $elementor->frontend->get_builder_content($template, true);
     }
 
     /**
@@ -457,4 +380,35 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         echo $rss_list;
     }
 
+    public function hide_vum_dashboard()
+    {
+        if ( !wp_verify_nonce( $_REQUEST['nonce'], "vum_hide_dashboard_nonce")) {
+            exit("No naughty business please");
+        }
+        $user_id = get_current_user_id();
+        if( $user_id == 0 )
+        {
+            return false;
+        }
+        
+        $key = sanitize_text_field($_POST['key']);
+        update_user_meta($user_id, 'vum_hide_dashboard' . $key, 1);
+        echo json_encode(array('type' => 'success'));
+        exit;
+    }
+
+    public function reset_welcome_dashboard()
+    {
+        if(!  isset($_GET['wlcms-action'])  ) return;
+        
+        if( $_GET['wlcms-action'] !== 'reset-welcome-dashboard' ) return;
+        if(!  isset($_GET['dashboard'])  ) return;
+        
+        if( ! is_wlcms_super_admin() ) return;
+        $key = sanitize_text_field($_GET['dashboard']);
+        
+        delete_metadata( 'user', 0, 'vum_hide_dashboard'. $key, '', true );
+
+        WLCMS_Queue('Welcome dashboard message successfully reset.');
+    }
 }

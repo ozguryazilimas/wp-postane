@@ -568,7 +568,6 @@ class WLCMS_Admin_Menus
         <input type="hidden" value="my-account" name="admin_bar_menus[]">
         <input type="hidden" value="user-actions" name="admin_bar_menus[]">
         <input type="hidden" value="logout" name="admin_bar_menus[]">
-
         ';
 
         foreach ($menu as $menu_props) {

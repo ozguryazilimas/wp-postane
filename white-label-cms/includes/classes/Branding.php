@@ -53,6 +53,9 @@ class WLCMS_Branding extends WLCMS_Previewable
                     'align-items' => 'center'
                 )
             );
+            
+            wlcms_set_css('#footer-left img', array('vertical-align' => 'middle', 'max-height' => '50px', 'margin-right' => '5px'));
+            wlcms_set_css('#footer-left a', array('text-decoration' => 'none'));
         }
     }
 
@@ -205,8 +208,6 @@ class WLCMS_Branding extends WLCMS_Previewable
 
         if ($footer_image) {
             $footer_main_text .= '<img src="' . $footer_image . '" /> ';
-            wlcms_set_css('#footer-left img', array('vertical-align' => 'middle', 'max-height' => '50px', 'margin-right' => '5px'));
-            wlcms_set_css('#footer-left a', array('text-decoration' => 'none'));
         }
 
         if ($footer_text) {

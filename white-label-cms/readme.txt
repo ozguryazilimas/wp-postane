@@ -9,7 +9,7 @@ Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
 Tested up to: 5.4
-Stable tag: 2.1.3
+Stable tag: 2.2
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -66,8 +66,8 @@ There is so much that you can do with White Label CMS, but we want the experienc
 
 == Changelog ==
 
-= 2.1.3 =
-* Added compatibility with WordPress 5.4
+= 2.2 =
+* Custom Welcome Dashboard fixes
 
 == Frequently Asked Questions ==
 = Who is this plugin for?=

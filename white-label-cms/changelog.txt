@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 2.1.3 =
+* Added compatibility with WordPress 5.4
+
 = 2.1.2 =
 * Support fonts import
 * Added custom javascript for the login page
