@@ -1490,7 +1490,7 @@ class YARPP {
 		$version = YARPP_VERSION;
 		$remote = wp_remote_post("https://yarpp.org/checkversion.php?format=php&version={$version}");
 
-		if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) != 200 || !isset($remote['body'])){
+		if (is_wp_error($remote) || wp_remote_retrieve_response_code($remote) != 200 || !isset($remote['body']) || !is_array($remote['body'])){
 			$this->set_transient('yarpp_version_info', null, 60*60);
 			return false;
     }

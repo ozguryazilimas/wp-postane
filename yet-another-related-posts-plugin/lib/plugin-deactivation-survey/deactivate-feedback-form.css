@@ -1,0 +1,102 @@
+.wp-admin .remodal {
+	margin-top: 20px;
+}
+
+.shareaholic-deactivate-dialog {
+	text-align: left;
+	width: auto;
+}
+
+.shareaholic-deactivate-dialog {
+	width: auto !important;
+}
+
+.shareaholic-deactivate-dialog input[name="comments"] {
+	width: 380px;
+}
+
+.shareaholic-deactivate-header {
+	background-size: contain;
+  background-repeat: no-repeat;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	align-items: center;
+	max-height: 65px;
+  box-shadow: 0 0 8px rgba(0,0,0,.1);
+  -webkit-box-shadow: 0 0 8px rgba(0,0,0,.1);
+}
+
+.shareaholic-review-notice-text {
+	background: rgba(255, 255, 255, 0.9);
+  text-shadow: #fff 0px 0px 10px;
+  margin-right: 8em !important;
+}
+
+.shareaholic-deactivate-header h2 {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #495157;
+  text-transform: uppercase;
+  margin-left: 65px;
+}
+
+.shareaholic-deactivate-body {
+	margin-top: 50px;
+}
+
+.shareaholic-deactivate-body-foreword {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6em;
+  color: #495157;
+  margin-bottom: 1.6em;
+}
+
+.shareaholic-deactivate-text-area {
+	text-align: left;
+	vertical-align: middle;
+	transition-property: all;
+	transition-duration: 0.15s;
+	transition-timing-function: ease-out;
+	transition-delay: 0s;
+}
+
+.shareaholic-deactivate-input, .shareaholic-deactivate-input[type], .shareaholic-deactivate-text-area {
+  font-size: 12px;
+	border-radius: 3px;
+	border: 1px solid #cbd6e2;
+	background-color: #f5f8fa;
+	margin-top: 1.2em;
+	padding: 9px 10px;
+	width: 100%;
+}
+
+.shareaholic-deactivate-help {
+  font-size: 0.9em;
+  color: #71767c;
+  margin: 0.6em 0 2em 0;
+}
+
+.shareaholic-deactivate-reasons li {
+	margin: 1em 0 1.2em 0;
+  color: #33475b;
+}
+
+.shareaholic-deactivate-contact {
+  font-weight: 700;
+  line-height: 1.6em;
+  margin-top: 2em;
+}
+
+.shareaholic-deactivate-divider {
+  border-top: 1px #ddd solid;
+  margin: 2.6em -30px 20px -30px;
+}
+
+.shareaholic-deactivate-dialog-footer {
+  text-align: right;
+  padding: 0 0 20px 0;
+}

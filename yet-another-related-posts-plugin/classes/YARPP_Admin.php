@@ -34,6 +34,7 @@ class YARPP_Admin {
     add_filter('current_screen', array($this, 'settings_screen'));
     add_filter('screen_settings', array($this, 'render_screen_settings'), 10, 2);
     add_filter('default_hidden_meta_boxes', array($this, 'default_hidden_meta_boxes'), 10, 2);
+    add_filter('shareaholic_deactivate_feedback_form_plugins', array($this,'deactivation_survey_data'));
   }
 
   /**
@@ -760,4 +761,82 @@ class YARPP_Admin {
     echo 'ok';
     die();
   }
+
+	/**
+	 * Registers YARPP plugin for the deactivation survey library code.
+	 *
+	 * @param array $plugins
+	 *
+	 * @return array
+	 */
+	public function deactivation_survey_data( $plugins ) {
+
+		global $yarpp;
+		if ( $yarpp instanceof YARPP && isset( $yarpp->cloud ) && $yarpp->cloud instanceof YARPP_Cloud ) {
+			$api_key          = $yarpp->cloud->get_api_key();
+			$verification_key = $yarpp->cloud->get_option( 'verification_key' );
+			if ( empty( $verification_key ) ) {
+				$verification_key = '';
+			}
+		} else {
+			$api_key          = '';
+			$verification_key = '';
+		}
+
+
+		$plugins[] = (object) array(
+			'basename'    => plugin_basename(YARPP_MAIN_FILE),
+			'logo'    => YARPP_URL . '/images/icon-256x256.png',
+			'api_server' => 'yarpp.com',
+			'bgcolor' => '#fff',
+			'send' => array(
+				'plugin_name'      => 'yarpp',
+				'plugin_version'   => YARPP_VERSION,
+				'api_key'          => $api_key,
+				'verification_key' => $verification_key,
+				'platform'         => 'wordpress',
+				'domain'           => site_url(),
+				'language'         => strtolower( get_bloginfo( 'language' ) ),
+			),
+            'reasons' => array(
+	            'error'                  => esc_html__( 'I think I found a bug', 'yarpp' ),
+	            'feature-missing'        => esc_html__( 'It\'s missing a feature I need', 'yarpp' ),
+	            'too-hard'               => esc_html__( 'I couldn\'t figure out how to do something', 'yarpp' ),
+	            'inefficient'            => esc_html__( 'It\'s too slow or inefficient', 'yarpp' ),
+	            'no-signup'              => esc_html__( 'I don\'t want to signup', 'yarpp' ),
+	            'temporary-deactivation' => esc_html__( 'Temporarily deactivating or troubleshooting', 'yarpp' ),
+	            'other'                  => esc_html__( 'Other', 'yarpp' )
+            ),
+            'reasons_needing_comment' => array(
+	            'error',
+	            'feature-missing',
+	            'too-hard',
+	            'other'
+            ),
+            'translations' => array(
+	            'quick_feedback'        => esc_html__( 'Quick Feedback', 'yarpp' ),
+	            'foreword'              => esc_html__( 'If you would be kind enough, please tell us why you are deactivating the plugin:',
+	                                                   'yarpp' ),
+	            'please_tell_us'        => esc_html__( 'Please share anything you think might be helpful. The more we know about your problem, the faster we\'ll be able to fix it.',
+	                                                   'yarpp' ),
+	            'cancel'                => esc_html__( 'Cancel', 'yarpp' ),
+	            'skip_and_deactivate'   => esc_html__( 'Skip &amp; Deactivate', 'yarpp' ),
+	            'submit_and_deactivate' => esc_html__( 'Submit &amp; Deactivate', 'yarpp' ),
+	            'please_wait'           => esc_html__( 'Please wait...', 'yarpp' ),
+	            'thank_you'             => esc_html__( 'Thank you!', 'yarpp' ),
+	            'ask_for_support'       => sprintf(
+		            esc_html__( 'Just so you know, you can visit %1$sthe support forum%2$s or %3$sread the FAQs%2$s for help.',
+		                        'yarpp' ),
+		            '<a href="https://wordpress.org/support/plugin/yet-another-related-posts-plugin/" target="_blank" >',
+		            '</a>',
+		            '<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#faq" target="_blank" >'
+	            ),
+	            'email_request'         => esc_html__( 'If you would like to tell us more, please leave your email here. We will be in touch (only for product feedback, nothing else).',
+	                                                   'yarpp' ),
+            )
+
+		);
+
+		return $plugins;
+	}
 }

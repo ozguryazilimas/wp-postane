@@ -2,10 +2,10 @@
 Contributors: jeffparker, shareaholic
 Tags: related, related posts, similar posts, posts, pages, thumbnails, feeds, multisite, multilingual
 Requires at least: 3.7
-Requires PHP: 5.2
+Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.4
-Stable tag: 5.1.3
+Stable tag: 5.1.5
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -21,9 +21,9 @@ Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post 
 * **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. [Learn More.](https://wordpress.tv/2011/01/29/michael-mitcho-erlewine-the-yet-another-related-posts-plugin-algorithm-explained/)  
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
 
-The **Yet Another Related Posts Plugin** is the most popular [WordPress Related Posts plugin](https://wordpress.org/plugins/yet-another-related-posts-plugin/), encouraging Discovery and Engagement since 2008.
+The **Yet Another Related Posts Plugin** is the most popular and widely used [Related Posts plugin for WordPress](https://wordpress.org/plugins/yet-another-related-posts-plugin/), encouraging Discovery and Engagement since 2008.
 
-This plugin requires PHP 5, MySQL 4.1, and WordPress 3.3 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
+This plugin requires PHP 5.3, MySQL 4.1, and WordPress 3.7 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
 
 == Installation ==
 
@@ -248,7 +248,27 @@ function yarpp_disable_review_notice() {
 add_action('admin_init', 'yarpp_disable_review_notice', 11);
 `
 
+= Can I disable the request-for-feedback modal when deactivating the plugin? =
+Sure. Use the following code:
+
+`
+add_action(
+	'admin_init',
+	function(){
+		remove_all_filters('shareaholic_deactivate_feedback_form_plugins');
+	},
+	11
+);
+`
+
 == Changelog ==
+= 5.1.5 (2020-05-11) =
+* Bugfix: Use correct deactivation reason code
+
+= 5.1.4 (2020-05-11) =
+* Require PHP 5.3 as a bare minimum for compatibility features
+* New: Display optional feedback form on plugin deactivation
+
 = 5.1.3 (2020-04-07) =
 * Support for WordPress 5.4+
 * Enhancement: Switch over to secure (https) endpoints
@@ -911,6 +931,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.1.3 =
+= 5.1.5 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
