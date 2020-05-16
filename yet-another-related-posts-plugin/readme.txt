@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.4
-Stable tag: 5.1.5
+Stable tag: 5.1.6
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -262,6 +262,10 @@ add_action(
 `
 
 == Changelog ==
+= 5.1.6 (2020-05-15) =
+* [Bugfix](https://wordpress.org/support/topic/403-when-saving-changes/): 403 error when saving changes resolved
+* Enhancement: Feedback form enhancements
+
 = 5.1.5 (2020-05-11) =
 * Bugfix: Use correct deactivation reason code
 
@@ -931,6 +935,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.1.5 =
+= 5.1.6 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

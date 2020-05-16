@@ -782,12 +782,13 @@ class YARPP_Admin {
 			$api_key          = '';
 			$verification_key = '';
 		}
-
-
+		$plugin_data = get_plugin_data(YARPP_MAIN_FILE, false, false);
 		$plugins[] = (object) array(
+			'title_slugged' => sanitize_title($plugin_data['Name']),
 			'basename'    => plugin_basename(YARPP_MAIN_FILE),
 			'logo'    => YARPP_URL . '/images/icon-256x256.png',
 			'api_server' => 'yarpp.com',
+			'script_cache_ver'    => YARPP_VERSION,
 			'bgcolor' => '#fff',
 			'send' => array(
 				'plugin_name'      => 'yarpp',
@@ -825,7 +826,7 @@ class YARPP_Admin {
 	            'please_wait'           => esc_html__( 'Please wait...', 'yarpp' ),
 	            'thank_you'             => esc_html__( 'Thank you!', 'yarpp' ),
 	            'ask_for_support'       => sprintf(
-		            esc_html__( 'Just so you know, you can visit %1$sthe support forum%2$s or %3$sread the FAQs%2$s for help.',
+		            esc_html__( 'Have you visited %1$sthe support forum%2$s and %3$sread the FAQs%2$s for help?',
 		                        'yarpp' ),
 		            '<a href="https://wordpress.org/support/plugin/yet-another-related-posts-plugin/" target="_blank" >',
 		            '</a>',

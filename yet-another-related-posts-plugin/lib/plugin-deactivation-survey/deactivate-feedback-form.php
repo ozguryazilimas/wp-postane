@@ -1,20 +1,30 @@
 <?php
+/**
+ * Displays a Feedback Form when a user clicks on the "Deactivate" link on the plugin settings page.
+ *
+ * @package shareaholic
+ */
+
 if ( ! is_admin() ) {
 	return;
 }
 
 global $pagenow;
 
-if ( $pagenow != 'plugins.php' ) {
+if ( 'plugins.php' !== $pagenow ) {
 	return;
 }
 
 if ( ! function_exists( 'shareaholic_deactivate_feedback' ) ) {
+
+	/**
+	 * Handles adding required code for the feedback form
+	 */
 	function shareaholic_deactivate_feedback() {
-		// Plugins
+		// Plugins.
 		/**
 		 * Each plugin adds an array to this filtered value in order to register itself. Please see the callback
-		 * to see the expected structure of the array
+		 * to see the expected structure of the array.
 		 */
 		$plugins = apply_filters( 'shareaholic_deactivate_feedback_form_plugins', array() );
 
@@ -22,22 +32,29 @@ if ( ! function_exists( 'shareaholic_deactivate_feedback' ) ) {
 			return;
 		}
 
-		// Enqueue scripts
-		wp_enqueue_script( 'remodal', plugin_dir_url( __FILE__ ) . 'remodal.min.js', array(), '1.1.1' );
-		wp_enqueue_style( 'remodal', plugin_dir_url( __FILE__ ) . 'remodal.css', array(), '1.1.1' );
-		wp_enqueue_style( 'remodal-default-theme', plugin_dir_url( __FILE__ ) . 'remodal-default-theme.css', array(), '1.1.1' );
+		if ( $plugins[0] && $plugins[0]->script_cache_ver ) {
+			$script_cache_ver = $plugins[0]->script_cache_ver;
+		} else {
+			$script_cache_ver = '1.1.1';
+		}
+
+		// Enqueue scripts.
+		wp_enqueue_script( 'remodal', plugin_dir_url( __FILE__ ) . 'remodal.min.js', array(), $script_cache_ver, false );
+		wp_enqueue_style( 'remodal', plugin_dir_url( __FILE__ ) . 'remodal.css', array(), $script_cache_ver );
+		wp_enqueue_style( 'remodal-default-theme', plugin_dir_url( __FILE__ ) . 'remodal-default-theme.css', array(), $script_cache_ver );
 
 		wp_enqueue_script(
 			'shareaholic-deactivate-feedback-form',
 			plugin_dir_url( __FILE__ ) . 'deactivate-feedback-form.js',
 			array(),
-			'1.1.1'
+			$script_cache_ver,
+			false
 		);
 		wp_enqueue_style(
 			'shareaholic-deactivate-feedback-form',
 			plugin_dir_url( __FILE__ ) . 'deactivate-feedback-form.css',
 			array(),
-			'1.1.1'
+			$script_cache_ver
 		);
 
 		$current_user = wp_get_current_user();
@@ -47,19 +64,11 @@ if ( ! function_exists( 'shareaholic_deactivate_feedback' ) ) {
 			$email = '';
 		}
 
-		// Localized strings
-		wp_localize_script(
-			'shareaholic-deactivate-feedback-form',
-			'shareaholic_deactivate_feedback_form_strings',
-			array_merge(
-				$plugins[0]->translations,
-				array(
-					'email' => $email,
-				)
-			)
-		);
+		foreach ( $plugins as $plugin ) {
+			$plugin->email = $email;
+		}
 
-		// Send plugin data
+		// Send plugin data.
 		wp_localize_script(
 			'shareaholic-deactivate-feedback-form',
 			'shareaholic_deactivate_feedback_form_plugins',
