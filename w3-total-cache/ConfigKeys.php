@@ -173,6 +173,18 @@ $keys = array(
 		'type' => 'boolean',
 		'default' => true
 	),
+	'lazyload.googlemaps.google_maps_easy' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
+	'lazyload.googlemaps.wp_google_maps' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
+	'lazyload.googlemaps.wp_google_map_plugin' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
 	'lazyload.exclude' => array(
 		'type' => 'array',
 		'default' => array(
@@ -223,7 +235,7 @@ $keys = array(
 	),
 	'objectcache.enabled_for_wp_admin' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false,
 	),
 	'objectcache.fallback_transients' => array(
 		'type' => 'boolean',
