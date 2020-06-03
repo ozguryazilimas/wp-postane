@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 5.4.1
-Stable tag: 4.54
+Stable tag: 4.55
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,9 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.55] 03.06.2020 =
+* Update: User Role Editor uninstallation was refactored. It fully removes the ('ure_%') user capabilities from the user roles data.
+
 = [4.54] 02.05.2020 =
 * New: Quick filter hides capabilities, which do not contain search string
 * Update: CSS enhancement: When site has many custom post types capabilities list section maximal height is limited by real height of the left side (capabilities groups) section, not by 720px as earlier.
@@ -93,10 +96,6 @@ For example courses CPT from LearnDash plugin is defined with 'course' capabilit
 * Fix: Undefined variable: $message at wp-content/plugins/user-role-editor/includes/classes/editor.php:898
 * Update: Few English grammar enhancements.
 
-= [4.53] 01.02.2020 =
-* Update: "Add role", "Delete role", "Rename role", "Add capability", "Delete capability" do not reload full page on completion, but use AJAX for data exchange with server and refresh parts of the page via JavaScript.
-* Update: Multisite: "Allow non super administrators to create, edit, and delete users" option: priority for 'map_meta_cap' filter priority was raised from 1 to 99, in order make possible to overwrite changes made by other plugins, like WooCommerce.
-* Fix: Some English grammar mistakes.
 
 File changelog.txt contains the full list of changes.
 
@@ -108,5 +107,5 @@ I am ready to answer on your questions about plugin usage. Use [plugin page comm
 
 == Upgrade Notice ==
 = [4.54] 02.05.2020 =
-* New: Quick filter hides capabilities, which do not contain search string
-* Update: CSS enhancement: When site has many custom post types capabilities list section maximal height is limited by real height of the left side (capabilities groups) section, not by 720px as earlier.
+New: Quick filter hides capabilities, which do not contain search string
+Update: CSS enhancement: When site has many custom post types capabilities list section maximal height is limited by real height of the left side (capabilities groups) section, not by 720px as earlier.
