@@ -2,9 +2,9 @@
 
 class URE_Uninstall {
     
-    private $lib = null;
-    private $options = null;
-    private $own_caps = null;
+    protected $lib = null;
+    protected $options = null;
+    protected $own_caps = null;
     
     public function __construct() {
     
@@ -16,7 +16,7 @@ class URE_Uninstall {
     // end of __construct()
     
     
-    private function init_options_list() {
+    protected function init_options_list() {
         
         $this->options = array();
         $this->options[] = 'ure_caps_readable';
