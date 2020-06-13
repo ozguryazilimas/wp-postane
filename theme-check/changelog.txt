@@ -1,3 +1,45 @@
+= 20200612.1 =
+* Release to WordPress.org plugins directory
+
+= 20200611.1 =
+* Added escaping checks
+* Added tested up to and Requires PHP checks for the style.css
+* Added register_block_type to plugin territory check
+* Check for remove_action wp_head
+* Changed some checks from errors to warnings
+* Updated error messages
+* Updated regex for non printable characters
+* Fixed parse errors
+* Removed unused functions
+
+= 20200504.1 =
+* Contributor and URI adjustments
+* site_url checks
+* smarter nav menu and favicon checks
+* additional filename blacklist checks
+* developer files added to github (phpcs, composer, attributes, gitignore, etc)
+* improvements to existing checks, move some warnings to required to reflect updated guidelines
+* check for themes being copies of underscores
+* check for non-gpl-compatible sites used for images
+* Add warnings for demo content
+* Update links in messages to point to new development and documentation locations
+* disallow dashboard widgets in themes
+
+= 20190801.1 =
+* Fix missing nonce and nonce check on admin page. props Steven Stern for reporting the issue to the plugins team. Though this is technically a CSRF, there is no vulnerability arising from it, as the only thing that could be done with the form is to scan a theme.
+
+= 20190208.1 =
+* Add new styles for the block editor. See https://meta.trac.wordpress.org/ticket/3921
+
+= 20160523.1 =
+* Fix for theme-names with dashes in them
+* Comments stripping changes
+* Many changes by the theme review team and others. See Github for full change list.
+
+= 20151211.1 =
+* Full sync with Github and all the changes that have happened there.
+* Release for 4.4 deprecated functions.
+
 = 20140929.1 =
 * Added new checks and updates from Frank Klein at Automattic. Thanks Frank!
 * Updated deprecated function listings
@@ -48,11 +90,11 @@
 * Add check for wp_link_pages() + fix eval() check
 
 = 20110219.2 =
-* Merged new UI props Gua Bob [1](http://guabob.com/) 
+* Merged new UI props Gua Bob [1](http://guabob.com/)
 * Last tested theme is always pre-selected in the themes list.
 * Fixed php error in admin_menu.php
 
-= 20110219.1 = 
+= 20110219.1 =
 * See [commit log](https://github.com/Pross/theme-check/commits/) for changes.
 
 = 20110201.2 =
