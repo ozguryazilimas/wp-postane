@@ -135,7 +135,7 @@
 		this.deactivateURL = event.target.href;
 
 		if ( ! this.dialog) {
-			this.dialog = $( this.element ).remodal();
+			this.dialog = $( this.element ).remodal({closeOnOutsideClick:false});
 		}
 		this.dialog.open();
 		event.preventDefault();
@@ -148,7 +148,8 @@
 		var data             = this.plugin.send;
 		data.survey_response = {
 			contact:{
-				email: $( element ).find( "input[name='email']" ).val().trim().toLowerCase()
+				email: $( element ).find( "input[name='email']" ).val().trim().toLowerCase(),
+				role: this.plugin.role || null
 			},
 			type:'uninstall',
 			data:{

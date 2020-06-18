@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.4
-Stable tag: 5.1.6
+Stable tag: 5.1.8
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -262,6 +262,14 @@ add_action(
 `
 
 == Changelog ==
+= 5.1.8 (2020-06-17) =
+* [Bugfix](https://wordpress.org/support/topic/upgrade-issue-29/) Add missing file to previous release!
+
+= 5.1.7 (2020-06-17) =
+* [Bugfix](https://wordpress.org/support/topic/cant-use-indexing/) Double-check database indexes exist before creating them
+* Bugfix: Titles were only being considered if body text was also considered for the relatedness algorithm. This update fixes the logic to work where only titles are set to be considered.
+* [Bugfix](https://wordpress.org/support/topic/wont-let-me-deactivate-or-delete-plugin/): Do not dismiss deactivation modal when clicking outside it
+
 = 5.1.6 (2020-05-15) =
 * [Bugfix](https://wordpress.org/support/topic/403-when-saving-changes/): 403 error when saving changes resolved
 * Enhancement: Feedback form enhancements
@@ -935,6 +943,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.1.6 =
+= 5.1.8 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

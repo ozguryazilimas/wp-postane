@@ -18,6 +18,10 @@ class YARPP {
     public $cache_bypass;
     public $cache;
     public $admin;
+	/**
+	 * @var YARPP_DB_Schema
+	 */
+    public $db_schema;
 
     private $active_cache;
     private $storage_class;
@@ -37,9 +41,10 @@ class YARPP {
 		load_plugin_textdomain('yarpp', false, plugin_basename(YARPP_DIR).'/lang');
 
 		/* Load cache object. */
-		$this->storage_class    = 'YARPP_Cache_'.ucfirst(YARPP_CACHE_TYPE);
-		$this->cache            = new $this->storage_class($this);
-		$this->cache_bypass     = new YARPP_Cache_Bypass($this);
+		$this->storage_class = 'YARPP_Cache_'.ucfirst(YARPP_CACHE_TYPE);
+		$this->cache         = new $this->storage_class($this);
+		$this->cache_bypass  = new YARPP_Cache_Bypass($this);
+		$this->db_schema     = new YARPP_DB_Schema();
 
 		register_activation_hook(__FILE__, array($this, 'activate'));
 
@@ -326,18 +331,23 @@ class YARPP {
 
 		/* Temporarily ensure that errors are not displayed: */
 		$previous_value = $wpdb->hide_errors();
+		if(! $this->db_schema->title_column_has_index()) {
+			$wpdb->query( "ALTER TABLE $wpdb->posts ADD FULLTEXT `yarpp_title` (`post_title`)" );
+			if ( ! empty( $wpdb->last_error ) ) {
+				$this->disable_fulltext();
 
-		$wpdb->query("ALTER TABLE $wpdb->posts ADD FULLTEXT `yarpp_title` (`post_title`)");
-		if (!empty($wpdb->last_error)){
-            $this->disable_fulltext();
-            return false;
-        }
+				return false;
+			}
+		}
 
-		$wpdb->query("ALTER TABLE $wpdb->posts ADD FULLTEXT `yarpp_content` (`post_content`)");
-		if (!empty($wpdb->last_error)){
-            $this->disable_fulltext();
-            return false;
-        }
+		if(! $this->db_schema->content_column_has_index()){
+			$wpdb->query("ALTER TABLE $wpdb->posts ADD FULLTEXT `yarpp_content` (`post_content`)");
+			if (!empty($wpdb->last_error)){
+				$this->disable_fulltext();
+				return false;
+			}
+		}
+
 		
 		/* Restore previous setting */
 		$wpdb->show_errors($previous_value);
