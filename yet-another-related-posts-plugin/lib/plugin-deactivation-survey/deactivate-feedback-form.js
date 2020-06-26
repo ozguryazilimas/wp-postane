@@ -135,7 +135,7 @@
 		this.deactivateURL = event.target.href;
 
 		if ( ! this.dialog) {
-			this.dialog = $( this.element ).remodal({closeOnOutsideClick:false});
+			this.dialog = $( this.element ).remodal({hashTracking:false,closeOnOutsideClick:false});
 		}
 		this.dialog.open();
 		event.preventDefault();

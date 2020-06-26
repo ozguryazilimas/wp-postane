@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.4
-Stable tag: 5.1.8
+Stable tag: 5.1.9
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -262,6 +262,9 @@ add_action(
 `
 
 == Changelog ==
+= 5.1.9 (2020-06-25) =
+* [Bugfix](https://wordpress.org/support/topic/wont-let-me-deactivate-or-delete-plugin/) Fixes deactivation survey plugin conflict
+
 = 5.1.8 (2020-06-17) =
 * [Bugfix](https://wordpress.org/support/topic/upgrade-issue-29/) Add missing file to previous release!
 
@@ -943,6 +946,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.1.8 =
+= 5.1.9 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
