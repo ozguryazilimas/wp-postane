@@ -112,6 +112,37 @@ class ExactMetrics_Rest_Routes {
 			$options['custom_code'] = stripslashes( $options['custom_code'] );
 		}
 
+		//add email summaries options
+		if ( exactmetrics_is_pro_version() ) {
+			$default_email = array(
+				'email' => get_option( 'admin_email' ),
+			);
+
+			if ( ! isset( $options['email_summaries'] ) ) {
+				$options['email_summaries'] = 'on';
+			}
+
+			if ( ! isset( $options['summaries_email_addresses'] ) ) {
+				$options['summaries_email_addresses'] = array(
+					$default_email,
+				);
+			}
+
+			if ( ! isset( $options['summaries_html_template'] ) ) {
+				$options['summaries_html_template'] = 'yes';
+			}
+
+
+			if ( ! isset( $options['summaries_carbon_copy'] ) ) {
+				$options['summaries_carbon_copy'] = 'no';
+			}
+
+
+			if ( ! isset( $options['summaries_header_image'] ) ) {
+				$options['summaries_header_image'] = '';
+			}
+		}
+
 		wp_send_json( $options );
 
 	}
@@ -132,8 +163,10 @@ class ExactMetrics_Rest_Routes {
 			if ( isset( $_POST['value'] ) ) {
 				$value = $this->handle_sanitization( $setting, $_POST['value'] );
 				exactmetrics_update_option( $setting, $value );
+				do_action( 'exactmetrics_after_update_settings', $setting, $value );
 			} else {
 				exactmetrics_update_option( $setting, false );
+				do_action( 'exactmetrics_after_update_settings', $setting, false );
 			}
 		}
 
@@ -286,7 +319,7 @@ class ExactMetrics_Rest_Routes {
 			'basename'  => 'optinmonster/optin-monster-wp-api.php',
 			'slug'      => 'optinmonster',
 		);
-		// OptinMonster.
+		// WP Mail Smtp.
 		$parsed_addons['wp-mail-smtp'] = array(
 			'active'    => function_exists( 'wp_mail_smtp' ),
 			'icon'      => plugin_dir_url( EXACTMETRICS_PLUGIN_FILE ) . 'assets/images/plugin-smtp.png',
@@ -295,6 +328,16 @@ class ExactMetrics_Rest_Routes {
 			'installed' => array_key_exists( 'wp-mail-smtp/wp_mail_smtp.php', $installed_plugins ),
 			'basename'  => 'wp-mail-smtp/wp_mail_smtp.php',
 			'slug'      => 'wp-mail-smtp',
+		);
+		// Pretty Links
+		$parsed_addons['pretty-link'] = array(
+			'active'    => class_exists( 'PrliBaseController' ),
+			'icon'      => '',
+			'title'     => 'Pretty Links',
+			'excerpt'   => __( 'Pretty Links helps you shrink, beautify, track, manage and share any URL on or off of your WordPress website. Create links that look how you want using your own domain name!', 'google-analytics-dashboard-for-wp' ),
+			'installed' => array_key_exists( 'pretty-link/pretty-link.php', $installed_plugins ),
+			'basename'  => 'pretty-link/pretty-link.php',
+			'slug'      => 'pretty-link',
 		);
 		// SeedProd.
 		$parsed_addons['coming-soon'] = array(
@@ -683,14 +726,14 @@ class ExactMetrics_Rest_Routes {
 		}
 
 		// We do not need any extra credentials if we have gotten this far, so let's install the plugin.
-		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		$base = ExactMetrics();
+		require_once plugin_dir_path( $base->file ) . '/includes/admin/licensing/plugin-upgrader.php';
 		require_once plugin_dir_path( $base->file ) . '/includes/admin/licensing/skin.php';
 
-		// Prevent languange upgrade in ajax calls.
+		// Prevent language upgrade in ajax calls.
 		remove_action( 'upgrader_process_complete', array( 'Language_Pack_Upgrader', 'async_upgrade' ), 20 );
 		// Create the plugin upgrader with our custom skin.
-		$installer = new Plugin_Upgrader( new ExactMetrics_Skin() );
+		$installer = new ExactMetrics_Plugin_Upgrader( new ExactMetrics_Skin() );
 		$installer->install( $download_url );
 
 		// Flush the cache and return the newly installed plugin basename.

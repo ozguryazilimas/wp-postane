@@ -4,7 +4,7 @@
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: ExactMetrics
- * Version: 6.0.2
+ * Version: 6.1.0
  * Author URI: https://exactmetrics.com
  * Text Domain: google-analytics-dashboard-for-wp
  * Domain Path: /languages
@@ -42,7 +42,7 @@ final class ExactMetrics_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.0.2';
+	public $version = '6.1.0';
 
 	/**
 	 * Plugin file.
@@ -90,6 +90,15 @@ final class ExactMetrics_Lite {
 	public $notices;
 
 	/**
+	 * Holds instance of ExactMetrics Notifications class.
+	 *
+	 * @since 6.1
+	 * @access public
+	 * @var ExactMetrics_Notifications $notifications Instance of Notifications class.
+	 */
+	public $notifications;
+
+	/**
 	 * Holds instance of ExactMetrics Reporting class.
 	 *
 	 * @since 6.0.0
@@ -101,7 +110,7 @@ final class ExactMetrics_Lite {
 	/**
 	 * Holds instance of ExactMetrics Auth class.
 	 *
-	 * @since 7.0.0
+	 * @since 6.0.0
 	 * @access public
 	 * @var ExactMetrics_Auth $auth Instance of Auth class.
 	 */
@@ -119,7 +128,7 @@ final class ExactMetrics_Lite {
 	/**
 	 * Holds instance of ExactMetrics API Rest Routes class.
 	 *
-	 * @since 7.4.0
+	 * @since 6.0.0
 	 * @access public
 	 * @var ExactMetrics_Rest_Routes $routes Instance of rest routes.
 	 */
@@ -180,7 +189,7 @@ final class ExactMetrics_Lite {
 
 			// This does the version to version background upgrade routines and initial install
 			$em_version = get_option( 'exactmetrics_current_version', '5.5.3' );
-			if ( version_compare( $em_version, '6.0.0', '<' ) ) {
+			if ( version_compare( $em_version, '6.1.0', '<' ) ) {
 				exactmetrics_lite_call_install_and_upgrade();
 			}
 
@@ -197,6 +206,7 @@ final class ExactMetrics_Lite {
 				self::$instance->reporting 	      = new ExactMetrics_Reporting();
 				self::$instance->api_auth    	  = new ExactMetrics_API_Auth();
 				self::$instance->routes 		  = new ExactMetrics_Rest_Routes();
+				self::$instance->notifications    = new ExactMetrics_Notifications();
 			}
 
 			if ( exactmetrics_is_pro_version() ) {
@@ -249,7 +259,7 @@ final class ExactMetrics_Lite {
 	 * the API & Auth frontend, so it's only loaded if user is using a plugin
 	 * that requires it.
 	 *
-	 * @since 7.0.0
+	 * @since 6.0.0
 	 * @access public
 	 *
 	 * @return void
@@ -429,7 +439,7 @@ final class ExactMetrics_Lite {
 	 *
 	 * Loads license class used by ExactMetrics
 	 *
-	 * @since 7.0.0
+	 * @since 6.0.0
 	 * @access public
 	 *
 	 * @return void
@@ -446,7 +456,7 @@ final class ExactMetrics_Lite {
 	 *
 	 * Loads auth used by ExactMetrics
 	 *
-	 * @since 7.0.0
+	 * @since 6.0.0
 	 * @access public
 	 *
 	 * @return void
@@ -498,6 +508,12 @@ final class ExactMetrics_Lite {
 
 			// Routes used by Vue
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/routes.php';
+
+			// Emails
+			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/emails/class-emails.php';
+
+			// Notifications class.
+			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notifications.php';
 		}
 
 		require_once EXACTMETRICS_PLUGIN_DIR . 'includes/api-request.php';

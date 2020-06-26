@@ -128,7 +128,7 @@ class ExactMetrics_Tracking_Analytics extends ExactMetrics_Tracking_Abstract {
 		}
 
 		// Add Enhanced link attribution.
-		if ( exactmetrics_get_option( 'enhanced_link_attribution', false ) ) {
+		if ( exactmetrics_get_option( 'link_attribution', false ) ) {
 			$options['enhanced_link_attribution'] = "'require', 'linkid', 'linkid.js'";
 		}
 

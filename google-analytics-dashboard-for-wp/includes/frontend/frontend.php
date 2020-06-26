@@ -108,7 +108,7 @@ add_filter( 'the_permalink_rss', 'exactmetrics_rss_link_tagger', 99 );
  * Checks used for loading the frontend scripts/admin bar button.
  */
 function exactmetrics_prevent_loading_frontend_reports() {
-	return ! current_user_can( 'exactmetrics_view_dashboard' ) || exactmetrics_get_option( 'hide_admin_bar_reports' ) || function_exists( 'exactmetrics_is_reports_page' ) && exactmetrics_is_reports_page();
+	return ! current_user_can( 'exactmetrics_view_dashboard' ) || exactmetrics_get_option( 'hide_admin_bar_reports' ) || function_exists( 'exactmetrics_is_reports_page' ) && exactmetrics_is_reports_page() || function_exists( 'exactmetrics_is_settings_page' ) && exactmetrics_is_settings_page();
 }
 
 /**
@@ -173,6 +173,7 @@ function exactmetrics_frontend_admin_bar_scripts() {
 
 	// Check if any of the other admin scripts are enqueued, if so, use their object.
 	if ( ! wp_script_is( 'exactmetrics-vue-script' ) && ! wp_script_is( 'exactmetrics-vue-reports' ) && ! wp_script_is( 'exactmetrics-vue-widget' ) ) {
+		$reports_url = is_network_admin() ? add_query_arg( 'page', 'exactmetrics_reports', network_admin_url( 'admin.php' ) ) : add_query_arg( 'page', 'exactmetrics_reports', admin_url( 'admin.php' ) );
 		wp_localize_script(
 			'exactmetrics-vue-frontend',
 			'exactmetrics',
@@ -189,10 +190,10 @@ function exactmetrics_frontend_admin_bar_scripts() {
 				'shareasale_id'       => exactmetrics_get_shareasale_id(),
 				'shareasale_url'      => exactmetrics_get_shareasale_url( exactmetrics_get_shareasale_id(), '' ),
 				'is_admin'            => is_admin(),
-				'reports_url'         => add_query_arg( 'page', 'exactmetrics_reports', admin_url( 'admin.php' ) ),
+				'reports_url'         => $reports_url,
 				'authed'              => $site_auth || $ms_auth,
 				'getting_started_url' => is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network#/about/getting-started' ) : admin_url( 'admin.php?page=exactmetrics_settings#/about/getting-started' ),
-				'wizard_url'          => admin_url( 'index.php?page=exactmetrics-onboarding' ),
+				'wizard_url'          => is_network_admin() ? network_admin_url( 'index.php?page=exactmetrics-onboarding' ) : admin_url( 'index.php?page=exactmetrics-onboarding' ),
 			)
 		);
 	}

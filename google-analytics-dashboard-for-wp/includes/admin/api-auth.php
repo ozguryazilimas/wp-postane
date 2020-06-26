@@ -266,8 +266,8 @@ final class ExactMetrics_API_Auth {
 			'ajaxurl'   => admin_url( 'admin-ajax.php' ),
 			'network'   => is_network_admin() ? 'network' : 'site',
 			'siteurl'   => is_network_admin() ? network_admin_url() : site_url(),
-			'key'       => ExactMetrics()->auth->get_key(),
-			'token'     => ExactMetrics()->auth->get_token(),
+			'key'       => is_network_admin() ? ExactMetrics()->auth->get_network_key() : ExactMetrics()->auth->get_key(),
+			'token'     => is_network_admin() ? ExactMetrics()->auth->get_network_token() : ExactMetrics()->auth->get_token(),
 			'return'    => is_network_admin() ? network_admin_url( 'admin.php?page=exactmetrics_network' ) : admin_url( 'admin.php?page=exactmetrics_settings' ),
 			'testurl'   => 'https://' . exactmetrics_get_api_url() . 'test/',
 		 ), $this->get_route( 'https://' . exactmetrics_get_api_url() . 'auth/reauth/{type}' ) );

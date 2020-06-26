@@ -46,3 +46,21 @@
 		display: none;
 	}
 }
+
+#wpadminbar .exactmetrics-menu-notification-indicator,
+.exactmetrics-menu-notification-indicator {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #C84B29;
+	display: inline-block;
+	margin-left: 8px;
+}
+
+@media (max-width: 782px) {
+	#wpadminbar .exactmetrics-menu-notification-indicator {
+		margin: 0 0 10px -13px;
+		z-index: 10;
+		position: relative;
+	}
+}

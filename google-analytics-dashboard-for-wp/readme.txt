@@ -3,8 +3,9 @@ Contributors: chriscct7, smub
 Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
-Tested up to: 5.3
-Stable tag: 6.0.2
+Tested up to: 5.4
+Stable tag: 6.1.0
+Requires PHP: 5.2
 License: GPL v3
 
 Connects Google Analytics with your WordPress site. Displays stats to help you understand your users and site content on a whole new level!
@@ -70,7 +71,8 @@ See what one business owner is saying about ExactMetrics:
 * Real Time Report - see who is online on your website in real-time, right inside your WordPress dashboard.
 * Customizable Google Analytics Dashboard Widget - Our dashboard widget allows you to have quick access to your most important stats at the moment you login to your WordPress dashboard.
 * Page Insights in Admin Bar - Easily view analytics for each individual page and post from the ExactMetrics menu in WordPress admin bar while browsing your website.
-
+* Email Summaries - Get the most important metrics delivered to you and/or your client's email inboxes weekly with our brandable Email Summaries, allowing you to keep up to date on your website's Google Analytics results even without needing to login to the Google Analytics dashboard.
+* PDF Exports - Easily take your ExactMetrics reports with you or send them to clients or colleagues by exporting all ExactMetrics reports as a brandable PDF.
 
 = Integrations =
 
@@ -154,6 +156,13 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.1.0: June 24, 2020 =
+- New: On our UTM builder in our Tools submenu page, we’ve integrated with PrettyLinks to enable conversion of generated URLs into PrettyLinks.
+- Tweak: The multisite setup process has been streamlined for users who network activate ExactMetrics. We’ve introduced a new setup wizard for those users, and worked on ironing out the experience.
+- Tweak: Our integration with WordPress’s Site Health feature now handles detection of Coming Soon plugins to reduce false positives for the automatic check of the tracking code output.
+- Tweak: The “Tracking code not output” error will no longer appear for users who have the PHP constant in use to disable tracking on testing and staging sites.
+- Fixed: A bug that caused the enhanced link attribution code to not output for some users has been fixed.
+
 = 6.0.2: February 25, 2020 =
 - New: We added a new "classic" mode to the dashboard based on user feedback. This new mode allows for a more compact, compressed widget to see all the most important information at a glance..
 - Tweak: We disabled the eCommerce settings and reports for users that are not using any eCommerce plugin.

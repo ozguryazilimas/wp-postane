@@ -615,6 +615,7 @@ function exactmetrics_get_country_list( $translated = false ) {
 			'YE' => __( 'Yemen', 'google-analytics-dashboard-for-wp' ),
 			'ZM' => __( 'Zambia', 'google-analytics-dashboard-for-wp' ),
 			'ZW' => __( 'Zimbabwe', 'google-analytics-dashboard-for-wp' ),
+			'ZZ' => __( 'Unknown Country', 'google-analytics-dashboard-for-wp' ),
 		);
 	} else {
 		$countries = array(
@@ -871,6 +872,7 @@ function exactmetrics_get_country_list( $translated = false ) {
 			'YE' => 'Yemen',
 			'ZM' => 'Zambia',
 			'ZW' => 'Zimbabwe',
+			'ZZ' => 'Unknown Country',
 		);
 	}
 	return $countries;
@@ -1070,9 +1072,9 @@ function exactmetrics_get_inline_menu_icon() {
 	$scheme          = get_user_option( 'admin_color', get_current_user_id() );
 	$use_dark_scheme = $scheme === 'light';
 	if ( $use_dark_scheme ) {
-		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAhCAYAAAC1ONkWAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMbSURBVHgBzZhbSFRBGMdnrbTsooaI0cUtEHso6MUgA4seSgjqqcKMSJBICHqtIEgregmJEovIh8DAegoiiEhTupAPQtBDVmRGFlFWdLNA8es3nFkZZ4/HPe5u2x9+zOxcvvnO3GeV+k8VUWmSiJQSbIa58CgSiTxQmRQO5UIj/JGJaoOoyoRoeDsMyOQahSMwQ/0L0VA5dDlO/IAG2AevnTz9e7dKlzBeCBdgzGm4E5ZY5RbACfjtlLsLK1SqhLEI1MFHp6EXsCWgXhRuSLwuQolKRhiohMeO4a9m7uQkaKNa/Ie3NlYm1HZBRb381zvJQ9DKdjCsQgp7ewkaIGolD0CNyrRwLhuOml4fH4GIU2gZQZZKjVZBGcyGPuihVwfV5A5GCVphk5vRJKlVD1yC83AHRuAyFAQ4Vx+rbCd+kNToJWz0abTEONoHRVM5NtNKPw0HYJaanvR+9AoqGLJPbiZpbwj202YzYZvyztH0Srz96bNYZyHxOeIdUTthqZP+BHb52PHtMbuAXhTaWKILQff0LXplwNTPJeiFlSb/PWlV5D8FvfufI60OrqkwouJtCa9aq36NT36HlV8CQz7tjvdYlk+mvj9NZ/y/W/FSn/yoFf8JeSpAcUNJV//CuZNE9RzIVokpH4qt390+ZR5a8eXwTqVbfMhBe6hM2hlrGLudBXAI2n3sxO9jAY1GzKoLYo14R0qFUzcfFjtpi8Q7sDck61inJC69SZcF2JoHvWaqqGk7Jt4FL6yG4RgUWnZyoAqeQVNAe+OOTXntoUyjCrcQYtIXv+fKu1rp26w+yM+yuNomaUcH9dCi0inT2+tgLRQHlIvN4x1indcqU7IcWi3e3d9Wf1hjW6ED7llclxDvReOQZqF4W8qI5ZB+1NwU6yETxjm9PTQ7X6gNXp3KQeNQARyXiTfWMfPBlSpZGQfvOw6Oml4o8nFID9s2eOvUGYRqlWrJ5A/aPSZfO1Ruht3WN9Nz81W6hPE8OCXx/1d0QYtMfBDreLs4J0JaZYb3isS/zGMO9aVkHiXhYAX0G2c0X+CwJPgg1voLGs+nF3NfjMgAAAAASUVORK5CYII=';
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAlCAMAAAAZd2syAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAAapQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////3hTzAgAAAI50Uk5TACVrdjwKgvj/pCBP4Px5AzXA84Fg31oUl/6+HA6D97wiAWTq2kewmB8+yO8HWWFGbV46BnoeTHN7U72OyZqTuvucEWno20DYFm/X3BWU7QlWHdBXiKLlLWK7uFvsC4DdE9lBNGyMwagwEBsZPycMzYT2fUj0zFw5NhhV3ku/qhKzpcNO4+TxDQ+FlqHueGDblssAAAHSSURBVHicY2AYPICRiZmFoCJWNnYODg5OLvyquHk4wICXjx+3IgFBoAohYRFRICUqhkORuIQkUFpKmoFBRlYOyJJXwKJIUUkZKKWiCuFxqYGsVtdAV6WpBRTW5tOBC+iCbdZDVaUvDAQGrChihmCFRri9AgXGJtpAG0AsUy4MYGZuYSkNVchlxcEBpKw5MIGNrZ29g6MTRJ0zWJkLhiJXN5Cshq27B5IyTy9vFCDp6gO1ztceSRka4PIDxqU/d0AgkAwKRlGmiOSLkFBg3HtxcISFMzBERKIoi0J2GTA0o0G0FdB5McjKYiWRlVkyMMSB6HgGhgQHFNPYEkXhQJuJgSEJpAxoeTIPTi+kAC1jSOXgSAP6wTMdXZkizAsZ2qAYzMwCEtmiOejKpBCOc8mFCOXlF6CHmwyyJwqLxBkYdIq9rBnQlaH4QlRU0su9pLSMAVMZKpApr6iEObrKBacyhM/C5YGuqEYWqrGqra2tQ8md9akOHBySDdIoWrl8gTolG+EKneKAKVfSShPDDq4mUDZOBaczxeYWIKdVF6tjINm4jEFRoBbIaItrx+Hojk5QASLYBUwOkulZeHzH1Q1OMZLumI5CBUbVkpI9vToEVJENAOVRStPJFiL7AAAAAElFTkSuQmCC';
 	} else {
-		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAhCAYAAAC1ONkWAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMbSURBVHgBzZhbSFRBGMdnrbTsooaI0cUtEHso6MUgA4seSgjqqcKMSJBICHqtIEgregmJEovIh8DAegoiiEhTupAPQtBDVmRGFlFWdLNA8es3nFkZZ4/HPe5u2x9+zOxcvvnO3GeV+k8VUWmSiJQSbIa58CgSiTxQmRQO5UIj/JGJaoOoyoRoeDsMyOQahSMwQ/0L0VA5dDlO/IAG2AevnTz9e7dKlzBeCBdgzGm4E5ZY5RbACfjtlLsLK1SqhLEI1MFHp6EXsCWgXhRuSLwuQolKRhiohMeO4a9m7uQkaKNa/Ie3NlYm1HZBRb381zvJQ9DKdjCsQgp7ewkaIGolD0CNyrRwLhuOml4fH4GIU2gZQZZKjVZBGcyGPuihVwfV5A5GCVphk5vRJKlVD1yC83AHRuAyFAQ4Vx+rbCd+kNToJWz0abTEONoHRVM5NtNKPw0HYJaanvR+9AoqGLJPbiZpbwj202YzYZvyztH0Srz96bNYZyHxOeIdUTthqZP+BHb52PHtMbuAXhTaWKILQff0LXplwNTPJeiFlSb/PWlV5D8FvfufI60OrqkwouJtCa9aq36NT36HlV8CQz7tjvdYlk+mvj9NZ/y/W/FSn/yoFf8JeSpAcUNJV//CuZNE9RzIVokpH4qt390+ZR5a8eXwTqVbfMhBe6hM2hlrGLudBXAI2n3sxO9jAY1GzKoLYo14R0qFUzcfFjtpi8Q7sDck61inJC69SZcF2JoHvWaqqGk7Jt4FL6yG4RgUWnZyoAqeQVNAe+OOTXntoUyjCrcQYtIXv+fKu1rp26w+yM+yuNomaUcH9dCi0inT2+tgLRQHlIvN4x1indcqU7IcWi3e3d9Wf1hjW6ED7llclxDvReOQZqF4W8qI5ZB+1NwU6yETxjm9PTQ7X6gNXp3KQeNQARyXiTfWMfPBlSpZGQfvOw6Oml4o8nFID9s2eOvUGYRqlWrJ5A/aPSZfO1Ruht3WN9Nz81W6hPE8OCXx/1d0QYtMfBDreLs4J0JaZYb3isS/zGMO9aVkHiXhYAX0G2c0X+CwJPgg1voLGs+nF3NfjMgAAAAASUVORK5CYII=';
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAlCAMAAAAZd2syAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAAapQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////3hTzAgAAAI50Uk5TACVrdjwKgvj/pCBP4Px5AzXA84Fg31oUl/6+HA6D97wiAWTq2kewmB8+yO8HWWFGbV46BnoeTHN7U72OyZqTuvucEWno20DYFm/X3BWU7QlWHdBXiKLlLWK7uFvsC4DdE9lBNGyMwagwEBsZPycMzYT2fUj0zFw5NhhV3ku/qhKzpcNO4+TxDQ+FlqHueGDblssAAAHSSURBVHicY2AYPICRiZmFoCJWNnYODg5OLvyquHk4wICXjx+3IgFBoAohYRFRICUqhkORuIQkUFpKmoFBRlYOyJJXwKJIUUkZKKWiCuFxqYGsVtdAV6WpBRTW5tOBC+iCbdZDVaUvDAQGrChihmCFRri9AgXGJtpAG0AsUy4MYGZuYSkNVchlxcEBpKw5MIGNrZ29g6MTRJ0zWJkLhiJXN5Cshq27B5IyTy9vFCDp6gO1ztceSRka4PIDxqU/d0AgkAwKRlGmiOSLkFBg3HtxcISFMzBERKIoi0J2GTA0o0G0FdB5McjKYiWRlVkyMMSB6HgGhgQHFNPYEkXhQJuJgSEJpAxoeTIPTi+kAC1jSOXgSAP6wTMdXZkizAsZ2qAYzMwCEtmiOejKpBCOc8mFCOXlF6CHmwyyJwqLxBkYdIq9rBnQlaH4QlRU0su9pLSMAVMZKpApr6iEObrKBacyhM/C5YGuqEYWqrGqra2tQ8md9akOHBySDdIoWrl8gTolG+EKneKAKVfSShPDDq4mUDZOBaczxeYWIKdVF6tjINm4jEFRoBbIaItrx+Hojk5QASLYBUwOkulZeHzH1Q1OMZLumI5CBUbVkpI9vToEVJENAOVRStPJFiL7AAAAAElFTkSuQmCC';
 	}
 }
 
@@ -1191,7 +1193,14 @@ function exactmetrics_is_code_installed_frontend() {
 	) );
 	$errors  = array();
 
-	if ( 200 === wp_remote_retrieve_response_code( $request ) ) {
+	$accepted_http_codes = array(
+		200,
+		503
+	);
+
+	$response_code = wp_remote_retrieve_response_code( $request );
+
+	if ( in_array( $response_code, $accepted_http_codes, true ) ) {
 
 		$body            = wp_remote_retrieve_body( $request );
 		$current_ua_code = exactmetrics_get_ua_to_output();
@@ -1202,8 +1211,17 @@ function exactmetrics_is_code_installed_frontend() {
 		}
 		// Translators: The placeholders are for making the "We noticed you're using a caching plugin" text bold.
 		$cache_error = sprintf( esc_html__( '%1$sWe noticed you\'re using a caching plugin or caching from your hosting provider.%2$s Be sure to clear the cache to ensure the tracking appears on all pages and posts. %3$s(See this guide on how to clear cache)%4$s.', 'google-analytics-dashboard-for-wp' ), '<b>', '</b>', ' <a href="https://www.wpbeginner.com/beginners-guide/how-to-clear-your-cache-in-wordpress/" target="_blank">', '</a>' );
+
 		// Translators: The placeholders are for making the "We have detected multiple tracking codes" text bold & adding a link to support.
-		$multiple_ua_error = sprintf( esc_html__( '%1$sWe have detected multiple tracking codes%2$s! You should remove non-ExactMetrics ones. If you need help finding them please %3$sread this article%4$s.', 'google-analytics-dashboard-for-wp' ), '<b>', '</b>', '<a href="https://www.exactmetrics.com/docs/how-to-find-duplicate-google-analytics-tracking-codes-in-wordpress/" target="_blank">', '</a>' );
+		$message           = esc_html__( '%1$sWe have detected multiple tracking codes%2$s! You should remove non-ExactMetrics ones. If you need help finding them please %3$sread this article%4$s.', 'google-analytics-dashboard-for-wp' );
+		$url               = exactmetrics_get_url( 'site-health', 'comingsoon', 'https://www.exactmetrics.com/docs/how-to-find-duplicate-google-analytics-tracking-codes-in-wordpress/' );
+		$multiple_ua_error = sprintf(
+			$message,
+			'<b>',
+			'</b>',
+			'<a href="' . $url . '" target="_blank">',
+			'</a>'
+		);
 
 		// First, check if the tracking frontend code is present.
 		if ( false === strpos( $body, '__gaTracker' ) ) {
@@ -1214,6 +1232,14 @@ function exactmetrics_is_code_installed_frontend() {
 				// We have the tracking code but using another UA, so it's cached.
 				$errors[] = $cache_error;
 			}
+
+			// Grab all potential google site verification tags
+			$pattern = '/content="UA-[0-9-]+"/';
+			if ( preg_match_all( $pattern, $body, $matches ) ) {
+				// Raise the number of UA limits
+				$ua_limit += count( $matches[0] );
+			}
+
 			// Grab all the UA codes from the page.
 			$pattern = '/UA-[0-9]+/m';
 			preg_match_all( $pattern, $body, $matches );
@@ -1295,3 +1321,180 @@ function exactmetrics_custom_track_pretty_links_redirect( $url ) {
 	exactmetrics_mp_track_event_call( $track_args );
 }
 add_action( 'prli_before_redirect', 'exactmetrics_custom_track_pretty_links_redirect' );
+
+/**
+ * Decode special characters, both alpha- (<) and numeric-based (').
+ *
+ * @since 7.10.5
+ *
+ * @param string $string Raw string to decode.
+ *
+ * @return string
+ */
+function exactmetrics_decode_string( $string ) {
+
+	if ( ! is_string( $string ) ) {
+		return $string;
+	}
+
+	return wp_kses_decode_entities( html_entity_decode( $string, ENT_QUOTES ) );
+}
+
+add_filter( 'exactmetrics_email_message', 'exactmetrics_decode_string' );
+
+/**
+ * Sanitize a string, that can be a multiline.
+ * If WP core `sanitize_textarea_field()` exists (after 4.7.0) - use it.
+ * Otherwise - split onto separate lines, sanitize each one, merge again.
+ *
+ * @since 7.10.5
+ *
+ * @param string $string
+ *
+ * @return string If empty var is passed, or not a string - return unmodified. Otherwise - sanitize.
+ */
+function exactmetrics_sanitize_textarea_field( $string ) {
+
+	if ( empty( $string ) || ! is_string( $string ) ) {
+		return $string;
+	}
+
+	if ( function_exists( 'sanitize_textarea_field' ) ) {
+		$string = sanitize_textarea_field( $string );
+	} else {
+		$string = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $string ) ) );
+	}
+
+	return $string;
+}
+
+/**
+ * Trim a sentence
+ *
+ * @since 7.10.5
+ *
+ * @param string $string
+ * @param int $count
+ *
+ * @return trimed sentence
+ */
+function exactmetrics_trim_text( $text, $count ){
+	$text 	= str_replace("  ", " ", $text);
+	$string = explode(" ", $text);
+	$trimed = "";
+
+	for ( $wordCounter = 0; $wordCounter <= $count; $wordCounter++ ) {
+		$trimed .= $string[$wordCounter];
+
+		if ( $wordCounter < $count ){
+			$trimed .= " "; 
+		} else {
+			$trimed .= "..."; 
+		}
+	}
+
+	$trimed = trim($trimed);
+
+	return $trimed;
+}
+
+/**
+ * Add newly generated builder URL to PrettyLinks &
+ * Clear localStorage key(ExactMetricsURL) after saving PrettyLink
+ */
+function exactmetrics_tools_copy_url_to_prettylinks() {
+	global $pagenow;
+
+	$post_type                 = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+	$exactmetrics_reference = isset( $_GET['exactmetrics_reference'] ) ? $_GET['exactmetrics_reference'] : '';
+
+	if ( 'post-new.php' === $pagenow && 'pretty-link' === $post_type && 'url_builder' === $exactmetrics_reference ) { ?>
+        <script>
+            let targetTitleField = document.querySelector("input[name='post_title']");
+            let targetUrlField = document.querySelector("textarea[name='prli_url']");
+            let monsterInsightsUrl = JSON.parse(localStorage.getItem('ExactMetricsURL'));
+            if ( 'undefined' !== typeof targetUrlField && 'undefined' !== typeof monsterInsightsUrl ) {
+                let url = monsterInsightsUrl.value;
+                let postTitle = '';
+                let pathArray = url.split('?');
+                if ( pathArray.length <= 1 ) {
+                    pathArray = url.split('#');
+                }
+                let urlParams = new URLSearchParams(pathArray[1]);
+                if (urlParams.has('utm_campaign')) {
+                    let campaign_name = urlParams.get('utm_campaign');
+                    postTitle += campaign_name;
+                }
+                if (urlParams.has('utm_medium')) {
+                    let campaign_medium = urlParams.get('utm_medium');
+                    postTitle += ` ${campaign_medium}`;
+                }
+                if (urlParams.has('utm_source')) {
+                    let campaign_source = urlParams.get('utm_source');
+                    postTitle += ` on ${campaign_source}`;
+                }
+                if (urlParams.has('utm_term')) {
+                    let campaign_term = urlParams.get('utm_term');
+                    postTitle += ` for ${campaign_term}`;
+                }
+                if (urlParams.has('utm_content')) {
+                    let campaign_content = urlParams.get('utm_content');
+                    postTitle += ` - ${campaign_content}`;
+                }
+                if ( 'undefined' !== typeof targetTitleField && postTitle ) {
+                    targetTitleField.value = postTitle;
+                }
+                if( url ) {
+                    targetUrlField.value = url;
+                }
+            }
+            let form = document.getElementById('post');
+            form.addEventListener('submit', function(){
+                localStorage.removeItem('ExactMetricsURL');
+            });
+        </script>
+    <?php }
+}
+add_action( 'admin_footer', 'exactmetrics_tools_copy_url_to_prettylinks' );
+
+/**
+ * When click on 'Create New Pretty Link" button(on tools/prettylinks-flow page) after installing & activating prettylinks plugin
+ * it redirects to PrettyLinks welcome scree page instead of prettylinks add new page.
+ * This function will skip that welcome screen
+ */
+function exactmetrics_skip_prettylinks_welcome_screen() {
+	global $pagenow;
+
+	$post_type                 = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+	$exactmetrics_reference = isset( $_GET['exactmetrics_reference'] ) ? $_GET['exactmetrics_reference'] : '';
+
+	if ( 'post-new.php' === $pagenow && 'pretty-link' === $post_type && 'url_builder' === $exactmetrics_reference ) {
+	    $onboard  = get_option( 'prli_onboard' );
+
+		if ( $onboard == 'welcome' || $onboard == 'update' ) {
+			update_option( 'exactmetrics_backup_prli_onboard_value', $onboard );
+			delete_option( 'prli_onboard' );
+		}
+	}
+}
+add_action( 'wp_loaded', 'exactmetrics_skip_prettylinks_welcome_screen', 9 );
+
+/**
+ * Restore the `prli_onboard` value after creating a prettylinks with exactmetrics prettylinks flow
+ * users will see the prettylinks welcome screen after fresh installation & creating prettylinks with exactmetrics prettylinks flow
+ */
+function exactmetrics_restore_prettylinks_onboard_value() {
+	global $pagenow;
+
+	$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+
+	if ( 'edit.php' === $pagenow && 'pretty-link' === $post_type ) {
+		$onboard   = get_option( 'exactmetrics_backup_prli_onboard_value' );
+
+		if ( class_exists( 'PrliBaseController' ) && ( $onboard == 'welcome' || $onboard == 'update' ) ) {
+			update_option( 'prli_onboard', $onboard );
+			delete_option( 'exactmetrics_backup_prli_onboard_value' );
+		}
+	}
+}
+add_action( 'wp_loaded', 'exactmetrics_restore_prettylinks_onboard_value', 15 );

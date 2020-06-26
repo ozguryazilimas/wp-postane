@@ -58,24 +58,20 @@ function exactmetrics_is_reports_page() {
 		return false;
 	}
 
-	$settings_page = false;
+	$reports_page = false;
 	if ( ! empty( $admin_page_hooks['exactmetrics_reports'] ) && $current_screen->id === $admin_page_hooks['exactmetrics_reports'] ) {
-		$settings_page = true;
+		$reports_page = true;
 	}
 
 	if ( 'toplevel_page_exactmetrics_reports' === $current_screen->id ) {
-		$settings_page = true;
+		$reports_page = true;
 	}
 
 	if ( strpos( $current_screen->id, 'exactmetrics_reports' ) !== false ) {
-		$settings_page = true;
+		$reports_page = true;
 	}
 
-	if ( ! empty( $current_screen->base ) && strpos( $current_screen->base, 'exactmetrics_network' ) !== false ) {
-		$settings_page = true;
-	}
-
-	return $settings_page;
+	return $reports_page;
 }
 
 /**
@@ -148,6 +144,7 @@ function exactmetrics_admin_scripts() {
 
 	wp_register_script( 'exactmetrics-admin-common-script', plugins_url( 'assets/js/admin-common' . $suffix . '.js', EXACTMETRICS_PLUGIN_FILE ), array( 'jquery' ), exactmetrics_get_asset_version() );
 	wp_enqueue_script( 'exactmetrics-admin-common-script' );
+
 	wp_localize_script(
 		'exactmetrics-admin-common-script',
 		'exactmetrics_admin_common',
@@ -227,10 +224,11 @@ function exactmetrics_admin_scripts() {
 				'shareasale_id'        => exactmetrics_get_shareasale_id(),
 				'shareasale_url'       => exactmetrics_get_shareasale_url( exactmetrics_get_shareasale_id(), '' ),
 				'addons_url'           => is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network#/addons' ) : admin_url( 'admin.php?page=exactmetrics_settings#/addons' ),
+				'email_summary_url'    => admin_url( 'admin.php?exactmetrics_email_preview&exactmetrics_email_template=summary' ),
 				'install_amp_url'      => $install_amp_url,
 				'install_fbia_url'     => $install_fbia_url,
 				'dimensions'           => $prepared_dimensions,
-				'wizard_url'           => admin_url( 'index.php?page=exactmetrics-onboarding' ),
+				'wizard_url'           => is_network_admin() ? network_admin_url( 'index.php?page=exactmetrics-onboarding' ) : admin_url( 'index.php?page=exactmetrics-onboarding' ),
 				'install_plugins'      => current_user_can( 'install_plugins' ),
 				'unfiltered_html'      => current_user_can( 'unfiltered_html' ),
 				'activate_nonce'       => wp_create_nonce( 'exactmetrics-activate' ),
@@ -249,10 +247,14 @@ function exactmetrics_admin_scripts() {
 				),
 				'plugin_version'       => EXACTMETRICS_VERSION,
 				'is_admin'             => true,
+				'admin_email'          => get_option( 'admin_email' ),
+				'site_url'             => get_site_url(),
 				'reports_url'          => add_query_arg( 'page', 'exactmetrics_reports', admin_url( 'admin.php' ) ),
 				'first_run_notice'     => apply_filters( 'exactmetrics_settings_first_time_notice_hide', exactmetrics_get_option( 'exactmetrics_first_run_notice' ) ),
-				'getting_started_url'  => is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network#/about/getting-started' ) : admin_url( 'admin.php?page=exactmetrics_settings#/about/getting-started' ),
+				'getting_started_url'  => is_network_admin() ? network_admin_url( 'admin.php?page=exactmetrics_network#/about' ) : admin_url( 'admin.php?page=exactmetrics_settings#/about/getting-started' ),
 				'authed'               => $is_authed,
+				'new_pretty_link_url'  => admin_url( 'post-new.php?post_type=pretty-link' ),
+				'wpmailsmtp_admin_url' => admin_url( 'admin.php?page=wp-mail-smtp' ),
 			)
 		);
 
@@ -281,19 +283,19 @@ function exactmetrics_admin_scripts() {
 			'exactmetrics-vue-reports',
 			'exactmetrics',
 			array(
-				'ajax'            => admin_url( 'admin-ajax.php' ),
-				'nonce'           => wp_create_nonce( 'mi-admin-nonce' ),
-				'network'         => is_network_admin(),
-				'translations'    => wp_get_jed_locale_data( exactmetrics_is_pro_version() ? 'exactmetrics-premium' : 'google-analytics-dashboard-for-wp' ),
-				'assets'          => plugins_url( $version_path . '/assets/vue', EXACTMETRICS_PLUGIN_FILE ),
-				'shareasale_id'   => exactmetrics_get_shareasale_id(),
-				'shareasale_url'  => exactmetrics_get_shareasale_url( exactmetrics_get_shareasale_id(), '' ),
-				'addons_url'      => is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network#/addons' ) : admin_url( 'admin.php?page=exactmetrics_settings#/addons' ),
-				'timezone'        => date( 'e' ),
-				'authed'          => $site_auth || $ms_auth,
-				'settings_url'    => add_query_arg( 'page', 'exactmetrics_settings', admin_url( 'admin.php' ) ),
+				'ajax'             => admin_url( 'admin-ajax.php' ),
+				'nonce'            => wp_create_nonce( 'mi-admin-nonce' ),
+				'network'          => is_network_admin(),
+				'translations'     => wp_get_jed_locale_data( exactmetrics_is_pro_version() ? 'exactmetrics-premium' : 'google-analytics-dashboard-for-wp' ),
+				'assets'           => plugins_url( $version_path . '/assets/vue', EXACTMETRICS_PLUGIN_FILE ),
+				'shareasale_id'    => exactmetrics_get_shareasale_id(),
+				'shareasale_url'   => exactmetrics_get_shareasale_url( exactmetrics_get_shareasale_id(), '' ),
+				'addons_url'       => is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network#/addons' ) : admin_url( 'admin.php?page=exactmetrics_settings#/addons' ),
+				'timezone'         => date( 'e' ),
+				'authed'           => $site_auth || $ms_auth,
+				'settings_url'     => add_query_arg( 'page', 'exactmetrics_settings', admin_url( 'admin.php' ) ),
 				// Used to add notices for future deprecations.
-				'versions'        => array(
+				'versions'         => array(
 					'php_version'          => phpversion(),
 					'php_version_below_54' => apply_filters( 'exactmetrics_temporarily_hide_php_52_and_53_upgrade_warnings', version_compare( phpversion(), '5.4', '<' ) ),
 					'php_version_below_56' => apply_filters( 'exactmetrics_temporarily_hide_php_54_and_55_upgrade_warnings', version_compare( phpversion(), '5.6', '<' ) ),
@@ -303,14 +305,16 @@ function exactmetrics_admin_scripts() {
 					'wp_version_below_49'  => version_compare( $wp_version, '4.9', '<' ),
 					'wp_update_link'       => exactmetrics_get_url( 'settings-notice', 'settings-page', 'https://www.exactmetrics.com/docs/update-wordpress/' ),
 				),
-				'plugin_version'  => EXACTMETRICS_VERSION,
-				'is_admin'        => true,
-				'wizard_url'      => admin_url( 'index.php?page=exactmetrics-onboarding' ),
-				'install_nonce'   => wp_create_nonce( 'exactmetrics-install' ),
-				'activate_nonce'  => wp_create_nonce( 'exactmetrics-activate' ),
-				'deactivate_nonce'=> wp_create_nonce( 'exactmetrics-deactivate' ),
-				'update_settings' => current_user_can( 'exactmetrics_save_settings' ),
-				'migrated'        => exactmetrics_get_option( 'gadwp_migrated', 0 ),
+				'plugin_version'   => EXACTMETRICS_VERSION,
+				'is_admin'         => true,
+				'admin_email'      => get_option( 'admin_email' ),
+				'site_url'         => get_site_url(),
+				'wizard_url'       => is_network_admin() ? network_admin_url( 'index.php?page=exactmetrics-onboarding' ) : admin_url( 'index.php?page=exactmetrics-onboarding' ),
+				'install_nonce'    => wp_create_nonce( 'exactmetrics-install' ),
+				'activate_nonce'   => wp_create_nonce( 'exactmetrics-activate' ),
+				'deactivate_nonce' => wp_create_nonce( 'exactmetrics-deactivate' ),
+				'update_settings'  => current_user_can( 'exactmetrics_save_settings' ),
+				'migrated'         => exactmetrics_get_option( 'gadwp_migrated', 0 ),
 			)
 		);
 
