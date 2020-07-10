@@ -3,9 +3,9 @@
 Plugin Name: Detailed-Search v1
 Plugin URI: http://ozguryazilim.com.tr
 Description: Detailed Search plugin For 22dakika.org project
-Version: 1.1
-Author: Kivilcim Eray
-Author URI: http://github.com/kivicko
+Version: 1.2
+Author: Ozguryazilim
+Author URI: https://www.ozguryazilim.com.tr
 License: GPL
 */
 
@@ -282,7 +282,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
 
   if ($words_included != NULL) {
     foreach ($words_included as $key) {
-      $query->extend_query("AND (post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s'))))",
+      $query->extend_query("AND (post_title LIKE '%s' OR (post_content LIKE '%s' AND ((post_content REGEXP CONCAT('^[^<>]*', '%s')) OR (post_content REGEXP CONCAT('^.*<[^<>]*>[^<]*', '%s')))))",
                            $key . ' ',
                            array('%' . $key . '%', '%' . $key . '%', $key, $key));
     }
@@ -293,7 +293,7 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
     $query->extend_query('AND ( 1=0');
 
     foreach ($words_at_least_one as $key) {
-      $query->extend_query("OR post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s')))",
+      $query->extend_query("OR post_title LIKE '%s' OR (post_content LIKE '%s' AND ((post_content REGEXP CONCAT('^[^<>]*', '%s')) OR (post_content REGEXP CONCAT('^.*<[^<>]*>[^<]*', '%s'))))",
                            $key . ' ',
                            array('%' . $key . '%', '%' . $key . '%', $key, $key));
     }
@@ -302,14 +302,14 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
   }
 
   if ($words_ordered != NULL) {
-    $query->extend_query("AND (post_title LIKE '%s' OR (post_content LIKE '%s' AND (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s'))))",
+    $query->extend_query("AND (post_title LIKE '%s' OR (post_content LIKE '%s' AND ((post_content REGEXP CONCAT('^[^<>]*', '%s')) OR (post_content REGEXP CONCAT('^.*<[^<>]*>[^<]*', '%s')))))",
                          $words_ordered . ' kelimeleri sıralı olan ',
                          array('%' . $words_ordered . '%', '%' . $words_ordered . '%', $words_ordered, $words_ordered));
   }
 
   if ($words_excluded != NULL) {
     foreach ($words_excluded as $key) {
-      $query->extend_query("AND post_title NOT LIKE '%s' AND (post_content NOT LIKE '%s' OR NOT (post_content REGEXP CONCAT(CONCAT(CONCAT('^[^<>]*','%s'),'|^.*<[^<>]*>[^<]*'),'%s')))",
+      $query->extend_query("AND post_title NOT LIKE '%s' AND (post_content NOT LIKE '%s' OR NOT ((post_content REGEXP CONCAT('^[^<>]*', '%s')) OR (post_content REGEXP CONCAT('^.*<[^<>]*>[^<]*', '%s'))))",
                            $key . ' ',
                            array('%' . $key . '%', '%' . $key . '%', $key, $key));
     }

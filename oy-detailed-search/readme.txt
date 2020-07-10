@@ -3,7 +3,7 @@ Contributors:
 Donate link:
 Tags: search, detailed, advanced
 Requires at least: 3.0.0
-Tested up to: 4.9.6
+Tested up to: 5.4.2
 
 This plugin adds detailed search capability without hassle.
 
