@@ -3,7 +3,7 @@
 Plugin Name: Detailed-Search v1
 Plugin URI: http://ozguryazilim.com.tr
 Description: Detailed Search plugin For 22dakika.org project
-Version: 1.2
+Version: 1.3.0
 Author: Ozguryazilim
 Author URI: https://www.ozguryazilim.com.tr
 License: GPL
@@ -707,12 +707,14 @@ function oy_custom_page_template_redirect() {
 */
 function oy_detailed_search_assets() {
   wp_enqueue_script('jquery-ui-datepicker', array('jquery'));
-  wp_enqueue_style('jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+  // wp_enqueue_style('jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+  $jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.12.1';
+  wp_enqueue_style('jquery-ui-style', '//code.jquery.com/ui/' . $jquery_version . '/themes/smoothness/jquery-ui.min.css', array(), $jquery_version);
 
   wp_register_style('oy_detailed_search_template_css', plugins_url('css/oy-css.css', __FILE__));
   wp_enqueue_style('oy_detailed_search_template_css');
 
-  wp_register_script('oy_detailed_search_template_js', plugins_url('js/oy-js.js', __FILE__));
+  wp_register_script('oy_detailed_search_template_js', plugins_url('js/oy-js.js', __FILE__), array('jquery', 'jquery-ui-datepicker'), '1.3.0');
   wp_enqueue_script('oy_detailed_search_template_js');
 }
 add_action('wp_enqueue_scripts', 'oy_detailed_search_assets');
