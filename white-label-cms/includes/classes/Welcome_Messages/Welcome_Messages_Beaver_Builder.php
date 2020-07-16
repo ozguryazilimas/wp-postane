@@ -11,7 +11,7 @@ class Welcome_Messages_Beaver_Builder
         $this->key = $key;
         $this->settings = $settings;
         $this->template = $settings['page_id_beaver'];
-        add_action( 'admin_notices', array( $this, 'welcome_panel' ) );
+        add_action( 'in_admin_header', array( $this, 'welcome_panel' ) );
         add_action('admin_enqueue_scripts', 'FLBuilder::register_layout_styles_scripts');
     }
     
@@ -36,12 +36,11 @@ class Welcome_Messages_Beaver_Builder
         ?><a class="welcome-panel-close" href="#" aria-label="Dismiss the welcome panel">Dismiss</a>
         <?php endif?>
             <div class="welcome-panel-content welcome-panel-content<?php echo $this->key?>">
-                <h2>
                 <?php if( isset($this->settings['page_id_beaver']) && isset($this->settings['show_title']) ):?>
+                <h2>
                     <?php echo get_the_title($this->settings['page_id_beaver'])?>
-                <?php endif;?>
-                &nbsp;
                 </h2>
+                <?php endif;?>
                 <?php $this->template(); ?>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <div class="wlcms-input-group">
     <div class="wlcms-input">
-        <textarea class="textarea-full wlcms-css" name="login_custom_css"><?php echo esc_textarea(wlcms_field_setting('login_custom_css')) ?></textarea>
+        <textarea class="textarea-full wlcms-css" name="login_custom_css"><?php echo esc_html(wlcms_field_setting('login_custom_css')) ?></textarea>
     </div>
     <div class="wlcms-help">
         <p><?php _e('Completely customise the login page by entering your own CSS.', 'white-label-cms') ?></p>

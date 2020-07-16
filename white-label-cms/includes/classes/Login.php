@@ -51,12 +51,21 @@ class WLCMS_Login extends WLCMS_Previewable
         echo '});';
         echo '</script>';
         echo '<style type="text/css">';
-        echo $this->set_custom_css();
-        echo $this->set_background_css();
-        echo $this->set_logo_css();
-        echo $this->set_form_css();
-        echo $this->set_links_css();
+        echo $this->compiled_login_css();
         echo '</style>';
+    }
+
+    private function compiled_login_css()
+    {
+        $content = $this->get_settings('login_custom_css');
+        $content .= $this->set_background_css();
+        $content .= $this->set_logo_css();
+        $content .= $this->set_form_css();
+        $content .= $this->set_links_css();
+
+        $content = wp_kses( $content, array( '\'', '\"' ) );
+        $content = str_replace( '&gt;', '>', $content );
+        return $content;
     }
 
     private function get_js()
@@ -233,14 +242,9 @@ class WLCMS_Login extends WLCMS_Previewable
         return $form_css;
     }
 
-    private function set_custom_css()
-    {
-        return $this->get_settings('login_custom_css');
-    }
-
     private function set_custom_login_js()
     {
-        return $this->get_settings('login_custom_js');
+        return wlcms_esc_html_e($this->get_settings('login_custom_js'));
     }
     public function settings()
     {

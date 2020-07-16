@@ -228,12 +228,12 @@ if (!function_exists('wlcms_form_upload_field')) {
 
         $key_setting = wlcms_field_setting($key);
         if ($key_setting) {
-            $html .= '<img src="' . $key_setting . '" alt="" /><span class="dashicons dashicons-dismiss wlcms-remove-img"></span>';
+            $html .= '<img src="' . esc_url($key_setting) . '" alt="" /><span class="dashicons dashicons-dismiss wlcms-remove-img"></span>';
         }
 
         $html .= '</div>
                     <div class="wlcms-input">
-                        <input type="text" name="' . $key . '" class="wlcms-upload-input" value="' . $key_setting . '" />
+                        <input type="text" name="' . $key . '" class="wlcms-upload-input" value="' . esc_url($key_setting) . '" />
                         <a href="#" class="wlcms_upload">Upload</a>
                     </div>
                 <div class="wlcms-help">' . $help . '</div>';

@@ -7,16 +7,10 @@ class Welcome_Messages_Html
     {
         $this->key = $key;
         $this->settings = $settings;
-        //var_dump($this->settings);
-        //exit;
 
         if( isset( $this->settings['is_fullwidth']) && $this->settings['is_fullwidth'] == 1  ) 
         {
-            remove_action( 'welcome_panel', 'wp_welcome_panel' );
-		    add_action( 'welcome_panel', array( $this, 'welcome_panel' ) );
-            if ( ! current_user_can( 'edit_theme_options' ) ) {
-                add_action( 'admin_notices', array( $this, 'welcome_panel' ) );
-            }
+            add_action( 'in_admin_header', array( $this, 'welcome_panel' ) );
             return;
         }
 
@@ -45,7 +39,9 @@ class Welcome_Messages_Html
                 <?php if(isset( $this->settings['title'] )):?>
                     <h2><?php echo $this->settings['title']?></h2>
                 <?php endif;?>
+                <div class="wlcms-welcome-content">
                 <?php echo $this->template(); ?>
+                </div>
             </div>
         </div>
         <?php

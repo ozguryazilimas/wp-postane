@@ -28,11 +28,20 @@ class WLCMS_Admin_Script
         
         $scripts = "<!-- WLCMS Style-->\n";
         if (count($this->css) || count($this->hidded_elements) || count($this->bulk_css) || !empty($this->admin_css) ) {
-            $scripts .= sprintf('<style type="text/css">%s %s %s</style>', $this->admin_css, $this->compileCss(), $this->additional_css);
+            $scripts .= sprintf('<style type="text/css">%s</style>', $this->compiled_header_css());
         }
+        
         $scripts .= "\n<!-- WLCMS End Style-->";
         echo $scripts;
 
+    }
+
+    private function compiled_header_css()
+    {
+        $content = $this->admin_css . $this->compileCss(). $this->additional_css;
+        $content = wp_kses( $content, array( '\'', '\"' ) );
+        $content = str_replace( '&gt;', '>', $content );
+        return $content;
     }
 
     public function footer_script()

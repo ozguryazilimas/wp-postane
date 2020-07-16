@@ -23,7 +23,6 @@ class Admin_Dashboard_Welcome_Message
             $template = new Welcome_Messages_Elementor();
         }elseif( $type == 'Beaver Builder' ){
             $template = new Welcome_Messages_Beaver_Builder();
-            
         }else {
             $template = new Welcome_Messages_Html();
         }

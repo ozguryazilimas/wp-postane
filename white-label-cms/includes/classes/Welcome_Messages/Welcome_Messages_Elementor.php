@@ -10,24 +10,27 @@ class Welcome_Messages_Elementor
         
         $this->key = $key;
         $this->settings = $settings;
-        add_action( 'admin_notices', array( $this, 'welcome_panel' ) );
+        add_action( 'in_admin_header', array( $this, 'welcome_panel' ) );
     }
 
     public function welcome_panel()
     {
+        $has_dismissable = isset($this->settings['dismissible']);
+        $is_show_title = isset($this->settings['page_id_elementor']) && isset($this->settings['show_title']);
         ?>
         <div id="welcome-panel<?php echo $this->key?>" data-welcome_key="<?php echo $this->key?>" class="welcome-panel wlcms-welcome-panel" style="display:none">
         <?php
-        if(isset($this->settings['dismissible'])):
+        if($has_dismissable):
             ?><a class="welcome-panel-close" href="#" aria-label="Dismiss the welcome panel">Dismiss</a>
         <?php endif?>
             <div class="welcome-panel-content welcome-panel-content<?php echo $this->key?>">
+            <?php if( $has_dismissable || $is_show_title ):?>
+                <?php if( $is_show_title ):?>
                 <h2>
-                <?php if( isset($this->settings['page_id_elementor']) && isset($this->settings['show_title']) ):?>
                     <?php echo get_the_title($this->settings['page_id_elementor'])?>
-                <?php endif;?>
-                &nbsp;
                 </h2>
+                <?php endif;?>
+                <?php endif;?>
                 <?php $this->template(); ?>
             </div>
         </div>

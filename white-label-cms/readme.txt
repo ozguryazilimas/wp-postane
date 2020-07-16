@@ -8,8 +8,8 @@ Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugi
 Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
-Tested up to: 5.4
-Stable tag: 2.2
+Tested up to: 5.4.2
+Stable tag: 2.2.1
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -17,6 +17,7 @@ Customise dashboard panels and branding, hide menus plus lots more.
 The White Label CMS plugin is for developers who want to give their clients a more personalised and less confusing content management system.
 
 For a overview of the changes in 2.0 version of the plugin please visit the Video User Manuals website.
+[](http://coderisk.com/wp/plugin/white-label-cms/RIPS-2du_LffR85)
 
 = Features =
 - Customize the login page
@@ -66,7 +67,9 @@ There is so much that you can do with White Label CMS, but we want the experienc
 
 == Changelog ==
 
-= 2.2 =
+= 2.2.1 =
+* Refactoring / Security fixes reported by @twd
+* Fixed override footer action reported by @simebern
 * Custom Welcome Dashboard fixes
 
 == Frequently Asked Questions ==

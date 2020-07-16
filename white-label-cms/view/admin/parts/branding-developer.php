@@ -2,7 +2,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Developer Name', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="text" name="developer_name" value="<?php echo wlcms_field_setting('developer_name') ?>" />
+        <input type="text" name="developer_name" value="<?php echo esc_attr(wlcms_field_setting('developer_name')) ?>" />
     </div>
     <div class="wlcms-help">
         <?php _e('For use in footer and ALT text\'s.', 'white-label-cms') ?>
@@ -12,7 +12,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Developer URL', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="url" name="developer_url" value="<?php echo wlcms_field_setting('developer_url') ?>" />
+        <input type="url" name="developer_url" value="<?php echo esc_url(wlcms_field_setting('developer_url')) ?>" />
     </div>
     <div class="wlcms-help">
         <?php _e('For use in footer and admin bar.', 'white-label-cms') ?>

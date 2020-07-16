@@ -8,7 +8,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Side Menu Link URL', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="url" name="side_menu_link_url" value="<?php echo wlcms_field_setting('side_menu_link_url') ?>" />
+        <input type="url" name="side_menu_link_url" value="<?php echo esc_url(wlcms_field_setting('side_menu_link_url')) ?>" />
     </div>
     <div class="wlcms-help">
         <?php _e('URL the Side Menu Image will link to.', 'white-label-cms') ?>
@@ -17,7 +17,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Side Menu Alt Text', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="text" name="side_menu_alt_text" value="<?php echo wlcms_field_setting('side_menu_alt_text') ?>" />
+        <input type="text" name="side_menu_alt_text" value="<?php echo esc_attr(wlcms_field_setting('side_menu_alt_text')) ?>" />
     </div>
     <div class="wlcms-help">
         <?php _e('Alt text for the Side Menu Image link.', 'white-label-cms') ?>

@@ -27,7 +27,6 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         $this->dashboard_title();
         $this->set_welcome_metabox();
 
-
         //Old version setting 2.0.2
         if (!wlcms_field_setting('dashboard_role_stat')) {
             if (is_wlcms_admin()) return;
@@ -46,28 +45,59 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
     private function reset_dashboard_style() {
 
         wlcms_set_css(
-            '.wlcms-welcome-panel-content .elementor p,
-            .wlcms-welcome-panel-content .elementor div,
-            .wlcms-welcome-panel-content .elementor h1,
-            .wlcms-welcome-panel-content .elementor h2,
-            .wlcms-welcome-panel-content .elementor h3
-            .wlcms-welcome-panel-content .elementor h4
-            .wlcms-welcome-panel-content .elementor h5
-            .wlcms-welcome-panel-content .fl-builder-content p', 
+            '.wlcms-welcome-panel .elementor div,
+            .wlcms-welcome-panel .elementor h1,
+            .wlcms-welcome-panel .elementor h2,
+            .wlcms-welcome-panel .elementor h3,
+            .wlcms-welcome-panel .elementor h4,
+            .wlcms-welcome-panel .elementor h5,
+            .wlcms-welcome-panel .fl-builder-content p,
+            .wlcms-welcome-panel p', 
             array(
                 'border' => '0',
                 'font-size' => '100%',
                 'font' => 'inherit',
                 'line-height' => 'inherit',
                 'vertical-align' => 'baseline',
-                'color' => 'inherit'
+                'color' => 'unset'
                 )
             );
         
         wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-content > h2', 
             array(
                 'width' => '95%',
-                'padding-bottom' => '21px'
+                'padding' => '21px'
+                )
+            );
+        wlcms_set_css( '.wlcms-welcome-panel .wlcms-welcome-content', 
+            array(
+                'padding' => '20px'
+                )
+            );
+        wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-content', 
+            array(
+                'max-width' => 'none!important',
+                'margin-left' => '0!important'
+                )
+            );
+
+        wlcms_set_css( '.wlcms-welcome-panel .elementor-section-full_width', 
+            array(
+                'width' => '100%!important',
+                'left' => '0!important'
+                )
+            );
+        
+        wlcms_set_css( '.wlcms-welcome-panel, .wlcms-welcome-panel .welcome-panel-content', array(
+                'padding' => '0!important',
+        ));
+        wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-close', 
+            array(
+                'top' => '0!important',
+                'right' => '0!important',
+                'background' => 'white!important',
+                'z-index' => '1000',
+
                 )
             );
     }
@@ -303,7 +333,7 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         $this->get_settings('rss_title');
 
         if ($logo = $this->get_settings('rss_logo')) {
-            $title .= '<img src="' . $logo . '" height="16" width="16" alt="Logo" style="padding-right:5px;vertical-align:bottom;"/> ';
+            $title .= '<img src="' . esc_url($logo) . '" height="16" width="16" alt="Logo" style="padding-right:5px;vertical-align:bottom;"/> ';
         }
 
         if ($rss_title = $this->get_settings('rss_title')) {

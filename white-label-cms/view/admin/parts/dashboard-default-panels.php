@@ -13,7 +13,7 @@ if( ! $dashboard_role_stat) {
 <div class="wlcms-input-group">
     <label><?php _e('Dashboard Title', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="text" name="dashboard_title" value="<?php echo wlcms_field_setting('dashboard_title') ?>" />
+        <input type="text" name="dashboard_title" value="<?php echo esc_attr(wlcms_field_setting('dashboard_title')) ?>" />
     </div>
     <div class="wlcms-help">
         <?php _e('Change the heading for the Dashboard', 'white-label-cms') ?>

@@ -12,7 +12,7 @@
             <div class="wlcms-input-group">
                 <label><?php _e('RSS Title', 'white-label-cms') ?></label>
                 <div class="wlcms-input">
-                    <input type="text" name="rss_title" value="<?php echo wlcms_field_setting('rss_title') ?>" />
+                    <input type="text" name="rss_title" value="<?php echo esc_attr(wlcms_field_setting('rss_title')) ?>" />
                 </div>
                 <div class="wlcms-help">
                     <?php _e('The title of the RSS Panel', 'white-label-cms') ?>
@@ -26,7 +26,7 @@
             <div class="wlcms-input-group">
                 <label><?php _e('RSS Feed', 'white-label-cms') ?></label>
                 <div class="wlcms-input">
-                    <input type="text" id="rss_feed_address" name="rss_feed_address" value="<?php echo wlcms_field_setting('rss_feed_address') ?>" />
+                    <input type="text" id="rss_feed_address" name="rss_feed_address" value="<?php echo esc_url(wlcms_field_setting('rss_feed_address')) ?>" />
                 </div>
                 <div class="wlcms-help">
                     <?php _e('The RSS feed address. For example feed://' . wlcms_site_domain() . '/feed/', 'white-label-cms') ?>
@@ -40,7 +40,7 @@
                         <?php 
                         $item_setting = wlcms_field_setting('rss_feed_number_of_item');
                         for($item = 1; $item <= 10; $item++) {?>
-                        <option value="<?php echo $item?>" <?php echo ($item == $item_setting) ? ' selected="selected"' : '' ?>><?php echo $item?></option>
+                        <option value="<?php echo esc_attr($item)?>" <?php echo ($item == $item_setting) ? ' selected="selected"' : '' ?>><?php echo esc_attr($item)?></option>
                         <?php }?>
                     </select>
                 </div>
@@ -61,7 +61,7 @@
             <div class="wlcms-input-group">
                 <label><?php _e('Introduction HTML', 'white-label-cms') ?></label>
                 <div class="wlcms-input">
-                    <textarea class="textarea-full" name="rss_introduction"><?php echo wlcms_field_setting('rss_introduction') ?></textarea>
+                    <textarea class="textarea-full" name="rss_introduction"><?php echo wlcms_esc_html_e(wlcms_field_setting('rss_introduction')) ?></textarea>
                 </div>
                 <div class="wlcms-help">
                     <?php _e('Add introduction text to appear above the RSS items. You can use HTML.', 'white-label-cms') ?>

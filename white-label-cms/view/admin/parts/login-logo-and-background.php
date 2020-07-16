@@ -9,7 +9,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Logo Width', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="number" name="logo_width" class="wlcms-upload-input" value="<?php echo wlcms_field_setting('logo_width', '') ?>" />px
+        <input type="number" name="logo_width" class="wlcms-upload-input" value="<?php echo esc_attr(wlcms_field_setting('logo_width', '')) ?>" />px
     </div>
     <div class="wlcms-help">
         <?php _e('Add a width to your Login Logo. Max width 320px', 'white-label-cms') ?>
@@ -18,7 +18,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Logo Height', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="number" name="logo_height" class="wlcms-upload-input" value="<?php echo wlcms_field_setting('logo_height', '') ?>" />px
+        <input type="number" name="logo_height" class="wlcms-upload-input" value="<?php echo esc_attr(wlcms_field_setting('logo_height', '')) ?>" />px
     </div>
     <div class="wlcms-help">
         <?php _e('Add a height to your Login Logo.', 'white-label-cms') ?>
@@ -28,7 +28,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Logo Bottom Margin', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="number" name="logo_bottom_margin" class="wlcms-upload-input" value="<?php echo wlcms_field_setting('logo_bottom_margin') ?>" />px
+        <input type="number" name="logo_bottom_margin" class="wlcms-upload-input" value="<?php echo esc_attr(wlcms_field_setting('logo_bottom_margin')) ?>" />px
     </div>
     <div class="wlcms-help">
         <?php _e('Add a bottom margin to your Login Logo.', 'white-label-cms') ?>
@@ -38,7 +38,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Background Color', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="text" name="background_color" class="wlcms-color-field" value="<?php echo wlcms_field_setting('background_color') ?>" />
+        <input type="text" name="background_color" class="wlcms-color-field" value="<?php echo esc_attr(wlcms_field_setting('background_color')) ?>" />
     </div>
     <div class="wlcms-help">
         <?php _e('Background color for the login page. Changing to White will help your logo standout.', 'white-label-cms') ?>

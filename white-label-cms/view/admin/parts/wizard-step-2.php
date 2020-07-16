@@ -8,7 +8,7 @@
         <div class="wlcms-input-group">
             <label><?php _e('Clients Business Name', 'white-label-cms') ?></label>
             <div class="wlcms-input">
-                <input type="text" name="client_business_name" value="<?php echo wlcms_field_setting('client_business_name') ?>" />
+                <input type="text" name="client_business_name" value="<?php echo esc_attr(wlcms_field_setting('client_business_name')) ?>" />
             </div>
             <div class="wlcms-help">
                 <?php _e('For use in Admin Page Title and Dashboard Title.', 'white-label-cms') ?>

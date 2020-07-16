@@ -14,7 +14,6 @@ class WLCMS_Settings
 
     public function init()
     {
-
         // check or initiate import
         $this->import();
 
@@ -243,7 +242,7 @@ class WLCMS_Settings
 
 
         delete_option("wlcms_options");
-        $wpdb->get_results("DELETE FROM $wpdb->options WHERE option_name LIKE 'wlcms_o_%'");
+        $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->options WHERE option_name LIKE %s", 'wlcms_o_%'));
 
         $site_url = get_bloginfo('url');
 
@@ -260,7 +259,7 @@ class WLCMS_Settings
             }
         }
 
-        WLCMS_Queue('Your Import has been completed.');
+        WLCMS_Queue('Your import has been completed.');
         wp_redirect(wlcms()->admin_url());
         exit;
     }
@@ -294,7 +293,7 @@ class WLCMS_Settings
         }
 
         delete_option("wlcms_options");
-        $wpdb->get_results("DELETE FROM $wpdb->options WHERE option_name LIKE 'wlcms_o_%'");
+        $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->options WHERE option_name LIKE %s", 'wlcms_o_%'));
 
         WLCMS_Queue('Settings reset.');
         wp_redirect(wlcms()->admin_url());
@@ -379,6 +378,5 @@ class WLCMS_Settings
             'settings_custom_css_url' => ''
         );
         return apply_filters('wlcms_setting_fields', $settings);
-
     }
 }

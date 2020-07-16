@@ -71,7 +71,7 @@ $welcome_panel_is_active = wlcms_welcome_value(0, 'is_active');
         <div class="welcome-basicHtml1">
             <label><?php _e('Title of Welcome Panel', 'white-label-cms') ?></label>
             <div class="wlcms-input">
-                <input type="text" name="welcome_panel[0][title]" value="<?php echo wlcms_welcome_value(0, 'title') ?>" />
+                <input type="text" name="welcome_panel[0][title]" value="<?php echo esc_attr(wlcms_welcome_value(0, 'title')) ?>" />
             </div>
             <div class="wlcms-help">
                 <?php _e('Title of the Welcome Panel', 'white-label-cms') ?>
@@ -81,7 +81,7 @@ $welcome_panel_is_active = wlcms_welcome_value(0, 'is_active');
         <div class="welcome-basicHtml1">
             <label><?php _e('Welcome Panel Description HTML', 'white-label-cms') ?></label>
             <div class="wlcms-input">
-                <textarea class="textarea-full" name="welcome_panel[0][description]"><?php echo wlcms_welcome_value(0, 'description') ?></textarea>
+                <textarea class="textarea-full" name="welcome_panel[0][description]"><?php echo esc_html(wlcms_welcome_value(0, 'description')) ?></textarea>
             </div>
             <div class="wlcms-help"><?php _e('You can add any HTML to the welcome panel.', 'white-label-cms') ?></div>
         </div>
@@ -169,7 +169,7 @@ $welcome_panel_is_active = wlcms_welcome_value(1, 'is_active');
         <div class="welcome-basicHtml2">
             <label><?php _e('Title of Second Panel', 'white-label-cms') ?></label>
             <div class="wlcms-input">
-                <input type="text" name="welcome_panel[1][title]" value="<?php echo wlcms_welcome_value(1, 'title') ?>" />
+                <input type="text" name="welcome_panel[1][title]" value="<?php echo esc_attr(wlcms_welcome_value(1, 'title')) ?>" />
             </div>
             <div class="wlcms-help">
                 <?php _e('Title of the Second Panel', 'white-label-cms') ?>
@@ -179,7 +179,7 @@ $welcome_panel_is_active = wlcms_welcome_value(1, 'is_active');
         <div class="welcome-basicHtml2">
             <label><?php _e('Second Panel Description (HTML)', 'white-label-cms') ?></label>
             <div class="wlcms-input">
-                <textarea class="textarea-full" name="welcome_panel[1][description]"><?php echo wlcms_welcome_value(1, 'description') ?></textarea>
+                <textarea class="textarea-full" name="welcome_panel[1][description]"><?php echo esc_html(wlcms_welcome_value(1, 'description')) ?></textarea>
             </div>
             <div class="wlcms-help"><?php _e('You can add any HTML to the second panel.', 'white-label-cms') ?></div>
         </div>

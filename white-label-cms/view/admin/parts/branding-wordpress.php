@@ -22,7 +22,7 @@
 <div class="wlcms-input-group">
     <label><?php _e('Custom Page Titles', 'white-label-cms') ?></label>
     <div class="wlcms-input">
-        <input type="text" name="custom_page_title" value="<?php echo wlcms_field_setting('custom_page_title') ?>" />
+        <input type="text" name="custom_page_title" value="<?php echo esc_attr(wlcms_field_setting('custom_page_title')) ?>" />
     </div>
     <div class="wlcms-help">
         <?php _e('Replace WordPress in the page titles.', 'white-label-cms') ?>

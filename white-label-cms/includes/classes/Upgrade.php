@@ -31,7 +31,7 @@ class WLCMS_Upgrades
             return;
         }
 
-        $newdbsetting = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->options WHERE option_name = 'wlcms_options'");
+        $newdbsetting = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $wpdb->options WHERE option_name = %s", 'wlcms_options'));
 
         if ($legacy_version && $newdbsetting) {
             return;
@@ -51,7 +51,7 @@ class WLCMS_Upgrades
         global $wpdb;
         
         // Get all WLCMS vals from options table
-        $results = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE 'wlcms_o_%'");
+        $results = $wpdb->get_results($wpdb->prepare("SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE %s", 'wlcms_o_%'));
 
         // Are there any options to grab?
         if (!$results) return;
@@ -317,7 +317,7 @@ class WLCMS_Upgrades
         global $wpdb;
 
         delete_option('wlcms_o_ver');
-        $wpdb->get_results("DELETE FROM $wpdb->options WHERE option_name = 'wlcms_o_ver'");
+        $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->options WHERE option_name = %s", 'wlcms_o_ver'));
     }
 
     private function legacy_settings()
