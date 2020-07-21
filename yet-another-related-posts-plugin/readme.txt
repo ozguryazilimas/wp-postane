@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.4
-Stable tag: 5.1.9
+Stable tag: 5.2.1
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -13,17 +13,26 @@ Display a list of related posts on your site based on a powerful unique algorith
 
 Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post types related to the current entry, introducing your readers to other relevant content on your site.
 
-**YARPP Basic for Standard Features**
+**YARPP Standard Features**
 -------------------------------------------
 * **Thumbnail or list view** of related content.
 * **Related posts, pages, and custom post types.**
 * **Templating**: The YARPP templating system gives you advanced control of how your results are displayed.
-* **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. [Learn More.](https://wordpress.tv/2011/01/29/michael-mitcho-erlewine-the-yet-another-related-posts-plugin-algorithm-explained/)  
+* **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. 
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
+* **HTTPS support**
+* **Professionally maintained** and supported with regular updates
 
-The **Yet Another Related Posts Plugin** is the most popular and widely used [Related Posts plugin for WordPress](https://wordpress.org/plugins/yet-another-related-posts-plugin/), encouraging Discovery and Engagement since 2008.
+**YARPP Algorithm Explained**
+-------------------------------------------
 
-This plugin requires PHP 5.3, MySQL 4.1, and WordPress 3.7 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
+https://videopress.com/v/0n2TSzkb
+
+**Trusted since 2008**
+-------------------------------------------
+The **Yet Another Related Posts Plugin** (YARPP) is the **most popular and widely used** [Related Posts plugin for WordPress](https://wordpress.org/plugins/yet-another-related-posts-plugin/), encouraging Discovery and Engagement since 2008!
+
+YARPP works best with PHP 5.3 or greater, MySQL 5.6 or greater OR MariaDB 10.1 or greater, and WordPress 3.7 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
 
 == Installation ==
 
@@ -262,6 +271,13 @@ add_action(
 `
 
 == Changelog ==
+= 5.2.1 (2020-07-20) =
+* Enhancement: Don't recommend switching database engine unless necessary for fulltext indexes.
+
+= 5.2.0 (2020-07-20) =
+* Enhancement: Adds support for InnoDb fulltext search! One of our most requested features. Fulltext indexing is supported in MyISAM or InnoDB with MySQL 5.6.4 and higher.
+* Enhancement: Optimized database queries, resulting in ~2x speed improvement in some queries.
+
 = 5.1.9 (2020-06-25) =
 * [Bugfix](https://wordpress.org/support/topic/wont-let-me-deactivate-or-delete-plugin/) Fixes deactivation survey plugin conflict
 
@@ -946,6 +962,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.1.9 =
+= 5.2.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

@@ -45,6 +45,7 @@ class YARPP {
 		$this->cache         = new $this->storage_class($this);
 		$this->cache_bypass  = new YARPP_Cache_Bypass($this);
 		$this->db_schema     = new YARPP_DB_Schema();
+		$this->db_options    = new YARPP_DB_Options();
 
 		register_activation_hook(__FILE__, array($this, 'activate'));
 
@@ -78,7 +79,7 @@ class YARPP {
 
 		if (isset($_REQUEST['yarpp_debug'])) $this->debug = true;
 		
-		if (!get_option('yarpp_version')) update_option('yarpp_activated', true);
+		if (! $this->db_options->plugin_version_in_db()) $this->db_options->add_upgrade_flag();
 
         /**
 		 * @since 3.4 Only load UI if we're in the admin.
@@ -178,7 +179,7 @@ class YARPP {
 		}
 	
 		$new_options = array_merge($current_options, $options);
-		update_option('yarpp', $new_options);
+		$this->db_options->set_yarpp_options($new_options);
 	
 		// new in 3.1: clear cache when updating certain settings.
 		$clear_cache_options = array('show_pass_post' => 1, 'recent' => 1, 'threshold' => 1, 'past_only' => 1);
@@ -201,7 +202,7 @@ class YARPP {
 	 * @since 3.4b8 $option can be a path, of the query_str variety, i.e. "option[suboption][subsuboption]"
      */
 	public function get_option($option = null) {
-		$options = (array) get_option('yarpp', array());
+		$options = $this->db_options->get_yarpp_options();
 
 		// ensure defaults if not set:
 		$options = array_merge($this->default_options, $options);
@@ -283,8 +284,8 @@ class YARPP {
 		/* If we're not enabled, give up. */
 		if (!$this->enabled()) return false;
 
-		if (!get_option('yarpp_version')) {
-			add_option('yarpp_version', YARPP_VERSION);
+		if (!$this->db_options->plugin_version_in_db()) {
+			$this->db_options->update_plugin_version_in_db();
 			$this->version_info(true);
 		} else {
 			$this->upgrade();
@@ -296,67 +297,70 @@ class YARPP {
 	/**
 	 * DIAGNOSTICS
 	 * @since 4.0 Moved into separate functions. Note return value types can differ.
+	 * @since 5.2.0 consider using $this->db_schema->posta_table_database_engine() or
+	 *        $this->db_schema->database_supports_fulltext_indexes() instead
 	 */
 	public function diagnostic_myisam_posts() {
-		global $wpdb;
-		$tables = $wpdb->get_results("show table status like '{$wpdb->posts}'");
-		foreach ($tables as $table) {
-			if ($table->Engine === 'MyISAM'){
+		$engine = $this->db_schema->posts_table_database_engine();
+		switch($engine){
+			case 'MyISAM':
 				return true;
-            } else {
-				return $table->Engine;
-            }
+			case null:
+				return 'UNKNOWN';
+			default:
+				return $engine;
 		}
-		return 'UNKNOWN';
 	}
 	
 	function diagnostic_fulltext_disabled() {
-		return get_option('yarpp_fulltext_disabled', false);
+		return $this->db_options->is_fulltext_disabled();
 	}
-	
+
+	/**
+	 * Attempts to add the fulltext indexes on the posts table.
+	 *
+	 * @since 5.1.8
+	 * @return bool
+	 */
 	public function enable_fulltext() {
-		global $wpdb;
         /*
-         * If overwrite is not set go thru the normal process.
-         * Otherwise force it.
+         * If we haven't already re-attempted creating the database indexes and the database doesn't support adding
+         * those indexes, disable it.
          */
-        $overwrite = (bool) $this->get_option('myisam_override', false);
-		if (!$overwrite) {
-			$table_type = $this->diagnostic_myisam_posts();
-			if ($table_type !== true) {
+		if (!(bool) $this->get_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE) &&
+		    ! $this->db_schema->database_supports_fulltext_indexes()) {
 				$this->disable_fulltext();
 				return false;
-			}
 		}
 
-		/* Temporarily ensure that errors are not displayed: */
-		$previous_value = $wpdb->hide_errors();
 		if(! $this->db_schema->title_column_has_index()) {
-			$wpdb->query( "ALTER TABLE $wpdb->posts ADD FULLTEXT `yarpp_title` (`post_title`)" );
-			if ( ! empty( $wpdb->last_error ) ) {
+			if ( $this->db_schema->add_title_index() ) {
+				$this->db_options->delete_fulltext_db_error_record();
+			} else {
+				$this->db_options->update_fulltext_db_record();
 				$this->disable_fulltext();
-
 				return false;
 			}
 		}
 
 		if(! $this->db_schema->content_column_has_index()){
-			$wpdb->query("ALTER TABLE $wpdb->posts ADD FULLTEXT `yarpp_content` (`post_content`)");
-			if (!empty($wpdb->last_error)){
+			if ( $this->db_schema->add_content_index()) {
+				$this->db_options->delete_fulltext_db_error_record();
+			} else {
 				$this->disable_fulltext();
+				$this->db_options->update_fulltext_db_record();
 				return false;
 			}
 		}
 
-		
-		/* Restore previous setting */
-		$wpdb->show_errors($previous_value);
-
         return true;
 	}
-	
+
+	/**
+	 * Stop considering post title and body in relatedness criteria.
+	 */
 	public function disable_fulltext() {
-		if ((bool) get_option('yarpp_fulltext_disabled', false) === true) return;
+		if ($this->db_options->is_fulltext_disabled()) return;
 	
 		/* Remove title and body weights: */
 		$weight = $this->get_option('weight');
@@ -368,7 +372,7 @@ class YARPP {
 		$threshold = (float) $this->get_option('threshold');
 		$this->set_option(array('threshold' => round($threshold / 2)));
 
-		update_option('yarpp_fulltext_disabled', true);
+		$this->db_options->set_fulltext_disabled(true);
 	}
 
     /*
@@ -528,7 +532,7 @@ class YARPP {
 	 */
 	
 	public function upgrade() {
-		$last_version = get_option('yarpp_version');
+		$last_version = $this->db_options->plugin_version_in_db();
 
 		if (version_compare(YARPP_VERSION, $last_version) === 0) return;
 		if ($last_version && version_compare('3.4b2',   $last_version) > 0) $this->upgrade_3_4b2();
@@ -547,8 +551,8 @@ class YARPP {
 	
 		$this->version_info(true);
 	
-		update_option('yarpp_version', YARPP_VERSION);
-		update_option('yarpp_upgraded', true);
+		$this->db_options->update_plugin_version_in_db();
+		$this->db_options->add_upgrade_flag();
 		$this->delete_transient('yarpp_optin');
 	}
 	
@@ -756,7 +760,8 @@ class YARPP {
 			$weight = $this->default_options['weight'];
 
 			// if we're still not using MyISAM
-			if (!$this->get_option('myisam_override') && $this->diagnostic_myisam_posts() !== true) {
+			if ( !$this->get_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE) &&
+			     ! $this->db_schema->database_supports_fulltext_indexes()) {
 				unset($weight['title']);
 				unset($weight['body']);
 			}

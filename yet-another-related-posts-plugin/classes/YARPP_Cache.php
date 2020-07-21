@@ -228,11 +228,7 @@ abstract class YARPP_Cache {
         } else {
 			$post_types = $this->core->get_post_types();
         }
-		$queries = array();
-		foreach ($post_types as $post_type) {
-			$queries[] = '('.str_replace("post_type = 'post'", "post_type = '{$post_type}'", $newsql).')';
-		}
-		$sql = implode(' union ', $queries);
+		$sql = '('.str_replace("post_type = 'post'", "post_type IN ('" . implode("','",$post_types). "')", $newsql).')';
 	
 		if ($this->core->debug) echo "<!-- $sql -->";
 		

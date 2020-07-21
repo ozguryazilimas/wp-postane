@@ -382,3 +382,13 @@ body.rtl #yarpp-optin-learnmore {
 	width: 100%;
 	overflow: auto;
 }
+
+.yarpp_red {
+	color:red;
+	font-weight:bold
+}
+
+.yarpp_separated{
+	display:inline-block;
+	margin:1.5em 1em
+}

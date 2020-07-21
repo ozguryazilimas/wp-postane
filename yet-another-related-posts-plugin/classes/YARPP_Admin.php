@@ -1,6 +1,10 @@
 <?php
 
 class YARPP_Admin {
+
+	/**
+	 * @var YARPP
+	 */
   public $core;
   public $hook;
   
@@ -190,19 +194,19 @@ class YARPP_Admin {
   function ui_register() {
     global $wp_version;
 
-    if (get_option('yarpp_activated')) {
+    if ($this->core->db_options->after_activation()) {
 
-      delete_option('yarpp_activated');
-      delete_option('yarpp_upgraded');
+	  $this->core->db_options->delete_activation_flag();
+	  $this->core->db_options->delete_upgrade_flag();
 
       /* Optin/Pro message */
       add_action('admin_notices', array($this, 'install_notice'));
 
-    } elseif (get_option('yarpp_upgraded') && current_user_can('manage_options') && $this->core->get_option('optin')) {
+    } elseif ( $this->core->db_options->after_upgrade() && current_user_can('manage_options') && $this->core->get_option('optin')) {
       add_action('admin_notices', array($this, 'upgrade_notice'));
     }
     
-    if ($this->core->get_option('optin')) delete_option('yarpp_upgraded');
+    if ($this->core->get_option('optin')) $this->core->db_options->delete_upgrade_flag();
     
     /*
      * Setup Admin
@@ -400,7 +404,7 @@ class YARPP_Admin {
 
     switch($type) {
       case 'upgrade':
-        delete_option('yarpp_upgraded');
+        $this->core->db_options->delete_upgrade_flag();
         break;
       case 'install':
       default:
