@@ -81,7 +81,7 @@ class YARPP_DB_Options {
 	 * @return bool indicating success
 	 */
 	public function update_plugin_version_in_db() {
-		return add_option( 'yarpp_version', YARPP_VERSION );
+		return update_option( 'yarpp_version', YARPP_VERSION );
 	}
 
 	/**

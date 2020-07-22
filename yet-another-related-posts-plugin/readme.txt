@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.4
-Stable tag: 5.2.1
+Stable tag: 5.2.2
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -271,6 +271,9 @@ add_action(
 `
 
 == Changelog ==
+= 5.2.2 (2020-07-21) =
+* [Critical Bugfix](https://wordpress.org/support/topic/slow-website-after-update-to-5-2-1/): Fixes plugin upgrade process. This in turn fixes a page slow down issue introduced for some sites with v5.2.1.
+
 = 5.2.1 (2020-07-20) =
 * Enhancement: Don't recommend switching database engine unless necessary for fulltext indexes.
 
@@ -962,6 +965,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.2.1 =
+= 5.2.2 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
