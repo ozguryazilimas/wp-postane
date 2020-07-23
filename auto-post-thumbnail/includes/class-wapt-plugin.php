@@ -6,18 +6,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Основной класс плагина Auto Post Thumbnail
+ * Основной класс плагина Auto Featured Image
  *
  * @author        Alexander Kovalev <alex.kovalevv@gmail.com>
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-
-class WAPT_Plugin extends Wbcr_Factory425_Plugin {
+class WAPT_Plugin extends Wbcr_Factory429_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory425_Plugin
+	 * @var Wbcr_Factory429_Plugin
 	 */
 	private static $app;
 
@@ -25,6 +24,7 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 	 * @var integer
 	 */
 	public $numberOfColumn;
+
 	/**
 	 * Конструктор
 	 *
@@ -32,7 +32,7 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 	 * Подробнее о свойстве $app см. self::app()
 	 *
 	 * @param string $plugin_path
-	 * @param array  $data
+	 * @param array $data
 	 *
 	 * @throws Exception
 	 */
@@ -51,14 +51,16 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 			$this->admin_scripts();
 			//------ ACTIONS ------
 			// filter posts
-			add_action( 'restrict_manage_posts', [ $this, 'add_posts_filters']);
-			add_action( 'pre_get_posts', [ $this, 'posts_filter'], 10, 1 );
+			add_action( 'restrict_manage_posts', [ $this, 'add_posts_filters' ] );
+			add_action( 'pre_get_posts', [ $this, 'posts_filter' ], 10, 1 );
 			add_filter( 'views_edit-post', [ $this, 'add_filter_link' ], 10, 1 );
 			// bulk actions
-			add_filter( 'bulk_actions-edit-post', [ $this, 'register_bulk_action_generate'] );
-			add_filter( 'handle_bulk_actions-edit-post', [ $this, 'bulk_action_generate_handler'], 10, 3 );
-			add_action( 'admin_notices', [ $this, 'apt_bulk_action_admin_notice'] );
-			add_action( 'admin_notices', [ $this, 'update_admin_notice'] );
+			add_filter( 'bulk_actions-edit-post', [ $this, 'register_bulk_action_generate' ] );
+			add_filter( 'handle_bulk_actions-edit-post', [ $this, 'bulk_action_generate_handler' ], 10, 3 );
+			add_action( 'admin_notices', [ $this, 'apt_bulk_action_admin_notice' ] );
+			add_action( 'admin_notices', [ $this, 'update_admin_notice' ] );
+
+			add_filter( 'plugin_action_links_' . WAPT_PLUGIN_BASENAME, [ $this, 'plugin_action_link' ] );
 		}
 		$this->global_scripts();
 	}
@@ -72,7 +74,7 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return Wbcr_Factory425_Plugin
+	 * @return Wbcr_Factory429_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -83,17 +85,17 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 	 *
 	 * @return bool
 	 */
-	public function is_premium()
-	{
-		if(
+	public function is_premium() {
+		if (
 			$this->premium->is_active() &&
 			$this->premium->is_activate() &&
 			is_plugin_active( "{$this->premium->get_setting('slug')}/{$this->premium->get_setting('slug')}.php" )
 			//$this->premium->is_install_package()
-		)
+		) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 
 	/**
@@ -136,31 +138,30 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 	 *
 	 * @return array(string)
 	 */
-	public function register_bulk_action_generate($bulk_actions)
-	{
-		$bulk_actions['apt_generate_thumb'] = __('Generate featured image', 'apt');
-		$bulk_actions['apt_delete_thumb'] = __('Unset featured image', 'apt');
+	public function register_bulk_action_generate( $bulk_actions ) {
+		$bulk_actions['apt_generate_thumb'] = __( 'Generate featured image', 'apt' );
+		$bulk_actions['apt_delete_thumb']   = __( 'Unset featured image', 'apt' );
+
 		return $bulk_actions;
 	}
+
 	/**
 	 * Handler of bulk option for posts
 	 *
 	 * @return string
 	 */
-	public function bulk_action_generate_handler($redirect_to, $doaction, $post_ids)
-	{
-		if( $doaction !== 'apt_generate_thumb' && $doaction !== 'apt_delete_thumb' )
+	public function bulk_action_generate_handler( $redirect_to, $doaction, $post_ids ) {
+		if ( $doaction !== 'apt_generate_thumb' && $doaction !== 'apt_delete_thumb' ) {
 			return $redirect_to;
+		}
 
-		foreach( $post_ids as $post_id )
-		{
-			switch($doaction)
-			{
+		foreach ( $post_ids as $post_id ) {
+			switch ( $doaction ) {
 				case 'apt_generate_thumb':
-					$thumb = auto_post_thumbnails()->publish_post($post_id);
+					$thumb = auto_post_thumbnails()->publish_post( $post_id );
 					break;
 				case 'apt_delete_thumb':
-					delete_post_thumbnail($post_id);
+					delete_post_thumbnail( $post_id );
 					break;
 			}
 		}
@@ -173,44 +174,46 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 
 		return $redirect_to;
 	}
+
 	/**
 	 * Admin notice after bulk action
 	 *
 	 */
-	public function apt_bulk_action_admin_notice()
-	{
-		if( empty( $_GET['apt_bulk_action'] ) )
+	public function apt_bulk_action_admin_notice() {
+		if ( empty( $_GET['apt_bulk_action'] ) ) {
 			return;
+		}
 
 		$data = $_GET['apt_bulk_action'];
-		$msg = __('Processed posts: ','apt').intval($data);
-		echo '<div id="message" class="updated"><p>'. $msg .'</p></div>';
+		$msg  = __( 'Processed posts: ', 'apt' ) . intval( $data );
+		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
 	}
+
 	/**
 	 * Admin notice
 	 *
 	 */
-	public function update_admin_notice()
-	{
-		if( defined( 'WAPTP_PLUGIN_VERSION') && str_replace( '.', '', WAPTP_PLUGIN_VERSION) < 130  ) {
-			$msg  = __( 'To use premium features, update the <b>Auto Post Thumbnail Premium</b> plugin!', 'apt' );
+	public function update_admin_notice() {
+		if ( defined( 'WAPTP_PLUGIN_VERSION' ) && str_replace( '.', '', WAPTP_PLUGIN_VERSION ) < 130 ) {
+			$msg = __( 'To use premium features, update the <b>Auto Featured Image Premium</b> plugin!', 'apt' );
 			echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . $msg . '</p></div>';
 		}
 	}
+
 	/**
 	 * Add filter on the Posts list tables.
 	 *
 	 * @param $post_type string
 	 * @param $witch string
 	 */
-	public function add_posts_filters()
-	{
+	public function add_posts_filters() {
 		$screen = get_current_screen();
 
-		if(!empty($screen) && "post" == $screen->post_type)
-		{
+		if ( ! empty( $screen ) && "post" == $screen->post_type ) {
 			$apt_is_image = false;
-			if(isset($_GET['apt_is_image'])) $apt_is_image = $_GET['apt_is_image'];
+			if ( isset( $_GET['apt_is_image'] ) ) {
+				$apt_is_image = $_GET['apt_is_image'];
+			}
 
 			echo '<select name="apt_is_image">' .
 			     '<option value="-1">' . __( 'Featured Image', 'apt' ) . '</option>' .
@@ -226,21 +229,25 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 	 * @param $query WP_Query
 	 *
 	 */
-	public function posts_filter($query)
-	{
-		if( ! is_admin() ) return; // выходим если не админка
+	public function posts_filter( $query ) {
+		if ( ! is_admin() ) {
+			return;
+		} // выходим если не админка
 
 		// убедимся что мы на нужной странице админки
-		require_once(ABSPATH.'wp-admin/includes/screen.php');
+		require_once( ABSPATH . 'wp-admin/includes/screen.php' );
 		$cs = get_current_screen();
-		if( empty($cs->post_type) || $cs->post_type != 'post' || $cs->id != 'edit-post' ) return;
+		if ( empty( $cs->post_type ) || $cs->post_type != 'post' || $cs->id != 'edit-post' ) {
+			return;
+		}
 
-		if(isset($_GET['apt_is_image']) && $_GET['apt_is_image'] != -1) {
-			if((int)$_GET['apt_is_image'] == 1)
+		if ( isset( $_GET['apt_is_image'] ) && $_GET['apt_is_image'] != - 1 ) {
+			if ( (int) $_GET['apt_is_image'] == 1 ) {
 				$compare = 'EXISTS';
-			else
+			} else {
 				$compare = 'NOT EXISTS';
-			$query->set( 'meta_query', array(array('key' => '_thumbnail_id','compare' => $compare)) );
+			}
+			$query->set( 'meta_query', array( array( 'key' => '_thumbnail_id', 'compare' => $compare ) ) );
 		}
 	}
 
@@ -248,15 +255,29 @@ class WAPT_Plugin extends Wbcr_Factory425_Plugin {
 	 * Add filter on the Posts list tables.
 	 *
 	 */
-	public function add_filter_link($views)
-	{
-		$query = auto_post_thumbnails()->get_posts_query(false, 'publish','post');
-		$posts =  $query->post_count;
+	public function add_filter_link( $views ) {
+		$query = auto_post_thumbnails()->get_posts_query( false, 'post', 'publish' );
+		$posts = $query->post_count;
 
-		$q = add_query_arg( array('apt_is_image' => '0', 'post_type' => 'post'), 'edit.php' );
-		$views['apt_filter'] = '<a href="'.$q.'">'.__('Without featured image','apt').'</a> ('.$posts.')';
-		unset($my);
+		$q                   = add_query_arg( array( 'apt_is_image' => '0', 'post_type' => 'post' ), 'edit.php' );
+		$views['apt_filter'] = '<a href="' . $q . '">' . __( 'Without featured image', 'apt' ) . '</a> (' . $posts . ')';
+		unset( $my );
+
 		return $views;
-
 	}
+
+	/**
+	 * Adds the plugin action link on Plugins table
+	 *
+	 * @param array $links links array
+	 *
+	 * @return array
+	 */
+	public function plugin_action_link( $links ) {
+		$link_generate = '<a href="' . esc_url( $this->getPluginPageUrl( $this->getPrefix() . "generate" ) ) . '">' . esc_html__( 'Generate', 'apt' ) . '</a>';
+		array_unshift( $links, $link_generate );
+
+		return $links;
+	}
+
 }

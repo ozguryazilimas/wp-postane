@@ -5,7 +5,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
-$apt_ds = get_option( 'wapt_delete_settings');
+$apt_ds = get_option( 'wapt_delete_settings' );
 
 if ( ! $apt_ds ) {
 	return;

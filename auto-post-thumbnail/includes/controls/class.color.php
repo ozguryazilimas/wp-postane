@@ -13,43 +13,42 @@
  */
 
 // Exit if accessed directly
-if( !defined('ABSPATH') ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( !class_exists('Wapt_FactoryForms_ColorControl') ) {
+if ( ! class_exists( 'Wapt_FactoryForms_ColorControl' ) ) {
 
-	class Wapt_FactoryForms_ColorControl extends Wbcr_FactoryForms423_Control {
+	class Wapt_FactoryForms_ColorControl extends Wbcr_FactoryForms427_Control {
 
 		public $type = 'wapt-color';
 
 		/**
 		 * Shows the html markup of the control.
 		 *
-		 * @since 1.0.0
 		 * @return void
+		 * @since 1.0.0
 		 */
-		public function html()
-		{
-			$name = $this->getNameOnForm();
-			$value = esc_attr($this->getValue());
+		public function html() {
+			$name  = $this->getNameOnForm();
+			$value = esc_attr( $this->getValue() );
 
-			if( !$value ) {
+			if ( ! $value ) {
 				$value = '#ffffff';
 			}
 			?>
-			<script src="<?php echo WAPT_PLUGIN_URL;?>/admin/assets/js/jscolor.js"></script>
+            <script src="<?php echo WAPT_PLUGIN_URL; ?>/admin/assets/js/jscolor.js"></script>
             <style>
-                .wapt-jscolor
-                {
+                .wapt-jscolor {
                     padding: 15px !important;
                     font-size: 16px !important;
                     cursor: pointer;
                 }
             </style>
-			<div <?php $this->attrs() ?>>
-				<input type="text" readonly id="<?php echo $name; ?>" name="<?php echo $name; ?>" class="factory-input-text jscolor wapt-jscolor" value="<?php echo $value; ?>">
-			</div>
+            <div <?php $this->attrs() ?>>
+                <input type="text" readonly id="<?php echo $name; ?>" name="<?php echo $name; ?>"
+                       class="factory-input-text jscolor wapt-jscolor" value="<?php echo $value; ?>">
+            </div>
 			<?php
 		}
 	}

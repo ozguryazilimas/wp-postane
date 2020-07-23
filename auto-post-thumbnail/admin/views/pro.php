@@ -1,6 +1,5 @@
 <?php
-if(!WAPT_Plugin::app()->premium->is_activate())
-{
+if ( ! WAPT_Plugin::app()->premium->is_activate() ) {
 	echo __( "This service available in the PRO version" );
 	?>
     <a href="<?php echo WAPT_Plugin::app()->get_support()->get_pricing_url( true, 'license_page' ); ?>"
@@ -11,8 +10,7 @@ if(!WAPT_Plugin::app()->premium->is_activate())
     </a>
 	<?php
 }
-if(empty($slug) && WAPT_Plugin::app()->premium->is_activate())
-{
+if ( empty( $slug ) && WAPT_Plugin::app()->premium->is_activate() ) {
 	echo __( "You have activated a premium license, but not install premium add-on to use pro features now." );
 }
 

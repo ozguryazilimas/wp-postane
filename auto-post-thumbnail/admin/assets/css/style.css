@@ -65,32 +65,32 @@
     left: 50%;
     z-index: 100;
 }
-.column-apt-image
-{
+
+.column-apt-image {
     width: 100px;
 }
-.apt_thumbs
-{
+
+.apt_thumbs {
     float: left;
     margin: 5px;
 }
-.column-apt
-{
+
+.column-apt {
     float: left;
     margin: 5px;
 }
-.wapt-image-box
-{
+
+.wapt-image-box {
     overflow: hidden;
     display: flex;
     width: 100%;
     height: 100%;
     border-radius: 5px;
-    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
     border: 1px solid #ccc;
 }
-.wapt-item-generated
-{
+
+.wapt-item-generated {
     color: #000000;
     font-weight: 500;
     font-size: 16px;
@@ -100,25 +100,25 @@
     line-height: 1.3;
 }
 
-li.wapt-grid-item
-{
+li.wapt-grid-item {
     width: 180px;
     height: 180px;
     cursor: pointer;
 }
+
 .wapt-grid-item {
     float: left;
     margin: 5px;
 }
-.wapt-image-box-checked
-{
+
+.wapt-image-box-checked {
     opacity: 0.5;
     filter: alpha(opacity=50); /* For IE8 and earlier */
     box-shadow: inset 0 0 1px 5px #0073aa, inset 0 0 2px 7px #fff;
 }
-input
-{
-    padding:7px 7px 7px 9px;
+
+input {
+    padding: 7px 7px 7px 9px;
 }
 
 /*
@@ -133,8 +133,7 @@ input
 }
 */
 /* GUTENBERG */
-.apt-sidebar-content
-{
+.apt-sidebar-content {
     padding: 10px;
 }
 
@@ -167,18 +166,18 @@ input
     -webkit-box-shadow: inset 0 3px 8px 0 #f8ba36;
     box-shadow: inset 0 3px 8px 0 #f8ba36;
 }
-.purchase-premium
-{
+
+.purchase-premium {
     text-decoration: none;
 }
-.wapt-sup-pro
-{
+
+.wapt-sup-pro {
     font-weight: bold;
     color: red;
 }
+
 /*Filters block*/
-.apt-filter-row
-{
+.apt-filter-row {
     background: #ffffff;
     padding: 20px 10px 20px 10px;
     margin: 10px 0px 10px 0px !important;
@@ -186,28 +185,51 @@ input
     border-radius: 10px;
 }
 
-.apt-filter-input
-{
+.apt-filter-input {
     width: 150px;
 }
 
-.apt-filter-label
-{
+.apt-filter-label {
     font-size: 15px;
     margin-top: 5px;
     margin-left: 5px;
     margin-right: 5px;
 }
 
-.checked_api_key_ok
-{
+.checked_api_key_ok {
     border: 2px solid green !important;
 }
-.checked_api_key_fail
-{
+
+.checked_api_key_fail {
     border: 2px solid red !important;
 }
-.checked_api_key_proccess
-{
+
+.checked_api_key_proccess {
     background: #fff url('../img/ajax-loader.gif') 98%/25px no-repeat !important;
+}
+
+.wapt-pro-row {
+    opacity: 0.5;
+}
+
+.wapt-pro-row input, .wapt-pro-row select {
+    pointer-events: none;
+}
+.wapt-pro-row input+span:before, .wapt-pro-row select+span:before {
+    display: inline-block;
+    position: absolute;
+    content: 'PRO';
+    background: #ff5722;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 10px;
+    line-height: 1;
+    font-style: normal;
+    padding: 4px 6px;
+    margin-left: 4px;
+    vertical-align: top;
+    top: -10px;
+    left: 0;
+    right: auto;
+    z-index: 11;
 }

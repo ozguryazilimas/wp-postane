@@ -40,10 +40,10 @@ class WAPT_About extends WAPT_Page {
 	 * @param WAPT_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
-		$this->id         = "wapt_about";
-		$this->menu_target= $plugin->getPrefix()."generate-".$plugin->getPluginName();
-		$this->page_title = __( 'About APT', 'apt' );
-		$this->menu_title = __( 'About', 'apt' );
+		$this->id            = "wapt_about";
+		$this->menu_target   = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
+		$this->page_title    = __( 'About APT', 'apt' );
+		$this->menu_title    = __( 'About', 'apt' );
 		$this->template_name = "about";
 
 		parent::__construct( $plugin );

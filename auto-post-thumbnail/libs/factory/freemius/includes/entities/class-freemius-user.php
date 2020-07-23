@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Freemius_113\Entities;
+namespace WBCR\Factory_Freemius_117\Entities;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

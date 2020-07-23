@@ -1,5 +1,5 @@
-(function($){
-    $(document).ready(function(){
+(function ($) {
+    $(document).ready(function () {
         $('input#wapt_text-line-spacing').attr('step', '0.1');
         $('input#wapt_text-line-spacing').attr('min', '0');
 

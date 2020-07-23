@@ -41,14 +41,14 @@ class WAPT_Settings extends WAPT_Page {
 	 * @param WAPT_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
-		$this->id            = "wapt_settings";
+		$this->id            = $plugin->getPrefix(). "settings";
 		$this->menu_target   = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
 		$this->page_title    = __( 'Settings of APT', 'apt' );
 		$this->menu_title    = __( 'Settings', 'apt' );
 		$this->capabilitiy   = "manage_options";
 		$this->template_name = "settings";
 
-		add_action( 'wbcr_factory_forms_423_register_controls', function(){
+		add_action( 'wbcr_factory_forms_427_register_controls', function () {
 			$colorControls = array(
 				[
 					'type'    => 'wapt-color',
@@ -67,7 +67,7 @@ class WAPT_Settings extends WAPT_Page {
 				],
 			);
 			$this->plugin->forms->registerControls( $colorControls );
-		});
+		} );
 
 		$this->plugin = $plugin;
 
@@ -77,8 +77,8 @@ class WAPT_Settings extends WAPT_Page {
 	/**
 	 * Returns options for the Basic Settings screen.
 	 *
-	 * @since 3.6.2
 	 * @return array
+	 * @since 3.6.2
 	 */
 	public function getOptions_general() {
 
@@ -134,19 +134,19 @@ class WAPT_Settings extends WAPT_Page {
 	/**
 	 * Returns options for the Basic Settings screen.
 	 *
-	 * @since 3.6.2
 	 * @return array
+	 * @since 3.6.2
 	 */
 	public function getOptions_image() {
 
 		$is_premium = AutoPostThumbnails::instance()->is_premium();
-		$pro = $is_premium ? '' : "<br><span class='wapt-icon-pro wapt-icon-pro-span'>PRO</span>";
+		$pro        = $is_premium ? '' : "<br><span class='wapt-icon-pro wapt-icon-pro-span'>PRO</span>";
 
 		$options = [];
 
 		$options[] = [
 			'type' => 'html',
-			'html' => '<h3 style="margin-left:0">'.__( 'Background settings', 'apt' ).'</h3>'
+			'html' => '<h3 style="margin-left:0">' . __( 'Background settings', 'apt' ) . '</h3>'
 		];
 
 		$options[] = [
@@ -154,17 +154,17 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'dropdown',
-			'way'     => 'buttons',
-			'name'    => 'background-type',
-			'data'    => [
+			'type'     => 'dropdown',
+			'way'      => 'buttons',
+			'name'     => 'background-type',
+			'data'     => [
 				[ 'color', __( 'Color', 'apt' ) ],
 				[ 'image', __( 'Image', 'apt' ) ],
 			],
-			'default' => 'color',
-			'title'   => __( 'Background type', 'apt' ),
-			'hint'    => __( 'Select the background type for the featured image', 'apt' ),
-			'cssClass' => ( !$is_premium) ? [ 'wapt-icon-pro' ] : [],
+			'default'  => 'color',
+			'title'    => __( 'Background type', 'apt' ),
+			'hint'     => __( 'Select the background type for the featured image', 'apt' ),
+			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 		];
 
 		$options[] = [
@@ -175,7 +175,7 @@ class WAPT_Settings extends WAPT_Page {
 			'hint'    => __( 'Set the background color for the featured image', 'apt' )
 		];
 
-		if($is_premium) {
+		if ( $is_premium ) {
 			$options[] = [
 				'type'     => 'wapt-mediabutton',
 				'name'     => 'background-image',
@@ -201,7 +201,7 @@ class WAPT_Settings extends WAPT_Page {
 		//----------------------------------------------------------------------
 		$options[] = [
 			'type' => 'html',
-			'html' => '<h3 style="margin-left:0">'.__( 'Font settings', 'apt' ).'</h3>'
+			'html' => '<h3 style="margin-left:0">' . __( 'Font settings', 'apt' ) . '</h3>'
 		];
 
 		$options[] = [
@@ -209,13 +209,13 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'wapt-fonts',
-			'name'    => 'font',
-			'data'    => AutoPostThumbnails::get_fonts(),
-			'empty' => '',
-			'title'   => __( 'Font name', 'apt' ),
-			'hint'    => __( 'Select a font for the text in the featured image', 'apt' ),
-			'cssClass' => ( !$is_premium) ? [ 'wapt-icon-pro' ] : [],
+			'type'     => 'wapt-fonts',
+			'name'     => 'font',
+			'data'     => AutoPostThumbnails::get_fonts(),
+			'empty'    => '',
+			'title'    => __( 'Font name', 'apt' ),
+			'hint'     => __( 'Select a font for the text in the featured image', 'apt' ),
+			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 		];
 
 		$options[] = [
@@ -229,16 +229,16 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'wapt-color',
-			'name'    => 'font-color',
-			'title'   => __( 'Font color', 'apt' ),
-			'hint'    => __( 'Set the font color for the featured image', 'apt' )
+			'type'  => 'wapt-color',
+			'name'  => 'font-color',
+			'title' => __( 'Font color', 'apt' ),
+			'hint'  => __( 'Set the font color for the featured image', 'apt' )
 		];
 
 		//----------------------------------------------------------------------
 		$options[] = [
 			'type' => 'html',
-			'html' => '<h3 style="margin-left:0">'.__( 'Text settings', 'apt' ).'</h3>'
+			'html' => '<h3 style="margin-left:0">' . __( 'Text settings', 'apt' ) . '</h3>'
 		];
 
 		$options[] = [
@@ -246,12 +246,12 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'checkbox',
-			'way'     => 'buttons',
-			'name'    => 'shadow',
-			'default' => '0',
-			'title'   => __( 'Text shadow', 'apt' ),
-			'hint'    => __( 'Use text shadow?', 'apt' ),
+			'type'      => 'checkbox',
+			'way'       => 'buttons',
+			'name'      => 'shadow',
+			'default'   => '0',
+			'title'     => __( 'Text shadow', 'apt' ),
+			'hint'      => __( 'Use text shadow?', 'apt' ),
 			'eventsOn'  => [
 				'show' => '.factory-control-shadow-color'
 			],
@@ -261,10 +261,10 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'wapt-color',
-			'name'    => 'shadow-color',
-			'title'   => __( 'Shadow color', 'apt' ),
-			'hint'    => __( 'Set the shadow color for the text', 'apt' )
+			'type'  => 'wapt-color',
+			'name'  => 'shadow-color',
+			'title' => __( 'Shadow color', 'apt' ),
+			'hint'  => __( 'Set the shadow color for the text', 'apt' )
 		];
 
 		$options[] = [
@@ -295,7 +295,7 @@ class WAPT_Settings extends WAPT_Page {
 			'type'    => 'integer',
 			'way'     => 'text',
 			'name'    => 'text-line-spacing',
-			'range'   => array(0,3),
+			'range'   => array( 0, 3 ),
 			'default' => 1.5,
 			'title'   => __( 'Line spacing', 'apt' ),
 			'hint'    => __( 'Set the line spacing', 'apt' )
@@ -304,7 +304,7 @@ class WAPT_Settings extends WAPT_Page {
 		//----------------------------------------------------------------------
 		$options[] = [
 			'type' => 'html',
-			'html' => '<h3 style="margin-left:0">'.__( 'Alignment', 'apt' ).'</h3>'
+			'html' => '<h3 style="margin-left:0">' . __( 'Alignment', 'apt' ) . '</h3>'
 		];
 
 		$options[] = [
@@ -312,39 +312,39 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'dropdown',
-			'way'     => 'buttons',
-			'name'    => 'text-align-horizontal',
-			'data'    => [
+			'type'     => 'dropdown',
+			'way'      => 'buttons',
+			'name'     => 'text-align-horizontal',
+			'data'     => [
 				[ 'left', __( 'Left', 'apt' ) ],
 				[ 'center', __( 'Center', 'apt' ) ],
 				[ 'right', __( 'Right', 'apt' ) ],
 			],
-			'default' => 'center',
-			'title'   => __( 'Horizontal text alignment', 'apt' ).$pro,
-			'hint'    => __( 'Select how to horizontally align the text on the image', 'apt' ),
+			'default'  => 'center',
+			'title'    => __( 'Horizontal text alignment', 'apt' ) . $pro,
+			'hint'     => __( 'Select how to horizontally align the text on the image', 'apt' ),
 			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 		];
 
 		$options[] = [
-			'type'    => 'dropdown',
-			'way'     => 'buttons',
-			'name'    => 'text-align-vertical',
-			'data'    => [
+			'type'     => 'dropdown',
+			'way'      => 'buttons',
+			'name'     => 'text-align-vertical',
+			'data'     => [
 				[ 'top', __( 'Top', 'apt' ) ],
 				[ 'center', __( 'Center', 'apt' ) ],
 				[ 'bottom', __( 'Bottom', 'apt' ) ],
 			],
-			'default' => 'center',
-			'title'   => __( 'Vertical text alignment', 'apt' ).$pro,
-			'hint'    => __( 'Select how to vertically align the text on the image', 'apt' ),
+			'default'  => 'center',
+			'title'    => __( 'Vertical text alignment', 'apt' ) . $pro,
+			'hint'     => __( 'Select how to vertically align the text on the image', 'apt' ),
 			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 		];
 
 		//----------------------------------------------------------------------
 		$options[] = [
 			'type' => 'html',
-			'html' => '<h3 style="margin-left:0">'.__( 'Padding', 'apt' ).'</h3>'
+			'html' => '<h3 style="margin-left:0">' . __( 'Padding', 'apt' ) . '</h3>'
 		];
 
 		$options[] = [
@@ -352,31 +352,31 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'integer',
-			'way'     => 'text',
-			'name'    => 'text-padding-tb',
-			'units'   => __( 'px', 'apt' ),
-			'default' => 15,
-			'title'   => __( 'Top/bottom text padding', 'apt' ).$pro,
-			'hint'    => __( 'Padding at the top and bottom of the text', 'apt' ),
-			'cssClass' => ( !$is_premium) ? [ 'wapt-icon-pro' ] : [],
+			'type'     => 'integer',
+			'way'      => 'text',
+			'name'     => 'text-padding-tb',
+			'units'    => __( 'px', 'apt' ),
+			'default'  => 15,
+			'title'    => __( 'Top/bottom text padding', 'apt' ) . $pro,
+			'hint'     => __( 'Padding at the top and bottom of the text', 'apt' ),
+			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 		];
 
 		$options[] = [
-			'type'    => 'integer',
-			'way'     => 'text',
-			'name'    => 'text-padding-lr',
-			'units'   => __( 'px', 'apt' ),
-			'default' => 15,
-			'title'   => __( 'Left/right text padding', 'apt' ).$pro,
-			'hint'    => __( 'Padding at the left and right of the text', 'apt' ),
-			'cssClass' => ( !$is_premium) ? [ 'wapt-icon-pro' ] : [],
+			'type'     => 'integer',
+			'way'      => 'text',
+			'name'     => 'text-padding-lr',
+			'units'    => __( 'px', 'apt' ),
+			'default'  => 15,
+			'title'    => __( 'Left/right text padding', 'apt' ) . $pro,
+			'hint'     => __( 'Padding at the left and right of the text', 'apt' ),
+			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 		];
 
 		//----------------------------------------------------------------------
 		$options[] = [
 			'type' => 'html',
-			'html' => '<h3 style="margin-left:0">'.__( 'Addition of text', 'apt' ).'</h3>'
+			'html' => '<h3 style="margin-left:0">' . __( 'Addition of text', 'apt' ) . '</h3>'
 		];
 
 		$options[] = [
@@ -384,23 +384,23 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'textbox',
-			'name'    => 'before-text',
-			'default' => '',
-			'title'   => __( 'String before text', 'apt' ).$pro,
-			'hint'    => __( 'Additional string before text. For a line break, use <b>[br]</b>', 'apt' ),
-			'cssClass' => ( !$is_premium) ? [ 'wapt-icon-pro' ] : [],
-			'htmlAttrs' => ( !$is_premium ) ? [ 'disabled' => 'disabled' ] : [],
+			'type'      => 'textbox',
+			'name'      => 'before-text',
+			'default'   => '',
+			'title'     => __( 'String before text', 'apt' ) . $pro,
+			'hint'      => __( 'Additional string before text. For a line break, use <b>[br]</b>', 'apt' ),
+			'cssClass'  => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
+			'htmlAttrs' => ( ! $is_premium ) ? [ 'disabled' => 'disabled' ] : [],
 		];
 
 		$options[] = [
-			'type'    => 'textbox',
-			'name'    => 'after-text',
-			'default' => '',
-			'title'   => __( 'String after text', 'apt' ).$pro,
-			'hint'    => __( 'Additional string after text. For a line break, use <b>[br]</b>', 'apt' ),
-			'cssClass' => ( !$is_premium) ? [ 'wapt-icon-pro' ] : [],
-			'htmlAttrs' => ( !$is_premium ) ? [ 'disabled' => 'disabled' ] : [],
+			'type'      => 'textbox',
+			'name'      => 'after-text',
+			'default'   => '',
+			'title'     => __( 'String after text', 'apt' ) . $pro,
+			'hint'      => __( 'Additional string after text. For a line break, use <b>[br]</b>', 'apt' ),
+			'cssClass'  => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
+			'htmlAttrs' => ( ! $is_premium ) ? [ 'disabled' => 'disabled' ] : [],
 		];
 
 		return $options;
@@ -409,8 +409,8 @@ class WAPT_Settings extends WAPT_Page {
 	/**
 	 * Returns options for the Basic Settings screen.
 	 *
-	 * @since 3.6.2
 	 * @return array
+	 * @since 3.6.2
 	 */
 	public function getOptions_api() {
 
@@ -432,8 +432,8 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'hidden',
-			'name'    => 'ajax_nonce',
+			'type'  => 'hidden',
+			'name'  => 'ajax_nonce',
 			'value' => wp_create_nonce( 'check-api-key' )
 		];
 
@@ -464,21 +464,20 @@ class WAPT_Settings extends WAPT_Page {
 	}
 
 	public function indexAction() {
-		wp_enqueue_style( 'wapt-tabs-style', WAPT_PLUGIN_URL.'/admin/assets/css/tabs.css', array(), WAPT_PLUGIN_VERSION );
-		wp_enqueue_style( 'wapt-settings-style', WAPT_PLUGIN_URL.'/admin/assets/css/settings.css', array(), WAPT_PLUGIN_VERSION );
+		wp_enqueue_style( 'wapt-tabs-style', WAPT_PLUGIN_URL . '/admin/assets/css/tabs.css', array(), WAPT_PLUGIN_VERSION );
+		wp_enqueue_style( 'wapt-settings-style', WAPT_PLUGIN_URL . '/admin/assets/css/settings.css', array(), WAPT_PLUGIN_VERSION );
 		wp_enqueue_script( 'wapt-settings-script', WAPT_PLUGIN_URL . '/admin/assets/js/settings.js', [], WAPT_PLUGIN_VERSION, true );
 		// creating a form
 		global $form;
-		$form = new Wbcr_FactoryForms423_Form( [
+		$form = new Wbcr_FactoryForms427_Form( [
 			'scope' => substr( $this->plugin->getPrefix(), 0, - 1 ),
 			'name'  => 'setting'
 		], $this->plugin );
 
-		$form->setProvider( new Wbcr_FactoryForms423_OptionsValueProvider( $this->plugin ) );
+		$form->setProvider( new Wbcr_FactoryForms427_OptionsValueProvider( $this->plugin ) );
 
 		$wapt_tab = WAPT_Plugin::app()->request->get( 'apt_tab', '' );
-		switch ($wapt_tab)
-		{
+		switch ( $wapt_tab ) {
 			case 'general':
 				$form->add( $this->getOptions_general() );
 				break;

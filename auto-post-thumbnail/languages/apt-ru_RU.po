@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Auto Post Thumbnail\n"
+"Project-Id-Version: Auto Featured Image\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-10 11:21+0000\n"
-"PO-Revision-Date: 2020-02-10 12:05+0000\n"
-"Last-Translator: admin <webtemyk@yandex.ru>\n"
+"POT-Creation-Date: 2020-07-23 08:21+0000\n"
+"PO-Revision-Date: 2020-07-23 08:33+0000\n"
+"Last-Translator: \n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
@@ -13,43 +13,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.1; wp-5.3.2"
+"X-Loco-Version: 2.4.0; wp-5.4.2"
 
-#. Name of the plugin
-#: auto-post-thumbnail.php:48 includes/class-wapt-base.php:959
+#: auto-post-thumbnail.php:50 includes/class-wapt-base.php:978
 #: admin/pages/generate.php:100
-msgid "Auto Post Thumbnail"
-msgstr "Auto Post Thumbnail"
+msgid "Auto Featured Image"
+msgstr "Auto Featured Image"
 
-#: includes/class-wapt-base.php:207
+#: includes/class-wapt-base.php:208
 msgid "Use as thumbnail"
 msgstr "Применить изображение"
 
-#: includes/class-wapt-base.php:208 includes/class-wapt-base.php:916
+#: includes/class-wapt-base.php:209 includes/class-wapt-base.php:935
 msgid "Change featured image"
 msgstr "Изменить изображение"
 
-#: includes/class-wapt-base.php:411
+#: includes/class-wapt-base.php:418
 msgid "This plugin has been automatically deactivated."
 msgstr "Этот плагин был автоматически деактивирован."
 
-#: includes/class-wapt-base.php:819 admin/pages/settings.php:154
+#: includes/class-wapt-base.php:839 admin/pages/settings.php:162
 msgid "Image"
 msgstr "Изображение"
 
-#: includes/class-wapt-base.php:913
+#: includes/class-wapt-base.php:932
 msgid "No image"
 msgstr "Нет изображений"
 
-#: includes/class-wapt-base.php:933
-msgid "Auto Post Thumbnails"
-msgstr "Auto Post Thumbnails"
+#: includes/class-wapt-base.php:952
+msgid "Auto Featured Images"
+msgstr "Auto Featured Images"
 
-#: includes/class-wapt-base.php:933
+#: includes/class-wapt-base.php:952
 msgid "Add from APT"
 msgstr "Добавить через APT"
 
-#: includes/class-wapt-base.php:1176
+#: includes/class-wapt-base.php:1207
 #, php-format
 msgid ""
 "You have reached the limit at the moment. Try again in an 1 hour or <a "
@@ -58,7 +57,7 @@ msgstr ""
 "На данный момент Вы достигли лимита запросов. Повторите попытку через 1 час "
 "или <a href=\"%s\">обновите до Premium</a>"
 
-#: includes/class-wapt-base.php:1236
+#: includes/class-wapt-base.php:1266
 #, php-format
 msgid ""
 "To download images from Google, specify Google API keys in the <a href='%s'>"
@@ -67,54 +66,66 @@ msgstr ""
 "Чтобы загружать изображения из Google, укажите ключи API Google в <a "
 "href='%s'>настройках</a>."
 
-#: includes/class-wapt-base.php:1265
+#: includes/class-wapt-base.php:1295
 #, php-format
 msgid ""
 "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on "
 "our website."
 msgstr ""
 
-#: includes/class-wapt-base.php:1291
+#: includes/class-wapt-base.php:1323
 msgid "Standard"
-msgstr ""
+msgstr "Стандартные"
 
-#: includes/class-wapt-base.php:1302
+#: includes/class-wapt-base.php:1338
 msgid "Uploaded"
-msgstr ""
+msgstr "Загруженные"
 
-#: includes/class-wapt-plugin.php:140
+#: includes/class-wapt-plugin.php:142
 msgid "Generate featured image"
 msgstr "Генерировать изображение"
 
-#: includes/class-wapt-plugin.php:141
+#: includes/class-wapt-plugin.php:143
 msgid "Unset featured image"
 msgstr "Убрать изображение"
 
-#: includes/class-wapt-plugin.php:185
+#: includes/class-wapt-plugin.php:188
 msgid "Processed posts: "
 msgstr "Обработано постов:"
 
-#: includes/class-wapt-plugin.php:204
+#: includes/class-wapt-plugin.php:198
+msgid ""
+"To use premium features, update the <b>Auto Featured Image Premium</b> "
+"plugin!"
+msgstr ""
+"Чтобы пользоваться премиум функциями, обновите плагин <b>Auto Featured Image "
+"Premium</b>!"
+
+#: includes/class-wapt-plugin.php:219
 msgid "Featured Image"
 msgstr "Изображение"
 
-#: includes/class-wapt-plugin.php:205
+#: includes/class-wapt-plugin.php:220
 msgid "With image"
 msgstr "С изображением"
 
-#: includes/class-wapt-plugin.php:206
+#: includes/class-wapt-plugin.php:221
 msgid "Without image"
 msgstr "Без изображения"
 
-#: includes/class-wapt-plugin.php:245
+#: includes/class-wapt-plugin.php:263
 msgid "Without featured image"
 msgstr "Без изображения"
 
-#: admin/ajax/check-license.php:27
+#: includes/class-wapt-plugin.php:277
+msgid "Generate"
+msgstr "Генерировать"
+
+#: admin/ajax/check-license.php:26
 msgid "Licensing action not passed or this action is prohibited!"
 msgstr "Licensing action not passed or this action is prohibited!"
 
-#: admin/ajax/check-license.php:39
+#: admin/ajax/check-license.php:38
 msgid ""
 "License key is empty or license key too long (license key is 32 characters "
 "long)"
@@ -122,25 +133,25 @@ msgstr ""
 "Лицензионный ключ пуст или слишком длинный (длина лицензионного ключа "
 "составляет 32 символа)"
 
-#: admin/ajax/check-license.php:42
+#: admin/ajax/check-license.php:41
 msgid "Your license has been successfully activated"
 msgstr "Ваша лицензия успешно активирована"
 
-#: admin/ajax/check-license.php:47
+#: admin/ajax/check-license.php:46
 msgid "The license is deactivated"
 msgstr "Ваша лицензия деактивирована"
 
-#: admin/ajax/check-license.php:51
+#: admin/ajax/check-license.php:50
 msgid "The license has been updated"
 msgstr "Ваша лицензия была обновлена"
 
-#: admin/ajax/check-license.php:55
+#: admin/ajax/check-license.php:54
 msgid "Subscription success cancelled"
 msgstr "Подписка успешно отменена"
 
 #: admin/pages/about.php:45
 msgid "About APT"
-msgstr "О плагине Auto Post Thumbnail"
+msgstr "О плагине Auto Featured Image"
 
 #: admin/pages/about.php:46
 msgid "About"
@@ -150,284 +161,307 @@ msgstr "О плагине"
 msgid "Generate featured images"
 msgstr "Генератор изображений"
 
-#: admin/pages/license.php:91
+#: admin/pages/license.php:94
 msgid "License of APT"
-msgstr "Лицензия Auto Post Thumbnail"
+msgstr "Лицензия Auto Featured Image"
 
 #: admin/pages/settings.php:46
 msgid "Settings of APT"
-msgstr "Настройки Auto Post Thumbnail"
+msgstr "Настройки Auto Featured Image"
 
-#. text
-#: admin/pages/settings.php:47 admin/views/tab-settings.php:40
+#: admin/pages/settings.php:47
 msgid "Settings"
 msgstr "Настройки"
 
 #: admin/pages/settings.php:100
-msgid "Automatic set featured image on save"
-msgstr "Автодобавление изображения записи"
+msgid "Add featured image when saving a post"
+msgstr "Добавлять featured image во время сохранения поста"
 
 #: admin/pages/settings.php:102
-msgid "Set the first image in a post as the featured image"
-msgstr "При сохранении, первое изображение станет изображением поста"
+msgid "Automatically add featured image when saving a post"
+msgstr "Автоматически добавлять featured image во время сохранения поста"
 
-#. text
-#: admin/pages/settings.php:109 admin/pages/settings.php:111
+#: admin/pages/settings.php:110
+msgid "Find in post"
+msgstr "Искать в посте"
+
+#: admin/pages/settings.php:111
+msgid "Generate from title"
+msgstr "Генерировать из заголовка"
+
+#: admin/pages/settings.php:112
+msgid "Both"
+msgstr "Оба способа"
+
+#: admin/pages/settings.php:115
+msgid "Featured image"
+msgstr "Featured image"
+
+#: admin/pages/settings.php:116
+msgid ""
+"How to generate featured image:\n"
+"\t\t\t\t\t\t\t<br> <b>Find in post:</b> search for the first image in the "
+"post text\n"
+"\t\t\t\t\t\t\t<br> <b>Generate from title:</b> created from the title on a "
+"colored background\n"
+"\t\t\t\t\t\t\t<br> <b>Both:</b> find an image in the post text, if it is not "
+"present, generate it from the title"
+msgstr ""
+"Как генерировать featured image:\n"
+"\t\t\t\t\t\t\t<br> <b>Искать в посте:</b> искать первое изображение в тексте "
+"поста\n"
+"\t\t\t\t\t\t\t<br> <b>Генерировать из заголовка:</b> создать изображение с "
+"текстом из заголовка на цветном фоне\n"
+"\t\t\t\t\t\t\t<br> <b>Оба способа:</b> find an image in the post text, if it "
+"is not present, generate it from the title\n"
+"\t\t\t\t\t\t\t<br> <b>Оба способа:</b> искать первое изображение в тексте "
+"поста, если его нет в тексте, тогда генерировать из заголовка"
+
+#: admin/pages/settings.php:126 admin/pages/settings.php:128
 msgid "Delete settings when removing the plugin"
 msgstr "Удалять настройки при удалении плагина"
 
-#: admin/pages/settings.php:118
-msgid "Generate featured image from title"
-msgstr "Генерировать изображение поста из заголовка"
-
-#: admin/pages/settings.php:120
-msgid ""
-"A featured image will be created automatically from the title on a colored "
-"background"
-msgstr ""
-"Изображение поста будет создано автоматически из заголовка на цветном фоне"
-
-#: admin/pages/settings.php:141
+#: admin/pages/settings.php:149
 msgid "Background settings"
 msgstr "Настройки фона"
 
-#: admin/pages/settings.php:153
+#: admin/pages/settings.php:161
 msgid "Color"
 msgstr "Цвет"
 
-#: admin/pages/settings.php:157
+#: admin/pages/settings.php:165
 msgid "Background type"
 msgstr "Тип фона"
 
-#: admin/pages/settings.php:158
+#: admin/pages/settings.php:166
 msgid "Select the background type for the featured image"
 msgstr "Тип фона для изображения поста"
 
-#: admin/pages/settings.php:166
+#: admin/pages/settings.php:174
 msgid "Background color for the image"
 msgstr "Цвет фона"
 
-#: admin/pages/settings.php:167
+#: admin/pages/settings.php:175
 msgid "Set the background color for the featured image"
 msgstr "Цвет фона для изображения поста"
 
-#: admin/pages/settings.php:174
+#: admin/pages/settings.php:182
 msgid "Select image"
 msgstr "Выбрать изображение"
 
-#: admin/pages/settings.php:175
+#: admin/pages/settings.php:183
 msgid "Background image"
 msgstr "Фоновое изображение"
 
-#: admin/pages/settings.php:176
+#: admin/pages/settings.php:184
 msgid "Set the background image. Only JPG or PNG"
 msgstr "Изображение для фона. Только JPG или PNG"
 
-#: admin/pages/settings.php:186
+#: admin/pages/settings.php:194
 msgid "JPEG"
 msgstr "JPEG"
 
-#: admin/pages/settings.php:187
+#: admin/pages/settings.php:195
 msgid "PNG"
 msgstr "PNG"
 
-#: admin/pages/settings.php:190
+#: admin/pages/settings.php:198
 msgid "Image format"
 msgstr "Формат изображения"
 
-#: admin/pages/settings.php:191
+#: admin/pages/settings.php:199
 msgid "Set format to save images"
 msgstr "В каком формате сохранять изображения поста"
 
-#: admin/pages/settings.php:196
+#: admin/pages/settings.php:204
 msgid "Font settings"
 msgstr "Настройки шрифта"
 
-#: admin/pages/settings.php:208
+#: admin/pages/settings.php:216
 msgid "Font name"
 msgstr "Шрифт"
 
-#: admin/pages/settings.php:209
+#: admin/pages/settings.php:217
 msgid "Select a font for the text in the featured image"
 msgstr "Шрифт текста на изображении поста"
 
-#: admin/pages/settings.php:219
+#: admin/pages/settings.php:227
 msgid "Font size"
 msgstr "Размер шрифта"
 
-#: admin/pages/settings.php:220
+#: admin/pages/settings.php:228
 msgid "Set the font size for the featured image"
 msgstr "Размер шрифта на изображении поста"
 
-#: admin/pages/settings.php:226
+#: admin/pages/settings.php:234
 msgid "Font color"
 msgstr "Цвет шрифта"
 
-#: admin/pages/settings.php:227
+#: admin/pages/settings.php:235
 msgid "Set the font color for the featured image"
 msgstr "Цвет шрифта на изображении поста"
 
-#: admin/pages/settings.php:233
+#: admin/pages/settings.php:241
 msgid "Text settings"
 msgstr "Настройки текста"
 
-#: admin/pages/settings.php:245
+#: admin/pages/settings.php:253
 msgid "Text shadow"
 msgstr "Тень"
 
-#: admin/pages/settings.php:246
+#: admin/pages/settings.php:254
 msgid "Use text shadow?"
 msgstr "Рисовать тень для текста?"
 
-#: admin/pages/settings.php:258
+#: admin/pages/settings.php:266
 msgid "Shadow color"
 msgstr "Цвет тени"
 
-#: admin/pages/settings.php:259
+#: admin/pages/settings.php:267
 msgid "Set the shadow color for the text"
 msgstr "Цвет тени для текста"
 
-#: admin/pages/settings.php:267
+#: admin/pages/settings.php:275
 msgid "No transform"
 msgstr "Нет"
 
-#: admin/pages/settings.php:268
+#: admin/pages/settings.php:276
 msgid "Uppercase"
 msgstr "ЗАГЛАВНЫЕ"
 
-#: admin/pages/settings.php:269
+#: admin/pages/settings.php:277
 msgid "Lowercase"
 msgstr "строчные"
 
-#: admin/pages/settings.php:272
+#: admin/pages/settings.php:280
 msgid "Text transform"
 msgstr "Преобразование текста"
 
-#: admin/pages/settings.php:273
+#: admin/pages/settings.php:281
 msgid "Select type of text transformation"
 msgstr "Выберите тип преобразования текста"
 
-#: admin/pages/settings.php:280
+#: admin/pages/settings.php:288
 msgid "chars"
 msgstr "символов"
 
-#: admin/pages/settings.php:282
+#: admin/pages/settings.php:290
 msgid "Text length"
 msgstr "Длина текста"
 
-#: admin/pages/settings.php:283
+#: admin/pages/settings.php:291
 msgid "Set the maximum text length"
 msgstr "Максимальная длинна текста (обрезается по словам)"
 
-#: admin/pages/settings.php:292
+#: admin/pages/settings.php:300
 msgid "Line spacing"
 msgstr "Межстрочный интервал"
 
-#: admin/pages/settings.php:293
+#: admin/pages/settings.php:301
 msgid "Set the line spacing"
 msgstr "Интервал между строками текста (коэффициент от размера шрифта)"
 
-#: admin/pages/settings.php:299
+#: admin/pages/settings.php:307
 msgid "Alignment"
 msgstr "Выравнивание"
 
-#: admin/pages/settings.php:311
+#: admin/pages/settings.php:319
 msgid "Left"
 msgstr "Слева"
 
-#: admin/pages/settings.php:312 admin/pages/settings.php:327
+#: admin/pages/settings.php:320 admin/pages/settings.php:335
 msgid "Center"
 msgstr "По центру"
 
-#: admin/pages/settings.php:313
+#: admin/pages/settings.php:321
 msgid "Right"
 msgstr "Справа"
 
-#: admin/pages/settings.php:316
+#: admin/pages/settings.php:324
 msgid "Horizontal text alignment"
 msgstr "Горизонтальное выравнивание"
 
-#: admin/pages/settings.php:317
+#: admin/pages/settings.php:325
 msgid "Select how to horizontally align the text on the image"
 msgstr "Горизонтальное выравнивание текста на изображении поста"
 
-#: admin/pages/settings.php:326
+#: admin/pages/settings.php:334
 msgid "Top"
 msgstr "Вверху"
 
-#: admin/pages/settings.php:328
+#: admin/pages/settings.php:336
 msgid "Bottom"
 msgstr "Внизу"
 
-#: admin/pages/settings.php:331
+#: admin/pages/settings.php:339
 msgid "Vertical text alignment"
 msgstr "Вертикальное выравнивание"
 
-#: admin/pages/settings.php:332
+#: admin/pages/settings.php:340
 msgid "Select how to vertically align the text on the image"
 msgstr "Вертикальное выравнивание текста на изображении поста"
 
-#: admin/pages/settings.php:339
+#: admin/pages/settings.php:347
 msgid "Padding"
 msgstr "Отступы"
 
-#: admin/pages/settings.php:350 admin/pages/settings.php:361
+#: admin/pages/settings.php:358 admin/pages/settings.php:369
 msgid "px"
 msgstr "px"
 
-#: admin/pages/settings.php:352
+#: admin/pages/settings.php:360
 msgid "Top/bottom text padding"
 msgstr "Верхний/нижний отступ"
 
-#: admin/pages/settings.php:353
+#: admin/pages/settings.php:361
 msgid "Padding at the top and bottom of the text"
 msgstr "Отступ сверху и снизу от текста"
 
-#: admin/pages/settings.php:363
+#: admin/pages/settings.php:371
 msgid "Left/right text padding"
 msgstr "Левый/правый отступ"
 
-#: admin/pages/settings.php:364
+#: admin/pages/settings.php:372
 msgid "Padding at the left and right of the text"
 msgstr "Отступ слева и справа от текста"
 
-#: admin/pages/settings.php:371
+#: admin/pages/settings.php:379
 msgid "Addition of text"
 msgstr "Добавление текста"
 
-#: admin/pages/settings.php:382
+#: admin/pages/settings.php:390
 msgid "String before text"
 msgstr "Текст до"
 
-#: admin/pages/settings.php:383
+#: admin/pages/settings.php:391
 msgid "Additional string before text. For a line break, use <b>[br]</b>"
 msgstr ""
 "Дополнительный текст перед текстом. Для переноса строки используйте <b>[br]"
 "</b>"
 
-#: admin/pages/settings.php:392
+#: admin/pages/settings.php:400
 msgid "String after text"
 msgstr "Текст после"
 
-#: admin/pages/settings.php:393
+#: admin/pages/settings.php:401
 msgid "Additional string after text. For a line break, use <b>[br]</b>"
 msgstr ""
 "Дополнительный текст после текста. Для переноса строки используйте <b>[br]"
 "</b>"
 
-#: admin/pages/settings.php:419
+#: admin/pages/settings.php:427
 msgid "How to get google api key & custom search engine id"
 msgstr "Как получить Google API key и Custom Search Engine ID"
 
-#: admin/pages/settings.php:436
+#: admin/pages/settings.php:444
 msgid "API key for Google"
 msgstr "API ключ Google"
 
-#: admin/pages/settings.php:444
+#: admin/pages/settings.php:452
 msgid "Google Custom Search Engine ID"
 msgstr "Google Custom Search Engine ID"
 
-#: admin/pages/settings.php:445
+#: admin/pages/settings.php:453
 msgid "You can get API key after registration on the site"
 msgstr "Вы можете получить API ключ на сайте"
 
@@ -545,15 +579,23 @@ msgstr ""
 msgid "Generate Featured images for posts"
 msgstr "Генератор изображений для постов"
 
-#: admin/views/tab-main.php:22
+#: admin/views/tab-main.php:37
+msgid "Posts"
+msgstr "Посты"
+
+#: admin/views/tab-main.php:38
+msgid "Pages"
+msgstr "Страницы"
+
+#: admin/views/tab-main.php:105
 msgid "Generate Featured images"
 msgstr "Сгенерировать изображения"
 
-#: admin/views/tab-main.php:25
+#: admin/views/tab-main.php:110
 msgid "Delete Featured images"
 msgstr "Убрать изображения"
 
-#: admin/views/tab-main.php:42
+#: admin/views/tab-main.php:128
 msgid ""
 "Note: Thumbnails won't be generated for posts that already have post "
 "thumbnail or <strong><em>skip_post_thumb</em></strong> custom meta field."
@@ -562,54 +604,65 @@ msgstr ""
 "уже есть изображение или имеют заполненное мета поле <strong><em>"
 "skip_post_thumb</em></strong>."
 
-#: admin/views/tab-main.php:44
+#: admin/views/tab-main.php:130
 msgid "You must enable Javascript in order to proceed!"
 msgstr "Вам нужно включить JavaScript чтобы продолжить!"
 
-#: admin/views/tab-main.php:103 admin/views/tab-main.php:164
+#: admin/views/tab-main.php:189 admin/views/tab-main.php:252
 msgid "All done! Processed posts:"
 msgstr "Завершено! Обработано постов: "
 
-#: admin/views/tab-main.php:103
+#: admin/views/tab-main.php:189
 msgid "Set featured image in posts:"
 msgstr "Добавлены изображения в посты:"
 
-#: admin/views/tab-main.php:164
+#: admin/views/tab-main.php:252
 msgid "Delete featured image in posts:"
 msgstr "Убраны изображения из постов:"
 
-#: admin/views/sources/google.php:40
+#: admin/views/tab-settings.php:38
+msgid "Settings of"
+msgstr "Настройки"
+
+#: admin/views/sources/google.php:43
 msgid "No hits"
 msgstr "Нет результатов"
 
-#: admin/views/sources/google.php:156
+#: admin/views/sources/google.php:160
 msgid "Search..."
 msgstr "Запрос для поиска"
 
-#: admin/views/sources/google.php:158
+#: admin/views/sources/google.php:162
 msgid "Search"
 msgstr "Поиск"
 
-#: admin/views/sources/google.php:165
+#: admin/views/sources/google.php:167
+msgid "Commercial and derived use"
+msgstr "Коммерческое и производное использование"
+
+#: admin/views/sources/google.php:175
 msgid "Prev"
 msgstr "Предыдущая"
 
-#: admin/views/sources/google.php:168
+#: admin/views/sources/google.php:178
 msgid "Next"
 msgstr "Следующая"
 
-#: admin/views/sources/google.php:177
+#: admin/views/sources/google.php:186
 msgid "API key is missing. Add it in APT settings"
-msgstr "Ключ API не задан. Добавьте его в настройках Auto Post Thumbnail"
+msgstr "Ключ API не задан. Добавьте его в настройках Auto Featured Image"
+
+#. Name of the plugin
+msgid "Auto Featured Image (Auto Post Thumbnail)"
+msgstr ""
 
 #. Description of the plugin
 msgid ""
-"Automatically generate the Post Thumbnail (Featured Thumbnail) from the "
-"first image in post (or any custom post type) only if Post Thumbnail is not "
-"set manually."
+"Automatically generate the Featured Image from the first image in post or "
+"any custom post type only if Featured Image is not set manually. Featured "
+"Image Generation From Title. Native image search for Elementor, Gutenberg, "
+"Classic Editor."
 msgstr ""
-"Автоматически генерировать изображения для записи из ее первой картинки, "
-"только если изображение не установлено вручную."
 
 #. URI of the plugin
 msgid "https://cm-wp.com/apt"

@@ -1,18 +1,77 @@
-::-webkit-input-placeholder { color: #aaa !important; }
-::-moz-placeholder { color: #aaa !important; }
-:-ms-input-placeholder { color: #aaa !important; }
-[placeholder] { text-overflow: ellipsis; }
+::-webkit-input-placeholder {
+    color: #aaa !important;
+}
 
-.flex-images { overflow: hidden; }
-.flex-images .item { float: left; margin: 4px; background: #f3f3f3; box-sizing: content-box; overflow: hidden; position: relative; }
-.flex-images .item > img { display: block; width: auto; height: 100%; }
+::-moz-placeholder {
+    color: #aaa !important;
+}
+
+:-ms-input-placeholder {
+    color: #aaa !important;
+}
+
+[placeholder] {
+    text-overflow: ellipsis;
+}
+
+.flex-images {
+    overflow: hidden;
+}
+
+.flex-images .item {
+    float: left;
+    margin: 4px;
+    background: #f3f3f3;
+    box-sizing: content-box;
+    overflow: hidden;
+    position: relative;
+}
+
+.flex-images .item > img {
+    display: block;
+    width: auto;
+    height: 100%;
+}
 
 .flex-images .download {
-    opacity: 0; transition: opacity .3s; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-    cursor: pointer; background: rgba(0,0,0,.65); color: #eee;
-    text-align: center; font-size: 14px; line-height: 1.5;
+    opacity: 0;
+    transition: opacity .3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    cursor: pointer;
+    background: rgba(0, 0, 0, .65);
+    color: #eee;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
 }
-.flex-images .item:hover .download, .flex-images .item.uploading .download { opacity: 1; }
-.flex-images .download img { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; height: 32px; opacity: .7; }
-.flex-images .download div { position: absolute; left: 0; right: 0; bottom: 15px; padding: 0 5px; }
-.flex-images .download a { color: #eee; }
+
+.flex-images .item:hover .download, .flex-images .item.uploading .download {
+    opacity: 1;
+}
+
+.flex-images .download img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: 32px;
+    opacity: .7;
+}
+
+.flex-images .download div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 15px;
+    padding: 0 5px;
+}
+
+.flex-images .download a {
+    color: #eee;
+}

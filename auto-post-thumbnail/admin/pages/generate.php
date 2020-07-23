@@ -20,7 +20,7 @@ class WAPT_Generate extends WAPT_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages425_AdminPage
+	 * @see   FactoryPages429_AdminPage
 	 *
 	 * @var string
 	 */
@@ -95,17 +95,33 @@ class WAPT_Generate extends WAPT_Page {
 	/**
 	 * @param WAPT_Plugin $plugin
 	 */
-	public function __construct(  $plugin ) {
-		$this->id         = $plugin->getPrefix()."generate";
-		$this->menu_title = __( 'Auto Post Thumbnail', 'apt' );
-		$this->menu_sub_title = __( 'Generate featured images', 'apt' );;
-		$this->menu_icon = WAPT_PLUGIN_URL . '/admin/assets/img/apt.png';
-		$this->template_name = "main";
+	public function __construct( $plugin ) {
+		$this->id             = $plugin->getPrefix() . "generate";
+		$this->menu_title     = __( 'Auto Featured Image', 'apt' );
+		$this->menu_sub_title = __( 'Generate featured images', 'apt' );
+		$this->menu_icon      = WAPT_PLUGIN_URL . '/admin/assets/img/apt.png';
+		$this->template_name  = "main";
 
 		parent::__construct( $plugin );
 
 		$this->plugin = $plugin;
 	}
 
+	/**
+	 * Requests assets (js and css) for the page.
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 * @see   FactoryPages429_AdminPage
+	 *
+	 */
+	public function assets( $scripts, $styles ) {
+		parent::assets( $scripts, $styles );
+
+		wp_enqueue_style( 'jquery-ui-genpostthumbs', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery-ui.min.css', [], '1.7.2' );
+		wp_enqueue_script( 'jquery-progress', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery-ui.progressbar.min.js', [], false, true );
+
+
+	}
 
 }

@@ -14,74 +14,71 @@
  */
 
 // Exit if accessed directly
-if( !defined('ABSPATH') ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( !class_exists('Wapt_FactoryForms_MediaButtonControl') ) {
+if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 
-	class Wapt_FactoryForms_MediaButtonControl extends Wbcr_FactoryForms423_Control {
+	class Wapt_FactoryForms_MediaButtonControl extends Wbcr_FactoryForms427_Control {
 
 		public $type = 'wapt-mediabutton';
 
 		/**
 		 * Shows the html markup of the control.
 		 *
-		 * @since 1.0.0
 		 * @return void
+		 * @since 1.0.0
 		 */
-		public function html()
-		{
+		public function html() {
 			wp_enqueue_media();
 
-			$name = $this->getNameOnForm();
-			$value = esc_attr($this->getValue());
-			$button_text = esc_attr($this->options['text']);
+			$name          = $this->getNameOnForm();
+			$value         = esc_attr( $this->getValue() );
+			$button_text   = esc_attr( $this->options['text'] );
 			$thumbnail_url = '';
-			$image_class = 'wapt-invisible';
+			$image_class   = 'wapt-invisible';
 
-			if( !$value ) {
-				$value = 0;
+			if ( ! $value ) {
+				$value         = 0;
 				$thumbnail_url = '';
-			}
-			else {
-				$thumbnail = wp_get_attachment_image_src((int)$value, 'thumbnail');
-				if(is_array( $thumbnail)) {
+			} else {
+				$thumbnail = wp_get_attachment_image_src( (int) $value, 'thumbnail' );
+				if ( is_array( $thumbnail ) ) {
 					$thumbnail_url = $thumbnail[0];
-					$image_class = 'wapt-visible';
+					$image_class   = 'wapt-visible';
 				}
-            }
+			}
 			?>
             <style>
-                .wapt-bg-image-thumb
-                {
+                .wapt-bg-image-thumb {
                     margin: 10px 0px;
                     border-radius: 10px;
-                    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+                    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
                 }
-                .wapt-invisible
-                {
+
+                .wapt-invisible {
                     display: none;
                 }
-                .wapt-visible
-                {
+
+                .wapt-visible {
                     display: block;
                 }
             </style>
             <script lang="js">
-                jQuery(function ( $ ) {
+                jQuery(function ($) {
 
                     var frame;
-                    $(document).on('click', '#wapt-select-image', function ( event ) {
+                    $(document).on('click', '#wapt-select-image', function (event) {
                         event.preventDefault();
-                        if( frame ) {
+                        if (frame) {
                             frame.open();
                             return;
                         }
 
                         frame = wp.media({
                             //title   : 'Выберите файл',
-                            button  : {
+                            button: {
                                 //text: 'Использовать этот файл'
                             },
                             multiple: false
@@ -98,11 +95,14 @@ if( !class_exists('Wapt_FactoryForms_MediaButtonControl') ) {
                     });
                 });
             </script>
-			<div <?php $this->attrs() ?>>
-                <img src="<?php echo $thumbnail_url?>" alt="" class="wapt-bg-image-thumb <?php echo $image_class; ?>" id="wapt-bg-image-thumb">
-				<button class="button button-primary button-large <?php echo $name; ?>" id="wapt-select-image"><?php echo $button_text; ?></button>
-				<input type="hidden" id="<?php echo $name; ?>" name="<?php echo $name; ?>" class="factory-input-text" value="<?php echo $value; ?>">
-			</div>
+            <div <?php $this->attrs() ?>>
+                <img src="<?php echo $thumbnail_url ?>" alt="" class="wapt-bg-image-thumb <?php echo $image_class; ?>"
+                     id="wapt-bg-image-thumb">
+                <button class="button button-primary button-large <?php echo $name; ?>"
+                        id="wapt-select-image"><?php echo $button_text; ?></button>
+                <input type="hidden" id="<?php echo $name; ?>" name="<?php echo $name; ?>" class="factory-input-text"
+                       value="<?php echo $value; ?>">
+            </div>
 			<?php
 		}
 	}

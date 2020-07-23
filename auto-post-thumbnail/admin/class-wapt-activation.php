@@ -4,7 +4,7 @@
  *
  * @author        Webcraftic <wordpress.webraftic@gmail.com>
  * @copyright (c) 02.12.2018, Webcraftic
- * @see           Wbcr_Factory425_Activator
+ * @see           Wbcr_Factory429_Activator
  *
  * @version       1.0.1
  */
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WAPT_Activation extends Wbcr_Factory425_Activator {
+class WAPT_Activation extends Wbcr_Factory429_Activator {
 
 	/**
 	 * Method is executed during the activation of the plugin.
@@ -23,12 +23,14 @@ class WAPT_Activation extends Wbcr_Factory425_Activator {
 	 */
 	public function activate() {
 		// Code to be executed during plugin activation
-		$limit = array(
-			'count' => 10,
+		$limit        = array(
+			'count'   => 10,
 			'expires' => time(),
 		);
-		$google_limit = WAPT_Plugin::app()->getOption('google_limit');
-		if(!$google_limit) WAPT_Plugin::app()->updateOption('google_limit', $limit);
+		$google_limit = WAPT_Plugin::app()->getOption( 'google_limit' );
+		if ( ! $google_limit ) {
+			WAPT_Plugin::app()->updateOption( 'google_limit', $limit );
+		}
 
 		//update_option( $this->plugin->getOptionName( 'whats_new_v360' ), 1 );
 	}
@@ -39,7 +41,7 @@ class WAPT_Activation extends Wbcr_Factory425_Activator {
 	 * @since 1.0.0
 	 */
 	public function deactivate() {
-		$apt_ds = WAPT_Plugin::app()->getOption( 'delete_settings', false);
+		$apt_ds = WAPT_Plugin::app()->getOption( 'delete_settings', false );
 
 		if ( $apt_ds ) {
 			// remove plugin options

@@ -1,6 +1,9 @@
 <?php
 
 // Exit if accessed directly
+use WBCR\Factory_429\Premium\Interfaces\License;
+use WBCR\Factory_429\Premium\Provider;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -52,7 +55,7 @@ class WAPT_License extends WAPT_Page {
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_425\Premium\Provider
+	 * @var Provider
 	 */
 	protected $premium;
 
@@ -70,7 +73,7 @@ class WAPT_License extends WAPT_Page {
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_425\Premium\Interfaces\License
+	 * @var License
 	 */
 	protected $premium_license;
 
@@ -81,17 +84,17 @@ class WAPT_License extends WAPT_Page {
 	 * {@inheritdoc}
 	 * @param WAPT_Plugin $plugin
 	 */
-	public function __construct ( $plugin ) {
+	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 
 		parent::__construct( $plugin );
 
-		$this->id             = 'license';
-		$this->menu_title     = __( 'License', 'insert-php' );
-		$this->page_title = __( 'License of APT', 'apt' );
+		$this->id            = 'license';
+		$this->menu_title    = __( 'License', 'insert-php' );
+		$this->page_title    = __( 'License of APT', 'apt' );
 		$this->template_name = "license";
-		$this->menu_target= $plugin->getPrefix()."generate-".$plugin->getPluginName();
-		$this->capabilitiy = "manage_options";
+		$this->menu_target   = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
+		$this->capabilitiy   = "manage_options";
 
 		$this->premium                  = WAPT_Plugin::app()->premium;
 		$this->is_premium               = $this->premium->is_activate();
@@ -103,7 +106,7 @@ class WAPT_License extends WAPT_Page {
 	/**
 	 * [MAGIC] Magic method that configures assets for a page.
 	 */
-	public function assets ( $scripts, $styles ) {
+	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
 
 		$this->styles->add( WAPT_PLUGIN_URL . '/admin/assets/css/license-manager.css' );
@@ -122,14 +125,14 @@ class WAPT_License extends WAPT_Page {
 	 *
 	 * @return string Before content.
 	 */
-	protected function get_plan_description () {
+	protected function get_plan_description() {
 		return '';
 	}
 
 	/**
 	 * @return string
 	 */
-	protected function get_hidden_license_key () {
+	protected function get_hidden_license_key() {
 		if ( ! $this->is_premium ) {
 			return '';
 		}
@@ -140,7 +143,7 @@ class WAPT_License extends WAPT_Page {
 	/**
 	 * @return string
 	 */
-	protected function get_plan () {
+	protected function get_plan() {
 		if ( ! $this->is_premium ) {
 			return 'free';
 		}
@@ -151,14 +154,14 @@ class WAPT_License extends WAPT_Page {
 	/**
 	 * @return mixed
 	 */
-	protected function get_expiration_days () {
+	protected function get_expiration_days() {
 		return $this->premium_license->get_expiration_time( 'days' );
 	}
 
 	/**
 	 * @return string
 	 */
-	protected function get_billing_cycle_readable () {
+	protected function get_billing_cycle_readable() {
 		if ( ! $this->is_premium ) {
 			return '';
 		}
@@ -184,7 +187,7 @@ class WAPT_License extends WAPT_Page {
 	 *
 	 * @return string
 	 */
-	protected function get_license_type () {
+	protected function get_license_type() {
 		if ( ! $this->is_premium ) {
 			return 'free';
 		}
