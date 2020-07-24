@@ -588,9 +588,9 @@ class AutoPostThumbnails {
 	public function publish_post( $post_id ) {
 		global $wpdb;
 
-		if ( ! is_single( $post_id ) ) {
-			return 0;
-		}
+		//if ( ! is_single( $post_id ) ) {
+		//	return 0;
+		//}
 
 		// First check whether Post Thumbnail is already set for this post.
 		$_thumbnail_id = get_post_meta( $post_id, '_thumbnail_id', true );
