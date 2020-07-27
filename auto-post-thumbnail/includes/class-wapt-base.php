@@ -588,10 +588,6 @@ class AutoPostThumbnails {
 	public function publish_post( $post_id ) {
 		global $wpdb;
 
-		//if ( ! is_single( $post_id ) ) {
-		//	return 0;
-		//}
-
 		// First check whether Post Thumbnail is already set for this post.
 		$_thumbnail_id = get_post_meta( $post_id, '_thumbnail_id', true );
 		if ( $_thumbnail_id && $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE id = '$_thumbnail_id' AND post_type = 'attachment'" ) || get_post_meta( $post_id, 'skip_post_thumb', true ) ) {

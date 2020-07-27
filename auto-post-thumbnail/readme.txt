@@ -2,7 +2,7 @@
 Contributors: creativemotion
 Tags: post thumbnails, featured image, elementor, thumbnails, featured image from title
 Requires at least: 4.2
-Tested up to: 5.3
+Tested up to: 5.4.2
 Requires PHP: 5.4
 Stable tag: trunk
 License: GPLv2
@@ -103,6 +103,11 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.7.2 =
+* Fixed: generation of featured images
+
+
 = 3.7.1 =
 * Added: "Commercial and derived use" checkbox for Google search
 * Fixed: Divi theme compatible
