@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.4
-Stable tag: 5.2.2
+Stable tag: 5.3.0
 
 Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
 
@@ -21,6 +21,7 @@ Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post 
 * **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. 
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
 * **HTTPS support**
+* **REST API** support
 * **Professionally maintained** and supported with regular updates
 
 **YARPP Algorithm Explained**
@@ -271,8 +272,14 @@ add_action(
 `
 
 == Changelog ==
+= 5.3.0 (2020-07-29) =
+* New: REST API support ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
+* Enhancement: [WP Rest Cache Plugin](https://wordpress.org/plugins/wp-rest-cache/) support
+* Enhancement: Filters to change the priority for YARPP's filters on `the_content`, `the_content_feed` and `the_excerpt_rss`, example:  `add_filter('yarpp_content_priority', 1);`
+* Bugfix: Fixes deactivation survey when Google Translate in Chrome auto translates the admin page
+
 = 5.2.2 (2020-07-21) =
-* [Critical Bugfix](https://wordpress.org/support/topic/slow-website-after-update-to-5-2-1/): Fixes plugin upgrade process. This in turn fixes a page slow down issue introduced for some sites with v5.2.1.
+* [Critical Bugfix](https://wordpress.org/support/topic/slow-website-after-update-to-5-2-1/): Fixes plugin upgrade process. This in turn fixes a page slow down issue introduced for some sites with v5.2.0.
 
 = 5.2.1 (2020-07-20) =
 * Enhancement: Don't recommend switching database engine unless necessary for fulltext indexes.
@@ -965,6 +972,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.2.2 =
+= 5.3.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

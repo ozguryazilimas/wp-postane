@@ -1,0 +1,226 @@
+<?php
+
+/**
+ * YARPP rest api functionality
+ */
+class YARPP_Rest_Api extends WP_REST_Controller{
+
+	public function __construct() {
+		add_action('rest_api_init', array($this, 'register_api_routes'));
+		add_filter('wp_rest_cache/allowed_endpoints', array($this,'cache_endpoints'),10,1);
+	}
+
+	/**
+	 * @var \WP_REST_Posts_Controller|null
+	 */
+	protected $posts_controller = null;
+
+	/**
+	 * Initializes yarpp rest routes via rest_api_init
+	 */
+    function register_api_routes() {
+		global $yarpp;
+
+        if ($yarpp->get_option('rest_api_display')) {
+            $NAMESPACE = 'yarpp/v1';
+		
+			/* Register the yarpp rest route */
+            register_rest_route( $NAMESPACE, '/related/(?P<id>[\w-]+)', array(
+                array(
+                    'methods' => WP_REST_Server::READABLE,
+                    'callback' => array($this,'get_related_posts'),
+                    'permission_callback' => array( $this, 'get_item_permissions_check' ),
+                    'args' => $this->get_related_posts_args()
+                ),
+                'args'   => array(
+	                'id' => array(
+		                'description' => __( 'Unique identifier for the object.' ),
+		                'type'        => 'integer',
+	                ),
+                ),
+                'schema' => array( $this->get_posts_controller('post'), 'get_public_item_schema' ),
+			));
+        }
+    }
+
+	/**
+	 * @param WP_REST_Request $request
+	 *
+	 * @return WP_Error
+	 */
+	public function get_item_permissions_check($request) {
+		$error_response = new WP_Error(
+			'rest_forbidden_context',
+			__( 'Sorry, you are not allowed to read this post.', 'yarpp' ),
+			array( 'status' => rest_authorization_required_code() )
+		);
+		$post_obj = get_post($request->get_param('id'));
+		if(! $this->get_posts_controller($post_obj->post_type)->check_read_permission($post_obj)){
+			return $error_response;
+		}
+
+		$core_permissions_check = $this->get_posts_controller()->get_items_permissions_check($request);
+		if($core_permissions_check instanceof WP_Error){
+			return $core_permissions_check;
+		}
+		// Check for password-protected posts.
+		if ( !empty($post_obj->post_password) && ! $this->get_posts_controller()->can_access_password_content( $post_obj, $request ) ) {
+			return $error_response;
+		}
+		return true;
+	}
+
+	/**
+	 * Gets available arguments for related-posts endpoint.
+	 *
+	 * @return array
+	 */
+	public function get_related_posts_args() {
+		/**
+		 * @var $yarpp YARPRP
+		 */
+		global $yarpp;
+
+		return array(
+			'limit' => array(
+				'description' => esc_html('Number of posts to display', 'yarpp'),
+				'type' => 'integer',
+				'default' => $yarpp->get_option('limit'),
+				'validate_callback' => 'rest_validate_request_arg',
+				'sanitize_callback' => 'absint',
+				'minimum' => 1,
+				'maximum' => apply_filters(
+					'yarpp_rest_api_get_related_posts_args_limit_maximum',
+					20
+				)
+			),
+			'context' => array_replace_recursive(
+				$this->get_context_param(),
+				array(
+					'default' => 'embed'
+				)
+			),
+			'password' => array(
+				'description' => __( 'The password for the post if it is password protected.' ),
+				'type'        => 'string',
+			)
+		);
+	}
+	
+	/**
+	 * Gets related posts provided a id param exists.
+	 *
+	 * @param WP_REST_REQUEST $request Incoming HTTP request data.
+	 * @return WP_Error|WP_HTTP_Response
+	 */
+	public function get_related_posts($request) {
+		/**
+		 * @var $yarpp YARPP
+		 */
+		global $yarpp;
+
+		$query_params = $request->get_params();
+		$id = $query_params['id'];
+
+		$post_obj = get_post($id);
+		if(! $post_obj instanceof WP_Post){
+			return new WP_Error('rest_invalid_id', esc_html__( 'Invalid Id', 'yarpp' ), array('status' => 404));
+		}
+
+		if ($yarpp->get_option('cross_relate')) {
+			$post_types = $yarpp->get_post_types();
+		} else {
+			$post_types = array(get_post_type($post_obj));
+		}
+
+		$post_types = apply_filters('yarpp_map_post_types', $post_types, 'rest_api');
+        $allowed_args = array('limit');
+
+        $args = array_filter(
+	        $query_params,
+	        function($key) use ($allowed_args){
+		        return in_array($key,$allowed_args);
+	        },
+	        ARRAY_FILTER_USE_KEY
+        );
+        $args['post_type'] = $post_types;
+		$related_posts = $yarpp->get_related(
+			$id,
+			$args
+		);
+
+		// Great, we have the posts we want. But they're formatted totally differently than the WP REST API endpoints
+		// So we use the core WP_RESTS_Posts_Controller to get the response in exactly the same format.
+		$ids = wp_list_pluck( $related_posts, 'ID' );
+		$read_controller = $this->get_posts_controller($post_obj->post_type);
+		$simulated_request = clone $request;
+		$simulated_request->set_route('wp/v1/posts');
+
+		$simulated_params = array(
+			'include' => $ids,
+			'per_page' =>$query_params['limit']
+		);
+		if(isset($query_params['context'])){
+			$simulated_params['context'] = $query_params['context'];
+		}
+
+		$simulated_request->set_query_params($simulated_params);
+
+		// Hack the WordPress Posts controller to return posts of all types, so long as they have the IDs we want.
+		add_action( 'rest_post_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
+		$read_controller_response = $read_controller->get_items($simulated_request);
+		remove_action( 'rest_post_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
+
+		$read_controller_posts = $read_controller_response->get_data();
+		$ordered_rest_results = array();
+		// Reorder the posts in the response according to what they were in the YARPP response.
+		foreach($related_posts as $related_post){
+			foreach($read_controller_posts as $read_controller_post){
+				if($related_post->ID === $read_controller_post['id']){
+					$ordered_rest_results[] = $read_controller_post;
+					break;
+				}
+			}
+		}
+		$read_controller_response->set_data($ordered_rest_results);
+		return $read_controller_response;
+    }
+
+	/**
+	 * @param string $post_type
+	 *
+	 * @return WP_REST_Posts_Controller
+	 */
+    protected function get_posts_controller($post_type = null){
+		if( ! $this->posts_controller instanceof WP_REST_Posts_Controller){
+			$this->posts_controller = new WP_REST_Posts_Controller($post_type);
+		}
+		return $this->posts_controller;
+    }
+
+	/**
+	 * Register the /wp-json/yarpp/v1/related for caching with https://wordpress.org/plugins/wp-rest-cache/
+	 */
+	function cache_endpoints( $allowed_endpoints ) {
+		if ( ! isset( $allowed_endpoints[ 'yarpp/v1' ] ) || ! in_array( 'related', $allowed_endpoints[ 'yarpp/v1' ] ) ) {
+			$allowed_endpoints[ 'yarpp/v1' ][] = 'related';
+		}
+		return $allowed_endpoints;
+	}
+
+	/**
+	 * Filters what post types the WordPress Posts Controller uses when querying.
+	 * This way we can ask the posts controller for all posts of any type (remember we're only fetching ones with
+	 * IDs that match the results of YARPP's related query.) The results are all formatted like posts, which isn't
+	 * stellar, but it's got the important info.
+	 * @param $args
+	 * @param $request
+	 *
+	 * @return mixed
+	 */
+	public function ignore_post_type_filter_callback( $args, $request ){
+			global $yarpp;
+			$args['post_type'] = $yarpp->get_post_types();
+			return $args;
+		}
+}

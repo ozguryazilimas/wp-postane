@@ -132,7 +132,7 @@
 
 	shareaholic.DeactivateFeedbackForm.prototype.onDeactivateClicked = function(event)
 	{
-		this.deactivateURL = event.target.href;
+		this.deactivateURL = event.currentTarget.href;
 
 		if ( ! this.dialog) {
 			this.dialog = $( this.element ).remodal({hashTracking:false,closeOnOutsideClick:false});
