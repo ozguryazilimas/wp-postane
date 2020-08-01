@@ -2,8 +2,8 @@
 Contributors: Otto42, pross, poena, dingo-d, acosmin, joyously
 Requires at Least: 3.7
 Tested Up To: 5.4
-Tags: template, theme, check, checker, tool, wordpress, wordpress.org, upload, uploader, test, guideline, review
-Stable tag: 20200612.1
+Tags: template, theme, check, checker, tool, wordpress.org, upload, uploader, test, guideline, review
+Stable tag: 20200731.1
 
 A simple and easy way to test your theme for all the latest WordPress standards and practices. A great theme development tool!
 

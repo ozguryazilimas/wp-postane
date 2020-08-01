@@ -6,7 +6,6 @@ class I18NCheck implements themecheck {
 	protected $error = array();
 
 	function check( $php_files, $css_files, $other_files ) {
-
 		$ret = true;
 		$error = '';
 		checkcount();
