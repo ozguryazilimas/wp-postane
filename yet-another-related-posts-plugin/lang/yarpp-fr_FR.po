@@ -345,7 +345,7 @@ msgstr "La liste d’entrées similaires YARPP est déterminée par: 1) un nombr
 
 #: options-meta-boxes.php:210
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Plus le seuil de similarité sera élevé, plus la sélection sera restrictive, et les listes d’entrées similaires présenteront, dans l’ensemble, moins d’éléments. La valeur du seuil de similarité, par défaut, est fixée à 5. Faites des essais avec différentes valeurs, afin de déterminer le seuil de similarité le mieux adapté à votre site et à vos entrées."
 
 #: options-meta-boxes.php:213

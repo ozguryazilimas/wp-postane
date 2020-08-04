@@ -38,9 +38,25 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 		                'type'        => 'integer',
 	                ),
                 ),
-                'schema' => array( $this->get_posts_controller('post'), 'get_public_item_schema' ),
+                'schema' => array( $this, 'get_public_item_schema' ),
 			));
         }
+    }
+
+	/**
+	 * Wraps WP_REST_Posts_Controller's schema, and adds YARPP-specific fields.
+	 *
+	 * @return array
+	 */
+    public function get_public_item_schema() {
+    	$posts_schema = $this->get_posts_controller('post')->get_public_item_schema();
+    	$posts_schema['properties']['score'] = array(
+    		'description' => __('YARPP relatedness score', 'yarpp'),
+		    'type' => 'number',
+		    'context' => array('view', 'edit', 'embed'),
+		    'readonly' => true,
+	    );
+    	return $posts_schema;
     }
 
 	/**
@@ -69,6 +85,7 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 		}
 		return true;
 	}
+
 
 	/**
 	 * Gets available arguments for related-posts endpoint.
@@ -177,8 +194,12 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 		foreach($related_posts as $related_post){
 			foreach($read_controller_posts as $read_controller_post){
 				if($related_post->ID === $read_controller_post['id']){
+					// Add score, but before _links.
+					$links = $read_controller_post['_links'];
+					unset($read_controller_post['_links']);
+					$read_controller_post['score'] = (float)$related_post->score;
+					$read_controller_post['_links'] = $links;
 					$ordered_rest_results[] = $read_controller_post;
-					break;
 				}
 			}
 		}

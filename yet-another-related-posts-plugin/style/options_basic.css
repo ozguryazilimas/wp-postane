@@ -244,14 +244,6 @@ body.rtl .yarpp_code_display {
 	}	
 }
 
-.yarpp_copy_templates_button {
-	float: right;
-}
-
-body.rtl .yarpp_copy_templates_button {
-	float: left;
-}
-
 #yarpp-optin-learnmore {
 	float: right;
 }

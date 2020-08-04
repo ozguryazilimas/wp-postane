@@ -389,7 +389,7 @@ msgstr "პარამეტრები შენახულია!"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "რაც მეტია მსგავსების ზღურბლი, მით უფრო მკაცრად ხდება არჩევა და მით უფრო ნაკლები ჩანაწერი იძებნება. ზღურბლის ნაგულისხმევი ზომაა 5. თუ გსურთ მოძებნოთ ზღურბლის დასაშვები მნიშვნელობები, მოსინჯეთ ზოგიერთი შეტყობინებების მაგალითზე. შეძლებთ ნახოთ რომელი ჩანაწერები გამოდის ზემოთ და მსგავსების რა მნიშვნელობა აქვს მათ, რის მიხედვითაც შეგიძლიათ განსაზღვროთ თქვენი საიტისთვის მისაღები დონე."
 
 #: yarpp_options.php:279

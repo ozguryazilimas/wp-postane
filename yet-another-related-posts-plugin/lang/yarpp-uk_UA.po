@@ -389,7 +389,7 @@ msgstr "Настройки збережені!"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Чим вище поріг схожості, тим суворіше вибірка, і тим менше отримаєте записів на виході. За замовчуванням поріг дорівнює 5. Якщо хочете знайти прийнятні порогові значення, поекспериментуйте з кількома повідомлення. Ви зможете побачити, які повідомлення виходять наверх і які у них значення подібності, за якими можна визначити прийнятний рівень для вашого сайту."
 
 #: yarpp_options.php:279

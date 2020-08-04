@@ -251,7 +251,7 @@ msgstr "mer&gt;"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Desto høyere resultat-terskel, desto strenger, og du vil få mindre relaterte poster generelt. Standard resultat-terskel er 5. Dersom du vil oppnå en hensiktsmessig resultat-terskel, ta en titt på noen relaterte poster og se på poengsummen. Du kan se hva slags relaterte poster som blir valgt ut og hva slags poengsum, og dermed finne en hensiktsmessig resultat-terskel for din side."
 
 #: options-meta-boxes.php:130

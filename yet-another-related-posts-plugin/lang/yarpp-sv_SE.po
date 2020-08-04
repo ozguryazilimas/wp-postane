@@ -246,7 +246,7 @@ msgstr "YARPP begränsar listan med relaterade inlägg efter (1) ett maximalt an
 
 # @ yarpp
 #: options-meta-boxes.php:153
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Ju högre tröskelvärde, desto mer restriktivt bliir filtret, och du får färre relaterade poster. Förvalt värde är 5. Om du vill hitta ett lagom värde, ta en titt på vilka värden som visas för några relaterade poster. Genom att titta på vilka värden du har för de relaterade poster som hittas kan du enklare se om du behöver sänka eller höja värdet. Sänk det om du får för få relaterade poster, och höj det om du får för många."
 
 # @ yarpp

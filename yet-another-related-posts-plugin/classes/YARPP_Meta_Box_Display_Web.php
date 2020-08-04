@@ -4,7 +4,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
     public function display() {
         global $yarpp;
 
-        echo "<div style='overflow:auto'>";
+        echo "<div>";
         echo '<div class="yarpp_code_display"';
         if ( !$yarpp->get_option('code_display') )
             echo ' style="display: none;"';
@@ -12,7 +12,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 
         echo "<div class='yarpp_form_row yarpp_form_post_types'><div>";
         echo 'Automatically display related content from YARPP Basic on: ';
-        echo " <span class='yarpp_help' data-help='" . esc_attr( __( "This option automatically displays related posts right after the content on single entry pages. If this option is off, you will need to manually insert <code>related_posts()</code> or variants (<code>related_pages()</code> and <code>related_entries()</code>) into your theme files.", 'yarpp' ) ) . "'>&nbsp;</span>&nbsp;&nbsp;";
+        echo " <span class='yarpp_help' data-help='" . esc_attr( __( "This option automatically displays related posts right after the content on single entry pages. If this option is off, you will need to manually insert the shortcode <code>[yarpp]</code>, or PHP functions <code>related_posts()</code> or variants (<code>related_pages()</code> and <code>related_entries()</code>) into your theme files.", 'yarpp' ) ) . "'>&nbsp;</span>&nbsp;&nbsp;";
         echo "</div><div>";
         $post_types = yarpp_get_option( 'auto_display_post_types' );
         foreach ($yarpp->get_post_types('objects') as $post_type) {
@@ -65,6 +65,6 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
         echo "</div>";
 
         $this->displayorder( 'order' );
-        $this->checkbox( 'promote_yarpp', __( "Help promote Yet Another Related Posts Plugin?", 'yarpp' ) . " <span class='yarpp_help' data-help='" . esc_attr( sprintf( __( "This option will add the code %s. Try turning it on, updating your options, and see the code in the code example to the right. These links are greatly appreciated.", 'yarpp' ), "<code>" . htmlspecialchars( sprintf( __( "Related posts brought to you by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.", 'yarpp' ), 'https://yarpp.com' ) )."</code>" ) ) . "'>&nbsp;</span>", 'yarpp' );
+        $this->checkbox( 'promote_yarpp', __( "Link to YARPP?", 'yarpp' ) . " <span class='yarpp_help' data-help='" . esc_attr( sprintf( __( "This option will add the code %s These links are greatly appreciated and keeps us motivated.", 'yarpp' ), "<code>" . htmlspecialchars( sprintf( __( "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.", 'yarpp' ), 'https://yarpp.com' ) )."</code>" ) ) . "'>&nbsp;</span>", 'yarpp' );
     }
 }

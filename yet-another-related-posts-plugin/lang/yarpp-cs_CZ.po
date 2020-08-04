@@ -249,7 +249,7 @@ msgstr "YARPP omezuje seznam podobných článků na základě (1) nastaveného 
 
 #: options-meta-boxes.php:153
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Čím vyšší prahovou hodnotu (tj. přísnější omezení) nastavíte, tím méně se většinou podobných článků zobrazí. Standardní prahová hodnota je nastavena na hodnotu 5. Jestliže chcete najít odpovídající prahovou hodnotu, prohlédněte si, jaké články s jakou prahovou hodnotou se zobrazují jako podobné články na webu. Zjistíte tak, jaké druhy článků jsou zobrazovány mezi podobnými články a jaké mají skóre relevance (zobrazuje se v závorce za názvem článku), což vám pomůže nastavit prahovou hodnotu pro váš web."
 
 #: options-meta-boxes.php:159

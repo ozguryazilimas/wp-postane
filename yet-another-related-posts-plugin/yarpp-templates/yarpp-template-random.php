@@ -2,7 +2,7 @@
 /*
 YARPP Template: Random
 Description: This template gives you a random other post in case there are no related posts
-Author: mitcho (Michael Yoshitaka Erlewine)
+Author: YARPP Team
 */ ?>
 <h3>Related Posts</h3>
 <?php if (have_posts()):?>

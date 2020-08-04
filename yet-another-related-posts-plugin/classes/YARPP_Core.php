@@ -105,6 +105,8 @@ class YARPP {
 			$this->admin = new YARPP_Admin($this);
 			$this->enforce();
 		}
+		$shortcode = new YARPP_Shortcode();
+		$shortcode->register();
 	}
 		
 	/*
@@ -1177,10 +1179,10 @@ class YARPP {
                 '<p>'.
                     sprintf(
                         __(
-                            "Related posts brought to you by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
+                            "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
                             'yarpp'
                         ),
-                        'https://wordpress.org/plugins/yet-another-related-posts-plugin/'
+                        'https://yarpp.com'
                     ).
                 "</p>\n";
         }
@@ -1353,10 +1355,10 @@ class YARPP {
                 '<p>'.
                     sprintf(
                         __(
-                            "Related posts brought to you by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
+                            "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
                             'yarpp'
                         ),
-                        'https://wordpress.org/plugins/yet-another-related-posts-plugin/'
+                        'https://yarpp.com'
                     ).
                 "</p>\n";
         }

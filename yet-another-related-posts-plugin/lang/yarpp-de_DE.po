@@ -398,7 +398,7 @@ msgstr "Einstellungen gespeichert!"
 
 #: yarpp_options.php:311
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Umso höher Sie den Relevanz-Wert einstellen, desto weniger ähnliche Artikel werden angezeigt, da Sie die Auswahl beschränken. Der Standardwert ist 5. Um einen guten Wert zu finden, schauen Sie sich das Ergebnis Ihrer bisherigen ähnlichen Artikeln an. So finden Sie heraus, wie sie die Relevanz-Wert beeinflussen müssen um ein gutes Ergebnis zu erhalten. "
 
 #: yarpp_options.php:550

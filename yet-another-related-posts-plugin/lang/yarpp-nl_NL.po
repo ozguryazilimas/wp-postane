@@ -183,7 +183,7 @@ msgstr "meer&gt;"
 
 #: options-meta-boxes.php:153
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Hoe hoger de overeenkomstdrempel hoe meer restricties en hoe minder gerelateerde bijdragen. De standaard overeenkomstdrempel is 5. Als je zoekt naar een goede drempel bekijk dan enkele gerelateerde  bijdragen van de bijdragen en de scores. Je kunt zien wat voor soort gerelateerde er zijn opgepikt, wat de soort overeenkomst is en zo een juiste drempel instellen voor je website."
 
 #: options-meta-boxes.php:159

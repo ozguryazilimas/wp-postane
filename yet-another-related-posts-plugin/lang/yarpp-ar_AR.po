@@ -413,7 +413,7 @@ msgstr "حفظ الخيارات!"
 
 #:  yarpp_options.php:310
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "ارتفاع عتبة التشابه ، إلا أن تشديد العينة ، وسيحصلون على أقل ناتج قياسي. العتبة الافتراضي هو 5. إذا كنت ترغب في العثور على عتبة المقبول ، تجربة مع رسائل متعددة. يمكنك ان ترى ما ورسائل تصل ما قيمها من التشابه ، والتي يمكن تحديد مستوى مقبول لموقعك."
 
 #:  yarpp_options.php:538

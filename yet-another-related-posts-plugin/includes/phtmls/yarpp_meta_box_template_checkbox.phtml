@@ -1,12 +1,12 @@
 <?php
     $customHelp = null;
     if (!$this->yarpp->diagnostic_custom_templates()) {
-        $customHelp = __('This option is disabled because no YARPP templates were found in your theme.', 'yarpp');
+        $customHelp = __('This option is disabled because no YARPP templates were found in your active theme folder.', 'yarpp');
     }
     if ($this->offer_copy_templates()) {
         $customHelp .=
-        ' '.__('Would you like to copy some sample templates bundled with YARPP into your theme?', 'yarpp').
-        '<input type="button" class="button button-small yarpp_copy_templates_button" value="'.esc_attr(__('Copy Templates', 'yarpp')).'"/>';
+        ' '.__('Would you like to copy some sample templates bundled with YARPP into your active theme folder?', 'yarpp').
+        '<br /><br /><input type="button" class="button button-small yarpp_copy_templates_button" value="'.esc_attr(__('Copy Templates', 'yarpp')).'"/><span class="spinner"></span>';
     }
 ?>
 

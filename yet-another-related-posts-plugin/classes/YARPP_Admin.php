@@ -539,7 +539,7 @@ class YARPP_Admin {
         margin: 10px 0;
       }
        #yarpp-related-posts .spinner {
-        float: none; visibility: hidden; opacity: 1; margin: 5px 0 0 7px;
+        float: none; visibility: hidden; opacity: 1; margin: 5px 7px 0 7px;
       }
     </style>
     <?php

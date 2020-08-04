@@ -183,6 +183,17 @@ jQuery(function($) {
     that.mouseleave(function () {
       pointer.pointer('close');
     });
+
+    // Only setup the copy templates button once it exists.
+    $('.yarpp_copy_templates_button').on('click', function() {
+      $copy_templates_button = $(this);
+      $spinner = $copy_templates_button.siblings('.spinner');
+
+      $copy_templates_button.addClass( 'disabled' );
+      $spinner.addClass('is-active');
+
+      window.location = window.location + (window.location.search.length ? '&' : '?') + 'action=copy_templates&_ajax_nonce=' + $('#yarpp_copy_templates-nonce').val();
+    });
   });
   $('.yarpp_template_button:not(.disabled)').click(function() {
     $(this).siblings('input')
@@ -190,10 +201,6 @@ jQuery(function($) {
       .change();
     $(this).siblings().removeClass('active');
     $(this).addClass('active');
-  });
-
-  $('.yarpp_copy_templates_button').live('click', function() {
-    window.location = window.location + (window.location.search.length ? '&' : '?') + 'action=copy_templates&_ajax_nonce=' + $('#yarpp_copy_templates-nonce').val();
   });
   
   function template_info() {

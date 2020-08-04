@@ -388,8 +388,8 @@ msgstr "વિકલ્પો સાચવ્યા!"
 
 #@ yarpp
 #: options-meta-boxes.php:124
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
-msgstr "ઊંચી મેચ થ્રેશોલ્ડ વધુ પ્રતિબંધિત છે, અને તમે ઓછા સંબંધિત પોસ્ટ્સ એકંદર છે. મૂળભૂત મેચ થ્રેશોલ્ડ 5 છે. જો તમે યોગ્ય મેચ threshhold શોધવા માંગો છો, અમુક પોસ્ટ સંબંધિત પોસ્ટ્સ પ્રદર્શન પર એક નજર અને તેમના સ્કોર્સ લો. તમે શું સંબંધિત પોસ્ટ્સ પ્રકારના અપ કરવામાં આવી રહી લેવામાં આવે છે અને જુઓ કે મેચ સ્કોર્સ પ્રકારની શું કરી શકો છો, અને તમારી સાઇટ માટે યોગ્ય થ્રેશોલ્ડ નક્કી કરે છે."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgstr "ઊંચી મેચ થ્રેશોલ્ડ વધુ પ્રતિબંધિત છે, અને તમે ઓછા સંબંધિત પોસ્ટ્સ એકંદર છે. મૂળભૂત મેચ થ્રેશોલ્ડ 5 છે. જો તમે યોગ્ય મેચ thresholdશોધવા માંગો છો, અમુક પોસ્ટ સંબંધિત પોસ્ટ્સ પ્રદર્શન પર એક નજર અને તેમના સ્કોર્સ લો. તમે શું સંબંધિત પોસ્ટ્સ પ્રકારના અપ કરવામાં આવી રહી લેવામાં આવે છે અને જુઓ કે મેચ સ્કોર્સ પ્રકારની શું કરી શકો છો, અને તમારી સાઇટ માટે યોગ્ય થ્રેશોલ્ડ નક્કી કરે છે."
 
 #@ yarpp
 #: yarpp_options.php:279

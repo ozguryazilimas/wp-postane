@@ -335,7 +335,7 @@ msgstr "옵션이 저장되었습니다!"
 
 #: options-meta-boxes.php:153
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "일치 임계값이 높을수록, 더 많은 제한을 할수록, 전체적으로 적은 관련 글들을 얻습니다. 기본적인 일치 임계값은 5입니다. 적절히 일치하는 임계값을 찾으려면, 일부 글의 관련 글 화면 및 점수를 보시기 바랍니다. 당신은 어떤 류의 관련된 글이 포착되고 있고 어떤 종류의 일치하는 점수인지를 확인할 수 있으며 당신의 사이트에 대한 적절한 임계값을 결정할 수 있습니다."
 
 #: class-core.php:71

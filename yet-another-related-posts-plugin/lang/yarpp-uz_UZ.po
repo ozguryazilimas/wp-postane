@@ -389,7 +389,7 @@ msgstr "Opsiyalar saqlab qolindi!"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "O'xshashlik chegarasi qanchalik yuqori bo'lsa natija shunchalik chegaralangan, yani natijada shunchalik kam aloqador xabarlarga ega bo'lasiz. Asl holida o'xshashlik chegarasi 5ga teng. Agar mos keladigan chegara ko'rsatkichini topishni hohlasangiz, turli xabarlarni o'rganib chiqing. Siz qanday aloqador xabarlar yuqoriga ko'tarilayotganini va ularning o'xshashlik ko'rsatkichlarini ko'rishingiz mumkin. Natijada o'z saytingizga mos chegara ko'rsatkichni aniqlay olasiz."
 
 #: yarpp_options.php:279

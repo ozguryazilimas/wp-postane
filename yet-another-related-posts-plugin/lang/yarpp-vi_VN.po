@@ -220,7 +220,7 @@ msgstr "thêm&gt;"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Mức độ liên quan càng cao thì càng có ít bài viết liên quan. Mức độ mặc định là 5. Nếu bạn muốn xác định một mức độ phù hợp với trang của mình bạn có thể kiểm tra một số bài viết liên quan đang được hiển thị và dựa trên đó để xác định một mức độ hợp lý."
 
 #: options-meta-boxes.php:130

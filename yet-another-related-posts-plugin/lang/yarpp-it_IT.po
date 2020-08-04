@@ -249,7 +249,7 @@ msgstr "YARPP limita la lista degli articoli correlati (1) per numero massimo e 
 
 #: options-meta-boxes.php:153
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Quanto più alto sarà il valore di corrispondenza, maggiore sarà la restrizione: otterrai di fatto un minore numero di articoli correlati. Il valore predefinito é impostato a 5. Qualora desiderassi trovare un valore appropriato per determinare le affinità, verifica gli articoli correlati di alcuni post ed il punteggio a loro associato. Potrai quindi determinare quale sia il migliore valore di corrispondenza per il tuo sito."
 
 #: options-meta-boxes.php:159

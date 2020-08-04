@@ -2,7 +2,7 @@
 /*
 YARPP Template: Thumbnails
 Description: Requires a theme which supports post thumbnails
-Author: mitcho (Michael Yoshitaka Erlewine)
+Author: YARPP Team
 */ ?>
 <h3>Related Photos</h3>
 <?php if (have_posts()):?>

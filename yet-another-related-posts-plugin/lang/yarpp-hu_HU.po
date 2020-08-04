@@ -389,7 +389,7 @@ msgstr "Beállítások elmentve!"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Minél pontossabb a hasonlósági beállításod annál kevesebb hasonló bejegyzés jelenik meg. Az alap megjelentés 5. Ha több hasonló bejegyzést szeretnél megjeleníteni adj meg kevesebb szűrési opciót illetve ha kevesebb de pontosabb találatokat szeretnél, adj meg minden szűrési opciót."
 
 #: yarpp_options.php:279

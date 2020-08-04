@@ -224,7 +224,7 @@ msgstr "bilgi &gt;"
 
 #@ yarpp
 #: options-meta-boxes.php:124
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Eşleşme eşiği yükseldikçe seçilecek olan benzer yazılar daha yüksek kriterlere göre değerlendirilir ve benzer yazı sayınız azalabilir. Varsayılan eşleşme eşiği 5'tir. Uygun bir eşleşme eşiği sayısı bulmak için, yazılarınızın bazılarına bakın ve benzer yazılarının eşleşme eşik değerlerini inceleyin. Gördüğünüz sayılara göre ortalama bir değer bulabilirsiniz."
 
 #@ yarpp

@@ -265,7 +265,7 @@ msgstr "YARPP 相關文章列表受兩項因素限制：(1) 最大值和 (2) <em
 
 #: options-meta-boxes.php:153
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "相關值越高，篩選上也會更加嚴格，對整體來說顯示的相關文章會越少。在預設情況下，相關值是 5 分。如果你想找出一個理想的相關值，可以看看目前站內相關文章的顯示情形，試著找出一個最合適的相關值設定。"
 
 #: options-meta-boxes.php:159

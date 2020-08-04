@@ -1,7 +1,7 @@
 <?php 
 /*
 YARPP Template: Simple
-Author: mitcho (Michael Yoshitaka Erlewine)
+Author: YARPP Team
 Description: A simple example YARPP template.
 */
 ?><h3>Related Posts</h3>

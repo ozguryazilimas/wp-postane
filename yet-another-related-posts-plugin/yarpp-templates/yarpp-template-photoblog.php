@@ -2,7 +2,7 @@
 /*
 YARPP Template: Yet Another Photoblog
 Description: Requires the Yet Another Photoblog plugin
-Author: mitcho (Michael Yoshitaka Erlewine)
+Author: YARPP Team
 */ ?>
 <h3>Related Photos</h3>
 <?php if (have_posts()):?>

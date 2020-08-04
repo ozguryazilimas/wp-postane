@@ -389,7 +389,7 @@ msgstr "विकल्प बचा लिया!"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "मैच सीमा से अधिक, अधिक प्रतिबंधात्मक,  और तुम कम संबंधित पदों पीओगे. डिफ़ॉल्ट मैच दहलीज 5 है. यदि आप एक उचित मैच दहलीज को ढूँढ़ना चाहते हूँ.किसी पद से संबंधित पदों प्रदर्शन और अपने स्कोर पर एक नज़र रखना चाहते हूँ. तुम संबंधित पदों का क्या प्रकार और मैच के स्कोर देख सकते हो और आपकी साइट के लिए एक उचित सीमा निर्धारित सकते हो. "
 
 #: yarpp_options.php:279

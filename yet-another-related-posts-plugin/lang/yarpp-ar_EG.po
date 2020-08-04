@@ -292,7 +292,7 @@ msgstr "المزيد&gt;"
 
 #:  yarpp_options.php:310
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "كلما ذاد ارتفاع نسبة التشابه ، كلما إزداد التقيد ، وتحصل على عدد أقل من المحتويات المتشابهه عموما. الافتراضي 5. إذا كنت تريد معرفة الرقم المناسب لك ، إنظر على المحتوياات ذات الصلة لأي من مشاراكاتك ودرجاتهم. يمكنك ان ترى ما هي أنواع المحتوياات ذات الصلة ويجري انتقاؤها ورقم التشابه الخاص بكل مشاركة ، ثم على هذا الأساس حدد نسبة مناسبة لموقعك."
 
 #:  yarpp_options.php:315

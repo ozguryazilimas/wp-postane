@@ -288,7 +288,7 @@ msgstr "más&gt;"
 
 #@ yarpp
 #: yarpp_options.php:311
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "Mientras más alto el umbral de combinación, más restrictivo, y en total, obtienes menos Publicaciones Relacionadas. La falta que combina o concuerda como límite, es 5. Si quieres encontrar una combinación apropiada para el umbral en un número límite, da un vistazo a algunas Publicaciones Relacionadas que se pueden visualizar y sus calificaciones, y determina un tamaño límite apropiado para tu sitio."
 
 #@ yarpp

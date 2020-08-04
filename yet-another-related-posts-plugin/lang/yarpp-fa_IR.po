@@ -399,7 +399,7 @@ msgstr "ذخیره تنظیمات"
 
 #: options-meta-boxes.php:124
 #@ yarpp
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshhold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
 msgstr "هر چه حداقل تطبیق کمتر شود، نتیجه حساس تر و تعداد پست های مرتبط کمتر می شود. مقدار پیش فرض آن 5 است. برای اینکه مقدار مطلوب آن را بیابید به امتیاز تطبیق برخی از پست ها نگاهی بیاندازید."
 
 #: yarpp_options.php:280
