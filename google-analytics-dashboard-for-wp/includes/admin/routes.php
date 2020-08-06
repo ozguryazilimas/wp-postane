@@ -661,7 +661,7 @@ class ExactMetrics_Rest_Routes {
 
 		if ( ! current_user_can( 'install_plugins' ) ) {
 			wp_send_json( array(
-				'message' => esc_html__( 'You are not allowed to install plugins', 'exactmetrics-premium' ),
+				'message' => esc_html__( 'You are not allowed to install plugins', 'google-analytics-dashboard-for-wp' ),
 			) );
 		}
 
@@ -669,7 +669,7 @@ class ExactMetrics_Rest_Routes {
 
 		if ( ! $slug ) {
 			wp_send_json( array(
-				'message' => esc_html__( 'Missing plugin name.', 'exactmetrics-premium' ),
+				'message' => esc_html__( 'Missing plugin name.', 'google-analytics-dashboard-for-wp' ),
 			) );
 		}
 

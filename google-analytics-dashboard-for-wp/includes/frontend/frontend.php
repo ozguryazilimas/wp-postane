@@ -237,7 +237,7 @@ function exactmetrics_administrator_tracking_notice() {
 			<img src="<?php echo esc_url( plugins_url( 'assets/images/em-mascot.png', EXACTMETRICS_PLUGIN_FILE ) ); ?>" width="40" alt="ExactMetrics Mascot" />
 		</div>
 		<div class="exactmetrics-tracking-notice-text">
-			<h3><?php esc_html_e( 'Tracking is Disabled for Administrators', 'exactmetrics-premium' ); ?></h3>
+			<h3><?php esc_html_e( 'Tracking is Disabled for Administrators', 'google-analytics-dashboard-for-wp' ); ?></h3>
 			<p>
 				<?php
 				$doc_url = 'https://exactmetrics.com/docs/tracking-disabled-administrators-editors';
@@ -247,7 +247,7 @@ function exactmetrics_administrator_tracking_notice() {
 					'utm_campaign' => 'admin-tracking-doc',
 				), $doc_url );
 				// Translators: %s is the link to the article where more details about tracking are listed.
-				printf( esc_html__( 'To keep stats accurate, we do not load Google Analytics scripts for admin users. %1$sLearn More &raquo;%2$s', 'exactmetrics-premium' ), '<a href="' . esc_url( $doc_url ) . '" target="_blank">', '</a>' );
+				printf( esc_html__( 'To keep stats accurate, we do not load Google Analytics scripts for admin users. %1$sLearn More &raquo;%2$s', 'google-analytics-dashboard-for-wp' ), '<a href="' . esc_url( $doc_url ) . '" target="_blank">', '</a>' );
 				?>
 			</p>
 		</div>

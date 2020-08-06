@@ -4,7 +4,9 @@
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: ExactMetrics
- * Version: 6.1.0
+ * Version: 6.2.0
+ * Requires at least: 3.8.0
+ * Requires PHP: 5.2
  * Author URI: https://exactmetrics.com
  * Text Domain: google-analytics-dashboard-for-wp
  * Domain Path: /languages
@@ -42,7 +44,7 @@ final class ExactMetrics_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.1.0';
+	public $version = '6.2.0';
 
 	/**
 	 * Plugin file.
@@ -189,7 +191,7 @@ final class ExactMetrics_Lite {
 
 			// This does the version to version background upgrade routines and initial install
 			$em_version = get_option( 'exactmetrics_current_version', '5.5.3' );
-			if ( version_compare( $em_version, '6.1.0', '<' ) ) {
+			if ( version_compare( $em_version, '6.2.0', '<' ) ) {
 				exactmetrics_lite_call_install_and_upgrade();
 			}
 
@@ -198,7 +200,7 @@ final class ExactMetrics_Lite {
 			}
 
 			// Load the plugin textdomain.
-			add_action( 'plugins_loaded', array( self::$instance, 'load_plugin_textdomain' ) );
+			add_action( 'plugins_loaded', array( self::$instance, 'load_plugin_textdomain' ), 15 );
 
 			// Load admin only components.
 			if ( is_admin() || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
@@ -508,6 +510,9 @@ final class ExactMetrics_Lite {
 
 			// Routes used by Vue
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/routes.php';
+
+			// Load gutenberg editor functions
+			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/gutenberg/gutenberg.php';
 
 			// Emails
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/emails/class-emails.php';
