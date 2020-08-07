@@ -110,6 +110,7 @@ jQuery(function($) {
             display.find('.loading').remove();
             if (':(' == html) { // no more :(
               finished_taxonomies[taxonomy] = true;
+              display.append("-");
               return;
             }
             display.append(html);
@@ -195,6 +196,15 @@ jQuery(function($) {
       window.location = window.location + (window.location.search.length ? '&' : '?') + 'action=copy_templates&_ajax_nonce=' + $('#yarpp_copy_templates-nonce').val();
     });
   });
+  
+  $('.yarpp_spin_on_click').on('click', function() {
+    $button = $(this);
+    $spinner = $button.siblings('.spinner');
+
+    $button.addClass( 'disabled' );
+    $spinner.addClass( 'is-active' );
+  });
+  
   $('.yarpp_template_button:not(.disabled)').click(function() {
     $(this).siblings('input')
       .val($(this).attr('data-value'))

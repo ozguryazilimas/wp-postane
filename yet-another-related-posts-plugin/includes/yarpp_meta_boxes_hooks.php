@@ -21,7 +21,7 @@ add_meta_box(
 
 add_meta_box(
     'yarpp_relatedness',
-    __( '"Relatedness" options', 'yarpp' ),
+    __( 'The Algorithm', 'yarpp' ),
     array(
         new YARPP_Meta_Box_Relatedness,
         'display'
@@ -33,7 +33,7 @@ add_meta_box(
 
 add_meta_box(
     'yarpp_display_web',
-    __('Display options <small>for your website</small>', 'yarpp'),
+    __('Automatic Display Options', 'yarpp'),
     array(
         new YARPP_Meta_Box_Display_Web,
         'display'
@@ -45,7 +45,7 @@ add_meta_box(
 
 add_meta_box(
     'yarpp_display_rss',
-    __('Display options <small>for RSS</small>', 'yarpp'),
+    __('RSS Feed Options', 'yarpp'),
     array(
         new YARPP_Meta_Box_Display_Feed,
         'display'
@@ -62,8 +62,8 @@ if(
 	class_exists('WP_REST_Posts_Controller')
 ){
 	add_meta_box(
-		'yarp_display_api',
-		__('Display options <small>for REST API</small>', 'yarpp'),
+		'yarpp_display_api',
+		__('REST API Options', 'yarpp'),
 		array(
 			new YARPP_Meta_Box_Display_Rest_Api,
 			'display'

@@ -5,15 +5,15 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.5
-Stable tag: 5.4.0
+Stable tag: 5.5.0
 
-Display a list of related posts on your site based on a powerful unique algorithm. Optionally, earn money by including sponsored content.
+The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
 == Description ==
 
-Yet Another Related Posts Plugin (YARPP) displays pages, posts, and custom post types related to the current entry, introducing your readers to other relevant content on your site.
+*Yet Another Related Posts Plugin* (YARPP) is a professionally maintained and feature rich plugin that displays pages, posts, and custom post types related to the current entry, introducing your readers to other relevant content on your site. Automatically added Related Posts can increase your pageviews up to 10%. Just install and activate.
 
-**YARPP Standard Features**
+**Key Features**
 -------------------------------------------
 * **Thumbnail or list view** of related content.
 * **Related posts, pages, and custom post types.**
@@ -52,7 +52,7 @@ Make sure the "display related posts in feeds" option is turned on if you would 
 
 Related posts can also be displayed as a widget. Go to the Appearance > Widgets options page and add the "Related Posts (YARPP)" widget. Choose to display content from YARPP Basic. The widget will only be displayed on single entry (permalink) pages.
 
-The YARPP Basic widget can be used even if the "auto display" option is turned off.
+The YARPP widget can be used even if the "auto display" option is turned off.
 
 = Custom display through templates =
 
@@ -72,15 +72,15 @@ You can place YARPP manually wherever you’d like in your theme within [The Loo
 
 == Frequently Asked Questions ==
 
-**Common Questions about YARPP Basic**
+**Common Questions about YARPP **
 
-Below are Frequently Asked Questions about YARPP basic.
+Below are Frequently Asked Questions about YARPP.
 
 If your question isn't here, ask your own question at [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin).
 
 = Many pages list "no related posts." =
 
-Most likely you have "no related posts" right now because the default "match threshold" is too high. Here's what I recommend to find an appropriate match threshold: lower your match threshold in the YARPP "Relatedness" options to something very low, like 1. (If you don't see the match threshold, you may need to display the "Relatedness" options via the "Screen Options" tab at the top.) Most likely the really low threshold will pull up many posts that aren't actually related (false positives), so look at some of your posts' related posts and their match scores. This will help you find an appropriate threshold. You want it lower than what you have now, but high enough so it doesn't have many false positives.
+Most likely you have "no related posts" right now because the default "match threshold" is too high. Here's what we recommend to find an appropriate match threshold: lower your match threshold in the YARPP "Algorithm" options to something very low, like 1. (If you don't see the match threshold, you may need to display the "Algorithm" options via the "Screen Options" tab at the top.) Most likely the really low threshold will pull up many posts that aren't actually related (false positives), so look at some of your posts' related posts and their match scores. This will help you find an appropriate threshold. You want it lower than what you have now, but high enough so it doesn't have many false positives.
 
 = How can I move the related posts display? =
 
@@ -94,7 +94,7 @@ Yes. In Wordpress, go to "Settings" and "Related Posts (YARPP)" and make sure "T
 
 = Where do I tell YARPP to display related posts only by tags? =
 
-In WordPress, go to "Settings" and "Related Posts (YARPP)" and make sure "Relatedness" is checked in the "Screen Options" section at the top of the page.  In the "Relatedness" section, configure the dropdown boxes next to "Titles," "Bodies," "Categories," and "Tags."
+In WordPress, go to "Settings" and "YARPP" and make sure "Algorithm" is checked in the "Screen Options" section at the top of the page.  In the "Algorithm" section, configure the dropdown boxes next to "Titles," "Bodies," "Categories," and "Tags."
 
 = Can I specify related posts? =
 
@@ -163,7 +163,7 @@ The recommended solution in such cases is to use the [Polylang](https://polylang
 
 YARPP works fine with full-width (double-byte) characters, assuming your WordPress database is set up with Unicode support. 99% of the time, if you're able to write blog posts with full-width characters and they're displayed correctly, YARPP will work on your blog.
 
-However, YARPP does have difficulty with languages that don't place spaces between words (Chinese, Japanese, etc.). For these languages, the "consider body" and "consider titles" options in the "Relatedness options" may not be very helpful. Using only tags and categories may work better for these languages.
+However, YARPP does have difficulty with languages that don't place spaces between words (Chinese, Japanese, etc.). For these languages, the "consider body" and "consider titles" options in the "Algorithm options" may not be very helpful. Using only tags and categories may work better for these languages.
 
 = Does YARPP slow down my blog/server? =
 
@@ -218,7 +218,7 @@ yarpp_related(array(
 	'past_only' => false, // show only posts which were published before the reference post
 	'exclude' => array(), // a list of term_taxonomy_ids. entities with any of these terms will be excluded from consideration.
 	'recent' => false, // to limit to entries published recently, set to something like '15 day', '20 week', or '12 month'.
-	// Relatedness options: these determine how "relatedness" is computed
+	// Relatedness algorithm options: these determine how "relatedness" is computed
 	// Weights are used to construct the "match score" between candidates and the reference post
 	'weight' => array(
 		'body' => 1,
@@ -285,6 +285,13 @@ add_action(
 `
 
 == Changelog ==
+= 5.5.0 (06-August-2020) =
+* New: Support for custom page types and taxonomies, including those added by WooCommerce
+* Enhancement: Show spinner while full-text indexes are being created
+* Enhancement: Various YARPP Admin UX/UI improvements
+* [Bugfix](https://wordpress.org/support/topic/nice-plugin-crappy-ever-present-notice/): Fixes bug where Review Notice was not getting dismissed for non-admins
+* [Bugfix](https://wordpress.org/support/topic/please-exclude-the-gutenberg-blocks/): Exclude Gutenberg blocks so that they don't appear as related
+
 = 5.4.0 (03-August-2020) =
 * New: Shortcode support! `[yarpp]` ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#%0Ahow%20can%20i%20move%20the%20related%20posts%20display%3F%0A))
 * Enhancement: Adds YARPP score to REST API responses ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
@@ -992,6 +999,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.4.0 =
+= 5.5.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

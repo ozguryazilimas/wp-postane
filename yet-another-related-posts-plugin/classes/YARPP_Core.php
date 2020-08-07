@@ -854,7 +854,7 @@ class YARPP {
 	}
 	
 	private function post_type_filter($post_type) {
-		if ($post_type->_builtin && $post_type->show_ui) return true;
+		if ($post_type->public) return true;
 		if (isset($post_type->yarpp_support)) return $post_type->yarpp_support;
 		return false;
 	}

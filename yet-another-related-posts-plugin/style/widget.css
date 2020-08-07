@@ -3,20 +3,19 @@
     padding: 0.4em 2em 0.8em;
     text-align: justify;
 }
+
 .yarpp_pro_msg strong{
     display: inline-block;
     text-align: center;
     width: 100%;
     color: orange;
 }
-.yarpp_help {
-    position: relative;
-    display: inline-block;
-    background: transparent url('../../../../wp-includes/images/wpicons.png') no-repeat -520px -20px;
-    vertical-align: text-bottom;
-    width: 20px;
-    height: 20px;
+
+.yarpp_help .wp-pointer-content p {
+  text-align: left;
+  font-family: sans-serif;
 }
+
 .yarpp_help_msg {
     position: absolute;
     left: 25px;
@@ -29,6 +28,7 @@
     box-shadow: 0 0 0.4em -0.15em #333;
     z-index: 100;
 }
+
 .yarpp_help:hover .yarpp_help_msg{
     display: block
 }

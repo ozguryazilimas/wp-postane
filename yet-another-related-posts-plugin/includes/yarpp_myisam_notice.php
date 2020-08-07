@@ -11,10 +11,10 @@ if (isset($_POST['myisam_override'])) {
 
         $yarpp->db_options->set_fulltext_disabled(false);
         ?>
-            <div class="updated">
+            <div class="notice notice-success">
             <?php
             esc_html_e(
-                'The fulltext indexes have been added. You may now use titles and bodies as relatedness criteria.',
+                'Full-text indexes have been added to the posts table. You may now use titles and bodies as relatedness criteria.',
                 'yarpp'
             );
             ?></div>
@@ -23,11 +23,11 @@ if (isset($_POST['myisam_override'])) {
     } else {
 
         yarpp_set_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE, 0);
-        ?><div class="error" >
-                <span class="yarpp-red"><?php esc_html_e('Fulltext Index creation did not work!','yarpp');?></span><br/>
+        ?><div class="notice notice-error" >
+                <span class="yarpp-red"><?php esc_html_e('Full-text Index creation did not work!','yarpp');?></span><br/>
 	            <?php
                     printf(
-	                    esc_html__( 'There was an error adding the fulltext index onto your posts table: %s', 'yarpp' ),
+	                    esc_html__( 'There was an error adding the full-text index to your posts table: %s', 'yarpp' ),
                         $yarpp->db_options->get_fulltext_db_error()
                     );
                     ?><br/>
@@ -41,7 +41,7 @@ $database_supports_fulltext_indexes = $yarpp->db_schema->database_supports_fullt
 if ( ! $database_supports_fulltext_indexes) $yarpp->disable_fulltext();
 if ( !(bool) yarpp_get_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE) && $yarpp->db_options->is_fulltext_disabled()) {
         ?>
-    <div class='updated'>
+    <div class='notice notice-warning'>
         <p><?php
             esc_html_e('Comparing posts based on titles or bodies is currently disabled','yarpp');
             ?>
@@ -56,11 +56,11 @@ if ( !(bool) yarpp_get_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE) && $yarpp
         </p>
         <div id="yarpp_fulltext_details" class="hidden">
             <?php if ( $database_supports_fulltext_indexes ){ ?>
-            <p><?php esc_html_e('YARPP can automatically create "fulltext indexes" to enable comparing posts based on titles and bodies. To do so, click the button below.');?></p>
+            <p><?php esc_html_e('YARPP can automatically create "full-text indexes" to enable comparing posts based on titles and bodies. To do so, click the button below.');?></p>
         <?php } else { ?>
                 <p><?php
 		            printf(
-			            esc_html__('Because fulltext indexing is not supported by your current table engine, "%1$s", YARPP cannot compare posts based on their titles or bodies.','yarpp'),
+			            esc_html__('Because full-text indexing is not supported by your current table engine, "%1$s", YARPP cannot compare posts based on their titles or bodies.','yarpp'),
 			            'InnoDB',
 			            '5.6.4',
 			            '<code>' . $wpdb->posts . '</code>',
@@ -77,12 +77,13 @@ if ( !(bool) yarpp_get_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE) && $yarpp
                 </p>
                 <code class="yarpp_separated">ALTER TABLE `<?php echo $wpdb->posts;?>` ENGINE = MyISAM;</code>
                 <p><?php
-		            esc_html_e('After you have done that, click the button below to enable comparing titles and bodies using "fulltext indexes."','yarpp');
+		            esc_html_e('After you have done that, click the button below to enable comparing titles and bodies using full-text indexes."','yarpp');
 		            ?>
                 </p>
         <?php } ?>
 	        <form method="post" class="yarpp_separated">
-	            <input type='submit' class='button' name='myisam_override' value='Create fulltext indexes'/>
+	            <input type='submit' class='button yarpp_spin_on_click' name='myisam_override' value='Create FULLTEXT indexes'/>
+							<span class="spinner"></span>
 	        </form>
 	        <p><?php
 	                esc_html_e(

@@ -9,9 +9,10 @@
 
 <?php
     foreach ($yarpp->get_taxonomies() as $taxonomy) {
-        $this->exclude($taxonomy->name, sprintf(__('Disallow by %s:', 'yarpp'), $taxonomy->labels->singular_name));
+        $this->exclude($taxonomy->name, sprintf(__('Disallow by %s:', 'yarpp'), ucwords($taxonomy->labels->name)), $taxonomy->_builtin);
     }
-    $this->checkbox('show_pass_post', __('Show password protected posts?', 'yarpp'));
+
+    $this->checkbox('show_pass_post', __('Display password protected posts', 'yarpp'));
 
     $recent = yarpp_get_option('recent');
     if ((bool) $recent) {
@@ -34,6 +35,20 @@
 <div class='yarpp_form_row yarpp_form_checkbox'>
     <div>
         <input type='checkbox' name='recent_only' value='true' <?php checked((bool) $recent) ?> />
-        <?php echo str_replace('NUMBER', $recent_number, str_replace('UNITS', $recent_units, __("Show only posts from the past NUMBER UNITS", 'yarpp'))); ?>
+        <?php 
+				
+				printf(
+        // translators: 1: HTML for a number field, 2: HTML for a units dropdown (eg "week(s)", "day(s)", month(s))
+        __('Display only posts from the past %1$s %2$s', 'yarpp'),
+        $recent_number,
+        $recent_units
+				);
+        ?>
     </div>
 </div>
+
+<?php
+	$this->checkbox( 'past_only', __( "Display only posts older than current post", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "Only posts older than the current post will be displayed.", 'yarpp' ) ) . "'>&nbsp;</span>" );
+
+	$this->checkbox( 'cross_relate', __( "Display results from all post types", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "When disabled, only other posts with the same post type will be displayed. For example, only posts will be displayed as related to a post, only pages will be displayed as related to a page, etc.", 'yarpp' ) ) . "'>&nbsp;</span>" );
+?>

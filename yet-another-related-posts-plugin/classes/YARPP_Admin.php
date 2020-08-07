@@ -83,7 +83,6 @@ class YARPP_Admin {
     $user_id = $current_user->ID;
     
     if (!is_admin() ||
-        !current_user_can('publish_posts') ||
         !isset($_GET['_wpnonce']) ||
         !wp_verify_nonce($_GET['_wpnonce'], 'review-nonce') ||
         !isset($_GET['yarpp_defer_t']) ||
@@ -108,7 +107,11 @@ class YARPP_Admin {
     
   	global $current_user;
   	$user_id = $current_user->ID;
-    
+
+		if (!current_user_can('publish_posts')) {
+			return;
+		}
+
     $show_review_notice = false;
     $activation_timestamp = get_site_option(self::ACTIVATE_TIMESTAMP_OPTION);
     $review_dismissal_array = get_user_meta($user_id, self::REVIEW_DISMISS_OPTION, true);

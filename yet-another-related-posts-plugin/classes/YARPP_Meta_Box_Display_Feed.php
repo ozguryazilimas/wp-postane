@@ -10,8 +10,8 @@ class YARPP_Meta_Box_Display_Feed extends YARPP_Meta_Box {
             echo ' style="display: none;"';
         echo '><b>' . __( "RSS display code example", 'yarpp' ) . '</b><br /><small>' . __( "(Update options to reload.)", 'yarpp' ) . "</small><br/><div id='display_demo_rss'></div></div>";
 
-        $this->checkbox( 'rss_display', __( "Display related posts in feeds?", 'yarpp' )." <span class='yarpp_help' data-help='" . esc_attr( __( "This option displays related posts at the end of each item in your RSS and Atom feeds. No template changes are needed.", 'yarpp' ) ) . "'>&nbsp;</span>", '' );
-        $this->checkbox( 'rss_excerpt_display', __( "Display related posts in the descriptions?", 'yarpp' )." <span class='yarpp_help' data-help='" . esc_attr( __( "This option displays the related posts in the RSS description fields, not just the content. If your feeds are set up to only display excerpts, however, only the description field is used, so this option is required for any display at all.", 'yarpp' ) ) . "'>&nbsp;</span>", 'rss_displayed' );
+        $this->checkbox( 'rss_display', __( "Display related posts in feeds?", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "This option displays related posts at the end of each item in your RSS and Atom feeds. No template changes are needed.", 'yarpp' ) ) . "'>&nbsp;</span>", '' );
+        $this->checkbox( 'rss_excerpt_display', __( "Display related posts in the descriptions?", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "This option displays the related posts in the RSS description fields, not just the content. If your feeds are set up to only display excerpts, however, only the description field is used, so this option is required for any display at all.", 'yarpp' ) ) . "'>&nbsp;</span>", 'rss_displayed' );
 
         $this->textbox( 'rss_limit', __( 'Maximum number of related posts:', 'yarpp' ), 2, 'rss_displayed' );
         $this->template_checkbox( true, 'rss_displayed' );
@@ -55,6 +55,6 @@ class YARPP_Meta_Box_Display_Feed extends YARPP_Meta_Box {
 
         $this->displayorder( 'rss_order', 'rss_displayed' );
 
-        $this->checkbox( 'rss_promote_yarpp', __( "Link to YARPP?", 'yarpp' ) . " <span class='yarpp_help' data-help='" . esc_attr( sprintf( __( "This option will add the code %s These links are greatly appreciated and keeps us motivated.", 'yarpp' ), "<code>" . htmlspecialchars( sprintf( __( "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.", 'yarpp' ), 'https://yarpp.com' ) )."</code>" ) ) . "'>&nbsp;</span>", 'rss_displayed' );
+        $this->checkbox( 'rss_promote_yarpp', __( "Link to YARPP?", 'yarpp' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( sprintf( __( "This option will add the code %s These links are greatly appreciated and keeps us motivated.", 'yarpp' ), "<code>" . htmlspecialchars( sprintf( __( "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.", 'yarpp' ), 'https://yarpp.com' ) )."</code>" ) ) . "'>&nbsp;</span>", 'rss_displayed' );
     }
 }

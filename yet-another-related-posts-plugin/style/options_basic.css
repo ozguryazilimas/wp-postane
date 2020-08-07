@@ -2,6 +2,15 @@
 	width: 900px;
 }
 
+.yarpp-red {
+  color: #dc3232;
+}
+
+.yarpp-no-float {
+  float: none;
+  margin-bottom: 5px;
+}
+
 .form-table td {
   line-height: 11px; /* to match the th's */
 }
@@ -108,12 +117,9 @@ a.info{
 	z-index:24;
 }
 
-.yarpp_help {
-    display: inline-block;
-    background: transparent url('../../../../wp-includes/images/wpicons.png') no-repeat -520px -20px;
-    vertical-align: text-bottom;
-    width: 20px;
-    height: 20px;
+.yarpp_help .wp-pointer-content p {
+  text-align: left;
+  font-family: sans-serif;
 }
 
 a.yarpp_help {
@@ -124,10 +130,6 @@ a.yarpp_help {
 a.yarpp_help:hover {
 	text-decoration: none;
 	background-position: -520px -0px;
-}
-
-.branch-3-4 .yarpp_help, .branch-3-3 .yarpp-help {
-	background-image: url('../../../../wp-includes/images/wpicons.png');
 }
 
 .exclude_terms span {
@@ -150,8 +152,11 @@ a.yarpp_help:hover {
 
 .yarpp_form_row > div {
 	display: inline-block;
-	*display: inline;
-	vertical-align: baseline;
+	vertical-align: top;
+}
+
+.yarpp_form_row > div > label {
+  vertical-align: baseline;
 }
 
 .yarpp_form_checkbox > div {
@@ -232,7 +237,7 @@ body.rtl .yarpp_code_display {
 	min-height: 25px;
 	max-height: 100px;
 	width: 60%;
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 @media all and (max-width:1200px) {
