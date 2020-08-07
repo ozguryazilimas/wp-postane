@@ -39,7 +39,7 @@ function exactmetrics_is_plugin_our_addon( $plugin_file ) {
 function exactmetrics_modify_wordpress_autoupdater_setting( $html, $plugin_file, $plugin_data ) {
 	$is_pro         = exactmetrics_is_pro_version();
 	$is_addon       = exactmetrics_is_plugin_our_addon( $plugin_file );
-	$is_main_free   = 'google-analytics-dashboard-for-wp' === $plugin_data['slug'];
+	$is_main_free   = isset( $plugin_data['slug'] ) && 'google-analytics-dashboard-for-wp' === $plugin_data['slug'];
 	$is_main_pro    = $is_pro && plugin_basename( EXACTMETRICS_PLUGIN_FILE ) === $plugin_file;
 	$has_permission = current_user_can( 'exactmetrics_save_settings' );
 

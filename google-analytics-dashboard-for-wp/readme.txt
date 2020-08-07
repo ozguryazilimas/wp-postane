@@ -3,8 +3,8 @@ Contributors: chriscct7, smub
 Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
-Tested up to: 5.4
-Stable tag: 6.2.0
+Tested up to: 5.5
+Stable tag: 6.2.1
 Requires PHP: 5.2
 License: GPL v3
 
@@ -156,6 +156,9 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.2.1: August 6, 2020 =
+- Tweak: WordPress Core decided to merge some additional work into 5.5 later than usual into the release process. This update adds additional work to enable perfect compatibility with those changes.
+
 = 6.2.0: August 5, 2020 =
 - New: Our plugin now includes a Headline Analyzer tool to help you write more SEO-friendly headlines that drive traffic and social-media shares directly in the Gutenberg editor.
 - Tweak: Large numbers are now better formatted across all reports so they are easier to read.

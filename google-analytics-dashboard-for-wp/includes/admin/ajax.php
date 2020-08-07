@@ -90,9 +90,7 @@ function exactmetrics_ajax_install_addon() {
         }
 
         // We do not need any extra credentials if we have gotten this far, so let's install the plugin.
-        require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-        $base = ExactMetrics();
-        require_once plugin_dir_path( $base->file ) . '/includes/admin/licensing/skin.php';
+	    exactmetrics_require_upgrader( false );
 
         // Create the plugin upgrader with our custom skin.
         $installer = new Plugin_Upgrader( $skin = new ExactMetrics_Skin() );
