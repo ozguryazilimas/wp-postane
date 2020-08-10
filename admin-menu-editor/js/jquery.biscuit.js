@@ -67,10 +67,11 @@
 
 			return (document.cookie = [
 				encode(key), '=', stringifyCookieValue(value),
-				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-				options.path    ? '; path=' + options.path : '',
-				options.domain  ? '; domain=' + options.domain : '',
-				options.secure  ? '; secure' : ''
+				options.expires  ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+				options.path     ? '; path=' + options.path : '',
+				options.domain   ? '; domain=' + options.domain : '',
+				options.samesite ? '; samesite=' + options.samesite : '',
+				options.secure   ? '; secure' : ''
 			].join(''));
 		}
 
@@ -103,7 +104,9 @@
 		return result;
 	};
 
-	config.defaults = {};
+	config.defaults = {
+		'samesite' : 'lax'
+	};
 
 	$.removeCookie = function (key, options) {
 		if ($.cookie(key) !== undefined) {

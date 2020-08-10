@@ -1387,6 +1387,18 @@ $accessLevelRightMargin: 5px;
 
 .ws_dialog_subpanel {
 	margin-bottom: 1em;
+
+	fieldset p {
+		margin-top: 0;
+		margin-bottom: 4px;
+	}
+}
+
+.ws-ame-dialog-subheading {
+	display: block;
+	font-weight: 600;
+	font-size: 1em;
+	margin: 0 0 0.2em 0;
 }
 
 #ws_menu_access_editor .ws_column_access,
@@ -1958,6 +1970,12 @@ $userSelectionPanelPadding: 10px;
 .ws_ame_doc_box, .ws_ame_custom_postbox {
 	.hndle {
 		cursor: default !important;
+		border-bottom: 1px solid $amePostboxBorderColor;
+	}
+
+	.handlediv {
+		display: block;
+		float: right;
 	}
 
 	.inside {
@@ -2125,6 +2143,20 @@ $userSelectionPanelPadding: 10px;
 	z-index: 100;
 }
 
+.ws-ame-icon-radio-button-group > label {
+	display: inline-block;
+	padding: 8px;
+	border: 1px solid #ccd0d4;
+	border-radius: 2px;
+
+	margin-right: 0.5em;
+}
+
+span.description {
+	color: #666;
+	//Before WP 5.5 description text was displayed in italics. We'll preserve that style for now.
+	font-style: italic;
+}
 
 .test-wrap {
     background-color: #444444;

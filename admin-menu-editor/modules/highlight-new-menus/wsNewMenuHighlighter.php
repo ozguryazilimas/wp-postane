@@ -194,7 +194,7 @@ class wsNewMenuHighlighter {
 			))
 		) {
 			$GLOBALS['wp_menu_editor']->register_jquery_plugins();
-			$dependencies[] = 'jquery-cookie';
+			$dependencies[] = 'ame-jquery-cookie';
 		}
 
 		wp_enqueue_script(

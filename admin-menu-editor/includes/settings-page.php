@@ -355,6 +355,27 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 			</tr>
 
 			<tr>
+				<th scope="row">
+					WPML support
+				</th>
+				<td>
+					<p>
+						<label>
+							<input type="checkbox" name="wpml_support_enabled"
+								<?php checked($settings['wpml_support_enabled']); ?>>
+							Make edited menu titles translatable with WPML
+
+							<br><span class="description">
+								The titles will appear in the "Strings" section in WPML.
+								If you don't use WPML or a similar translation plugin,
+								you can safely disable this option.
+							</span>
+						</label>
+					</p>
+				</td>
+			</tr>
+
+			<tr>
 				<th scope="row">Error verbosity level</th>
 				<td>
 					<fieldset id="ame-submenu-icons-settings">

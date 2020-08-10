@@ -216,7 +216,9 @@ window.AmeItemAccessEditor = (function ($) {
 			$('#ws_ext_permissions_container').toggleClass('ws_ext_readable_names_enabled', readableNamesEnabled);
 
 			//Remember the user's choice.
-			$.cookie('ame-readable-capability-names', readableNamesEnabled ? '1' : '0', {expires: 90});
+			if (typeof $['cookie'] !== 'undefined') {
+				$.cookie('ame-readable-capability-names', readableNamesEnabled ? '1' : '0', {expires: 90});
+			}
 		});
 
 		//Prevent the user from accidentally changing menu permissions when selecting a role.
@@ -346,7 +348,9 @@ window.AmeItemAccessEditor = (function ($) {
 			isProVersion = _.get(config, 'isPro', false);
 
 			//Read settings from cookies.
-			readableNamesEnabled = $.cookie('ame-readable-capability-names');
+			if (typeof $['cookie'] !== 'undefined') {
+				readableNamesEnabled = $.cookie('ame-readable-capability-names');
+			}
 			if (typeof readableNamesEnabled === 'undefined') {
 				readableNamesEnabled = true;
 			} else {

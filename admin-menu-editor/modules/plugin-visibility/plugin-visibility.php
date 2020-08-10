@@ -31,6 +31,9 @@ class amePluginVisibility extends amePersistentModule {
 		//Remove "hidden" plugins from the list on the "Plugins -> Installed Plugins" page.
 		add_filter('all_plugins', array($this, 'filterPluginList'), 15);
 
+		//Hide updates for hidden plugins.
+		add_filter('site_transient_update_plugins', array($this, 'filterPluginUpdates'), 15);
+
 		//It's not possible to completely prevent a user from (de)activating "hidden" plugins because plugin API
 		//functions like activate_plugin() and deactivate_plugins() don't provide a way to abort (de)activation.
 		//However, we can still block edits and *some* other actions that WP verifies with check_admin_referer().
@@ -196,6 +199,37 @@ class amePluginVisibility extends amePersistentModule {
 	}
 
 	/**
+	 * Filter out updates associated with plugins that are not visible to the current user.
+	 *
+	 * @param StdClass|null $updates
+	 * @return StdClass|null
+	 */
+	public function filterPluginUpdates($updates) {
+		if ( !isset($updates->response) || !is_array($updates->response) ) {
+			//Either there are no updates or we don't recognize the format.
+			return $updates;
+		}
+
+		//Let's not hide anything when no one is logged in. We don't check is_admin() here
+		//because plugin updates can appear in the Toolbar and that's visible in the front-end.
+		$user = wp_get_current_user();
+		if ( !$user->exists() || (defined('DOING_CRON') && DOING_CRON) ) {
+			return $updates;
+		}
+
+		$pluginFileNames = array_keys($updates->response);
+		foreach($pluginFileNames as $fileName) {
+			//Remove all hidden plugins.
+			if ( !$this->isPluginVisible($fileName, $user) ) {
+				unset($updates->response[$fileName]);
+				continue;
+			}
+		}
+
+		return $updates;
+	}
+
+	/**
 	 * Verify that the current user is allowed to see the plugin that they're trying to edit, activate or deactivate.
 	 * Note that this doesn't catch bulk (de-)activation or various plugin management plugins.
 	 *
@@ -279,7 +313,6 @@ class amePluginVisibility extends amePersistentModule {
 		if ( $action === 'save_plugin_visibility' ) {
 			check_admin_referer($action);
 
-			/** @noinspection PhpComposerExtensionStubsInspection */
 			$this->settings = json_decode($post['settings'], true);
 			$this->saveSettings();
 

@@ -178,6 +178,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//but adds decompression overhead to very admin page.
 			'compress_custom_menu' => false,
 
+			//Make custom menu and page titles translatable with WPML. They will appear in the "Strings" section.
+			//This only applies to custom (i.e. changed) titles.
+			'wpml_support_enabled' => true,
+
 			//Which modules are active or inactive. Format: ['module-id' => true/false].
 			'is_active_module' => array(
 				'highlight-new-menus' => false,
@@ -289,6 +293,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'options-general.php?page=mace-general-settings'             => true,
 			//"What's Your Reaction"
 			'options-general.php?page=wyr-fakes-settings' => true,
+			//WP-Job-Manager 1.34.1
+			'index.php?page=job-manager-setup' => true,
 		);
 
 		//AJAXify screen options
@@ -871,7 +877,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//jQuery Form plugin. This is a more recent version than the one included with WP.
 		wp_register_auto_versioned_script('ame-jquery-form', plugins_url('js/jquery.form.js', $this->plugin_file), array('jquery'));
 		//jQuery cookie plugin
-		wp_register_auto_versioned_script('jquery-cookie', plugins_url('js/jquery.biscuit.js', $this->plugin_file), array('jquery'));
+		wp_register_auto_versioned_script('ame-jquery-cookie', plugins_url('js/jquery.biscuit.js', $this->plugin_file), array('jquery'));
 	}
 
 	/**
@@ -997,7 +1003,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$editor_dependencies = array(
 			'jquery', 'jquery-ui-sortable', 'jquery-ui-dialog', 'jquery-ui-tabs',
 			'ame-jquery-form', 'jquery-ui-droppable', 'jquery-qtip',
-			'jquery-sort', 'jquery-json', 'jquery-cookie',
+			'jquery-sort', 'jquery-json', 'ame-jquery-cookie',
 			'wp-color-picker', 'ame-lodash', 'ame-access-editor', 'ame-actor-manager',
 			'ame-actor-selector',
 		);
@@ -1263,7 +1269,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 *
 	 * @param array|null $custom_menu
 	 * @param string|null $config_id Supported values: 'network-admin', 'global' or 'site'
-	 * @throws InvalidMenuException
 	 */
 	function set_custom_menu($custom_menu, $config_id = null) {
 		if ( $config_id === null ) {
@@ -1273,7 +1278,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$custom_menu = apply_filters('ame_pre_set_custom_menu', $custom_menu);
 
 		$previous_custom_menu = $this->load_custom_menu($config_id);
-		$this->update_wpml_strings($previous_custom_menu, $custom_menu);
+		if ( !empty($this->options['wpml_support_enabled']) ) {
+			$this->update_wpml_strings($previous_custom_menu, $custom_menu);
+		}
 
 		if ( !empty($custom_menu) ) {
 			$custom_menu['prebuilt_virtual_caps'] = $this->build_virtual_capability_list($custom_menu);
@@ -1312,7 +1319,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 *
 	 * @param null $config_id
 	 * @return array|null Either a menu in the internal format, or NULL if there is no custom menu available.
-	 * @throws InvalidMenuException
 	 */
 	public function load_custom_menu($config_id = null) {
 		if ( $config_id === null ) {
@@ -1426,6 +1432,28 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		} else {
 			$capability = apply_filters('admin_menu_editor-capability', $access);
 			return current_user_can($capability);
+		}
+	}
+
+	/**
+	 * Determine if a specific user can access the menu editor.
+	 *
+	 * @param int $userId
+	 * @return bool
+	 */
+	public function user_can_edit_menu($userId) {
+		$access = $this->options['plugin_access'];
+		if ( $access === 'super_admin' ) {
+			return is_super_admin($userId);
+		} else if ( $access === 'specific_user' ) {
+			return $userId == $this->options['allowed_user_id'];
+		} else {
+			$capability = apply_filters('admin_menu_editor-capability', $access);
+			$user = get_user_by('id', $userId);
+			if ( !$user ) {
+				return false;
+			}
+			return $user->has_cap($capability);
 		}
 	}
 
@@ -2128,7 +2156,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		//WPML support: Use translated menu titles where available.
-		if ( !$item['separator'] && $hasCustomMenuTitle && function_exists('icl_t') ) {
+		if (
+			!$item['separator'] && $hasCustomMenuTitle && function_exists('icl_t')
+			&& !empty($this->options['wpml_support_enabled'])
+		) {
 			$item['menu_title'] = icl_t(
 				self::WPML_CONTEXT,
 				$this->get_wpml_name_for($item, 'menu_title'),
@@ -2569,6 +2600,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 			//Menu data compression.
 			$this->options['compress_custom_menu'] = !empty($this->post['compress_custom_menu']);
+
+			//WPML support.
+			$this->options['wpml_support_enabled'] = !empty($this->post['wpml_support_enabled']);
 
 			//Active modules.
 			$activeModules = isset($this->post['active_modules']) ? (array)$this->post['active_modules'] : array();

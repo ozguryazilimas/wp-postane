@@ -1022,6 +1022,15 @@ a#ws-ame-delete-color-preset:hover {
 
 .ws_dialog_subpanel {
   margin-bottom: 1em; }
+  .ws_dialog_subpanel fieldset p {
+    margin-top: 0;
+    margin-bottom: 4px; }
+
+.ws-ame-dialog-subheading {
+  display: block;
+  font-weight: 600;
+  font-size: 1em;
+  margin: 0 0 0.2em 0; }
 
 #ws_menu_access_editor .ws_column_access,
 #ws_menu_access_editor .ws_ext_action_check_column {
@@ -1388,7 +1397,11 @@ a#ws-ame-delete-color-preset:hover {
   margin-left: 0.5em; }
 
 .ws_ame_doc_box .hndle, .ws_ame_custom_postbox .hndle {
-  cursor: default !important; }
+  cursor: default !important;
+  border-bottom: 1px solid #ccd0d4; }
+.ws_ame_doc_box .handlediv, .ws_ame_custom_postbox .handlediv {
+  display: block;
+  float: right; }
 .ws_ame_doc_box .inside, .ws_ame_custom_postbox .inside {
   margin-bottom: 0; }
 .ws_ame_doc_box ul, .ws_ame_custom_postbox ul {
@@ -1499,6 +1512,17 @@ a#ws-ame-delete-color-preset:hover {
   right: 20px;
   bottom: 40px;
   z-index: 100; }
+
+.ws-ame-icon-radio-button-group > label {
+  display: inline-block;
+  padding: 8px;
+  border: 1px solid #ccd0d4;
+  border-radius: 2px;
+  margin-right: 0.5em; }
+
+span.description {
+  color: #666;
+  font-style: italic; }
 
 .test-wrap {
   background-color: #444444;

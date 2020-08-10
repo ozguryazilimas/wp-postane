@@ -3,6 +3,8 @@ abstract class ameMenu {
 	const format_name = 'Admin Menu Editor menu';
 	const format_version = '7.0';
 
+	protected static $custom_loaders = array();
+
 	/**
 	 * Load an admin menu from a JSON string.
 	 *
@@ -158,6 +160,10 @@ abstract class ameMenu {
 			$menu['prebuilt_virtual_caps'] = $arr['prebuilt_virtual_caps'];
 		}
 
+		foreach(self::$custom_loaders as $callback) {
+			$menu = call_user_func($callback, $menu, $arr);
+		}
+
 		return $menu;
 	}
 
@@ -213,7 +219,6 @@ abstract class ameMenu {
 				gettype($result)
 			);
 			if ( function_exists('json_last_error') ) {
-				/** @noinspection PhpComposerExtensionStubsInspection */
 				$message .= sprintf(' JSON error code: %d.', json_last_error());
 			}
 			if ( function_exists('json_last_error_msg') ) {
@@ -512,11 +517,24 @@ abstract class ameMenu {
 			}
 		}
 	}
+
+	/**
+	 * @param callable $callback
+	 */
+	public static function add_custom_loader($callback) {
+		self::$custom_loaders[] = $callback;
+	}
 }
 
 class ameGrantedCapabilityFilter {
-	private $post_types = array();
-	private $taxonomies = array();
+	/**
+	 * @var string[]
+	 */
+	private $post_types;
+	/**
+	 * @var string[]
+	 */
+	private $taxonomies;
 
 	public function __construct() {
 		$this->post_types = get_post_types(array('public' => true, 'show_ui' => true), 'names', 'or');
@@ -582,4 +600,4 @@ class ameModifiedIconDetector {
 
 class InvalidMenuException extends Exception {}
 
-class ameInvalidJsonException extends RuntimeException {};
+class ameInvalidJsonException extends RuntimeException {}

@@ -306,6 +306,8 @@ function loadMenuConfiguration(adminMenu) {
 
 	//Display the new admin menu.
 	outputWpMenu(adminMenu.tree);
+
+	$(document).trigger('menuConfigurationLoaded.adminMenuEditor', adminMenu);
 }
 
 /*
@@ -1626,12 +1628,15 @@ function readMenuTreeState(){
 
 	AmeCapabilityManager.pruneGrantedUserCapabilities();
 
-	return {
+	var result = {
 		tree: tree,
 		color_presets: $.extend(true, {}, colorPresets),
 		granted_capabilities: AmeCapabilityManager.getGrantedCapabilities(),
 		component_visibility: $.extend(true, {}, generalComponentVisibility)
 	};
+
+	$(document).trigger('getMenuConfiguration.adminMenuEditor', result);
+	return result;
 }
 
 /**
@@ -4071,7 +4076,9 @@ function ameOnDomReady() {
 	//Toggle the second row of toolbar buttons.
 	$('#ws_toggle_toolbar').click(function() {
 		var visible = menuEditorNode.find('.ws_second_toolbar_row').toggle().is(':visible');
-		$.cookie('ame-show-second-toolbar', visible ? '1' : '0', {expires: 90});
+		if (typeof $['cookie'] !== 'undefined') {
+			$.cookie('ame-show-second-toolbar', visible ? '1' : '0', {expires: 90});
+		}
 	});
 
 
@@ -4337,7 +4344,9 @@ function ameOnDomReady() {
 
 	$('#ws_toggle_editor_layout').click(function () {
 		var isCompactLayoutEnabled = menuEditorNode.toggleClass('ws_compact_layout').hasClass('ws_compact_layout');
-		$.cookie('ame-compact-layout', isCompactLayoutEnabled ? '1' : '0', {expires: 90});
+		if (typeof $['cookie'] !== 'undefined') {
+			$.cookie('ame-compact-layout', isCompactLayoutEnabled ? '1' : '0', {expires: 90});
+		}
 
 		var button = $(this);
 		if (button.is('input')) {
@@ -4682,11 +4691,13 @@ function ameOnDomReady() {
 
 		$generalVisBox.find('.handlediv').click(function() {
 			$generalVisBox.toggleClass('closed');
-			$.cookie(
-				'ame_vis_box_open',
-				($generalVisBox.hasClass('closed') ? '0' : '1'),
-				{ expires: 90 }
-			);
+			if (typeof $['cookie'] !== 'undefined') {
+				$.cookie(
+					'ame_vis_box_open',
+					($generalVisBox.hasClass('closed') ? '0' : '1'),
+					{ expires: 90 }
+				);
+			}
 		});
 
 		actorSelectorWidget.onChange(function() {
@@ -4811,11 +4822,13 @@ function ameOnDomReady() {
 	var $howToBox = $("#ws_ame_how_to_box");
 	$howToBox.find(".handlediv").click(function() {
 		$howToBox.toggleClass('closed');
-		$.cookie(
-			'ame_how_to_box_open',
-			($howToBox.hasClass('closed') ? '0' : '1'),
-			{ expires: 180 }
-		);
+		if (typeof $['cookie'] !== 'undefined') {
+			$.cookie(
+				'ame_how_to_box_open',
+				($howToBox.hasClass('closed') ? '0' : '1'),
+				{ expires: 180 }
+			);
+		}
 	});
 
 
