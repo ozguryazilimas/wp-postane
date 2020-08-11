@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 
-	class Wapt_FactoryForms_MediaButtonControl extends Wbcr_FactoryForms427_Control {
+	class Wapt_FactoryForms_MediaButtonControl extends Wbcr_FactoryForms429_Control {
 
 		public $type = 'wapt-mediabutton';
 

@@ -15,24 +15,24 @@ function check_api_google(provider) {
             provider_input.removeClass("checked_api_key_proccess");
             provider_input2.removeClass("checked_api_key_proccess");
             if (html) {
-                provider_input.removeClass("checked_api_key_fail");
-                provider_input2.removeClass("checked_api_key_fail");
-                provider_input.addClass("checked_api_key_ok");
-                provider_input2.addClass("checked_api_key_ok");
+                // Классы перекрываются каким-то другим !important
+                // Пришлось костыльнуть так
+                provider_input.attr('style', 'border-color: green !important');
+                provider_input2.attr('style', 'border-color: green !important');
             } else {
-                provider_input.removeClass("checked_api_key_ok");
-                provider_input2.removeClass("checked_api_key_ok");
-                provider_input.addClass("checked_api_key_fail");
-                provider_input2.addClass("checked_api_key_fail");
+                // Классы перекрываются каким-то другим !important
+                // Пришлось костыльнуть так
+                provider_input.attr('style', 'border-color: red !important');
+                provider_input2.attr('style', 'border-color: red !important');
             }
         });
     } else if (provider_input.val() === "" && provider_input2.val() === "") {
         provider_input.removeClass("checked_api_key_proccess");
         provider_input2.removeClass("checked_api_key_proccess");
-        provider_input.removeClass("checked_api_key_fail");
-        provider_input2.removeClass("checked_api_key_fail");
-        provider_input.removeClass("checked_api_key_ok");
-        provider_input2.removeClass("checked_api_key_ok");
+        // Классы перекрываются каким-то другим !important
+        // Пришлось костыльнуть так
+        provider_input.removeAttr('style');
+        provider_input2.removeAttr('style');
 
     }
 }

@@ -3,7 +3,7 @@
 Plugin Name: Auto Featured Image (Auto Post Thumbnail)
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Featured Image from the first image in post or any custom post type only if Featured Image is not set manually. Featured Image Generation From Title. Native image search for Elementor, Gutenberg, Classic Editor.
-Version: 3.7.2
+Version: 3.7.3
 Author: Creativemotion <support@cm-wp.com>
 Author URI: cm-wp.com
 Text Domain: apt
@@ -53,7 +53,7 @@ $plugin_info = array(
 	// Служба поддержки
 	// Указываем ссылки и имена страниц сайта плагина, чтобы иметь к ним доступ внутри плагина.
 	'support_details'      => array(
-		'url'       => 'https://cm-wp.com/apt',// Ссылка на сайт плагина
+		'url'       => 'https://cm-wp.com/afi',// Ссылка на сайт плагина
 		'pages_map' => array(
 			'features' => 'premium-features', // {site}/premium-features "страница возможности"
 			'pricing'  => 'pricing', // {site}/prices страница "цены"
@@ -120,21 +120,21 @@ $plugin_info = array(
 	// Подключаемые модуль фреймворка
 	// Необходимые для ускоренной разработки продуктов Webcrfatic
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_430', 'admin' ),
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_432', 'admin' ),
 		// Модуль позволяет использовать различные js виджеты и стили оформление форм.
-		array( 'libs/factory/forms', 'factory_forms_427', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_429', 'admin' ),
 		// Модуль позволяет быстро создавать формы и готовые поля настроек
-		array( 'libs/factory/pages', 'factory_pages_429', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_431', 'admin' ),
 		// Модуль позволяет создавать страницы плагина, в том числе шаблонизированные страницы
-		array( 'libs/factory/freemius', 'factory_freemius_117', 'all' ),
+		array( 'libs/factory/freemius', 'factory_freemius_119', 'all' ),
 		// Модуль для работы с freemius.com, содержит api библиотеку и провайдеры для премиум менеджера
-		array( 'libs/factory/adverts', 'factory_adverts_109', 'admin' ),
+		array( 'libs/factory/adverts', 'factory_adverts_111', 'admin' ),
 		// Модуль для показа рекламы в админпанели Wordpress, вся реклама вытягивается через API Creative Motion
-		array( 'libs/factory/feedback', 'factory_feedback_104', 'admin' ),
+		array( 'libs/factory/feedback', 'factory_feedback_106', 'admin' ),
 	)
 );
 
-$wapt_compatibility = new Wbcr_Factory429_Requirements( __FILE__, array_merge( $plugin_info, array(
+$wapt_compatibility = new Wbcr_Factory431_Requirements( __FILE__, array_merge( $plugin_info, array(
 	'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
 	'required_php_version'    => '5.4',
 	'required_wp_version'     => '4.2.0',
@@ -174,6 +174,7 @@ define( 'WAPT_PLUGIN_DIR', dirname( __FILE__ ) );
  */
 require_once( WAPT_PLUGIN_DIR . '/libs/factory/core/boot.php' );
 require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-plugin.php' );
+require_once( WAPT_PLUGIN_DIR . '/includes/image-search/boot.php' );
 
 try {
 	new WAPT_Plugin( __FILE__, array_merge( $plugin_info, array(

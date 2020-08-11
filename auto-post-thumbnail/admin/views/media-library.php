@@ -3,10 +3,28 @@ $ajaxloader        = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader-line.gif";
 $apt_content_nonce = wp_create_nonce( 'apt_content' );
 ?>
 
+<?php if ( WAPT_Plugin::app()->premium->is_activate() ): ?>
+    <div class="watson-categories">
+        <div id="ajaxloader-watson" style="display: none">
+            <img src="<?= $ajaxloader ?>" alt="">
+        </div>
+        <div id="message"></div>
+        <div class="categories">
+            <ul id="categories-list">
+                <li></li>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>
+
 <div class="tabs">
     <ul>
 		<?php $i = 1;
 		foreach ( $this->sources as $src => $slug ) {
+			if ( $slug === '_skip' ) {
+				continue;
+			}
+
 			$is_pro = "";
 			if ( empty( $slug ) && ! WAPT_Plugin::app()->premium->is_activate() ) {
 				$is_pro = " (PRO)";
@@ -19,6 +37,10 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
     <div id='ajaxloader' style='display:none;'><img src='<?php echo $ajaxloader; ?>' width='150px' alt=''></div>
     <div id="media-frame-content">
 		<?php foreach ( $this->sources as $src => $slug ) {
+			if ( $slug === '_skip' ) {
+				continue;
+			}
+
 			echo "<div id='tab-" . strtolower( $src ) . "' class='tab'></div>";
 		} ?>
     </div>
@@ -39,12 +61,12 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
         padding-top: 10px;
     }
 
-    .tabs ul {
+    .tabs > ul {
         margin: 0px;
         padding: 0px;
     }
 
-    .tabs ul:after {
+    .tabs > ul:after {
         content: "";
         display: block;
         clear: both;
@@ -52,7 +74,7 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
         background: #008ec2;
     }
 
-    .tabs ul li {
+    .tabs > ul li {
         padding: 0px;
         cursor: pointer;
         display: block;
@@ -66,18 +88,18 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
         text-align: center;
     }
 
-    .tabs ul li.active, .tabs ul li.active:hover {
+    .tabs > ul li.active, .tabs ul li.active:hover {
         background: #008ec2;
         color: #ffffff;
         width: 15%;
     }
 
-    .tabs ul li:hover {
+    .tabs > ul li:hover {
         background: #008ec2;
         color: #dddddd;
     }
 
-    .tabs li {
+    .tabs > ul li {
         margin-bottom: 0;
     }
 
@@ -151,9 +173,15 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
                         action: 'source_content',
                         source: jQuery(tabs).children("div").children("div").eq(i).attr('id'),
                         wpnonce: '<?php echo $apt_content_nonce; ?>',
+                        post_id: <?=isset( $_GET['post_id'] ) ? $_GET['post_id'] : - 1?>,
                     }).done(function (content) {
                         jQuery('#ajaxloader').hide();
                         jQuery('#' + jQuery(tabs).children("div").children("div").eq(i).attr('id')).html(content);
+
+                        if (typeof window.search_query !== 'undefined') {
+                            jQuery(".input_query").val(window.search_query);
+                            jQuery(".submit_button").click();
+                        }
                     });
 
                 };
@@ -172,5 +200,29 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
             return this.each(createTabs);
         };
         jQuery(".tabs").lightTabs();
+
+        jQuery("#ajax-watson").on('click', function () {
+            jQuery("#ajaxloader-watson").css('display', 'block');
+            jQuery.post(ajaxurl, {
+                action: 'apt_api_watson',
+                postId: <?=isset( $_GET['post_id'] ) ? $_GET['post_id'] : - 1?>,
+                nonce: "<?=wp_create_nonce( 'apt_api_watson' )?>"
+            }, function (response) {
+                console.log(response);
+                if (response.success) {
+                    jQuery("#ajaxloader-watson").css('display', 'none');
+                    response.data.categories.forEach(function (category) {
+                        var ul = jQuery(`<li style="cursor: pointer; color: #007bff" data-label="${category.label}">${category.label} (${(category.score * 100).toFixed(2)}%)</li>`);
+                        ul.on('click', function () {
+                            jQuery(".input_query").val(jQuery(this).attr('data-label'));
+                            jQuery(".submit_button").click();
+                        });
+                        jQuery("#categories-list").append(ul);
+                    });
+                } else {
+                    jQuery("#message").html(response.data.message);
+                }
+            });
+        });
     });
 </script>

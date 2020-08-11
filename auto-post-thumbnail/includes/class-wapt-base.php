@@ -48,10 +48,19 @@ class AutoPostThumbnails {
 		$this->numberOfColumn = 4;
 
 		$this->sources = [
-			'google'   => WAPT_PLUGIN_SLUG,
-			'pixabay'  => '',
-			'unsplash' => '',
+			'google'    => WAPT_PLUGIN_SLUG,
+			'recommend' => '',
+			'pixabay'   => '',
+			'unsplash'  => '',
 		];
+		if ( WAPT_Plugin::app()->is_premium() ) {
+			$this->sources = [
+				'recommend' => '',
+				'google'    => WAPT_PLUGIN_SLUG,
+				'pixabay'   => '',
+				'unsplash'  => '',
+			];
+		}
 
 		$this->init_includes();
 		$this->init();
@@ -106,15 +115,9 @@ class AutoPostThumbnails {
 		//add_action( 'admin_menu', [ $this, 'init_admin_menu' ] );
 
 		// Plugin hook for adding CSS and JS files required for this plugin
-		add_action( 'admin_enqueue_scripts', [
-			$this,
-			'enqueue_assets',
-		] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets', ] );
 
-		add_action( 'wp_enqueue_media', [
-			$this,
-			'enqueue_media',
-		] );
+		add_action( 'wp_enqueue_media', [ $this, 'enqueue_media', ] );
 
 		//Hook to adding "image" column in Posts table
 		add_filter( 'manage_post_posts_columns', [ $this, 'add_image_column' ], 4 );
@@ -127,14 +130,8 @@ class AutoPostThumbnails {
 		add_action( "media_upload_apttab", [ $this, "aptTabHandle" ] );
 
 		//AJAX actions
-		add_action( 'wp_ajax_generatepostthumbnail', [
-			$this,
-			'ajax_process_post',
-		] );
-		add_action( 'wp_ajax_delete_post_thumbnails', [
-			$this,
-			'ajax_delete_post_thumbnails',
-		] );
+		add_action( 'wp_ajax_generatepostthumbnail', [ $this, 'ajax_process_post', ] );
+		add_action( 'wp_ajax_delete_post_thumbnails', [ $this, 'ajax_delete_post_thumbnails', ] );
 		add_action( 'wp_ajax_get-posts-ids', [ $this, 'get_posts_ids' ] );
 		add_action( 'wp_ajax_apt_replace_thumbnail', [ $this, 'apt_replace_thumbnail' ] );
 		add_action( 'wp_ajax_apt_get_thumbnail', [ $this, 'apt_get_thumbnail' ] );
@@ -211,13 +208,7 @@ class AutoPostThumbnails {
 
 		}
 
-		wp_enqueue_script(
-			'apt-admin-check_api',
-			WAPT_PLUGIN_URL . '/admin/assets/js/check-api.js',
-			array(),
-			false,
-			true
-		);
+		wp_enqueue_script( 'apt-admin-check_api', WAPT_PLUGIN_URL . '/admin/assets/js/check-api.js', array(), false, true );
 
 		//-----------------------------------
 		if ( 'settings_page_generate-post-thumbnails' != $hook_suffix ) {
@@ -241,7 +232,7 @@ class AutoPostThumbnails {
 				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages429' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages431' ) ) {
 							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
 						}
 						if ( $redirect_url ) {
@@ -455,25 +446,15 @@ class AutoPostThumbnails {
 			'post_type'      => $q_type,
 			'meta_query'     => array(
 				'relation' => 'AND',
-				array(
-					'key'     => '_thumbnail_id',
-					'compare' => $q_has_thumb
-				),
-				array(
-					'key'     => 'skip_post_thumb',
-					'compare' => 'NOT EXISTS'
-				),
+				array( 'key' => '_thumbnail_id', 'compare' => $q_has_thumb ),
+				array( 'key' => 'skip_post_thumb', 'compare' => 'NOT EXISTS' ),
 			),
 		);
 		if ( $category ) {
 			$args['cat'] = $category;
 		}
 		if ( $date_start && $date_start ) {
-			$args['date_query'][] = array(
-				'after'     => $date_start,
-				'before'    => $date_end,
-				'inclusive' => true,
-			);
+			$args['date_query'][] = array( 'after' => $date_start, 'before' => $date_end, 'inclusive' => true, );
 		}
 		$query = new WP_Query( $args );
 
@@ -730,12 +711,7 @@ class AutoPostThumbnails {
 		if ( ! ini_get( 'allow_url_fopen' ) ) {
 			$file_data = $this->curl_get_file_contents( $imageUrl );
 		} else {
-			$arrContextOptions = array(
-				"ssl" => array(
-					"verify_peer"      => false,
-					"verify_peer_name" => false,
-				),
-			);
+			$arrContextOptions = array( "ssl" => array( "verify_peer" => false, "verify_peer_name" => false, ), );
 			$file_data         = file_get_contents( $imageUrl, false, stream_context_create( $arrContextOptions ) );
 		}
 
@@ -831,9 +807,7 @@ class AutoPostThumbnails {
 	public function add_image_column( $columns ) {
 		$pro = $this->is_premium() ? '' : ' <sup class="wapt-sup-pro">(PRO)<sup>';
 
-		$new_columns = [
-			'apt-image' => __( 'Image', 'apt' ) . $pro,
-		];
+		$new_columns = [ 'apt-image' => __( 'Image', 'apt' ) . $pro, ];
 
 		return array_slice( $columns, 0, $this->numberOfColumn ) + $new_columns + array_slice( $columns, $this->numberOfColumn );
 	}
@@ -872,7 +846,16 @@ class AutoPostThumbnails {
 
 					if ( $thumb_id == - 1 ) //generate image
 					{
-						$thumb_id = $this->generate_and_attachment( $post_id );
+						switch ( $_POST['feature'] ) {
+
+							case 'from_meaning':
+
+								break;
+
+							default:
+								$thumb_id = $this->generate_and_attachment( $post_id );
+
+						}
 					}
 				} else if ( isset( $_POST['image'] ) && ! empty( $_POST['image'] ) ) {
 					$img = $_POST['image'];
@@ -932,7 +915,7 @@ class AutoPostThumbnails {
 		$wpnonce    = wp_create_nonce( 'set_post_thumbnail-' . $post_id );
 		$ajaxloader = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader.gif";
 		$content    = "";
-		$html       = "<a title='{$title}' href='#' class='modal-init-js' id='modal-init-js_{$post_id}' " . ")'>{$imgTag}</a>" . "<span id='loader_{$post_id}' style='display:none;'><img src='{$ajaxloader}' width='100px' alt=''></span>" . "<div id='post_imgs_{$post_id}' class='imgs' style='display:none;'>" . "<span style='display:none;'><img src='{$ajaxloader}' alt=''></span><p>{$content}</p></div>";
+		$html       = "<a title='{$title}' href='#' class='modal-init-js' id='modal-init-js_{$post_id}' " . "onclick='return window.aptModalShow(this, {$post_id}, \"$wpnonce\");'>{$imgTag}</a>" . "<span id='loader_{$post_id}' style='display:none;'><img src='{$ajaxloader}' width='100px' alt=''></span>" . "<div id='post_imgs_{$post_id}' class='imgs' style='display:none;'>" . "<span style='display:none;'><img src='{$ajaxloader}' alt=''></span><p>{$content}</p></div>";
 
 		return $html;
 	}
@@ -958,7 +941,7 @@ class AutoPostThumbnails {
 	public function addToMediaFromApt() {
 		//media_upload_header();
 		$this->is_in_medialibrary = true;
-		$this->sources            = apply_filters( 'wapt/sources', $this->sources );
+		$this->sources            = apply_filters( 'wapt/sources', $this->sources, 'add_to_media_from_apt' );
 		require_once WAPT_ABSPATH . "/admin/views/media-library.php";
 	}
 
@@ -991,7 +974,7 @@ class AutoPostThumbnails {
 	 */
 	public function media_AptTabContent() {
 		media_upload_header();
-		$this->sources = apply_filters( 'wapt/sources', $this->sources );
+		$this->sources = apply_filters( 'wapt/sources', $this->sources, 'tab_content' );
 		require_once WAPT_ABSPATH . "/admin/views/media-library.php";
 	}
 
@@ -1003,7 +986,7 @@ class AutoPostThumbnails {
 		if ( ! wp_verify_nonce( $_POST['wpnonce'], 'apt_content' ) ) {
 			die( 'Error: Invalid request.' );
 		}
-		$this->sources = apply_filters( 'wapt/sources', $this->sources );
+		$this->sources = apply_filters( 'wapt/sources', $this->sources, 'source_content' );
 		if ( isset( $_POST['source'] ) && ! empty( $_POST['source'] ) ) {
 			$source = str_replace( "tab-", "", sanitize_text_field( $_POST['source'] ) );
 
@@ -1045,7 +1028,11 @@ class AutoPostThumbnails {
 					break;
 				case 'unsplash':
 					parse_str( parse_url( $_POST['image_url'], PHP_URL_QUERY ), $url_query );
-					$file_ext    = $url_query['fm'];
+					$file_ext = $url_query['fm'];
+					if ( ! $file_ext ) {
+						$file_ext = 'jpg';
+					}
+
 					$image_title = sanitize_text_field( $_POST['title'] );
 					break;
 				case 'google':
@@ -1167,56 +1154,50 @@ class AutoPostThumbnails {
 			die( 'Error: Invalid request.' );
 		}
 		if ( isset( $_POST['query'] ) ) {
-			$query      = $_POST['query'];
-			$google_key = WAPT_Plugin::app()->getOption( 'google_apikey' );
-			$google_cse = WAPT_Plugin::app()->getOption( 'google_cse' );
-
 			if ( isset( $_POST['page'] ) ) {
 				$page = $_POST['page'];
 			} else {
 				$page = 1;
 			}
 
-			if ( isset( $_POST['rights'] ) && (int) $_POST['rights'] ) {
-				$rights = "&rights=(cc_publicdomain%7Ccc_attribute%7Ccc_sharealike).-(cc_noncommercial%7Ccc_nonderived)";
-			} else {
-				$rights = '';
-			}
-
-			$start = ( ( $page - 1 ) * 10 ) + 1;
-			$url   = "https://www.googleapis.com/customsearch/v1?searchType=image&start={$start}{$rights}&q=" . urlencode( $query ) . "&key={$google_key}&cx={$google_cse}";
-
-			// Check limits
-			$limit = WAPT_Plugin::app()->getOption( 'google_limit' );
-			if ( ! $limit ) {
-				WAPT_Plugin::app()->updateOption( 'google_limit', array( 'expires' => time(), 'count' => 10 ) );
-			}
-			if ( time() - $limit['expires'] > 3600 ) //1 hour - 3600 sec
-			{
-				$limit['expires'] = time();
-				$limit['count']   = 10;
-				WAPT_Plugin::app()->updateOption( 'google_limit', $limit );
-			}
-
-			if ( ! WAPT_Plugin::app()->premium->is_active() && ! WAPT_Plugin::app()->premium->is_activate() ) {
-				if ( $limit['count'] < 1 ) {
-					die( sprintf( __( 'You have reached the limit at the moment. Try again in an 1 hour or <a href="%s">Upgrade to Premium</a>', 'apt' ), WAPT_Plugin::app()->get_support()->get_pricing_url( true, 'license_page' ) ) );
+			$post_title = '';
+			if ( isset( $_POST['post_id'] ) && is_numeric( $_POST['post_id'] ) ) {
+				$post = get_post( (int) $_POST['post_id'] );
+				if ( is_object( $post ) ) {
+					$post_title = $post->post_title;
 				}
-				$limit['count'] --;
 			}
 
-			if ( $start === 1 ) {
-				WAPT_Plugin::app()->updateOption( 'google_limit', $limit );
+			$query = isset( $_POST['query'] ) && ! empty( $_POST['query'] ) && isset( $_POST['watson'] ) && (bool) (int) $_POST['watson'] ? $_POST['query'] : $post_title;
+
+			try {
+				$response = ( new WAPT_GoogleImages() )->search( $query, $query == $post_title ? $page + 1 : $page );
+
+				if ( isset( $_POST['limit'] ) && is_numeric( $_POST['limit'] ) ) {
+					$response->limit( (int) $_POST['limit'] );
+				}
+
+				if ( ! $response->is_error() && isset( $_POST['post_id'] ) && is_numeric( $_POST['post_id'] ) ) {
+					$post = get_post( (int) $_POST['post_id'] );
+					if ( $post ) {
+						$response2 = ( new WAPT_GoogleImages() )->search( $post->post_title, $page );
+
+						if ( isset( $_POST['limit'] ) && is_numeric( $_POST['limit'] ) ) {
+							$response2->limit( (int) $_POST['limit'] );
+						}
+
+						$response->images = array_merge( $response2->images, $response->images );
+					}
+				}
+			} catch ( Exception $e ) {
+				die( $e->getMessage() );
 			}
 
-			$response = wp_remote_get( $url, [ 'timeout' => 100 ] );
-			if ( is_wp_error( $response ) ) {
-				die( 'Error: ' . $response->get_error_message() );
+			if ( $response->is_error() ) {
+				wp_send_json_error( $response );
 			}
 
-			echo $response['body'];
-
-			exit;
+			wp_send_json_success( $response );
 		}
 	}
 
@@ -1287,8 +1268,7 @@ class AutoPostThumbnails {
 		// Получаем заголовок плагина
 		$plugin_title = WAPT_Plugin::app()->getPluginTitle();
 
-		$notice_text = '<p><b>' . $plugin_title . ':</b> ' .
-		               sprintf( __( "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on our website.", 'apt' ), 'https://cm-wp.com/auto-featured-image-from-title/' ) . "</p>";
+		$notice_text = '<p><b>' . $plugin_title . ':</b> ' . sprintf( __( "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on our website.", 'apt' ), 'https://cm-wp.com/auto-featured-image-from-title/' ) . "</p>";
 		$notices[]   = [
 			'id'              => 'apt_show_about_370',
 			//error, success, warning
@@ -1415,6 +1395,14 @@ class AutoPostThumbnails {
 		}
 
 		return $image;
+
+	}
+
+	public function find_from_text_category( $post_id ) {
+		$post = get_post( $post_id );
+
+		$response = ( new WAPT_IBMWatson( strip_tags( $post->post_content ) ) )->categories()->analyze();
+
 
 	}
 

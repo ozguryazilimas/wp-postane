@@ -10,7 +10,6 @@
  * global ajaxurl, apt_thumb - language array
  */
 (function ($) {
-//Отображение окна со всеми картинками в тексте поста
     jQuery(document).ready(function ($) {
 
         jQuery(document).on('click', '#hide_notice_auto_generation', function (e) {
@@ -24,7 +23,7 @@
 
         });
 
-
+        //Отображение окна со всеми картинками в тексте поста
         window.aptModalShow = function (that, postid, wpnonce) {
 
             var $modal = $('#post_imgs_' + postid).find('> p');

@@ -1,4 +1,5 @@
-<?php $ajaxloader = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader-line.gif";
+<?php
+$ajaxloader = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader-line.gif";
 $apt_google_nonce = wp_create_nonce( 'apt_api' );
 
 $apt_google_key = WAPT_Plugin::app()->getOption( 'google_apikey' );
@@ -12,78 +13,21 @@ if ( isset( $_REQUEST['post'] ) ) {
 
 if ( $apt_google_key && $apt_google_cse ) {
 	?>
+    <script>
+        window.wapt_no_hits = '<?=__( 'No hits', 'apt' )?>';
+        window.wapt_download_svg = '<?php echo WAPT_PLUGIN_URL . '/admin/assets/img/download.svg' ?>';
+    </script>
+    <script src="<?=WAPT_PLUGIN_URL . '/admin/assets/js/search-page.js'?>"></script>
     <script type="text/javascript">
 
         function call_api(query, page = 1) {
-            jQuery.post(ajaxurl,
-                {
-                    action: 'apt_api_google',
-                    query: query,
-                    rights: rights,
-                    page: page,
-                    nonce: '<?php  echo $apt_google_nonce; ?>'
-                },
-                function (data) {
-                    try {
-                        data = JSON.parse(data);
-                    } catch (e) {
-                        jQuery('#loader_flex').hide();
-                        jQuery('#page_num_div').hide();
-                        jQuery('#prev_page').hide();
-                        jQuery('#next_page').hide();
-                        jQuery('#google_results').html(data);
-                        return false;
-                    }
-
-                    if (!parseInt(data.searchInformation.totalResults) > 0) {
-                        jQuery('#loader_flex').hide();
-                        jQuery('#page_num_div').hide();
-                        jQuery('#prev_page').hide();
-                        jQuery('#next_page').hide();
-                        jQuery('#google_results').html('<?php  echo __( 'No hits', 'apt' ); ?>');
-                        return false;
-                    }
-                    show_images(data, page);
-                });
-        }
-
-        function show_images(data, page) {
-            var s = '';
-            var totalhits = 100; //google limit
-            if (page > 1) jQuery('#prev_page').show();
-            else jQuery('#prev_page').hide();
-            if (page < parseInt(totalhits, 10) / 10) jQuery('#next_page').show();
-            else jQuery('#next_page').hide();
-
-            jQuery('#page_num_div').html(page);
-            jQuery('#page_num_div').show();
-
-            jQuery.each(data.items, function (k, v) {
-                descr = v.title;
-                if (!descr) descr = "google_image";
-                s += '<div class="item upload_google" ' +
-                    'data-service="google" ' +
-                    'data-title="' + descr + '" ' +
-                    'data-url="' + v.link + '" ' +
-                    'data-link="' + v.image.contextLink + '" ' +
-                    'data-w="' + v.image.width + '" ' +
-                    'data-h="' + v.image.height + '">' +
-                    '<img src="' + v.image.thumbnailLink + '">' +
-                    '<div class="download"><img src="<?php echo WAPT_PLUGIN_URL . '/admin/assets/img/download.svg' ?>">' +
-                    '<div>' + v.image.width + '×' + v.image.height + '<br>' +
-                    '<a href="' + v.image.contextLink + '" target="_blank">' + descr.substr(0, 15) + '</a>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
-                //console.log(v.urls.regular);
+            findImages('google', 'apt_api_google', '<?=$apt_google_nonce?>', query, page, {
+                rights: jQuery("#filter_rights").attr('checked') === 'checked' ? 1 : 0,
             });
-            jQuery('#google_results').html(jQuery('#google_results').html() + s);
-            jQuery('.flex-images').flexImages({rowHeight: 160});
-            jQuery('#loader_flex').hide();
         }
 
         function do_submit() {
-            jQuery('#loader_flex').show();
+            jQuery('#loader_flex-google').show();
             q = jQuery('#query', form).val();
             p = jQuery('#page_num', form).val();
 
@@ -168,7 +112,7 @@ if ( $apt_google_key && $apt_google_cse ) {
                 </label>
             </div>
         </form>
-        <div id="loader_flex" style="display: none;"><img src='<?php echo $ajaxloader; ?>' width='100px' alt=''></div>
+        <div id="loader_flex-google" style="display: none;"><img src='<?php echo $ajaxloader; ?>' width='100px' alt=''></div>
         <div id="google_results" class="flex-images"></div>
         <div class="apt_pages">
             <button id="prev_page" style="display: none;"><span

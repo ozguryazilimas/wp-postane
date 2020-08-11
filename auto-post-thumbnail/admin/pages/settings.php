@@ -48,7 +48,7 @@ class WAPT_Settings extends WAPT_Page {
 		$this->capabilitiy   = "manage_options";
 		$this->template_name = "settings";
 
-		add_action( 'wbcr_factory_forms_427_register_controls', function () {
+		add_action( 'wbcr_factory_forms_429_register_controls', function () {
 			$colorControls = array(
 				[
 					'type'    => 'wapt-color',
@@ -469,12 +469,12 @@ class WAPT_Settings extends WAPT_Page {
 		wp_enqueue_script( 'wapt-settings-script', WAPT_PLUGIN_URL . '/admin/assets/js/settings.js', [], WAPT_PLUGIN_VERSION, true );
 		// creating a form
 		global $form;
-		$form = new Wbcr_FactoryForms427_Form( [
+		$form = new Wbcr_FactoryForms429_Form( [
 			'scope' => substr( $this->plugin->getPrefix(), 0, - 1 ),
 			'name'  => 'setting'
 		], $this->plugin );
 
-		$form->setProvider( new Wbcr_FactoryForms427_OptionsValueProvider( $this->plugin ) );
+		$form->setProvider( new Wbcr_FactoryForms429_OptionsValueProvider( $this->plugin ) );
 
 		$wapt_tab = WAPT_Plugin::app()->request->get( 'apt_tab', '' );
 		switch ( $wapt_tab ) {

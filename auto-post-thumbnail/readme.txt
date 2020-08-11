@@ -2,8 +2,8 @@
 Contributors: creativemotion
 Tags: post thumbnails, featured image, elementor, thumbnails, featured image from title
 Requires at least: 4.2
-Tested up to: 5.4.2
-Requires PHP: 5.4
+Tested up to: 5.5
+Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -56,9 +56,10 @@ This features of APT simplifies the process of publishing content and saves you 
 4. Upload your own background images.
 5. Upload your own fonts.
 6. Position the text on the image.
-7. Unlimited search & upload featured images from Google, Unsplash, Pixabay
+7. Unlimited search & upload featured images from Google, Unsplash, Pixabay.
+8. Images are recommended by the NEURAL NETWORK.
 
-[learn more](https://cm-wp.com/apt/pricing/).
+[learn more](https://cm-wp.com/afi/).
 
 == What’s Next ==
 
@@ -78,7 +79,7 @@ TRANSLATIONS:
 · Russian.
 We need your help with translation AFI (APT) to your language. Our goal is to make APT an international and user-friendly tool for everyone. If you want to help with the translation, contact us through the contact form in the plugin or send a message at the support forum. In return, we will give you a premium license for free!
 
-https://cm-wp.com/apt/
+https://cm-wp.com/afi/
 
 == Installation ==
 
@@ -104,9 +105,11 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= 3.7.3 =
+* Added: Images in posts are recommended by the NEURAL NETWORK. (PRO)
+
 = 3.7.2 =
 * Fixed: generation of featured images
-
 
 = 3.7.1 =
 * Added: "Commercial and derived use" checkbox for Google search

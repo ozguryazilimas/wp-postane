@@ -56,7 +56,7 @@ if ( isset( $_GET['apt_tab'] ) && ! empty( $_GET['apt_tab'] ) ) {
         <div class="content">
             <section id="section-<?php echo $current_tab; ?>">
                 <div class="wrap">
-                    <div class="factory-bootstrap-430 factory-fontawesome-000">
+                    <div class="factory-bootstrap-432 factory-fontawesome-000">
                         <div class="row">
                             <div class="col-md-8">
                                 <form method="post" class="form-horizontal">

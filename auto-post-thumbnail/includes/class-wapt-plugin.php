@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WAPT_Plugin extends Wbcr_Factory429_Plugin {
+class WAPT_Plugin extends Wbcr_Factory431_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory429_Plugin
+	 * @var Wbcr_Factory431_Plugin
 	 */
 	private static $app;
 
@@ -74,7 +74,7 @@ class WAPT_Plugin extends Wbcr_Factory429_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return Wbcr_Factory429_Plugin
+	 * @return Wbcr_Factory431_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -88,9 +88,8 @@ class WAPT_Plugin extends Wbcr_Factory429_Plugin {
 	public function is_premium() {
 		if (
 			$this->premium->is_active() &&
-			$this->premium->is_activate() &&
-			is_plugin_active( "{$this->premium->get_setting('slug')}/{$this->premium->get_setting('slug')}.php" )
-			//$this->premium->is_install_package()
+			$this->premium->is_activate()
+			//&& $this->premium->is_install_package()
 		) {
 			return true;
 		} else {
