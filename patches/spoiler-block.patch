@@ -1,7 +1,7 @@
-diff --git a/spoiler-block/css/style.css b/spoiler-block/css/style.css
-index bab07e3..f8c104b 100644
---- a/spoiler-block/css/style.css
-+++ b/spoiler-block/css/style.css
+diff --git b/spoiler-block/css/style.css a/spoiler-block/css/style.css
+index bab07e39..f8c104ba 100644
+--- b/spoiler-block/css/style.css
++++ a/spoiler-block/css/style.css
 @@ -1,17 +1,18 @@
 -/* just code */
 -.spoiler{
@@ -38,10 +38,39 @@ index bab07e3..f8c104b 100644
 +	display: none;
  }
 \ No newline at end of file
-diff --git a/spoiler-block/spoiler_block.php b/spoiler-block/spoiler_block.php
-index c5f33bb..b93eed7 100644
---- a/spoiler-block/spoiler_block.php
-+++ b/spoiler-block/spoiler_block.php
+diff --git b/spoiler-block/js/scripts.js a/spoiler-block/js/scripts.js
+index 64777716..9a31e9b4 100644
+--- b/spoiler-block/js/scripts.js
++++ a/spoiler-block/js/scripts.js
+@@ -2,7 +2,7 @@ jQuery(document).ready(function($){
+ 	$(".spoiler").each(function(){
+ 		sb_replace_content(this);
+ 	});
+-	$(".spoiler").click(function(){
++	$(".spoiler").on('click', function() {
+ 		if($(this).hasClass("spoiler")){
+ 			$(this).fadeOut("slow", function(){
+ 				$(this).removeClass("spoiler").addClass("spoiler-open");
+@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
+ 			});
+ 		}
+ 	});
+-	$(".spoiler-open").live('click', function(){
++	$(".spoiler-open").on('click', function(){
+ 		if($(this).hasClass("spoiler-open")){
+ 			$(this).fadeIn("slow", function(){
+ 				$(this).removeClass("spoiler-open").addClass("spoiler");
+@@ -31,4 +31,4 @@ function sb_replace_content(element){
+ 		
+ 	jQuery(element).attr("rel", content);
+ 	jQuery(element).html(spoiler_message);
+-}
+\ No newline at end of file
++}
+diff --git b/spoiler-block/spoiler_block.php a/spoiler-block/spoiler_block.php
+index c5f33bb1..b93eed7c 100644
+--- b/spoiler-block/spoiler_block.php
++++ a/spoiler-block/spoiler_block.php
 @@ -53,13 +53,14 @@ if (!defined('SPOILERBLOCK_CONFIG_PAGE')) {
    define('SPOILERBLOCK_CONFIG_PAGE', "spoiler-block-config");
  }
