@@ -59,7 +59,7 @@ This features of APT simplifies the process of publishing content and saves you 
 7. Unlimited search & upload featured images from Google, Unsplash, Pixabay.
 8. Images are recommended by the NEURAL NETWORK.
 
-[learn more](https://cm-wp.com/afi/).
+[learn more](https://cm-wp.com/apt/).
 
 == What’s Next ==
 
@@ -79,7 +79,7 @@ TRANSLATIONS:
 · Russian.
 We need your help with translation AFI (APT) to your language. Our goal is to make APT an international and user-friendly tool for everyone. If you want to help with the translation, contact us through the contact form in the plugin or send a message at the support forum. In return, we will give you a premium license for free!
 
-https://cm-wp.com/afi/
+https://cm-wp.com/apt/
 
 == Installation ==
 
@@ -104,6 +104,9 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.7.4 =
+* Fixed: Google image search
 
 = 3.7.3 =
 * Added: Images in posts are recommended by the NEURAL NETWORK. (PRO)

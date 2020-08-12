@@ -1168,7 +1168,11 @@ class AutoPostThumbnails {
 				}
 			}
 
-			$query = isset( $_POST['query'] ) && ! empty( $_POST['query'] ) && isset( $_POST['watson'] ) && (bool) (int) $_POST['watson'] ? $_POST['query'] : $post_title;
+			if ( isset( $_POST['watson'] ) ) {
+				$query = isset( $_POST['query'] ) && ! empty( $_POST['query'] ) && (bool) (int) $_POST['watson'] ? $_POST['query'] : $post_title;
+			} else {
+				$query = isset( $_POST['query'] ) ? $_POST['query'] : '';
+			}
 
 			try {
 				$response = ( new WAPT_GoogleImages() )->search( $query, $query == $post_title ? $page + 1 : $page );
