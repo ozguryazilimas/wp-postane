@@ -1,9 +1,9 @@
 === TinyMCE Advanced ===
 Contributors: azaozz
 Tags: block editor, classic editor, editor, Gutenberg, formatting, tinymce, write
-Requires at least: 5.4
-Tested up to: 5.4
-Stable tag: 5.4.0
+Requires at least: 5.5
+Tested up to: 5.5
+Stable tag: 5.5.0
 Requires PHP: 5.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,7 +15,7 @@ Extends and enhances the block editor (Gutenberg) and the classic editor (TinyMC
 TinyMCE Advanced introduces a "Classic Paragraph" block for the block editor (Gutenberg).
 If you are not quite ready to switch to the block editor, or have plugins that cannot be used there (yet), using the Classic Paragraph block is your best option. It lets you to continue to use the familiar TinyMCE editor for most tasks, and at the same time gives you full access to all blocks and new features in the block editor.
 
-Version 5.4 continues to improve and enhance the new features introduced in version 5.0 of TinyMCE Advanced. It includes an improved "Clear Formatting" button, several advanced settings for tables, and importing and exporting of the settings to a file.
+Version 5.5 continues to improve and enhance the new features introduced in version 5.0 of TinyMCE Advanced. It includes an improved "Clear Formatting" button, several advanced settings for tables, and importing and exporting of the settings to a file.
 
 If you want to continue to use the previous ("classic") editor in WordPress 5.0 and newer, this plugin has an option to replace the new editor with the previous one. If you prefer to have access to both editors side by side or to allow your users to switch editors, it would be better to install the [Classic Editor plugin](https://wordpress.org/plugins/classic-editor/). TinyMCE Advanced is fully compatible with the classic editor plugin and similar plugins that restore use of the previous WordPress editor.
 
@@ -46,6 +46,11 @@ In that terms TinyMCE Advanced does not affect your website's user privacy in an
 Best is to install directly from WordPress. If manual installation is required, please make sure that the plugin files are in a folder named "tinymce-advanced" (not two nested folders) in the WordPress plugins folder, usually "wp-content/plugins".
 
 == Changelog ==
+
+= 5.5.0 =
+* Updated for WordPress 5.5 and TinyMCE 4.9.10.
+* Updated/renamed the subscript and superscript buttons as these are now in Gutenberg.
+* Minor CSS fixes and enhancements.
 
 = 5.4.0 =
 * Updated for WordPress 5.4.
