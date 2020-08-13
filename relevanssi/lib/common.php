@@ -23,12 +23,12 @@
  */
 function relevanssi_mb_strcasecmp( $str1, $str2, $encoding = null ) {
 	if ( ! function_exists( 'mb_internal_encoding' ) ) {
-		return strcasecmp( $str1, $str2 );
+		return strnatcasecmp( $str1, $str2 );
 	} else {
 		if ( null === $encoding ) {
 			$encoding = mb_internal_encoding();
 		}
-		return strcmp( mb_strtoupper( $str1, $encoding ), mb_strtoupper( $str2, $encoding ) );
+		return strnatcmp( mb_strtoupper( $str1, $encoding ), mb_strtoupper( $str2, $encoding ) );
 	}
 }
 
@@ -557,7 +557,7 @@ function relevanssi_generate_phrase_queries( $phrases, $taxonomies, $custom_fiel
 			}
 
 			if ( 'visible' === $custom_fields ) {
-				$keys = "AND (m.meta_key NOT LIKE '_%' OR m.meta_key = '_relevanssi_pdf_content')";
+				$keys = "AND (m.meta_key NOT LIKE '\_%' OR m.meta_key = '_relevanssi_pdf_content')";
 			}
 
 			$query = "(SELECT ID
@@ -1052,6 +1052,12 @@ function relevanssi_get_post_status( $post_id ) {
 		return 'publish';
 	}
 
+	$original_id = $post_id;
+	$blog_id     = -1;
+	if ( is_multisite() ) {
+		$blog_id = get_current_blog_id();
+		$post_id = $blog_id . '|' . $post_id;
+	}
 	if ( isset( $relevanssi_post_array[ $post_id ] ) ) {
 		$status = $relevanssi_post_array[ $post_id ]->post_status;
 		if ( 'inherit' === $status ) {
@@ -1066,14 +1072,32 @@ function relevanssi_get_post_status( $post_id ) {
 		}
 		return $status;
 	} else {
-		// No hit from the cache; let's add this post to the cache.
-		$post = get_post( $post_id );
-		if ( ! $post ) {
-			return '';
-		}
+		// No hit from the cache; let's fetch.
+		$post = relevanssi_get_post( $original_id, $blog_id );
 
-		$relevanssi_post_array[ $post_id ] = $post;
-		return $post->post_status;
+		if ( is_wp_error( $post ) ) {
+			$post->add_data(
+				'not_found',
+				"relevanssi_get_post_status() didn't get a post, relevanssi_get_post() returned null."
+			);
+			return $post;
+		} elseif ( $post ) {
+			if ( 'inherit' === $post->post_status ) {
+				// Attachment, let's see what the parent says.
+				$parent = $relevanssi_post_array[ $post_id ]->post_parent;
+				if ( ! $parent ) {
+					// Attachment without a parent, let's assume it's public.
+					$status = 'publish';
+				} else {
+					$status = relevanssi_get_post_status( $parent );
+				}
+			} else {
+				$status = $post->post_status;
+			}
+			return $status;
+		} else {
+			return new WP_Error( 'not_found', 'Something went wrong.' );
+		}
 	}
 }
 
@@ -1091,17 +1115,27 @@ function relevanssi_get_post_status( $post_id ) {
  */
 function relevanssi_get_post_type( $post_id ) {
 	global $relevanssi_post_array;
+
+	$original_id = $post_id;
+	$blog_id     = -1;
+	if ( function_exists( 'get_current_blog_id' ) ) {
+		$blog_id = get_current_blog_id();
+		$post_id = $blog_id . '|' . $post_id;
+	}
+
 	if ( isset( $relevanssi_post_array[ $post_id ] ) ) {
 		return $relevanssi_post_array[ $post_id ]->post_type;
 	} else {
-		// No hit from the cache; let's add this post to the cache.
-		$post = relevanssi_get_post( $post_id );
+		// No hit from the cache; let's fetch.
+		$post = relevanssi_get_post( $original_id, $blog_id );
 
 		if ( is_wp_error( $post ) ) {
-			$post->add_data( 'not_found', "relevanssi_get_post_type() didn't get a post, relevanssi_get_post() returned null." );
+			$post->add_data(
+				'not_found',
+				"relevanssi_get_post_type() didn't get a post, relevanssi_get_post() returned null."
+			);
 			return $post;
 		} elseif ( $post ) {
-			$relevanssi_post_array[ $post_id ] = $post;
 			return $post->post_type;
 		} else {
 			return new WP_Error( 'not_found', 'Something went wrong.' );
@@ -1368,8 +1402,18 @@ function relevanssi_get_the_title( $post_id ) {
 function relevanssi_update_doc_count() {
 	global $wpdb, $relevanssi_variables;
 	$doc_count = $wpdb->get_var( 'SELECT COUNT(DISTINCT(doc)) FROM ' . $relevanssi_variables['relevanssi_table'] ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-	update_option( 'relevanssi_doc_count', $doc_count );
+	update_option( 'relevanssi_doc_count', is_null( $doc_count ) ? 0 : $doc_count );
+
 	return $doc_count;
+}
+
+/**
+ * Launches an asynchronous action to update the doc count and other counts.
+ *
+ * This function should be used instead of relevanssi_update_doc_count().
+ */
+function relevanssi_async_update_doc_count() {
+	relevanssi_launch_ajax_action( 'relevanssi_update_counts' );
 }
 
 /**
@@ -2003,6 +2047,7 @@ function relevanssi_remove_page_builder_shortcodes( $content ) {
 			'/\[et_pb_code.*?\].*\[\/et_pb_code\]/im',
 			'/\[et_pb_sidebar.*?\].*\[\/et_pb_sidebar\]/im',
 			'/\[et_pb_fullwidth_slider.*?\].*\[\/et_pb_fullwidth_slider\]/im',
+			'/\[et_pb_fullwidth_code.*?\].*\[\/et_pb_fullwidth_code\]/im',
 			'/\[vc_raw_html.*?\].*\[\/vc_raw_html\]/im',
 			'/\[fusion_imageframe.*?\].*\[\/fusion_imageframe\]/im',
 			'/\[fusion_code.*?\].*\[\/fusion_code\]/im',
@@ -2083,7 +2128,7 @@ function relevanssi_check_indexing_restriction() {
 		$callbacks = array_flip(
 			array_keys(
 				array_merge(
-					[],
+					array(),
 					...$wp_filter['relevanssi_indexing_restriction']->callbacks
 				)
 			)
@@ -2100,7 +2145,13 @@ function relevanssi_check_indexing_restriction() {
 		if ( ! empty( $callbacks ) ) {
 			$returns_string = array();
 			foreach ( array_keys( $callbacks ) as $callback ) {
-				$return = call_user_func( $callback, array( 'mysql' => '', 'reason' => '' ) );
+				$return = call_user_func(
+					$callback,
+					array(
+						'mysql'  => '',
+						'reason' => '',
+					)
+				);
 				if ( is_string( $return ) ) {
 					$returns_string[] = '<code>' . $callback . '</code>';
 				}
@@ -2119,4 +2170,44 @@ EOH;
 		}
 	}
 	return $notice;
+}
+
+/**
+ * Launches an asynchronous Ajax action.
+ *
+ * Makes a wp_remote_post() call with the specific action. Handles nonce
+ * verification.
+ *
+ * @see wp_remove_post()
+ * @see wp_create_nonce()
+ *
+ * @param string $action       The action to trigger (also the name of the
+ * nonce).
+ * @param array  $payload_args The parameters sent to the action. Defaults to
+ * an empty array.
+ *
+ * @return WP_Error|array The wp_remote_post() response or WP_Error on failure.
+ */
+function relevanssi_launch_ajax_action( $action, $payload_args = array() ) {
+	$cookies = array();
+	foreach ( $_COOKIE as $name => $value ) {
+		$cookies[] = "$name=" . rawurlencode(
+			is_array( $value ) ? wp_json_encode( $value ) : $value
+		);
+	}
+	$default_payload = array(
+		'action' => $action,
+		'_nonce' => wp_create_nonce( $action ),
+	);
+	$payload         = array_merge( $default_payload, $payload_args );
+	$args            = array(
+		'timeout'  => 0.01,
+		'blocking' => false,
+		'body'     => $payload,
+		'headers'  => array(
+			'cookie' => implode( '; ', $cookies ),
+		),
+	);
+	$url             = admin_url( 'admin-ajax.php' );
+	return wp_remote_post( $url, $args );
 }

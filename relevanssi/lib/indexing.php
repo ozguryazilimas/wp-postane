@@ -308,7 +308,7 @@ function relevanssi_build_index( $extend_offset = false, $verbose = null, $post_
 			relevanssi_premium_indexing();
 		}
 
-		update_option( 'relevanssi_index', '' );
+		update_option( 'relevanssi_index', '', false );
 	}
 
 	$indexing_query_args = relevanssi_indexing_query_args( $extend_offset, $post_limit );
@@ -366,11 +366,11 @@ function relevanssi_build_index( $extend_offset = false, $verbose = null, $post_
 
 	if ( ( 0 === $size ) || ( count( $content ) < $size ) ) {
 		$complete = true;
-		update_option( 'relevanssi_indexed', 'done' );
-	}
+		update_option( 'relevanssi_indexed', 'done', false );
 
-	// Update the document count variable.
-	relevanssi_update_doc_count();
+		// Update the document count variable.
+		relevanssi_async_update_doc_count();
+	}
 
 	wp_suspend_cache_addition( false );
 
@@ -858,6 +858,8 @@ function relevanssi_insert_edit( $post_id ) {
 	if ( $index_this_post ) {
 		$bypass_global_post = true;
 		$return_value       = relevanssi_publish( $post_id, $bypass_global_post );
+
+		relevanssi_async_update_doc_count();
 	} else {
 		// The post isn't supposed to be indexed anymore, remove it from index.
 		relevanssi_remove_doc( $post_id );
@@ -868,8 +870,6 @@ function relevanssi_insert_edit( $post_id ) {
 		);
 		$return_value = 'removed';
 	}
-
-	relevanssi_update_doc_count();
 
 	return $return_value;
 }
@@ -892,7 +892,6 @@ function relevanssi_insert_edit( $post_id ) {
 function relevanssi_index_comment( $comment_id ) {
 	$comment_indexing_type = get_option( 'relevanssi_index_comments' );
 	$no_pingbacks          = false;
-	$post_id               = null;
 
 	if ( 'normal' === $comment_indexing_type ) {
 		$no_pingbacks = true;
@@ -905,7 +904,7 @@ function relevanssi_index_comment( $comment_id ) {
 	if ( ! $comment ) {
 		return 'nocommentfound';
 	}
-	if ( $no_pingbacks && ! empty( $comment->comment_type ) ) {
+	if ( $no_pingbacks && 'pingback' === $comment->comment_type ) {
 		return 'donotindex';
 	}
 	if ( 1 !== intval( $comment->comment_approved ) ) {
@@ -955,7 +954,21 @@ function relevanssi_get_comments( $post_id ) {
 			'number' => $limit,
 			'type'   => $comment_types,
 		);
-		$comments = get_approved_comments( $post_id, $args );
+		$comments = get_approved_comments(
+			$post_id,
+			/**
+			 * Filters the arguments for get_approved_comments().
+			 *
+			 * Useful for indexing custom comment types, for example.
+			 *
+			 * @param array An array of arguments. Don't adjust 'offset' or
+			 * 'number' to avoid problems.
+			 */
+			apply_filters(
+				'relevanssi_get_approved_comments_args',
+				$args
+			)
+		);
 		if ( count( $comments ) === 0 ) {
 			break;
 		}
@@ -1021,8 +1034,6 @@ function relevanssi_remove_doc( $post_id, $keep_internal_links = false ) {
 			return;
 		}
 
-		$doc_count = get_option( 'relevanssi_doc_count' );
-
 		$rows_updated = $wpdb->query(
 			$wpdb->prepare(
 				'DELETE FROM ' . $relevanssi_variables['relevanssi_table'] . ' WHERE doc=%d', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -1031,7 +1042,7 @@ function relevanssi_remove_doc( $post_id, $keep_internal_links = false ) {
 		);
 
 		if ( $rows_updated && $rows_updated > 0 ) {
-			update_option( 'relevanssi_doc_count', $doc_count - $rows_updated );
+			relevanssi_async_update_doc_count();
 		}
 	}
 }
@@ -1474,7 +1485,9 @@ function relevanssi_index_content( &$insert_data, $post, $min_word_length, $debu
 
 	if ( 'on' === get_option( 'relevanssi_expand_shortcodes' ) ) {
 		// TablePress support.
-		$tablepress_controller = relevanssi_enable_tablepress_shortcodes();
+		if ( function_exists( 'relevanssi_enable_tablepress_shortcodes' ) ) {
+			$tablepress_controller = relevanssi_enable_tablepress_shortcodes();
+		}
 
 		relevanssi_disable_shortcodes();
 
@@ -1501,6 +1514,7 @@ function relevanssi_index_content( &$insert_data, $post, $min_word_length, $debu
 		$contents,
 		$post
 	);
+
 	$contents = relevanssi_strip_invisibles( $contents );
 
 	// Premium feature for better control over internal links.
