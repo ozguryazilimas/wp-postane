@@ -34,7 +34,8 @@
 
 <div class='yarpp_form_row yarpp_form_checkbox'>
     <div>
-        <input type='checkbox' name='recent_only' value='true' <?php checked((bool) $recent) ?> />
+        <input type='checkbox' name='recent_only' id='yarpp-recent_only' value='true' <?php checked((bool) $recent) ?> />
+				<label for="yarpp-recent_only">
         <?php 
 				
 				printf(
@@ -44,6 +45,7 @@
         $recent_units
 				);
         ?>
+				</label>
     </div>
 </div>
 

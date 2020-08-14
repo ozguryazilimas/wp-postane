@@ -7,7 +7,7 @@ class YARPP_Widget extends WP_Widget {
 
 	public function __construct() {
 		parent::__construct(false, 'Related Posts (YARPP)', array('description' => 'Related Posts and/or Sponsored Content'));
-        wp_enqueue_style('yarppWidgetCss', YARPP_URL.'/style/widget.css');
+        wp_enqueue_style('yarppWidgetCss', plugins_url('/style/widget.css', YARPP_MAIN_FILE));
 	}
 
 	public function widget($args, $instance) {

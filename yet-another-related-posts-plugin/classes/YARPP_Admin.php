@@ -20,15 +20,15 @@ class YARPP_Admin {
     /* If action = flush and the nonce is correct, reset the cache */
     if (isset($_GET['action']) && $_GET['action'] === 'flush' && check_ajax_referer('yarpp_cache_flush', false, false) !== false) {
       $this->core->cache->flush();
-      wp_redirect(admin_url('/options-general.php?page=yarpp'));
-      die();
+      wp_safe_redirect(admin_url('/options-general.php?page=yarpp'));
+      exit;
     }
 
     /* If action = copy_templates and the nonce is correct, copy templates */
     if (isset($_GET['action']) && $_GET['action'] === 'copy_templates' && check_ajax_referer('yarpp_copy_templates', false, false) !== false) {
       $this->copy_templates();
-      wp_redirect(admin_url('/options-general.php?page=yarpp'));
-      die();
+      wp_safe_redirect(admin_url('/options-general.php?page=yarpp'));
+      exit;
     }
 
     add_action('admin_init', array($this, 'ajax_register'));
@@ -793,7 +793,7 @@ class YARPP_Admin {
 		$plugins[] = (object) array(
 			'title_slugged' => sanitize_title($plugin_data['Name']),
 			'basename'    => plugin_basename(YARPP_MAIN_FILE),
-			'logo'    => YARPP_URL . '/images/icon-256x256.png',
+			'logo'    => plugins_url('/images/icon-256x256.png', YARPP_MAIN_FILE),
 			'api_server' => 'yarpp.com',
 			'script_cache_ver'    => YARPP_VERSION,
 			'bgcolor' => '#fff',

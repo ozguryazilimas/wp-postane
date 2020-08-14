@@ -24,7 +24,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 
         $this->checkbox( 'auto_display_archive', __( "Also display in archives", 'yarpp' ) );
 
-        $this->textbox( 'limit', __( 'Maximum number of related posts:', 'yarpp' ) );
+        $this->textbox( 'limit', __( 'Maximum number of posts:', 'yarpp' ) );
 								
         $this->template_checkbox( false );
         echo "</div>";
@@ -33,7 +33,10 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
         $choice = false === $chosen_template ? 'builtin' :
             ( $chosen_template == 'thumbnails' ? 'thumbnails' : 'custom' );
 
-        echo "<div class='postbox yarpp_subbox template_options_custom'";
+	    // Wrap all the options in a div with a gray border
+	    echo '<div class="postbox">';
+
+        echo "<div class='yarpp_subbox template_options_custom'";
         if ( $choice != 'custom' )
             echo ' style="display: none;"';
         echo ">";
@@ -41,16 +44,15 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
         $this->template_file( false );
         echo "</div>";
 
-        echo "<div class='postbox yarpp_subbox template_options_thumbnails'";
+        echo "<div class='yarpp_subbox template_options_thumbnails'";
         if ( $choice != 'thumbnails' )
             echo ' style="display: none;"';
         echo ">";
         $this->textbox( 'thumbnails_heading', __( 'Heading:', 'yarpp' ), 40 );
         $this->textbox( 'thumbnails_default', __( 'Default image (URL):', 'yarpp' ), 40 );
-        $this->textbox( 'no_results', __( 'Default display if no results:', 'yarpp' ), 40, 'sync_no_results' );
         echo "</div>";
 
-        echo "<div class='postbox yarpp_subbox template_options_builtin'";
+        echo "<div class='yarpp_subbox template_options_builtin'";
         if ( $choice != 'builtin' )
             echo ' style="display: none;"';
         echo ">";
@@ -61,9 +63,14 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
         $this->textbox( 'excerpt_length', __( 'Excerpt length (No. of words):', 'yarpp' ), 10, 'excerpted' );
 
         $this->beforeafter( array( 'before_post', 'after_post' ), __( "Before / after (excerpt):", 'yarpp' ), 10, 'excerpted', __( "For example:", 'yarpp' ) . ' &lt;li&gt;&lt;/li&gt;' . __( ' or ', 'yarpp' ) . '&lt;dl&gt;&lt;/dl&gt;' );
-
-        $this->textbox( 'no_results', __( 'Default display if no results:', 'yarpp' ), 40, 'sync_no_results' );
         echo "</div>";
+
+	    echo '<div class="yarpp_no_results">';
+	    $this->textbox( 'no_results', __( 'Default display if no results:', 'yarpp' ), 40, 'sync_no_results' );
+	    echo '</div>';
+
+	    // Close the div that wraps all the options
+	    echo '</div>';
 
         $this->displayorder( 'order' );
         $this->checkbox( 'promote_yarpp', __( "Link to YARPP?", 'yarpp' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( sprintf( __( "This option will add the code %s These links are greatly appreciated and keeps us motivated.", 'yarpp' ), "<code>" . htmlspecialchars( sprintf( __( "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.", 'yarpp' ), 'https://yarpp.com' ) )."</code>" ) ) . "'>&nbsp;</span>", 'yarpp' );

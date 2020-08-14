@@ -10,6 +10,14 @@ jQuery(function($) {
     
     metabox.find('.yarpp_subbox').hide();
     metabox.find('.template_options_' + value).show();
+
+    var no_results_area = metabox.find('.yarpp_no_results');
+    // The "no_results" input is special. Its used by the non-custom templates.
+    if(value === 'custom'){
+      no_results_area.hide();
+    } else {
+      no_results_area.show();
+    }
     excerpt.apply(metabox);
   }
   $('.use_template').each(template).change(template);
@@ -74,6 +82,29 @@ jQuery(function($) {
   }
   $('#yarpp-rss_display, #yarpp_display_rss .handlediv, #yarpp_display_rss-hide').click(rss_display);
   rss_display();
+
+
+  function yarpp_rest_display() {
+    if ( !$('#yarpp_display_api .inside').is(':visible') )
+      return;
+    if ( $('#yarpp-rest_api_display').is(':checked') ) {
+      $('.yarpp_rest_displayed').show();
+    } else {
+      $('.yarpp_rest_displayed').hide();
+    }
+  }
+  $('#yarpp-rest_api_display').click(yarpp_rest_display);
+  yarpp_rest_display();
+
+  function yarpp_rest_cache_display() {
+    if ( $('#yarpp-rest_api_client_side_caching').is(':checked') ) {
+      $('.yarpp_rest_browser_cache_displayed').show();
+    } else {
+      $('.yarpp_rest_browser_cache_displayed').hide();
+    }
+  }
+  $('#yarpp-rest_api_client_side_caching').click(yarpp_rest_cache_display);
+  yarpp_rest_cache_display();
 
   var loaded_disallows = false;
   function load_disallows() {

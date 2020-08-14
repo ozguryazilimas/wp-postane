@@ -204,8 +204,24 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 			}
 		}
 		$read_controller_response->set_data($ordered_rest_results);
+		$this->maybe_set_caching_headers($read_controller_response);
 		return $read_controller_response;
     }
+
+	/**
+	 * If enables, sends HTTP headers along with the response that instructs the browser to cache the results.
+	 * @param WP_Rest_Response $response
+	 */
+    protected function maybe_set_caching_headers(WP_Rest_Response $response){
+		global $yarpp;
+		if ($yarpp->get_option('rest_api_client_side_caching')) {
+			$seconds_to_cache = (int)$yarpp->get_option('yarpp_rest_api_cache_time') * MINUTE_IN_SECONDS;
+			$seconds_to_cache = max($seconds_to_cache, 0); // ensure non-negative values
+			$ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+			$response->header("Expires", $ts);
+			$response->header("Cache-Control", "public, max-age=$seconds_to_cache");
+		}
+	}
 
 	/**
 	 * @param string $post_type

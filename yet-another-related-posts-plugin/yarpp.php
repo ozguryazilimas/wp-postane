@@ -2,7 +2,7 @@
 /*
 Plugin Name: Yet Another Related Posts Plugin (YARPP)
 Description: Adds related posts to your site and in RSS feeds, based on a powerful, customizable algorithm.
-Version: 5.5.0
+Version: 5.6.0
 Author: YARPP
 Author URI: https://yarpp.com/
 Plugin URI: https://yarpp.com/
@@ -23,9 +23,13 @@ if(!defined('WP_CONTENT_DIR')){
     define('WP_CONTENT_DIR', substr($tr,0,strrpos($tr,'/')));
 }
 
-define('YARPP_VERSION', '5.5.0');
+define('YARPP_VERSION', '5.6.0');
 
 define('YARPP_DIR', dirname(__FILE__));
+/**
+ * @deprecated Instead use plugins_url(...,YARPP_MAIN_FILE);. See https://wordpress.org/support/topic/support-for-multilingual-2/
+ * This may be removed after October 2020.
+ */
 define('YARPP_URL', plugins_url('',__FILE__));
 define('YARPP_MAIN_FILE',__FILE__);
 

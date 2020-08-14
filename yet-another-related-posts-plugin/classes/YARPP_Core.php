@@ -181,7 +181,9 @@ class YARPP {
 			'auto_display_post_types' => array('post'),
 			'pools' => array(),
 			'manually_using_thumbnails' => false,
-			'rest_api_display' => true
+			'rest_api_display' => true,
+			'rest_api_client_side_caching' => false,
+			'yarpp_rest_api_cache_time' => 15
 		);
 	}
 	
@@ -1075,7 +1077,7 @@ class YARPP {
         /* If we're already in a YARPP loop, stop now. */
         if ($this->cache->is_yarpp_time() || $this->cache_bypass->is_yarpp_time()) return false;
         $this->enforce();
-        wp_enqueue_style('yarppRelatedCss', YARPP_URL.'/style/related.css');
+        wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
         $output = null;
 
         if (is_numeric($reference_ID)) {

@@ -14,7 +14,13 @@ class YARPP_Meta_Box_Pool extends YARPP_Meta_Box {
 		$exclude_tt_ids = wp_parse_id_list( yarpp_get_option( 'exclude' ) );
 		$exclude_term_ids = $yarpp->admin->get_term_ids_from_tt_ids($taxonomy, $exclude_tt_ids);
 		if ( count( $exclude_term_ids ) ) {
-			$terms = get_terms( $taxonomy, array( 'include' => $exclude_term_ids ) );
+			$terms = get_terms(
+				array(
+					'taxonomy' => $taxonomy,
+					'include' => $exclude_term_ids,
+					'hide_empty' => false
+				)
+			);
 			foreach ( $terms as $term ) {
 				echo "<input type='checkbox' name='exclude[{$term->term_taxonomy_id}]' id='exclude_{$term->term_taxonomy_id}' value='true' checked='checked' /> <label for='exclude_{$term->term_taxonomy_id}'>" . esc_html( $term->name ) . "</label> ";
 			}

@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.5
-Stable tag: 5.5.0
+Stable tag: 5.6.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -20,9 +20,10 @@ The most popular plugin to display a list of related posts on your site based on
 * **Templating**: The YARPP templating system gives you advanced control of how your results are displayed.
 * **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. 
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
+* **REST API support** - Embed related posts in your web or JavaScript driven app! ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
+* **Shortcode support** - Use `[yarpp]` shortcode to place related posts anywhere ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#%0Ahow%20can%20i%20move%20the%20related%20posts%20display%3F%0A))
 * **HTTPS support**
-* **Shortcode support** for placing related posts anywhere inside or outside the content ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#%0Ahow%20can%20i%20move%20the%20related%20posts%20display%3F%0A))
-* **REST API support** ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
+* **WordPress Multisite support**
 * **Professionally maintained** and supported with regular updates
 
 **YARPP Algorithm Explained**
@@ -71,10 +72,6 @@ You can place YARPP manually wherever you’d like in your theme within [The Loo
 `[yarpp]`
 
 == Frequently Asked Questions ==
-
-**Common Questions about YARPP **
-
-Below are Frequently Asked Questions about YARPP.
 
 If your question isn't here, ask your own question at [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin).
 
@@ -285,6 +282,12 @@ add_action(
 `
 
 == Changelog ==
+= 5.6.0 (13-August-2020) =
+* New: Configurable in-browser caching option for YARPP REST API
+* Bugfix: Always include unused categories and terms in YARPP Admin options
+* [Bugfix](https://wordpress.org/support/topic/support-for-multilingual-2/): Fixed issue with loading CSS files from wrong domain on multilingual sites
+* Various Admin UI fixes
+
 = 5.5.0 (06-August-2020) =
 * New: Support for custom page types and taxonomies, including those added by WooCommerce
 * Enhancement: Show spinner while full-text indexes are being created
@@ -999,6 +1002,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.5.0 =
+= 5.6.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
