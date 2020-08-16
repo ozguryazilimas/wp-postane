@@ -2,7 +2,7 @@ jQuery(document).ready(function($){
 	$(".spoiler").each(function(){
 		sb_replace_content(this);
 	});
-	$(".spoiler").on('click', function() {
+	$(document).on('click', ".spoiler", function() {
 		if($(this).hasClass("spoiler")){
 			$(this).fadeOut("slow", function(){
 				$(this).removeClass("spoiler").addClass("spoiler-open");
@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
 			});
 		}
 	});
-	$(".spoiler-open").on('click', function(){
+	$(document).on('click', ".spoiler-open", function(){
 		if($(this).hasClass("spoiler-open")){
 			$(this).fadeIn("slow", function(){
 				$(this).removeClass("spoiler-open").addClass("spoiler");
