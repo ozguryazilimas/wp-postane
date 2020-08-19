@@ -101,7 +101,7 @@ abstract class YARPP_Cache {
 		}
 		
 		// Publish
-		if ($old_status !== 'publish' && $new_status === 'publish') {
+		if ($new_status === 'publish') {
 			/*
 			 * Find everything which is related to this post, and clear them,
 			 * so that this post might show up as related to them.
@@ -226,7 +226,11 @@ abstract class YARPP_Cache {
 		if (isset($args['post_type'])) {
 			$post_types = (array) $args['post_type'];
         } else {
-			$post_types = $this->core->get_post_types();
+			if ($this->core->get_option('cross_relate')) {
+				$post_types = $this->core->get_post_types();
+			} else {
+				$post_types = array(get_post_type($reference_post));
+			}
         }
 		$sql = '('.str_replace("post_type = 'post'", "post_type IN ('" . implode("','",$post_types). "')", $newsql).')';
 	
