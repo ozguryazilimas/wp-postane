@@ -105,6 +105,9 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= 3.7.5 =
+* Fixed: jQuery.fn.load() and other bugs after update to Wordpress 5.5
+
 = 3.7.4 =
 * Fixed: Google image search
 

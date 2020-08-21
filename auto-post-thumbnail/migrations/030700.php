@@ -3,7 +3,7 @@
 /**
  * Добавление новых опций в базу данных
  */
-class WAPTUpdate030700 extends Wbcr_Factory431_Update {
+class WAPTUpdate030700 extends Wbcr_Factory432_Update {
 
 	public function install() {
 		if ( is_multisite() && $this->plugin->isNetworkActive() ) {

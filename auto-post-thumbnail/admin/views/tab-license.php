@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div class="factory-bootstrap-432 factory-fontawesome-000">
+    <div class="factory-bootstrap-433 factory-fontawesome-000">
 		<?php wp_nonce_field( 'license' ); ?>
         <div id="wapt-license-wrapper"
              data-loader="<?php echo WAPT_PLUGIN_URL . '/admin/assets/img/loader.gif'; ?>"

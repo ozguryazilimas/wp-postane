@@ -1,6 +1,6 @@
 <div class="wrap">
     <h2><?php esc_html_e( 'Generate Featured images for posts', 'apt' ) ?></h2>
-    <div class="factory-bootstrap-432 factory-fontawesome-000">
+    <div class="factory-bootstrap-433 factory-fontawesome-000">
         <div class="row">
             <div class="col-md-9">
 

@@ -232,7 +232,7 @@ class AutoPostThumbnails {
 				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages431' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages432' ) ) {
 							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
 						}
 						if ( $redirect_url ) {
@@ -1131,6 +1131,10 @@ class AutoPostThumbnails {
 				die( json_encode( array( 'error' => "The uploaded file is not a TrueType font" ) ) );
 			}
 			//-----
+			$path = pathinfo( $file['tmp_name'] );
+			if ( $path['extension'] == 'php' || $path['extension'] == 'js' ) {
+				die( json_encode( array( 'error' => "The uploaded file is not a TrueType font." ) ) );
+			}
 
 			if ( move_uploaded_file( $file['tmp_name'], "$upload_dir/$file_name" ) ) {
 				if ( realpath( "$upload_dir/$file_name" ) ) {

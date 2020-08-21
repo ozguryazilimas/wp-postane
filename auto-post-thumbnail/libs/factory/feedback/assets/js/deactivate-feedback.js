@@ -4,7 +4,7 @@
 	var redirectLink = '';
 	var plugin_slug = '';
 
-	$(window).load(function() {
+	$(document).ready(function() {
 		var modal = $('#wbcr-factory-feedback-106-deactivate-form');
 		var deact_button = $('#the-list .deactivate > .wbcr-factory-feedback-106-plugin-slug').prev();
 		var deact_button_close = modal.find('a.button-close');

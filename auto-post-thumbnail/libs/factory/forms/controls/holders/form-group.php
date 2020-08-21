@@ -14,13 +14,13 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms429_FormGroupHolder') ) {
+	if( !class_exists('Wbcr_FactoryForms430_FormGroupHolder') ) {
 		/**
 		 * Group Holder
 		 *
 		 * @since 1.0.0
 		 */
-		class Wbcr_FactoryForms429_FormGroupHolder extends Wbcr_FactoryForms429_Holder {
+		class Wbcr_FactoryForms430_FormGroupHolder extends Wbcr_FactoryForms430_Holder {
 
 			/**
 			 * A holder type.

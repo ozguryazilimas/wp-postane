@@ -25,7 +25,7 @@ if( defined('FACTORY_FEEDBACK_106_LOADED') || (defined('FACTORY_FEEDBACK_BLOCK')
 define('FACTORY_FEEDBACK_106_LOADED', true);
 
 # Устанавливаем версию модуля
-define('FACTORY_FEEDBACK_106_VERSION', '1.0.4');
+define('FACTORY_FEEDBACK_106_VERSION', '1.0.6');
 
 # Регистрируем текстовый домен, для интернализации интерфейса модуля
 load_plugin_textdomain('wbcr_factory_feedback_106', false, dirname(plugin_basename(__FILE__)) . '/langs');
@@ -40,7 +40,7 @@ require_once(FACTORY_FEEDBACK_106_DIR . '/includes/class-base.php');
 require_once(FACTORY_FEEDBACK_106_DIR . '/includes/class-rest-request.php');
 
 /**
- * @param Wbcr_Factory431_Plugin $plugin
+ * @param Wbcr_Factory432_Plugin $plugin
  */
 add_action('wbcr_factory_feedback_106_plugin_created', function ($plugin) {
 	new WBCR\Factory_Feedback_106\Base($plugin);

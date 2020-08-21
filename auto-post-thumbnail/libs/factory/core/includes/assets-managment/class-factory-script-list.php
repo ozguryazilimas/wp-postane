@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Wbcr_Factory431_ScriptList extends Wbcr_Factory431_AssetsList {
+class Wbcr_Factory432_ScriptList extends Wbcr_Factory432_AssetsList {
 
 	public $localize_data = [];
 	public $use_ajax = false;
@@ -147,9 +147,9 @@ class Wbcr_Factory431_ScriptList extends Wbcr_Factory431_AssetsList {
 	 * Регистрирует глобальную JS переменную с пользовательскими данными
 	 *
 	 * @param string $varname
-	 * @param string $data
+	 * @param array $data
 	 *
-	 * @return Wbcr_Factory431_ScriptList $this
+	 * @return Wbcr_Factory432_ScriptList $this
 	 */
 	public function localize( $varname, $data ) {
 		$bindTo = count( $this->all ) == 0 ? null : end( $this->all );
