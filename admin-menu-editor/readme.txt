@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
 Tested up to: 5.5
-Stable tag: 1.9.6
+Stable tag: 1.9.7
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -62,6 +62,10 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.9.7 =
+* Fixed a conflict with Elementor 3.0.0-beta that caused the "Theme Builder" menu item to have the wrong URL. 
+* Minor performance optimization.
 
 = 1.9.6 =
 * Added an option to disable WPML support.
