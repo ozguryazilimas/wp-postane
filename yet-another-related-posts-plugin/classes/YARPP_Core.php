@@ -660,6 +660,7 @@ class YARPP {
 		$option_keys[] = 'excerpt_len';
 		$option_keys[] = 'show_score';
 		if (count($option_keys)) {
+			// This sanitization is sufficient because $option_keys are hardcoded above.
 			$in = "('yarpp_".join("', 'yarpp_", $option_keys)."')";
 			$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name IN {$in}");
 		}
@@ -1621,5 +1622,19 @@ class YARPP {
 		$text = str_replace('<p>', "\n", $text);
 		$text = str_replace('</p>', '', $text);
 		return $text;
+	}
+
+	/**
+	 * Gets the list of valid interval units used by YARPP and MySQL interval statements.
+	 *
+	 * @return array keys are valid values for recent units, and for MySQL interval
+	 * (see https://www.mysqltutorial.org/mysql-interval/), values are translated strings
+	 */
+	public function recent_units() {
+		return array(
+			'day' => __('day(s)','yarpp'),
+			'week' => __('week(s)','yarpp'),
+			'month' => __('month(s)','yarpp')
+		);
 	}
 }

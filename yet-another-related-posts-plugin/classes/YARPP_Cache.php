@@ -162,14 +162,25 @@ abstract class YARPP_Cache {
 		$keywords = $this->get_keywords($reference_ID);
 	
 		// SELECT
-		$newsql = "SELECT $reference_ID as reference_ID, ID, "; //post_title, post_date, post_content, post_excerpt,
+		$newsql = $wpdb->prepare(
+			"SELECT %d as reference_ID, ID, ",
+			$reference_ID
+		);
 		$newsql .= 'ROUND(0';
 		if (isset($weight) && is_array($weight)){
 			if (isset($weight['body']) && (int) $weight['body']) {
-				$newsql .= " + (MATCH (post_content) AGAINST ('".esc_sql($keywords['body'])."')) * ".absint($weight['body']);
+				$newsql .= $wpdb->prepare(
+					" + (MATCH (post_content) AGAINST (%s)) * %d",
+					$keywords['body'],
+					$weight['body']
+				);
 			}
 			if (isset($weight['title']) && (int) $weight['title']) {
-				$newsql .= " + (MATCH (post_title) AGAINST ('".esc_sql($keywords['title'])."')) * ".absint($weight['title']);
+				$newsql .= $wpdb->prepare(
+					" + (MATCH (post_title) AGAINST (%s)) * %d",
+					$keywords['title'],
+					$weight['title']
+				);
 			}
 
 			// Build tax criteria query parts based on the weights
@@ -186,22 +197,68 @@ abstract class YARPP_Cache {
 	
 		$exclude_tt_ids = wp_parse_id_list($exclude);
 		if (count($exclude_tt_ids) || (isset($weight) && isset($weight['tax']) && count((array) $weight['tax'])) || count($require_tax)) {
-			$newsql .= "left join $wpdb->term_relationships as terms on ( terms.object_id = $wpdb->posts.ID ) \n";
+			$newsql .= "left join $wpdb->term_relationships as terms on ( terms.object_id = {$wpdb->posts}.ID ) \n";
 		}
 	
 		/*
 		 * Where
 		 */
 	
-		$newsql .= " where post_status in ( 'publish', 'static' ) and ID != '$reference_ID'";
+		$newsql .= $wpdb->prepare(
+			" where post_status in ( 'publish', 'static' ) and ID != %d",
+            $reference_ID
+		);
         /**
          * @since 3.1.8 Revised $past_only option
          */
-		if ($past_only)         $newsql .= " and post_date <= '$reference_post->post_date' ";
-		if (!$show_pass_post)   $newsql .= " and post_password ='' ";
-		if ((bool) $recent)     $newsql .= " and post_date > date_sub(now(), interval {$recent}) ";
-	
-		$newsql .= " and post_type = 'post'";
+		if ($past_only) {
+			$newsql .= $wpdb->prepare(
+				" and post_date <= %s ",
+				$reference_post->post_date
+			);
+		}
+		if (!$show_pass_post){
+			$newsql .= " and post_password ='' ";
+		}
+		if ((bool) $recent){
+			$recent_parts = explode(' ', $recent);
+			if(count($recent_parts) === 2 && isset($recent_parts[0], $recent_parts[1])){
+				$recent_number = $recent_parts[0];
+				if(in_array(
+					$recent_parts[1],
+					array_keys(
+						$this->core->recent_units()
+					)
+				)){
+					$recent_unit = $recent_parts[1];
+				} else {
+					$recent_unit = 'day';
+				}
+				$newsql .= $wpdb->prepare(
+					" and post_date > date_sub(now(), interval %d {$recent_unit}) ",
+					$recent_number
+				);
+			}
+
+		}
+
+		if (isset($args['post_type'])) {
+			$post_types = (array) $args['post_type'];
+		} else {
+			if ($this->core->get_option('cross_relate')) {
+				$post_types = $this->core->get_post_types();
+			} else {
+				$post_types = array(get_post_type($reference_post));
+			}
+		}
+		$sanitized_post_types = array_map(
+			function($item){
+				global $wpdb;
+				return $wpdb->prepare('%s', $item);
+			},
+			$post_types
+		);
+		$newsql .= ' and post_type IN (' . implode(',',$sanitized_post_types). ')';
 	
 		// GROUP BY
 		$newsql .= "\n group by ID \n";
@@ -212,17 +269,27 @@ abstract class YARPP_Cache {
 		/**
          * @since 3.5.3: ID=0 is a special value; never save such a result.
          */
-		$newsql .= " having score >= $safethreshold and ID != 0";
+		$newsql .= $wpdb->prepare(
+			" having score >= %f and ID != 0",
+			$safethreshold
+		);
         if (count($exclude_tt_ids)) {
+        	// $exclude_tt_ids already ran through wp_parse_id_list
 			$newsql .= " and bit_or(terms.term_taxonomy_id in (".join(',', $exclude_tt_ids).")) = 0";
 		}
 	
 		foreach ((array) $require_tax as $tax => $number) {
-			$newsql .= ' and '.$this->tax_criteria($reference_ID, $tax).' >= '.intval($number);
+			$newsql .= $wpdb->prepare(
+				' and '.$this->tax_criteria($reference_ID, $tax).' >= %d',
+				$number
+			);
 		}
 	
-		$newsql .= " order by score desc limit $limit";
-	
+		$newsql .= $wpdb->prepare(
+			" order by score desc limit %d",
+			$limit
+		);
+
 		if (isset($args['post_type'])) {
 			$post_types = (array) $args['post_type'];
         } else {
@@ -232,13 +299,12 @@ abstract class YARPP_Cache {
 				$post_types = array(get_post_type($reference_post));
 			}
         }
-		$sql = '('.str_replace("post_type = 'post'", "post_type IN ('" . implode("','",$post_types). "')", $newsql).')';
-	
-		if ($this->core->debug) echo "<!-- $sql -->";
+
+		if ($this->core->debug) echo "<!-- $newsql -->";
 		
-		$this->last_sql = $sql;
+		$this->last_sql = $newsql;
 		
-		return $sql;
+		return $newsql;
 	}
 	
 	private function tax_criteria($reference_ID, $taxonomy) {
@@ -246,7 +312,12 @@ abstract class YARPP_Cache {
 		// if there are no terms of that tax
 		if (false === $terms) return '(1 = 0)';
 		
-		$tt_ids = wp_list_pluck($terms, 'term_taxonomy_id');
+		$tt_ids = array_map(
+			function($item){
+				return (int)$item->term_taxonomy_id;
+			},
+			$terms
+		);
 		return "count(distinct if( terms.term_taxonomy_id in (".join(',',$tt_ids)."), terms.term_taxonomy_id, null ))";
 	}
 	/*

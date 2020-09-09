@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.5
-Stable tag: 5.7.0
+Stable tag: 5.8.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -282,6 +282,11 @@ add_action(
 `
 
 == Changelog ==
+= 5.8.0 (08-September-2020) =
+* Enhancement: Code hygiene upgrade with usage of `WPDB->prepare` everywhere possible and related improvements
+* [Bugfix](https://wordpress.org/support/topic/i-need-to-ad-yarpp-to-my-sidebar-but-it-wont-let-me-upgrade-to-pro/): Since there is no YARPP Pro currently, removed mention of it from the widget form
+* [Bugfix](https://wordpress.org/support/topic/bug-fix-for-role-related-code/): Fixes "role" in deactivation survey
+
 = 5.7.0 (18-August-2020) =
 * Enhancement: Ensure that when a post is finally published, YARPP cache for peer posts is cleared to ensure the most related posts are always recommended across every post
 * [Bugfix](https://wordpress.org/support/topic/an-error-occurred-while-processing-the-directive-6/): Fixed warning in Admin UI caused by an unnecessary HTML comment
@@ -1007,6 +1012,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.7.0 =
+= 5.8.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 

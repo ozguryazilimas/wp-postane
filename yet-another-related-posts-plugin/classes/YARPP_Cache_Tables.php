@@ -78,11 +78,17 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 
 	public function uncached($limit = 20, $offset = 0) {
 		global $wpdb;
-		return $wpdb->get_col("select SQL_CALC_FOUND_ROWS p.ID
-			FROM `{$wpdb->posts}` as p
-			LEFT JOIN `{$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . "` as c ON (p.ID = c.reference_ID)
-			WHERE p.post_status = 'publish' and c.ID IS NULL
-			LIMIT $limit OFFSET $offset");
+		return $wpdb->get_col(
+			$wpdb->prepare(
+				"select SQL_CALC_FOUND_ROWS p.ID
+				FROM `{$wpdb->posts}` as p
+				LEFT JOIN `{$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . "` as c ON (p.ID = c.reference_ID)
+				WHERE p.post_status = 'publish' and c.ID IS NULL
+				LIMIT %d OFFSET %d",
+				$limit,
+				$offset
+			)
+		);
 	}
 	
 	public function stats() {
@@ -241,7 +247,12 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 			
 			return YARPP_RELATED;
 		} else {
-			$wpdb->query("insert into {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " (reference_ID,ID,score) values ($reference_ID,0,0) on duplicate key update date = now()");
+			$wpdb->query(
+				$wpdb->prepare(
+					"insert into " . $wpdb->prefix . YARPP_TABLES_RELATED_TABLE . " (reference_ID,ID,score) values (%d,0,0) on duplicate key update date = now()",
+					$reference_ID
+				)
+			);
 
 			// Clear the caches of those which are no longer related.
 			if ( count($original_related) )
@@ -253,7 +264,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 
 	public function flush() {
 		global $wpdb;
-		$wpdb->query("truncate table `{$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . "`");
+		$wpdb->query("truncate table `" . $wpdb->prefix. YARPP_TABLES_RELATED_TABLE . '`');
 		// @since 3.5.2: clear object cache, used for is_cached_* values
 		wp_cache_flush();
 	}
@@ -267,18 +278,34 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 		}
 
 		if (!is_null($reference_ID) && !is_null($related_ID)) {
-			$results = $wpdb->get_col("select ID from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where reference_ID = $reference_ID and ID = $related_ID");
+			$results = $wpdb->get_col(
+				$wpdb->prepare(
+					"select ID from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where reference_ID = %d and ID = %d",
+					$reference_ID,
+					$related_ID
+				)
+			);
 			return count($results) > 0;
 		}
 
 		// return a list of ID's of "related" entries
 		if ( !is_null($reference_ID) ) {
-			return $wpdb->get_col("select distinct ID from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where reference_ID = $reference_ID and ID != 0");
+			return $wpdb->get_col(
+				$wpdb->prepare(
+					"select distinct ID from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where reference_ID = %d and ID != 0",
+					$related_ID
+				)
+			);
 		}
 
 		// return a list of entities which list this post as "related"
 		if ( !is_null($related_ID) ) {
-			return $wpdb->get_col("select distinct reference_ID from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where ID = $related_ID");
+			return $wpdb->get_col(
+				$wpdb->prepare(
+				"select distinct reference_ID from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where ID = %d",
+					$related_ID
+				)
+			);
 		}
 
 		return false;

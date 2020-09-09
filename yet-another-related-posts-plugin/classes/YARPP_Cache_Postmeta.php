@@ -41,11 +41,18 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 
 	public function uncached($limit = 20, $offset = 0) {
 		global $wpdb;
-		return $wpdb->get_col("select SQL_CALC_FOUND_ROWS p.ID
-			FROM `{$wpdb->posts}` as p
-			LEFT JOIN `{$wpdb->postmeta}` as m ON (p.ID = m.post_id and m.meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "')
-			WHERE p.post_status = 'publish' and m.meta_value IS NULL
-			LIMIT $limit OFFSET $offset");
+
+		return $wpdb->get_col(
+			$wpdb->prepare(
+				"select SQL_CALC_FOUND_ROWS p.ID
+				FROM `{$wpdb->posts}` as p
+				LEFT JOIN `{$wpdb->postmeta}` as m ON (p.ID = m.post_id and m.meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "')
+				WHERE p.post_status = 'publish' and m.meta_value IS NULL
+				LIMIT %d OFFSET %d",
+				$limit,
+				$offset
+			)
+		);
 	}
 
 	public function stats() {
@@ -214,7 +221,12 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 
 		// return a list of entities which list this post as "related"
 		if (!is_null($related_ID)) {
-			return $wpdb->get_col("select post_id from `{$wpdb->postmeta}` where meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "' and meta_value regexp 's:2:\"ID\";s:\d+:\"{$related_ID}\"'");
+			return $wpdb->get_col(
+				$wpdb->prepare(
+					"select post_id from `{$wpdb->postmeta}` where meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "' and meta_value regexp 's:2:\"ID\";s:\d+:\"%d\"'",
+					$reference_ID
+				)
+			);
 		}
 
 		return false;

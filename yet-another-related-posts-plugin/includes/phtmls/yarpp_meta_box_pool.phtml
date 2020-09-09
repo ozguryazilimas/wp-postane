@@ -22,14 +22,13 @@
         $recent_units = 'month';
     }
 
-    $recent_number = '<input name="recent_number" type="text" id="recent_number" value="'.esc_attr($recent_number).'" size="2" />';
+    $recent_number_html = '<input name="recent_number" type="text" id="recent_number" value="'.esc_attr($recent_number).'" size="2" />';
 
-    $recent_units  =
-    '<select name="recent_units" id="recent_units" style="vertical-align:inherit">'.
-        '<option value="day" '  .(($recent_units === 'day')   ? 'selected' : null).'>'.__('day(s)', 'yarpp').'</option>'.
-        '<option value="week" ' .(($recent_units === 'week')  ? 'selected' : null).'>'.__('week(s)', 'yarpp').'</option>'.
-        '<option value="month" '.(($recent_units === 'month') ? 'selected' : null).'>'.__('month(s)', 'yarpp').'</option>'.
-    '</select>';
+    $recent_units_html  = '<select name="recent_units" id="recent_units" style="vertical-align:inherit">';
+    foreach($yarpp->recent_units() as $value => $translated_string){
+	    $recent_units_html .= '<option value="' . esc_attr($value) . '" ' . (($recent_units === $value) ? 'selected' : '') . '>' . $translated_string . '</option>';
+    }
+$recent_units_html .= '</select>';
 ?>
 
 <div class='yarpp_form_row yarpp_form_checkbox'>
@@ -41,8 +40,8 @@
 				printf(
         // translators: 1: HTML for a number field, 2: HTML for a units dropdown (eg "week(s)", "day(s)", month(s))
         __('Display only posts from the past %1$s %2$s', 'yarpp'),
-        $recent_number,
-        $recent_units
+        $recent_number_html,
+        $recent_units_html
 				);
         ?>
 				</label>
