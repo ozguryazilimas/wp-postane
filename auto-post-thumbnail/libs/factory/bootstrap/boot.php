@@ -36,7 +36,7 @@ define('FACTORY_BOOTSTRAP_433_URL', plugins_url(null, __FILE__));
 require_once(FACTORY_BOOTSTRAP_433_DIR . '/includes/functions.php');
 
 /**
- * @param Wbcr_Factory432_Plugin $plugin
+ * @param Wbcr_Factory433_Plugin $plugin
  */
 add_action('wbcr_factory_bootstrap_433_plugin_created', function ($plugin) {
 	$manager = new Wbcr_FactoryBootstrap433_Manager($plugin);

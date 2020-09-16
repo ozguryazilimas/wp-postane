@@ -65,7 +65,7 @@ class Creative_Motion_API {
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 * @since  1.0.1
-	 * @var \Wbcr_Factory432_Plugin
+	 * @var \Wbcr_Factory433_Plugin
 	 */
 	private $plugin;
 
@@ -75,11 +75,11 @@ class Creative_Motion_API {
 	 *
 	 * Variable initialization.
 	 *
-	 * @param \Wbcr_Factory432_Plugin $plugin_name
+	 * @param \Wbcr_Factory433_Plugin $plugin_name
 	 * @since 1.0.0 Added
 	 *
 	 */
-	public function __construct(\Wbcr_Factory432_Plugin $plugin)
+	public function __construct(\Wbcr_Factory433_Plugin $plugin)
 	{
 		$this->plugin = $plugin;
 	}

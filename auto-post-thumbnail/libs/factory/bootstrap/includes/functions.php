@@ -26,7 +26,7 @@ class Wbcr_FactoryBootstrap433_Manager {
 	 * A plugin for which the manager was created.
 	 *
 	 * @since 3.2.0
-	 * @var Wbcr_Factory432_Plugin
+	 * @var Wbcr_Factory433_Plugin
 	 */
 	public $plugin;
 
@@ -51,7 +51,7 @@ class Wbcr_FactoryBootstrap433_Manager {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory433_Plugin $plugin ) {
 		$this->plugin = $plugin;
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'loadAssets' ] );
@@ -111,8 +111,8 @@ class Wbcr_FactoryBootstrap433_Manager {
 	 */
 	public function loadAssets( $hook ) {
 
-		do_action( 'wbcr_factory_432_bootstrap_enqueue_scripts', $hook );
-		do_action( 'wbcr_factory_432_bootstrap_enqueue_scripts_' . $this->plugin->getPluginName(), $hook );
+		do_action( 'wbcr_factory_433_bootstrap_enqueue_scripts', $hook );
+		do_action( 'wbcr_factory_433_bootstrap_enqueue_scripts_' . $this->plugin->getPluginName(), $hook );
 
 		$dependencies = [];
 		if ( ! empty( $this->scripts ) ) {

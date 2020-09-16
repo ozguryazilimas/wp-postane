@@ -3,7 +3,7 @@
 Plugin Name: Auto Featured Image (Auto Post Thumbnail)
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Featured Image from the first image in post or any custom post type only if Featured Image is not set manually. Featured Image Generation From Title. Native image search for Elementor, Gutenberg, Classic Editor.
-Version: 3.7.5
+Version: 3.7.6
 Author: Creativemotion <support@cm-wp.com>
 Author URI: cm-wp.com
 Text Domain: apt
@@ -134,7 +134,7 @@ $plugin_info = array(
 	)
 );
 
-$wapt_compatibility = new Wbcr_Factory432_Requirements( __FILE__, array_merge( $plugin_info, array(
+$wapt_compatibility = new Wbcr_Factory433_Requirements( __FILE__, array_merge( $plugin_info, array(
 	'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
 	'required_php_version'    => '5.4',
 	'required_wp_version'     => '4.2.0',

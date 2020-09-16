@@ -31,7 +31,7 @@
 			private static $pages = array();
 			
 			/**
-			 * @param Wbcr_Factory432_Plugin $plugin
+			 * @param Wbcr_Factory433_Plugin $plugin
 			 * @param $class_name
 			 */
 			public static function register($plugin, $class_name)
@@ -59,7 +59,7 @@
 				}
 			}
 
-			public static function getPageUrl(Wbcr_Factory432_Plugin $plugin, $page_id, $args = array())
+			public static function getPageUrl(Wbcr_Factory433_Plugin $plugin, $page_id, $args = array())
 			{
 				if( isset(self::$pages[$plugin->getPluginName()]) ) {
 					$pages = self::$pages[$plugin->getPluginName()];
@@ -75,7 +75,7 @@
 			}
 
 			/**
-			 * @param Wbcr_Factory432_Plugin $plugin
+			 * @param Wbcr_Factory433_Plugin $plugin
 			 * @return array
 			 */
 			public static function getIds($plugin)
@@ -96,7 +96,7 @@
 	if( !function_exists('wbcr_factory_pages_432_get_page_id') ) {
 		/**
 		 *
-		 * @param Wbcr_Factory432_Plugin $plugin
+		 * @param Wbcr_Factory433_Plugin $plugin
 		 * @param string $page_id
 		 * @return string
 		 */

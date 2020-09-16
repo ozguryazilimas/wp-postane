@@ -43,7 +43,7 @@ require_once(FACTORY_ADVERTS_112_DIR . '/includes/class-rest-request.php');
 require_once(FACTORY_ADVERTS_112_DIR . '/includes/class-base.php');
 
 /**
- * @param Wbcr_Factory432_Plugin $plugin
+ * @param Wbcr_Factory433_Plugin $plugin
  */
 add_action('wbcr_factory_adverts_112_plugin_created', function ($plugin) {
 	$plugin->set_adverts_manager("WBCR\Factory_Adverts_112\Base");

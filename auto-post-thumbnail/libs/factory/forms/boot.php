@@ -55,11 +55,11 @@ load_plugin_textdomain('wbcr_factory_forms_430', false, dirname(plugin_basename(
 if( !function_exists('wbcr_factory_forms_430_register_default_controls') ) {
 
 	/**
-	 * @param Wbcr_Factory432_Plugin $plugin
+	 * @param Wbcr_Factory433_Plugin $plugin
 	 *
 	 * @throws Exception
 	 */
-	function wbcr_factory_forms_430_register_default_controls(Wbcr_Factory432_Plugin $plugin)
+	function wbcr_factory_forms_430_register_default_controls(Wbcr_Factory433_Plugin $plugin)
 	{
 
 		if( $plugin && !isset($plugin->forms) ) {

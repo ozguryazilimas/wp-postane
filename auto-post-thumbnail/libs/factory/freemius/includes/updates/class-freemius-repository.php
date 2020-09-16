@@ -4,8 +4,8 @@ namespace WBCR\Factory_Freemius_120\Updates;
 
 // Exit if accessed directly
 use Exception;
-use Wbcr_Factory432_Plugin;
-use WBCR\Factory_432\Updates\Repository;
+use Wbcr_Factory433_Plugin;
+use WBCR\Factory_433\Updates\Repository;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -28,11 +28,11 @@ class Freemius_Repository extends Repository {
 	 * Freemius constructor.
 	 * @since 4.0.0
 	 *
-	 * @param Wbcr_Factory432_Plugin $plugin
+	 * @param Wbcr_Factory433_Plugin $plugin
 	 *
 	 * @throws Exception
 	 */
-	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory433_Plugin $plugin ) {
 		$this->plugin  = $plugin;
 		$this->premium = $this->plugin->premium;
 	}

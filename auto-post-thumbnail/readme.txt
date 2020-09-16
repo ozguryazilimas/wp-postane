@@ -24,7 +24,7 @@ post type, status, category, or the creation date.
 5. Automatically generates an image for each post from the post title and sets it as the featured image. NEW!
 6. Search &amp; upload featured images from popular stock
 platforms instantly.
- 
+
 AFI (APT) users save up to 20 minutes per hour on generating content for a website.
 Let’s go through the process of creating a post and see how timesaving APT can be.
 
@@ -38,7 +38,7 @@ Download images from a search page or a stock service.
 
 It takes six steps to create a post.
 Now imagine that APT turns three steps into one! Learn how to save up to 30% time for more engaging activities!
- 
+
 This plugin is a must-have for every WordPress blog. Don’t
 hesitate to install this content maker tool on your website.
 Recommend it to your friends and colleagues; maximize their
@@ -72,12 +72,12 @@ If you like this plugin, then consider checking out our other projects:
 
 THANKS TO THE PLUGIN DEVELOPERS
 We’ve used some of the powerful features from the
-plugins:  Dynamic Featured Image ,  Featured Image from URL, Regenerate Thumbnails, Force Regenerate Thumbnails, Recent Posts Widget Extended
+plugins: Dynamic Featured Image, Featured Image from URL, Regenerate Thumbnails, Force Regenerate Thumbnails, Recent Posts Widget Extended
 
 TRANSLATIONS:
 · Default: English (always enabled);
 · Russian.
-We need your help with translation AFI (APT) to your language. Our goal is to make APT an international and user-friendly tool for everyone. If you want to help with the translation, contact us through the contact form in the plugin or send a message at the support forum. In return, we will give you a premium license for free!
+We need your help with translation AFI (APT) to your language. Our goal is to make APT an international and user-friendly tool for everyone. If you want to help with the translation, contact us through the contact form in the plugin or send a message at the support forum. In return, we will give you a premium license for free!
 
 https://cm-wp.com/apt/
 
@@ -104,6 +104,9 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.7.6 =
+* Fixed: Selecting a date on the mass generation page
 
 = 3.7.5 =
 * Fixed: jQuery.fn.load() and other bugs after update to Wordpress 5.5

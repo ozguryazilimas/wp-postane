@@ -24,19 +24,19 @@ if( !defined('ABSPATH') ) {
  * @package       factory-core
  *
  */
-abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
+abstract class Wbcr_Factory433_Plugin extends Wbcr_Factory433_Base {
 
 	/**
-	 * Instance class Wbcr_Factory432_Request, required manages http requests
+	 * Instance class Wbcr_Factory433_Request, required manages http requests
 	 *
 	 * @see https://webcraftic.atlassian.net/wiki/spaces/FFD/pages/390561806
-	 * @var Wbcr_Factory432_Request
+	 * @var Wbcr_Factory433_Request
 	 */
 	public $request;
 
 	/**
 	 * @see https://webcraftic.atlassian.net/wiki/spaces/FFD/pages/393936924
-	 * @var \WBCR\Factory_432\Premium\Provider
+	 * @var \WBCR\Factory_433\Premium\Provider
 	 */
 	public $premium;
 
@@ -55,11 +55,11 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 	public $forms;
 
 	/**
-	 * Простой массив со списком зарегистрированных классов унаследованных от Wbcr_Factory432_Activator.
+	 * Простой массив со списком зарегистрированных классов унаследованных от Wbcr_Factory433_Activator.
 	 * Классы активации используются для упаковки набора функций, которые нужно выполнить во время
 	 * активации плагина.
 	 *
-	 * @var array[] Wbcr_Factory432_Activator
+	 * @var array[] Wbcr_Factory433_Activator
 	 */
 	protected $activator_class = [];
 
@@ -106,8 +106,8 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 
 		parent::__construct($plugin_path, $data);
 
-		$this->request = new Wbcr_Factory432_Request();
-		//$this->route = new Wbcr_Factory432_Route();
+		$this->request = new Wbcr_Factory433_Request();
+		//$this->route = new Wbcr_Factory433_Route();
 
 		// INIT PLUGIN FRAMEWORK MODULES
 		// Framework modules should always be loaded first,
@@ -183,8 +183,8 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 	 */
 	public function set_license_provider($name, $class_name)
 	{
-		if( !isset(WBCR\Factory_432\Premium\Manager::$providers[$name]) ) {
-			WBCR\Factory_432\Premium\Manager::$providers[$name] = $class_name;
+		if( !isset(WBCR\Factory_433\Premium\Manager::$providers[$name]) ) {
+			WBCR\Factory_433\Premium\Manager::$providers[$name] = $class_name;
 		}
 	}
 
@@ -202,8 +202,8 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 	 */
 	public function set_update_repository($name, $class_name)
 	{
-		if( !isset(WBCR\Factory_432\Updates\Upgrader::$repositories[$name]) ) {
-			WBCR\Factory_432\Updates\Upgrader::$repositories[$name] = $class_name;
+		if( !isset(WBCR\Factory_433\Updates\Upgrader::$repositories[$name]) ) {
+			WBCR\Factory_433\Updates\Upgrader::$repositories[$name] = $class_name;
 		}
 	}
 
@@ -249,12 +249,12 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 
 	public function newScriptList()
 	{
-		return new Wbcr_Factory432_ScriptList($this);
+		return new Wbcr_Factory433_ScriptList($this);
 	}
 
 	public function newStyleList()
 	{
-		return new Wbcr_Factory432_StyleList($this);
+		return new Wbcr_Factory433_StyleList($this);
 	}
 
 	/**
@@ -346,16 +346,16 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		/**
 		 * @since 4.1.1 - change  hook name
 		 */
-		if( apply_filters("wbcr/factory_432/cancel_plugin_activation_{$this->plugin_name}", false) ) {
+		if( apply_filters("wbcr/factory_433/cancel_plugin_activation_{$this->plugin_name}", false) ) {
 			return;
 		}
 
 		/**
-		 * wbcr_factory_432_plugin_activation
+		 * wbcr_factory_433_plugin_activation
 		 *
 		 * @since 4.1.1 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated('wbcr_factory_432_plugin_activation', [
+		wbcr_factory_433_do_action_deprecated('wbcr_factory_433_plugin_activation', [
 			$this
 		], '4.1.1', "wbcr/factory/plugin_activation");
 
@@ -364,7 +364,7 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		 *
 		 * @since 4.1.2 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated('wbcr/factory/plugin_activation', [
+		wbcr_factory_433_do_action_deprecated('wbcr/factory/plugin_activation', [
 			$this
 		], '4.1.2', "wbcr/factory/before_plugin_activation");
 
@@ -380,16 +380,16 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		 *
 		 * @since 4.1.2 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated("wbcr/factory/plugin_{$this->plugin_name}_activation", [
+		wbcr_factory_433_do_action_deprecated("wbcr/factory/plugin_{$this->plugin_name}_activation", [
 			$this
 		], '4.1.2', "wbcr/factory/before_plugin_{$this->plugin_name}_activation");
 
 		/**
-		 * wbcr_factory_432_plugin_activation_' . $this->plugin_name
+		 * wbcr_factory_433_plugin_activation_' . $this->plugin_name
 		 *
 		 * @since 4.1.1 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated('wbcr_factory_432_plugin_activation_' . $this->plugin_name, [
+		wbcr_factory_433_do_action_deprecated('wbcr_factory_433_plugin_activation_' . $this->plugin_name, [
 			$this
 		], '4.1.1', "wbcr/factory/before_plugin_{$this->plugin_name}_activation");
 
@@ -430,16 +430,16 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		/**
 		 * @since 4.1.1 - change  hook name
 		 */
-		if( apply_filters("wbcr/factory_432/cancel_plugin_deactivation_{$this->plugin_name}", false) ) {
+		if( apply_filters("wbcr/factory_433/cancel_plugin_deactivation_{$this->plugin_name}", false) ) {
 			return;
 		}
 
 		/**
-		 * wbcr_factory_432_plugin_deactivation
+		 * wbcr_factory_433_plugin_deactivation
 		 *
 		 * @since 4.1.1 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated('wbcr_factory_432_plugin_deactivation', [
+		wbcr_factory_433_do_action_deprecated('wbcr_factory_433_plugin_deactivation', [
 			$this
 		], '4.1.1', "wbcr/factory/plugin_deactivation");
 
@@ -448,7 +448,7 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		 *
 		 * @since 4.1.2 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated('wbcr/factory/plugin_deactivation', [
+		wbcr_factory_433_do_action_deprecated('wbcr/factory/plugin_deactivation', [
 			$this
 		], '4.1.2', "wbcr/factory/before_plugin_deactivation");
 
@@ -460,11 +460,11 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		do_action('wbcr/factory/plugin_deactivation', $this);
 
 		/**
-		 * wbcr_factory_432_plugin_deactivation_ . $this->plugin_name
+		 * wbcr_factory_433_plugin_deactivation_ . $this->plugin_name
 		 *
 		 * @since 4.1.1 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated('wbcr_factory_432_plugin_deactivation_' . $this->plugin_name, [
+		wbcr_factory_433_do_action_deprecated('wbcr_factory_433_plugin_deactivation_' . $this->plugin_name, [
 			$this
 		], '4.1.1', "wbcr/factory/before_plugin_{$this->plugin_name}_deactivation");
 
@@ -473,7 +473,7 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		 *
 		 * @since 4.1.2 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated("wbcr/factory/plugin_{$this->plugin_name}_deactivation", [
+		wbcr_factory_433_do_action_deprecated("wbcr/factory/plugin_{$this->plugin_name}_deactivation", [
 			$this
 		], '4.1.2', "wbcr/factory/before_plugin_{$this->plugin_name}_deactivation");
 
@@ -622,12 +622,12 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		/**
 		 * @since 4.1.1 - deprecated
 		 */
-		wbcr_factory_432_do_action_deprecated('wbcr_factory_432_core_modules_loaded-' . $this->plugin_name, [], '4.1.1', "wbcr/factory_432/modules_loaded-" . $this->plugin_name);
+		wbcr_factory_433_do_action_deprecated('wbcr_factory_433_core_modules_loaded-' . $this->plugin_name, [], '4.1.1', "wbcr/factory_433/modules_loaded-" . $this->plugin_name);
 
 		/**
 		 * @since 4.1.1 - add
 		 */
-		do_action('wbcr/factory_432/modules_loaded-' . $this->plugin_name);
+		do_action('wbcr/factory_433/modules_loaded-' . $this->plugin_name);
 	}
 
 
@@ -654,7 +654,7 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		});
 
 		if( is_admin() ) {
-			add_filter('wbcr_factory_432_core_admin_allow_multisite', '__return_true');
+			add_filter('wbcr_factory_433_core_admin_allow_multisite', '__return_true');
 
 			register_activation_hook($this->get_paths()->main_file, [$this, 'activation_hook']);
 			register_deactivation_hook($this->get_paths()->main_file, [$this, 'deactivation_hook']);
@@ -670,7 +670,7 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 	 */
 	protected function init_plugin_migrations()
 	{
-		new WBCR\Factory_432\Migrations($this);
+		new WBCR\Factory_433\Migrations($this);
 	}
 
 	/**
@@ -681,7 +681,7 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 	 */
 	protected function init_plugin_notices()
 	{
-		new Wbcr\Factory_432\Notices($this);
+		new Wbcr\Factory_433\Notices($this);
 	}
 
 	/**
@@ -697,7 +697,7 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 	protected function init_plugin_updates()
 	{
 		if( $this->has_updates ) {
-			new WBCR\Factory_432\Updates\Upgrader($this);
+			new WBCR\Factory_433\Updates\Upgrader($this);
 		}
 	}
 
@@ -720,11 +720,11 @@ abstract class Wbcr_Factory432_Plugin extends Wbcr_Factory432_Base {
 		}
 
 		// Создаем экземляр премиум менеджера, мы сможем к нему обращаться глобально.
-		$this->premium = WBCR\Factory_432\Premium\Manager::instance($this, $this->license_settings);
+		$this->premium = WBCR\Factory_433\Premium\Manager::instance($this, $this->license_settings);
 
 		// Подключаем премиум апгрейдер
 		if( isset($this->license_settings['has_updates']) && $this->license_settings['has_updates'] ) {
-			new WBCR\Factory_432\Updates\Premium_Upgrader($this);
+			new WBCR\Factory_433\Updates\Premium_Upgrader($this);
 		}
 	}
 }

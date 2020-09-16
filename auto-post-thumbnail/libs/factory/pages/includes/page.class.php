@@ -39,7 +39,7 @@ if ( ! class_exists( 'Wbcr_FactoryPages432_Page' ) ) {
 		/**
 		 * Current Factory Plugin.
 		 *
-		 * @var Wbcr_Factory432_Plugin
+		 * @var Wbcr_Factory433_Plugin
 		 */
 		public $plugin;
 
@@ -51,11 +51,11 @@ if ( ! class_exists( 'Wbcr_FactoryPages432_Page' ) ) {
 		//private $default_actions = array();
 
 		/**
-		 * @param Wbcr_Factory432_Plugin $plugin
+		 * @param Wbcr_Factory433_Plugin $plugin
 		 *
 		 * @throws Exception
 		 */
-		public function __construct( Wbcr_Factory432_Plugin $plugin ) {
+		public function __construct( Wbcr_Factory433_Plugin $plugin ) {
 			$this->plugin = $plugin;
 
 			if ( $plugin ) {

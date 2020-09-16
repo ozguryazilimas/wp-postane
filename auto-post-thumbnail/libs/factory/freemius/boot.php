@@ -41,7 +41,7 @@ if( !class_exists('Freemius_Api_WordPress') ) {
 require_once(FACTORY_FREEMIUS_120_DIR . '/includes/class-freemius-api.php');
 
 /**
- * @param Wbcr_Factory432_Plugin $plugin
+ * @param Wbcr_Factory433_Plugin $plugin
  */
 add_action('wbcr_factory_freemius_120_plugin_created', function ($plugin) {
 	# Устанавливаем класс провайдера лицензий для премиум менеджера

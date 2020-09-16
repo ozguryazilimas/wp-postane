@@ -43,7 +43,7 @@
 			/**
 			 * Creates a new instance of an options value provider.
 			 */
-			public function __construct(Wbcr_Factory432_Plugin $plugin)
+			public function __construct(Wbcr_Factory433_Plugin $plugin)
 			{
 				$this->plugin = $plugin;
 			}

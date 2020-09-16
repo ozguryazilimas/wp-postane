@@ -283,8 +283,8 @@ class AutoPostThumbnails {
 		if ( auto_post_thumbnails()->is_premium() ) {
 			$status     = $_POST['poststatus'];
 			$category   = $_POST['category'];
-			$date_start = $_POST['date_start'] ? DateTime::createFromFormat( get_option( 'date_format ' ), $_POST['date_start'] )->format( 'Y-m-d' ) : 0;
-			$date_end   = $_POST['date_end'] ? DateTime::createFromFormat( get_option( 'date_format ' ), $_POST['date_end'] )->format( 'Y-m-d' ) : 0;
+			$date_start = $_POST['date_start'] ? DateTime::createFromFormat( 'd.m.Y', $_POST['date_start'] )->format( 'd.m.Y' ) : 0;
+			$date_end   = $_POST['date_end'] ? DateTime::createFromFormat( 'd.m.Y', $_POST['date_end'] )->format( 'd.m.Y' ) : 0;
 			// Get id's of the posts that satisfy the filters
 			$query = $this->get_posts_query( $has_thumb, $type, $status, $category, $date_start, $date_end );
 		} else {

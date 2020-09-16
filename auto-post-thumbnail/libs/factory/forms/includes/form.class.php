@@ -261,9 +261,9 @@
 			 *
 			 * @since 1.0.0
 			 * @param array $options
-			 * @param Wbcr_Factory432_Plugin $plugin
+			 * @param Wbcr_Factory433_Plugin $plugin
 			 */
-			public function __construct(array $options = array(), Wbcr_Factory432_Plugin $plugin)
+			public function __construct(array $options = array(), Wbcr_Factory433_Plugin $plugin)
 			{
 				// register controls once, when the first form is created
 				if( !Wbcr_FactoryForms430_Manager::$controls_registered ) {
@@ -332,7 +332,7 @@
 			 */
 			public function getItems()
 			{
-				return apply_filters('wbcr_factory_432_form_items', $this->items, $this->name);
+				return apply_filters('wbcr_factory_433_form_items', $this->items, $this->name);
 			}
 
 			/**

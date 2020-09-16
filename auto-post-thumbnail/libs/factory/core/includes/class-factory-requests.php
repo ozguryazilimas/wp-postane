@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package       factory-core
 */
 
-class Wbcr_Factory432_Request {
+class Wbcr_Factory433_Request {
 
 	/**
 	 * @param null $param

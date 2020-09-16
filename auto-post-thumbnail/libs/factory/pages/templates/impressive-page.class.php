@@ -112,12 +112,12 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 		public $page_menu = [];
 
 		/**
-		 * @param Wbcr_Factory432_Plugin $plugin
+		 * @param Wbcr_Factory433_Plugin $plugin
 		 */
-		public function __construct(Wbcr_Factory432_Plugin $plugin)
+		public function __construct(Wbcr_Factory433_Plugin $plugin)
 		{
 			$this->menuIcon = FACTORY_PAGES_432_URL . '/templates/assets/img/webcraftic-plugin-icon.png';
-			//$allow_multisite = apply_filters('wbcr_factory_432_core_admin_allow_multisite', false);
+			//$allow_multisite = apply_filters('wbcr_factory_433_core_admin_allow_multisite', false);
 
 			if( is_multisite() && $this->available_for_multisite && $plugin->isNetworkActive() ) {
 				$this->network = true;
@@ -173,7 +173,7 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 			 * @since 4.0.8 - добавлен
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$plugin_title = wbcr_factory_432_apply_filters_deprecated('wbcr/factory/imppage/plugin_title', [
+			$plugin_title = wbcr_factory_433_apply_filters_deprecated('wbcr/factory/imppage/plugin_title', [
 				$this->plugin->getPluginTitle(),
 				$this->plugin->getPluginName()
 			], '4.0.9', 'wbcr/factory/pages/impressive/plugin_title');
@@ -247,15 +247,15 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 			/**
 			 * @since 4.0.1 - является устаревшим
 			 */
-			wbcr_factory_432_do_action_deprecated('wbcr_factory_432_imppage_flush_cache', [
+			wbcr_factory_433_do_action_deprecated('wbcr_factory_433_imppage_flush_cache', [
 				$this->plugin->getPluginName(),
 				$this->getResultId()
-			], '4.0.1', 'wbcr_factory_432_imppage_after_form_save');
+			], '4.0.1', 'wbcr_factory_433_imppage_after_form_save');
 
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			wbcr_factory_432_do_action_deprecated('wbcr_factory_432_imppage_after_form_save', [
+			wbcr_factory_433_do_action_deprecated('wbcr_factory_433_imppage_after_form_save', [
 				$this->plugin,
 				$this
 			], '4.0.9', 'wbcr/factory/pages/impressive/after_form_save');
@@ -274,7 +274,7 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$redirect_args = wbcr_factory_432_apply_filters_deprecated('wbcr_factory_432_imppage_after_form_save_redirect_args', [$redirect_args], '4.0.9', 'wbcr/factory/pages/impressive/save_redirect_args');
+			$redirect_args = wbcr_factory_433_apply_filters_deprecated('wbcr_factory_433_imppage_after_form_save_redirect_args', [$redirect_args], '4.0.9', 'wbcr/factory/pages/impressive/save_redirect_args');
 
 			/**
 			 * @since 4.0.1 - добавлен
@@ -372,7 +372,7 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			wbcr_factory_432_do_action_deprecated('wbcr_factory_pages_432_imppage_print_all_notices', [
+			wbcr_factory_433_do_action_deprecated('wbcr_factory_pages_432_imppage_print_all_notices', [
 				$this->plugin,
 				$this
 			], '4.0.9', 'wbcr/factory/pages/impressive/print_all_notices');
@@ -399,7 +399,7 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$notices = wbcr_factory_432_apply_filters_deprecated('wbcr_factory_pages_432_imppage_actions_notice', [
+			$notices = wbcr_factory_433_apply_filters_deprecated('wbcr_factory_pages_432_imppage_actions_notice', [
 				$notices,
 				$this->plugin,
 				$this->id
@@ -733,7 +733,7 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 			/**
 			 * @since 4.0.9 - является устаревшим
 			 */
-			$widgets = wbcr_factory_432_apply_filters_deprecated('wbcr_factory_pages_432_imppage_get_widgets', [
+			$widgets = wbcr_factory_433_apply_filters_deprecated('wbcr_factory_pages_432_imppage_get_widgets', [
 				$widgets,
 				$position,
 				$this->plugin,
@@ -803,7 +803,7 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 				/**
 				 * @since 4.0.9 - является устаревшим
 				 */
-				wbcr_factory_432_do_action_deprecated('wbcr_factory_432_imppage_before_form_save', [
+				wbcr_factory_433_do_action_deprecated('wbcr_factory_433_imppage_before_form_save', [
 					$form,
 					$this->plugin,
 					$this
@@ -822,7 +822,7 @@ if( !class_exists('Wbcr_FactoryPages432_ImpressiveThemplate') ) {
 				/**
 				 * @since 4.0.9 - является устаревшим
 				 */
-				wbcr_factory_432_do_action_deprecated('wbcr_factory_432_imppage_form_saved', [
+				wbcr_factory_433_do_action_deprecated('wbcr_factory_433_imppage_form_saved', [
 					$form,
 					$this->plugin,
 					$this

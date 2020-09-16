@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WAPT_Plugin extends Wbcr_Factory432_Plugin {
+class WAPT_Plugin extends Wbcr_Factory433_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory432_Plugin
+	 * @var Wbcr_Factory433_Plugin
 	 */
 	private static $app;
 
@@ -74,7 +74,7 @@ class WAPT_Plugin extends Wbcr_Factory432_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return Wbcr_Factory432_Plugin
+	 * @return Wbcr_Factory433_Plugin
 	 */
 	public static function app() {
 		return self::$app;

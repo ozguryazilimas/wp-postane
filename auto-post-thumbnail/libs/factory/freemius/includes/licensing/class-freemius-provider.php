@@ -6,8 +6,8 @@ use WBCR\Factory_Freemius_120\Entities\License;
 use WBCR\Factory_Freemius_120\Entities\Plugin;
 use WBCR\Factory_Freemius_120\Entities\Site;
 use WBCR\Factory_Freemius_120\Entities\User;
-use WBCR\Factory_432\Premium\Provider as License_Provider;
-use Wbcr_Factory432_Plugin;
+use WBCR\Factory_433\Premium\Provider as License_Provider;
+use Wbcr_Factory433_Plugin;
 use WBCR\Factory_Freemius_120\Api;
 use WP_Error;
 use Exception;
@@ -82,11 +82,11 @@ final class Provider extends License_Provider {
 	/**
 	 * Manager constructor.
 	 *
-	 * @param Wbcr_Factory432_Plugin $plugin
+	 * @param Wbcr_Factory433_Plugin $plugin
 	 *
 	 * @throws Exception
 	 */
-	public function __construct(Wbcr_Factory432_Plugin $plugin, array $settings)
+	public function __construct(Wbcr_Factory433_Plugin $plugin, array $settings)
 	{
 		parent::__construct($plugin, $settings);
 
