@@ -22,7 +22,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
         }
         echo "</div></div>";
 
-        $this->checkbox( 'auto_display_archive', __( "Also display in archives", 'yarpp' ) );
+        $this->checkbox( 'auto_display_archive', __( "Display on the front page, category and archive pages", 'yarpp' ) );
 
         $this->textbox( 'limit', __( 'Maximum number of posts:', 'yarpp' ) );
 								

@@ -277,12 +277,18 @@ abstract class YARPP_Cache {
         	// $exclude_tt_ids already ran through wp_parse_id_list
 			$newsql .= " and bit_or(terms.term_taxonomy_id in (".join(',', $exclude_tt_ids).")) = 0";
 		}
-	
+
+		$post_type_taxonomies = get_object_taxonomies($post->post_type, 'names');
 		foreach ((array) $require_tax as $tax => $number) {
-			$newsql .= $wpdb->prepare(
-				' and '.$this->tax_criteria($reference_ID, $tax).' >= %d',
-				$number
-			);
+			// Double-check this post type actually uses this taxonomy. If not,
+			// we'll never find any related posts, as the reference post doesn't use have any terms in this taxonomy.
+			// See https://wordpress.org/support/topic/require-at-least-one-taxonomy-limited-to-taxonomies-available-the-post-type/
+			if(in_array($tax, $post_type_taxonomies)){
+				$newsql .= $wpdb->prepare(
+					' and '.$this->tax_criteria($reference_ID, $tax).' >= %d',
+					$number
+				);
+			}
 		}
 	
 		$newsql .= $wpdb->prepare(

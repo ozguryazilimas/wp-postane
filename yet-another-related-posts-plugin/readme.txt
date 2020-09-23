@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.5
-Stable tag: 5.8.0
+Stable tag: 5.9.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -69,7 +69,8 @@ YARPP adds a REST API endpoint for fetching related posts. The JSON results from
 
 You can place YARPP manually wherever you’d like in your theme within [The Loop](http://codex.wordpress.org/The_Loop) where you want to display the related posts. Simply insert the following shortcode:
 
-`[yarpp]`
+`[yarpp]` to show content related to the current post
+`[yarpp reference_id=123]` to show content related to post 123 (can be used either inside or outside the loop from theme code)
 
 == Frequently Asked Questions ==
 
@@ -282,6 +283,12 @@ add_action(
 `
 
 == Changelog ==
+= 5.9.0 (21-September-2020) =
+* Enhancement: Clarify that "Also display in archives" includes front page and category pages
+* Enhancement: `reference_id` parameter support for the YARPP shortcode. For example:  `[yarpp reference_id=123]` to show content related to Post ID 123 (can be used either inside or outside the loop from theme code)
+* Enhancement: Place warning about comparing using titles and bodies next to the affected inputs, rather than at the top of the page where it could be lost with notices from other plugins
+* [Bugfix](https://wordpress.org/support/topic/require-at-least-one-taxonomy-limited-to-taxonomies-available-the-post-type/): Don't require a category or term, even if set by the admin, on post types that don't use categories or terms (also applies to custom taxonomies)
+
 = 5.8.0 (08-September-2020) =
 * Enhancement: Code hygiene upgrade with usage of `WPDB->prepare` everywhere possible and related improvements
 * [Bugfix](https://wordpress.org/support/topic/i-need-to-ad-yarpp-to-my-sidebar-but-it-wont-let-me-upgrade-to-pro/): Since there is no YARPP Pro currently, removed mention of it from the widget form
@@ -1012,6 +1019,6 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.8.0 =
+= 5.9.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
 
