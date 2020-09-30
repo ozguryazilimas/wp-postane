@@ -1,42 +1,47 @@
 <?php
 /*
-Plugin Name: TinyMCE Advanced
-Plugin URI: http://www.laptoptips.ca/projects/tinymce-advanced/
+Plugin Name: Advanced Editor Tools (previously TinyMCE Advanced)
+Plugin URI: https://wordpress.org/plugins/tinymce-advanced/
 Description: Extends and enhances the block editor (Gutenberg) and the classic editor (TinyMCE).
-Version: 5.5.0
+Version: 5.5.1
 Requires at least: 5.5
 Tested up to: 5.5
 Requires PHP: 5.6
-Author: Andrew Ozz
-Author URI: http://www.laptoptips.ca/
+Author: Automattic
+Author URI: https://automattic.com
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tinymce-advanced
 
 
-TinyMCE Advanced is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
+Advanced Editor Tools (previously TinyMCE Advanced) is free software: you can
+redistribute it and/or modifyit under the terms of the GNU General Public License
+as published bythe Free Software Foundation, either version 2 of the License, or
 any later version.
 
-TinyMCE Advanced is distributed in the hope that it will be useful,
+Advanced Editor Tools is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along
-with TinyMCE Advanced or WordPress. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+with Advanced Editor Tools or WordPress. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
-Copyright (c) 2007-2020 Andrew Ozz. All rights reserved.
+Copyright (c) 2007-2020 Automattic, Inc. All rights reserved.
 */
+
+/**
+ * Main plugin file.
+ * @package advanced-editor-tools
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Tinymce_Advanced' ) ) :
+if ( ! class_exists( 'Advanced_Editor_Tools' ) ) :
 
-class Tinymce_Advanced {
+class Advanced_Editor_Tools {
 
 	private $required_wp_version = '5.5-alpha';
 	private $plugin_version = 5500;
@@ -370,7 +375,7 @@ class Tinymce_Advanced {
 			<?php
 
 			printf(
-				__( 'TinyMCE Advanced requires WordPress version %1$s or newer. It appears that you are running %2$s. This can make the editor unstable.', 'tinymce-advanced' ),
+				__( 'Advanced Editor Tools requires WordPress version %1$s or newer. It appears that you are running %2$s. This can make the editor unstable.', 'tinymce-advanced' ),
 				$this->required_wp_version,
 				esc_html( $wp_version )
 			);
@@ -1323,7 +1328,9 @@ class Tinymce_Advanced {
 	}
 
 	public function add_menu() {
-		add_options_page( 'TinyMCE Advanced', 'TinyMCE Advanced', 'manage_options', 'tinymce-advanced', array( $this, 'settings_page' ) );
+		$page_title      = __( 'Advanced Editor Tools', 'tinymce-advanced' );
+		$menu_item_label = __( 'Advanced Editor Tools (TinyMCE Advanced)', 'tinymce-advanced' );
+		add_options_page( $page_title, $menu_item_label, 'manage_options', 'tinymce-advanced', array( $this, 'settings_page' ) );
 	}
 
 	/**
@@ -1331,8 +1338,7 @@ class Tinymce_Advanced {
 	 */
 	public function add_settings_link( $links, $file ) {
 		if (
-			strpos( $file, '/tinymce-advanced.php' ) !== false &&
-			plugin_basename( __FILE__ ) === $file &&
+			strrpos( $file, '/tinymce-advanced.php' ) === ( strlen( $file ) - 21 ) &&
 			current_user_can( 'manage_options' )
 		) {
 			$settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=tinymce-advanced' ), __( 'Settings', 'tinymce-advanced' ) );
@@ -1344,5 +1350,5 @@ class Tinymce_Advanced {
 	}
 }
 
-new Tinymce_Advanced;
+new Advanced_Editor_Tools;
 endif;
