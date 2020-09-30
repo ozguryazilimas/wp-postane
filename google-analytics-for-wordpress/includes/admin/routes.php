@@ -95,7 +95,7 @@ class MonsterInsights_Rest_Routes {
 
 		check_ajax_referer( 'mi-admin-nonce', 'nonce' );
 
-		if ( ! current_user_can( 'monsterinsights_save_settings' ) ) {
+		if ( ! current_user_can( 'monsterinsights_view_dashboard' ) ) {
 			return;
 		}
 

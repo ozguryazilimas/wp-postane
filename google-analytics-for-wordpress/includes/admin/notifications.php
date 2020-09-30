@@ -159,7 +159,9 @@ class MonsterInsights_Notifications {
 			}
 
 			// Ignore if license type does not match.
-			if ( ! in_array( MonsterInsights()->license->get_license_type(), $notification['type'] ) ) {
+			$license_type = MonsterInsights()->license->get_license_type() ? MonsterInsights()->license->get_license_type() : 'lite';
+
+			if ( ! in_array( $license_type, $notification['type'] ) ) {
 				continue;
 			}
 

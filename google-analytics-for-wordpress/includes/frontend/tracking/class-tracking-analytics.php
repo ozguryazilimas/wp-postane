@@ -228,6 +228,7 @@ class MonsterInsights_Tracking_Analytics extends MonsterInsights_Tracking_Abstra
 } ?>
 <?php if ( $ua ) { ?>
 <script<?php echo $attr_string;?>>
+    (window.gaDevIds=window.gaDevIds||[]).push("dZGIzZG");
 	var mi_version         = '<?php echo MONSTERINSIGHTS_VERSION; ?>';
 	var mi_track_user      = <?php echo ( $track_user ? 'true' : 'false' ); ?>;
 	var mi_no_track_reason = <?php echo ( $reason ? "'" . esc_js( $reason)  . "'": "''" ); ?>;
