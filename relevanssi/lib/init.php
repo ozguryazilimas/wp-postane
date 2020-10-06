@@ -46,6 +46,7 @@ add_filter( 'relevanssi_remove_punctuation', 'relevanssi_remove_punct' );
 add_filter( 'relevanssi_post_ok', 'relevanssi_default_post_ok', 9, 2 );
 add_filter( 'relevanssi_query_filter', 'relevanssi_limit_filter' );
 add_action( 'relevanssi_trim_logs', 'relevanssi_trim_logs' );
+add_action( 'relevanssi_update_counts', 'relevanssi_update_counts' );
 add_action( 'relevanssi_custom_field_value', 'relevanssi_filter_custom_fields', 10, 2 );
 
 // Page builder shortcodes.
@@ -368,7 +369,7 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		mysqlcolumn_detail longtext NOT NULL,
 		type varchar(210) NOT NULL DEFAULT 'post',
 		item bigint(20) NOT NULL DEFAULT '0',
-	    UNIQUE KEY doctermitem (doc, term, item)) $charset_collate";
+	    PRIMARY KEY doctermitem (doc, term, item)) $charset_collate";
 
 		dbDelta( $sql );
 
@@ -379,6 +380,7 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		$relevanssi_term_reverse_idx_exists = false;
 		$docs_exists                        = false;
 		$typeitem_exists                    = false;
+		$doctermitem_exists					= false;
 		foreach ( $indices as $index ) {
 			if ( 'terms' === $index->Key_name ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName
 				$terms_exists = true;
@@ -391,6 +393,9 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 			}
 			if ( 'typeitem' === $index->Key_name ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName
 				$typeitem_exists = true;
+			}
+			if ( 'doctermitem' === $index->Key_name ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName
+				$doctermitem_exists = true;
 			}
 		}
 
@@ -414,8 +419,13 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery
 		}
 
+		if ( $doctermitem_exists ) {
+			$sql = "DROP INDEX doctermitem ON $relevanssi_table";
+			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery
+		}
+
 		$sql = 'CREATE TABLE ' . $relevanssi_stopword_table . " (stopword varchar(50) $charset_collate_bin_column NOT NULL,
-	    UNIQUE KEY stopword (stopword)) $charset_collate;";
+	    PRIMARY KEY stopword (stopword)) $charset_collate;";
 
 		dbDelta( $sql );
 
@@ -425,7 +435,7 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 		user_id bigint(20) NOT NULL DEFAULT '0',
 		ip varchar(40) NOT NULL DEFAULT '',
-	    UNIQUE KEY id (id)) $charset_collate;";
+	    PRIMARY KEY id (id)) $charset_collate;";
 
 		dbDelta( $sql );
 
@@ -433,14 +443,23 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		$indices = $wpdb->get_results( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		$query_exists = false;
+		$id_exists    = false;
 		foreach ( $indices as $index ) {
 			if ( 'query' === $index->Key_name ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName
 				$query_exists = true;
+			}
+			if ( 'id' === $index->Key_name ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName
+				$id_exists = true;
 			}
 		}
 
 		if ( ! $query_exists ) {
 			$sql = "CREATE INDEX query ON $relevanssi_log_table (query(190))";
+			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
+		}
+
+		if ( $id_exists ) {
+			$sql = "DROP INDEX id ON $relevanssi_log_table";
 			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
 		}
 
