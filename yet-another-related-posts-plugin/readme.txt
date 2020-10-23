@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.5
-Stable tag: 5.9.0
+Stable tag: 5.10.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -67,10 +67,22 @@ YARPP adds a REST API endpoint for fetching related posts. The JSON results from
 
 = Shortcode =
 
-You can place YARPP manually wherever you’d like in your theme within [The Loop](http://codex.wordpress.org/The_Loop) where you want to display the related posts. Simply insert the following shortcode:
+You can place YARPP's related posts manually wherever you’d like in post content or theme files.
+
+To add to post content, use the shortcode:
 
 `[yarpp]` to show content related to the current post
-`[yarpp reference_id=123]` to show content related to post 123 (can be used either inside or outside the loop from theme code)
+
+If you know the reference Post ID that you want to show content related to, use:
+
+`[yarpp reference_id=123]` to show content related to post 123
+
+The add YARRP related posts to your theme files (eg. single.php), we recommend using:
+
+`<?php echo do_shortcode('[yarpp]'); ?>`
+`<?php echo do_shortcode('[yarpp reference_id=123]'); ?>`
+
+If you're adding the shortcode *outside [the loop](http://codex.wordpress.org/The_Loop)*, you must provide the reference_id.
 
 == Frequently Asked Questions ==
 
@@ -84,7 +96,7 @@ Most likely you have "no related posts" right now because the default "match thr
 
 If you do not want to show the Related Posts display in its default position (right below the post content), first go to YARPP options and turn off the "automatically display" options in the "website" section. If you would like to instead display it in your sidebar and you have a widget-aware theme, YARPP provides a Related Posts widget which you can add under "Appearance" > "Widgets."
 
-If you would like to add the Related Posts display elsewhere, edit your relevant theme file (most likely something like `single.php`) and add the shortcode code `[yarpp]` (recommended) or PHP function `related_posts();` within [The Loop](http://codex.wordpress.org/The_Loop) where you want to display the related posts. Make sure you don't add `echo related_posts();` or you may end up with duplicates in your related posts section.
+If you would like to add the Related Posts display elsewhere, edit your relevant theme file (most likely something like `single.php`) and add the shortcode code `[yarpp]` (recommended) or PHP function `related_posts();` within [The Loop](https://codex.wordpress.org/The_Loop) where you want to display the related posts. Make sure you don't add `echo related_posts();` or you may end up with duplicates in your related posts section.
 
 = How can I limit related posts to a certain time frame? For instance, I don't want to show posts from two years ago. =
 
@@ -147,7 +159,7 @@ YARPP's thumbnail view requires that a WordPress "featured image" be set for eac
 
 = How can I use the custom template feature? =
 
-YARPP's custom templates feature allows you to uber-customize the related posts display using the same coding conventions and [Template Tags](http://codex.wordpress.org/Template_Tags) as in WordPress themes. Custom templates must be in your *active theme's main directory* in order to be recognized by YARPP. If your theme did not ship with YARPP templates, move the files in the `yarpp-templates` directory which ships with YARPP into your active theme's main directory. Be sure to move the *files* (which must be named `yarpp-template-`...`.php`) to your theme, not the entire directory.
+YARPP's custom templates feature allows you to uber-customize the related posts display using the same coding conventions and [Template Tags](https://codex.wordpress.org/Template_Tags) as in WordPress themes. Custom templates must be in your *active theme's main directory* in order to be recognized by YARPP. If your theme did not ship with YARPP templates, move the files in the `yarpp-templates` directory which ships with YARPP into your active theme's main directory. Be sure to move the *files* (which must be named `yarpp-template-`...`.php`) to your theme, not the entire directory.
 
 = Is YARPP compatible with WordPress Multisite? =
 
@@ -283,6 +295,16 @@ add_action(
 `
 
 == Changelog ==
+= 5.10.0 (22-October-2020) =
+* Enhancement: Faster queries and a speed boost ⚡️
+* [Enhancement](https://wordpress.org/support/topic/yarp-page-break/): On posts with page breaks, show YARPP only on the last page
+* Enhancement: [Documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation) on how to use `[yarpp]` shortcode from a theme file (like single.php) or post content
+* Bugfix: If YARPP has already added its content to a post and somehow `apply_filters('the_content'...)` gets called again, don't try to re-add YARPP's content to the post again.
+* Bugfix: Fixes showing/hiding excerpt options when checking excerpt checkboxes
+* [Bugfix](https://wordpress.org/support/topic/bug-fix-for-role-related-code/): Fixes "role" in deactivation survey
+* [Bugfix](https://wordpress.org/support/topic/php-error-423/): Fixes PHP warning on options page
+* [Bugfix](https://wordpress.org/support/topic/yarpp-query-migrate-helper-warnings/): Resolves jQuery Migrate Helper warnings
+
 = 5.9.0 (21-September-2020) =
 * Enhancement: Clarify that "Also display in archives" includes front page and category pages
 * Enhancement: `reference_id` parameter support for the YARPP shortcode. For example:  `[yarpp reference_id=123]` to show content related to Post ID 123 (can be used either inside or outside the loop from theme code)
@@ -292,7 +314,6 @@ add_action(
 = 5.8.0 (08-September-2020) =
 * Enhancement: Code hygiene upgrade with usage of `WPDB->prepare` everywhere possible and related improvements
 * [Bugfix](https://wordpress.org/support/topic/i-need-to-ad-yarpp-to-my-sidebar-but-it-wont-let-me-upgrade-to-pro/): Since there is no YARPP Pro currently, removed mention of it from the widget form
-* [Bugfix](https://wordpress.org/support/topic/bug-fix-for-role-related-code/): Fixes "role" in deactivation survey
 
 = 5.7.0 (18-August-2020) =
 * Enhancement: Ensure that when a post is finally published, YARPP cache for peer posts is cleared to ensure the most related posts are always recommended across every post
@@ -1019,6 +1040,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.9.0 =
+= 5.10.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
-

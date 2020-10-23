@@ -78,11 +78,25 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 
 	public function orderby_filter($arg) {
 		global $wpdb;
-		// only order by score if the score function is added in fields_filter, which only happens
-		// if there are related posts in the postdata
+		/*
+         * Only order by score if the score function is added in fields_filter,
+         * which only happens if there are related posts in the post-data.
+         * If ordering by score also order by post ID to keep them consistent in cases where the score is the same
+         * for multiple posts.
+         */
 		if ($this->score_override &&
 		    is_array($this->related_postdata) && count($this->related_postdata))
-			return str_replace("$wpdb->posts.post_date","score",$arg);
+			return str_replace(
+				array(
+					"$wpdb->posts.post_date ASC",
+					"$wpdb->posts.post_date DESC"
+				),
+				array(
+					"score ASC, yarpp.ID ASC",
+					"score DESC, yarpp.ID ASC"
+				),
+				$arg
+			);
 		return $arg;
 	}
 

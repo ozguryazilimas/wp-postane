@@ -25,7 +25,7 @@ jQuery(function($) {
   function excerpt() {
     var metabox = $(this).closest('#yarpp_display_web, #yarpp_display_rss');
     metabox.find('.excerpted').toggle(
-            !!(metabox.find('.use_template').val() === 'builtin' && metabox.find('.show_excerpt input').attr('checked'))
+            !!(metabox.find('.use_template').val() === 'builtin' && metabox.find('.show_excerpt input').prop('checked'))
         );
   }
   $('.show_excerpt, .use_template, #yarpp-rss_display').click(excerpt);

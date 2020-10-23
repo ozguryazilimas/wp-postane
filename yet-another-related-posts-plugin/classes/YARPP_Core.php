@@ -15,7 +15,13 @@ class YARPP {
     public $default_hidden_metaboxes    = array();
     public $debug                       = false;
     public $yarppPro                    = null;
+	/**
+	 * @var YARPP_Cache_Bypass
+	 */
     public $cache_bypass;
+	/**
+	 * @var YARPP_Cache
+	 */
     public $cache;
     public $admin;
 	/**
@@ -23,6 +29,9 @@ class YARPP {
 	 */
     public $db_schema;
 
+	/**
+	 * @var YARPP_Cache
+	 */
     private $active_cache;
     private $storage_class;
     private $default_dimensions         = array(
@@ -855,7 +864,7 @@ class YARPP {
 
 		return wp_list_pluck( $this->post_types, $field );
 	}
-	
+
 	private function post_type_filter($post_type) {
 		if ($post_type->public) return true;
 		if (isset($post_type->yarpp_support)) return $post_type->yarpp_support;
@@ -1022,6 +1031,11 @@ class YARPP {
         if (!is_singular() && !($this->get_option('auto_display_archive') && (is_archive() || is_home()))) {
             return null;
         }
+        // If we're only viewing a single post with page breaks, only show YARPP its the last page.
+        global $page, $pages;
+        if(is_singular() && is_int($page) && is_array($pages) && $page < count($pages)){
+			return null;
+        }
 
         if ($this->get_option('cross_relate')) {
             $post_types = $this->get_post_types();
@@ -1074,10 +1088,12 @@ class YARPP {
      * @return string
 	 */
 	public function display_related($reference_ID = null, $args = array(), $echo = true) {
-        
-        /* If we're already in a YARPP loop, stop now. */
-        if ($this->cache->is_yarpp_time() || $this->cache_bypass->is_yarpp_time()) return false;
+
+		// If YARPP cache is already finding the current post's content, don't ask it to do it again.
+		// Avoid infinite recursion here.
+        if ( $this->active_cache_busy()) return false;
         $this->enforce();
+
         wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
         $output = null;
 
@@ -1106,7 +1122,9 @@ class YARPP {
         extract($this->parse_args($args, $options));
 
         $cache_status = $this->active_cache->enforce($reference_ID);
-        if ($cache_status === YARPP_DONT_RUN) return;
+        if ($cache_status === YARPP_DONT_RUN){
+        	return;
+        }
         if ($cache_status !== YARPP_NO_RELATED) $this->active_cache->begin_yarpp_time($reference_ID, $args);
 
         $this->save_post_context();
@@ -1201,9 +1219,11 @@ class YARPP {
 	 * @param (array) $args
 	 */
 	public function get_related($reference_ID = null, $args = array()) {
-		/* If we're already in a YARPP loop, stop now. */
-		if ($this->cache->is_yarpp_time() || $this->cache_bypass->is_yarpp_time()) return false;
+		// If YARPP cache is already finding the current post's content, don't ask it to do it again.
+		// Avoid infinite recursion here.
+		if ( $this->active_cache_busy()) return false;
 		$this->enforce();
+
 
 		if (is_numeric($reference_ID)) {
 			$reference_ID = (int) $reference_ID;
@@ -1222,7 +1242,9 @@ class YARPP {
 		extract($this->parse_args($args, $options));
 
 		$cache_status = $this->active_cache->enforce($reference_ID);
-		if ($cache_status === YARPP_DONT_RUN || $cache_status === YARPP_NO_RELATED) return array();
+		if ($cache_status === YARPP_DONT_RUN || $cache_status === YARPP_NO_RELATED) {
+			return array();
+		}
 					
 		/* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);
@@ -1239,16 +1261,15 @@ class YARPP {
 	
 		$related_query->posts = apply_filters(
             'yarpp_results',
-            $related_query->posts,
-            array(
-                'function'      => 'get_related',
+            $related_query->posts, array(
+
+			              'function'      => 'get_related',
                 'args'          => $args,
                 'related_ID'    => $reference_ID
             )
         );
 	
 		$this->active_cache->end_yarpp_time();
-	
 		return $related_query->posts;
 	}
 	
@@ -1257,9 +1278,9 @@ class YARPP {
 	 * @param (array) $args
 	 */
 	public function related_exist($reference_ID = null, $args = array()) {
-		/* if we're already in a YARPP loop, stop now. */
-		if ($this->cache->is_yarpp_time() || $this->cache_bypass->is_yarpp_time()) return false;
-
+		// If YARPP cache is already finding the current post's content, don't ask it to do it again.
+		// Avoid infinite recursion here.
+		if ($this->active_cache_busy()) return false;
 		$this->enforce();	
 	
 		if (is_numeric($reference_ID)) {
@@ -1275,7 +1296,9 @@ class YARPP {
 	
 		$cache_status = $this->active_cache->enforce($reference_ID);
 	
-		if ($cache_status === YARPP_NO_RELATED) return false;
+		if ($cache_status === YARPP_NO_RELATED) {
+			return false;
+		}
 
         /* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);
@@ -1300,7 +1323,6 @@ class YARPP {
 		unset($related_query);
 
 		$this->active_cache->end_yarpp_time();
-	
 		return $return;
 	}
 		
@@ -1310,7 +1332,8 @@ class YARPP {
      * @return string
 	 */
 	public function display_demo_related($args = array(), $echo = true) {
-	    /* if we're already in a demo YARPP loop, stop now. */
+	    // If YARPP cache is already finding the current post's content, don't ask it to do it again.
+		// Avoid infinite recursion here.
 		if ($this->cache_bypass->demo_time) return false;
 	
 		$options = array(
@@ -1461,15 +1484,15 @@ class YARPP {
 	 */
 	 
 	public function the_content($content) {
-		/* this filter doesn't handle feeds */
-		if (is_feed()) return $content;
+		// If the cache is currently finding a post's keywords, don't start adding YARPP related posts to it. That's
+		// unnecessarily recursion.
+		if (is_feed() || $this->active_cache_busy()) return $content;
 
 		/* If the content includes <!--noyarpp-->, don't display */
 		if (!stristr($content, '<!--noyarpp-->')) {
             $content .= $this->display_basic();
             $content .= $this->display_pro('website');
         }
-	
 		return $content;
 	}
 
@@ -1624,7 +1647,7 @@ class YARPP {
 		return $text;
 	}
 
-	/**
+	/*
 	 * Gets the list of valid interval units used by YARPP and MySQL interval statements.
 	 *
 	 * @return array keys are valid values for recent units, and for MySQL interval
@@ -1636,5 +1659,14 @@ class YARPP {
 			'week' => __('week(s)','yarpp'),
 			'month' => __('month(s)','yarpp')
 		);
+	}
+
+	/**
+	 * Detects if the active cache is currently discovering post keywords. If so, it's a bad time
+	 * to start calculating related posts yet again.
+	 * @return bool
+	 */
+	protected function active_cache_busy(){
+		return $this->active_cache instanceof YARPP_Cache && $this->active_cache->discovering_keywords();
 	}
 }

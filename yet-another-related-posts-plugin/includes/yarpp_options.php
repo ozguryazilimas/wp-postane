@@ -30,7 +30,7 @@ if (current_user_can('update_plugins')) {
     $slug = 'yet-another-related-posts-plugin';
     $plugin_name = 'Yet Another Related Posts Plugin';
     $file = basename(YARPP_DIR).'/yarpp.php';
-    if ($yarpp_version_info['result'] === 'new') {
+    if ($yarpp_version_info && isset($yarpp_version_info['result']) && $yarpp_version_info['result'] === 'new') {
 
         /* Make sure the update system is aware of this version. */
         $current = get_site_transient('update_plugins');
