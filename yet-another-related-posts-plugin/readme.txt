@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.5
-Stable tag: 5.10.0
+Stable tag: 5.10.1
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -295,6 +295,9 @@ add_action(
 `
 
 == Changelog ==
+= 5.10.1 (23-October-2020) =
+* [Critical Bugfix](https://wordpress.org/support/topic/version-5-10-0-generated-error-500/): Reverts query changes from the v5.10.0 update as it caused 500 fatal errors on some WordPress installations. We sincerely apologies for any issues it may have caused. We did test the release for weeks, but each environment is just a bit different. We are actively testing a bug fix with those affected that volunteered before we release it again.
+
 = 5.10.0 (22-October-2020) =
 * Enhancement: Faster queries and a speed boost ⚡️
 * [Enhancement](https://wordpress.org/support/topic/yarp-page-break/): On posts with page breaks, show YARPP only on the last page
@@ -1040,5 +1043,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.10.0 =
+= 5.10.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

@@ -1,18 +1,7 @@
 <?php
 abstract class YARPP_Cache {
 	protected $core;
-	/**
-	 * During "YARPP Time", we add a bunch of filters to modify WP_Query
-	 * @var bool
-	 */
     protected $yarpp_time   = false;
-
-	/**
-	 * Keep track of when we're calculating, so YARPP core can know when to back off from initiating calculating
-	 * related again.
-	 * @var bool
-	 */
-    protected $discovering_keywords = false;
 	public $score_override  = false;
 	public $online_limit    = false;
 	public $last_sql;
@@ -202,7 +191,7 @@ abstract class YARPP_Cache {
 			}
 		}
 	
-		$newsql .= ',4) as score';
+		$newsql .= ',1) as score';
 	
 		$newsql .= "\n from $wpdb->posts \n";
 	
@@ -361,16 +350,16 @@ abstract class YARPP_Cache {
 		return apply_filters('yarpp_title_keywords', $this->extract_keywords(get_the_title($ID), $max, $ID), $max, $ID);
 	}
 	protected function body_keywords( $ID, $max = 20 ) {
+		global $wp_current_filter;
+		$filter_count = array_count_values( $wp_current_filter );
+		if ( ! empty( $filter_count['the_content'] ) && $filter_count['the_content'] > 1 ) {
+			return '';
+		}
 		$post = get_post( $ID );
 		if ( empty( $post ) ) {
 			return '';
 		}
-		$this->discovering_keywords = true;
-		$body_content = apply_filters( 'the_content', $post->post_content );
-		$this->discovering_keywords = false;
-		$keywords                   =  apply_filters( 'yarpp_body_keywords', $this->extract_keywords( $body_content, $max, $ID ), $max, $ID );
-
-		return $keywords;
+		return apply_filters( 'yarpp_body_keywords', $this->extract_keywords( apply_filters( 'the_content', $post->post_content ), $max, $ID ), $max, $ID );
 	}
 	
 	private function extract_keywords( $html, $max = 20, $ID = 0 ) {
@@ -463,14 +452,5 @@ abstract class YARPP_Cache {
 		if (count($types) > $max)
 			$types = array_slice($types, 0, $max);
 		return implode(' ', $types);
-	}
-
-	/**
-	 * Returns whether or not we're currently discovering the keywords on a reference post.
-	 * (This is a very bad time to start looking for related posts! So YARPP core should be able to detect this.)
-	 * @return bool
-	 */
-	public function discovering_keywords(){
-		return $this->discovering_keywords;
 	}
 }
