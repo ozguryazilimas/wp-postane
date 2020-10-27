@@ -102,6 +102,8 @@ class Simple_Local_Avatars {
 	 * @param int   $size        Requested avatar size.
 	 */
 	public function get_simple_local_avatar_url( $id_or_email, $size ) {
+		global $wpdb;
+
 		if ( is_numeric( $id_or_email ) ) {
 			$user_id = (int) $id_or_email;
 		} elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) ) {
@@ -110,6 +112,8 @@ class Simple_Local_Avatars {
 			$user_id = (int) $id_or_email->user_id;
 		} elseif ( $id_or_email instanceof WP_Post && ! empty( $id_or_email->post_author ) ) {
 			$user_id = (int) $id_or_email->post_author;
+		} else {
+			$user_id = $wpdb->get_var("SELECT user_id FROM wp_comments WHERE comment_author_email = '" . $id_or_email . "' LIMIT 1");
 		}
 
 		if ( empty( $user_id ) ) {
