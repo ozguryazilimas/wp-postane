@@ -4,7 +4,7 @@
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: ExactMetrics
- * Version: 6.2.2
+ * Version: 6.3.0
  * Requires at least: 3.8.0
  * Requires PHP: 5.2
  * Author URI: https://exactmetrics.com
@@ -44,7 +44,7 @@ final class ExactMetrics_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.2.2';
+	public $version = '6.3.0';
 
 	/**
 	 * Plugin file.
@@ -99,6 +99,15 @@ final class ExactMetrics_Lite {
 	 * @var ExactMetrics_Notifications $notifications Instance of Notifications class.
 	 */
 	public $notifications;
+
+	/**
+	 * Holds instance of ExactMetrics Notification Events
+	 *
+	 * @since 6.2.3
+	 * @access public
+	 * @var ExactMetrics_Notification_Event $notification_event Instance of ExactMetrics_Notification_Event class.
+	 */
+	public $notification_event;
 
 	/**
 	 * Holds instance of ExactMetrics Reporting class.
@@ -191,7 +200,7 @@ final class ExactMetrics_Lite {
 
 			// This does the version to version background upgrade routines and initial install
 			$em_version = get_option( 'exactmetrics_current_version', '5.5.3' );
-			if ( version_compare( $em_version, '6.2.0', '<' ) ) {
+			if ( version_compare( $em_version, '6.3.0', '<' ) ) {
 				exactmetrics_lite_call_install_and_upgrade();
 			}
 
@@ -204,11 +213,12 @@ final class ExactMetrics_Lite {
 
 			// Load admin only components.
 			if ( is_admin() || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
-				self::$instance->notices          = new ExactMetrics_Notice_Admin();
-				self::$instance->reporting 	      = new ExactMetrics_Reporting();
-				self::$instance->api_auth    	  = new ExactMetrics_API_Auth();
-				self::$instance->routes 		  = new ExactMetrics_Rest_Routes();
-				self::$instance->notifications    = new ExactMetrics_Notifications();
+				self::$instance->notices            = new ExactMetrics_Notice_Admin();
+				self::$instance->reporting          = new ExactMetrics_Reporting();
+				self::$instance->api_auth           = new ExactMetrics_API_Auth();
+				self::$instance->routes             = new ExactMetrics_Rest_Routes();
+				self::$instance->notifications      = new ExactMetrics_Notifications();
+				self::$instance->notification_event = new ExactMetrics_Notification_Event();
 			}
 
 			if ( exactmetrics_is_pro_version() ) {
@@ -519,6 +529,9 @@ final class ExactMetrics_Lite {
 
 			// Notifications class.
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notifications.php';
+			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notification-event.php';
+			// Add notification manual events for lite version.
+			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notifications/notification-events.php';
 		}
 
 		require_once EXACTMETRICS_PLUGIN_DIR . 'includes/api-request.php';
@@ -627,6 +640,18 @@ function exactmetrics_lite_uninstall_hook() {
 
 		// Delete data
 		$instance->reporting->delete_aggregate_data('site');
+	}
+
+	// Clear notification cron schedules
+	$schedules = wp_get_schedules();
+
+	if  ( is_array( $schedules ) && ! empty( $schedules ) ) {
+		foreach ( $schedules as $key => $value ) {
+			if ( 0 === strpos($key, "exactmetrics_notification_") ) {
+				$cron_hook = implode("_", explode( "_", $key, -2 ) ) . '_cron';
+				wp_clear_scheduled_hook( $cron_hook );
+			}
+		}
 	}
 
 }

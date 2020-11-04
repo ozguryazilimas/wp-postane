@@ -47,6 +47,9 @@ function exactmetrics_admin_menu() {
 
     $submenu_base = add_query_arg( 'page', 'exactmetrics_settings', admin_url( 'admin.php' ) );
 
+	// Add Popular Posts menu item.
+	add_submenu_page( $hook, __( 'Popular Posts:', 'google-analytics-dashboard-for-wp' ), __( 'Popular Posts', 'google-analytics-dashboard-for-wp' ), 'exactmetrics_save_settings', $submenu_base . '#/popular-posts' );
+
     // then tools
     add_submenu_page( $hook, __( 'Tools:', 'google-analytics-dashboard-for-wp' ), __( 'Tools', 'google-analytics-dashboard-for-wp' ), 'manage_options', $submenu_base . '#/tools' );
 
@@ -459,6 +462,7 @@ function exactmetrics_admin_setup_notices() {
                     echo '<img class="exactmetrics-wooedd-upsell-image exactmetrics-wooedd-upsell-image-large" src="' . trailingslashit( EXACTMETRICS_PLUGIN_URL ) . 'assets/images/upsell/woo-edd-upsell.png">';
                 echo '</div>';
             echo '</div>';
+            echo '<style type="text/css">.exactmetrics-wooedd-upsell-left{width:50%;display:table-cell;float:left}.exactmetrics-wooedd-upsell-right{width:50%;display:table-cell;float:left}.exactmetrics-wooedd-upsell-image{width:100%;height:auto;padding:20px}.exactmetrics-wooedd-upsell-image-small{display:none}.exactmetrics-wooedd-upsell-row{display:table}.exactmetrics-wooedd-upsell-left p{margin:1em 0;font-size:16px}@media (max-width:900px){.exactmetrics-wooedd-upsell-left{width:100%}.exactmetrics-wooedd-upsell-right{display:none}.exactmetrics-wooedd-upsell-image-small{display:block}.exactmetrics-wooedd-upsell-image-large{display:none}}</style>';
             return;
         }
     }
@@ -533,4 +537,4 @@ function exactmetrics_admin_menu_inline_styles() {
 	<?php
 }
 
-add_action( 'admin_footer', 'exactmetrics_admin_menu_inline_styles', 300 );
+add_action( 'admin_head', 'exactmetrics_admin_menu_inline_styles', 300 );

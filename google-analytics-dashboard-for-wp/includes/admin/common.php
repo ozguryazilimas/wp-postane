@@ -42,6 +42,7 @@ function exactmetrics_is_settings_page() {
 	if ( ! empty( $current_screen->base ) && strpos( $current_screen->base, 'exactmetrics_network' ) !== false ) {
 		$settings_page = true;
 	}
+
 	return $settings_page;
 }
 
@@ -150,8 +151,8 @@ function exactmetrics_admin_scripts() {
 		'exactmetrics-admin-common-script',
 		'exactmetrics_admin_common',
 		array(
-			'ajax'                  => admin_url( 'admin-ajax.php' ),
-			'dismiss_notice_nonce'  => wp_create_nonce( 'exactmetrics-dismiss-notice' ),
+			'ajax'                 => admin_url( 'admin-ajax.php' ),
+			'dismiss_notice_nonce' => wp_create_nonce( 'exactmetrics-dismiss-notice' ),
 		)
 	);
 
@@ -179,7 +180,7 @@ function exactmetrics_admin_scripts() {
 		wp_enqueue_script( 'exactmetrics-vue-script' );
 		$plugins         = get_plugins();
 		$install_amp_url = false;
-		if ( current_user_can( 'install_plugins' ) ) {
+		if ( exactmetrics_can_install_plugins() ) {
 			$amp_key = 'amp/amp.php';
 			if ( array_key_exists( $amp_key, $plugins ) ) {
 				$install_amp_url = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . $amp_key ), 'activate-plugin_' . $amp_key );
@@ -187,8 +188,17 @@ function exactmetrics_admin_scripts() {
 				$install_amp_url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=amp' ), 'install-plugin_amp' );
 			}
 		}
+		$install_woocommerce_url = false;
+		if ( exactmetrics_can_install_plugins() ) {
+			$woo_key = 'woocommerce/woocommerce.php';
+			if ( array_key_exists( $woo_key, $plugins ) ) {
+				$install_woocommerce_url = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . $woo_key ), 'activate-plugin_' . $woo_key );
+			} else {
+				$install_woocommerce_url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=woocommerce' ), 'install-plugin_woocommerce' );
+			}
+		}
 		$install_fbia_url = false;
-		if ( current_user_can( 'install_plugins' ) ) {
+		if ( exactmetrics_can_install_plugins() ) {
 			$fbia_key = 'fb-instant-articles/facebook-instant-articles.php';
 			if ( array_key_exists( $fbia_key, $plugins ) ) {
 				$install_fbia_url = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . $fbia_key ), 'activate-plugin_' . $fbia_key );
@@ -213,38 +223,40 @@ function exactmetrics_admin_scripts() {
 			'exactmetrics-vue-script',
 			'exactmetrics',
 			array(
-				'ajax'                 => admin_url( 'admin-ajax.php' ),
-				'nonce'                => wp_create_nonce( 'mi-admin-nonce' ),
-				'network'              => is_network_admin(),
-				'translations'         => wp_get_jed_locale_data( exactmetrics_is_pro_version() ? 'exactmetrics-premium' : 'google-analytics-dashboard-for-wp' ),
-				'assets'               => plugins_url( $version_path . '/assets/vue', EXACTMETRICS_PLUGIN_FILE ),
-				'roles'                => exactmetrics_get_roles(),
-				'roles_manage_options' => exactmetrics_get_manage_options_roles(),
-				'shareasale_id'        => exactmetrics_get_shareasale_id(),
-				'shareasale_url'       => exactmetrics_get_shareasale_url( exactmetrics_get_shareasale_id(), '' ),
-				'addons_url'           => is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network#/addons' ) : admin_url( 'admin.php?page=exactmetrics_settings#/addons' ),
-				'email_summary_url'    => admin_url( 'admin.php?exactmetrics_email_preview&exactmetrics_email_template=summary' ),
-				'install_amp_url'      => $install_amp_url,
-				'install_fbia_url'     => $install_fbia_url,
-				'dimensions'           => $prepared_dimensions,
-				'wizard_url'           => is_network_admin() ? network_admin_url( 'index.php?page=exactmetrics-onboarding' ) : admin_url( 'index.php?page=exactmetrics-onboarding' ),
-				'install_plugins'      => current_user_can( 'install_plugins' ),
-				'unfiltered_html'      => current_user_can( 'unfiltered_html' ),
-				'activate_nonce'       => wp_create_nonce( 'exactmetrics-activate' ),
-				'deactivate_nonce'     => wp_create_nonce( 'exactmetrics-deactivate' ),
-				'install_nonce'        => wp_create_nonce( 'exactmetrics-install' ),
+				'ajax'                            => admin_url( 'admin-ajax.php' ),
+				'nonce'                           => wp_create_nonce( 'mi-admin-nonce' ),
+				'network'                         => is_network_admin(),
+				'translations'                    => wp_get_jed_locale_data( exactmetrics_is_pro_version() ? 'exactmetrics-premium' : 'google-analytics-dashboard-for-wp' ),
+				'assets'                          => plugins_url( $version_path . '/assets/vue', EXACTMETRICS_PLUGIN_FILE ),
+				'roles'                           => exactmetrics_get_roles(),
+				'roles_manage_options'            => exactmetrics_get_manage_options_roles(),
+				'shareasale_id'                   => exactmetrics_get_shareasale_id(),
+				'shareasale_url'                  => exactmetrics_get_shareasale_url( exactmetrics_get_shareasale_id(), '' ),
+				'addons_url'                      => is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network#/addons' ) : admin_url( 'admin.php?page=exactmetrics_settings#/addons' ),
+				'email_summary_url'               => admin_url( 'admin.php?exactmetrics_email_preview&exactmetrics_email_template=summary' ),
+				'install_amp_url'                 => $install_amp_url,
+				'install_fbia_url'                => $install_fbia_url,
+				'install_woo_url'                 => $install_woocommerce_url,
+				'dimensions'                      => $prepared_dimensions,
+				'wizard_url'                      => is_network_admin() ? network_admin_url( 'index.php?page=exactmetrics-onboarding' ) : admin_url( 'index.php?page=exactmetrics-onboarding' ),
+				'install_plugins'                 => exactmetrics_can_install_plugins(),
+				'unfiltered_html'                 => current_user_can( 'unfiltered_html' ),
+				'activate_nonce'                  => wp_create_nonce( 'exactmetrics-activate' ),
+				'deactivate_nonce'                => wp_create_nonce( 'exactmetrics-deactivate' ),
+				'install_nonce'                   => wp_create_nonce( 'exactmetrics-install' ),
 				// Used to add notices for future deprecations.
-				'versions'             => exactmetrics_get_php_wp_version_warning_data(),
-				'plugin_version'       => EXACTMETRICS_VERSION,
-				'is_admin'             => true,
-				'admin_email'          => get_option( 'admin_email' ),
-				'site_url'             => get_site_url(),
-				'reports_url'          => add_query_arg( 'page', 'exactmetrics_reports', admin_url( 'admin.php' ) ),
-				'first_run_notice'     => apply_filters( 'exactmetrics_settings_first_time_notice_hide', exactmetrics_get_option( 'exactmetrics_first_run_notice' ) ),
-				'getting_started_url'  => is_network_admin() ? network_admin_url( 'admin.php?page=exactmetrics_network#/about' ) : admin_url( 'admin.php?page=exactmetrics_settings#/about/getting-started' ),
-				'authed'               => $is_authed,
-				'new_pretty_link_url'  => admin_url( 'post-new.php?post_type=pretty-link' ),
-				'wpmailsmtp_admin_url' => admin_url( 'admin.php?page=wp-mail-smtp' ),
+				'versions'                        => exactmetrics_get_php_wp_version_warning_data(),
+				'plugin_version'                  => EXACTMETRICS_VERSION,
+				'is_admin'                        => true,
+				'admin_email'                     => get_option( 'admin_email' ),
+				'site_url'                        => get_site_url(),
+				'reports_url'                     => add_query_arg( 'page', 'exactmetrics_reports', admin_url( 'admin.php' ) ),
+				'first_run_notice'                => apply_filters( 'exactmetrics_settings_first_time_notice_hide', exactmetrics_get_option( 'exactmetrics_first_run_notice' ) ),
+				'getting_started_url'             => is_network_admin() ? network_admin_url( 'admin.php?page=exactmetrics_network#/about' ) : admin_url( 'admin.php?page=exactmetrics_settings#/about/getting-started' ),
+				'authed'                          => $is_authed,
+				'new_pretty_link_url'             => admin_url( 'post-new.php?post_type=pretty-link' ),
+				'wpmailsmtp_admin_url'            => admin_url( 'admin.php?page=wp-mail-smtp' ),
+				'load_headline_analyzer_settings' => exactmetrics_load_gutenberg_app() ? 'true' : 'false',
 			)
 		);
 
@@ -799,10 +811,10 @@ add_action( 'admin_head', 'exactmetrics_remove_unnecessary_footer_hooks', 15 );
  */
 function exactmetrics_yearinreview_admin_menu_tooltip() {
 
-	$dismiss_tooltip 		= get_option( 'exactmetrics_yearinreview_dismiss_admin_tooltip', false );
-	$activated				= get_option( 'exactmetrics_over_time', array() );
-	$ua_code 				= exactmetrics_get_ua();
-	$dashboards_disabled 	= exactmetrics_get_option( 'dashboards_disabled', false );
+	$dismiss_tooltip     = get_option( 'exactmetrics_yearinreview_dismiss_admin_tooltip', false );
+	$activated           = get_option( 'exactmetrics_over_time', array() );
+	$ua_code             = exactmetrics_get_ua();
+	$dashboards_disabled = exactmetrics_get_option( 'dashboards_disabled', false );
 
 	if ( $dashboards_disabled ) {
 		return;
@@ -818,7 +830,7 @@ function exactmetrics_yearinreview_admin_menu_tooltip() {
 	}
 
 	// equivalent to: 01/01/2020 @ 12:00am (UTC)
-	$new_year  = '1577836800';
+	$new_year = '1577836800';
 
 	// equivalent to: 01/02/2020 @ 12:00am (UTC)
 	$start_time = '1577923200';
@@ -826,7 +838,7 @@ function exactmetrics_yearinreview_admin_menu_tooltip() {
 	// equivalent to: 01/13/2020 @ 12:00am (UTC)
 	$end_time = '1578873600';
 
-	if ( $dismiss_tooltip )  {
+	if ( $dismiss_tooltip ) {
 		return;
 	}
 
@@ -862,7 +874,9 @@ function exactmetrics_yearinreview_admin_menu_tooltip() {
 		<div class="exactmetrics-yearinreview-admin-menu-tooltip-content">
 			<strong><?php esc_html_e( 'See how your website performed this year and find tips along the way to help grow even more in 2020!', 'google-analytics-dashboard-for-wp' ); ?></strong>
 			<p>
-				<a href="<?php echo esc_url( $url ); ?>" class="button button-primary exactmetrics-yearinreview-admin-menu-tooltip-btn-link"><?php esc_html_e( 'View 2019 Year in Review report!', 'google-analytics-dashboard-for-wp' ); ?></a>
+				<a href="<?php echo esc_url( $url ); ?>" class="button button-primary exactmetrics-yearinreview-admin-menu-tooltip-btn-link">
+					<?php esc_html_e( 'View 2019 Year in Review report!', 'google-analytics-dashboard-for-wp' ); ?>
+				</a>
 			</p>
 		</div>
 	</div>

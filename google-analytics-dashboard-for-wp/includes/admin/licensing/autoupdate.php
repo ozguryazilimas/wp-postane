@@ -9,6 +9,10 @@
 function exactmetrics_is_plugin_our_addon( $plugin_file ) {
 	$addons_data = exactmetrics_get_addons();
 
+	if ( ! is_array( $addons_data ) ) {
+		return false;
+	}
+
 	foreach ( $addons_data as $type => $addons ) {
 		foreach ( $addons as $addon ) {
 			$slug     = 'exactmetrics-' . $addon->slug;

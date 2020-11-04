@@ -38,7 +38,7 @@ class ExactMetrics_Connect {
 		check_ajax_referer( 'mi-admin-nonce', 'nonce' );
 
 		// Check for permissions.
-		if ( ! current_user_can( 'install_plugins' ) ) {
+		if ( ! exactmetrics_can_install_plugins() ) {
 			wp_send_json_error( array( 'message' => esc_html__( 'You are not allowed to install plugins.', 'google-analytics-dashboard-for-wp' ) ) );
 		}
 

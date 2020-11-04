@@ -50,8 +50,10 @@ function exactmetrics_ajax_install_addon() {
     // Run a security check first.
     check_ajax_referer( 'exactmetrics-install', 'nonce' );
 
-    if ( ! current_user_can( 'install_plugins' ) ) {
-        echo json_encode( true );
+    if ( ! exactmetrics_can_install_plugins() ) {
+	    wp_send_json( array(
+		    'error' => esc_html__( 'You are not allowed to install plugins', 'google-analytics-dashboard-for-wp' ),
+	    ) );
     }
 
     // Install the addon.
@@ -124,7 +126,9 @@ function exactmetrics_ajax_activate_addon() {
     check_ajax_referer( 'exactmetrics-activate', 'nonce' );
 
     if ( ! current_user_can( 'activate_plugins' ) ) {
-        echo json_encode( true );
+	    wp_send_json( array(
+		    'error' => esc_html__( 'You are not allowed to activate plugins', 'google-analytics-dashboard-for-wp' ),
+	    ) );
     }
 
     // Activate the addon.
@@ -158,8 +162,10 @@ function exactmetrics_ajax_deactivate_addon() {
     // Run a security check first.
     check_ajax_referer( 'exactmetrics-deactivate', 'nonce' );
 
-    if ( ! current_user_can( 'activate_plugins' ) ) {
-        echo json_encode( true );
+    if ( ! current_user_can( 'deactivate_plugins' ) ) {
+	    wp_send_json( array(
+		    'error' => esc_html__( 'You are not allowed to deactivate plugins', 'google-analytics-dashboard-for-wp' ),
+	    ) );
     }
 
     // Deactivate the addon.
@@ -205,3 +211,48 @@ function exactmetrics_ajax_dismiss_notice() {
 
 }
 add_action( 'wp_ajax_exactmetrics_ajax_dismiss_notice', 'exactmetrics_ajax_dismiss_notice' );
+
+/**
+ * Dismiss SEMRush CTA
+ *
+ * @access public
+ * @since 7.12.3
+ */
+function exactmetrics_ajax_dismiss_semrush_cta() {
+	check_ajax_referer( 'mi-admin-nonce', 'nonce' );
+
+	if ( ! current_user_can( 'exactmetrics_save_settings' ) ) {
+		return;
+	}
+
+	// Deactivate the notice
+	if ( update_option( 'exactmetrics_dismiss_semrush_cta', 'yes' ) ) {
+		// Return true
+		wp_send_json( array(
+			'dismissed' => 'yes',
+		) );
+		wp_die();
+	}
+
+	// If here, an error occurred
+	wp_send_json( array(
+		'dismissed' => 'no',
+	) );
+	wp_die();
+}
+add_action( 'wp_ajax_exactmetrics_vue_dismiss_semrush_cta', 'exactmetrics_ajax_dismiss_semrush_cta' );
+
+/**
+ * Get the sem rush cta dismiss status value
+ */
+function exactmetrics_get_sem_rush_cta_status() {
+	check_ajax_referer( 'mi-admin-nonce', 'nonce' );
+
+	$dismissed_cta = get_option( 'exactmetrics_dismiss_semrush_cta', 'no' );
+
+	wp_send_json( array(
+		'dismissed' => $dismissed_cta,
+	) );
+}
+
+add_action( 'wp_ajax_exactmetrics_get_sem_rush_cta_status', 'exactmetrics_get_sem_rush_cta_status' );

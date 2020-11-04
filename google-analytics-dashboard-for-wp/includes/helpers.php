@@ -47,7 +47,7 @@ function exactmetrics_track_user( $user_id = -1 ) {
 	}
 
 	$track_super_admin = apply_filters( 'exactmetrics_track_super_admins', false );
-	if ( $track_super_admin === false && is_multisite() && is_super_admin() ) {
+	if ( $user_id === -1 && $track_super_admin === false && is_multisite() && is_super_admin() ) {
 		$track_user = false;
 	}
 
@@ -325,10 +325,10 @@ function exactmetrics_is_dev_url( $url = '' ) {
 
 		$tlds_to_check = array( '.local', ':8888', ':8080', ':8081', '.invalid', '.example', '.test' );
 		foreach ( $tlds_to_check as $tld ) {
-				if ( false !== strpos( $host, $tld ) ) {
-					$is_local_url = true;
-					break;
-				}
+			if ( false !== strpos( $host, $tld ) ) {
+				$is_local_url = true;
+				break;
+			}
 
 		}
 		if ( substr_count( $host, '.' ) > 1 ) {
@@ -929,7 +929,7 @@ function exactmetrics_is_network_active() {
 	}
 
 	if ( is_multisite() && is_plugin_active_for_network( plugin_basename( EXACTMETRICS_PLUGIN_FILE ) ) ) {
-	   return true;
+		return true;
 	} else {
 		return false;
 	}
@@ -1238,7 +1238,7 @@ function exactmetrics_count_third_party_ua_codes( $body ) {
  * @return array
  */
 function exactmetrics_is_code_installed_frontend() {
-		// Grab the front page html.
+	// Grab the front page html.
 	$request = wp_remote_request( home_url(), array(
 		'sslverify' => false,
 	) );
@@ -1388,7 +1388,7 @@ function exactmetrics_get_current_post_type() {
 	return null;
 }
 
- /** Decode special characters, both alpha- (<) and numeric-based (').
+/** Decode special characters, both alpha- (<) and numeric-based (').
  *
  * @since 7.10.5
  *
@@ -1518,7 +1518,7 @@ function exactmetrics_tools_copy_url_to_prettylinks() {
                 localStorage.removeItem('ExactMetricsURL');
             });
         </script>
-    <?php }
+	<?php }
 }
 add_action( 'admin_footer', 'exactmetrics_tools_copy_url_to_prettylinks' );
 
@@ -1534,7 +1534,7 @@ function exactmetrics_skip_prettylinks_welcome_screen() {
 	$exactmetrics_reference = isset( $_GET['exactmetrics_reference'] ) ? $_GET['exactmetrics_reference'] : '';
 
 	if ( 'post-new.php' === $pagenow && 'pretty-link' === $post_type && 'url_builder' === $exactmetrics_reference ) {
-	    $onboard  = get_option( 'prli_onboard' );
+		$onboard  = get_option( 'prli_onboard' );
 
 		if ( $onboard == 'welcome' || $onboard == 'update' ) {
 			update_option( 'exactmetrics_backup_prli_onboard_value', $onboard );
@@ -1592,4 +1592,99 @@ function exactmetrics_require_upgrader( $custom_upgrader = true ) {
 		require_once plugin_dir_path( $base->file ) . '/includes/admin/licensing/skin.php';
 	}
 
+}
+
+/**
+ * Load headline analyzer if wp version is higher than/equal to 5.4
+ *
+ * @return boolean
+ * @since 7.12.3
+ *
+ */
+function exactmetrics_load_gutenberg_app() {
+	global $wp_version;
+
+	if ( version_compare( $wp_version, '5.4', '<' ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Helper function for frontend script attributes
+ *
+ * @return string
+ * @since 7.12.3
+ *
+ *
+ */
+function exactmetrics_get_frontend_analytics_script_atts() {
+	$attr_string = '';
+
+	$attributes = apply_filters( 'exactmetrics_tracking_analytics_script_attributes', array(
+		'type'         => "text/javascript",
+		'data-cfasync' => 'false'
+	) );
+
+	if ( ! empty( $attributes ) ) {
+		foreach ( $attributes as $attr_name => $attr_value ) {
+			if ( ! empty( $attr_name ) ) {
+				$attr_string .= ' ' . sanitize_key( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
+			} else {
+				$attr_string .= ' ' . sanitize_key( $attr_value );
+			}
+		}
+	}
+
+	return $attr_string;
+}
+
+/**
+ * Get native english speaking countries
+ *
+ * @return array
+ *
+ * @since 7.12.3
+ */
+function exactmetrics_get_english_speaking_countries() {
+	return array(
+		'AG' => __( 'Antigua and Barbuda', 'google-analytics-dashboard-for-wp' ),
+		'AU' => __( 'Australia', 'google-analytics-dashboard-for-wp' ),
+		'BS' => __( 'The Bahamas', 'google-analytics-dashboard-for-wp' ),
+		'BB' => __( 'Barbados', 'google-analytics-dashboard-for-wp' ),
+		'BZ' => __( 'Belize', 'google-analytics-dashboard-for-wp' ),
+		'CA' => __( 'Canada', 'google-analytics-dashboard-for-wp' ),
+		'DM' => __( 'Dominica', 'google-analytics-dashboard-for-wp' ),
+		'GD' => __( 'Grenada', 'google-analytics-dashboard-for-wp' ),
+		'GY' => __( 'Guyana', 'google-analytics-dashboard-for-wp' ),
+		'IE' => __( 'Ireland', 'google-analytics-dashboard-for-wp' ),
+		'JM' => __( 'Jamaica', 'google-analytics-dashboard-for-wp' ),
+		'NZ' => __( 'New Zealand', 'google-analytics-dashboard-for-wp' ),
+		'KN' => __( 'St Kitts and Nevis', 'google-analytics-dashboard-for-wp' ),
+		'LC' => __( 'St Lucia', 'google-analytics-dashboard-for-wp' ),
+		'VC' => __( 'St Vincent and the Grenadines', 'google-analytics-dashboard-for-wp' ),
+		'TT' => __( 'Trinidad and Tobago', 'google-analytics-dashboard-for-wp' ),
+		'GB' => __( 'United Kingdom', 'google-analytics-dashboard-for-wp' ),
+		'US' => __( 'United States of America', 'google-analytics-dashboard-for-wp' ),
+	);
+}
+
+/**
+ * Helper function to check if the current user can install a plugin.
+ *
+ * @return bool
+ */
+function exactmetrics_can_install_plugins() {
+
+	if ( ! current_user_can( 'install_plugins' ) ) {
+		return false;
+	}
+
+	// Determine whether file modifications are allowed.
+	if ( function_exists( 'wp_is_file_mod_allowed' ) && ! wp_is_file_mod_allowed( 'exactmetrics_can_install' ) ) {
+		return false;
+	}
+
+	return true;
 }

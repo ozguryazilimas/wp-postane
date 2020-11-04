@@ -199,17 +199,7 @@ class ExactMetrics_Tracking_Analytics extends ExactMetrics_Tracking_Abstract {
 		$ua         	= exactmetrics_get_ua();
 		$output     	= '';
 		$reason     	= '';
-		$attributes     = apply_filters( 'exactmetrics_tracking_analytics_script_attributes', array( 'type' => "text/javascript", 'data-cfasync' => 'false'  ) );
-		$attr_string    = '';
-		if ( ! empty( $attributes ) ) {
-			foreach( $attributes as $attr_name => $attr_value ) {
-	 			if ( ! empty( $attr_name ) ) {
-	 				$attr_string .= ' ' . sanitize_key( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
-	 			} else {
-	 				$attr_string .= ' ' . sanitize_key( $attr_value );
-	 			}
-			}
-		}
+		$attr_string    = exactmetrics_get_frontend_analytics_script_atts();
 		ob_start();
 		?>
 <!-- This site uses the Google Analytics by ExactMetrics plugin v<?php echo EXACTMETRICS_VERSION; ?> - Using Analytics tracking - https://www.exactmetrics.com/ -->
@@ -228,6 +218,7 @@ class ExactMetrics_Tracking_Analytics extends ExactMetrics_Tracking_Abstract {
 } ?>
 <?php if ( $ua ) { ?>
 <script<?php echo $attr_string;?>>
+    (window.gaDevIds=window.gaDevIds||[]).push("dNDMyYj");
 	var em_version         = '<?php echo EXACTMETRICS_VERSION; ?>';
 	var em_track_user      = <?php echo ( $track_user ? 'true' : 'false' ); ?>;
 	var em_no_track_reason = <?php echo ( $reason ? "'" . esc_js( $reason)  . "'": "''" ); ?>;

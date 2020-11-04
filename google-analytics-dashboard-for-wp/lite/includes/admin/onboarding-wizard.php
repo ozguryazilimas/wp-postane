@@ -239,7 +239,7 @@ class ExactMetrics_Onboarding_Wizard {
 
 		check_ajax_referer( 'exactmetrics-install', 'nonce' );
 
-		if ( ! current_user_can( 'install_plugins' ) ) {
+		if ( ! exactmetrics_can_install_plugins() ) {
 			wp_send_json( array(
 				'message' => esc_html__( 'You are not allowed to install plugins', 'google-analytics-dashboard-for-wp' ),
 			) );
