@@ -199,17 +199,7 @@ class MonsterInsights_Tracking_Analytics extends MonsterInsights_Tracking_Abstra
 		$ua         	= monsterinsights_get_ua();
 		$output     	= '';
 		$reason     	= '';
-		$attributes     = apply_filters( 'monsterinsights_tracking_analytics_script_attributes', array( 'type' => "text/javascript", 'data-cfasync' => 'false'  ) );
-		$attr_string    = '';
-		if ( ! empty( $attributes ) ) {
-			foreach( $attributes as $attr_name => $attr_value ) {
-	 			if ( ! empty( $attr_name ) ) {
-	 				$attr_string .= ' ' . sanitize_key( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
-	 			} else {
-	 				$attr_string .= ' ' . sanitize_key( $attr_value );
-	 			}
-			}
-		}
+		$attr_string    = monsterinsights_get_frontend_analytics_script_atts();
 		ob_start();
 		?>
 <!-- This site uses the Google Analytics by MonsterInsights plugin v<?php echo MONSTERINSIGHTS_VERSION; ?> - Using Analytics tracking - https://www.monsterinsights.com/ -->
