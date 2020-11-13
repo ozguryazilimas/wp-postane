@@ -509,7 +509,7 @@ function relevanssi_generate_phrase_queries( $phrases, $taxonomies, $custom_fiel
 		$queries = array();
 		$phrase  = $wpdb->esc_like( $phrase );
 		$phrase  = str_replace( array( '‘', '’', "'", '"', '”', '“', '“', '„', '´' ), '_', $phrase );
-		$phrase  = htmlentities( $phrase );
+		$phrase  = htmlspecialchars( $phrase );
 		$phrase  = esc_sql( $phrase );
 
 		$excerpt = '';
@@ -900,8 +900,9 @@ function relevanssi_prevent_default_request( $request, $query ) {
 			$admin_search_ok = false;
 		}
 
-		if ( $query->is_admin && 'page' === $query->query_vars['post_type'] ) {
-			// Relevanssi doesn't work on the page screen, so disable.
+		if ( $query->is_admin && isset( $query->query['fields'] ) && 'id=>parent' === $query->query['fields'] ) {
+			// Relevanssi doesn't work on hierarchical post type admin screens,
+			// so disable.
 			$prevent         = false;
 			$admin_search_ok = false;
 		}
@@ -1014,14 +1015,22 @@ function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = 
 
 		if ( $accept ) {
 			$token = relevanssi_mb_trim( $token );
-			if ( is_numeric( $token ) ) {
-				// $token ends up as an array index, and numbers don't work there.
-				$token = " $token";
-			}
-			if ( ! isset( $tokens[ $token ] ) ) {
-				$tokens[ $token ] = 1;
-			} else {
-				$tokens[ $token ]++;
+
+			/**
+			 * This explode is done so that a stemmer can return both the
+			 * original term and the stemmed term and both can be indexed.
+			 */
+			$token_array = explode( ' ', $token );
+			foreach ( $token_array as $token ) {
+				if ( is_numeric( $token ) ) {
+					// $token ends up as an array index, and numbers don't work there.
+					$token = " $token";
+				}
+				if ( ! isset( $tokens[ $token ] ) ) {
+					$tokens[ $token ] = 1;
+				} else {
+					$tokens[ $token ]++;
+				}
 			}
 		}
 
@@ -2249,4 +2258,229 @@ function relevanssi_launch_ajax_action( $action, $payload_args = array() ) {
 	);
 	$url             = admin_url( 'admin-ajax.php' );
 	return wp_remote_post( $url, $args );
+}
+
+/**
+ * Fetches the data and generates the HTML for the "How Relevanssi sees this
+ * post".
+ *
+ * @param int     $post_id The post ID.
+ * @param boolean $display If false, add "display: none" style to the element.
+ *
+ * @return string The HTML code for the "How Relevanssi sees this post".
+ */
+function relevanssi_generate_how_relevanssi_sees( $post_id, $display = true ) {
+	$style = '';
+	if ( ! $display ) {
+		$style = 'style="display: none"';
+	}
+
+	$element = '<div id="relevanssi_sees_container" ' . $style . '>';
+
+	$data = relevanssi_fetch_sees_data( $post_id );
+
+	if ( empty( $data['terms_list'] ) && empty( $data['reason'] ) ) {
+		$element .= '<p>'
+			// Translators: %d is the post ID.
+			. sprintf( __( 'Nothing found for post ID %d.', 'relevanssi' ), $post_id )
+			. '</p>';
+		$element .= '</div>';
+		return $element;
+	}
+
+	if ( ! empty( $data['reason'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Possible reasons this post is not indexed', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['reason'] ) . '</p>';
+	}
+	if ( ! empty( $data['title'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Post title', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['title'] ) . '</p>';
+	}
+	if ( ! empty( $data['content'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Post content', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['content'] ) . '</p>';
+	}
+	if ( ! empty( $data['comment'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Comments', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['comment'] ) . '</p>';
+	}
+	if ( ! empty( $data['tag'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Tags', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['tag'] ) . '</p>';
+	}
+	if ( ! empty( $data['category'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Categories', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['category'] ) . '</p>';
+	}
+	if ( ! empty( $data['taxonomy'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Other taxonomies', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['taxonomy'] ) . '</p>';
+	}
+	if ( ! empty( $data['link'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Links', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['link'] ) . '</p>';
+	}
+	if ( ! empty( $data['author'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Authors', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['author'] ) . '</p>';
+	}
+	if ( ! empty( $data['excerpt'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Excerpt', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['excerpt'] ) . '</p>';
+	}
+	if ( ! empty( $data['customfield'] ) ) {
+		$element .= '<h3>' . esc_html__( 'Custom fields', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['customfield'] ) . '</p>';
+	}
+	if ( ! empty( $data['mysql'] ) ) {
+		$element .= '<h3>' . esc_html__( 'MySQL content', 'relevanssi' ) . '</h3>';
+		$element .= '<p>' . esc_html( $data['mysql'] ) . '</p>';
+	}
+	$element .= '</div>';
+	return $element;
+}
+
+/**
+ * Fetches the Relevanssi indexing data for a post.
+ *
+ * @param int $post_id The post ID.
+ *
+ * @global array  $relevanssi_variables The Relevanssi global variables array,
+ * used for the database table name.
+ * @global object $wpdb                 The WordPress database interface.
+ *
+ * @return array The indexed terms for various parts of the post in an
+ * associative array.
+ */
+function relevanssi_fetch_sees_data( $post_id ) {
+	global $wpdb, $relevanssi_variables;
+
+	$terms_list = $wpdb->get_results(
+		$wpdb->prepare(
+			'SELECT * FROM ' . $relevanssi_variables['relevanssi_table'] . ' WHERE doc = %d', // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
+			$post_id
+		),
+		OBJECT
+	);
+
+	$terms['content']     = array();
+	$terms['title']       = array();
+	$terms['comment']     = array();
+	$terms['tag']         = array();
+	$terms['link']        = array();
+	$terms['author']      = array();
+	$terms['category']    = array();
+	$terms['excerpt']     = array();
+	$terms['taxonomy']    = array();
+	$terms['customfield'] = array();
+	$terms['mysql']       = array();
+
+	foreach ( $terms_list as $row ) {
+		if ( $row->content > 0 ) {
+			$terms['content'][] = $row->term;
+		}
+		if ( $row->title > 0 ) {
+			$terms['title'][] = $row->term;
+		}
+		if ( $row->comment > 0 ) {
+			$terms['comment'][] = $row->term;
+		}
+		if ( $row->tag > 0 ) {
+			$terms['tag'][] = $row->term;
+		}
+		if ( $row->link > 0 ) {
+			$terms['link'][] = $row->term;
+		}
+		if ( $row->author > 0 ) {
+			$terms['author'][] = $row->term;
+		}
+		if ( $row->category > 0 ) {
+			$terms['category'][] = $row->term;
+		}
+		if ( $row->excerpt > 0 ) {
+			$terms['excerpt'][] = $row->term;
+		}
+		if ( $row->taxonomy > 0 ) {
+			$terms['taxonomy'][] = $row->term;
+		}
+		if ( $row->customfield > 0 ) {
+			$terms['customfield'][] = $row->term;
+		}
+		if ( $row->mysqlcolumn > 0 ) {
+			$terms['mysql'][] = $row->term;
+		}
+	}
+
+	$reason = get_post_meta( $post_id, '_relevanssi_noindex_reason', true );
+
+	return array(
+		'content'     => implode( ' ', $terms['content'] ),
+		'title'       => implode( ' ', $terms['title'] ),
+		'comment'     => implode( ' ', $terms['comment'] ),
+		'tag'         => implode( ' ', $terms['tag'] ),
+		'link'        => implode( ' ', $terms['link'] ),
+		'author'      => implode( ' ', $terms['author'] ),
+		'category'    => implode( ' ', $terms['category'] ),
+		'excerpt'     => implode( ' ', $terms['excerpt'] ),
+		'taxonomy'    => implode( ' ', $terms['taxonomy'] ),
+		'customfield' => implode( ' ', $terms['customfield'] ),
+		'mysql'       => implode( ' ', $terms['mysql'] ),
+		'reason'      => $reason,
+		'terms_list'  => $terms_list,
+	);
+}
+
+/**
+ * Removes quotes from array keys. Does not keep array values.
+ *
+ * Used to remove phrase quotes from search term array, which have the format
+ * of (term => hits). The number of hits is not needed, so this function
+ * discards it as a side effect.
+ *
+ * @param array $array An array to process.
+ *
+ * @return array The same array with quotes removed from the keys.
+ */
+function relevanssi_remove_quotes_from_array_keys( $array ) {
+	$array = array_keys( $array );
+	array_walk(
+		$array,
+		function( &$key ) {
+			$key = relevanssi_remove_quotes( $key );
+		}
+	);
+	return array_flip( $array );
+}
+
+/**
+ * Removes quotes (", ”, “) from a string.
+ *
+ * @param string $string The string to clean.
+ *
+ * @return string The cleaned string.
+ */
+function relevanssi_remove_quotes( $string ) {
+	return str_replace( array( '”', '“', '"' ), '', $string );
+}
+
+/**
+ * Strips tags from contents, keeping the allowed tags.
+ *
+ * The allowable tags are read from the relevanssi_excerpt_allowable_tags
+ * option. Spaces are added between tags before removing the tags, so that
+ * words don't get stuck together. The function also remove invisible content.
+ *
+ * @see relevanssi_strip_invisibles
+ *
+ * @param string $content The content.
+ *
+ * @return string The content without tags.
+ */
+function relevanssi_strip_tags( $content ) {
+	$content = relevanssi_strip_invisibles( $content );
+	$content = preg_replace( '/(<\/[^>]+?>)(<[^>\/][^>]*?>)/', '$1 $2', $content );
+	return strip_tags(
+		$content,
+		get_option( 'relevanssi_excerpt_allowable_tags', '' )
+	);
 }

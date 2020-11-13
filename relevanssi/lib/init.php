@@ -182,6 +182,10 @@ function relevanssi_init() {
 		require_once 'compatibility/seopress.php';
 	}
 
+	if ( defined( 'THE_SEO_FRAMEWORK_VERSION' ) ) {
+		require_once 'compatibility/seoframework.php';
+	}
+
 	if ( function_exists( 'members_content_permissions_enabled' ) ) {
 		require_once 'compatibility/members.php';
 	}
@@ -223,6 +227,14 @@ function relevanssi_init() {
 	if ( defined( 'NINJA_TABLES_VERSION' ) ) {
 		require_once 'compatibility/ninjatables.php';
 	}
+
+	if ( defined( 'PRLI_PLUGIN_NAME' ) ) {
+		require_once 'compatibility/pretty-links.php';
+	}
+
+	if ( defined( 'CT_VERSION' ) ) {
+		require_once 'compatibility/oxygen.php';
+	}
 }
 
 /**
@@ -232,8 +244,6 @@ function relevanssi_init() {
  */
 function relevanssi_admin_init() {
 	global $relevanssi_variables;
-
-	require_once $relevanssi_variables['plugin_dir'] . 'lib/admin-ajax.php';
 
 	add_action( 'admin_enqueue_scripts', 'relevanssi_add_admin_scripts' );
 	add_filter( 'plugin_action_links_' . $relevanssi_variables['plugin_basename'], 'relevanssi_action_links' );

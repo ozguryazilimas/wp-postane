@@ -126,8 +126,10 @@ jQuery(document).ready(function ($) {
 			!this.checked
 		)
 		$("#tr_excerpt_length").toggleClass("relevanssi_disabled", !this.checked)
+		$("#tr_max_excerpts").toggleClass("relevanssi_disabled", !this.checked)
 		$("#relevanssi_excerpt_length").attr("disabled", !this.checked)
 		$("#relevanssi_excerpt_type").attr("disabled", !this.checked)
+		$("#relevanssi_max_excerpts").attr("disabled", !this.checked)
 		$("#relevanssi_excerpt_allowable_tags").attr("disabled", !this.checked)
 		$("#relevanssi_excerpt_custom_fields").attr("disabled", !this.checked)
 		$("#relevanssi_highlight").attr("disabled", !this.checked)
@@ -138,9 +140,9 @@ jQuery(document).ready(function ($) {
 		$("#relevanssi_hilite_title").attr("disabled", !this.checked)
 		$("#relevanssi_highlight_docs").attr("disabled", !this.checked)
 		$("#relevanssi_highlight_comments").attr("disabled", !this.checked)
-		$("#relevanssi_word_boundaries").attr("disabled", !this.checked)
 		$("#relevanssi_show_matches").attr("disabled", !this.checked)
 		$("#relevanssi_show_matches_text").attr("disabled", !this.checked)
+		$("#relevanssi_expand_highlights").attr("disabled", !this.checked)
 	})
 
 	$("#relevanssi_searchblogs_all").click(function () {
