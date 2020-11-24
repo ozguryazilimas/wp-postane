@@ -19,6 +19,11 @@ final class ExactMetrics_Notification_Mobile_Device extends ExactMetrics_Notific
 	 * @since 7.12.3
 	 */
 	public function prepare_notification_data( $notification ) {
+		if ( ! exactmetrics_is_pro_version() ) {
+			// Improve performance for lite users by disabling external API calls they can’t access.
+			// Since lite users can’t access this feature return early.
+			return false;
+		}
 		$data                                  = array();
 		$report                                = $this->get_report( 'overview', $this->report_start_from, $this->report_end_to );
 		$data['percentage_of_mobile_visitors'] = isset( $report['data']['devices']['mobile'] ) ? $report['data']['devices']['mobile'] : 0;

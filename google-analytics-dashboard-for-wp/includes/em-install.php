@@ -85,6 +85,10 @@ class ExactMetrics_Install {
 				$this->v630_upgrades();
 			}
 
+			if ( version_compare( $version, '6.3.1', '<' ) ) {
+				$this->v631_upgrades();
+			}
+
 			// Do not use. See exactmetrics_after_install_routine comment below.
 			do_action( 'exactmetrics_after_existing_upgrade_routine', $version );
 			$version = get_option( 'exactmetrics_current_version', $version );
@@ -626,5 +630,13 @@ class ExactMetrics_Install {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Upgrade routine for version 6.3.1
+	 */
+	public function v631_upgrades() {
+		// Delete transient for GA data with wrong expiration date.
+		delete_transient( 'exactmetrics_popular_posts_ga_data' );
 	}
 }

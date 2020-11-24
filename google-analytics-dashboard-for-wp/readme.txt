@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
 Tested up to: 5.5
-Stable tag: 6.3.0
+Stable tag: 6.3.2
 Requires PHP: 5.2
 License: GPL v3
 
@@ -156,6 +156,10 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.3.2: November 24, 2020 =
+- Tweak: We improved performance by tweaking some of the contextual insights using report data.
+- Fix: Automatic inserting of the inline popular posts widget was not working as expected for sites using languages with multi-byte characters.
+
 = 6.3.0: November 3, 2020 =
 - New: Brand new Popular Posts feature to showcase your best posts using Gutenberg Blocks, Sidebar Widgets or directly in the post content. You can choose from multiple themes and customise styles individually.
 - New: Contextual Insights - get smart tips based on your analytics data directly in your ExactMetrics dashboard.

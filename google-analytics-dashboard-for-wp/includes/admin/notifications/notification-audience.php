@@ -18,6 +18,11 @@ final class ExactMetrics_Notification_Audience extends ExactMetrics_Notification
 	 * @since 7.12.3
 	 */
 	public function get_notification_data() {
+		if ( ! exactmetrics_is_pro_version() ) {
+			// Improve performance for lite users by disabling external API calls they can’t access.
+			// Since lite users can’t access this feature return early.
+			return false;
+		}
 		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
 		$data                       = array();

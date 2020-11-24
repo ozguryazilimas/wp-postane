@@ -20,6 +20,11 @@ final class ExactMetrics_Notification_Traffic_Dropping extends ExactMetrics_Noti
 	 * @since 7.12.3
 	 */
 	public function prepare_notification_data( $notification ) {
+		if ( ! exactmetrics_is_pro_version() ) {
+			// Improve performance for lite users by disabling external API calls they can’t access.
+			// Since lite users can’t access this feature return early.
+			return false;
+		}
 		$data                             = array();
 		$report                           = $this->get_report();
 		$data['prev_sessions_difference'] = isset( $report['data']['infobox']['sessions']['prev'] ) ? $report['data']['infobox']['sessions']['prev'] : 0;
