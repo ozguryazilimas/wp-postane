@@ -134,8 +134,10 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 
 	public function orderby_filter($arg) {
 		global $wpdb;
+		// If ordering by score also order by post ID to keep them consistent in cases where the score is the same
+		// for multiple posts.
 		if ($this->yarpp_time and $this->score_override)
-			$arg = str_replace("$wpdb->posts.post_date","yarpp.score",$arg);
+			$arg = $this->orderby_score($arg);
 		return $arg;
 	}
 

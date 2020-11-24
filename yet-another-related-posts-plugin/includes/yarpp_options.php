@@ -54,7 +54,7 @@ if (current_user_can('update_plugins')) {
         );
         echo '</p></div>';
 
-    } else if ($yarpp_version_info['result'] === 'newbeta') {
+    } else if (isset($yarpp_version_info['result']) && $yarpp_version_info['result'] === 'newbeta') {
 
         echo '<div class="updated"><p>';
         printf(

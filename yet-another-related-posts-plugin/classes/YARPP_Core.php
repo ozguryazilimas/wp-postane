@@ -15,7 +15,13 @@ class YARPP {
     public $default_hidden_metaboxes    = array();
     public $debug                       = false;
     public $yarppPro                    = null;
+	/**
+	 * @var YARPP_Cache_Bypass
+	 */
     public $cache_bypass;
+	/**
+	 * @var YARPP_Cache
+	 */
     public $cache;
     public $admin;
 	/**
@@ -23,6 +29,9 @@ class YARPP {
 	 */
     public $db_schema;
 
+	/**
+	 * @var YARPP_Cache
+	 */
     private $active_cache;
     private $storage_class;
     private $default_dimensions         = array(
@@ -32,6 +41,11 @@ class YARPP {
                                             'size'      => '120x120',
                                             '_default'  => true
                                          );
+	/**
+	 * @var bool Set to true while YARPP is rendering related posts (a very bad time to start looking for related
+	 * content, and start infintely recursing !)
+	 */
+    private $rendering_related_content;
 
 	public function __construct() {
 		$this->load_default_options();
@@ -855,7 +869,7 @@ class YARPP {
 
 		return wp_list_pluck( $this->post_types, $field );
 	}
-	
+
 	private function post_type_filter($post_type) {
 		if ($post_type->public) return true;
 		if (isset($post_type->yarpp_support)) return $post_type->yarpp_support;
@@ -1079,10 +1093,10 @@ class YARPP {
      * @return string
 	 */
 	public function display_related($reference_ID = null, $args = array(), $echo = true) {
-        
-        /* If we're already in a YARPP loop, stop now. */
-        if ($this->cache->is_yarpp_time() || $this->cache_bypass->is_yarpp_time()) return false;
+		// Avoid infinite recursion here.
+        if ( $this->do_not_query_for_related()) return false;
         $this->enforce();
+
         wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
         $output = null;
 
@@ -1111,7 +1125,9 @@ class YARPP {
         extract($this->parse_args($args, $options));
 
         $cache_status = $this->active_cache->enforce($reference_ID);
-        if ($cache_status === YARPP_DONT_RUN) return;
+        if ($cache_status === YARPP_DONT_RUN){
+        	return;
+        }
         if ($cache_status !== YARPP_NO_RELATED) $this->active_cache->begin_yarpp_time($reference_ID, $args);
 
         $this->save_post_context();
@@ -1155,6 +1171,9 @@ class YARPP {
 
         $output .= "'>\n";
 
+        // Be careful to avoid infinite recursion, because those templates might show each related posts' body or
+		// excerpt, which would trigger finding its related posts, which would show its related posts body or excerpt...
+        $this->rendering_related_content = true;
         if ($domain === 'metabox') {
             include(YARPP_DIR.'/includes/template_metabox.php');
         } else if ((bool) $template && $template === 'thumbnails') {
@@ -1170,7 +1189,7 @@ class YARPP {
         } else {
             include(YARPP_DIR.'/includes/template_builtin.php');
         }
-        
+        $this->rendering_related_content = false;
         $output = trim($output)."\n";
 
         if ($cache_status === YARPP_NO_RELATED) {
@@ -1206,9 +1225,10 @@ class YARPP {
 	 * @param (array) $args
 	 */
 	public function get_related($reference_ID = null, $args = array()) {
-		/* If we're already in a YARPP loop, stop now. */
-		if ($this->cache->is_yarpp_time() || $this->cache_bypass->is_yarpp_time()) return false;
+		// Avoid infinite recursion here.
+		if ( $this->do_not_query_for_related()) return false;
 		$this->enforce();
+
 
 		if (is_numeric($reference_ID)) {
 			$reference_ID = (int) $reference_ID;
@@ -1227,7 +1247,9 @@ class YARPP {
 		extract($this->parse_args($args, $options));
 
 		$cache_status = $this->active_cache->enforce($reference_ID);
-		if ($cache_status === YARPP_DONT_RUN || $cache_status === YARPP_NO_RELATED) return array();
+		if ($cache_status === YARPP_DONT_RUN || $cache_status === YARPP_NO_RELATED) {
+			return array();
+		}
 					
 		/* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);
@@ -1244,16 +1266,15 @@ class YARPP {
 	
 		$related_query->posts = apply_filters(
             'yarpp_results',
-            $related_query->posts,
-            array(
-                'function'      => 'get_related',
+            $related_query->posts, array(
+
+			              'function'      => 'get_related',
                 'args'          => $args,
                 'related_ID'    => $reference_ID
             )
         );
 	
 		$this->active_cache->end_yarpp_time();
-	
 		return $related_query->posts;
 	}
 	
@@ -1262,9 +1283,8 @@ class YARPP {
 	 * @param (array) $args
 	 */
 	public function related_exist($reference_ID = null, $args = array()) {
-		/* if we're already in a YARPP loop, stop now. */
-		if ($this->cache->is_yarpp_time() || $this->cache_bypass->is_yarpp_time()) return false;
-
+		// Avoid infinite recursion here.
+		if ($this->do_not_query_for_related()) return false;
 		$this->enforce();	
 	
 		if (is_numeric($reference_ID)) {
@@ -1280,7 +1300,9 @@ class YARPP {
 	
 		$cache_status = $this->active_cache->enforce($reference_ID);
 	
-		if ($cache_status === YARPP_NO_RELATED) return false;
+		if ($cache_status === YARPP_NO_RELATED) {
+			return false;
+		}
 
         /* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);
@@ -1305,7 +1327,6 @@ class YARPP {
 		unset($related_query);
 
 		$this->active_cache->end_yarpp_time();
-	
 		return $return;
 	}
 		
@@ -1315,7 +1336,8 @@ class YARPP {
      * @return string
 	 */
 	public function display_demo_related($args = array(), $echo = true) {
-	    /* if we're already in a demo YARPP loop, stop now. */
+	    // If YARPP cache is already finding the current post's content, don't ask it to do it again.
+		// Avoid infinite recursion here.
 		if ($this->cache_bypass->demo_time) return false;
 	
 		$options = array(
@@ -1466,15 +1488,14 @@ class YARPP {
 	 */
 	 
 	public function the_content($content) {
-		/* this filter doesn't handle feeds */
-		if (is_feed()) return $content;
+		// Avoid infinite recursion.
+		if (is_feed() || $this->do_not_query_for_related()) return $content;
 
 		/* If the content includes <!--noyarpp-->, don't display */
 		if (!stristr($content, '<!--noyarpp-->')) {
             $content .= $this->display_basic();
             $content .= $this->display_pro('website');
         }
-	
 		return $content;
 	}
 
@@ -1629,7 +1650,7 @@ class YARPP {
 		return $text;
 	}
 
-	/**
+	/*
 	 * Gets the list of valid interval units used by YARPP and MySQL interval statements.
 	 *
 	 * @return array keys are valid values for recent units, and for MySQL interval
@@ -1641,5 +1662,23 @@ class YARPP {
 			'week' => __('week(s)','yarpp'),
 			'month' => __('month(s)','yarpp')
 		);
+	}
+
+	/**
+	 * Checks if it's an appropriate time to look for related posts, or if we should skip that.
+	 *
+	 * There are two contrary indicators:
+	 * 1. if the active cache is currently discovering post keywords. Finding related posts at this time causes
+	 * infinite recursion because: in order to discover keywords, you need to get the post's FILTERED content, which
+	 * would trigger adding related content to the post's body, which requires discovering its keywords, etc.
+	 * 2. if YARPP is currently adding related content. Finding related posts at this time can cause infinite recursion
+	 * because: the template file might show a posts't content or excerpt, which would cause adding related content
+	 * to that post body or excerpt, which would start adding related content to it too, etc.	 *
+	 *
+	 * @return bool
+	 */
+	protected function do_not_query_for_related(){
+		return $this->rendering_related_content ||
+		       ($this->active_cache instanceof YARPP_Cache && $this->active_cache->discovering_keywords());
 	}
 }

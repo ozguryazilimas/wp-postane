@@ -316,7 +316,7 @@ jQuery(function($) {
     $('#yarpp-auto_display_archive')
       .attr('disabled', !available);
     if ( !available )
-      $('#yarpp-auto_display_archive').attr('checked', false);
+      $('#yarpp-auto_display_archive').prop('checked', false);
   }
   
   $('.yarpp_form_post_types input[type=checkbox]').change(auto_display_archive);

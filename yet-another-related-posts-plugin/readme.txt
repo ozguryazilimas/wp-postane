@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.5
-Stable tag: 5.10.1
+Stable tag: 5.10.2
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -295,6 +295,14 @@ add_action(
 `
 
 == Changelog ==
+= 5.10.2 (23-November-2020) =
+* Enhancement: Faster queries and a speed boost ⚡️ (Re-introduces database query improvements while avoiding the fatal error identified by some in v5.10.0)
+* [Enhancement](https://wordpress.org/support/topic/yarpp-query-migrate-helper-warnings/): Speed up by not loading widget.css when not necessary
+* [Bugfix](https://wordpress.org/support/topic/yarpp-query-migrate-helper-warnings/): Part 2 of 2 - Resolves jQuery Migrate Helper warnings
+* [Bugfix](https://wordpress.org/support/topic/php-error-423/): Fixes PHP warning on options page
+* [Bugfix](https://wordpress.org/support/topic/plugin-causes-issues-with-algolia-search-integration/): Fixes integration with Algolia search
+* [Bugfix](https://wordpress.org/support/topic/require-at-least-one-category-in-common/): Respect "Require at least 1 {Taxonomy} in common" when you press "refresh" in the meta box while editing a post
+
 = 5.10.1 (23-October-2020) =
 * [Critical Bugfix](https://wordpress.org/support/topic/version-5-10-0-generated-error-500/): Reverts query changes from the v5.10.0 update as it caused 500 fatal errors on some WordPress installations. We sincerely apologies for any issues it may have caused. We did test the release for weeks, but each environment is just a bit different. We are actively testing a bug fix with those affected that volunteered before we release it again.
 
@@ -306,7 +314,7 @@ add_action(
 * Bugfix: Fixes showing/hiding excerpt options when checking excerpt checkboxes
 * [Bugfix](https://wordpress.org/support/topic/bug-fix-for-role-related-code/): Fixes "role" in deactivation survey
 * [Bugfix](https://wordpress.org/support/topic/php-error-423/): Fixes PHP warning on options page
-* [Bugfix](https://wordpress.org/support/topic/yarpp-query-migrate-helper-warnings/): Resolves jQuery Migrate Helper warnings
+* [Bugfix](https://wordpress.org/support/topic/yarpp-query-migrate-helper-warnings/): Part 1 of 2 - Resolves jQuery Migrate Helper warnings
 
 = 5.9.0 (21-September-2020) =
 * Enhancement: Clarify that "Also display in archives" includes front page and category pages
@@ -1043,5 +1051,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.10.1 =
+= 5.10.2 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
