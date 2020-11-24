@@ -2,10 +2,10 @@
 Contributors: nosilver4u
 Donate link: https://ewww.io/donate/
 Tags: image, scale, resize, space saver, quality, upload
-Requires at least: 5.0
+Requires at least: 5.1
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 License: GPLv3
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually resizing your images? Imsanity to the rescue!
@@ -105,6 +105,10 @@ Imsanity is short for "Image Sanity Limit". A sanity limit is a term for limitin
 Questions may be posted on the support forum at https://wordpress.org/support/plugin/imsanity but if you don't get an answer, please use https://ewww.io/contact-us/.
 
 == Changelog ==
+
+= 2.7.1 =
+* changed: clarify text for queue reset button
+* changed: Delete Originals function in bulk/selective resizer will clean metadata if original image is already gone
 
 = 2.7.0 =
 * changed: bulk resizer will resize all images with no limits, use list mode for selective resizing
