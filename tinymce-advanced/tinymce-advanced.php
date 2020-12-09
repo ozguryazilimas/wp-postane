@@ -3,9 +3,9 @@
 Plugin Name: Advanced Editor Tools (previously TinyMCE Advanced)
 Plugin URI: https://wordpress.org/plugins/tinymce-advanced/
 Description: Extends and enhances the block editor (Gutenberg) and the classic editor (TinyMCE).
-Version: 5.5.1
-Requires at least: 5.5
-Tested up to: 5.5
+Version: 5.6.0
+Requires at least: 5.6
+Tested up to: 5.6
 Requires PHP: 5.6
 Author: Automattic
 Author URI: https://automattic.com
@@ -43,8 +43,8 @@ if ( ! class_exists( 'Advanced_Editor_Tools' ) ) :
 
 class Advanced_Editor_Tools {
 
-	private $required_wp_version = '5.5-alpha';
-	private $plugin_version = 5500;
+	private $required_wp_version = '5.6-alpha';
+	private $plugin_version = 5600;
 
 	private $user_settings;
 	private $admin_settings;

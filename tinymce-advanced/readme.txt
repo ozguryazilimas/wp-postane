@@ -1,9 +1,9 @@
 === Advanced Editor Tools (previously TinyMCE Advanced) ===
 Contributors: automattic, azaozz
 Tags: block editor, classic editor, editor, Gutenberg, formatting, tinymce, write
-Requires at least: 5.5
-Tested up to: 5.5
-Stable tag: 5.5.1
+Requires at least: 5.6
+Tested up to: 5.6
+Stable tag: 5.6.0
 Requires PHP: 5.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -46,6 +46,9 @@ In that terms Advanced Editor Tools does not affect your website's user privacy 
 Best is to install directly from WordPress. If manual installation is required, please make sure that the plugin files are in a folder named "tinymce-advanced" (not two nested folders) in the WordPress plugins folder, usually "wp-content/plugins".
 
 == Changelog ==
+
+= 5.6.0 =
+* Updated for WordPress 5.6 and TinyMCE 4.9.11.
 
 = 5.5.1 =
 * Renamed the plugin to Advanced Editor Tools to comply with trademark requirements.
