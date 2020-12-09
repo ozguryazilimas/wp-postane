@@ -40,21 +40,22 @@ index d8695484..960d8491 100644
 +
 +</style>	
 diff --git a/bknewsticker/ticker.css b/bknewsticker/ticker.css
-index 2de65382..544ae792 100644
+index 2de65382..510eed55 100644
 --- a/bknewsticker/ticker.css
 +++ b/bknewsticker/ticker.css
-@@ -6,6 +6,10 @@
+@@ -6,6 +6,11 @@
  	max-height: 40px!important;
  }
  
 +#allticker > ul > li {
 +    padding-top: 2px;
++    background: none !important;
 +}
 +
  #bknewsticker{
  	background: #F3F3F3;
  	margin: 0px;
-@@ -17,7 +21,7 @@
+@@ -17,7 +22,7 @@
  	background: #5A5A5A;
  	color: #ccc;
  	font-size: 10px;
@@ -63,7 +64,7 @@ index 2de65382..544ae792 100644
  	margin-left: 3px;
  }
  .tickerLink a, .tickermore a{
-@@ -28,14 +32,14 @@
+@@ -28,14 +33,14 @@
  }
  .tickerText{
  	color: #5A5A5A;
@@ -80,7 +81,7 @@ index 2de65382..544ae792 100644
  	background: transparent;
  	
  }
-@@ -44,11 +48,11 @@
+@@ -44,11 +49,11 @@
  	font-size: 14px;
  	margin: 0px;
  	text-align: center;
@@ -95,7 +96,7 @@ index 2de65382..544ae792 100644
      padding-left: 5px;
  }
  
-@@ -57,4 +61,4 @@
+@@ -57,4 +62,4 @@
  	}
  @media only screen and (max-width: 320px) {
  	#bknews-title{ display: none!important;
