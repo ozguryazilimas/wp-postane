@@ -35,7 +35,7 @@ add_action( 'deleted_comment', 'relevanssi_index_comment' );
 
 // Attachment indexing.
 add_action( 'delete_attachment', 'relevanssi_remove_doc' );
-add_action( 'add_attachment', 'relevanssi_publish', 12 );
+add_action( 'add_attachment', 'relevanssi_insert_edit', 12 );
 add_action( 'edit_attachment', 'relevanssi_insert_edit' );
 
 // When a post status changes, check child posts that inherit their status from parent.
@@ -186,6 +186,10 @@ function relevanssi_init() {
 		require_once 'compatibility/seoframework.php';
 	}
 
+	if ( class_exists( 'RankMath', false ) ) {
+		require_once 'compatibility/rankmath.php';
+	}
+
 	if ( function_exists( 'members_content_permissions_enabled' ) ) {
 		require_once 'compatibility/members.php';
 	}
@@ -234,6 +238,20 @@ function relevanssi_init() {
 
 	if ( defined( 'CT_VERSION' ) ) {
 		require_once 'compatibility/oxygen.php';
+	}
+
+	if ( ! is_array( get_option( 'relevanssi_stopwords' ) ) ) {
+		// Version 2.12 / 4.10 changes stopwords option from a string to an
+		// array to support multilingual stopwords. This function converts old
+		// style to new style. Remove eventually.
+		relevanssi_update_stopwords_setting();
+	}
+
+	if ( ! is_array( get_option( 'relevanssi_synonyms' ) ) ) {
+		// Version 2.12 / 4.10 changes synonyms option from a string to an
+		// array to support multilingual synonyms. This function converts old
+		// style to new style. Remove eventually.
+		relevanssi_update_synonyms_setting();
 	}
 }
 
@@ -391,7 +409,7 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		$relevanssi_term_reverse_idx_exists = false;
 		$docs_exists                        = false;
 		$typeitem_exists                    = false;
-		$doctermitem_exists					= false;
+		$doctermitem_exists                 = false;
 		foreach ( $indices as $index ) {
 			if ( 'terms' === $index->Key_name ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName
 				$terms_exists = true;
@@ -420,11 +438,6 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery
 		}
 
-		if ( ! $docs_exists ) {
-			$sql = "CREATE INDEX docs ON $relevanssi_table (doc)";
-			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery
-		}
-
 		if ( ! $typeitem_exists ) {
 			$sql = "CREATE INDEX typeitem ON $relevanssi_table (type(190), item)";
 			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery
@@ -432,6 +445,11 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 
 		if ( $doctermitem_exists ) {
 			$sql = "DROP INDEX doctermitem ON $relevanssi_table";
+			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery
+		}
+
+		if ( $docs_exists ) { // This index was removed in 4.9.2 / 2.11.2.
+			$sql = "DROP INDEX docs ON $relevanssi_table (doc)";
 			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery
 		}
 
@@ -477,7 +495,8 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		update_option( 'relevanssi_db_version', $relevanssi_db_version );
 	}
 
-	if ( empty( get_option( 'relevanssi_stopwords', '' ) ) ) {
+	$stopwords = relevanssi_fetch_stopwords();
+	if ( empty( $stopwords ) ) {
 		relevanssi_populate_stopwords();
 	}
 }

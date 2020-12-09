@@ -9,23 +9,6 @@
  */
 
 /**
- * Prints out the post excerpt.
- *
- * Prints out the post excerpt from $post->post_excerpt, unless the post is
- * protected. Only works in the Loop.
- *
- * @global $post The global post object.
- */
-function relevanssi_the_excerpt() {
-	global $post;
-	if ( ! post_password_required( $post ) ) {
-		echo '<p>' . $post->post_excerpt . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	} else {
-		esc_html_e( 'There is no excerpt because this is a protected post.', 'relevanssi' );
-	}
-}
-
-/**
  * Generates an excerpt for a post.
  *
  * Takes the excerpt length and type as parameters. These can be omitted, in
@@ -476,14 +459,15 @@ function relevanssi_highlight_in_docs( $content ) {
  * you want to override the settings, 'pre_option_relevanssi_highlight' filter
  * hook is your friend).
  *
- * @param string       $content The content to highlight.
- * @param string|array $query   The search query (should be a string, can
- * sometimes be an array).
- * @param boolean      $in_docs Are we highlighting post content? Default false.
+ * @param string       $content          The content to highlight.
+ * @param string|array $query            The search query (should be a string,
+ * can also be an array of string).
+ * @param boolean      $convert_entities Are we highlighting post content?
+ * Default false.
  *
  * @return string The $content with highlighting.
  */
-function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
+function relevanssi_highlight_terms( $content, $query, $convert_entities = false ) {
 	$type = get_option( 'relevanssi_highlight' );
 	if ( 'none' === $type ) {
 		return $content;
@@ -707,7 +691,7 @@ function relevanssi_highlight_terms( $content, $query, $in_docs = false ) {
 	}
 
 	$content = relevanssi_remove_nested_highlights( $content, $start_emp_token, $end_emp_token );
-	$content = relevanssi_fix_entities( $content, $in_docs );
+	$content = relevanssi_fix_entities( $content, $convert_entities );
 
 	/**
 	 * Allows cleaning unwanted highlights.
@@ -879,25 +863,6 @@ function relevanssi_entities_inside( $content, $tag ) {
 		$content = str_replace( 'xxx' . $tag, $tag, $content );
 	}
 	return $content;
-}
-
-/**
- * Generates closing tags for an array of tags.
- *
- * @param array $tags Array of tag names.
- *
- * @return array $closing_tags Array of closing tags.
- */
-function relevanssi_generate_closing_tags( $tags ) {
-	$closing_tags = array();
-	foreach ( $tags as $tag ) {
-		$a = str_replace( '<', '</', $tag );
-		$b = str_replace( '>', '/>', $tag );
-
-		$closing_tags[] = $a;
-		$closing_tags[] = $b;
-	}
-	return $closing_tags;
 }
 
 /**
@@ -1248,8 +1213,8 @@ function relevanssi_add_accent_variations( $word ) {
 		array(
 			'from'    => array( 'a', 'c', 'e', 'i', 'o', 'u', 'n' ),
 			'to'      => array( '(?:a|á|à|â)', '(?:c|ç)', '(?:e|é|è|ê|ë)', '(?:i|í|ì|î|ï)', '(?:o|ó|ò|ô|õ)', '(?:u|ú|ù|ü|û)', '(?:n|ñ)' ),
-			'from_re' => array( "/(s)('|’)?$/", "/[^\(\|]('|’)/" ),
-			'to_re'   => array( "(('|’)?\\1|\\1('|’)?)", "?('|’)?" ),
+			'from_re' => array( "/(s)('|’)?$/", "/[^\(\|:]('|’)/" ),
+			'to_re'   => array( "(?:(?:'|’)?\\1|\\1(?:'|’)?)", "?('|’)?" ),
 		)
 	);
 

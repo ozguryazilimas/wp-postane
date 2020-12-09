@@ -13,7 +13,7 @@
  * Plugin Name: Relevanssi
  * Plugin URI: https://www.relevanssi.com/
  * Description: This plugin replaces WordPress search with a relevance-sorting search.
- * Version: 4.9.1
+ * Version: 4.10.0
  * Author: Mikko Saari
  * Author URI: http://www.mikkosaari.fi/
  * Text Domain: relevanssi
@@ -63,23 +63,28 @@ $relevanssi_variables['comment_boost_default']                 = 0.75;
 $relevanssi_variables['post_type_weight_defaults']['post_tag'] = 0.75;
 $relevanssi_variables['post_type_weight_defaults']['category'] = 0.75;
 $relevanssi_variables['post_type_index_defaults']              = array( 'post', 'page' );
-$relevanssi_variables['database_version']                      = 5;
+$relevanssi_variables['database_version']                      = 6;
 $relevanssi_variables['file']                                  = __FILE__;
 $relevanssi_variables['plugin_dir']                            = plugin_dir_path( __FILE__ );
 $relevanssi_variables['plugin_basename']                       = plugin_basename( __FILE__ );
-$relevanssi_variables['plugin_version']                        = '4.9.1';
+$relevanssi_variables['plugin_version']                        = '4.10.0';
 
 require_once 'lib/admin-ajax.php';
 require_once 'lib/common.php';
+require_once 'lib/didyoumean.php';
 require_once 'lib/excerpts-highlights.php';
 require_once 'lib/indexing.php';
 require_once 'lib/init.php';
 require_once 'lib/install.php';
 require_once 'lib/interface.php';
 require_once 'lib/log.php';
+require_once 'lib/options.php';
+require_once 'lib/phrases.php';
+require_once 'lib/privacy.php';
 require_once 'lib/search.php';
 require_once 'lib/search-tax-query.php';
 require_once 'lib/search-query-restrictions.php';
 require_once 'lib/shortcodes.php';
 require_once 'lib/sorting.php';
 require_once 'lib/stopwords.php';
+require_once 'lib/utils.php';
