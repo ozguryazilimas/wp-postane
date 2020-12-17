@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
 Tested up to: 5.5
-Stable tag: 6.3.3
+Stable tag: 6.4.0
 Requires PHP: 5.2
 License: GPL v3
 
@@ -156,6 +156,16 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.4.0: December 16, 2020 =
+- New: With our new, limited-time only, Year in Review report you’ll be able to see how your site performed in 2020 and how to improve in 2021.
+- Tweak: Our contextual notifications are now more efficient when using report data.
+- Tweak: Selecting the “no styles” option in the Popular Posts settings now also prevents any inline styles from being output.
+- Tweak: Our campaign URL tool now encodes values better.
+- Tweak: We removed a JavaScript dependency in the Popular Posts Widget settings.
+- Tweak: We added a limit to the number of dismissed notifications for better storage usage.
+- Fix: We added a value for the alt parameter of the images used in the Popular Posts widgets.
+- Fix: Our Popular Posts widgets had a potential infinite recursion error in certain situations so we added a check to prevent that.
+
 = 6.3.3: December 10, 2020 =
 - Fix: Prevent a notice from showing up in WordPress 5.6 when editing a post.
 

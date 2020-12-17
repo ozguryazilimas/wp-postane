@@ -35,7 +35,10 @@
 		}
 
 		function init_multiselect() {
-			$('#widgets-right .exactmetrics-multiselect').select2({
+			if ( ! jQuery.fn.select300 ) {
+				return;
+			}
+			$('#widgets-right .exactmetrics-multiselect').select300({
 				ajax: {
 					type: 'POST',
 					url: ajaxurl,

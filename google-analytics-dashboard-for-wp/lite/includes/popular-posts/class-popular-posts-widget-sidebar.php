@@ -141,13 +141,12 @@ class ExactMetrics_Popular_Posts_Widget_Sidebar extends WP_Widget {
 
 		$new_instance['title']         = wp_strip_all_tags( $new_instance['title'] );
 		$new_instance['theme']         = wp_strip_all_tags( $new_instance['theme'] );
-		$new_instance['display_title'] = wp_strip_all_tags( $new_instance['display_title'] );
+		$new_instance['display_title'] = isset( $new_instance['display_title'] ) ? wp_strip_all_tags( $new_instance['display_title'] ) : '';
 		$new_instance['post_count']    = absint( $new_instance['post_count'] );
 
 		// Theme-dependant options.
 		$themes = new ExactMetrics_Popular_Posts_Themes( 'widget', ! empty( $old_instance['theme'] ) ? $old_instance['theme'] : '' );
 		$theme  = $themes->get_theme();
-
 
 		foreach ( $this->conditional_options as $key => $obj ) {
 			$new_instance = $this->maybe_remove_option( ! empty( $theme['styles'][ $obj[0] ][ $obj[1] ] ), $key, $new_instance );
@@ -289,17 +288,21 @@ class ExactMetrics_Popular_Posts_Widget_Sidebar extends WP_Widget {
 				<?php echo esc_html( _x( 'Only Show Posts from These Categories:', 'Widget', 'google-analytics-dashboard-for-wp' ) ); ?>
 				<span class="exactmetrics-pro-pill">PRO</span>
 			</label>
-			<select disabled
-					class="exactmetrics-multiselect" multiple>
-				<?php
-				foreach ( $categories as $category ) {
-					?>
-					<option value="<?php echo absint( $category['value'] ); ?>"
-							selected="selected"><?php echo esc_html( $category['name'] ); ?></option>
-					<?php
-				}
-				?>
-			</select>
+			<div class="select300 select300-container select300-container--default select300-container--disabled select300-container--focus"
+				  dir="ltr" data-select300-id="2" style="width: auto;">
+				<div class="selection">
+					<div class="select300-selection select300-selection--multiple">
+						<ul class="select300-selection__rendered">
+							<li class="select300-selection__choice" title="News" data-select300-id="5">
+								<span class="select300-selection__choice__remove" role="presentation">×</span>News
+							</li>
+							<li class="select300-selection__choice" title="Technology" data-select300-id="6">
+								<span class="select300-selection__choice__remove" role="presentation">×</span>Technology
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</p>
 		<?php
 	}
@@ -409,15 +412,9 @@ class ExactMetrics_Popular_Posts_Widget_Sidebar extends WP_Widget {
 			'wp-color-picker',
 		), exactmetrics_get_asset_version() );
 
-
-		wp_register_script( 'exactmetrics-select2', plugins_url( 'assets/js/select2.min.js', EXACTMETRICS_PLUGIN_FILE ), array(
-			'jquery',
-		), '4.0.13', true );
-
 		wp_register_script( 'exactmetrics-admin-widget-settings', plugins_url( 'assets/js/admin-widget-settings' . $suffix . '.js', EXACTMETRICS_PLUGIN_FILE ), array(
 			'jquery',
 			'wp-color-picker',
-			'exactmetrics-select2',
 		), exactmetrics_get_asset_version(), true );
 		wp_enqueue_script( 'exactmetrics-admin-widget-settings' );
 

@@ -4,7 +4,7 @@
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: ExactMetrics
- * Version: 6.3.3
+ * Version: 6.4.0
  * Requires at least: 3.8.0
  * Requires PHP: 5.2
  * Author URI: https://exactmetrics.com
@@ -44,7 +44,7 @@ final class ExactMetrics_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.3.3';
+	public $version = '6.4.0';
 
 	/**
 	 * Plugin file.
@@ -200,7 +200,7 @@ final class ExactMetrics_Lite {
 
 			// This does the version to version background upgrade routines and initial install
 			$em_version = get_option( 'exactmetrics_current_version', '5.5.3' );
-			if ( version_compare( $em_version, '6.3.0', '<' ) ) {
+			if ( version_compare( $em_version, '6.4.0', '<' ) ) {
 				exactmetrics_lite_call_install_and_upgrade();
 			}
 
@@ -530,6 +530,7 @@ final class ExactMetrics_Lite {
 			// Notifications class.
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notifications.php';
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notification-event.php';
+			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notification-event-runner.php';
 			// Add notification manual events for lite version.
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notifications/notification-events.php';
 		}

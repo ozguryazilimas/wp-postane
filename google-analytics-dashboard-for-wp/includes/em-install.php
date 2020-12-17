@@ -89,6 +89,10 @@ class ExactMetrics_Install {
 				$this->v631_upgrades();
 			}
 
+			if ( version_compare( $version, '6.4.0', '<' ) ) {
+				$this->v640_upgrades();
+			}
+
 			// Do not use. See exactmetrics_after_install_routine comment below.
 			do_action( 'exactmetrics_after_existing_upgrade_routine', $version );
 			$version = get_option( 'exactmetrics_current_version', $version );
@@ -638,5 +642,29 @@ class ExactMetrics_Install {
 	public function v631_upgrades() {
 		// Delete transient for GA data with wrong expiration date.
 		delete_transient( 'exactmetrics_popular_posts_ga_data' );
+	}
+
+
+	/**
+	 * Upgrade routine for version 64.0
+	 */
+	public function v640_upgrades() {
+
+		// Clear notification cron events no longer used.
+		$cron = get_option( 'cron' );
+
+		foreach ( $cron as $timestamp => $cron_array ) {
+			if ( ! is_array( $cron_array ) ) {
+				continue;
+			}
+			foreach ( $cron_array as $cron_key => $cron_data ) {
+				if ( 0 === strpos( $cron_key, 'exactmetrics_notification_' ) ) {
+					wp_unschedule_event( $timestamp, $cron_key, array() );
+				}
+			}
+		}
+
+		// Delete existing year in review report option.
+		delete_option( 'exactmetrics_report_data_yearinreview' );
 	}
 }
