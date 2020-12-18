@@ -292,7 +292,7 @@ window.AmeItemAccessEditor = (function ($) {
 		});
 
 		//The "Save Changes" button.
-		$editor.find('#ws_save_access_settings').click(function() {
+		$editor.find('#ws_save_access_settings').on('click', function() {
 			//Read the new settings from the form.
 			var extraCapability, restrictAccessToItems, grantAccess;
 

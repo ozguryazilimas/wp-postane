@@ -376,6 +376,27 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 			</tr>
 
 			<tr>
+				<th scope="row">
+					bbPress override
+				</th>
+				<td>
+					<p>
+						<label>
+							<input type="checkbox" name="bbpress_override_enabled"
+								<?php checked($settings['bbpress_override_enabled']); ?>>
+							Prevent bbPress from resetting role capabilities
+
+							<br><span class="description">
+								By default, bbPress will automatically undo any changes that are made to dynamic
+								bbPress roles. Enable this option to override that behaviour and make it possible
+								to change bbPress role capabilities.
+							</span>
+						</label>
+					</p>
+				</td>
+			</tr>
+
+			<tr>
 				<th scope="row">Error verbosity level</th>
 				<td>
 					<fieldset id="ame-submenu-icons-settings">

@@ -106,6 +106,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * @var ameModule[] List of modules that were loaded for the current request.
 	 */
 	private $loaded_modules = array();
+	private $are_modules_loaded = false;
 
 	/**
 	 * @var array List of capabilities that are used in the default admin menu. Used to detect meta capabilities.
@@ -187,6 +188,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//Make custom menu and page titles translatable with WPML. They will appear in the "Strings" section.
 			//This only applies to custom (i.e. changed) titles.
 			'wpml_support_enabled' => true,
+			//Prevent bbPress from resetting its own roles. This should allow the user to edit bbPress roles
+			//with any role editing plugin. Disabled by default due to risk of conflicts and the performance impact.
+			'bbpress_override_enabled' => false,
 
 			//Which modules are active or inactive. Format: ['module-id' => true/false].
 			'is_active_module' => array(
@@ -301,6 +305,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'options-general.php?page=wyr-fakes-settings' => true,
 			//WP-Job-Manager 1.34.1
 			'index.php?page=job-manager-setup' => true,
+			//Simple Calendar 3.1.33
+			'index.php?page=simple-calendar_about'       => true,
+			'index.php?page=simple-calendar_credits'     => true,
+			'index.php?page=simple-calendar_translators' => true,
 		);
 
 		//AJAXify screen options
@@ -417,6 +425,12 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//Compatibility fix for MailPoet 3.
 		$this->apply_mailpoet_compat_fix();
 
+		//bbPress role override.
+		if ( !empty($this->options['bbpress_override_enabled']) ) {
+			require_once __DIR__ . '/bbpress-role-override.php';
+			new ameBBPressRoleOverride();
+		}
+
 		if ( did_action('plugins_loaded') ) {
 			$this->load_modules();
 		} else {
@@ -425,15 +439,22 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	}
 
 	public function load_modules() {
-		//Modules
-		foreach($this->get_active_modules() as $module) {
+		//Load any active modules that haven't been loaded yet.
+		foreach($this->get_active_modules() as $id => $module) {
+			if ( array_key_exists($id, $this->loaded_modules) ) {
+				continue;
+			}
+
 			/** @noinspection PhpIncludeInspection */
 			include ($module['path']);
 			if ( !empty($module['className']) ) {
 				$instance = new $module['className']($this);
-				$this->loaded_modules[] = $instance;
+				$this->loaded_modules[$id] = $instance;
+			} else {
+				$this->loaded_modules[$id] = true;
 			}
 		}
+		$this->are_modules_loaded = true;
 
 		//Set up the tabs for the menu editor page. Many tabs are provided by modules.
 		$firstTabs = array('editor' => 'Admin Menu');
@@ -1339,6 +1360,13 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			return $this->cached_custom_menu;
 		}
 
+		//Modules may include custom hooks that change how menu settings are loaded, so we need to load active modules
+		//before we load the menu configuration. Usually that happens automatically, but there are some plugins that
+		//trigger AME filters that need menu data before modules would normally be loaded.
+		if ( !$this->are_modules_loaded ) {
+			$this->load_modules();
+		}
+
 		$this->loaded_menu_config_id = $config_id;
 
 		if ( $this->is_access_test ) {
@@ -2085,7 +2113,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		//Menus that have both a custom icon URL and a "menu-icon-*" class will get two overlapping icons.
 		//Fix this by automatically removing the class. The user can set a custom class attr. to override.
 		$hasCustomIconUrl = !ameMenuItem::is_default($item, 'icon_url');
-		$hasIcon = !in_array(ameMenuItem::get($item, 'icon_url'), array('', 'none', 'div'));
+		$tempIconUrl = ameMenuItem::get($item, 'icon_url', '');
+		$hasIcon = !in_array($tempIconUrl, array('', 'none', 'div'));
 		if (
 			ameMenuItem::is_default($item, 'css_class')
 			&& $hasCustomIconUrl
@@ -2097,8 +2126,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			}
 		}
 
-		if ( $hasCustomIconUrl && (strpos(ameMenuItem::get($item, 'icon_url'), 'dashicons-') === 0) ) {
-			$item['css_class'] = ameMenuItem::get($item, 'css_class', '') . ' ame-has-custom-dashicon';
+		if ( $hasCustomIconUrl ) {
+			//Is it a Dashicon?
+			if ( (strpos($tempIconUrl, 'dashicons-') === 0) ) {
+				$item['css_class'] = ameMenuItem::get($item, 'css_class', '') . ' ame-has-custom-dashicon';
+			//Is it a URL-looking thing and not an inline image?
+			} else if ( (strpos($tempIconUrl, '/') !== false) && (strpos($tempIconUrl, 'data:image') === false) ) {
+				$item['css_class'] = ameMenuItem::get($item, 'css_class', '') . ' ame-has-custom-image-url';
+			}
 		}
 
 		//WPML support: Translate only custom titles. See further below.
@@ -2613,6 +2648,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 			//WPML support.
 			$this->options['wpml_support_enabled'] = !empty($this->post['wpml_support_enabled']);
+
+			//bbPress override support.
+			$this->options['bbpress_override_enabled'] = !empty($this->post['bbpress_override_enabled']);
 
 			//Active modules.
 			$activeModules = isset($this->post['active_modules']) ? (array)$this->post['active_modules'] : array();
@@ -3434,9 +3472,27 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		// "/wp-admin/index.php" should match "/wp-admin/".
+		static $wpAdminDir = null;
+		if ( $wpAdminDir === null ) {
+			$wpAdminDir = '/wp-admin/';
+			if ( has_filter('admin_url') ) {
+				//Detect modified admin base URLs. For example, some security and branding plugins
+				//replace "wp-admin" with "something-else".
+				$suffix = 'ame-4425-admin-path-test';
+				$testUrl = self_admin_url($suffix);
+				$lastSlash = strrpos($testUrl, '/', -strlen($suffix) + 1);
+				if ( $lastSlash !== false ) {
+					$firstSlash = strrpos($testUrl, '/', -strlen($suffix) - 2);
+					if ( ($firstSlash !== false) && ($firstSlash !== $lastSlash) ) {
+						$wpAdminDir = substr($testUrl, $firstSlash, $lastSlash - $firstSlash + 1);
+					}
+				}
+			}
+		}
+
 		if (
-			($this->endsWith($path1, '/wp-admin/index.php') && $this->endsWith($path2, '/wp-admin/'))
-			|| ($this->endsWith($path2, '/wp-admin/index.php') && $this->endsWith($path1, '/wp-admin/'))
+			($this->endsWith($path1, $wpAdminDir . 'index.php') && $this->endsWith($path2, $wpAdminDir))
+			|| ($this->endsWith($path2, $wpAdminDir . 'index.php') && $this->endsWith($path1, $wpAdminDir))
 		) {
 			return true;
 		}
@@ -3591,7 +3647,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'ame-helper-style',
 			plugins_url('css/admin.css', $this->plugin_file),
 			array(),
-			'20140630-3'
+			'20201031'
 		);
 
 		if ( $this->options['force_custom_dashicons'] ) {

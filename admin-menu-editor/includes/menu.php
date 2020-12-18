@@ -17,9 +17,13 @@ abstract class ameMenu {
 	 * @return array
 	 */
 	public static function load_json($json, $assume_correct_format = false, $always_normalize = false) {
-		$arr = json_decode($json, true);
+		$arr = json_decode($json, true); //TODO: Consider ignoring or substituting invalid UTF-8 characters.
 		if ( !is_array($arr) ) {
-			throw new InvalidMenuException('The input is not a valid JSON-encoded admin menu.');
+			$message = 'The input is not a valid JSON-encoded admin menu.';
+			if ( function_exists('json_last_error_msg') ) {
+				$message .= ' ' . json_last_error_msg();
+			}
+			throw new InvalidMenuException($message);
 		}
 		return self::load_array($arr, $assume_correct_format, $always_normalize);
 	}
@@ -85,6 +89,7 @@ abstract class ameMenu {
 		if ( isset($arr['color_css']) && is_string($arr['color_css']) ) {
 			$menu['color_css'] = $arr['color_css'];
 			$menu['color_css_modified'] = isset($arr['color_css_modified']) ? intval($arr['color_css_modified']) : 0;
+			$menu['icon_color_overrides'] = isset($arr['icon_color_overrides']) ? $arr['icon_color_overrides'] : null;
 		}
 
 		//Sanitize color presets.

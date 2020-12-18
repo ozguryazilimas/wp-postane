@@ -20,7 +20,7 @@
 		//Menu separators shouldn't be clickable and should have a custom class.
 		adminMenu
 				.find('.ws-submenu-separator')
-				.closest('a').click(function() {
+				.closest('a').on('click', function() {
 					return false;
 				})
 				.closest('li').addClass('ws-submenu-separator-wrap');
@@ -30,7 +30,7 @@
 			.find(
 				'a.menu-top.ame-unclickable-menu-item, ul.wp-submenu > li > a[href^="#ame-unclickable-menu-item"]'
 			)
-			.click(function() {
+			.on('click', function() {
 				//Exception: At small viewport sizes, WordPress changes how top level menus work: clicking a menu
 				//now expands its submenu. We must not ignore that click or it will be impossible to expand the menu.
 				var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);

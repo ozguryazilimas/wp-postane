@@ -525,7 +525,10 @@ abstract class ameMenuItem {
 			//add_query_arg() might be more robust, but it's significantly slower.
 			$url = $base_file
 				. ((strpos($base_file, '?') === false) ? '?' : '&')
-				. 'page=' . urlencode($menu_url);
+				. 'page=' . $menu_url;
+			//Surprisingly, WordPress does NOT encode the menu slug when using it in a query parameter ("?page=slug").
+			//This allows plugins to use tricks like passing additional query parameters by simply appending them
+			//to the slug. For example, this works: "something&param=foo".
 		} else {
 			$url = $menu_url;
 		}

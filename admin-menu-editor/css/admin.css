@@ -57,6 +57,17 @@ hr.ws-submenu-separator {
     margin-left: 0;
 }
 
+/*
+ * Override third-party menu icons with image icons selected by the user.
+ *
+ * Some plugins use CSS to put their menu icon in a ::before pseudo-element, like WordPress does with Dashicons.
+ * When the user assigns a custom icon URL to the menu item (e.g. "https://example.com/icon.png"), the ::before
+ * element will still be there, and it will push the custom icon out of place. To prevent that, let's forcibly
+ * hide the ::before element (note: don't do this when the user has selected a custom Dashicon/other icon fonts!).
+ */
+#adminmenu a.ame-has-custom-image-url > .wp-menu-image::before {
+    display: none !important;
+}
 
 /*
  * Submenu icons.
