@@ -1,4 +1,5 @@
-jQuery(document).ready(function($) {
+
+(function() {
   var opened = false;
 
   tinymce.create('tinymce.plugins.oyuncu_shortcode_plugin', {
@@ -15,13 +16,16 @@ jQuery(document).ready(function($) {
             content = '[/oyuncu]';
           }
         }
-          opened = !opened;
-          tinymce.execCommand('mceInsertContent', false, content);
-        });
 
-        ed.addButton('oyuncu_button', {title : 'Oyuncu ekle', cmd : 'oyuncu_insert_shortcode', image: url + '/oyuncu.png'});
-      },
+        opened = !opened;
+        tinymce.execCommand('mceInsertContent', false, content);
+      });
+
+      ed.addButton('oyuncu_button', {title : 'Oyuncu ekle', cmd : 'oyuncu_insert_shortcode', image: url + '/oyuncu.png'});
+    },
   });
 
   tinymce.PluginManager.add('oyuncu_button', tinymce.plugins.oyuncu_shortcode_plugin);
-});
+
+})();
+
