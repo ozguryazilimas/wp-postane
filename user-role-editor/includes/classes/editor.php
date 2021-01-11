@@ -75,24 +75,29 @@ class URE_Editor {
     
     
     
-    // validate information about user we intend to edit
+    // Validate information about user we intend to edit
     protected function check_user_to_edit() {
 
-        if ( $this->ure_object ==='user' ) {
-            if ( !isset($_REQUEST['user_id'] ) ) {
-                return false; // user_id value is missed
-            }
-            $user_id = filter_var( $_REQUEST['user_id'], FILTER_VALIDATE_INT );            
-            if ( empty( $user_id ) ) {
-                return false;
-            }
-            $this->user_to_edit = get_user_to_edit( $user_id );
-            if ( empty( $this->user_to_edit ) ) {
-                return false;
-            }
-            
+        if ( $this->ure_object !=='user' ) {
+            return true;
         }
         
+        if ( isset( $_REQUEST['user_id'] ) ) {
+            $user_id = filter_var( $_REQUEST['user_id'], FILTER_VALIDATE_INT );
+        } elseif ( isset( $_POST['values']['user_id'] ) ) {
+            $user_id = filter_var( $_POST['values']['user_id'], FILTER_VALIDATE_INT );
+        } else {
+            return false;    // user_id value is missed
+        }
+        if ( empty( $user_id ) ) {
+            return false;
+        }
+
+        $this->user_to_edit = get_user_to_edit( $user_id );
+        if ( empty( $this->user_to_edit ) ) {
+            return false;
+        }
+                            
         return true;
     }
     // end of check_user_to_edit()
@@ -114,8 +119,36 @@ class URE_Editor {
     }
     // end of get_caps_columns_quant()
 
+    
+    protected function _init0() {
+        // could be sent as via POST, as via GET
+        if ( isset( $_REQUEST['object'] ) ) {
+            $this->ure_object = $_REQUEST['object'];
+        } elseif ( isset( $_POST['values']['object'] ) ) {  // AJAX POST
+            $this->ure_object = $_POST['values']['object'];
+        } else {
+            $this->ure_object = 'role';
+        }
         
+        if ( $this->ure_object=='user') {
+            if ( !$this->check_user_to_edit() ) {
+                return false;
+            }
+        }
+        
+        $this->apply_to_all = isset( $_POST['values']['ure_apply_to_all']) ? true : false;
+        
+        return true;
+    }
+    // end of _init0()
+        
+    
     protected function init0() {
+        
+        if ( !$this->_init0() ) {
+            return false;
+        }
+
         $this->caps_readable = get_site_transient( 'ure_caps_readable' );
         if ( false === $this->caps_readable ) {
             $this->caps_readable = $this->lib->get_option( 'ure_caps_readable' );
@@ -128,20 +161,9 @@ class URE_Editor {
         }
 
         $this->hide_pro_banner = $this->lib->get_option( 'ure_hide_pro_banner', 0 );
-        $this->wp_default_role = get_option( 'default_role' );
-
-        // could be sent as via POST, as via GET
-        if ( isset( $_REQUEST['object'] ) ) {
-            $this->ure_object = $_REQUEST['object'];
-            if ( !$this->check_user_to_edit() ) {
-                return false;
-            }
-        } else {
-            $this->ure_object = 'role';
-        }
-
-        $this->apply_to_all = $this->lib->get_request_var('ure_apply_to_all', 'post', 'checkbox');
+        $this->wp_default_role = get_option( 'default_role' );        
         $this->caps_columns_quant = $this->get_caps_columns_quant();
+        
 
         return true;
     }
@@ -184,17 +206,34 @@ class URE_Editor {
     // end of set_show_deprecated_caps()
             
     
+    private function get_role_id() {
+        
+        if ( isset( $_POST['values']['user_role'] ) ) {
+            $role_id = $_POST['values']['user_role'];
+        } elseif ( isset( $_POST['user_role'] ) ) {
+            $role_id = $_POST['user_role'];
+        } else {
+            $role_id = false;
+        }
+        
+        return $role_id;
+        
+    }
+    // end of get_role_id()
+    
+    
     public function init_current_role_name() {
 
+        $role_id = $this->get_role_id();
         $this->current_role = '';
         $this->current_role_name = '';
-        if ( !isset( $_POST['user_role'] ) ) {
+        if ( empty( $role_id ) ) {
             $mess = esc_html__('Error: ', 'user-role-editor') . esc_html__('Wrong request!', 'user-role-editor');
-        } else if ( !isset($this->roles[$_POST['user_role']]) ) {
-            $mess = esc_html__('Error: ', 'user-role-editor') . esc_html__('Role', 'user-role-editor') . ' <em>' . esc_html($_POST['user_role']) . '</em> ' . 
-                    esc_html__('does not exist', 'user-role-editor');            
+        } else if ( !isset( $this->roles[$role_id] ) ) {
+            $mess = esc_html__('Error: ', 'user-role-editor') . esc_html__('Role', 'user-role-editor') . ' <em>' . esc_html( $role_id ) . '</em> ' . 
+                    esc_html__('does not exist', 'user-role-editor');
         } else {
-            $this->current_role = $_POST['user_role'];
+            $this->current_role = $role_id;
             $this->current_role_name = $this->roles[$this->current_role]['name'];
             $mess = '';
         }
@@ -235,7 +274,7 @@ class URE_Editor {
                 
         foreach ( $this->full_capabilities as $cap ) {
             $cap_id_esc = URE_Capability::escape( $cap['inner'] );
-            if ( isset( $_POST[$cap_id_esc] ) ) {
+            if ( isset( $_POST['values'][$cap_id_esc] ) ) {
                 $this->capabilities_to_save[ $cap['inner'] ] = true;
             }
         }
@@ -676,7 +715,8 @@ class URE_Editor {
 
         if ( !empty( $mess ) ) {
             $mess .= '<br/>';
-        }
+        }                
+        
         if ( $this->ure_object === 'role' ) {  // save role changes to database
             if ($this->update_roles()) {                
                 if (!$this->apply_to_all) {
@@ -698,20 +738,6 @@ class URE_Editor {
         return $mess;
     }
     // end of permissions_object_update()
-    
-    
-    protected function update() {
-        
-        $this->roles = $this->lib->get_user_roles();
-        $this->full_capabilities = $this->lib->init_full_capabilities( $this->ure_object );
-        if ( isset( $_POST['user_role'] ) ) {
-            $this->notification = $this->init_current_role_name();
-        }
-        $this->prepare_capabilities_to_save();
-        $this->notification = $this->permissions_object_update( $this->notification );
-                
-    }
-    // end of update()    
     
     
     /**
@@ -804,7 +830,7 @@ class URE_Editor {
     /**
      * Process new role creation request
      * 
-     * @return string   - message about operation result
+     * @return array   - operation result data
      * 
      */
     public function add_new_role() {
@@ -857,7 +883,44 @@ class URE_Editor {
     }
     // end of add_new_role()    
     
-                
+
+    public function update_role() {
+        
+        $response = array('result'=>'error', 'role_id'=>'', 'role_name'=>'', 'message'=>'');
+        if ( !current_user_can( 'ure_edit_roles' ) ) {
+            $response['message'] = esc_html__( 'Insufficient permissions to work with User Role Editor','user-role-editor' );
+            return $response;
+        }
+        
+        $this->_init0();                
+        if ( $this->ure_object==='role') {
+            $result = $this->get_role_id_from_post();
+            if ( !empty( $result['message'] ) ) {
+                $response['message'] = $result['message'];
+                return $response;
+            }
+        }
+        
+        $this->roles = $this->lib->get_user_roles();
+        $this->full_capabilities = $this->lib->init_full_capabilities( $this->ure_object );
+        if ( isset( $_POST['values']['user_role'] ) ) {
+            $this->notification = $this->init_current_role_name();
+        }
+        $this->prepare_capabilities_to_save();
+        $this->notification = $this->permissions_object_update( $this->notification );
+        
+        $response['result'] = 'success';
+        if ( $this->ure_object==='role') {
+            $response['role_id'] = $result['role_id'];
+            $response['role_name'] = $this->current_role_name;
+        }
+        $response['message'] = $this->notification;
+        
+        return $response;
+    }
+    // end of update_role()
+    
+    
     /**
      * process rename role request
      * 

@@ -38,7 +38,7 @@ class URE_User_Other_Roles {
             add_action( 'wpmu_activate_user', array($this, 'add_other_roles'), 10, 1 );
             add_action( 'added_existing_user', array($this, 'add_other_roles'), 10, 1);
         }
-        add_action( 'user_register', array($this, 'add_other_roles'), 10, 1 );
+        add_action( 'user_register', array($this, 'add_default_other_roles'), 10, 1 );
             
     }
     // end of set_hooks()
@@ -341,14 +341,11 @@ class URE_User_Other_Roles {
     // end of update()
 
     
-    private function add_default_other_roles($user_id) {
-        if ( !current_user_can('edit_users') ) {
-            return false;
-        }
-        if ( !current_user_can('edit_user', $user_id) ) {
-            return false;
-        }
+    public function add_default_other_roles( $user_id ) {
         
+        if ( empty( $user_id ) ) {
+            return false;
+        }
         $user = get_user_by('id', $user_id );
         if ( empty( $user->ID ) ) {
             return true;
