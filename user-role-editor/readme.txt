@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 4.58
+Stable tag: 4.58.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,9 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.58.1] 11.01.2021 =
+* Fix: User lost assigned role(s) after click "Update" at the user permissions page, opened via "Selected user->Capabilities" or "User Profile->Capabilities->Edit" link.
+
 = [4.58] 11.01.2021 =
 * Update: Users->User Role Editor: Update button saves changes via AJAX without full page reload.
 * Fix: New user registered via frontend (wp-login.php?action=register) automatically receives additional (other) default role(s) according to selection made at User Role Editor settings "Other default roles" tab.

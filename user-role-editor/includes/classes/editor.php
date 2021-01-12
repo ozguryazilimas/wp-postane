@@ -637,7 +637,7 @@ class URE_Editor {
         
         $select_primary_role = apply_filters( 'ure_users_select_primary_role', true );
         if ( $select_primary_role  || $this->lib->is_super_admin()) {
-            $primary_role = $this->lib->get_request_var('primary_role', 'post');  
+            $primary_role = isset( $_POST['values']['primary_role'] ) ? filter_var( $_POST['values']['primary_role'], FILTER_SANITIZE_STRING ) : false;  
             if ( empty( $primary_role ) || !isset( $wp_roles->roles[$primary_role] ) ) {
                 $primary_role = '';
             }
@@ -676,7 +676,7 @@ class URE_Editor {
         }
 
         // add other roles to user
-        foreach ($_POST as $key => $value) {
+        foreach ($_POST['values'] as $key => $value) {
             $result = preg_match( '/^wp_role_(.+)/', $key, $match );
             if ( $result !== 1 ) {
                 continue;
