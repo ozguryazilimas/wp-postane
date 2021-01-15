@@ -676,7 +676,8 @@ class URE_Editor {
         }
 
         // add other roles to user
-        foreach ($_POST['values'] as $key => $value) {
+        $post_values = isset( $_POST['values'] ) && is_array( $_POST['values'] ) ? $_POST['values'] : array();
+        foreach ( $post_values as $key => $value ) {
             $result = preg_match( '/^wp_role_(.+)/', $key, $match );
             if ( $result !== 1 ) {
                 continue;
@@ -1197,10 +1198,6 @@ class URE_Editor {
             }
             case 'roles_restore_note': {
                 $this->notification = esc_html__( 'User Roles are restored to WordPress default values. ', 'user-role-editor' );
-                break;
-            }
-            case 'update': {
-                $this->update();                
                 break;
             }
             default: {

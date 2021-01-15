@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladi
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
 Tested up to: 5.6
-Stable tag: 4.58.1
+Stable tag: 4.58.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,10 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.58.2] 15.01.2021 =
+* Fix: Additional options turned ON for a role was not saved during role update.
+* Update: All JavaScript files are loaded with URE plugin version number as a query string for cache busting purpose.
+
 = [4.58.1] 11.01.2021 =
 * Fix: User lost assigned role(s) after click "Update" at the user permissions page, opened via "Selected user->Capabilities" or "User Profile->Capabilities->Edit" link.
 
@@ -101,21 +105,6 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 * Update: " jQuery( document ).ready( handler ) " was replaced globally with " jQuery( handler ) " for compatibility with [jQuery 3.0](https://api.jquery.com/ready/) and WordPress 5.6.
 * Update: jQuery UI CSS was updated to version 1.12.1
 * Fix: "Grant Roles" button produced JavaScript error, if single user without any role granted (None) was selected.
-
-= [4.56.1] 05.09.2020 =
-* New: WordPress multisite: Main site: Users->User Role Editor->Apply to All->Update: 'ure_after_network_roles_update' action hook was added. It is executed after all roles were replicated from the main site to the all other subsites of the network.
-* Fix: "Granted Only" filter did not work.
-* Fix: Warning was fixed: wp-content/plugins/user-role-editor/js/ure.js: jQuery.fn.attr('checked') might use property instead of attribute.
-
-= [4.56] 09.08.2020 =
-* New: User capabilities 'install_languages', 'resume_plugins', 'resume_themes', 'view_site_health_checks' were added to the list of supported WordPress built-in user capabilities.
-* Update: Single site WordPress installation: URE automatically grants all existing user capabilities to WordPress built-in 'administrator' role before opening its page "Users->User Role Editor". 
-* Fix: Extra slash was removed between URE_PLUGIN_URL and the image resource when outputting URE_PLUGIN_URL .'/images/ajax-loader.gif' at 'Users->User Role Editor' page.
-* Info: Marked as compatible with WordPress 5.5.
-
-= [4.55.1] 06.06.2020 =
-* Security fix: User with 'edit_users' capability could assign to another user a role not included into the editable roles list. This fix is required to install ASAP for all sites which have user(s) with 'edit_users' capability granted not via 'administrator' role.
-* Update: URE_Uninstall class properties were made 'protected' to be accessible in URE_Uninstall_Pro class included into the Pro version.
 
 File changelog.txt contains the full list of changes.
 

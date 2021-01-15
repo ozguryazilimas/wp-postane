@@ -1,5 +1,9 @@
 CHANGES LOG (full version).
 ===========================
+= [4.58.2] 15.01.2021 =
+* Fix: Additional options turned ON for a role was not saved during role update.
+* Update: All JavaScript files are loaded with URE plugin version number as a query string for cache busting purpose.
+
 = [4.58.1] 11.01.2021 =
 * Fix: User lost assigned role(s) after click "Update" at the user permissions page, opened via "Selected user->Capabilities" or "User Profile->Capabilities->Edit" link.
 
