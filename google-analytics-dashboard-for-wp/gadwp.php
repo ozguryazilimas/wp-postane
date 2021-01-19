@@ -4,7 +4,7 @@
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: ExactMetrics
- * Version: 6.4.0
+ * Version: 6.5.0
  * Requires at least: 3.8.0
  * Requires PHP: 5.2
  * Author URI: https://exactmetrics.com
@@ -44,7 +44,7 @@ final class ExactMetrics_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.4.0';
+	public $version = '6.5.0';
 
 	/**
 	 * Plugin file.
@@ -146,6 +146,15 @@ final class ExactMetrics_Lite {
 	public $routes;
 
 	/**
+	 * The tracking mode used in the frontend.
+	 *
+	 * @since 6.5.0
+	 * @accces public
+	 * @var string
+	 */
+	public $tracking_mode;
+
+	/**
 	 * Primary class constructor.
 	 *
 	 * @since 6.0.0
@@ -200,7 +209,7 @@ final class ExactMetrics_Lite {
 
 			// This does the version to version background upgrade routines and initial install
 			$em_version = get_option( 'exactmetrics_current_version', '5.5.3' );
-			if ( version_compare( $em_version, '6.4.0', '<' ) ) {
+			if ( version_compare( $em_version, '6.5.0', '<' ) ) {
 				exactmetrics_lite_call_install_and_upgrade();
 			}
 
@@ -545,6 +554,21 @@ final class ExactMetrics_Lite {
 		require_once EXACTMETRICS_PLUGIN_DIR . 'includes/frontend/frontend.php';
 		require_once EXACTMETRICS_PLUGIN_DIR . 'includes/frontend/seedprod.php';
 		require_once EXACTMETRICS_PLUGIN_DIR . 'includes/measurement-protocol.php';
+	}
+
+	/**
+	 * Get the tracking mode for the frontend scripts.
+	 *
+	 * @return string
+	 */
+	public function get_tracking_mode() {
+
+		if ( ! isset( $this->tracking_mode ) ) {
+			// This will already be set to 'analytics' to anybody already using the plugin before 6.5.0.
+			$this->tracking_mode = exactmetrics_get_option( 'tracking_mode', 'gtag' );
+		}
+
+		return $this->tracking_mode;
 	}
 }
 

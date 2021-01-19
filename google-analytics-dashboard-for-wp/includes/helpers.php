@@ -1255,10 +1255,10 @@ function exactmetrics_is_code_installed_frontend() {
 
 		$body            = wp_remote_retrieve_body( $request );
 		$current_ua_code = exactmetrics_get_ua_to_output();
-		$ua_limit        = 2;
+		$ua_limit        = 'gtag' === ExactMetrics()->get_tracking_mode() ? 4 : 2;
 		// If the ads addon is installed another UA is added to the page.
 		if ( class_exists( 'ExactMetrics_Ads' ) ) {
-			$ua_limit = 3;
+			$ua_limit++;
 		}
 		// Translators: The placeholders are for making the "We noticed you're using a caching plugin" text bold.
 		$cache_error = sprintf( esc_html__( '%1$sWe noticed you\'re using a caching plugin or caching from your hosting provider.%2$s Be sure to clear the cache to ensure the tracking appears on all pages and posts. %3$s(See this guide on how to clear cache)%4$s.', 'google-analytics-dashboard-for-wp' ), '<b>', '</b>', ' <a href="https://www.wpbeginner.com/beginners-guide/how-to-clear-your-cache-in-wordpress/" target="_blank">', '</a>' );
@@ -1632,7 +1632,7 @@ function exactmetrics_get_frontend_analytics_script_atts() {
 			if ( ! empty( $attr_name ) ) {
 				$attr_string .= ' ' . sanitize_key( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
 			} else {
-				$attr_string .= ' ' . sanitize_key( $attr_value );
+				$attr_string .= ' ' . esc_attr( $attr_value );
 			}
 		}
 	}

@@ -10,7 +10,7 @@
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 
@@ -21,31 +21,36 @@ if ( ! defined( 'ABSPATH' ) ) {
  * for the frontend_output() function to output. These are
  * generally dimensions and turned on GA features.
  *
+ * @return array Array of the options to use.
  * @since 7.0.0
  * @access public
  *
- * @return array Array of the options to use.
  */
-function exactmetrics_tracking_script( ) {
-    require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/class-tracking-abstract.php';
+function exactmetrics_tracking_script() {
+	require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/class-tracking-abstract.php';
 
-    $mode = is_preview() ? 'preview' : 'analytics';
+	$mode = is_preview() ? 'preview' : ExactMetrics()->get_tracking_mode();
 
-    do_action( 'exactmetrics_tracking_before_' . $mode );
-    do_action( 'exactmetrics_tracking_before', $mode );
-    if ( $mode === 'preview' ) {
-        require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-preview.php';
-        $tracking = new ExactMetrics_Tracking_Preview();
-        echo $tracking->frontend_output();
-    } else {
-         require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-analytics.php';
-         $tracking = new ExactMetrics_Tracking_Analytics();
-         echo $tracking->frontend_output();
-    }
+	do_action( 'exactmetrics_tracking_before_' . $mode );
+	do_action( 'exactmetrics_tracking_before', $mode );
+	if ( 'preview' === $mode ) {
+		require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-preview.php';
+		$tracking = new ExactMetrics_Tracking_Preview();
+		echo $tracking->frontend_output();
+	} else if ( 'gtag' === $mode ) {
+		require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-gtag.php';
+		$tracking = new ExactMetrics_Tracking_Gtag();
+		echo $tracking->frontend_output();
+	} else {
+		require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/tracking/class-tracking-analytics.php';
+		$tracking = new ExactMetrics_Tracking_Analytics();
+		echo $tracking->frontend_output();
+	}
 
-    do_action( 'exactmetrics_tracking_after_' . $mode );
-    do_action( 'exactmetrics_tracking_after', $mode );
+	do_action( 'exactmetrics_tracking_after_' . $mode );
+	do_action( 'exactmetrics_tracking_after', $mode );
 }
+
 add_action( 'wp_head', 'exactmetrics_tracking_script', 6 );
 //add_action( 'login_head', 'exactmetrics_tracking_script', 6 );
 
@@ -56,51 +61,61 @@ add_action( 'wp_head', 'exactmetrics_tracking_script', 6 );
  * for the frontend_output() function to output. These are
  * generally dimensions and turned on GA features.
  *
+ * @return array Array of the options to use.
  * @since 6.0.0
  * @access public
  *
- * @return array Array of the options to use.
  */
-function exactmetrics_events_tracking( ) {
-    $track_user    = exactmetrics_track_user();
+function exactmetrics_events_tracking() {
+	$track_user = exactmetrics_track_user();
 
-    if ( $track_user ) {
-        require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/events/class-analytics-events.php';
-        new ExactMetrics_Analytics_Events();
-    } else {
-        // User is in the disabled group or events mode is off
-    }
+	if ( $track_user ) {
+		$tracking_mode = exactmetrics_get_option( 'tracking_mode', 'gtag' );
+		if ( 'analytics' === $tracking_mode ) {
+			require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/events/class-analytics-events.php';
+			new ExactMetrics_Analytics_Events();
+		} else {
+			require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/events/class-gtag-events.php';
+			new ExactMetrics_Gtag_Events();
+		}
+	} else {
+		// User is in the disabled group or events mode is off
+	}
 }
+
 add_action( 'template_redirect', 'exactmetrics_events_tracking', 9 );
 
 /**
  * Add the UTM source parameters in the RSS feeds to track traffic.
  *
- * @since 6.0.0
- * @access public
- *
  * @param string $guid The link for the RSS feed.
  *
  * @return string The new link for the RSS feed.
+ * @since 6.0.0
+ * @access public
+ *
  */
 function exactmetrics_rss_link_tagger( $guid ) {
-    global $post;
+	global $post;
 
-    if ( exactmetrics_get_option( 'tag_links_in_rss', false ) ){
-        if ( is_feed() ) {
-            if ( exactmetrics_get_option( 'allow_anchor', false ) ) {
-                $delimiter = '#';
-            } else {
-                $delimiter = '?';
-                if ( strpos( $guid, $delimiter ) > 0 ) {
-                    $delimiter = '&amp;';
-                }
-            }
-            return $guid . $delimiter . 'utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=' . urlencode( $post->post_name );
-        }
-    }
-    return $guid;
+	if ( exactmetrics_get_option( 'tag_links_in_rss', false ) ) {
+		if ( is_feed() ) {
+			if ( exactmetrics_get_option( 'allow_anchor', false ) ) {
+				$delimiter = '#';
+			} else {
+				$delimiter = '?';
+				if ( strpos( $guid, $delimiter ) > 0 ) {
+					$delimiter = '&amp;';
+				}
+			}
+
+			return $guid . $delimiter . 'utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=' . urlencode( $post->post_name );
+		}
+	}
+
+	return $guid;
 }
+
 add_filter( 'the_permalink_rss', 'exactmetrics_rss_link_tagger', 99 );
 
 
@@ -114,9 +129,9 @@ function exactmetrics_prevent_loading_frontend_reports() {
 /**
  * Add an admin bar menu item on the frontend.
  *
+ * @return void
  * @since 7.5.0
  *
- * @return void
  */
 function exactmetrics_add_admin_bar_menu() {
 	if ( exactmetrics_prevent_loading_frontend_reports() ) {
@@ -127,7 +142,8 @@ function exactmetrics_add_admin_bar_menu() {
 
 	$args = array(
 		'id'    => 'exactmetrics_frontend_button',
-		'title' => '<span class="ab-icon dashicons-before dashicons-chart-bar"></span> ExactMetrics', // Maybe allow translation?
+		'title' => '<span class="ab-icon dashicons-before dashicons-chart-bar"></span> ExactMetrics',
+		// Maybe allow translation?
 		'href'  => '#',
 	);
 
@@ -141,9 +157,9 @@ add_action( 'admin_bar_menu', 'exactmetrics_add_admin_bar_menu', 999 );
 /**
  * Load the scripts needed for the admin bar.
  *
+ * @return void
  * @since 7.5.0
  *
- * @return void
  */
 function exactmetrics_frontend_admin_bar_scripts() {
 	if ( exactmetrics_prevent_loading_frontend_reports() ) {
@@ -234,7 +250,8 @@ function exactmetrics_administrator_tracking_notice() {
 	?>
 	<div class="exactmetrics-tracking-notice exactmetrics-tracking-notice-hide">
 		<div class="exactmetrics-tracking-notice-icon">
-			<img src="<?php echo esc_url( plugins_url( 'assets/images/em-mascot.png', EXACTMETRICS_PLUGIN_FILE ) ); ?>" width="40" alt="ExactMetrics Mascot" />
+			<img src="<?php echo esc_url( plugins_url( 'assets/images/em-mascot.png', EXACTMETRICS_PLUGIN_FILE ) ); ?>"
+				 width="40" alt="ExactMetrics Mascot"/>
 		</div>
 		<div class="exactmetrics-tracking-notice-text">
 			<h3><?php esc_html_e( 'Tracking is Disabled for Administrators', 'google-analytics-dashboard-for-wp' ); ?></h3>
@@ -254,91 +271,91 @@ function exactmetrics_administrator_tracking_notice() {
 		<div class="exactmetrics-tracking-notice-close">&times;</div>
 	</div>
 	<style type="text/css">
-		.exactmetrics-tracking-notice {
-			position: fixed;
-			bottom: 20px;
-			right: 15px;
-			font-family: Arial, Helvetica, "Trebuchet MS", sans-serif;
-			background: #fff;
-			box-shadow: 0 0 10px 0 #dedede;
-			padding: 6px 5px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 380px;
-			max-width: calc( 100% - 30px );
-			border-radius: 6px;
-			transition: bottom 700ms ease;
-			z-index: 10000;
-		}
+        .exactmetrics-tracking-notice {
+            position: fixed;
+            bottom: 20px;
+            right: 15px;
+            font-family: Arial, Helvetica, "Trebuchet MS", sans-serif;
+            background: #fff;
+            box-shadow: 0 0 10px 0 #dedede;
+            padding: 6px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 380px;
+            max-width: calc(100% - 30px);
+            border-radius: 6px;
+            transition: bottom 700ms ease;
+            z-index: 10000;
+        }
 
-		.exactmetrics-tracking-notice h3 {
-			font-size: 13px;
-			color: #222;
-			font-weight: 700;
-			margin: 0 0 8px;
-			padding: 0;
-			line-height: 1;
-			border: none;
-		}
+        .exactmetrics-tracking-notice h3 {
+            font-size: 13px;
+            color: #222;
+            font-weight: 700;
+            margin: 0 0 8px;
+            padding: 0;
+            line-height: 1;
+            border: none;
+        }
 
-		.exactmetrics-tracking-notice p {
-			font-size: 13px;
-			color: #7f7f7f;
-			font-weight: 400;
-			margin: 0;
-			padding: 0;
-			line-height: 1.2;
-			border: none;
-		}
+        .exactmetrics-tracking-notice p {
+            font-size: 13px;
+            color: #7f7f7f;
+            font-weight: 400;
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+            border: none;
+        }
 
-		.exactmetrics-tracking-notice p a {
-			color: #7f7f7f;
-			font-size: 13px;
-			line-height: 1.2;
-			margin: 0;
-			padding: 0;
-			text-decoration: underline;
-			font-weight: 400;
-		}
+        .exactmetrics-tracking-notice p a {
+            color: #7f7f7f;
+            font-size: 13px;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
+            text-decoration: underline;
+            font-weight: 400;
+        }
 
-		.exactmetrics-tracking-notice p a:hover {
-			color: #7f7f7f;
-			text-decoration: none;
-		}
+        .exactmetrics-tracking-notice p a:hover {
+            color: #7f7f7f;
+            text-decoration: none;
+        }
 
-		.exactmetrics-tracking-notice-icon img {
-			height: auto;
-			display: block;
-			margin: 0;
-		}
+        .exactmetrics-tracking-notice-icon img {
+            height: auto;
+            display: block;
+            margin: 0;
+        }
 
-		.exactmetrics-tracking-notice-icon {
-			padding: 14px;
-			background-color: #f4f3f7;
-			border-radius: 6px;
-			flex-grow: 0;
-			flex-shrink: 0;
-			margin-right: 12px;
-		}
+        .exactmetrics-tracking-notice-icon {
+            padding: 14px;
+            background-color: #f4f3f7;
+            border-radius: 6px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
 
-		.exactmetrics-tracking-notice-close {
-			padding: 0;
-			margin: 0 3px 0 0;
-			border: none;
-			box-shadow: none;
-			border-radius: 0;
-			color: #7f7f7f;
-			background: transparent;
-			line-height: 1;
-			align-self: flex-start;
-			cursor: pointer;
-			font-weight: 400;
-		}
+        .exactmetrics-tracking-notice-close {
+            padding: 0;
+            margin: 0 3px 0 0;
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            color: #7f7f7f;
+            background: transparent;
+            line-height: 1;
+            align-self: flex-start;
+            cursor: pointer;
+            font-weight: 400;
+        }
 
-		.exactmetrics-tracking-notice.exactmetrics-tracking-notice-hide {
-			bottom: -200px;
-		}
+        .exactmetrics-tracking-notice.exactmetrics-tracking-notice-hide {
+            bottom: -200px;
+        }
 	</style>
 	<?php
 

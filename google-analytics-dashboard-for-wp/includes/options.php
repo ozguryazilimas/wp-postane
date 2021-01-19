@@ -394,17 +394,17 @@ function exactmetrics_export_settings() {
 	return wp_json_encode( $settings );
 }
 
-/**
- * Always return 'analytics' when grabbing the tracking mode.
- *
- * @param string $value The value to override.
- *
- * @return string
- */
-function exactmetrics_force_tracking_mode( $value ) {
-	return 'analytics';
-}
-add_filter( 'exactmetrics_get_option_tracking_mode', 'exactmetrics_force_tracking_mode' );
+///**
+// * Always return 'analytics' when grabbing the tracking mode.
+// *
+// * @param string $value The value to override.
+// *
+// * @return string
+// */
+//function exactmetrics_force_tracking_mode( $value ) {
+//	return 'analytics';
+//}
+//add_filter( 'exactmetrics_get_option_tracking_mode', 'exactmetrics_force_tracking_mode' );
 
 /**
  * Always return 'js' when grabbing the events mode.

@@ -3,8 +3,8 @@ Contributors: chriscct7, smub
 Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
-Tested up to: 5.5
-Stable tag: 6.4.0
+Tested up to: 5.6
+Stable tag: 6.5.0
 Requires PHP: 5.2
 License: GPL v3
 
@@ -156,6 +156,10 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.5.0: January 19, 2021 =
+- New: We added support for Google’s global site tag (gtag.js) with a seamless upgrade experience for all your existing events or integrations with analytics.js. Upgrading to this version will give you the option to manually opt-in to gtag.js that will become the standard tracking code in a future version.
+- Fix: We added an extra check to prevent a potential error on older PHP versions from our Popular Posts feature.
+
 = 6.4.0: December 16, 2020 =
 - New: With our new, limited-time only, Year in Review report you’ll be able to see how your site performed in 2020 and how to improve in 2021.
 - Tweak: Our contextual notifications are now more efficient when using report data.
