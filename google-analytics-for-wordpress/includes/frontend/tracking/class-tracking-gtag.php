@@ -118,7 +118,15 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 
 		// Add cross-domain tracking.
 		if ( is_array( $cross_domains ) && ! empty( $cross_domains ) ) {
-			$options['linker'] = array( $cross_domains );
+			$linker_domains = array();
+			foreach ( $cross_domains as $cross_domain ) {
+				if ( ! empty( $cross_domain['domain'] ) ) {
+					$linker_domains[] = $cross_domain['domain'];
+				}
+			}
+			$options['linker'] = json_encode( array(
+				'domains' => $linker_domains,
+			) );
 		}
 
 		$options = apply_filters( 'monsterinsights_frontend_tracking_options_gtag_before_pageview', $options );
