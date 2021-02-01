@@ -31,7 +31,17 @@ function relevanssi_update_log( $query, $hits ) {
 	$user_agent = '';
 	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
-		$bots       = array( 'Google' => 'Mediapartners-Google' );
+		$bots       = array(
+			'Google 1'   => 'Mediapartners-Google',
+			'Google 2'   => 'Googlebot',
+			'Bing'       => 'Bingbot',
+			'Yahoo'      => 'Slurp',
+			'DuckDuckGo' => 'DuckDuckBot',
+			'Baidu'      => 'Baiduspider',
+			'Yandex'     => 'YandexBot',
+			'Sogou'      => 'Sogou',
+			'Exalead'    => 'Exabot',
+		);
 
 		/**
 		 * Filters the bots Relevanssi should block from logs.
@@ -284,6 +294,10 @@ function relevanssi_export_log() {
 	$data = $wpdb->get_results( 'SELECT * FROM ' . $relevanssi_variables['log_table'], ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	ob_start();
 	$df = fopen( 'php://output', 'w' ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	if ( empty( $data ) ) {
+		fputcsv( $df, array( __( 'No search keywords logged.', 'relevanssi' ) ) );
+		die();
+	}
 	fputcsv( $df, array_keys( reset( $data ) ) );
 	foreach ( $data as $row ) {
 		fputcsv( $df, $row );

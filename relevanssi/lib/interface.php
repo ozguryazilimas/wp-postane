@@ -121,11 +121,6 @@ function relevanssi_search_stats() {
 		}
 	}
 
-	wp_enqueue_style( 'dashboard' );
-	wp_print_styles( 'dashboard' );
-	wp_enqueue_script( 'dashboard' );
-	wp_print_scripts( 'dashboard' );
-
 	printf( "<div class='wrap'><h2>%s</h2>", esc_html( $options_txt ) );
 
 	if ( 'on' === get_option( 'relevanssi_log_queries' ) ) {
@@ -144,11 +139,6 @@ function relevanssi_admin_search_page() {
 	$relevanssi_hide_branding = get_option( 'relevanssi_hide_branding' );
 
 	$options_txt = __( 'Admin Search', 'relevanssi' );
-
-	wp_enqueue_style( 'dashboard' );
-	wp_print_styles( 'dashboard' );
-	wp_enqueue_script( 'dashboard' );
-	wp_print_scripts( 'dashboard' );
 
 	printf( "<div class='wrap'><h2>%s</h2>", esc_html( $options_txt ) );
 
@@ -409,11 +399,6 @@ function relevanssi_date_queries( $days, $title, $version = 'good' ) {
 function relevanssi_options_form() {
 	global $relevanssi_variables, $wpdb;
 
-	wp_enqueue_style( 'dashboard' );
-	wp_print_styles( 'dashboard' );
-	wp_enqueue_script( 'dashboard' );
-	wp_print_scripts( 'dashboard' );
-
 	echo "<div class='postbox-container'>";
 	echo "<form method='post'>";
 
@@ -576,7 +561,18 @@ function relevanssi_add_admin_scripts( $hook ) {
 		'settings_page_relevanssi/relevanssi',
 		'dashboard_page_relevanssi_admin_search',
 	);
-	if ( ! in_array( $hook, $acceptable_hooks, true ) ) {
+	/**
+	 * Filters the hooks where Relevanssi scripts are enqueued.
+	 *
+	 * By default Relevanssi only enqueues the Relevanssi admin javascript on
+	 * specific admin page hooks to avoid polluting the admin. If you want to
+	 * move things around, this means the javascript bits won't work. You can
+	 * introduce new hooks with this filter hook.
+	 *
+	 * @param array An array of page hook strings where Relevanssi scripts are
+	 * added.
+	 */
+	if ( ! in_array( $hook, apply_filters( 'relevanssi_acceptable_hooks', $acceptable_hooks ), true ) ) {
 		return;
 	}
 

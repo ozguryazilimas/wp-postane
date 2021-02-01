@@ -301,7 +301,7 @@ function relevanssi_remove_punct( $a ) {
 	$a = preg_replace( '/&lt;(\d|\s)/', '\1', $a );
 
 	$a = html_entity_decode( $a, ENT_QUOTES );
-	$a = preg_replace( '/<[^>]*>/', ' ', $a );
+	$a = preg_replace( '/<[!a-z]*>/', ' ', $a );
 
 	$punct_options = get_option( 'relevanssi_punctuation' );
 
@@ -719,11 +719,8 @@ function relevanssi_get_post_type( $post_id ) {
 	global $relevanssi_post_array;
 
 	$original_id = $post_id;
-	$blog_id     = -1;
-	if ( function_exists( 'get_current_blog_id' ) ) {
-		$blog_id = get_current_blog_id();
-		$post_id = $blog_id . '|' . $post_id;
-	}
+	$blog_id     = get_current_blog_id();
+	$post_id     = $blog_id . '|' . $post_id;
 
 	if ( isset( $relevanssi_post_array[ $post_id ] ) ) {
 		return $relevanssi_post_array[ $post_id ]->post_type;
@@ -817,50 +814,6 @@ function relevanssi_add_synonyms( $query ) {
 	}
 
 	return $query;
-}
-
-
-/**
- * Prints out post title with highlighting.
- *
- * Uses the global $post object. Reads the highlighted title from
- * $post->post_highlighted_title.
- *
- * @global object $post The global post object.
- *
- * @param boolean $echo If true, echo out the title. Default true.
- *
- * @return string If $echo is false, returns the title with highlights.
- */
-function relevanssi_the_title( $echo = true ) {
-	global $post;
-	if ( empty( $post->post_highlighted_title ) ) {
-		$post->post_highlighted_title = $post->post_title;
-	}
-	if ( $echo ) {
-		echo $post->post_highlighted_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-	return $post->post_highlighted_title;
-}
-
-/**
- * Returns the post title with highlighting.
- *
- * Reads the highlighted title from $post->post_highlighted_title.
- *
- * @param int $post_id The post ID.
- *
- * @return string The post title with highlights.
- */
-function relevanssi_get_the_title( $post_id ) {
-	$post = relevanssi_get_post( $post_id );
-	if ( ! is_object( $post ) ) {
-		return null;
-	}
-	if ( empty( $post->post_highlighted_title ) ) {
-		$post->post_highlighted_title = $post->post_title;
-	}
-	return $post->post_highlighted_title;
 }
 
 /**
@@ -1124,6 +1077,17 @@ function relevanssi_get_forbidden_post_types() {
 		'slides',               // Qoda slides.
 		'carousels',            // Qoda carousels.
 		'pretty-link',          // Pretty Links.
+		'fusion_tb_layout',     // Fusion Builder.
+		'fusion_tb_section',    // Fusion Builder.
+		'fusion_form',          // Fusion Builder.
+		'fusion_icons',         // Fusion Builder.
+		'fusion_template',      // Fusion Builder.
+		'fusion_element',       // Fusion Builder.
+		'acfe-dbt',             // ACF Extended.
+		'acfe-form',            // ACF Extended.
+		'acfe-dop',             // ACF Extended.
+		'acfe-dpt',             // ACF Extended.
+		'acfe-dt',              // ACF Extended.
 	);
 }
 
@@ -1148,7 +1112,9 @@ function relevanssi_get_forbidden_taxonomies() {
 /**
  * Filters out unwanted custom fields.
  *
- * Added to the relevanssi_custom_field_value filter hook.
+ * Added to the relevanssi_custom_field_value filter hook. This function removes
+ * visible custom fields that are known to contain unwanted content and also
+ * removes ACF meta fields (fields where content begins with `field_`).
  *
  * @see relevanssi_index_custom_fields()
  *
@@ -1165,6 +1131,17 @@ function relevanssi_filter_custom_fields( $values, $field ) {
 	if ( isset( $unwanted_custom_fields[ $field ] ) ) {
 		$values = array();
 	}
+
+	$values = array_map(
+		function( $value ) {
+			if ( is_string( $value ) && 'field_' === substr( $value, 0, 6 ) ) {
+				return '';
+			}
+			return $value;
+		},
+		$values
+	);
+
 	return $values;
 }
 
@@ -1517,7 +1494,7 @@ function relevanssi_generate_list_of_custom_fields( $post_id, $custom_fields = n
 	}
 
 	if ( ! is_array( $custom_fields ) ) {
-		return array();
+		$custom_fields = array();
 	}
 
 	$custom_fields = array_unique( $custom_fields );
