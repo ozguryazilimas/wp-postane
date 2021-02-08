@@ -16,12 +16,13 @@ if ($yarpp->debug) {
 }
 
 if (have_posts()) {
-	$output .= '<style>#yarpp-related-posts ol li { list-style-type: decimal; margin: 10px 0;} #yarpp-related-posts ol li a {text-decoration: none;}</style>';
+	$output .= '<style>#yarpp-related-posts ol li { list-style-type: decimal; margin: 10px 0;} #yarpp-related-posts ol li a {text-decoration: none;} .yarpp-related-action {visibility: hidden;}</style>';
 	$output .= '<ol id="yarpp-list">';
 	while (have_posts()) {
 		the_post();
-		$output .= "<li><a href='post.php?action=edit&post=" . get_the_ID() . "'>" . get_the_title() . "</a>";
+		$output .= "<li id='yarpp-related-". get_the_ID() . "'><a class='row-title' href='post.php?action=edit&post=" . get_the_ID() . "'>" . get_the_title() . "</a>";
 		$output .= ' (' . round(get_the_score(),3) . ')';
+		$output .=  " <span class='yarpp-related-action' id=yarpp-related-" . get_the_ID() . "-action'><span class='edit'><a href='post.php?action=edit&post=" . get_the_ID() . "'>" . __('Edit','yarpp') ."</a></span> | <span class='view'><a href='" . get_permalink() . "' target='_blank'>" . __('View', 'yarpp') . "</a></span></span>";
 		$output .= '</li>';
 	}
 	$output .= '</ol>';

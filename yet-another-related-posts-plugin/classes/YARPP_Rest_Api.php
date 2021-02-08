@@ -175,7 +175,9 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 
 		$simulated_params = array(
 			'include' => $ids,
-			'per_page' =>$query_params['limit']
+			'per_page' =>$query_params['limit'],
+			// we only get one page at a time. WP page numbering starts at 1.
+			'page' => 1
 		);
 		if(isset($query_params['context'])){
 			$simulated_params['context'] = $query_params['context'];
@@ -188,6 +190,9 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 		$read_controller_response = $read_controller->get_items($simulated_request);
 		remove_action( 'rest_post_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
 
+		if(is_wp_error($read_controller_response)){
+			return $read_controller_response;
+		}
 		$read_controller_posts = $read_controller_response->get_data();
 		$ordered_rest_results = array();
 		// Reorder the posts in the response according to what they were in the YARPP response.

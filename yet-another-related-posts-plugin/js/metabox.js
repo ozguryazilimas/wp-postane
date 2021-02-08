@@ -45,8 +45,19 @@ jQuery(document).ready(function($) {
   });
   
   /*
-  * Metabox Refresh Button
+  * Metabox Actions
   */
+  $(document).on('touchstart mouseenter', '#yarpp-list li', function() {
+    $(this).children('.yarpp-related-action').css( 'visibility', 'visible' );
+  });
+
+  $(document).on('touchend mouseleave', '#yarpp-list li', function() {
+    $(this).children('.yarpp-related-action').css( 'visibility', 'hidden' );
+  });
+
+  /*
+  * Metabox Refresh Button
+  */    
   $(document).on('click', '#yarpp-refresh', function(e) {
     e.preventDefault();
   

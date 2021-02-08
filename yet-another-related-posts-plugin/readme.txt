@@ -4,8 +4,8 @@ Tags: related, related posts, similar posts, posts, pages, thumbnails, feeds, mu
 Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
-Tested up to: 5.5
-Stable tag: 5.10.2
+Tested up to: 5.6
+Stable tag: 5.11.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -23,6 +23,7 @@ The most popular plugin to display a list of related posts on your site based on
 * **REST API support** - Embed related posts in your web or JavaScript driven app! ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
 * **Shortcode support** - Use `[yarpp]` shortcode to place related posts anywhere ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#%0Ahow%20can%20i%20move%20the%20related%20posts%20display%3F%0A))
 * **HTTPS support**
+* **bbPress forums support**
 * **WordPress Multisite support**
 * **Professionally maintained** and supported with regular updates
 
@@ -295,6 +296,14 @@ add_action(
 `
 
 == Changelog ==
+= 5.11.0 (08-February-2021) =
+* [New](https://wordpress.org/support/topic/why-related-topics-doesnt-show-up-under-topics-and-replies/): Adds native support for bbPress! Have you ever wanted a nifty Related Posts section on your bbPress topic pages, like the ones you've seen on forums like StackOverflow? It's now possible with YARPP Related Posts!
+* Enhancement: Updates to provided custom template examples
+* Enhancement: YARPP post metabox enhancements - adds "edit" and "view" hover options to each link, mimicking the main posts table
+* Enhancement: Add missing debug info
+* Bugfix: Avoid REST API warning by providing the page parameter which WP core expects
+* Deprecated: functions YARPP::maybe_enqueue_thumbnails() and YARPP::enqueue_thumbnails()
+
 = 5.10.2 (23-November-2020) =
 * Enhancement: Faster queries and a speed boost ⚡️ (Re-introduces database query improvements while avoiding the fatal error identified by some in v5.10.0)
 * [Enhancement](https://wordpress.org/support/topic/yarpp-query-migrate-helper-warnings/): Speed up by not loading widget.css when not necessary
@@ -307,7 +316,7 @@ add_action(
 * [Critical Bugfix](https://wordpress.org/support/topic/version-5-10-0-generated-error-500/): Reverts query changes from the v5.10.0 update as it caused 500 fatal errors on some WordPress installations. We sincerely apologies for any issues it may have caused. We did test the release for weeks, but each environment is just a bit different. We are actively testing a bug fix with those affected that volunteered before we release it again.
 
 = 5.10.0 (22-October-2020) =
-* Enhancement: Faster queries and a speed boost ⚡️
+* Enhancement: Faster queries and a speed boost ⚡
 * [Enhancement](https://wordpress.org/support/topic/yarp-page-break/): On posts with page breaks, show YARPP only on the last page
 * Enhancement: [Documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation) on how to use `[yarpp]` shortcode from a theme file (like single.php) or post content
 * Bugfix: If YARPP has already added its content to a post and somehow `apply_filters('the_content'...)` gets called again, don't try to re-add YARPP's content to the post again.
@@ -1051,5 +1060,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.10.2 =
+= 5.11.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

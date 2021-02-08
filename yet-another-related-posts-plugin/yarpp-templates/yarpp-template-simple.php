@@ -1,7 +1,7 @@
-<?php
+<?php 
 /*
-YARPP Template: List
-Description: This template returns posts as a comma-separated list.
+YARPP Template: Simple List
+Description: This template returns posts in an unordered list.
 Author: YARPP Team
 */
 ?>
@@ -26,18 +26,15 @@ Notes:
 ?>
 
 <h3>Related Posts</h3>
-<?php 
-if ( have_posts() ) :
-	$postsArray = array();
+<?php if ( have_posts() ) : ?>
+<ul>
+	<?php 
 	while ( have_posts() ) :
-		the_post();
-		$postsArray[] = '<a href="' . get_permalink() . '" rel="bookmark norewrite" title="' . the_title_attribute( 'echo=0' ) . '">' . get_the_title() . '</a><!-- (' . get_the_score() . ')-->';
-	endwhile;
-
-	echo implode( ', ' . "\n", $postsArray ); // print out a list of the related items, separated by commas
-
-else :
-	?>
-
+		the_post(); 
+		?>
+	<li><a href="<?php the_permalink(); ?>" rel="bookmark norewrite" title="<?php the_title_attribute(); ?>" ><?php the_title(); ?></a><!-- (<?php the_score(); ?>)--></li>
+	<?php endwhile; ?>
+</ul>
+<?php else : ?>
 <p>No related posts.</p>
 <?php endif; ?>

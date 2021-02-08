@@ -92,9 +92,10 @@ class YARPP {
 		$excerpt_rss_priority = apply_filters('yarpp_excerpt_rss_priority', 600);
 
 		add_filter('the_content',        array($this, 'the_content'), $content_priority);
+		add_action('bbp_template_after_single_topic', array($this,'add_to_bbpress'));
 		add_filter('the_content_feed',   array($this, 'the_content_feed'), $feed_priority);
 		add_filter('the_excerpt_rss',    array($this, 'the_excerpt_rss' ), $excerpt_rss_priority);
-		add_action('wp_enqueue_scripts', array($this, 'maybe_enqueue_thumbnails'));
+		add_action('wp_enqueue_scripts', array($this, 'maybe_enqueue_thumbnails_stylesheet'));
 
         /**
 		 * If we're using thumbnails, register yarpp-thumbnail size, if theme has not already.
@@ -479,7 +480,16 @@ class YARPP {
 		return $dimensions;
 	}
 
-	public function maybe_enqueue_thumbnails() {
+	/**
+	 * @deprecated 5.11.0
+	 * @see \YARPP::maybe_enqueue_thumbnails_stylesheet
+	 */
+	public function maybe_enqueue_thumbnails(){
+		_deprecated_function('YARPP::maybe_enqueue_thumbnails','5.11.0','YARPP::maybe_enqueue_thumbnails_stylesheet');
+		return 	$this->maybe_enqueue_thumbnails_stylesheet();
+	}
+
+	public function maybe_enqueue_thumbnails_stylesheet() {
 		if (is_feed()) return;
 
 		$auto_display_post_types = $this->get_option('auto_display_post_types');
@@ -491,10 +501,23 @@ class YARPP {
 
 		if ($this->get_option('template') !== 'thumbnails') return;
 
-		$this->enqueue_thumbnails($this->thumbnail_dimensions());
+		$this->enqueue_thumbnails_stylesheet($this->thumbnail_dimensions());
 	}
 
+	/**
+	 * @deprecated 5.11.0
+	 * @see YARPP::enqueue_thumbnails_stylesheet()
+	 * @param $dimensions
+	 */
 	public function enqueue_thumbnails($dimensions) {
+		_deprecated_function('YARPP::enqueue_thumbnails','5.11.0','YARPP::enqueue_thumbnails_stylesheet');
+		return $this->enqueue_thumbnails_stylesheet($dimensions);
+	}
+
+	/**
+	 * @param $dimensions
+	 */
+	public function enqueue_thumbnails_stylesheet($dimensions) {
         $queryStr = http_build_query(
             array(
                 'width'  => $dimensions['width'],
@@ -871,6 +894,16 @@ class YARPP {
 	}
 
 	private function post_type_filter($post_type) {
+		// Remove blacklisted post types.
+		if(class_exists( 'bbPress' ) && in_array(
+			$post_type->name,
+			array(
+				'forum', // bbPress forums (ie, group of topics).
+				'reply' // bbPress replies to topics
+			)
+		)){
+			return false;
+		}
 		if ($post_type->public) return true;
 		if (isset($post_type->yarpp_support)) return $post_type->yarpp_support;
 		return false;
@@ -914,7 +947,7 @@ class YARPP {
 			'rss_excerpt_length', 'past_only', 'show_excerpt', 'rss_show_excerpt',
 			'template', 'rss_template', 'show_pass_post', 'cross_relate',
 			'rss_display', 'rss_excerpt_display', 'promote_yarpp', 'rss_promote_yarpp',
-			'myisam_override', 'weight', 'require_tax', 'auto_display_archive'
+			'myisam_override', 'weight', 'require_tax', 'auto_display_archive', 'exclude'
 		));
 
 		$check_changed = array(
@@ -1662,6 +1695,13 @@ class YARPP {
 			'week' => __('week(s)','yarpp'),
 			'month' => __('month(s)','yarpp')
 		);
+	}
+
+	/**
+	 * Adds YARPP's content to bbPress topics.
+	 */
+	public function add_to_bbpress(){
+		echo $this->display_basic();
 	}
 
 	/**

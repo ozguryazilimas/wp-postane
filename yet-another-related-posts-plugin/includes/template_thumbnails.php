@@ -51,4 +51,4 @@ if (have_posts()) {
 	$output .= $no_results;
 }
 
-$this->enqueue_thumbnails( $dimensions );
+$this->enqueue_thumbnails_stylesheet( $dimensions );

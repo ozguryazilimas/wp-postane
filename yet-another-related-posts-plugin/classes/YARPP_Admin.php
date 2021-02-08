@@ -230,7 +230,7 @@ class YARPP_Admin {
     */
     if(!$this->core->yarppPro['active']){
       foreach ($metabox_post_types as $post_type) {
-        $title  = __('Related Posts' , 'yarpp');
+        $title  = __('YARPP: Related Posts' , 'yarpp');
         add_meta_box('yarpp_relatedposts',$title, array($this, 'metabox'), $post_type, 'normal');
       }
     }    

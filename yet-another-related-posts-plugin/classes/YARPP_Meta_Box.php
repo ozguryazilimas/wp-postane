@@ -10,7 +10,7 @@ class YARPP_Meta_Box {
         $this->template_text =
             __(
                 "This advanced option gives you full power to customize how your related posts are displayed.&nbsp;".
-                "Templates (stored in your theme folder) are written in PHP.",
+                "Templates are written in PHP and saved in your active theme's folder.",
                 'yarpp'
             );
     }

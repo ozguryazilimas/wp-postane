@@ -2,19 +2,19 @@
     margin: 1em 0;
 }
 
-.yarpp-related a{
+.yarpp-related a {
     text-decoration: none;
     font-weight: bold;
 }
 
-.yarpp-related .yarpp-thumbnail-title{
+.yarpp-related .yarpp-thumbnail-title {
     text-align: left;
     font-weight: bold;
     font-size: 96%;
     text-decoration: none;
 }
 
-.yarpp-related h3{
+.yarpp-related h3 {
     font-weight: bold;
     padding: 0 0 5px 0;
     font-size: 125%;
@@ -22,7 +22,7 @@
     margin: 0;
 }
 
-.yarpp-related .yarpp-promote{ 
+.yarpp-related .yarpp-promote { 
     clear: both;
     background: url(//api.engage.bidsystem.com/adk_mini_logo.png) no-repeat;
     float: right;
