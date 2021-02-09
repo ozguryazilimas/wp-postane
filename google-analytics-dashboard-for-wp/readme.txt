@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
 Requires at least: 3.8.0
 Tested up to: 5.6
-Stable tag: 6.5.1
+Stable tag: 6.6.0
 Requires PHP: 5.2
 License: GPL v3
 
@@ -49,14 +49,17 @@ See what one business owner is saying about ExactMetrics:
 * File Download Tracking - Track every file download with just one-click.
 * Outbound link tracking - Track your outbound link clicks inside Google Analytics.
 * Custom Dimensions Tracking – Enable Google analytics custom dimensions tracking for WordPress events.
+* Email Summaries - Get a weekly report of your website’s traffic directly in your inbox without having to login to your site.
 * Author Tracking – See author stats and discover who’s the most popular author on your site.
 * Google Analytics for AMP – Add proper Google Analytics tracking for Google AMP.
 * Form Conversion Tracking – Track conversions for your WordPress forms. Works with all popular plugins including WPForms, Contact Form 7, Gravity Forms, Formidable Forms, default WordPress comment form, and more.
 * Performance Addon - Adjust Google Analytics speed & sample rate, along with other advanced performance features.
 * Google Optimize Addon - Enable A/B Testing with Google Optimize and connect it with Google Analytics.
 * Custom Events Tracking - Track custom button, menu links, and banner clicks with Google Analytics.
+* Contextual Insights - Get tips on how to improve your site's traffic and engagement based on real traffic data.
 * Referral Tracking - See your top traffic referrals so you can unlock new opportunities.
 * Page level insights - Get detailed insights for each post, page, and products, so you can see the most popular areas and sections of your site.
+* Headline Analyzer - Get instant feedback on your post titles directly from the WordPress editor to improve SEO and get more clicks.
 * Popular post tracking - See which pages, posts, and products are the most popular with Google Analytics.
 * Scroll Depth tracking - See how far users scroll on your website with automatic scroll tracking in Google Analytics.
 
@@ -73,6 +76,8 @@ See what one business owner is saying about ExactMetrics:
 * Page Insights in Admin Bar - Easily view analytics for each individual page and post from the ExactMetrics menu in WordPress admin bar while browsing your website.
 * Email Summaries - Get the most important metrics delivered to you and/or your client's email inboxes weekly with our brandable Email Summaries, allowing you to keep up to date on your website's Google Analytics results even without needing to login to the Google Analytics dashboard.
 * PDF Exports - Easily take your ExactMetrics reports with you or send them to clients or colleagues by exporting all ExactMetrics reports as a brandable PDF.
+* Site Speed Report - helps you improve your website’s performance by displaying key metrics and actionable tips to improve those based on WordPress-specific solutions.
+* Popular Posts - Display popular posts in your post content automatically or using Gutenberg blocks and shortcodes. Show off your top posts to your visitors using sidebar widgets, Gutenberg blocks or shortcodes
 
 = Integrations =
 
@@ -114,10 +119,13 @@ If you like this plugin, then consider checking out our other projects:
 
 * <a href="https://optinmonster.com/" rel="friend" title="OptinMonster">OptinMonster</a> - Get More Email Subscribers
 * <a href="https://wpforms.com/" rel="friend" title="WPForms">WPForms</a> - Best WordPress Contact Form Plugin
-* <a href="https://www.seedprod.com/" rel="friend">SeedProd</a> - Most popular coming soon & maintenance mode plugin for WordPress
-* <a href="https://rafflepress.com/" rel="friend">RafflePress</a> - Popular WordPress giveaway and contest plugin.
-* <a href="https://wpmailsmtp.com/" rel="friend">WP Mail SMTP</a> - Fix WordPress email deliverability issue with SMTP.
-* <a href="https://semperplugins.com/" rel="friend">All in One SEO Pack</a> - Popular WordPress SEO plugin to help you rank higher.
+* <a href="https://aioseo.com/" rel="friend" title="AIOSEO">AIOSEO</a> - The original WordPress SEO plugin to help you rank higher in search results (trusted by over 2 million sites)
+* <a href="https://www.seedprod.com/" rel="friend" title="SeedProd">SeedProd</a> - Most popular coming soon & maintenance mode plugin for WordPress
+* <a href="https://wpmailsmtp.com/" rel="friend" title="WP Mail SMTP">WP Mail SMTP</a> - Improve email deliverability for your contact form with the most popular SMTP plugin for WordPress
+* <a href="https://rafflepress.com/" rel="friend" title="RafflePress">RafflePress</a> - Best WordPress giveaway and contest plugin to grow traffic and social followers
+* <a href="https://smashballoon.com/" rel="friend" title="Smash Balloon">Smash Balloon</a> - #1 social feeds plugin for WordPress - display social media content in WordPress without code
+* <a href="https://pushengage.com/" rel="friend" title="PushEngage">PushEngage</a> - Connect with visitors after they leave your website with the leading web push notification plugin
+* <a href="https://trustpulse.com/" rel="friend" title="TrustPulse">TrustPulse</a> - Add real-time social proof notifications to boost your store conversions by up to 15%
 
 This plugin would not be possible without the help and support of <a href="https://www.wpbeginner.com/" rel="friend" title="WPBeginner">WPBeginner</a>, the largest free WordPress resource site for beginners. You can learn from our <a href="https://www.wpbeginner.com/category/wp-tutorials/" rel="friend" title="WordPress Tutorials">free WordPress Tutorials</a> like <a href="https://www.wpbeginner.com/how-to-install-wordpress/" rel="friend" title="How to Install WordPress - Step by Step">how to install WordPress</a>, <a href="https://www.wpbeginner.com/wordpress-hosting/" rel="friend" title="How to choose the best WordPress hosting">choose the best WordPress hosting</a>, <a href="https://www.wpbeginner.com/glossary/" rel="friend" title="WordPress Glossary Terms for Beginners">WordPress glossary</a>, and more.
 
@@ -156,6 +164,11 @@ You can translate Google Analytics Dashboard for WP by ExactMetrics on [translat
 4. Want more features? <a href="https://www.exactmetrics.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase ExactMetrics Pro</a>!
 
 == Changelog ==
+= 6.6.0: February 9, 2021 =
+- New: We've updated the plugin to use Google's Global Site Tag (gtag.js) tracking solution for a futureproof setup combined with our exclusive compatibility layer that enables existing analytics.js events integrations to continue to work seamlessly.
+- Tweak: We updated some CSS styles on our admin panel for improved compatibility with other plugins.
+- Tweak: We adjusted the order of some parameters to improve compatibility with upcoming PHP8.
+
 = 6.5.1: January 27, 2021 =
 - Fix: We made an adjustment to fix an issue with the cross-domain tracking for the gtag.js tracking option.
 

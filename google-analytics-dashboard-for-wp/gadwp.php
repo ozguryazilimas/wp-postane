@@ -4,7 +4,7 @@
  * Plugin URI: https://exactmetrics.com
  * Description: Displays Google Analytics Reports and Real-Time Statistics in your Dashboard. Automatically inserts the tracking code in every page of your website.
  * Author: ExactMetrics
- * Version: 6.5.1
+ * Version: 6.6.0
  * Requires at least: 3.8.0
  * Requires PHP: 5.2
  * Author URI: https://exactmetrics.com
@@ -44,7 +44,7 @@ final class ExactMetrics_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '6.5.1';
+	public $version = '6.6.0';
 
 	/**
 	 * Plugin file.
@@ -148,7 +148,7 @@ final class ExactMetrics_Lite {
 	/**
 	 * The tracking mode used in the frontend.
 	 *
-	 * @since 6.5.0
+	 * @since 7.15.0
 	 * @accces public
 	 * @var string
 	 */
@@ -507,6 +507,7 @@ final class ExactMetrics_Lite {
 			require_once EXACTMETRICS_PLUGIN_DIR . 'assets/lib/pandora/class-am-deactivation-survey.php';
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/ajax.php';
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/admin.php';
+			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/em-admin.php';
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/common.php';
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/notice.php';
 			require_once EXACTMETRICS_PLUGIN_DIR . 'includes/admin/licensing/autoupdate.php';
@@ -564,7 +565,7 @@ final class ExactMetrics_Lite {
 	public function get_tracking_mode() {
 
 		if ( ! isset( $this->tracking_mode ) ) {
-			// This will already be set to 'analytics' to anybody already using the plugin before 6.5.0.
+			// This will already be set to 'analytics' to anybody already using the plugin before 7.15.0.
 			$this->tracking_mode = exactmetrics_get_option( 'tracking_mode', 'gtag' );
 		}
 

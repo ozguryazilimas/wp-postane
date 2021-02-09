@@ -485,7 +485,7 @@ class ExactMetrics_Notifications {
 	public function get_menu_count() {
 
 		if ( $this->get_count() > 0 ) {
-			return '<span class="exactmetrics-menu-notification-indicator">' . $this->get_count() . '</span>';
+			return '<span class="exactmetrics-menu-notification-indicator update-plugins">' . $this->get_count() . '</span>';
 		}
 
 		return '';
