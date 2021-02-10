@@ -3,7 +3,7 @@
 /**
  * Обновление параметра для редиректа на страницу About после обновления плагина
  */
-class WAPTUpdate030600 extends Wbcr_Factory433_Update {
+class WAPTUpdate030600 extends Wbcr_Factory444_Update {
 
 	public function install() {
 		if ( is_multisite() && $this->plugin->isNetworkActive() ) {

@@ -14,24 +14,24 @@
 		exit;
 	}
 
-	add_action('admin_menu', 'Wbcr_FactoryPages432::actionAdminMenu');
-	add_action('network_admin_menu', 'Wbcr_FactoryPages432::actionAdminMenu');
+	add_action('admin_menu', 'Wbcr_FactoryPages443::actionAdminMenu');
+	add_action('network_admin_menu', 'Wbcr_FactoryPages443::actionAdminMenu');
 
-	if( !class_exists('Wbcr_FactoryPages432') ) {
+	if( !class_exists('Wbcr_FactoryPages443') ) {
 		/**
 		 * A base class to manage pages.
 		 *
 		 * @since 1.0.0
 		 */
-		class Wbcr_FactoryPages432 {
+		class Wbcr_FactoryPages443 {
 
 			/**
-			 * @var Wbcr_FactoryPages432_Page[]
+			 * @var Wbcr_FactoryPages443_Page[]
 			 */
 			private static $pages = array();
 			
 			/**
-			 * @param Wbcr_Factory433_Plugin $plugin
+			 * @param Wbcr_Factory444_Plugin $plugin
 			 * @param $class_name
 			 */
 			public static function register($plugin, $class_name)
@@ -59,7 +59,7 @@
 				}
 			}
 
-			public static function getPageUrl(Wbcr_Factory433_Plugin $plugin, $page_id, $args = array())
+			public static function getPageUrl(Wbcr_Factory444_Plugin $plugin, $page_id, $args = array())
 			{
 				if( isset(self::$pages[$plugin->getPluginName()]) ) {
 					$pages = self::$pages[$plugin->getPluginName()];
@@ -75,7 +75,7 @@
 			}
 
 			/**
-			 * @param Wbcr_Factory433_Plugin $plugin
+			 * @param Wbcr_Factory444_Plugin $plugin
 			 * @return array
 			 */
 			public static function getIds($plugin)
@@ -93,14 +93,14 @@
 		}
 	}
 
-	if( !function_exists('wbcr_factory_pages_432_get_page_id') ) {
+	if( !function_exists('wbcr_factory_pages_443_get_page_id') ) {
 		/**
 		 *
-		 * @param Wbcr_Factory433_Plugin $plugin
+		 * @param Wbcr_Factory444_Plugin $plugin
 		 * @param string $page_id
 		 * @return string
 		 */
-		function wbcr_factory_pages_432_get_page_id($plugin, $page_id)
+		function wbcr_factory_pages_443_get_page_id($plugin, $page_id)
 		{
 			return $page_id . '-' . $plugin->getPluginName();
 		}

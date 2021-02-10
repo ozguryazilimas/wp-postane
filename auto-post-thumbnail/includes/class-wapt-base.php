@@ -232,7 +232,7 @@ class AutoPostThumbnails {
 				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages432' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages443' ) ) {
 							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
 						}
 						if ( $redirect_url ) {
@@ -532,7 +532,7 @@ class AutoPostThumbnails {
 		// If thumb id is not found, try to look for the image in DB. Thanks to "Erwin Vrolijk" for providing this code.
 		if ( ! $thumb_id ) {
 			//$image  = substr( $image, strpos( $image, '"' ) + 1 );
-			$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE guid = '" . $url . "'" );
+			$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE guid = '%" . $url . "%'" );
 			if ( $result ) {
 				$thumb_id = $result[0]->ID;
 			}
@@ -588,7 +588,7 @@ class AutoPostThumbnails {
 
 					return $thumb_id;
 				} else {
-					$thumb_id = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE '" . $images['urls'][ $key ] . "'" );
+					$thumb_id = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE '%" . $images['urls'][ $key ] . "%'" );
 					if ( $thumb_id ) {
 						update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
 
@@ -1365,10 +1365,10 @@ class AutoPostThumbnails {
 		$text_transform = WAPT_Plugin::app()->getOption( 'text-transform', "no" );
 		switch ( $text_transform ) {
 			case 'upper':
-				$text = strtoupper( $text );
+				$text = mb_strtoupper( $text );
 				break;
 			case 'lower':
-				$text = strtolower( $text );
+				$text = mb_strtolower( $text );
 				break;
 		}
 

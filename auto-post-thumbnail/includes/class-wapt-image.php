@@ -304,6 +304,9 @@ class WAPT_Image {
 	 */
 	public function write_text( $text, $font = '', $font_size = '', $font_color = '', $align = 'left', $valign = 'top', $line_spacing = '1.5', $shadow_color = '' ) {
 		if ( ! empty( $text ) ) {
+			$text = mb_convert_encoding( $text, 'HTML-ENTITIES', 'UTF-8' );
+			$text = preg_replace( '~^(&([a-zA-Z0-9]);)~', htmlentities( '${1}' ), $text );
+
 			if ( empty( $font ) ) {
 				$font = $this->font_path;
 			}

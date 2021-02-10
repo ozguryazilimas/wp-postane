@@ -1,9 +1,9 @@
 === Auto Featured Image (Auto Post Thumbnail) ===
 Contributors: creativemotion
 Tags: post thumbnails, featured image, elementor, thumbnails, featured image from title
-Requires at least: 4.2
-Tested up to: 5.5
-Requires PHP: 5.6
+Requires at least: 4.8
+Tested up to: 5.6
+Requires PHP: 7.0
 Stable tag: trunk
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -75,10 +75,17 @@ We’ve used some of the powerful features from the
 plugins: Dynamic Featured Image, Featured Image from URL, Regenerate Thumbnails, Force Regenerate Thumbnails, Recent Posts Widget Extended
 
 TRANSLATIONS:
-· Default: English (always enabled);
-· Russian.
-We need your help with translation AFI (APT) to your language. Our goal is to make APT an international and user-friendly tool for everyone. If you want to help with the translation, contact us through the contact form in the plugin or send a message at the support forum. In return, we will give you a premium license for free!
-
+<ul>
+<li>English (default), always included</li>
+<li>Italian — big thanks to @marcnyc</li>
+<li>Spanish (Spain) — big thanks to @nobnob</li>
+<li>Dutch — big thanks to @psmits1567</li>
+<li>Spanish (Venezuela) — big thanks to @nobnob, @yordansoares</li>
+<li>French (France) — @btpub</li>
+<li>Swedish — @elbogen</li>
+</ul>
+<p>We are very need for your help with <a href="https://translate.wordpress.org/projects/wp-plugins/auto-post-thumbnail//" rel="nofollow ugc">translating the
+Auto Featured Image plugin</a> into your native language. We want to make it international and understandable for everyone. Please contact us via email inside the plugin, or create a topic on our <a href="https://wordpress.org/support/plugin/auto-post-thumbnail/">support forum</a> if you can help with the translations. In exchange for your help, we will give you better support and our premium plugins absolutely free!</p>
 https://cm-wp.com/apt/
 
 == Installation ==
@@ -104,6 +111,12 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.7.7 =
+* Fixed: Encoding issues. [Solution](https://wordpress.org/support/topic/not-working-with-cyrillic-titles) by @bibliata
+* Fixed: Uppercase issue (agréable > AGRéABLE) strtoupper() -> mb_strtoupper()
+* Raised the minimum version of PHP -> 7.0
+* Other minor fixes
 
 = 3.7.6 =
 * Fixed: Selecting a date on the mass generation page

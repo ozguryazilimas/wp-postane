@@ -6,19 +6,19 @@ $current_tab = 'general';
 $TABS        = array(
 	'general'        => array(
 		'current' => false,
-		'caption' => 'General',
+		'caption' => __( 'General', 'apt' ),
 		'icon'    => 'icon-general',
 		'url'     => $current_url . "&apt_tab=general",
 	),
 	'img_generation' => array(
 		'current' => false,
-		'caption' => 'Image generation',
+		'caption' => __( 'Image generation', 'apt' ),
 		'icon'    => 'icon-image',
 		'url'     => $current_url . "&apt_tab=img_generation",
 	),
 	'api'            => array(
 		'current' => false,
-		'caption' => 'API',
+		'caption' => __( 'API', 'apt' ),
 		'icon'    => 'icon-api',
 		'url'     => $current_url . "&apt_tab=api",
 	),
@@ -56,7 +56,7 @@ if ( isset( $_GET['apt_tab'] ) && ! empty( $_GET['apt_tab'] ) ) {
         <div class="content">
             <section id="section-<?php echo $current_tab; ?>">
                 <div class="wrap">
-                    <div class="factory-bootstrap-433 factory-fontawesome-000">
+                    <div class="factory-bootstrap-444 factory-fontawesome-000">
                         <div class="row">
                             <div class="col-md-8">
                                 <form method="post" class="form-horizontal">

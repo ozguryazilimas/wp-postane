@@ -1,6 +1,6 @@
 <div class="wrap">
     <h2><?php esc_html_e( 'Generate Featured images for posts', 'apt' ) ?></h2>
-    <div class="factory-bootstrap-433 factory-fontawesome-000">
+    <div class="factory-bootstrap-444 factory-fontawesome-000">
         <div class="row">
             <div class="col-md-9">
 
@@ -48,9 +48,10 @@
                                        class="apt-filter-label"><?php esc_html_e( 'Post status', 'aptp' ) ?></label>
                             </div>
                             <div class="col-md-10">
-                                <select name="filter_poststatus" id="filter_poststatus" class="apt-filter-input" tabindex="-1">
+                                <select name="filter_poststatus" id="filter_poststatus" class="apt-filter-input"
+                                        tabindex="-1">
                                     <option value="">&nbsp;</option>
-									<?php
+			                        <?php
 									foreach ( $stati as $status ) {
 										echo '<option value="' . $status->name . '">' . $status->label . '</option>';
 									}
@@ -67,9 +68,10 @@
                                        class="apt-filter-label"><?php esc_html_e( 'Post category', 'aptp' ) ?></label>
                             </div>
                             <div class="col-md-10">
-                                <select name="filter_postcategory" id="filter_postcategory" class="apt-filter-input" tabindex="-1">
+                                <select name="filter_postcategory" id="filter_postcategory" class="apt-filter-input"
+                                        tabindex="-1">
                                     <option value="">&nbsp;</option>
-									<?php
+			                        <?php
 									foreach ( $categories as $cat ) {
 										echo '<option value="' . $cat->term_id . '">' . $cat->name . ' (' . $cat->count . ')</option>';
 									}

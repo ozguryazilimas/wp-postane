@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Wapt_FactoryForms_ColorControl' ) ) {
 
-	class Wapt_FactoryForms_ColorControl extends Wbcr_FactoryForms430_Control {
+	class Wapt_FactoryForms_ColorControl extends Wbcr_FactoryForms441_Control {
 
 		public $type = 'wapt-color';
 
