@@ -253,6 +253,15 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 						}
 						?>
 					} );
+					<?php
+						/**
+						 * Extend or enhance the functionality by adding custom code to frontend
+						 * tracking via this hook.
+						 *
+						 * @since 7.15.0
+						 */
+						do_action( 'monsterinsights_frontend_tracking_gtag_after_pageview' );
+					?>
 					<?php echo esc_js( $compat ); ?>
 					<?php if ( apply_filters( 'monsterinsights_tracking_gtag_frontend_gatracker_compatibility', true ) ) { ?>
 					(
