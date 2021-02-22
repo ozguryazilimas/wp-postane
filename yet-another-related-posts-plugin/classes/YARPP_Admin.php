@@ -401,7 +401,7 @@ class YARPP_Admin {
     $this->optin_notice('install', $optinAction);
   }
 
-  public function optin_notice($type=false, $optinAction) {
+  public function optin_notice($type=false, $optinAction='disable') {
     $screen = get_current_screen();
     if(is_null($screen) || $screen->id == 'settings_page_yarpp') return;
 
@@ -630,19 +630,23 @@ class YARPP_Admin {
       return array();
     return $wpdb->get_col("select term_id from $wpdb->term_taxonomy where taxonomy = '{$taxonomy}' and term_taxonomy_id in (" . join(',', $tt_ids) . ")");
   }
-  
+
+	/**
+	 * Handles populating the YARPP related metabox. When the page is initially loaded, this is called to populate it
+     * but $_REQUEST['refresh'] isn't set because we're happy using the cached results. But when the user clicks the
+     * "Refresh" button, $_REQUEST['refresh'] is set so we try to clear the cache and re-calculate the related content.
+	 */
   public function ajax_display() {
     check_ajax_referer('yarpp_display');
 
     if (!isset($_REQUEST['ID'])) return;
 
     $args = array(
-      'post_type' => array('post'),
       'domain' => isset($_REQUEST['domain']) ? $_REQUEST['domain'] : 'website'
     );
-
-    if ($this->core->get_option('cross_relate')) $args['post_type'] = $this->core->get_post_types();
-      
+    if(isset($_REQUEST['refresh']) && $this->core->cache instanceof YARPP_Cache){
+	    $this->core->cache->clear($_REQUEST['ID']);
+    }
     $return = $this->core->display_related(absint($_REQUEST['ID']), $args, false);
 
     header("HTTP/1.1 200");

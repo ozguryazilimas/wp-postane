@@ -13,23 +13,28 @@ jQuery(document).ready(function($) {
 
     if (!loaded_metabox) {
       loaded_metabox = true;
-      yarpp_metabox_populate();
+      yarpp_metabox_populate(false);
     }
   }
   
   /*
   * Populates Metabox
+  * @param bool refresh
   */
-  function yarpp_metabox_populate() {
+  function yarpp_metabox_populate(refresh) {
+    var data = {
+      action: 'yarpp_display',
+      domain: 'metabox',
+      ID: parseInt($('#post_ID').val()),
+      '_ajax_nonce': $('#yarpp_display-nonce').val()
+    };
+    if(typeof refresh !== 'undefined' && refresh){
+      data['refresh'] = true;
+    }
     $.ajax({
       type:'POST',
       url: ajaxurl,
-      data: {
-        action: 'yarpp_display',
-        domain: 'metabox',
-        ID: parseInt($('#post_ID').val()),
-        '_ajax_nonce': $('#yarpp_display-nonce').val()
-      },
+      data: data,
       error: function() {
         display.html("Error");
       },
@@ -73,7 +78,7 @@ jQuery(document).ready(function($) {
     $spinner.css( 'visibility', 'visible' );
 
     $('#yarpp-list').css( 'opacity', 0.6 );
-    yarpp_metabox_populate();
+    yarpp_metabox_populate(true);
   });
   
   /*

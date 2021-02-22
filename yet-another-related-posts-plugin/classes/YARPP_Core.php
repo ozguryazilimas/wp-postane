@@ -882,6 +882,14 @@ class YARPP {
 	}
 	
 	private $post_types = null;
+
+	/**
+	 * Gets all the post types YARPP can add related content to, and the post types YARPP can include in
+	 * "the pool"
+	 * @param string $field 'objects', or any property on WP_Post_Type, like 'name'. Defaults to 'name'.
+	 *
+	 * @return array|null
+	 */
 	public function get_post_types($field = 'name') {
 		if (is_null($this->post_types)) {
 			$this->post_types = get_post_types(array(), 'objects');
@@ -891,6 +899,23 @@ class YARPP {
 		if ($field === 'objects') return $this->post_types;
 
 		return wp_list_pluck( $this->post_types, $field );
+	}
+
+	/**
+	 * Gets the post types to use for the current YARPP query
+	 * @param string|WP_Post $reference_ID
+	 * @param array $args
+	 * @return string[]
+	 */
+	public function get_query_post_types($reference_ID = null, $args = array()){
+		if(isset($args['post_type'])){
+			$post_types = (array)$args['post_type'];
+		} else if ($this->get_option('cross_relate')) {
+			$post_types = $this->get_post_types();
+		} else {
+			$post_types = array(get_post_type($reference_ID));
+		}
+		return $post_types;
 	}
 
 	private function post_type_filter($post_type) {
@@ -1075,12 +1100,6 @@ class YARPP {
 			return null;
         }
 
-        if ($this->get_option('cross_relate')) {
-            $post_types = $this->get_post_types();
-        } else {
-            $post_types = array(get_post_type());
-        }
-
         $post_types = apply_filters('yarpp_map_post_types', $post_types, 'website');
 
         return $this->display_related(
@@ -1175,7 +1194,7 @@ class YARPP {
                     'orderby'   => $orders[0],
                     'order'     => $orders[1],
                     'showposts' => $limit,
-                    'post_type' => (isset($args['post_type']) ? $args['post_type'] : $this->get_post_types())
+                    'post_type' => $this->get_query_post_types($reference_ID, $args)
                 )
             );
         }
@@ -1207,11 +1226,12 @@ class YARPP {
         // Be careful to avoid infinite recursion, because those templates might show each related posts' body or
 		// excerpt, which would trigger finding its related posts, which would show its related posts body or excerpt...
         $this->rendering_related_content = true;
+        $template = sanitize_file_name($template);
         if ($domain === 'metabox') {
             include(YARPP_DIR.'/includes/template_metabox.php');
         } else if ((bool) $template && $template === 'thumbnails') {
             include(YARPP_DIR.'/includes/template_thumbnails.php');
-        } else if ((bool) $template && file_exists(STYLESHEETPATH.'/'.$template)) {
+        } else if ((bool) $template && strpos($template,'yarpp-template-') === 0 && file_exists(STYLESHEETPATH.'/'.$template)) {
             global $post;
             ob_start();
             include(STYLESHEETPATH.'/'.$template);
@@ -1294,7 +1314,7 @@ class YARPP {
 			'orderby'   => $orders[0],
 			'order'     => $orders[1],
 			'showposts' => $limit,
-			'post_type' => (isset($args['post_type'])) ? $args['post_type'] : $this->get_post_types()
+			'post_type' => $this->get_query_post_types($reference_ID, $args)
 		));
 	
 		$related_query->posts = apply_filters(
@@ -1343,7 +1363,7 @@ class YARPP {
 		$related_query->query(array(
 			'p'         => $reference_ID,
 			'showposts' => 1,
-			'post_type' => (isset($args['post_type'])) ? $args['post_type'] : $this->get_post_types()
+			'post_type' => $this->get_query_post_types($reference_ID, $args)
 		));
 		
 		$related_query->posts = apply_filters(
@@ -1538,11 +1558,7 @@ class YARPP {
 		/* If the content includes <!--noyarpp-->, don't display */
 		if (stristr($content, '<!--noyarpp-->') !== false) return $content;
 
-		if ($this->get_option('cross_relate')) {
-			$post_types = $this->get_post_types();
-        } else {
-			$post_types = array(get_post_type());
-        }
+		$post_types = $this->get_query_post_types();
 
 		$post_types = apply_filters('yarpp_map_post_types', $post_types, 'rss');
 	
@@ -1562,15 +1578,9 @@ class YARPP {
 		/* If the content includes <!--noyarpp-->, don't display */
 		if (stristr($content, '<!--noyarpp-->') !== false) return $content;
 
-		if ($this->get_option('cross_relate')) {
-			$type = $this->get_post_types();
-        } else if (get_post_type() === 'page') {
-			$type = array('page');
-        } else {
-			$type = array('post');
-        }
+		$post_type = $this->get_query_post_types();
 	
-		return $content . $this->clean_pre($this->display_related(null, array('post_type' => $type, 'domain' => 'rss'), false));
+		return $content . $this->clean_pre($this->display_related(null, array('post_type' => $post_type, 'domain' => 'rss'), false));
 	}
 	
 	/*

@@ -1,5 +1,8 @@
 <?php
 abstract class YARPP_Cache {
+	/**
+	 * @var YARPP
+	 */
 	protected $core;
 	/**
 	 * During "YARPP Time", we add a bunch of filters to modify WP_Query
@@ -253,15 +256,7 @@ abstract class YARPP_Cache {
 
 		}
 
-		if (isset($args['post_type'])) {
-			$post_types = (array) $args['post_type'];
-		} else {
-			if ($this->core->get_option('cross_relate')) {
-				$post_types = $this->core->get_post_types();
-			} else {
-				$post_types = array(get_post_type($reference_post));
-			}
-		}
+		$post_types = $this->core->get_query_post_types($reference_post, $args);
 		$sanitized_post_types = array_map(
 			function($item){
 				global $wpdb;
@@ -306,16 +301,6 @@ abstract class YARPP_Cache {
 			" order by score desc limit %d",
 			$limit
 		);
-
-		if (isset($args['post_type'])) {
-			$post_types = (array) $args['post_type'];
-        } else {
-			if ($this->core->get_option('cross_relate')) {
-				$post_types = $this->core->get_post_types();
-			} else {
-				$post_types = array(get_post_type($reference_post));
-			}
-        }
 
 		if ($this->core->debug) echo "<!-- $newsql -->";
 		

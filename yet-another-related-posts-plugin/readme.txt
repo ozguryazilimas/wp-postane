@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.6
-Stable tag: 5.11.0
+Stable tag: 5.12.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -78,6 +78,10 @@ If you know the reference Post ID that you want to show content related to, use:
 
 `[yarpp reference_id=123]` to show content related to post 123
 
+To specify which YARPP template to use, use the "template" attribute like so:
+
+`[yarpp template="yarpp-template-photoblog"]`
+
 The add YARRP related posts to your theme files (eg. single.php), we recommend using:
 
 `<?php echo do_shortcode('[yarpp]'); ?>`
@@ -97,7 +101,7 @@ Most likely you have "no related posts" right now because the default "match thr
 
 If you do not want to show the Related Posts display in its default position (right below the post content), first go to YARPP options and turn off the "automatically display" options in the "website" section. If you would like to instead display it in your sidebar and you have a widget-aware theme, YARPP provides a Related Posts widget which you can add under "Appearance" > "Widgets."
 
-If you would like to add the Related Posts display elsewhere, edit your relevant theme file (most likely something like `single.php`) and add the shortcode code `[yarpp]` (recommended) or PHP function `related_posts();` within [The Loop](https://codex.wordpress.org/The_Loop) where you want to display the related posts. Make sure you don't add `echo related_posts();` or you may end up with duplicates in your related posts section.
+If you would like to add the Related Posts display elsewhere, edit your relevant theme file (most likely something like `single.php`) and add the shortcode code `[yarpp]` (recommended) or PHP function `yarpp_related();` within [The Loop](https://codex.wordpress.org/The_Loop) where you want to display the related posts. Make sure you don't add `echo yarpp_related();` or you may end up with duplicates in your related posts section.
 
 = How can I limit related posts to a certain time frame? For instance, I don't want to show posts from two years ago. =
 
@@ -117,9 +121,7 @@ Some WordPress themes treat the home page as an archive or a "page." Go to "Sett
 
 = How can I prevent the "related posts" list from displaying on specific posts? =
 
-If you have several posts where you don't want to display related posts and they all share a similar category or tag, you could use "Disallow by Category" or "Disallow by Tag" in "The Pool" section. (Go to "Settings" and "Related Posts (YARPP)" and make sure "The Pool" is checked in the "Screen Options" section at the top of the page.)
-
-You could also add `<!--noyarpp-->` to the HTML code of any post to prevent related posts from displaying. This solution will only work if you are using "Automatic Display" in the "Display Options" section. If you are programatically calling `related_posts()` or the shortcode `[yarpp]` from PHP code, you'll have to do your own checking to see if related posts are appropriate to display or not.
+Add `<!--noyarpp-->` to the HTML code of any post to prevent related posts from displaying. This solution will only work if you are using "Automatic Display" in the "Display Options" section. If you are programatically calling `yarpp_related()` or the shortcode `[yarpp]` from PHP code, you'll have to do your own checking to see if related posts are appropriate to display or not.
 
 = I'm using the Thumbnails display in YARPP 4. How do I override the style of the text that displays? The title only shows two lines, the font is larger than I'd like, I'd like to center the thumbnails, etc. =
 
@@ -261,6 +263,17 @@ If you need to use related entries programmatically or to know whether they exis
 
 Note that custom YARPP queries using the functions mentioned here are *not* cached in the built-in YARPP caching system. Thus, if you notice any performance hits, you may need to write your own code to cache the results.
 
+Here is an example of how to use a custom YARPP query and cache the results for a day:
+
+`
+$result = get_transient('yarpp_custom_results_for_' . $post->ID);
+if(! $result){
+	$result = yarpp_related(['post_type' => 'reply'],null,false);
+	set_transient('yarpp_custom_results_for_' . $post->ID, $result, DAY_IN_SECONDS);
+}
+echo $result;
+`
+
 = Does YARPP support custom taxonomies? =
 
 Yes. Any taxonomy, including custom taxonomies, may be specified in the `weight` or `require_tax` arguments in a custom display as above. `term_taxonomy_id` specified in the `exclude` argument may be of any taxonomy.
@@ -296,6 +309,12 @@ add_action(
 `
 
 == Changelog ==
+= 5.12.0 (22-February-2021) =
+* New shortcode template attribute. Eg [yarpp template="yarpp-template-photoblog"]
+* Deprecated: functions related_posts, related_pages, related_entries (use yarpp_related instead), and related_posts_exist, related_pages_exist and related_entries_exist (use yarpp_related_exist instead)
+* Bugfix: consistently use "post_type" parameter and "cross-relate" from all YARPP functions
+* [Bugfix](https://wordpress.org/support/topic/cannot-be-translated-because-there-is-no-text-domain-description/): Add textdomain to allow translating the readme file
+
 = 5.11.0 (08-February-2021) =
 * [New](https://wordpress.org/support/topic/why-related-topics-doesnt-show-up-under-topics-and-replies/): Adds native support for bbPress! Have you ever wanted a nifty Related Posts section on your bbPress topic pages, like the ones you've seen on forums like StackOverflow? It's now possible with YARPP Related Posts!
 * Enhancement: Updates to provided custom template examples
@@ -1060,5 +1079,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.11.0 =
+= 5.12.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

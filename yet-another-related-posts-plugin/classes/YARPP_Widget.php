@@ -20,14 +20,6 @@ class YARPP_Widget extends WP_Widget {
 			$instance['template'] = ($instance['use_template']) ? ($instance['template_file']) : false;
         }
 
-		if ($yarpp->get_option('cross_relate')){
-			$instance['post_type'] = $yarpp->get_post_types();
-        } else if (in_array(get_post_type(), $yarpp->get_post_types())) {
-			$instance['post_type'] = array(get_post_type());
-        } else {
-			$instance['post_type'] = array('post');
-        }
-
 		$title = apply_filters('widget_title', $instance['title']);
         $output = $before_widget;
         if (!$instance['template']) {

@@ -143,14 +143,6 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 		if(! $post_obj instanceof WP_Post){
 			return new WP_Error('rest_invalid_id', esc_html__( 'Invalid Id', 'yarpp' ), array('status' => 404));
 		}
-
-		if ($yarpp->get_option('cross_relate')) {
-			$post_types = $yarpp->get_post_types();
-		} else {
-			$post_types = array(get_post_type($post_obj));
-		}
-
-		$post_types = apply_filters('yarpp_map_post_types', $post_types, 'rest_api');
         $allowed_args = array('limit');
 
         $args = array_filter(
@@ -160,7 +152,6 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 	        },
 	        ARRAY_FILTER_USE_KEY
         );
-        $args['post_type'] = $post_types;
 		$related_posts = $yarpp->get_related(
 			$id,
 			$args
@@ -186,9 +177,9 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 		$simulated_request->set_query_params($simulated_params);
 
 		// Hack the WordPress Posts controller to return posts of all types, so long as they have the IDs we want.
-		add_action( 'rest_post_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
+		add_action( 'rest_' . $post_obj->post_type . '_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
 		$read_controller_response = $read_controller->get_items($simulated_request);
-		remove_action( 'rest_post_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
+		remove_action( 'rest_' . $post_obj->post_type . '_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
 
 		if(is_wp_error($read_controller_response)){
 			return $read_controller_response;
