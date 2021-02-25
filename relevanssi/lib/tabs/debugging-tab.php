@@ -49,5 +49,8 @@ function relevanssi_debugging_tab() {
 			class='button button-primary' />
 	</p>
 	<?php echo $how_relevanssi_sees; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+
+	<?php do_action( 'relevanssi_debugging_tab' ); ?>
+
 	<?php
 }

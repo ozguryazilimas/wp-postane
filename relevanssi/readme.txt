@@ -3,9 +3,9 @@ Contributors: msaari
 Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
-Tested up to: 5.6.1
+Tested up to: 5.6.3
 Requires PHP: 7.0
-Stable tag: 4.11.0
+Stable tag: 4.12.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,8 +123,6 @@ Thus, the weight of the word for a document increases the more often it appears 
 
 Each document database is full of useless words. All the little words that appear in just about every document are completely useless for information retrieval purposes. Basically, their inverted document frequency is really low, so they never have much power in matching. Also, removing those words helps to make the index smaller and searching faster.
 
-[](http://coderisk.com/wp/plugin/relevanssi/RIPS-XC1ekC4JKr)
-
 == Thanks ==
 * Cristian Damm for tag indexing, comment indexing, post/page exclusion and general helpfulness.
 * Marcus Dalgren for UTF-8 fixing.
@@ -133,6 +131,22 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.12.0 =
+* New feature: New filter hook `relevanssi_phrase_queries` can be used to add phrase matching queries to support more content types.
+* New feature: New filter hook `relevanssi_excerpt_gap` lets you adjust the first line of excerpt optimization.
+* Changed behaviour: The `relevanssi_admin_search_element` filter hook now gets the post object as the second parameter, rendering the filter hook more useful.
+* Changed behaviour: Relevanssi now automatically optimizes excerpt creation in long posts. You can still use `relevanssi_optimize_excerpts` for further optimization, but it's probably not necessary.
+* Changed behaviour: The `relevanssi_tag_before_tokenize` filter hook parameters were changed in order to be actually useful and to match what the filter hook is supposed to do.
+* Minor fix: In some cases Relevanssi wouldn't highlight the last word of the title. This is more reliable now.
+* Minor fix: Relevanssi will now add the `highlight` parameter only to search results, and not to other links on the search results page.
+* Minor fix: Improved fringe cases in nested taxonomy queries.
+* Minor fix: Taxonomy terms in WPML were not indexed correctly. Instead of the post language, the current language was used, so if your admin dashboard is in English, German posts would get English translations of the terms, not German. This is now fixed.
+* Minor fix: Excerpt creation is now faster when multiple excerpts are not used.
+* Minor fix: The SEO plugin noindex setting did not actually work. That has been fixed now.
+
+= 4.11.1 =
+* Major fix: The type hinting introduced for some functions turned out to be too strict, causing fatal errors. The type hinting has been relaxed (using nullable types would help, but that's a PHP 7.4 feature, and we don't want that).
+
 = 4.11.0 =
 * New feature: New filter hook `relevanssi_rendered_block` filters Gutenberg block content after the block has been rendered with `render_block()`.
 * New feature: New filter hook `relevanssi_log_query` can be used to filter the search query before it's logged. This can be used to log instead the query that includes synonyms (available as a parameter to the filter hook).
@@ -194,6 +208,12 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: The category inclusion and exclusion setting checkboxes on the Searching tab didn't work. The setting was saved, but the checkboxes wouldn't appear.
 
 == Upgrade notice ==
+= 4.12.0 =
+* New features and bug fixes.
+
+= 4.11.1 =
+* Prevents surprising fatal errors.
+
 = 4.11.0 =
 * New filter hooks, bug fixes.
 

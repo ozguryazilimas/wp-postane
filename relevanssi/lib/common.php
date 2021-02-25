@@ -299,9 +299,8 @@ function relevanssi_remove_punct( $a ) {
 	}
 
 	$a = preg_replace( '/&lt;(\d|\s)/', '\1', $a );
-
 	$a = html_entity_decode( $a, ENT_QUOTES );
-	$a = preg_replace( '/<[!a-z]*>/', ' ', $a );
+	$a = relevanssi_strip_all_tags( $a );
 
 	$punct_options = get_option( 'relevanssi_punctuation' );
 
@@ -528,7 +527,14 @@ function relevanssi_prevent_default_request( $request, $query ) {
  * @return int[] An array of tokens as the keys and their frequency as the
  * value.
  */
-function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = -1 ) {
+function relevanssi_tokenize( $string, $remove_stops = true, int $min_word_length = -1 ) : array {
+	$string_for_phrases = is_array( $string ) ? implode( ' ', $string ) : $string;
+	$phrases            = relevanssi_extract_phrases( $string_for_phrases );
+	$phrase_words       = array();
+	foreach ( $phrases as $phrase ) {
+		$phrase_words = array_merge( $phrase_words, explode( ' ', $phrase ) );
+	}
+
 	$tokens = array();
 	if ( is_array( $string ) ) {
 		// If we get an array, tokenize each string in the array.
@@ -593,12 +599,12 @@ function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = 
 			$accept = false;
 		}
 
-		if ( RELEVANSSI_PREMIUM ) {
+		if ( RELEVANSSI_PREMIUM && ! in_array( $token, $phrase_words, true ) ) {
 			/**
 			 * Fires Premium tokenizer.
 			 *
-			 * Filters the token through the Relevanssi Premium tokenizer to add some
-			 * Premium features to the tokenizing (mostly stemming).
+			 * Filters the token through the Relevanssi Premium tokenizer to add
+			 * some Premium features to the tokenizing (mostly stemming).
 			 *
 			 * @param string $token Search query token.
 			 */
@@ -924,8 +930,8 @@ function relevanssi_add_highlight( $permalink, $link_post = null ) {
  * @global object $post The global post object.
  *
  * @param string     $link      The link to adjust.
- * @param object|int $link_post The post to modify, either WP post object or the post
- * ID. If null, use global $post. Defaults null.
+ * @param object|int $link_post The post to modify, either WP post object or the
+ * post ID. If null, use global $post. Defaults null.
  *
  * @return string The modified link.
  */
@@ -941,7 +947,7 @@ function relevanssi_permalink( $link, $link_post = null ) {
 		$link = $link_post->relevanssi_link;
 	}
 
-	if ( is_search() ) {
+	if ( is_search() && isset( $link_post->relevance_score ) ) {
 		$link = relevanssi_add_highlight( $link, $link_post );
 	}
 	return $link;
@@ -1088,6 +1094,9 @@ function relevanssi_get_forbidden_post_types() {
 		'acfe-dop',             // ACF Extended.
 		'acfe-dpt',             // ACF Extended.
 		'acfe-dt',              // ACF Extended.
+		'um_form',              // Ultimate Member.
+		'um_directory',         // Ultimate Member.
+		'mailpoet_page',        // Mailpoet Page.
 	);
 }
 

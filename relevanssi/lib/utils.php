@@ -219,11 +219,13 @@ function relevanssi_get_current_language( bool $locale = true ) {
 				$language_code = apply_filters( 'wpml_element_language_code', null, $element );
 
 				$language_details['language_code'] = $language_code;
-			} elseif ( ! isset( $post->user_id ) ) {
+			} elseif ( ! isset( $post->user_id ) && 'post_type' !== $post->post_type ) {
 				// Users don't have language details.
 				$language_details = apply_filters( 'wpml_post_language_details', null, $post->ID );
 			}
-
+			if ( is_wp_error( $language_details ) ) {
+				$current_language = apply_filters( 'wpml_current_language', null );
+			}
 			$current_language = $language_details[ $locale ? 'locale' : 'language_code' ];
 		} else {
 			if ( $locale ) {
@@ -514,7 +516,7 @@ function relevanssi_legal_value( array $request, string $option, array $values, 
  * @return int $val Returns < 0 if str1 is less than str2; > 0 if str1 is
  * greater than str2, and 0 if they are equal.
  */
-function relevanssi_mb_strcasecmp( string $str1, string $str2, string $encoding = '' ) {
+function relevanssi_mb_strcasecmp( $str1, $str2, $encoding = '' ) : int {
 	if ( ! function_exists( 'mb_internal_encoding' ) ) {
 		return strnatcasecmp( $str1, $str2 );
 	} else {
@@ -633,14 +635,14 @@ function relevanssi_return_off() {
 /**
  * Gets a post object, returns ID, ID=>parent or the post object.
  *
- * @param WP_Post $post         The post object.
- * @param string  $return_value The value to return, possible values are 'id'
+ * @param object $post         The post object.
+ * @param string $return_value The value to return, possible values are 'id'
  * for returning the ID and 'id=>parent' for returning the ID=>parent object,
  * otherwise the post object is returned.
  *
  * @return int|object|WP_Post The post object in the desired format.
  */
-function relevanssi_return_value( WP_Post $post, string $return_value ) {
+function relevanssi_return_value( $post, string $return_value ) {
 	if ( 'id' === $return_value ) {
 		return $post->ID;
 	} elseif ( 'id=>parent' === $return_value ) {
@@ -693,6 +695,20 @@ function relevanssi_select( string $option, string $value ) {
 }
 
 /**
+ * Strips all tags from content, keeping non-tags that look like tags.
+ *
+ * Strips content that matches <[!a-zA-Z\/]*> to remove HTML tags and HTML
+ * comments, but not things like "<30 grams, 4>1".
+ *
+ * @param string $content The content.
+ *
+ * @return string The content with tags stripped.
+ */
+function relevanssi_strip_all_tags( string $content ) : string {
+	return preg_replace( '/<[!a-zA-Z\/][^>]*>/', ' ', $content );
+}
+
+/**
  * Strips invisible elements from text.
  *
  * Strips <style>, <script>, <object>, <embed>, <applet>, <noscript>, <noembed>,
@@ -702,7 +718,10 @@ function relevanssi_select( string $option, string $value ) {
  *
  * @return string The processed text.
  */
-function relevanssi_strip_invisibles( string $text ) {
+function relevanssi_strip_invisibles( $text ) {
+	if ( ! is_string( $text ) ) {
+		$text = strval( $text );
+	}
 	$text = preg_replace(
 		array(
 			'@<style[^>]*?>.*?</style>@siu',
@@ -730,11 +749,14 @@ function relevanssi_strip_invisibles( string $text ) {
  *
  * @see relevanssi_strip_invisibles
  *
- * @param string $content The content.
+ * @param string|null $content The content.
  *
  * @return string The content without tags.
  */
-function relevanssi_strip_tags( string $content ) {
+function relevanssi_strip_tags( $content ) {
+	if ( ! is_string( $content ) ) {
+		$content = strval( $content );
+	}
 	$content = relevanssi_strip_invisibles( $content );
 	$content = preg_replace( '/(<\/[^>]+?>)(<[^>\/][^>]*?>)/', '$1 $2', $content );
 	return strip_tags(
@@ -757,7 +779,13 @@ function relevanssi_strip_tags( string $content ) {
  * @return mixed False, if no result or $offset outside the length of $haystack,
  * otherwise the position (which can be non-false 0!).
  */
-function relevanssi_stripos( string $haystack, string $needle, int $offset = 0 ) {
+function relevanssi_stripos( $haystack, $needle, int $offset = 0 ) {
+	if ( ! is_string( $haystack ) ) {
+		$haystack = strval( $haystack );
+	}
+	if ( ! is_string( $needle ) ) {
+		$needle = strval( $needle );
+	}
 	if ( $offset > relevanssi_strlen( $haystack ) ) {
 		return false;
 	}
@@ -824,7 +852,10 @@ function relevanssi_stripos( string $haystack, string $needle, int $offset = 0 )
  *
  * @return int The length of the string.
  */
-function relevanssi_strlen( string $s ) {
+function relevanssi_strlen( $s ) {
+	if ( ! is_string( $s ) ) {
+		$s = strval( $s );
+	}
 	if ( function_exists( 'mb_strlen' ) ) {
 		return mb_strlen( $s );
 	}
@@ -841,7 +872,10 @@ function relevanssi_strlen( string $s ) {
  *
  * @return string $string The string in lowercase.
  */
-function relevanssi_strtolower( string $string ) {
+function relevanssi_strtolower( $string ) {
+	if ( ! is_string( $string ) ) {
+		$string = strval( $string );
+	}
 	if ( ! function_exists( 'mb_strtolower' ) ) {
 		return strtolower( $string );
 	} else {
@@ -865,7 +899,10 @@ function relevanssi_strtolower( string $string ) {
  *
  * @return string $string The string in lowercase.
  */
-function relevanssi_substr( string $string, int $start, $length = null ) {
+function relevanssi_substr( $string, int $start, $length = null ) {
+	if ( ! is_string( $string ) ) {
+		$string = strval( $string );
+	}
 	if ( ! function_exists( 'mb_substr' ) ) {
 		return substr( $string, $start, $length );
 	} else {
