@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 5.6.3
 Requires PHP: 7.0
-Stable tag: 4.12.0
+Stable tag: 4.12.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,9 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.12.1 =
+* Major fix: Stops TypeError crashes from null custom field indexing.
+
 = 4.12.0 =
 * New feature: New filter hook `relevanssi_phrase_queries` can be used to add phrase matching queries to support more content types.
 * New feature: New filter hook `relevanssi_excerpt_gap` lets you adjust the first line of excerpt optimization.
@@ -208,6 +211,9 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: The category inclusion and exclusion setting checkboxes on the Searching tab didn't work. The setting was saved, but the checkboxes wouldn't appear.
 
 == Upgrade notice ==
+= 4.12.1 =
+* Stops TypeError crashes from null custom field indexing.
+
 = 4.12.0 =
 * New features and bug fixes.
 
