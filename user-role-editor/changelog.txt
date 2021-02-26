@@ -1,5 +1,10 @@
 CHANGES LOG (full version).
 ===========================
+
+= [4.58.3] 26.02.2021 =
+* Update: URE automatically adds custom taxonomies user capabilities to administrator role before opening "Users->User Role Editor" page.
+* Fix: Role changes were not saved with option "Confirm role update" switched off.
+
 = [4.58.2] 15.01.2021 =
 * Fix: Additional options turned ON for a role was not saved during role update.
 * Update: All JavaScript files are loaded with URE plugin version number as a query string for cache busting purpose.

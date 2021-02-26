@@ -1014,10 +1014,12 @@ jQuery(function ($) {
     $('#ure_update_role').button({
         label: ure_data.update
     }).on('click', (function () {
-        if (ure_data.confirm_role_update == 1) {
-            event.preventDefault();
+        event.preventDefault();
+        if (ure_data.confirm_role_update == 1) {            
             //ure_confirm(ure_data.confirm_submit, ure_form_submit);
             ure_confirm( ure_data.confirm_submit, ure_main.update_role );
+        } else {
+            ure_main.update_role();
         }
     }));
 

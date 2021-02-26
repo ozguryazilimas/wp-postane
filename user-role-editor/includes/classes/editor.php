@@ -137,6 +137,9 @@ class URE_Editor {
         }
         
         $this->apply_to_all = isset( $_POST['values']['ure_apply_to_all']) ? true : false;
+        if ( empty( $this->apply_to_all ) && isset( $_POST['ure_apply_to_all'] ) ) {
+            $this->apply_to_all = true;
+        }
         
         return true;
     }
@@ -247,7 +250,8 @@ class URE_Editor {
     // Visual Composer capabilities are excluded from a role update as they may store not boolean values.
     protected function restore_visual_composer_caps() {
         
-        if (!isset($this->roles[$this->current_role]) || !is_array($this->roles[$this->current_role]['capabilities'])) {
+        if ( !isset( $this->roles[$this->current_role] ) || 
+             !is_array( $this->roles[$this->current_role]['capabilities'] ) ) {
             return false;
         }
         
@@ -274,7 +278,7 @@ class URE_Editor {
                 
         foreach ( $this->full_capabilities as $cap ) {
             $cap_id_esc = URE_Capability::escape( $cap['inner'] );
-            if ( isset( $_POST['values'][$cap_id_esc] ) ) {
+            if ( isset( $_POST['values'][$cap_id_esc] ) || isset( $_POST[$cap_id_esc] ) ) {
                 $this->capabilities_to_save[ $cap['inner'] ] = true;
             }
         }
@@ -291,7 +295,7 @@ class URE_Editor {
      */
     protected function is_full_network_synch() {
         
-        if (is_network_admin()) {   // for Pro version
+        if ( is_network_admin() ) {   // for Pro version
             $result = true;
         } else {
             $result = defined('URE_MULTISITE_DIRECT_UPDATE') && URE_MULTISITE_DIRECT_UPDATE == 1;
@@ -921,6 +925,21 @@ class URE_Editor {
     }
     // end of update_role()
     
+    
+    public function update_network() {
+        
+        $this->init0();
+        $this->roles = $this->lib->get_user_roles();
+        $this->full_capabilities = $this->lib->init_full_capabilities( $this->ure_object );
+        if ( isset( $_POST['user_role'] ) ) {
+            $this->notification = $this->init_current_role_name();
+        }
+        $this->prepare_capabilities_to_save();
+        $this->notification = $this->permissions_object_update( $this->notification );
+                
+    }
+    // end of update_network()
+        
     
     /**
      * process rename role request
