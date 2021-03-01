@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.6
-Stable tag: 5.12.0
+Stable tag: 5.13.1
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -309,9 +309,19 @@ add_action(
 `
 
 == Changelog ==
+
+= 5.13.1 (1-March-2021) =
+* Add some of 5.13.0's changes that somehow weren't included
+
+= 5.13.0 (1-March-2021) =
+* New: Clear YARPP cache button on settings page
+* [Bugfix](https://wordpress.org/support/topic/undefined-variable-post_types/) Undefined variable ``$post_types`
+
 = 5.12.0 (22-February-2021) =
-* New shortcode template attribute. Eg [yarpp template="yarpp-template-photoblog"]
-* Deprecated: functions related_posts, related_pages, related_entries (use yarpp_related instead), and related_posts_exist, related_pages_exist and related_entries_exist (use yarpp_related_exist instead)
+* New shortcode template attribute. Eg `[yarpp template="yarpp-template-photoblog"]`
+* PHP 8.0 compatibility
+* Deprecated: functions `related_posts()`, `related_pages()` and `related_entries() [use `yarpp_related() instead`]
+* Deprecated: functions `related_posts_exist()`, `related_pages_exist()` and `related_entries_exist()` [use `yarpp_related_exist()` instead]
 * Bugfix: consistently use "post_type" parameter and "cross-relate" from all YARPP functions
 * [Bugfix](https://wordpress.org/support/topic/cannot-be-translated-because-there-is-no-text-domain-description/): Add textdomain to allow translating the readme file
 
@@ -321,7 +331,7 @@ add_action(
 * Enhancement: YARPP post metabox enhancements - adds "edit" and "view" hover options to each link, mimicking the main posts table
 * Enhancement: Add missing debug info
 * Bugfix: Avoid REST API warning by providing the page parameter which WP core expects
-* Deprecated: functions YARPP::maybe_enqueue_thumbnails() and YARPP::enqueue_thumbnails()
+* Deprecated: functions `YARPP::maybe_enqueue_thumbnails()` and `YARPP::enqueue_thumbnails()`
 
 = 5.10.2 (23-November-2020) =
 * Enhancement: Faster queries and a speed boost ⚡️ (Re-introduces database query improvements while avoiding the fatal error identified by some in v5.10.0)
@@ -1079,5 +1089,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.12.0 =
+= 5.13.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

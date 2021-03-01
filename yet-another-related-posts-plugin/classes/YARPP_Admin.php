@@ -69,9 +69,25 @@ class YARPP_Admin {
       add_action('wp_ajax_yarpp_optin_disable',           array($this, 'ajax_optin_disable'));
       add_action('wp_ajax_yarpp_set_display_code',        array($this, 'ajax_set_display_code'));
       add_action('wp_ajax_yarpp_switch',                  array($this, 'ajax_switch'));
+      add_action('wp_ajax_yarpp_clear_cache',             array($this, 'ajax_clear_cache'));
     }
   }
-  
+  /**
+  * Ajax callback for clearing the YARPP cache
+  *
+  * @since 5.13.0
+  */
+  public function ajax_clear_cache() {
+    if( false === check_ajax_referer( 'clear_cache_yarpp', false, false ) ) {
+      echo 'nonce_fail';
+    } else if ( current_user_can( 'manage_options' ) ) {
+      $this->core->cache->flush();
+      echo 'success';
+    } else {
+      echo 'forbidden';
+    }
+    wp_die();
+}
   /**
    * Check review notice status for current user
    *
@@ -509,6 +525,15 @@ class YARPP_Admin {
       wp_enqueue_script('postbox');
       wp_enqueue_script('wp-pointer');
       wp_enqueue_script('yarpp_options', plugins_url('js/options_basic.js', dirname(__FILE__)), array('jquery'), $version );
+      // Localize the script with messages
+      $translation_strings = array(
+        'alert_message' => __( 'This will delete all cache for YARPP.&#10;&#10;Are you sure?', 'yarpp' ),
+        'success' => __( 'Cache cleared successfully!', 'yarpp' ),
+        'forbidden' => __( 'You are not allowed to do this!', 'yarpp' ),
+        'nonce_fail' => __( 'You left this page open for too long. Please refresh the page and try again!', 'yarpp' ),
+        'error' => __( 'There is some error!', 'yarpp' ),
+      );
+      wp_localize_script( 'yarpp_options', 'yarpp_messages', $translation_strings );
     }
 
     $metabox_post_types = $this->core->get_option('auto_display_post_types');

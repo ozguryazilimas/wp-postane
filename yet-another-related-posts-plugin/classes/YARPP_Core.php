@@ -915,7 +915,11 @@ class YARPP {
 		} else {
 			$post_types = array(get_post_type($reference_ID));
 		}
-		return $post_types;
+		return apply_filters(
+			'yarpp_map_post_types',
+			$post_types,
+			is_array($args) && isset($args['domain']) ? $args['domain'] : null
+		);
 	}
 
 	private function post_type_filter($post_type) {
@@ -1100,12 +1104,9 @@ class YARPP {
 			return null;
         }
 
-        $post_types = apply_filters('yarpp_map_post_types', $post_types, 'website');
-
         return $this->display_related(
             null,
             array(
-                'post_type' => $post_types,
                 'domain'    => 'website'
             ),
             false
@@ -1558,14 +1559,9 @@ class YARPP {
 		/* If the content includes <!--noyarpp-->, don't display */
 		if (stristr($content, '<!--noyarpp-->') !== false) return $content;
 
-		$post_types = $this->get_query_post_types();
-
-		$post_types = apply_filters('yarpp_map_post_types', $post_types, 'rss');
-	
 		return $content.$this->display_related(
             null,
             array(
-			    'post_type' => $post_types,
 			    'domain'    => 'rss'
 		    ),
             false
@@ -1578,9 +1574,8 @@ class YARPP {
 		/* If the content includes <!--noyarpp-->, don't display */
 		if (stristr($content, '<!--noyarpp-->') !== false) return $content;
 
-		$post_type = $this->get_query_post_types();
-	
-		return $content . $this->clean_pre($this->display_related(null, array('post_type' => $post_type, 'domain' => 'rss'), false));
+
+		return $content . $this->clean_pre($this->display_related(null, array('domain' => 'rss'), false));
 	}
 	
 	/*

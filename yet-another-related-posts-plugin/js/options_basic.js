@@ -336,4 +336,32 @@ jQuery(function($) {
       $(this).text('Show Details [+]');
     }
   });
+  $('#yarpp-clear-cache').click(function() {
+    if ( confirm(yarpp_messages.alert_message) ){
+      $.ajax({
+          type:'POST',
+          url: ajaxurl,
+          data: {
+            action: 'yarpp_clear_cache',
+            clear_cache: true,
+            '_ajax_nonce': $('#clear_cache-nonce').val()
+          },
+          success:function(data){
+          if( 'success' == data ) {
+            var message = yarpp_messages.success;
+          } else if( 'forbidden' == data ) {
+            var message = yarpp_messages.forbidden;
+          } else if( 'nonce_fail' == data ) {
+            var message = yarpp_messages.nonce_fail;
+          } else {
+            var message = yarpp_messages.error;
+          }             
+          alert(message);
+      },
+      error:function(data){
+          alert(yarpp_messages.nonce_fail);
+      }
+    });
+    }
+  });
 });
