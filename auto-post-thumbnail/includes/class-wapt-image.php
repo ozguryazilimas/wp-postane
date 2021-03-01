@@ -1,4 +1,7 @@
 <?php
+namespace WBCR\APT;
+
+use WAPT_Plugin, Exception;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2020 Webraftic Ltd
  * @version       1.0
  */
-class WAPT_Image {
+class Image {
 
 	/**
 	 * @see self::app()
-	 * @var WAPT_Image
+	 * @var Image
 	 */
 	private static $app;
 
@@ -188,7 +191,7 @@ class WAPT_Image {
 	/**
 	 * Статический метод для быстрого доступа к интерфейсу плагина.
 	 *
-	 * @return WAPT_Image
+	 * @return Image
 	 */
 	public static function app() {
 		return self::$app;
@@ -304,8 +307,7 @@ class WAPT_Image {
 	 */
 	public function write_text( $text, $font = '', $font_size = '', $font_color = '', $align = 'left', $valign = 'top', $line_spacing = '1.5', $shadow_color = '' ) {
 		if ( ! empty( $text ) ) {
-			$text = mb_convert_encoding( $text, 'HTML-ENTITIES', 'UTF-8' );
-			$text = preg_replace( '~^(&([a-zA-Z0-9]);)~', htmlentities( '${1}' ), $text );
+			$text = mb_convert_encoding( $text, 'UTF-8' );
 
 			if ( empty( $font ) ) {
 				$font = $this->font_path;

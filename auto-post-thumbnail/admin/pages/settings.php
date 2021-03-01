@@ -1,5 +1,5 @@
 <?php
-
+use WBCR\APT\AutoPostThumbnails;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -81,6 +81,7 @@ class WAPT_Settings extends WAPT_Page {
 	 * @since 3.6.2
 	 */
 	public function getOptions_general() {
+		$is_premium = WAPT_Plugin::app()->is_premium();
 
 		$options = [];
 
@@ -109,14 +110,19 @@ class WAPT_Settings extends WAPT_Page {
 			'data'    => [
 				[ 'find', __( 'Find in post', 'apt' ) ],
 				[ 'generate', __( 'Generate from title', 'apt' ) ],
-				[ 'both', __( 'Both', 'apt' ) ],
+				[ 'both', __( 'Find or generate', 'apt' ) ],
+				[ 'google', __( 'Google', 'apt' ) ],
+				[ 'find_google', __( 'Find or Google', 'apt' ) ],
 			],
 			'default' => 'find',
 			'title'   => __( 'Featured image', 'apt' ),
 			'hint'    => __( "How to generate featured image:
 							<br> <b>Find in post:</b> search for the first image in the post text
 							<br> <b>Generate from title:</b> created from the title on a colored background
-							<br> <b>Both:</b> find an image in the post text, if it is not present, generate it from the title", 'apt' ),
+							<br> <b>Find or generate:</b> find an image in the post text, if it is not present, generate it from the title
+							<br> <b>Google:</b> search for an image by title of the post in Google
+							<br> <b>Find or Google:</b> find an image in the post text, if it is not present, search for an image by title of the post in Google", 'apt' ),
+			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro-item' ] : [],
 		];
 
 		$options[] = [
@@ -139,7 +145,7 @@ class WAPT_Settings extends WAPT_Page {
 	 */
 	public function getOptions_image() {
 
-		$is_premium = AutoPostThumbnails::instance()->is_premium();
+		$is_premium = WAPT_Plugin::app()->is_premium();
 		$pro        = $is_premium ? '' : "<br><span class='wapt-icon-pro wapt-icon-pro-span'>PRO</span>";
 
 		$options = [];
@@ -198,6 +204,28 @@ class WAPT_Settings extends WAPT_Page {
 			'title'   => __( 'Image format', 'apt' ),
 			'hint'    => __( 'Set format to save images', 'apt' ),
 		];
+
+		$options[] = [
+			'type'    => 'integer',
+			'way'     => 'text',
+			'name'    => 'image-width',
+			'units'   => 'px',
+			'default' => 800,
+			'title'   => __( 'Image size: width', 'apt' ),
+			'hint'    => __( 'Set width of the image for the featured image', 'apt' )
+		];
+
+		$options[] = [
+			'type'    => 'integer',
+			'way'     => 'text',
+			'name'    => 'image-height',
+			'units'   => 'px',
+			'default' => 600,
+			'title'   => __( 'Image size: height', 'apt' ),
+			'hint'    => __( 'Set height of the image for the featured image', 'apt' )
+		];
+
+
 		//----------------------------------------------------------------------
 		$options[] = [
 			'type' => 'html',

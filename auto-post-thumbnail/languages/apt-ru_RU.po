@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Auto Featured Image\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-23 08:21+0000\n"
-"PO-Revision-Date: 2021-02-10 12:56+0000\n"
+"PO-Revision-Date: 2021-02-12 10:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: Русский\n"
 "Language: ru_RU\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.4.0; wp-5.4.2"
+"X-Loco-Version: 2.5.0; wp-5.6.1"
 
 #: admin/views/tab-license.php:134
 #, php-format
@@ -45,7 +45,7 @@ msgstr "активных сайтов"
 msgid "Add featured image when saving a post"
 msgstr "Добавлять featured image во время сохранения поста"
 
-#: includes/class-wapt-base.php:931
+#: includes/class-apt.php:931
 msgid "Add from APT"
 msgstr "Добавить через APT"
 
@@ -85,7 +85,7 @@ msgstr "API ключ Google"
 msgid "API key is missing. Add it in APT settings"
 msgstr "Ключ API не задан. Добавьте его в настройках Auto Featured Image"
 
-#: auto-post-thumbnail.php:42 includes/class-wapt-base.php:957
+#: auto-post-thumbnail.php:42 includes/class-apt.php:957
 #: admin/pages/generate.php:100
 msgid "Auto Featured Image"
 msgstr "Auto Featured Image"
@@ -94,7 +94,7 @@ msgstr "Auto Featured Image"
 msgid "Auto Featured Image (Auto Post Thumbnail)"
 msgstr "Auto Featured Image (Auto Post Thumbnail)"
 
-#: includes/class-wapt-base.php:931
+#: includes/class-apt.php:931
 msgid "Auto Featured Images"
 msgstr "Auto Featured Images"
 
@@ -153,7 +153,7 @@ msgstr ""
 msgid "Center"
 msgstr "По центру"
 
-#: includes/class-wapt-base.php:206 includes/class-wapt-base.php:914
+#: includes/class-apt.php:206 includes/class-apt.php:914
 msgid "Change featured image"
 msgstr "Изменить изображение"
 
@@ -303,7 +303,7 @@ msgstr "Как получить Google API key и Custom Search Engine ID"
 msgid "https://cm-wp.com/apt"
 msgstr "https://cm-wp.com/apt"
 
-#: includes/class-wapt-base.php:810 admin/pages/settings.php:162
+#: includes/class-apt.php:810 admin/pages/settings.php:162
 msgid "Image"
 msgstr "Изображение"
 
@@ -313,7 +313,7 @@ msgstr "Формат изображения"
 
 #: admin/views/tab-settings.php:15
 msgid "Image generation"
-msgstr "Генерация изображения"
+msgstr "Изображение"
 
 #: admin/pages/settings.php:194
 msgid "JPEG"
@@ -359,7 +359,7 @@ msgstr "Следующая"
 msgid "No hits"
 msgstr "Нет результатов"
 
-#: includes/class-wapt-base.php:911
+#: includes/class-apt.php:911
 msgid "No image"
 msgstr "Нет изображений"
 
@@ -524,7 +524,7 @@ msgstr "Настройки Auto Featured Image"
 msgid "Shadow color"
 msgstr "Цвет тени"
 
-#: includes/class-wapt-base.php:1307
+#: includes/class-apt.php:1307
 msgid "Standard"
 msgstr "Стандартные"
 
@@ -572,11 +572,11 @@ msgstr "Ваша лицензия была обновлена"
 msgid "The license is deactivated"
 msgstr "Ваша лицензия деактивирована"
 
-#: includes/class-wapt-base.php:409
+#: includes/class-apt.php:409
 msgid "This plugin has been automatically deactivated."
 msgstr "Этот плагин был автоматически деактивирован."
 
-#: includes/class-wapt-base.php:1251
+#: includes/class-apt.php:1251
 #, php-format
 msgid ""
 "To download images from Google, specify Google API keys in the <a href='%s'>"
@@ -609,7 +609,7 @@ msgstr "Убрать изображение"
 msgid "Upgrade to Premium"
 msgstr "Обновить до Премиум"
 
-#: includes/class-wapt-base.php:1322
+#: includes/class-apt.php:1322
 msgid "Uploaded"
 msgstr "Загруженные"
 
@@ -617,7 +617,7 @@ msgstr "Загруженные"
 msgid "Uppercase"
 msgstr "ЗАГЛАВНЫЕ"
 
-#: includes/class-wapt-base.php:205
+#: includes/class-apt.php:205
 msgid "Use as thumbnail"
 msgstr "Применить изображение"
 
@@ -633,7 +633,7 @@ msgstr "версия"
 msgid "Vertical text alignment"
 msgstr "Вертикальное выравнивание"
 
-#: includes/class-wapt-base.php:1279
+#: includes/class-apt.php:1279
 #, php-format
 msgid ""
 "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on "

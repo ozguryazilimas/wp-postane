@@ -6,7 +6,7 @@
 
                 <div class="row wrap apt-filter-row">
 					<?php
-					if ( auto_post_thumbnails()->is_premium() ) {
+					if ( \WAPT_Plugin::app()->is_premium() ) {
 						do_action( 'wapt/filter_form_print' );
 					} else {
 						$stati = get_post_stati( array(
@@ -51,7 +51,7 @@
                                 <select name="filter_poststatus" id="filter_poststatus" class="apt-filter-input"
                                         tabindex="-1">
                                     <option value="">&nbsp;</option>
-			                        <?php
+									<?php
 									foreach ( $stati as $status ) {
 										echo '<option value="' . $status->name . '">' . $status->label . '</option>';
 									}
@@ -71,7 +71,7 @@
                                 <select name="filter_postcategory" id="filter_postcategory" class="apt-filter-input"
                                         tabindex="-1">
                                     <option value="">&nbsp;</option>
-			                        <?php
+									<?php
 									foreach ( $categories as $cat ) {
 										echo '<option value="' . $cat->term_id . '">' . $cat->name . ' (' . $cat->count . ')</option>';
 									}
@@ -149,16 +149,28 @@
                                 $.post("admin-ajax.php", {
                                     action: "get-posts-ids",
                                     withThumb: 0,
-									<?php
-									if(auto_post_thumbnails()->is_premium()) { ?>
+		                            <?php
+		                            if(\WAPT_Plugin::app()->is_premium()) { ?>
                                     poststatus: $("#filter_poststatus").val(),
                                     posttype: $("#filter_posttype").val(),
                                     date_start: $("#filter_startdate").val(),
                                     date_end: $("#filter_enddate").val(),
                                     category: $("#filter_postcategory").val(),
-									<?php } ?>
+		                            <?php } ?>
                                     _ajax_nonce: '<?php echo wp_create_nonce( 'get-posts' ); ?>'
                                 }, function (ids) {
+                                    if (ids === '' || ids == 0) {
+                                        setTimeout(function () {
+                                            $("#genpostthumbsbar").hide();
+                                            $("#genpostthumbsbar").progressbar("value", 0);
+                                            $("#generate-post-thumbnails").removeAttr('disabled');
+                                            $("#delete-post-thumbnails").removeAttr('disabled');
+                                            $("#message").html("<p><strong><?php echo esc_html__( 'Processed posts:', 'apt' ); ?> 0</strong></p>");
+                                            $("#message").show();
+                                        }, 500);
+                                        return;
+                                    }
+
                                     rt_images = JSON.parse("[" + ids + "]");
 
                                     var rt_total = rt_images.length;
@@ -214,14 +226,14 @@
                                 $.post("admin-ajax.php", {
                                     action: "get-posts-ids",
                                     withThumb: 1,
-									<?php
-									if(auto_post_thumbnails()->is_premium()) { ?>
+		                            <?php
+		                            if(\WAPT_Plugin::app()->is_premium()) { ?>
                                     poststatus: $("#filter_poststatus").val(),
                                     posttype: $("#filter_posttype").val(),
                                     date_start: $("#filter_startdate").val(),
                                     date_end: $("#filter_enddate").val(),
                                     category: $("#filter_postcategory").val(),
-									<?php } ?>
+		                            <?php } ?>
                                     _ajax_nonce: '<?php echo wp_create_nonce( 'get-posts' ); ?>'
                                 }, function (ids) {
                                     rt_images = JSON.parse("[" + ids + "]");

@@ -1,4 +1,5 @@
 <?php
+use WBCR\APT\AutoPostThumbnails;
 global $form;
 
 $current_url = admin_url( 'admin.php?page=wapt_settings-' . WAPT_Plugin::app()->getPluginName() );

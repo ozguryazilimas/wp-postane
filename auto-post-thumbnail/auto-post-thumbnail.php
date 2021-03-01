@@ -3,9 +3,9 @@
 Plugin Name: Auto Featured Image (Auto Post Thumbnail)
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Featured Image from the first image in post or any custom post type only if Featured Image is not set manually. Featured Image Generation From Title. Native image search for Elementor, Gutenberg, Classic Editor.
-Version: 3.7.7
-Author: Creativemotion <support@cm-wp.com>
-Author URI: cm-wp.com
+Version: 3.8.0
+Author: Creative Motion <support@cm-wp.com>
+Author URI: https://cm-wp.com
 Text Domain: apt
 Domain Path: /languages
 */
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * -----------------------------------------------------------------------------
  * CHECK REQUIREMENTS
  * Check compatibility with php and wp version of the user's site. As well as checking
- * compatibility with other plugins from Creativemotion.
+ * compatibility with other plugins from Creative Motion.
  * -----------------------------------------------------------------------------
  */
 // @formatter:off
@@ -133,7 +133,11 @@ define( 'WAPT_PLUGIN_DIR', dirname( __FILE__ ) );
  * -----------------------------------------------------------------------------
  */
 require_once( WAPT_PLUGIN_DIR . '/libs/factory/core/boot.php' );
+
 require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-plugin.php' );
+require_once( WAPT_PLUGIN_DIR . '/includes/class-apt.php' );
+require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-image.php' );
+
 require_once( WAPT_PLUGIN_DIR . '/includes/image-search/boot.php' );
 
 try {
@@ -141,7 +145,6 @@ try {
 		'plugin_version'     => WAPT_PLUGIN_VERSION,
 		'plugin_text_domain' => $wapt_compatibility->get_text_domain()
 	) ) );
-	auto_post_thumbnails();
 } catch ( Exception $e ) {
 	global $wapt_exeption;
 
@@ -160,15 +163,3 @@ try {
 	add_action( 'network_admin_notices', 'wapt_exception_notice' );
 }
 // @formatter:on
-
-/**
- * Get instance of the core class.
- *
- * @return AutoPostThumbnails
- */
-function auto_post_thumbnails() {
-	require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-base.php' );
-	require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-image.php' );
-
-	return AutoPostThumbnails::instance();
-}

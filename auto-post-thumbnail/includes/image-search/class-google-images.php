@@ -1,7 +1,14 @@
 <?php
+namespace WBCR\APT;
 
+use WAPT_Plugin, Exception;
 
-class WAPT_GoogleImages implements WAPT_ImageSearch {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class GoogleImages implements ImageSearch {
 	const URL = 'https://www.googleapis.com/customsearch/v1';
 
 	/**
@@ -24,7 +31,7 @@ class WAPT_GoogleImages implements WAPT_ImageSearch {
 	 * @param string $query
 	 * @param int $page
 	 *
-	 * @return WAPT_SearchResponse
+	 * @return SearchResponse
 	 * @throws Exception
 	 */
 	public function search( $query, $page ) {
@@ -58,9 +65,7 @@ class WAPT_GoogleImages implements WAPT_ImageSearch {
 
 		if ( ! WAPT_Plugin::app()->premium->is_active() && ! WAPT_Plugin::app()->premium->is_activate() ) {
 			if ( $limit['count'] < 1 ) {
-				throw new Exception(
-					sprintf( __( 'You have reached the limit at the moment. Try again in an 1 hour or <a href="%s">Upgrade to Premium</a>', 'apt' ), WAPT_Plugin::app()->get_support()->get_pricing_url( true, 'license_page' ) )
-				);
+				throw new Exception( sprintf( __( 'You have reached the limit at the moment. Try again in an 1 hour or <a href="%s">Upgrade to Premium</a>', 'apt' ), WAPT_Plugin::app()->get_support()->get_pricing_url( true, 'license_page' ) ) );
 			}
 			$limit['count'] --;
 		}
@@ -81,19 +86,12 @@ class WAPT_GoogleImages implements WAPT_ImageSearch {
 			$error = $response['error']['message'];
 		} elseif ( isset( $response['items'] ) && is_array( $response['items'] ) ) {
 			foreach ( $response['items'] as $item ) {
-				$image = new WAPT_FoundedImage(
-					$item['link'],
-					$item['image']['contextLink'],
-					$item['image']['thumbnailLink'],
-					$item['title'],
-					$item['image']['width'],
-					$item['image']['height']
-				);
+				$image = new FoundedImage( $item );
 
 				$images[] = $image;
 			}
 		}
 
-		return new WAPT_SearchResponse( $images, $error );
+		return new SearchResponse( $images, $error );
 	}
 }

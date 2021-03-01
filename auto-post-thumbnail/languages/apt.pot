@@ -43,7 +43,7 @@ msgstr ""
 msgid "Add featured image when saving a post"
 msgstr ""
 
-#: includes/class-wapt-base.php:931
+#: includes/class-apt.php:931
 msgid "Add from APT"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr ""
 msgid "API key is missing. Add it in APT settings"
 msgstr ""
 
-#: auto-post-thumbnail.php:42 includes/class-wapt-base.php:957
+#: auto-post-thumbnail.php:42 includes/class-apt.php:957
 #: admin/pages/generate.php:100
 msgid "Auto Featured Image"
 msgstr ""
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Auto Featured Image (Auto Post Thumbnail)"
 msgstr ""
 
-#: includes/class-wapt-base.php:931
+#: includes/class-apt.php:931
 msgid "Auto Featured Images"
 msgstr ""
 
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: includes/class-wapt-base.php:206 includes/class-wapt-base.php:914
+#: includes/class-apt.php:206 includes/class-apt.php:914
 msgid "Change featured image"
 msgstr ""
 
@@ -283,7 +283,7 @@ msgstr ""
 msgid "https://cm-wp.com/apt"
 msgstr ""
 
-#: includes/class-wapt-base.php:810 admin/pages/settings.php:162
+#: includes/class-apt.php:810 admin/pages/settings.php:162
 msgid "Image"
 msgstr ""
 
@@ -337,7 +337,7 @@ msgstr ""
 msgid "No hits"
 msgstr ""
 
-#: includes/class-wapt-base.php:911
+#: includes/class-apt.php:911
 msgid "No image"
 msgstr ""
 
@@ -499,7 +499,7 @@ msgstr ""
 msgid "Shadow color"
 msgstr ""
 
-#: includes/class-wapt-base.php:1307
+#: includes/class-apt.php:1307
 msgid "Standard"
 msgstr ""
 
@@ -547,11 +547,11 @@ msgstr ""
 msgid "The license is deactivated"
 msgstr ""
 
-#: includes/class-wapt-base.php:409
+#: includes/class-apt.php:409
 msgid "This plugin has been automatically deactivated."
 msgstr ""
 
-#: includes/class-wapt-base.php:1251
+#: includes/class-apt.php:1251
 #, php-format
 msgid ""
 "To download images from Google, specify Google API keys in the <a href='%s'>"
@@ -580,7 +580,7 @@ msgstr ""
 msgid "Upgrade to Premium"
 msgstr ""
 
-#: includes/class-wapt-base.php:1322
+#: includes/class-apt.php:1322
 msgid "Uploaded"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgstr ""
 msgid "Uppercase"
 msgstr ""
 
-#: includes/class-wapt-base.php:205
+#: includes/class-apt.php:205
 msgid "Use as thumbnail"
 msgstr ""
 
@@ -604,7 +604,7 @@ msgstr ""
 msgid "Vertical text alignment"
 msgstr ""
 
-#: includes/class-wapt-base.php:1279
+#: includes/class-apt.php:1279
 #, php-format
 msgid ""
 "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on "

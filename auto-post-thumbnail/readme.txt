@@ -112,6 +112,12 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= 3.8.0 =
+* Fixed: Encoding issues (On the generated image, the title displayed html entities instead of characters.).
+* Added: New option in the image settings: dimensions of the generated image
+* Other minor fixes
+* Added: NEW OPTION: Search for an image by title of the post in Google (PRO)
+
 = 3.7.7 =
 * Fixed: Encoding issues. [Solution](https://wordpress.org/support/topic/not-working-with-cyrillic-titles) by @bibliata
 * Fixed: Uppercase issue (agréable > AGRéABLE) strtoupper() -> mb_strtoupper()

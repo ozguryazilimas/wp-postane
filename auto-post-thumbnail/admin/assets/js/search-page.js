@@ -76,8 +76,8 @@ function showFoundedImages(searchEngine, images, page) {
             'data-title="' + (image.title || searchEngine + '_image') + '" ' +
             'data-url="' + image.link + '" ' +
             'data-link="' + image.context_link + '" ' +
-            'data-w="' + image.width + '" ' +
-            'data-h="' + image.height + '">' +
+            'data-w="' + image.image.width + '" ' +
+            'data-h="' + image.image.height + '">' +
             '<img src="' + image.thumbnail_link + '">' +
             '<div class="download"><img src="' + window.wapt_download_svg + '">' +
         '<div>' + image.width + '×' + image.height + '<br>' +

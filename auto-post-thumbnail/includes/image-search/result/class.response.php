@@ -1,59 +1,67 @@
 <?php
+namespace WBCR\APT;
 
-class WAPT_SearchResponse implements JsonSerializable {
+use WAPT_Plugin, Exception;
 
-    /**
-     * @var int
-     */
-    public $images_count;
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-    /**
-     * @var WAPT_FoundedImage
-     */
-    public $images;
+class SearchResponse implements \JsonSerializable {
 
-    /**
-     * @var string|null
-     */
-    public $error;
+	/**
+	 * @var int
+	 */
+	public $images_count;
 
-    /**
-     * WAPT_SearchResponse constructor.
-     *
-     * @param WAPT_FoundedImage[] $images
-     * @param string|null $images
-     */
-    public function __construct( $images, $error = null ) {
-        $this->images = $images;
-        $this->error = $error;
-        $this->images_count = count( $images );
-    }
+	/**
+	 * @var FoundedImage
+	 */
+	public $images;
 
-    /**
-     * @param $limit
-     */
-    public function limit( $limit ) {
-        $this->images = array_slice( $this->images, 0, $limit );
-        $this->images_count = count( $this->images );
-    }
+	/**
+	 * @var string|null
+	 */
+	public $error;
 
-    /**
-     * @return bool
-     */
-    public function is_error() {
-        return ! is_null( $this->error );
-    }
+	/**
+	 * SearchResponse constructor.
+	 *
+	 * @param FoundedImage[] $images
+	 * @param string|null $images
+	 */
+	public function __construct( $images, $error = null ) {
+		$this->images       = $images;
+		$this->error        = $error;
+		$this->images_count = count( $images );
+	}
 
-    public function jsonSerialize() {
-        if( $this->is_error() ) {
-            return [
-                'error' => $this->error
-            ];
-        }
+	/**
+	 * @param $limit
+	 */
+	public function limit( $limit ) {
+		$this->images       = array_slice( $this->images, 0, $limit );
+		$this->images_count = count( $this->images );
+	}
 
-        return [
-            'images' => $this->images,
-            'images_count' => $this->images_count,
-        ];
-    }
+	/**
+	 * @return bool
+	 */
+	public function is_error() {
+		return ! is_null( $this->error );
+	}
+
+	public function jsonSerialize() {
+		if( $this->is_error() ) {
+			return [
+				'error' => $this->error
+			];
+		}
+
+		return [
+			'images'       => $this->images,
+			'images_count' => $this->images_count,
+		];
+	}
 }

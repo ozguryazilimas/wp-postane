@@ -82,6 +82,8 @@ div.control-group .btn-group {
 span.wapt-icon-pro,
 .wapt-icon-pro input[class*="factory-"]:before,
 .wapt-icon-pro button.factory-image:after,
+.wapt-icon-pro-item button.factory-google:after,
+.wapt-icon-pro-item button.factory-find_google:after,
 .wapt-icon-pro ~ div.wapt-upload-div button.wapt-upload-button:after {
     display: inline-block;
     position: absolute;
@@ -118,7 +120,9 @@ span.wapt-icon-pro {
 .wapt-icon-pro button[class*="factory-"],
 .wapt-icon-pro button[class*="wapt"],
 .wapt-icon-pro img,
-.wapt-icon-pro ~ div.wapt-upload-div button.wapt-upload-button {
+.wapt-icon-pro ~ div.wapt-upload-div button.wapt-upload-button,
+.wapt-icon-pro-item button[class*="factory-google"],
+.wapt-icon-pro-item button[class*="factory-find_google"] {
     pointer-events: none;
     cursor: not-allowed;
     opacity: .65;

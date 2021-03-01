@@ -21,6 +21,11 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 	private static $app;
 
 	/**
+	 * @var WBCR\APT\AutoPostThumbnails
+	 */
+	public $apt;
+
+	/**
 	 * @var integer
 	 */
 	public $numberOfColumn;
@@ -45,34 +50,20 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 			// Регистрации класса активации/деактивации плагина
 			$this->initActivation();
 
+			$this->numberOfColumn = 4;
+			$this->apt            = \WBCR\APT\AutoPostThumbnails::instance();
+
 			require( WAPT_PLUGIN_DIR . '/admin/ajax/check-license.php' );
 
-			// Инициализация скриптов для бэкенда
+			// Инициализация бэкенда
 			$this->admin_scripts();
-			//------ ACTIONS ------
-			// filter posts
-			add_action( 'restrict_manage_posts', [ $this, 'add_posts_filters' ] );
-			add_action( 'pre_get_posts', [ $this, 'posts_filter' ], 10, 1 );
-			add_filter( 'views_edit-post', [ $this, 'add_filter_link' ], 10, 1 );
-			// bulk actions
-			add_filter( 'bulk_actions-edit-post', [ $this, 'register_bulk_action_generate' ] );
-			add_filter( 'handle_bulk_actions-edit-post', [ $this, 'bulk_action_generate_handler' ], 10, 3 );
-			add_action( 'admin_notices', [ $this, 'apt_bulk_action_admin_notice' ] );
-			add_action( 'admin_notices', [ $this, 'update_admin_notice' ] );
-
-			add_filter( 'plugin_action_links_' . WAPT_PLUGIN_BASENAME, [ $this, 'plugin_action_link' ] );
 		}
+
 		$this->global_scripts();
 	}
 
 	/**
 	 * Статический метод для быстрого доступа к интерфейсу плагина.
-	 *
-	 * Позволяет разработчику глобально получить доступ к экземпляру класса плагина в любом месте
-	 * плагина, но при этом разработчик не может вносить изменения в основной класс плагина.
-	 *
-	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
-	 * классам.
 	 *
 	 * @return Wbcr_Factory444_Plugin
 	 */
@@ -81,15 +72,12 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 	}
 
 	/**
-	 * Метод проверяет активацию премиум плагина и наличие действующего лицензионнного ключа
+	 * Метод проверяет активацию премиум плагина и наличие действующего лицензионного ключа
 	 *
 	 * @return bool
 	 */
 	public function is_premium() {
-		if (
-			$this->premium->is_active() &&
-			$this->premium->is_activate()
-			//&& $this->premium->is_install_package()
+		if ( $this->premium->is_active() && $this->premium->is_activate() //&& $this->premium->is_install_package()
 		) {
 			return true;
 		} else {
@@ -117,19 +105,248 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 	}
 
 	/**
-	 * Код который должен инициализироваться на бэкенде
 	 */
 	private function admin_scripts() {
-
-		// Регистрация страниц
 		$this->register_pages();
+
+		//------ ACTIONS ------
+		add_action( 'admin_init', [ $this, 'redirect_to_about_page' ] );
+		add_action( 'admin_menu', [ $this, 'my_custom_submenu_page' ] );
+
+		add_action( 'admin_notices', [ $this, 'check_perms' ] );
+		add_action( 'wbcr/factory/admin_notices', [ $this, 'show_about_notice' ], 10, 2 );
+
+		// Plugin hook for adding CSS and JS files required for this plugin
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets', ] );
+		add_action( 'wp_enqueue_media', [ $this, 'enqueue_media', ] );
+
+		//Hook to adding "image" column in Posts table
+		add_filter( 'manage_post_posts_columns', [ $this, 'add_image_column' ], 4 );
+		//Hook to filling "image" column in Posts table
+		add_action( 'manage_post_posts_custom_column', [ $this, 'fill_image_column' ], 5, 2 );
+
+		//ADD tab and button to medialibrary
+		add_filter( "media_upload_tabs", [ $this, "addTab" ] );
+		add_action( "media_upload_apttab", [ $this, "aptTabHandle" ] );
+
+
+		// filter posts
+		add_action( 'restrict_manage_posts', [ $this, 'add_posts_filters' ] );
+		add_action( 'pre_get_posts', [ $this, 'posts_filter' ], 10, 1 );
+		add_filter( 'views_edit-post', [ $this, 'add_filter_link' ], 10, 1 );
+		// bulk actions
+		add_filter( 'bulk_actions-edit-post', [ $this, 'register_bulk_action_generate' ] );
+		add_filter( 'handle_bulk_actions-edit-post', [ $this, 'bulk_action_generate_handler' ], 10, 3 );
+		add_action( 'admin_notices', [ $this, 'apt_bulk_action_admin_notice' ] );
+		add_action( 'admin_notices', [ $this, 'update_admin_notice' ] );
+
+		add_filter( 'plugin_action_links_' . WAPT_PLUGIN_BASENAME, [ $this, 'plugin_action_link' ] );
 	}
 
 	/**
-	 * Код который должен инициализироваться на бэкенде и фронтэнде
 	 */
 	private function global_scripts() {
-		// Код который должен инициализироваться на бэкенде и фронтенде
+	}
+
+	/**
+	 * Enqueue assets.
+	 *
+	 * @param $hook_suffix
+	 *
+	 * @return void
+	 */
+	public function enqueue_assets( $hook_suffix ) {
+		//Подключаем стили и скрипты всегда в админке
+		add_thickbox();
+		wp_enqueue_media();
+		wp_enqueue_script( 'apt-admin-script-thumbnail', WAPT_PLUGIN_URL . '/admin/assets/js/admin-thumbnail.js', [], false, true );
+		if ( isset( $_REQUEST['post'] ) ) {
+			$pid = $_REQUEST['post'];
+		} else {
+			$pid = '0';
+		}
+		wp_localize_script( 'apt-admin-script-thumbnail', 'apt_postid', $pid );
+
+		$action_column_get_thumbnails = "apt_get_thumbnail";
+		$action_column_get_thumbnails = apply_filters( 'wapt/get-thumbnails/action', $action_column_get_thumbnails );
+		wp_localize_script( 'apt-admin-script-thumbnail', 'action_column_get_thumbnails', $action_column_get_thumbnails );
+
+		if ( is_admin() ) {
+			wp_enqueue_script( 'jquery-autocolumnlist', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery.autocolumnlist.js', [], false, true );
+			wp_enqueue_script( 'jquery-flex-images', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery.flex-images.min.js', [ 'jquery' ], false, true );
+			wp_enqueue_style( 'style', WAPT_PLUGIN_URL . '/admin/assets/css/style.css' );
+			wp_enqueue_style( 'flex-images', WAPT_PLUGIN_URL . '/admin/assets/css/jquery.flex-images.css' );
+			wp_localize_script( 'apt-admin-script-thumbnail', 'apt_thumb', [
+				'button_text' => __( 'Use as thumbnail', 'apt' ),
+				'modal_title' => __( 'Change featured image', 'apt' ),
+			] );
+
+		}
+
+		wp_enqueue_script( 'apt-admin-check_api', WAPT_PLUGIN_URL . '/admin/assets/js/check-api.js', array(), false, true );
+
+		//-----------------------------------
+		if ( 'settings_page_generate-post-thumbnails' != $hook_suffix ) {
+			return;
+		}
+	}
+
+	public function enqueue_media() {
+		global $post;
+
+		if ( is_plugin_active( 'dreamstime-stock-photos/dreamstime.php' ) && ! ( isset( $_GET['action'] ) && $_GET['action'] == 'elementor' ) ) {
+			wp_deregister_script( 'dreamstime-media-views' );
+			wp_enqueue_script( 'dreamstime-media-views', WAPT_PLUGIN_URL . '/admin/assets/js/dreamstime-media-views.js', [ 'jquery' ], false, true );
+			$handler = 'dreamstime-media-views';
+		} else {
+			wp_enqueue_script( 'apt-media-views', WAPT_PLUGIN_URL . '/admin/assets/js/media-views.js', [ 'jquery' ], false, true );
+			$handler = 'apt-media-views';
+		}
+
+		$apt_media_iframe_src = ! empty( $post ) ? get_admin_url( get_current_blog_id(), 'media-upload.php?chromeless=1&post_id=' . $post->ID . '&tab=apttab' ) : "";
+		wp_localize_script( $handler, 'apt_media_iframe', [ 'src' => esc_url( $apt_media_iframe_src ) ] );
+	}
+
+	/**
+	 * Этот хук реализует условную логику, при которой пользователь периодически будет
+	 * видеть страницу "О плагине", а конкретно при активации и обновлении плагина.
+	 */
+	public function redirect_to_about_page() {
+		// If the user has updated the plugin or activated it for the first time,
+		// you need to show the page "What's new?"
+		if ( ! $this->isNetworkAdmin() ) {
+			$about_page_viewed = $this->request->get( 'wapt_about_page_viewed', null );
+			$need_show_about   = get_option( $this->getOptionName( 'whats_new_v360' ) );
+			if ( is_null( $about_page_viewed ) ) {
+				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+					try {
+						$redirect_url = '';
+						if ( class_exists( 'Wbcr_FactoryPages443' ) ) {
+							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
+						}
+						if ( $redirect_url ) {
+							wp_safe_redirect( $redirect_url );
+							die();
+						}
+					} catch ( Exception $e ) {
+					}
+				}
+			} else {
+				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+					delete_option( $this->getOptionName( 'whats_new_v360' ) );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Add subpage to media menu
+	 *
+	 * @param $hook_suffix
+	 *
+	 * @return void
+	 */
+	public function my_custom_submenu_page() {
+		add_media_page( __( 'Auto Featured Images', 'apt' ), __( 'Add from APT', 'apt' ), 'manage_options', 'menu-media-apt', [
+			$this->apt,
+			'addToMediaFromApt'
+		] );
+	}
+
+	/**
+	 * Check whether the required directory structure is available so that the plugin can create thumbnails if needed.
+	 * If not, don't allow plugin activation.
+	 */
+	public function check_perms() {
+		$uploads = wp_upload_dir( current_time( 'mysql' ) );
+
+		if ( $uploads['error'] ) {
+			echo '<div class="updated"><p>';
+			echo $uploads['error'];
+
+			if ( function_exists( 'deactivate_plugins' ) ) {
+				deactivate_plugins( 'auto-post-thumbnail/auto-post-thumbnail.php', 'auto-post-thumbnail.php' );
+				echo '<br /> ' . esc_html__( 'This plugin has been automatically deactivated.', 'apt' );
+			}
+
+			echo '</p></div>';
+		}
+	}
+
+	public function show_about_notice( $notices, $plugin_name ) {
+		// Если экшен вызывал не этот плагин, то не выводим это уведомления
+		if ( $plugin_name != $this->getPluginName() ) {
+			return $notices;
+		}
+		// Получаем заголовок плагина
+		$plugin_title = $this->getPluginTitle();
+
+		$notice_text = '<p><b>' . $plugin_title . ':</b> ' . sprintf( __( "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on our website.", 'apt' ), 'https://cm-wp.com/auto-featured-image-from-title/' ) . "</p>";
+		$notices[]   = [
+			'id'              => 'apt_show_about_370',
+			//error, success, warning
+			'type'            => 'info',
+			'dismissible'     => true,
+			// На каких страницах показывать уведомление ('plugins', 'dashboard', 'edit')
+			'where'           => array( 'plugins', 'dashboard', 'edit' ),
+			// Через какое время уведомление снова появится?
+			'dismiss_expires' => 0,
+			'text'            => $notice_text,
+			'classes'         => array()
+		];
+
+		return $notices;
+	}
+
+	/**
+	 * Function for adding "image" column in Posts table
+	 *
+	 * @param array $columns
+	 *
+	 * @return array
+	 */
+	public function add_image_column( $columns ) {
+		$pro = $this->is_premium() ? '' : ' <sup class="wapt-sup-pro">(PRO)<sup>';
+
+		$new_columns = [ 'apt-image' => __( 'Image', 'apt' ) . $pro, ];
+
+		return array_slice( $columns, 0, $this->numberOfColumn ) + $new_columns + array_slice( $columns, $this->numberOfColumn );
+	}
+
+	/**
+	 * Function to filling "image" column in Posts table
+	 *
+	 * @param string $colname
+	 * @param int $post_id
+	 */
+	public function fill_image_column( $colname, $post_id ) {
+		if ( $colname === 'apt-image' ) {
+			$thumb_id = get_post_thumbnail_id( $post_id );
+			//$this->nonce = wp_create_nonce( 'set_post_thumbnail-' . $post_id );
+			echo $this->apt->apt_getThumbHtml( $post_id, $thumb_id );
+		}
+	}
+
+	/**
+	 * Добавляет вкладку в медиабиблиотеку
+	 *
+	 * @param $tabs
+	 *
+	 * @return array
+	 */
+	public function addTab( $tabs ) {
+		$tabs['apttab'] = __( "Auto Featured Image", "apt" );
+
+		return ( $tabs );
+	}
+
+	/**
+	 * Обработчик вывода во вкладку
+	 *
+	 */
+	public function aptTabHandle() {
+		// wp_iframe() adds css for "media" when callback function has "media_" as prefix
+		wp_iframe( [ $this->apt, "media_AptTabContent" ] );
 	}
 
 	/**
@@ -157,7 +374,7 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 		foreach ( $post_ids as $post_id ) {
 			switch ( $doaction ) {
 				case 'apt_generate_thumb':
-					$thumb = auto_post_thumbnails()->publish_post( $post_id );
+					$thumb = $this->apt->publish_post( $post_id );
 					break;
 				case 'apt_delete_thumb':
 					delete_post_thumbnail( $post_id );
@@ -165,11 +382,9 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 			}
 		}
 
-		$redirect_to = add_query_arg(
-			array(
-				'apt_bulk_action' => count( $post_ids ),
-			),
-			$redirect_to );
+		$redirect_to = add_query_arg( array(
+			'apt_bulk_action' => count( $post_ids ),
+		), $redirect_to );
 
 		return $redirect_to;
 	}
@@ -214,18 +429,14 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 				$apt_is_image = $_GET['apt_is_image'];
 			}
 
-			echo '<select name="apt_is_image">' .
-			     '<option value="-1">' . __( 'Featured Image', 'apt' ) . '</option>' .
-			     '<option value="1" ' . selected( 1, $apt_is_image, 0 ) . '>' . __( 'With image', 'apt' ) . '</option>' .
-			     '<option value="0" ' . selected( 0, $apt_is_image, 0 ) . '>' . __( 'Without image', 'apt' ) . '</option>' .
-			     '</select>';
+			echo '<select name="apt_is_image">' . '<option value="-1">' . __( 'Featured Image', 'apt' ) . '</option>' . '<option value="1" ' . selected( 1, $apt_is_image, 0 ) . '>' . __( 'With image', 'apt' ) . '</option>' . '<option value="0" ' . selected( 0, $apt_is_image, 0 ) . '>' . __( 'Without image', 'apt' ) . '</option>' . '</select>';
 		}
 	}
 
 	/**
 	 * Filter the Posts list tables.
 	 *
-	 * @param $query WP_Query
+	 * @param $query \WP_Query
 	 *
 	 */
 	public function posts_filter( $query ) {
@@ -255,7 +466,7 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 	 *
 	 */
 	public function add_filter_link( $views ) {
-		$query = auto_post_thumbnails()->get_posts_query( false, 'post', 'publish' );
+		$query = $this->apt->get_posts_query( false, 'post', 'publish' );
 		$posts = $query->post_count;
 
 		$q                   = add_query_arg( array( 'apt_is_image' => '0', 'post_type' => 'post' ), 'edit.php' );

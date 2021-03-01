@@ -1,15 +1,21 @@
 <?php
+namespace WBCR\APT;
 
-interface WAPT_ImageSearch {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-    /**
-     * @param string $query
-     * @param int $page
-     *
-     * @throws Exception
-     *
-     * @return mixed
-     */
-    public function search( $query, $page );
+interface ImageSearch {
+
+	/**
+	 * @param string $query
+	 * @param int $page
+	 *
+	 * @return mixed
+	 * @throws \Exception
+	 *
+	 */
+	public function search( $query, $page );
 
 }
