@@ -97,7 +97,6 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
                 'right' => '0!important',
                 'background' => 'white!important',
                 'z-index' => '1000',
-
                 )
             );
     }

@@ -336,7 +336,7 @@ class WLCMS_Admin_Menus
         foreach ($menu as $i => $item) {
 
             $menu_item = remove_query_arg('return', $item[2]);
-            $menu_item = $menu_item;
+            $menu_item = urldecode($menu_item);
 
             if ($menu_slug == $menu_item) {
                 unset($menu[$i]);
@@ -365,6 +365,9 @@ class WLCMS_Admin_Menus
         foreach ($submenu[$menu_slug] as $i => $item) {
             $submenu_item = remove_query_arg('return', $item[2]);
             $submenu_item = sanitize_title($submenu_item);
+
+            //Patch whitelist
+            if( in_array($submenu_slug, array('wc-admin'))) continue;
 
             if ($submenu_slug == $submenu_item) {
                 unset($submenu[$menu_slug][$i]);

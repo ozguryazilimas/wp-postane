@@ -15,12 +15,17 @@ class WLCMS_Admin_Settings
     public function init()
     {
         $this->set_admin_css();
+        $this->remove_editor_wp_logo();
         $this->hide_screen_options();
+    }
+
+    public function remove_editor_wp_logo()
+    {
+        wlcms_add_js(';jQuery(".edit-post-header .edit-post-fullscreen-mode-close svg").remove();');
     }
 
     public function remove_admin_bar()
     {
-
 
         if (!wlcms_field_setting('hide_admin_bar_all')) {
             return;
@@ -33,7 +38,6 @@ class WLCMS_Admin_Settings
     private function disable_admin_bar_menu()
     {
         add_filter('show_admin_bar', '__return_false');
-
     }
 
     public function admin_menu()

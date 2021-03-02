@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 2.2.1 =
+* Refactoring / Security fixes reported by @twd
+* Fixed override footer action reported by @simebern
+* Custom Welcome Dashboard fixes
+
 = 2.2 =
 * Custom Welcome Dashboard fixes
 

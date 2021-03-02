@@ -130,8 +130,18 @@ class WLCMS_Branding extends WLCMS_Previewable
 
         $logo = sprintf('<img src=\"%s\" title=\"%s\" class=\"large-side-bar-logo\" /><img src=\"%s\" alt=\"%s\" class=\"collapsed-side-bar-logo\" />', $sidebar_image, $sidebar_text, $collapsed_sidebar_image, $sidebar_text);
 
+        $target = '_self';
+        if($sidebar_url) {
+            $domain = wp_parse_url($sidebar_url);
+            if( isset($domain['host']) ){
+                if (strpos($_SERVER['HTTP_HOST'], $domain['host']) === false) {
+                    $target = '_blank';
+                }
+            }
+        }
+
         if ($sidebar_url) {
-            $logo = sprintf('<a href=\"%s\" target=\"_blank\" title=\"%s\">%s</a>', $sidebar_url, $sidebar_text, $logo);
+            $logo = sprintf('<a href=\"%s\" title=\"%s\" target=\"%s\">%s</a>', $sidebar_url, $sidebar_text, $target, $logo);
         }
         wlcms_set_css('.collapsed-side-bar-logo', array('display' => 'none', 'padding' => '5px', 'max-width' => '36px'));
         wlcms_set_css('.folded .collapsed-side-bar-logo', array('display' => 'block', 'margin' => '0 auto', 'max-width' => '25px'));

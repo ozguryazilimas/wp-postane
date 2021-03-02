@@ -57,7 +57,8 @@ class WLCMS_Login extends WLCMS_Previewable
 
     private function compiled_login_css()
     {
-        $content = $this->get_settings('login_custom_css');
+
+        $content = $this->set_custom_css();
         $content .= $this->set_background_css();
         $content .= $this->set_logo_css();
         $content .= $this->set_form_css();
@@ -240,6 +241,15 @@ class WLCMS_Login extends WLCMS_Previewable
         }
 
         return $form_css;
+    }
+
+    private function set_custom_css()
+    {
+        $content = $this->get_settings('login_custom_css');
+        
+        $content = wp_kses( $content, array( '\'', '\"' ) );
+        $content = str_replace( '&gt;', '>', $content );
+        return $content;
     }
 
     private function set_custom_login_js()

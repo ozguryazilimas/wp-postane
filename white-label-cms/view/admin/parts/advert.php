@@ -1,8 +1,8 @@
 <div class="wlcms-advert-wrapper">
-	<a href="http://wplinks.io/workshop-wlcms" target="_blank">
+	<a href="https://www.videousermanuals.com/a-better-wp-for-clients" target="_blank">
 		<picture>
-			<source srcset="<?php echo WLCMS_ASSETS_URL ?>images/Better-Clients-Banner-white-label-cms-m.jpg" media="(max-width: 480px)">
-			<img srcset="<?php echo WLCMS_ASSETS_URL ?>images/Better-Clients-Banner.jpg" alt="3 secrets to Better Client, Better Projects & Better Fees">
+			<source srcset="<?php echo WLCMS_ASSETS_URL ?>images/better-wp-clients-m.jpg" media="(max-width: 480px)">
+			<img srcset="<?php echo WLCMS_ASSETS_URL ?>images/better-wp-clients.jpg" alt="A Better WordPress for Clients">
 		</picture>
 	</a>
 </div>

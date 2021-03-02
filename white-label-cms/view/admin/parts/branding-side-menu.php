@@ -11,7 +11,7 @@
         <input type="url" name="side_menu_link_url" value="<?php echo esc_url(wlcms_field_setting('side_menu_link_url')) ?>" />
     </div>
     <div class="wlcms-help">
-        <?php _e('URL the Side Menu Image will link to.', 'white-label-cms') ?>
+        <?php _e('External links will open in a new window.', 'white-label-cms') ?>
     </div>
 </div>
 <div class="wlcms-input-group">
