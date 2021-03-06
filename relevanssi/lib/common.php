@@ -219,15 +219,13 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
  * query, instead of doing up to 500 separate get_post() queries.
  *
  * @global array  $relevanssi_post_array An array of fetched posts.
- * @global array  $relevanssi_post_types An array of post types, to be used by
- * relevanssi_get_post_type() (again to avoid DB calls).
  * @global object $wpdb                  The WordPress database interface.
  *
  * @param array $matches An array of search matches.
  * @param int   $blog_id The blog ID for multisite searches. Default -1.
  */
 function relevanssi_populate_array( $matches, $blog_id = -1 ) {
-	global $relevanssi_post_array, $relevanssi_post_types, $wpdb;
+	global $relevanssi_post_array, $wpdb;
 
 	if ( -1 === $blog_id ) {
 		$blog_id = get_current_blog_id();
@@ -238,20 +236,24 @@ function relevanssi_populate_array( $matches, $blog_id = -1 ) {
 
 	$ids = array();
 	foreach ( $matches as $match ) {
-		array_push( $ids, $match->doc );
+		$cache_id = $blog_id . '|' . $match->doc;
+		if ( $match->doc > 0 && ! isset( $relevanssi_post_array[ $cache_id ] ) ) {
+			array_push( $ids, $match->doc );
+		}
 	}
 
 	$ids = array_keys( array_flip( $ids ) ); // Remove duplicate IDs.
 	do {
 		$hundred_ids = array_splice( $ids, 0, 100 );
 		$id_list     = implode( ', ', $hundred_ids );
-		$posts       = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE id IN ( $id_list )", OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		if ( ! empty( $id_list ) ) {
+			$posts = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE id IN ( $id_list )", OBJECT ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-		foreach ( $posts as $post ) {
-			$cache_id = $blog_id . '|' . $post->ID;
+			foreach ( $posts as $post ) {
+				$cache_id = $blog_id . '|' . $post->ID;
 
-			$relevanssi_post_array[ $cache_id ] = $post;
-			$relevanssi_post_types[ $cache_id ] = $post->post_type;
+				$relevanssi_post_array[ $cache_id ] = $post;
+			}
 		}
 	} while ( $ids );
 
@@ -356,6 +358,7 @@ function relevanssi_remove_punct( $a ) {
 		'©'                     => '',
 		'™'                     => '',
 		'&shy;'                 => '',
+		"\xC2\xAD"              => '',
 		'&nbsp;'                => ' ',
 		chr( 194 ) . chr( 160 ) => ' ',
 		'×'                     => ' ',
@@ -702,7 +705,7 @@ function relevanssi_get_post_status( $post_id ) {
 		} elseif ( $post ) {
 			if ( 'inherit' === $post->post_status ) {
 				// Attachment, let's see what the parent says.
-				$parent = $relevanssi_post_array[ $post_id ]->post_parent;
+				$parent = $relevanssi_post_array[ $post_id ]->post_parent ?? null;
 				if ( ! $parent ) {
 					// Attachment without a parent, let's assume it's public.
 					$status = 'publish';

@@ -3,9 +3,9 @@ Contributors: msaari
 Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
-Tested up to: 5.6.3
+Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 4.12.2
+Stable tag: 4.12.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,11 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.12.3 =
+* Major fix: Post type weights did not work; improving the caching had broken them.
+* Minor fix: Relevanssi works better with soft hyphens now, removing them in indexing and excerpt-building.
+* Minor fix: Stops indexing error messages in WPML.
+
 = 4.12.2 =
 * Major fix: Stops more problems with ACF custom field indexing.
 * Major fix: Fixes a bug in search result caching that caused Relevanssi to make lots of unnecessary database queries.
@@ -215,6 +220,9 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: The category inclusion and exclusion setting checkboxes on the Searching tab didn't work. The setting was saved, but the checkboxes wouldn't appear.
 
 == Upgrade notice ==
+= 4.12.3 =
+* Fixes post type weights and WPML indexing problems.
+
 = 4.12.2 =
 * Stops Relevanssi from crashing when saving posts with ACF fields, major performance boost.
 

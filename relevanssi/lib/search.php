@@ -108,7 +108,6 @@ function relevanssi_query( $posts, $query = false ) {
  * @global object   $wpdb                  The WordPress database interface.
  * @global array    $relevanssi_variables  The global Relevanssi variables array.
  * @global WP_Query $wp_query              The WP_Query object.
- * @global array    $relevanssi_post_types Cache array for post type values.
  *
  * @param array $args Array of arguments.
  *
@@ -412,7 +411,6 @@ function relevanssi_search( $args ) {
 			}
 
 			relevanssi_populate_array( $matches );
-			global $relevanssi_post_types;
 
 			$total_hits += count( $matches );
 
@@ -558,10 +556,7 @@ function relevanssi_search( $args ) {
 				$mysqlcolumn_matches[ $match->doc ] += $match->mysqlcolumn;
 
 				/* Post type weights. */
-				$type = null;
-				if ( isset( $relevanssi_post_types[ $match->doc ] ) ) {
-					$type = $relevanssi_post_types[ $match->doc ];
-				}
+				$type = relevanssi_get_post_type( $match->doc );
 				if ( ! empty( $post_type_weights[ $type ] ) ) {
 					$match->weight = $match->weight * $post_type_weights[ $type ];
 				}
@@ -978,9 +973,13 @@ function relevanssi_do_query( &$query ) {
 			$highlight                    = get_option( 'relevanssi_highlight' );
 			if ( 'none' !== $highlight ) {
 				if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+					$q_for_highlight = 'on' === get_option( 'relevanssi_index_synonyms', 'off' )
+					? relevanssi_add_synonyms( $q )
+					: $q;
+
 					$post->post_highlighted_title = relevanssi_highlight_terms(
 						$post->post_highlighted_title,
-						$q
+						$q_for_highlight
 					);
 				}
 			}
