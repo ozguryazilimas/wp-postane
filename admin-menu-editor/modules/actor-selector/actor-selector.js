@@ -12,6 +12,7 @@ var AmeActorSelector = /** @class */ (function () {
         this.isProVersion = false;
         this.allOptionEnabled = true;
         this.cachedVisibleActors = null;
+        this.isDomInitStarted = false;
         this.actorManager = actorManager;
         if (typeof isProVersion !== 'undefined') {
             this.isProVersion = isProVersion;
@@ -23,17 +24,16 @@ var AmeActorSelector = /** @class */ (function () {
         //Discard any users that don't exist / were not loaded by the actor manager.
         var _ = AmeActorSelector._;
         this.visibleUsers = _.intersection(this.visibleUsers, _.keys(actorManager.getUsers()));
-        if (jQuery.isReady) {
-            this.initDOM();
-        }
-        else {
-            jQuery(function () {
-                _this.initDOM();
-            });
-        }
+        jQuery(function () {
+            _this.initDOM();
+        });
     }
     AmeActorSelector.prototype.initDOM = function () {
         var _this = this;
+        if (this.isDomInitStarted) {
+            return;
+        }
+        this.isDomInitStarted = true;
         this.selectorNode = jQuery('#ws_actor_selector');
         this.populateActorSelector();
         //Don't show the selector in the free version.
@@ -95,6 +95,10 @@ var AmeActorSelector = /** @class */ (function () {
         this.subscribers.push(callback);
     };
     AmeActorSelector.prototype.highlightSelectedActor = function () {
+        //Set up and populate the selector element if we haven't done that yet.
+        if (!this.isDomInitStarted) {
+            this.initDOM();
+        }
         //Deselect the previous item.
         this.selectorNode.find('.current').removeClass('current');
         //Select the new one or "All".

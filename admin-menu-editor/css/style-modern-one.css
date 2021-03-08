@@ -9,7 +9,7 @@ $hiddenItemBorder: #f1acb1;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  width: 298px;
+  width: 304px;
   padding: 0;
   margin-top: 0;
   margin-bottom: 9px;
@@ -67,7 +67,7 @@ a.ws_edit_link {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   vertical-align: middle;
-  width: 244.36px;
+  width: 249.28px;
   height: 0;
   border: 2px inset rgba(0, 0, 0, 0.2); }
 .ws_menu_separator .ws_item_title {
@@ -124,7 +124,7 @@ a.ws_edit_link {
   box-shadow: 1px 3px 6px 0 rgba(1, 1, 1, 0.4); }
 
 .ws_main_container {
-  width: 318px; }
+  width: 324px; }
   .ws_main_container .ws_toolbar {
     padding: 10px 10px 0; }
   .ws_main_container .ws_dropzone {

@@ -10,7 +10,7 @@
 	margin-top: 9px;
 }
 
-$mainContainerWidth: 310px;
+$mainContainerWidth: 316px;
 $mainContainerBorderWidth: 1px;
 $mainContainerBorderRadius: 0px;
 $mainContainerBorderColor: $amePostboxBorderColor; //Was #cdd5d5 before WP 5.3.
@@ -189,7 +189,7 @@ $mainContainerBorderColor: $amePostboxBorderColor; //Was #cdd5d5 before WP 5.3.
  */
 
 .ws_container {
-	$itemWidth: 290px;
+	$itemWidth: $mainContainerWidth - 20px;
 	$itemPadding: 3px;
 	$itemBorderWidth: 1px;
 	$itemHorizontalMargin: ($mainContainerWidth - $itemWidth - $itemPadding * 2 - $itemBorderWidth * 2) / 2;
@@ -740,6 +740,10 @@ a.ws_button.ws_button_disabled:hover {
 	width: 5px;
 }
 
+#ws_toggle_toolbar {
+	margin-right: 0;
+}
+
 /************************************
        Capability selector
 *************************************/
@@ -1240,6 +1244,12 @@ $colorFieldRightMargin: 5px;
 			padding: 8px 8px 8px 8px;
 			font-size: 1.1em;
 		}
+
+		.ame-scrollable-dialog-content {
+			max-height: 500px;
+			overflow-y: auto;
+			padding-top: 0.5em;
+		}
 	}
 
 	.ui-dialog-titlebar {
@@ -1298,6 +1308,44 @@ $colorFieldRightMargin: 5px;
 
 #import_dialog .ws_dialog_panel {
 	height: 64px;
+}
+
+.ws_dialog_panel {
+	.ame-fixed-label-text {
+		display: inline-block;
+		min-width: 6em;
+	}
+
+	.ame-inline-select-with-input {
+		vertical-align: baseline;
+	}
+
+	.ame-box-side-sizes {
+		display: flex;
+		flex-wrap: wrap;
+		max-width: 800px;
+
+		.ame-fixed-label-text {
+			min-width: 4em;
+		}
+
+		label {
+			margin-right: 2.5em;
+		}
+
+		input {
+			margin-bottom: 0.4em;
+		}
+
+		input[type=number] {
+			width: 6em;
+		}
+	}
+}
+
+.ame-flexbox-break {
+	flex-basis: 100%;
+	height: 0;
 }
 
 .ws_dialog_buttons {
@@ -2125,6 +2173,28 @@ $userSelectionPanelPadding: 10px;
 
 .ame-is-wp53-plus .ws_edit_field input[type="button"] {
 	margin-top: 1px;
+}
+
+/*********************************************
+      CSS border style selector
+**********************************************/
+
+.ame-css-border-styles {
+	.ame-fixed-label-text {
+		min-width: 5em;
+	}
+
+	.ame-border-sample-container {
+		display: inline-block;
+		vertical-align: top;
+		min-height: 28px;
+	}
+
+	.ame-border-sample {
+		display: inline-block;
+		width: 14em;
+		border-top: 0.3em solid #444;
+	}
 }
 
 /*********************************************

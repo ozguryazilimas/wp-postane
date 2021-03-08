@@ -18,7 +18,8 @@
 
 	//Some plugins set the icon as a background image instead of a pseudo-element.
 	& > .wp-menu-image {
-		background-image: none;
+		background-image: none !important;
+		position: static;
 	}
 
 	@import '_dashicons';

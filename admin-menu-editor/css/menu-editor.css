@@ -7,7 +7,7 @@
 
 .ws_main_container {
   margin: 2px;
-  width: 310px;
+  width: 316px;
   float: left;
   display: block;
   border: 1px solid #ccd0d4;
@@ -141,7 +141,7 @@
  */
 .ws_container {
   display: block;
-  width: 290px;
+  width: 296px;
   padding: 3px;
   margin: 2px 0 2px 6px; }
   body.rtl .ws_container {
@@ -314,7 +314,8 @@
   visibility: hidden; }
 
 /* The input box in each field editor */
-#ws_menu_editor .ws_editbox input[type="text"], #ws_menu_editor .ws_editbox select {
+#ws_menu_editor .ws_editbox input[type="text"],
+#ws_menu_editor .ws_editbox select {
   display: block;
   float: left;
   width: 254px;
@@ -323,8 +324,8 @@
   line-height: 17px;
   padding-top: 3px;
   padding-bottom: 3px; }
-  .ame-is-wp53-plus #ws_menu_editor .ws_editbox input[type="text"],
-  .ame-is-wp53-plus #ws_menu_editor .ws_editbox select {
+  .ame-is-wp53-plus #ws_menu_editor .ws_editbox input[type="text"], .ame-is-wp53-plus
+  #ws_menu_editor .ws_editbox select {
     height: 28px; }
 
 #ws_menu_editor .ws_edit_field label {
@@ -543,6 +544,9 @@ a.ws_button.ws_button_disabled:hover {
 .ws_separator {
   float: left;
   width: 5px; }
+
+#ws_toggle_toolbar {
+  margin-right: 0; }
 
 /************************************
        Capability selector
@@ -917,6 +921,10 @@ a#ws-ame-delete-color-preset:hover {
   .settings_page_menu_editor .ui-dialog .ui-dialog-content {
     padding: 8px 8px 8px 8px;
     font-size: 1.1em; }
+  .settings_page_menu_editor .ui-dialog .ame-scrollable-dialog-content {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-top: 0.5em; }
 .settings_page_menu_editor .ui-dialog-titlebar {
   display: block;
   height: 22px;
@@ -954,6 +962,28 @@ a#ws-ame-delete-color-preset:hover {
 
 #import_dialog .ws_dialog_panel {
   height: 64px; }
+
+.ws_dialog_panel .ame-fixed-label-text {
+  display: inline-block;
+  min-width: 6em; }
+.ws_dialog_panel .ame-inline-select-with-input {
+  vertical-align: baseline; }
+.ws_dialog_panel .ame-box-side-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 800px; }
+  .ws_dialog_panel .ame-box-side-sizes .ame-fixed-label-text {
+    min-width: 4em; }
+  .ws_dialog_panel .ame-box-side-sizes label {
+    margin-right: 2.5em; }
+  .ws_dialog_panel .ame-box-side-sizes input {
+    margin-bottom: 0.4em; }
+  .ws_dialog_panel .ame-box-side-sizes input[type=number] {
+    width: 6em; }
+
+.ame-flexbox-break {
+  flex-basis: 100%;
+  height: 0; }
 
 .ws_dialog_buttons {
   /*height: 30px;*/
@@ -1500,6 +1530,20 @@ a#ws-ame-delete-color-preset:hover {
 **********************************************/
 .ame-is-wp53-plus .ws_edit_field input[type="button"] {
   margin-top: 1px; }
+
+/*********************************************
+      CSS border style selector
+**********************************************/
+.ame-css-border-styles .ame-fixed-label-text {
+  min-width: 5em; }
+.ame-css-border-styles .ame-border-sample-container {
+  display: inline-block;
+  vertical-align: top;
+  min-height: 28px; }
+.ame-css-border-styles .ame-border-sample {
+  display: inline-block;
+  width: 14em;
+  border-top: 0.3em solid #444; }
 
 /*********************************************
       Miscellaneous

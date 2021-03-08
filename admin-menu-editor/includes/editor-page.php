@@ -40,7 +40,7 @@ if ( !apply_filters('admin_menu_editor_is_pro', false) ){
 		var screenLinks = $('#screen-meta-links');
 		screenLinks.append(
 			'<div id="ws-pro-version-notice" class="custom-screen-meta-link-wrap">' +
-				'<a href="http://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=top_upgrade_link&utm_campaign=Plugins" id="ws-pro-version-notice-link" class="show-settings custom-screen-meta-link" target="_blank" title="View Pro version details">Upgrade to Pro</a>' +
+				'<a href="https://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=top_upgrade_link&utm_campaign=Plugins" id="ws-pro-version-notice-link" class="show-settings custom-screen-meta-link" target="_blank" title="View Pro version details">Upgrade to Pro</a>' +
 			'</div>'
 		);
 	})(jQuery);
@@ -102,6 +102,9 @@ function ame_output_sort_buttons($icons) {
 
 				<a id='ws_new_menu' class='ws_button' href='javascript:void(0)' title='New menu'><img src='<?php echo $icons['new']; ?>' alt="New menu" /></a>
 				<a id='ws_new_separator' class='ws_button' href='javascript:void(0)' title='New separator'><img src='<?php echo $icons['new-separator']; ?>' alt="New separator" /></a>
+				<?php if ( $is_pro_version ): ?>
+					<a id='ws_new_heading' class='ws_button' href='javascript:void(0)' title='New heading'><img src='<?php echo $icons['new-heading']; ?>' alt="New heading" /></a>
+				<?php endif; ?>
 
 				<?php if ( $is_pro_version ): ?>
 					<div class="ws_separator">&nbsp;</div>

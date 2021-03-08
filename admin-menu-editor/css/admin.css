@@ -126,7 +126,7 @@ hr.ws-submenu-separator {
 }
 
 #adminmenu .wp-submenu li.opensub > ul.ame-deep-submenu {
-	top: -7px;
+	top: -1px;
 }
 
 .folded #adminmenu li.opensub > ul.ame-deep-submenu,

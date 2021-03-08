@@ -253,7 +253,11 @@ class wsNewMenuHighlighter {
 			$this->flagAsSeen(array_keys($urls));
 		}
 
-		setcookie(self::COOKIE_NAME, '', time() - (24 * 3600));
+		if ( version_compare(phpversion(), '7.3', '>=') ) {
+			setcookie(self::COOKIE_NAME, '', array('expires' => time() - (24 * 3600), 'samesite' => 'Lax'));
+		} else {
+			setcookie(self::COOKIE_NAME, '', time() - (24 * 3600), '', '', is_ssl());
+		}
 	}
 
 	private function flagAsSeen($menuUrls) {

@@ -64,6 +64,43 @@ class ameUtils {
 		}
 		return null;
 	}
+
+	/**
+	 * Capitalize the first character of every word. Supports UTF-8.
+	 *
+	 * @param string $input
+	 * @return string
+	 */
+	public static function ucWords($input) {
+		static $hasUnicodeSupport = null, $charset = 'UTF-8';
+		if ( $hasUnicodeSupport === null ) {
+			//We need the mbstring extension and PCRE UTF-8 support.
+			$hasUnicodeSupport = function_exists('mb_list_encodings')
+				&& (@preg_match('/\pL/u', 'a') === 1)
+				&& function_exists('get_bloginfo');
+
+			if ( $hasUnicodeSupport ) {
+				//Technically, the encoding can change if something switches WP to a different site
+				//in the middle of a request, but we'll ignore that possibility.
+				$charset = get_bloginfo('charset');
+				$hasUnicodeSupport = in_array($charset, mb_list_encodings()) && ($charset === 'UTF-8');
+			}
+		}
+
+		if ( $hasUnicodeSupport ) {
+			$totalLength = mb_strlen($input);
+			$words = preg_split('/([\s\-_]++)/u', $input, null, PREG_SPLIT_DELIM_CAPTURE);
+			$output = array();
+			foreach ($words as $word) {
+				$firstCharacter = mb_substr($word, 0, 1, $charset);
+				//In old PHP versions, you must specify a non-null length to get the rest of the string.
+				$remainder = mb_substr($word, 1, $totalLength, $charset);
+				$output[] = mb_strtoupper($firstCharacter, $charset) . $remainder;
+			}
+			return implode('', $output);
+		}
+		return ucwords($input);
+	}
 }
 
 class ameFileLock {
