@@ -23,9 +23,7 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 	 */
     protected function disabled_warning(){
         global $yarpp, $wpdb;
-	    $database_supports_fulltext_indexes = $yarpp->db_schema->database_supports_fulltext_indexes();
-	    if ( ! $database_supports_fulltext_indexes) $yarpp->disable_fulltext();
-	    if ( !(bool) yarpp_get_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE) && $yarpp->db_options->is_fulltext_disabled()) {
+	    if ( $yarpp->db_schema->database_supports_fulltext_indexes() && ! $yarpp->diagnostic_fulltext_indices()) {
 		    ?>
             <div class='yarpp-callout yarpp-notice'>
                 <p><?php

@@ -205,8 +205,14 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
             return;
         }
 
-        $results = $wpdb->get_results($this->sql($reference_ID), ARRAY_A);
-        if ( !$results || !count($results) )
+        $results = $this->query_safely(
+        	'get_results',
+	        array(
+	        	$this->sql($reference_ID),
+		        ARRAY_A
+	        )
+        );
+        if ( !$results || !count($results) || $results instanceof WP_Error)
             return false;
 
         $results_ids = wp_list_pluck( $results, 'ID' );

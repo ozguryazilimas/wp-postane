@@ -13,6 +13,7 @@ class YARPP_DB_Schema {
 	const CACHE_KEY_FULLTEXT_SUPPORT            = 'fulltext_support';
 	const CACHE_KEY_POSTS_TABLE_DATABASE_ENGINE = 'posts_table_database_engine';
 	const CACHE_GROUP                           = 'yarpp';
+	const CACHE_KEY_TABLE_EXISTS                = 'table_exists';
 	/**
 	 * Checks if there is an index for the post title column
 	 *
@@ -125,5 +126,48 @@ class YARPP_DB_Schema {
 		wp_cache_delete( self::CACHE_KEY_CONTENT_INDEX, self::CACHE_GROUP );
 
 		return empty( $wpdb->last_error );
+	}
+
+	/**
+	 * Finds out if the YARPP cache table was created or not
+	 * @return bool
+	 */
+	public function cache_table_exists(){
+		$exists = wp_cache_get(self::CACHE_KEY_TABLE_EXISTS, self::CACHE_GROUP, false, $found);
+		if( ! $found ){
+			global $wpdb;
+			// now check for the cache tables
+			$tabledata = $wpdb->get_col('SHOW TABLES LIKE "'. $wpdb->prefix . YARPP_TABLES_RELATED_TABLE . '"');
+			if (in_array($wpdb->prefix . YARPP_TABLES_RELATED_TABLE,$tabledata) !== false)
+				$exists = true;
+			else
+				$exists = false;
+			wp_cache_set(self::CACHE_KEY_TABLE_EXISTS, $exists, self::CACHE_GROUP);
+		}
+		return $exists;
+	}
+
+	/**
+	 * Create the YARPP cache table
+	 */
+	public function create_cache_table(){
+		global $wpdb;
+
+		$charset_collate = '';
+		if (!empty($wpdb->charset)) $charset_collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
+		if (!empty($wpdb->collate)) $charset_collate .= " COLLATE ".$wpdb->collate;
+
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS `".$wpdb->prefix.YARPP_TABLES_RELATED_TABLE."` (
+			    `reference_ID`  bigint(20) unsigned NOT NULL default '0',
+			    `ID`            bigint(20) unsigned NOT NULL default '0',
+			    `score`         float unsigned NOT NULL default '0',
+			    `date`          timestamp NOT NULL default CURRENT_TIMESTAMP,
+			PRIMARY KEY (`reference_ID`,`ID`),
+			INDEX (`score`),
+			INDEX (`ID`)
+			)$charset_collate;"
+		);
+		wp_cache_delete(self::CACHE_KEY_TABLE_EXISTS, self::CACHE_GROUP);
 	}
 }

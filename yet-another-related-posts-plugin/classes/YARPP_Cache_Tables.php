@@ -11,33 +11,11 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 	}
 
 	public function is_enabled() {
-		global $wpdb;
-		// now check for the cache tables
-		$tabledata = $wpdb->get_col("show tables");
-		if (in_array($wpdb->prefix . YARPP_TABLES_RELATED_TABLE,$tabledata) !== false)
-			return true;
-		else
-			return false;
+		return $this->core->db_schema->cache_table_exists();
 	}
 
 	public function setup() {
-		global $wpdb;
-
-		$charset_collate = '';
-		if (!empty($wpdb->charset)) $charset_collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
-		if (!empty($wpdb->collate)) $charset_collate .= " COLLATE ".$wpdb->collate;
-
-		$wpdb->query(
-            "CREATE TABLE IF NOT EXISTS `".$wpdb->prefix.YARPP_TABLES_RELATED_TABLE."` (
-			    `reference_ID`  bigint(20) unsigned NOT NULL default '0',
-			    `ID`            bigint(20) unsigned NOT NULL default '0',
-			    `score`         float unsigned NOT NULL default '0',
-			    `date`          timestamp NOT NULL default CURRENT_TIMESTAMP,
-			PRIMARY KEY (`reference_ID`,`ID`),
-			INDEX (`score`),
-			INDEX (`ID`)
-			)$charset_collate;"
-        );
+		$this->core->db_schema->create_cache_table();
 	}
 	
 	public function upgrade($last_version) {
@@ -182,7 +160,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 		remove_action('parse_query',array(&$this,'set_score_override_flag'));
 	}
 	
-	// @return YARPP_NO_RELATED | YARPP_RELATED | YARPP_NOT_CACHED
+	// @return YARPP_NO_RELATED | YARPP_RELATED | YARPP_NOT_CACHED | YARPP_DONT_RUN
 	public function is_cached($reference_ID) {
 		global $wpdb;
 		
@@ -192,7 +170,19 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 		
 		// @since 3.5.3b3: check for max instead of min, so that if ID=0 and ID=X
 		// are both saved, we act like there *are* related posts, because there are.
-		$max_id = $wpdb->get_var("select max(ID) as max_id from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where reference_ID = $reference_ID");
+
+		// Also, if there's a database error, hide it and just ignore it. It's probably a missing table that we'll fix
+		// next admin request.
+		$max_id = $this->query_safely(
+			'get_var',
+			array(
+				"select max(ID) as max_id from {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " where reference_ID = $reference_ID"
+			)
+		);
+
+		if($max_id instanceof WP_Error){
+			return YARPP_DONT_RUN;
+		}
 
 		if ( is_null( $max_id ) )
 			return YARPP_NOT_CACHED;
@@ -221,7 +211,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 			wp_cache_delete( 'is_cached_' . $id, 'yarpp' );
 	}
 
-	// @return YARPP_RELATED | YARPP_NO_RELATED
+	// @return YARPP_RELATED | YARPP_NO_RELATED | YARPP_DONT_RUN
 	// @used by enforce
 	protected function update($reference_ID) {
 		global $wpdb;
@@ -233,7 +223,15 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 			$this->clear($reference_ID);
 		}
 
-		$wpdb->query("insert into {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " (reference_ID,ID,score) " . $this->sql($reference_ID) . " on duplicate key update date = now()");
+		$result = $this->query_safely(
+				'query',
+				array(
+					"insert into {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " (reference_ID,ID,score) " . $this->sql( $reference_ID ) . " on duplicate key update date = now()"
+				)
+			);
+		if($result instanceof WP_Error){
+			return YARPP_DONT_RUN;
+		}
 
 		// If there were related entries saved...
 		if ( $wpdb->rows_affected ) {

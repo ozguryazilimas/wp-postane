@@ -8,8 +8,6 @@ if (isset($_POST['myisam_override'])) {
     $enabled = $yarpp->enable_fulltext();
 
     if($enabled){
-
-        $yarpp->db_options->set_fulltext_disabled(false);
         ?>
             <div class="notice notice-success">
             <?php
