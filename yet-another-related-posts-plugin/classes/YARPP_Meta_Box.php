@@ -2,9 +2,6 @@
 
 class YARPP_Meta_Box {
     protected $template_text = null;
-	/**
-	 * @var YARPP
-	 */
     protected $yarpp         = null;
 
     public function __construct() {
@@ -73,7 +70,7 @@ class YARPP_Meta_Box {
         $weight = (int) yarpp_get_option("weight[$option]");
 
         /* Both require MyISAM fulltext indexing: */
-        $fulltext = $this->yarpp->diagnostic_fulltext_indices() ? '' : ' readonly="readonly" disabled="disabled"';
+        $fulltext = $this->yarpp->diagnostic_fulltext_disabled() ? ' readonly="readonly" disabled="disabled"' : '';
 
         echo "<div class='yarpp_form_row yarpp_form_select'><div class='yarpp_form_label'>{$desc}</div><div>";
         echo "<select name='weight[{$option}]'>";

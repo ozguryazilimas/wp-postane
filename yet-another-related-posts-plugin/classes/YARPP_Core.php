@@ -118,9 +118,7 @@ class YARPP {
 		if (is_admin()) {
 			require_once(YARPP_DIR.'/classes/YARPP_Admin.php');
 			$this->admin = new YARPP_Admin($this);
-			if( ! defined('DOING_AJAX')){
-				$this->enforce();
-			}
+			$this->enforce();
 		}
 		$shortcode = new YARPP_Shortcode();
 		$shortcode->register();
@@ -302,18 +300,16 @@ class YARPP {
     }
 
 	public function enabled() {
-		if ( ! (bool) $this->cache->is_enabled() ) {
-			return false;
-		} else {
-			return $this->diagnostic_fulltext_indices();
-		}
+		if (!(bool) $this->cache->is_enabled()) return false;
+		if (!(bool) $this->diagnostic_fulltext_disabled()) return $this->diagnostic_fulltext_indices();
+		return true;
 	}
 	
 	public function activate() {
 		/*
 		 * If it's not known to be disabled, but the indexes aren't there.
 		 */
-		if ( !$this->diagnostic_fulltext_indices()) {
+		if (!$this->diagnostic_fulltext_disabled() && !$this->diagnostic_fulltext_indices()) {
 			$this->enable_fulltext();
 		}
 
@@ -351,12 +347,7 @@ class YARPP {
 				return $engine;
 		}
 	}
-
-	/**
-	 * @deprecated in 5.14.0 we just always enable fulltext indexes, or keep checking for it, so this should never need
-	 * to be called.
-	 * @return bool
-	 */
+	
 	function diagnostic_fulltext_disabled() {
 		return $this->db_options->is_fulltext_disabled();
 	}
@@ -416,6 +407,8 @@ class YARPP {
 		/* cut threshold by half: */
 		$threshold = (float) $this->get_option('threshold');
 		$this->set_option(array('threshold' => round($threshold / 2)));
+
+		$this->db_options->set_fulltext_disabled(true);
 	}
 
     /*
@@ -423,7 +416,9 @@ class YARPP {
      * @return bool
      */
 	public function diagnostic_fulltext_indices() {
-		return $this->db_schema->title_column_has_index() && $this->db_schema->content_column_has_index();
+		global $wpdb;
+		$wpdb->get_results("SHOW INDEX FROM {$wpdb->posts} WHERE Key_name = 'yarpp_title' OR Key_name = 'yarpp_content'");
+		return ($wpdb->num_rows >= 2);
 	}
 
 	public function diagnostic_hidden_metaboxes() {
@@ -1004,6 +999,7 @@ class YARPP {
 			),
 			'diagnostics' => array(
 				'myisam_posts'          => $this->diagnostic_myisam_posts(),
+				'fulltext_disabled'     => $this->diagnostic_fulltext_disabled(),
 				'fulltext_indices'      => $this->diagnostic_fulltext_indices(),
 				'hidden_metaboxes'      => $this->diagnostic_hidden_metaboxes(),
 				'post_thumbnails'       => $this->diagnostic_post_thumbnails(),
@@ -1152,6 +1148,8 @@ class YARPP {
 	public function display_related($reference_ID = null, $args = array(), $echo = true) {
 		// Avoid infinite recursion here.
         if ( $this->do_not_query_for_related()) return false;
+        $this->enforce();
+
         wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
         $output = null;
 
@@ -1283,6 +1281,7 @@ class YARPP {
 	public function get_related($reference_ID = null, $args = array()) {
 		// Avoid infinite recursion here.
 		if ( $this->do_not_query_for_related()) return false;
+		$this->enforce();
 
 
 		if (is_numeric($reference_ID)) {
@@ -1302,7 +1301,9 @@ class YARPP {
 		extract($this->parse_args($args, $options));
 
 		$cache_status = $this->active_cache->enforce($reference_ID);
-		if ( in_array($cache_status, array(YARPP_DONT_RUN, YARPP_NO_RELATED), true)) return array();
+		if ($cache_status === YARPP_DONT_RUN || $cache_status === YARPP_NO_RELATED) {
+			return array();
+		}
 					
 		/* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);
@@ -1338,6 +1339,7 @@ class YARPP {
 	public function related_exist($reference_ID = null, $args = array()) {
 		// Avoid infinite recursion here.
 		if ($this->do_not_query_for_related()) return false;
+		$this->enforce();	
 	
 		if (is_numeric($reference_ID)) {
 			$reference_ID = (int) $reference_ID;
@@ -1351,9 +1353,10 @@ class YARPP {
 		$this->setup_active_cache($args);
 	
 		$cache_status = $this->active_cache->enforce($reference_ID);
-
-		if (in_array($cache_status, array(YARPP_DONT_RUN, YARPP_NO_RELATED), true)) return false;
-
+	
+		if ($cache_status === YARPP_NO_RELATED) {
+			return false;
+		}
 
         /* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);

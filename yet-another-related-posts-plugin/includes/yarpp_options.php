@@ -1,6 +1,9 @@
 <?php
 global $wpdb, $wp_version, $yarpp;
 
+/* Enforce YARPP setup: */
+$yarpp->enforce();
+
 if(!$yarpp->enabled() && !$yarpp->activate()) {
     echo '<div class="updated">'.__('The YARPP database has an error which could not be fixed.','yarpp').'</div>';
 }

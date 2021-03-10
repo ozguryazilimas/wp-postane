@@ -48,7 +48,7 @@ class YARPP_DB_Options {
 
 	/**
 	 * Gets whether fulltext indexes were not found to be supported.
-	 * @deprecated in 5.14.0 because we just always try to use fulltext indexes
+	 *
 	 * @return bool
 	 */
 	public function is_fulltext_disabled() {
@@ -59,7 +59,7 @@ class YARPP_DB_Options {
 	 * Records that fulltext indexes weren't supported.
 	 *
 	 * @param boolean $new_value True if we found fulltext indexes were supported, false otherwise.
-	 * @deprecated in 5.14.0 because we just check the actual DB instead
+	 *
 	 * @return bool indicating success
 	 */
 	public function set_fulltext_disabled( $new_value ) {
