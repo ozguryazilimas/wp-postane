@@ -3,6 +3,8 @@ if (php_sapi_name() != "cli") {
   die();
 }
 
+ini_set('memory_limit', '5120M');
+
 define('WP_USE_THEMES', false);
 $wp_blog_path = array(
   '../../../../../wp-blog-header.php',
