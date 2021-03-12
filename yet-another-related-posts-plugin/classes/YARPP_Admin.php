@@ -521,17 +521,24 @@ class YARPP_Admin {
       
       wp_enqueue_style('wp-pointer');
       wp_enqueue_style('yarpp_options', plugins_url('style/options_basic.css', dirname(__FILE__)), array(), $version );
+      wp_enqueue_style('yarpp_remodal', plugins_url('lib/plugin-deactivation-survey/remodal.css', dirname(__FILE__)), array(), $version );
+      wp_enqueue_style('yarpp_deactivate', plugins_url('lib/plugin-deactivation-survey/deactivate-feedback-form.css', dirname(__FILE__)), array(), $version );
+      wp_enqueue_style('yarpp_default_theme', plugins_url('lib/plugin-deactivation-survey/remodal-default-theme.css', dirname(__FILE__)), array(), $version );
 
       wp_enqueue_script('postbox');
       wp_enqueue_script('wp-pointer');
+      wp_enqueue_script('yarpp_remodal', plugins_url('lib/plugin-deactivation-survey/remodal.min.js', dirname(__FILE__)), array(), $version );
       wp_enqueue_script('yarpp_options', plugins_url('js/options_basic.js', dirname(__FILE__)), array('jquery'), $version );
       // Localize the script with messages
       $translation_strings = array(
-        'alert_message' => __( 'This will delete all cache for YARPP.&#10;&#10;Are you sure?', 'yarpp' ),
-        'success' => __( 'Cache cleared successfully!', 'yarpp' ),
-        'forbidden' => __( 'You are not allowed to do this!', 'yarpp' ),
-        'nonce_fail' => __( 'You left this page open for too long. Please refresh the page and try again!', 'yarpp' ),
-        'error' => __( 'There is some error!', 'yarpp' ),
+        'alert_message' => __( 'This will clear all of YARPP’s cached related results.<br> Are you sure?', 'yarpp' ),
+        'model_title'       => __( 'YARPP Cache', 'yarpp' ),
+        'success'       => __( 'Cache cleared successfully!', 'yarpp' ),
+        'logo'    => plugins_url('/images/icon-256x256.png', YARPP_MAIN_FILE),
+        'bgcolor'=> '#fff',
+        'forbidden'     => __( 'You are not allowed to do this!', 'yarpp' ),
+        'nonce_fail'    => __( 'You left this page open for too long. Please refresh the page and try again!', 'yarpp' ),
+        'error'         => __( 'There is some error. Please refresh the page and try again!', 'yarpp' ),
       );
       wp_localize_script( 'yarpp_options', 'yarpp_messages', $translation_strings );
     }

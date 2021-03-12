@@ -118,7 +118,9 @@ class YARPP {
 		if (is_admin()) {
 			require_once(YARPP_DIR.'/classes/YARPP_Admin.php');
 			$this->admin = new YARPP_Admin($this);
-			$this->enforce();
+			if( ! defined('DOING_AJAX')){
+				$this->enforce();
+			}
 		}
 		$shortcode = new YARPP_Shortcode();
 		$shortcode->register();
@@ -142,7 +144,7 @@ class YARPP {
 
 	private function load_default_options() {
 		$this->default_options = array(
-			'threshold' => 4,
+			'threshold' => 1,
 			'limit' => 4,
 			'excerpt_length' => 10,
 			'recent' => false,
@@ -178,8 +180,8 @@ class YARPP {
 			'myisam_override' => false,
 			'exclude' => '',
 			'weight' => array(
-				'title' => 1,
-				'body' => 1,
+				'title' => 0,
+				'body' => 0,
 				'tax' => array(
 					'category' => 1,
 					'post_tag' => 1
@@ -300,19 +302,14 @@ class YARPP {
     }
 
 	public function enabled() {
-		if (!(bool) $this->cache->is_enabled()) return false;
-		if (!(bool) $this->diagnostic_fulltext_disabled()) return $this->diagnostic_fulltext_indices();
-		return true;
+		if ( ! (bool) $this->cache->is_enabled() ) {
+			return false;
+		} else {
+			return $this->diagnostic_fulltext_indices();
+		}
 	}
 	
 	public function activate() {
-		/*
-		 * If it's not known to be disabled, but the indexes aren't there.
-		 */
-		if (!$this->diagnostic_fulltext_disabled() && !$this->diagnostic_fulltext_indices()) {
-			$this->enable_fulltext();
-		}
-
 		if ((bool) $this->cache->is_enabled() === false) {
 			$this->cache->setup();
 		}
@@ -347,7 +344,12 @@ class YARPP {
 				return $engine;
 		}
 	}
-	
+
+	/**
+	 * @deprecated in 5.14.0 we just always enable fulltext indexes, or keep checking for it, so this should never need
+	 * to be called.
+	 * @return bool
+	 */
 	function diagnostic_fulltext_disabled() {
 		return $this->db_options->is_fulltext_disabled();
 	}
@@ -356,19 +358,36 @@ class YARPP {
 	 * Attempts to add the fulltext indexes on the posts table.
 	 *
 	 * @since 5.1.8
+	 * @deprecated use YARPP::enable_fulltext_titles() and YARPP::enable_fulltext_contents() instead
 	 * @return bool
 	 */
 	public function enable_fulltext() {
-        /*
+		_deprecated_function('YARPP::enable_fulltext','5.15.0');
+        if(! $this->db_supports_fulltext()){
+        	return false;
+        }
+        if(! $this->enable_fulltext_titles()){
+        	return false;
+        }
+        if( ! $this->enable_fulltext_contents()){
+        	return false;
+        }
+        return true;
+	}
+
+	protected function db_supports_fulltext(){
+		/*
          * If we haven't already re-attempted creating the database indexes and the database doesn't support adding
          * those indexes, disable it.
          */
 		if (!(bool) $this->get_option(YARPP_DB_Options::YARPP_MYISAM_OVERRIDE) &&
 		    ! $this->db_schema->database_supports_fulltext_indexes()) {
-				$this->disable_fulltext();
-				return false;
+			$this->disable_fulltext();
+			return false;
 		}
-
+		return true;
+	}
+	public function enable_fulltext_titles(){
 		if(! $this->db_schema->title_column_has_index()) {
 			if ( $this->db_schema->add_title_index() ) {
 				$this->db_options->delete_fulltext_db_error_record();
@@ -378,7 +397,10 @@ class YARPP {
 				return false;
 			}
 		}
+		return true;
+	}
 
+	public function enable_fulltext_contents(){
 		if(! $this->db_schema->content_column_has_index()){
 			if ( $this->db_schema->add_content_index()) {
 				$this->db_options->delete_fulltext_db_error_record();
@@ -388,8 +410,7 @@ class YARPP {
 				return false;
 			}
 		}
-
-        return true;
+		return true;
 	}
 
 	/**
@@ -407,8 +428,21 @@ class YARPP {
 		/* cut threshold by half: */
 		$threshold = (float) $this->get_option('threshold');
 		$this->set_option(array('threshold' => round($threshold / 2)));
+	}
 
-		$this->db_options->set_fulltext_disabled(true);
+	/**
+	 * Returns true if we consider this to be a big database (based on posts records); false otherwise.
+	 * Uses the constants YARPP_BIG_DB
+	 * @return bool
+	 */
+	public function diagnostic_big_db(){
+		global $wpdb;
+		if(! defined('YARPP_BIG_DB')){
+			define('YARPP_BIG_DB', 2000);
+		}
+		$sql = 'SELECT count(*) FROM ' . $wpdb->posts;
+		$posts_count = $wpdb->get_var($sql);
+		return (int)$posts_count > YARPP_BIG_DB;
 	}
 
     /*
@@ -416,9 +450,7 @@ class YARPP {
      * @return bool
      */
 	public function diagnostic_fulltext_indices() {
-		global $wpdb;
-		$wpdb->get_results("SHOW INDEX FROM {$wpdb->posts} WHERE Key_name = 'yarpp_title' OR Key_name = 'yarpp_content'");
-		return ($wpdb->num_rows >= 2);
+		return $this->db_schema->title_column_has_index() && $this->db_schema->content_column_has_index();
 	}
 
 	public function diagnostic_hidden_metaboxes() {
@@ -999,7 +1031,6 @@ class YARPP {
 			),
 			'diagnostics' => array(
 				'myisam_posts'          => $this->diagnostic_myisam_posts(),
-				'fulltext_disabled'     => $this->diagnostic_fulltext_disabled(),
 				'fulltext_indices'      => $this->diagnostic_fulltext_indices(),
 				'hidden_metaboxes'      => $this->diagnostic_hidden_metaboxes(),
 				'post_thumbnails'       => $this->diagnostic_post_thumbnails(),
@@ -1148,8 +1179,6 @@ class YARPP {
 	public function display_related($reference_ID = null, $args = array(), $echo = true) {
 		// Avoid infinite recursion here.
         if ( $this->do_not_query_for_related()) return false;
-        $this->enforce();
-
         wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
         $output = null;
 
@@ -1281,7 +1310,6 @@ class YARPP {
 	public function get_related($reference_ID = null, $args = array()) {
 		// Avoid infinite recursion here.
 		if ( $this->do_not_query_for_related()) return false;
-		$this->enforce();
 
 
 		if (is_numeric($reference_ID)) {
@@ -1301,9 +1329,7 @@ class YARPP {
 		extract($this->parse_args($args, $options));
 
 		$cache_status = $this->active_cache->enforce($reference_ID);
-		if ($cache_status === YARPP_DONT_RUN || $cache_status === YARPP_NO_RELATED) {
-			return array();
-		}
+		if ( in_array($cache_status, array(YARPP_DONT_RUN, YARPP_NO_RELATED), true)) return array();
 					
 		/* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);
@@ -1339,7 +1365,6 @@ class YARPP {
 	public function related_exist($reference_ID = null, $args = array()) {
 		// Avoid infinite recursion here.
 		if ($this->do_not_query_for_related()) return false;
-		$this->enforce();	
 	
 		if (is_numeric($reference_ID)) {
 			$reference_ID = (int) $reference_ID;
@@ -1353,10 +1378,9 @@ class YARPP {
 		$this->setup_active_cache($args);
 	
 		$cache_status = $this->active_cache->enforce($reference_ID);
-	
-		if ($cache_status === YARPP_NO_RELATED) {
-			return false;
-		}
+
+		if (in_array($cache_status, array(YARPP_DONT_RUN, YARPP_NO_RELATED), true)) return false;
+
 
         /* Get ready for YARPP TIME! */
 		$this->active_cache->begin_yarpp_time($reference_ID, $args);

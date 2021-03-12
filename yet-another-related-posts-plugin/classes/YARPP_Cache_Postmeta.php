@@ -167,7 +167,16 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 		global $wpdb;
 
 		$original_related = $this->related($reference_ID);
-		$related = $wpdb->get_results($this->sql($reference_ID), ARRAY_A);
+		$related = $this->query_safely(
+			'get_results',
+			array(
+				$this->sql($reference_ID),
+				ARRAY_A
+			)
+		);
+		if($related instanceof WP_Error){
+			return YARPP_DONT_RUN;
+		}
 		$new_related = wp_list_pluck( $related, 'ID' );
 
 		if ( count($new_related) ) {

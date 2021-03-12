@@ -47,8 +47,14 @@
                 <?php wp_nonce_field( 'update_yarpp', 'update_yarpp-nonce' ); ?>
             </div>
             <br><br>
+            <div class="" id="display_notices" style="display: none;">
+            </div>
             <div>
-                <p><input type="button" name="yarpp-clear-cache" id="yarpp-clear-cache" class="button-secondary" value="<?php _e("Empty cache", 'yarpp'); ?>"> <label for="yarpp-clear-cache"><small><?php _e('Use this button to manually clear YARPP cache', 'yarpp'); ?></small></label></p>
+                <p>
+                    <input type="button" name="yarpp-clear-cache" id="yarpp-clear-cache" class="button-secondary" value="<?php _e("Empty cache", 'yarpp'); ?>">
+                    <span id="yarpp-clear-cache-label"><small><?php _e('Use this button to manually clear YARPP cache', 'yarpp'); ?></small></span>
+                    <span class="spinner" style="float: none;"></span>
+               </p>
                 <?php wp_nonce_field( 'clear_cache_yarpp', 'clear_cache-nonce' ); ?>
             </div>
 
