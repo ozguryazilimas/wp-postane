@@ -393,8 +393,8 @@ body.rtl #yarpp-optin-learnmore {
 .yarpp-callout{
 	margin: 5px 0 15px;
 	border: 1px solid #ccd0d4;
-	border-left-width:4px;
-	padding:1px 12px;
+	border-left-width: 4px;
+	padding: 1px 12px;
 }
 .yarpp-notice{
 	border-left-color:#ffb900;;

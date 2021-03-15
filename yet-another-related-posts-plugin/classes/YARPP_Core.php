@@ -438,9 +438,10 @@ class YARPP {
 	public function diagnostic_big_db(){
 		global $wpdb;
 		if(! defined('YARPP_BIG_DB')){
-			define('YARPP_BIG_DB', 2000);
+			define('YARPP_BIG_DB', 5000);
 		}
 		$sql = 'SELECT count(*) FROM ' . $wpdb->posts;
+		// Note: count includes drafts, revisions, etc
 		$posts_count = $wpdb->get_var($sql);
 		return (int)$posts_count > YARPP_BIG_DB;
 	}
