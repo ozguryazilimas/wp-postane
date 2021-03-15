@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-class FoundedImage {
+abstract class FoundedImage {
 
 	/**
 	 * @var string
@@ -52,26 +52,16 @@ class FoundedImage {
 	 * @param array $more_info
 	 */
 	public function __construct( $item, $more_info = [] ) {
-		$this->link           = $item['link'] ?? '';
-		$this->title          = $item['title'] ?? '';
-		$this->context_link   = $item['image']['contextLink'] ?? '';
-		$this->thumbnail_link = $item['image']['thumbnailLink'] ?? '';
-
-		$this->image         = new \stdClass();
-		$this->image->mime   = $item['mime'] ?? '';
-		$this->image->size   = $item['image']['byteSize'] ?? '';
-		$this->image->width  = $item['image']['width'] ?? '';
-		$this->image->height = $item['image']['height'] ?? '';
-
-
-		preg_match_all( '/.*\/(.*)\.(\w{3,4})?(\?|\/.*)?$/', $this->link, $match );
-
-		$this->file       = new \stdClass();
-		$this->file->name = $match[1][0] ?? '';
-		$this->file->ext  = $match[2][0] ?? '';
-
-		$this->more_info = $more_info;
+		$this->parse( $item, $more_info );
 	}
+
+	/**
+	 * Parse image data
+	 *
+	 * @param array $item
+	 * @param array $more_info
+	 */
+	abstract protected function parse( $item, $more_info = [] );
 
 	/**
 	 * @param string $path_to

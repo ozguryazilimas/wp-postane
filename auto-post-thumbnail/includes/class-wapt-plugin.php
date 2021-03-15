@@ -1,5 +1,8 @@
 <?php
 
+use WBCR\APT;
+use WBCR\APT\PostImagesPro;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -12,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WAPT_Plugin extends Wbcr_Factory444_Plugin {
+class WAPT_Plugin extends Wbcr_Factory445_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory444_Plugin
+	 * @var Wbcr_Factory445_Plugin
 	 */
 	private static $app;
 
@@ -59,13 +62,17 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 			$this->admin_scripts();
 		}
 
+		if ( $this->doing_rest_api() ) {
+			$this->apt = \WBCR\APT\AutoPostThumbnails::instance();
+		}
+
 		$this->global_scripts();
 	}
 
 	/**
 	 * Статический метод для быстрого доступа к интерфейсу плагина.
 	 *
-	 * @return Wbcr_Factory444_Plugin
+	 * @return Wbcr_Factory445_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -160,31 +167,32 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 		add_thickbox();
 		wp_enqueue_media();
 		wp_enqueue_script( 'apt-admin-script-thumbnail', WAPT_PLUGIN_URL . '/admin/assets/js/admin-thumbnail.js', [], false, true );
+
 		if ( isset( $_REQUEST['post'] ) ) {
 			$pid = $_REQUEST['post'];
 		} else {
 			$pid = '0';
 		}
-		wp_localize_script( 'apt-admin-script-thumbnail', 'apt_postid', $pid );
+		$action_column_get_thumbnails = apply_filters( 'wapt/get-thumbnails/action', "apt_get_thumbnail" );
 
-		$action_column_get_thumbnails = "apt_get_thumbnail";
-		$action_column_get_thumbnails = apply_filters( 'wapt/get-thumbnails/action', $action_column_get_thumbnails );
-		wp_localize_script( 'apt-admin-script-thumbnail', 'action_column_get_thumbnails', $action_column_get_thumbnails );
+		$localize = [
+			'postid'                       => $pid,
+			'action_column_get_thumbnails' => $action_column_get_thumbnails,
+		];
 
 		if ( is_admin() ) {
 			wp_enqueue_script( 'jquery-autocolumnlist', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery.autocolumnlist.js', [], false, true );
 			wp_enqueue_script( 'jquery-flex-images', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery.flex-images.min.js', [ 'jquery' ], false, true );
 			wp_enqueue_style( 'style', WAPT_PLUGIN_URL . '/admin/assets/css/style.css' );
 			wp_enqueue_style( 'flex-images', WAPT_PLUGIN_URL . '/admin/assets/css/jquery.flex-images.css' );
-			wp_localize_script( 'apt-admin-script-thumbnail', 'apt_thumb', [
-				'button_text' => __( 'Use as thumbnail', 'apt' ),
-				'modal_title' => __( 'Change featured image', 'apt' ),
-			] );
 
+			$localize['button_text'] = __( 'Use as thumbnail', 'apt' );
+			$localize['modal_title'] = __( 'Change featured image', 'apt' );
 		}
 
 		wp_enqueue_script( 'apt-admin-check_api', WAPT_PLUGIN_URL . '/admin/assets/js/check-api.js', array(), false, true );
 
+		wp_localize_script( 'apt-admin-script-thumbnail', 'apt', $localize );
 		//-----------------------------------
 		if ( 'settings_page_generate-post-thumbnails' != $hook_suffix ) {
 			return;
@@ -221,7 +229,7 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages443' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages444' ) ) {
 							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
 						}
 						if ( $redirect_url ) {
@@ -357,6 +365,7 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 	public function register_bulk_action_generate( $bulk_actions ) {
 		$bulk_actions['apt_generate_thumb'] = __( 'Generate featured image', 'apt' );
 		$bulk_actions['apt_delete_thumb']   = __( 'Unset featured image', 'apt' );
+		$bulk_actions['apt_add_images']     = __( 'Upload post images', 'apt' );
 
 		return $bulk_actions;
 	}
@@ -367,18 +376,20 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 	 * @return string
 	 */
 	public function bulk_action_generate_handler( $redirect_to, $doaction, $post_ids ) {
-		if ( $doaction !== 'apt_generate_thumb' && $doaction !== 'apt_delete_thumb' ) {
-			return $redirect_to;
-		}
 
 		foreach ( $post_ids as $post_id ) {
 			switch ( $doaction ) {
+				case 'apt_add_images':
+					do_action( 'wapt/upload_and_replace_post_images', $post_id );
+					break;
 				case 'apt_generate_thumb':
 					$thumb = $this->apt->publish_post( $post_id );
 					break;
 				case 'apt_delete_thumb':
 					delete_post_thumbnail( $post_id );
 					break;
+				default:
+					return $redirect_to;
 			}
 		}
 
@@ -490,4 +501,30 @@ class WAPT_Plugin extends Wbcr_Factory444_Plugin {
 		return $links;
 	}
 
+	/**
+	 * Checks if the current request is a WP REST API request.
+	 *
+	 * Case #1: After WP_REST_Request initialisation
+	 * Case #2: Support "plain" permalink settings
+	 * Case #3: URL Path begins with wp-json/ (your REST prefix)
+	 *          Also supports WP installations in subfolders
+	 *
+	 * @author matzeeable https://wordpress.stackexchange.com/questions/221202/does-something-like-is-rest-exist
+	 * @return boolean
+	 */
+	public function doing_rest_api() {
+		$prefix     = rest_get_url_prefix();
+		$rest_route = $this->request->get( 'rest_route', null );
+		if ( defined( 'REST_REQUEST' ) && REST_REQUEST // (#1)
+		     || ! is_null( $rest_route ) // (#2)
+		        && strpos( trim( $rest_route, '\\/' ), $prefix, 0 ) === 0 ) {
+			return true;
+		}
+
+		// (#3)
+		$rest_url    = wp_parse_url( site_url( $prefix ) );
+		$current_url = wp_parse_url( add_query_arg( [] ) );
+
+		return strpos( $current_url['path'], $rest_url['path'], 0 ) === 0;
+	}
 }

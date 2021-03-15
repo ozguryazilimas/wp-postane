@@ -47,26 +47,31 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
 </div>
 
 <style>
-    sup {
+    sup
+    {
         font-size: 10px;
     }
 
-    .tabs {
+    .tabs
+    {
         display: inline-block;
         width: 100%;
         margin: 5px 0px 10px 0px;
     }
 
-    .tabs > div {
+    .tabs > div
+    {
         padding-top: 10px;
     }
 
-    .tabs > ul {
+    .tabs > ul
+    {
         margin: 0px;
         padding: 0px;
     }
 
-    .tabs > ul:after {
+    .tabs > ul:after
+    {
         content: "";
         display: block;
         clear: both;
@@ -74,66 +79,76 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
         background: #008ec2;
     }
 
-    .tabs > ul li {
-        padding: 0px;
+    .tabs > ul li
+    {
         cursor: pointer;
         display: block;
         float: left;
-        padding: 10px 0px;
+        padding: 10px 0;
         background: #f1f1f1;
         color: #0073aa;
         width: 15%;
-        border-radius: 10px 10px 0px 0px;
+        border-radius: 10px 10px 0 0;
         font-weight: bold;
         text-align: center;
     }
 
-    .tabs > ul li.active, .tabs ul li.active:hover {
+    .tabs > ul li.active, .tabs ul li.active:hover
+    {
         background: #008ec2;
         color: #ffffff;
         width: 15%;
     }
 
-    .tabs > ul li:hover {
+    .tabs > ul li:hover
+    {
         background: #008ec2;
         color: #dddddd;
     }
 
-    .tabs > ul li {
+    .tabs > ul li
+    {
         margin-bottom: 0;
     }
 
-    .tab {
+    .tab
+    {
         padding: 10px;
     }
 
-    #ajaxloader {
+    #ajaxloader
+    {
         margin: 20px 10px 10px 30px;
     }
 
-    #page_num_div {
+    #page_num_div
+    {
         display: inline;
         font-weight: bold;
         padding: 20px;
     }
 
-    .apt_pages {
+    .apt_pages
+    {
         padding-top: 20px;
     }
 
-    .divform {
+    .divform
+    {
         line-height: 1.5;
         margin: 1em 0;
         max-width: 500px;
         position: relative;
     }
 
-    .input_query {
+    .input_query
+    {
         width: 100%;
         padding: 7px 32px 7px 9px;
     }
 
-    .submit_button {
+    .submit_button
+    {
         height: 90%;
         width: 70px;
         border: 0;
@@ -144,7 +159,8 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
         outline: 0;
     }
 
-    .custom-media-button {
+    .custom-media-button
+    {
         float: right;
         padding: 0px 20px 20px 0px;
         position: absolute;
@@ -199,6 +215,7 @@ $apt_content_nonce = wp_create_nonce( 'apt_content' );
             };
             return this.each(createTabs);
         };
+
         jQuery(".tabs").lightTabs();
 
         jQuery("#ajax-watson").on('click', function () {

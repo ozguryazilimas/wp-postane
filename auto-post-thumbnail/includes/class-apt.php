@@ -92,13 +92,27 @@ class AutoPostThumbnails {
 	 * Initiate all required hooks.
 	 */
 	private function init() {
-		$apt_ag = \WAPT_Plugin::app()->getOption( 'auto_generation' );
+		$is_auto_generate   = \WAPT_Plugin::app()->getOption( 'auto_generation' );
+		$is_auto_upload     = \WAPT_Plugin::app()->getOption( 'auto_upload_images' );
+		$allowed_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'import_post_types', 'posts' ) );
 
-		if ( $apt_ag ) {
+		add_filter( 'mime_types', [ $this, 'allow_upload_webp' ] );
+
+		if ( $is_auto_upload && \WAPT_Plugin::app()->is_premium() ) {
+			add_filter( 'wp_insert_post_data', [ $this, 'auto_upload' ], 10, 2 );
+
+			// This hook handle update post via rest api. for example Wordpress mobile apps
+			foreach ( $allowed_post_types as $post_type ) {
+				add_action( "rest_after_insert_{$post_type}", [ $this, 'auto_upload' ], 10, 1 );
+			}
+		}
+
+		if ( $is_auto_generate ) {
 			//add_action( 'publish_post', [ $this, 'publish_post' ], 10, 1 );
 			add_action( 'save_post', [ $this, 'publish_post' ], 10, 3 );
 			// This hook handle update post via rest api. for example Wordpress mobile apps
-			add_action( 'rest_api_inserted_post', [ $this, 'publish_post' ], 10, 1 );
+			add_action( 'rest_after_insert_post', [ $this, 'rest_after_insert' ], 10, 3 );
+			add_action( 'rest_after_insert_page', [ $this, 'rest_after_insert' ], 10, 3 );
 			// This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
 			add_action( 'transition_post_status', [ $this, 'check_required_transition' ], 10, 3 );
 		} else {
@@ -129,6 +143,12 @@ class AutoPostThumbnails {
 		add_action( 'wp_ajax_hide_notice_auto_generation', [ $this, 'hide_notice_auto_generation' ] );
 	}
 
+	public function allow_upload_webp( $existing_mimes ) {
+		$existing_mimes['webp'] = 'image/webp';
+
+		return $existing_mimes;
+	}
+
 	/**
 	 * Get posts id's
 	 *
@@ -141,14 +161,17 @@ class AutoPostThumbnails {
 		check_ajax_referer( 'get-posts' );
 
 		$generate = \WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
-		if ( $generate == 'find' ) {
-			$auto_generate = false;
-		} else if ( $generate == 'generate' || $generate == 'both' ) {
-			$auto_generate = true;
-		} else {
-			$auto_generate = false;
+		switch ( $generate ) {
+			case 'generate':
+			case 'both':
+			case 'google':
+			case 'find_google':
+				$auto_generate = true;
+				break;
+			default:
+				$auto_generate = false;
+				break;
 		}
-
 
 		$has_thumb = (bool) $_POST['withThumb'];
 		$type      = $_POST['posttype'];
@@ -170,8 +193,8 @@ class AutoPostThumbnails {
 			foreach ( $query->posts as $post ) {
 				//если запрошены посты без тамбнеила, значит пользователь хочет сгенерировать их
 				if ( ! $has_thumb ) {
-					$images = $this->get_images_from_post( $post->ID );
-					if ( ( isset( $images['urls'] ) && count( $images['urls'] ) ) || $auto_generate ) {
+					$images = new \WBCR\APT\PostImages( $post->ID );
+					if ( ( $images->is_images() && $images->count_images() ) || $auto_generate ) {
 						$ids[] = $post->ID;
 					}
 				} else //иначе он хочет удалить тамбнэйлы
@@ -320,95 +343,54 @@ class AutoPostThumbnails {
 	}
 
 	/**
-	 * Get an array of images url, contained in the post
-	 *
-	 * @param $post_id
-	 *
-	 * @return array
-	 */
-	public function get_images_from_post( $post_id ) {
-		$post = get_post( $post_id );
-
-		// Initialize variable used to store list of matched images as per provided regular expression
-		$matches = [];
-		$images  = [];
-
-		//do shortcodes before search images
-		$post_content = do_shortcode( $post->post_content );
-
-		// Get all images from post's body
-		preg_match_all( '/<\s*img .*?src\s*=\s*[\"\']?([^\"\'> ]*).*?>/i', $post_content, $matches );
-
-		if ( count( $matches ) ) {
-			foreach ( $matches[0] as $key => $image ) {
-				// Make sure to assign correct title to the image. Extract it from img tag
-				preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\""\']?([^\""\'>]*)/i', $image, $matchesTitle );
-
-				if ( count( $matchesTitle ) && isset( $matchesTitle[1] ) && isset( $matchesTitle[1][ $key ] ) ) {
-					$images['titles'][] = $matches[1][ $key ];
-				}
-
-				$images['tags'][] = htmlspecialchars( $image );
-				$images['urls'][] = $matches[1][ $key ];
-			}
-		}
-
-		return $images;
-	}
-
-	/**
 	 * Get thumbnail id for image
 	 *
-	 * @param string $image
-	 * @param string $url
+	 * @param array $image
 	 *
 	 * @return bool|int
 	 */
-	public function get_thumbnail_id( $image, $url ) {
+	public function get_thumbnail_id( $image ) {
 		global $wpdb;
+		$thumb_id = 0;
 
 		/**
 		 * If the image is from the WordPress own media gallery, then it appends the thumbnail id to a css class.
 		 * Look for this id in the IMG tag.
 		 */
-		preg_match( '/wp-image-([\d]*)/i', $image, $thumb_id );
+		if ( isset( $image['tag'] ) && ! empty( $image['tag'] ) ) {
+			preg_match( '/wp-image-([\d]*)/i', $image['tag'], $thumb_id );
 
-		if ( $thumb_id ) {
-			$thumb_id = $thumb_id[1];
-		}
+			if ( $thumb_id ) {
+				$thumb_id = $thumb_id[1];
 
-		if ( ! get_post( $thumb_id ) ) {
-			$thumb_id = false;
-		}
-
-		// If thumb id is not found, try to look for the image in DB. Thanks to "Erwin Vrolijk" for providing this code.
-		if ( ! $thumb_id ) {
-			//$image  = substr( $image, strpos( $image, '"' ) + 1 );
-			$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE guid = '%" . $url . "%'" );
-			if ( $result ) {
-				$thumb_id = $result[0]->ID;
-			}
-		}
-
-		// Still no id found? Try found by post_name
-		if ( ! $thumb_id ) {
-			if ( isset( $image ) && ! empty( $image ) ) {
-				$image_url = trim( $image );
-				$_parts    = explode( '/', $image_url );
-				$image_url = array_pop( $_parts );
-				$_parts    = explode( '.', $image_url );
-				$image_url = array_shift( $_parts );
-
-				if ( $image_url ) {
-					$result = $wpdb->get_results( "SELECT ID FROM {$wpdb->posts} WHERE post_name = '" . $image_url . "' AND post_type = 'attachment'" );
-					if ( $result ) {
-						$thumb_id = $result[0]->ID;
-					}
+				if ( ! get_post( $thumb_id ) ) {
+					$thumb_id = false;
 				}
 			}
 		}
 
+		if ( ! $thumb_id ) {
+			// If thumb id is not found, try to look for the image in DB.
+			if ( isset( $image['url'] ) && ! empty( $image['url'] ) ) {
+				$image_url = $image['url'];
+				//если ссылка на миниатюру, то регулярка сделает ссылку на оригинал. убирает в конце названия файла -150x150
+				$image_url = preg_replace( '/-[0-9]{1,}x[0-9]{1,}\./', '.', $image_url );
+				$thumb_id  = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE '%" . esc_sql( $image_url ) . "%'" );
+			}
+		}
+
 		return is_numeric( $thumb_id ) ? $thumb_id : false;
+	}
+
+	/**
+	 * @param \WP_Post $post
+	 * @param \WP_REST_Request $request
+	 * @param bool $is_insert
+	 *
+	 * @throws Exception
+	 */
+	public function rest_after_insert( $post, $request, $is_insert ) {
+		$this->publish_post( $post->ID, $post, ! $is_insert );
 	}
 
 	/**
@@ -436,39 +418,32 @@ class AutoPostThumbnails {
 		}
 		// First check whether Post Thumbnail is already set for this post.
 		$_thumbnail_id = get_post_meta( $post_id, '_thumbnail_id', true );
-		if ( $_thumbnail_id && $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE id = '$_thumbnail_id' AND post_type = 'attachment'" ) || get_post_meta( $post_id, 'skip_post_thumb', true ) ) {
+		if ( $_thumbnail_id && $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE id = '" . esc_sql( $_thumbnail_id ) . "' AND post_type = 'attachment'" ) || get_post_meta( $post_id, 'skip_post_thumb', true ) ) {
 			return 0;
 		}
 
 		$thumb_id  = 0;
 		$autoimage = \WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
-		$images    = $this->get_images_from_post( $post_id );
-		if ( ( isset( $images['tags'] ) && count( $images['tags'] ) ) && $autoimage !== 'generate' && $autoimage !== 'google' ) {
 
-			foreach ( $images['tags'] as $key => $image ) {
-				$thumb_id = $this->get_thumbnail_id( $image, $images['urls'][ $key ] );
+		$images = new \WBCR\APT\PostImages( $post_id );
+		if ( ( $images->is_images() && $images->count_images() ) && $autoimage !== 'generate' && $autoimage !== 'google' ) {
+
+			foreach ( $images->get_images() as $image ) {
+				$thumb_id = $this->get_thumbnail_id( $image );
 				// If we succeed in generating thumb, let's update post meta
 				if ( $thumb_id ) {
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
-
-					return $thumb_id;
 				} else {
-					$thumb_id = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE '%" . $images['urls'][ $key ] . "%'" );
-					if ( $thumb_id ) {
-						update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
+					if ( \WAPT_Plugin::app()->is_premium() ) {
+						$thumb_id = apply_filters( 'wapt/generate_post_thumb', $image, $post_id );
 
-						return $thumb_id ? $thumb_id : 0;
-					} else {
-						if ( \WAPT_Plugin::app()->is_premium() ) {
-							$thumb_id = apply_filters( 'wapt/generate_post_thumb', $images['urls'][ $key ], $post_id );
-						}
 						if ( $thumb_id ) {
 							update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
-
-							return $thumb_id;
 						}
 					}
 				}
+
+				return $thumb_id;
 			}
 		} else {
 			// создаём свою картинку с заголовком на цветном фоне
@@ -494,6 +469,22 @@ class AutoPostThumbnails {
 		}
 
 		return $thumb_id;
+	}
+
+	/**
+	 * Function to save first image in post as post thumbnail.
+	 *
+	 * @param \WP_Post|array $post
+	 * @param array $postarr
+	 */
+	public function auto_upload( $data, $postarr ) {
+		$allowed_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'import_post_types', '' ) );
+
+		if ( isset( $data['post_type'] ) && in_array( $data['post_type'], $allowed_post_types ) ) {
+			$data = apply_filters( 'wapt/upload_and_replace_post_images', $data );
+		}
+
+		return $data;
 	}
 
 	/**
@@ -547,17 +538,16 @@ class AutoPostThumbnails {
 	/**
 	 * Fetch image from URL and generate required thumbnails.
 	 *
-	 * @param $matches
-	 * @param $key
-	 * @param $post_content
-	 * @param $post_id
+	 *
+	 * @param string $image
+	 * @param string $title
+	 * @param int $post_id
 	 *
 	 * @return int|WP_Error|null
 	 */
-	public function generate_post_thumb( $image_url, $title, $post_id ) {
+	public function generate_post_thumb( $image, $title, $post_id ) {
 		// Get the URL now for further processing
-		//$imageUrl = $matches[1][ $key ];
-		$imageUrl   = $image_url;
+		$imageUrl   = $image;
 		$imageTitle = $title;
 
 		// Get the file name
@@ -690,32 +680,19 @@ class AutoPostThumbnails {
 				if ( isset( $_POST['thumbnail_id'] ) && ! empty( $_POST['thumbnail_id'] ) ) {
 					$thumb_id = intval( $_POST['thumbnail_id'] );
 
-					if ( $thumb_id == - 1 ) //generate image
-					{
-						switch ( $_POST['feature'] ) {
-
-							case 'from_meaning':
-
-								break;
-
-							default:
-								$thumb_id = $this->generate_and_attachment( $post_id );
-
-						}
+					if ( $thumb_id == - 1 ) {
+						//generate image
+						$thumb_id = $this->generate_and_attachment( $post_id );
 					}
 				} else if ( isset( $_POST['image'] ) && ! empty( $_POST['image'] ) ) {
 					$img = $_POST['image'];
 
-					//Совместимость с NexGen
+					//Совместимость с NextGen
 					$img = preg_replace( '/(thumbs\/thumbs_)/', '.', $img );
 
-					global $wpdb;
-					$thumb_id = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE '" . $img . "'" );
-					if ( ! $thumb_id ) {
-						//если ссылка на миниатюру, то регулярка сделает ссылку на оригинал. убирает в конце названия файла -150x150
-						$img      = preg_replace( '/-[0-9]{1,}x[0-9]{1,}\./', '.', $img );
-						$thumb_id = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE '" . $img . "'" );
-					}
+					//Find image in medialibrary
+					$thumb_id = $this->get_thumbnail_id( [ 'url' => $img ] );
+
 					if ( ! $thumb_id ) {
 						$thumb_id = $this->generate_post_thumb( $img, '', $post_id );
 					}
@@ -761,7 +738,7 @@ class AutoPostThumbnails {
 		$wpnonce    = wp_create_nonce( 'set_post_thumbnail-' . $post_id );
 		$ajaxloader = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader.gif";
 		$content    = "";
-		$html       = "<a title='{$title}' href='#' class='modal-init-js' id='modal-init-js_{$post_id}' " . "onclick='return window.aptModalShow(this, {$post_id}, \"$wpnonce\");'>{$imgTag}</a>" . "<span id='loader_{$post_id}' style='display:none;'><img src='{$ajaxloader}' width='100px' alt=''></span>" . "<div id='post_imgs_{$post_id}' class='imgs' style='display:none;'>" . "<span style='display:none;'><img src='{$ajaxloader}' alt=''></span><p>{$content}</p></div>";
+		$html       = "<a title='{$title}' href='#' class='modal-init-js' id='modal-init-js_{$post_id}' " . "onclick='return window.aptModalShow(this, {$post_id}, \"$wpnonce\");'>{$imgTag}</a>" . "<span id='loader_{$post_id}' style='display:none;'><img src='{$ajaxloader}' width='100px' alt=''></span>" . "<div id='post_imgs_{$post_id}' class='imgs' style='display:none;'>" . "<span style='display:none;'><img src='{$ajaxloader}' alt=''></span><div>{$content}</div></div>";
 
 		return $html;
 	}
@@ -1236,7 +1213,7 @@ class AutoPostThumbnails {
 		// Move the file to the uploads dir
 		$image = apply_filters( 'wapt/generate/image', $this->generate_image_with_text( $post->post_title, $uploads['path'] . "/$filename", $extension ), $post->post_title, $uploads['path'] . "/$filename", $extension );
 
-		$thumb_id = $this->insert_attachment( $post, $file_path, $mime_type );
+		$thumb_id = self::insert_attachment( $post, $file_path, $mime_type );
 
 		if ( ! is_wp_error( $thumb_id ) ) {
 			return $thumb_id;
@@ -1255,13 +1232,20 @@ class AutoPostThumbnails {
 	 *
 	 * @return int|WP_Error
 	 */
-	public function insert_attachment( $post, $file_path, $mime_type ) {
+	public static function insert_attachment( $post, $file_path, $mime_type = '' ) {
 		if ( is_int( $post ) ) {
 			$post = get_post( $post, 'OBJECT' );
 		}
 
 		if ( ! $post ) {
 			return new WP_Error( 'apt_attachment', 'Post not found (insert_attachment)' );
+		}
+
+		if ( empty( $mime_type ) ) {
+			$mime_type = wp_get_image_mime( $file_path );
+			if ( ! $mime_type ) {
+				$mime_type = 'image/jpeg';
+			}
 		}
 
 		$file_url = str_replace( wp_get_upload_dir()['basedir'], wp_get_upload_dir()['baseurl'], $file_path );

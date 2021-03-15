@@ -40,7 +40,7 @@ require_once(FACTORY_FEEDBACK_109_DIR . '/includes/class-base.php');
 require_once(FACTORY_FEEDBACK_109_DIR . '/includes/class-rest-request.php');
 
 /**
- * @param Wbcr_Factory444_Plugin $plugin
+ * @param Wbcr_Factory445_Plugin $plugin
  */
 add_action('wbcr_factory_feedback_109_plugin_created', function ($plugin) {
 	new WBCR\Factory_Feedback_109\Base($plugin);

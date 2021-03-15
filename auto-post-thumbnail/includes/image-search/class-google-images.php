@@ -86,7 +86,7 @@ class GoogleImages implements ImageSearch {
 			$error = $response['error']['message'];
 		} elseif ( isset( $response['items'] ) && is_array( $response['items'] ) ) {
 			foreach ( $response['items'] as $item ) {
-				$image = new FoundedImage( $item );
+				$image = new GoogleFoundedImage( $item );
 
 				$images[] = $image;
 			}

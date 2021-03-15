@@ -1,5 +1,7 @@
 <?php
+
 use WBCR\APT\AutoPostThumbnails;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -41,14 +43,14 @@ class WAPT_Settings extends WAPT_Page {
 	 * @param WAPT_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
-		$this->id            = $plugin->getPrefix(). "settings";
+		$this->id            = $plugin->getPrefix() . "settings";
 		$this->menu_target   = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
 		$this->page_title    = __( 'Settings of APT', 'apt' );
 		$this->menu_title    = __( 'Settings', 'apt' );
 		$this->capabilitiy   = "manage_options";
 		$this->template_name = "settings";
 
-		add_action( 'wbcr_factory_forms_441_register_controls', function () {
+		add_action( 'wbcr_factory_forms_442_register_controls', function () {
 			$colorControls = array(
 				[
 					'type'    => 'wapt-color',
@@ -75,6 +77,26 @@ class WAPT_Settings extends WAPT_Page {
 	}
 
 	/**
+	 * Enqueue page assets
+	 *
+	 * @return void
+	 * @since 3.8.1
+	 * @see   Wbcr_FactoryPages444_AdminPage
+	 *
+	 */
+	public function assets( $scripts, $styles ) {
+		parent::assets( $scripts, $styles );
+
+		$this->scripts->request( [
+			'control.list',
+		], 'bootstrap' );
+
+		$this->styles->request( [
+			'control.list'
+		], 'bootstrap' );
+	}
+
+	/**
 	 * Returns options for the Basic Settings screen.
 	 *
 	 * @return array
@@ -87,7 +109,7 @@ class WAPT_Settings extends WAPT_Page {
 
 		$options[] = [
 			'type' => 'html',
-			'html' => '<h3 style="margin-left:0">General</h3>'
+			'html' => '<h3 style="margin-left:0">' . __( 'General', 'apt' ) . '</h3>'
 		];
 
 		$options[] = [
@@ -104,19 +126,19 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
-			'type'    => 'dropdown',
-			'way'     => 'buttons',
-			'name'    => 'generate_autoimage',
-			'data'    => [
+			'type'     => 'dropdown',
+			'way'      => 'buttons',
+			'name'     => 'generate_autoimage',
+			'data'     => [
 				[ 'find', __( 'Find in post', 'apt' ) ],
 				[ 'generate', __( 'Generate from title', 'apt' ) ],
 				[ 'both', __( 'Find or generate', 'apt' ) ],
 				[ 'google', __( 'Google', 'apt' ) ],
 				[ 'find_google', __( 'Find or Google', 'apt' ) ],
 			],
-			'default' => 'find',
-			'title'   => __( 'Featured image', 'apt' ),
-			'hint'    => __( "How to generate featured image:
+			'default'  => 'find',
+			'title'    => __( 'Featured image', 'apt' ),
+			'hint'     => __( "How to generate featured image:
 							<br> <b>Find in post:</b> search for the first image in the post text
 							<br> <b>Generate from title:</b> created from the title on a colored background
 							<br> <b>Find or generate:</b> find an image in the post text, if it is not present, generate it from the title
@@ -132,6 +154,68 @@ class WAPT_Settings extends WAPT_Page {
 			'title'   => __( 'Delete settings when removing the plugin', 'apt' ),
 			'default' => false,
 			'hint'    => __( 'Delete settings when removing the plugin', 'apt' )
+		];
+
+		return $options;
+	}
+
+	/**
+	 * Returns options for the Basic Settings screen.
+	 *
+	 * @return array
+	 * @since 3.8.1
+	 */
+	public function getOptions_import() {
+		$is_premium = WAPT_Plugin::app()->is_premium();
+		$pro        = $is_premium ? '' : "<br><span class='wapt-icon-pro wapt-icon-pro-span'>PRO</span>";
+
+		$args = [ 'public' => true ];
+
+		if ( $this->plugin->isNetworkActive() ) {
+			$args['_builtin'] = true;
+		}
+		$types = get_post_types( $args, 'objects' );
+
+		$post_types = [];
+		foreach ( $types as $type_name => $type ) {
+			if ( $type_name == 'attachment' ) {
+				continue;
+			}
+
+			$post_types[] = [ $type_name, $type->label ];
+		}
+
+		$options = [];
+
+		$options[] = [
+			'type' => 'html',
+			'html' => '<h3 style="margin-left:0">' . __( 'Images import settings', 'apt' ) . '</h3>'
+		];
+
+		$options[] = [
+			'type' => 'separator'
+		];
+
+		$options[] = [
+			'type'     => 'checkbox',
+			'way'      => 'buttons',
+			'name'     => 'auto_upload_images',
+			'title'    => __( 'Auto images import', 'apt' ),
+			'default'  => false,
+			'hint'     => __( 'Import post images to the media library and replacing them in the text when saving the post', 'apt' ),
+			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
+		];
+
+		$options[] = [
+			'type'      => 'list',
+			'way'       => 'checklist',
+			'name'      => 'import_post_types',
+			'data'      => $post_types,
+			'default'   => '',
+			'title'     => __( 'Import for post types', 'apt' ) . $pro,
+			'hint'      => __( "What types of posts to import images for", 'apt' ),
+			'cssClass'  => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
+			'htmlAttrs' => ( ! $is_premium ) ? [ 'disabled' => 'disabled' ] : [],
 		];
 
 		return $options;
@@ -497,17 +581,20 @@ class WAPT_Settings extends WAPT_Page {
 		wp_enqueue_script( 'wapt-settings-script', WAPT_PLUGIN_URL . '/admin/assets/js/settings.js', [], WAPT_PLUGIN_VERSION, true );
 		// creating a form
 		global $form;
-		$form = new Wbcr_FactoryForms441_Form( [
+		$form = new Wbcr_FactoryForms442_Form( [
 			'scope' => substr( $this->plugin->getPrefix(), 0, - 1 ),
 			'name'  => 'setting'
 		], $this->plugin );
 
-		$form->setProvider( new Wbcr_FactoryForms441_OptionsValueProvider( $this->plugin ) );
+		$form->setProvider( new Wbcr_FactoryForms442_OptionsValueProvider( $this->plugin ) );
 
 		$wapt_tab = WAPT_Plugin::app()->request->get( 'apt_tab', '' );
 		switch ( $wapt_tab ) {
 			case 'general':
 				$form->add( $this->getOptions_general() );
+				break;
+			case 'import':
+				$form->add( $this->getOptions_import() );
 				break;
 			case 'img_generation':
 				$form->add( $this->getOptions_image() );

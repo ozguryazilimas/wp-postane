@@ -120,15 +120,23 @@ a:active, a:focus {
     margin: -0.25em 0.4em 0 0;
 }
 
-.icon-general:before {
+.icon-general:before
+{
     content: url(../img/settings-icon.png);
 }
 
-.icon-image:before {
+.icon-import:before
+{
+    content: url(../img/import-icon.png);
+}
+
+.icon-image:before
+{
     content: url(../img/image-icon.png);
 }
 
-.icon-api:before {
+.icon-api:before
+{
     content: url(../img/api-icon.png);
 }
 

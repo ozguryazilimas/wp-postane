@@ -2,7 +2,7 @@
     padding: 0px 30px;
 }
 
-.factory-bootstrap-444 .factory-ajax-loader {
+.factory-bootstrap-445 .factory-ajax-loader {
     width: 120px !important;
     background: url("../img/ajax-loader-line.gif") no-repeat center center !important;
     background-size: contain !important;
@@ -12,7 +12,7 @@
     top: 5px;
 }
 
-.factory-bootstrap-444 select.form-control {
+.factory-bootstrap-445 select.form-control {
     display: inline;
     background: #fff url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E) no-repeat right 5px top 55%;
     background-size: 16px 16px !important;
@@ -23,7 +23,7 @@
     font-size: 16px !important;
 }
 
-.factory-bootstrap-444 .btn-default.active, .factory-bootstrap-444 .btn-default:active {
+.factory-bootstrap-445 .btn-default.active, .factory-bootstrap-445 .btn-default:active {
     text-shadow: none;
     color: #fff !important;
     background-color: #33aad5 !important;
@@ -82,6 +82,7 @@ div.control-group .btn-group {
 span.wapt-icon-pro,
 .wapt-icon-pro input[class*="factory-"]:before,
 .wapt-icon-pro button.factory-image:after,
+.wapt-icon-pro button.factory-off:after,
 .wapt-icon-pro-item button.factory-google:after,
 .wapt-icon-pro-item button.factory-find_google:after,
 .wapt-icon-pro ~ div.wapt-upload-div button.wapt-upload-button:after {
@@ -120,6 +121,7 @@ span.wapt-icon-pro {
 .wapt-icon-pro button[class*="factory-"],
 .wapt-icon-pro button[class*="wapt"],
 .wapt-icon-pro img,
+.wapt-icon-pro input[type="checkbox"],
 .wapt-icon-pro ~ div.wapt-upload-div button.wapt-upload-button,
 .wapt-icon-pro-item button[class*="factory-google"],
 .wapt-icon-pro-item button[class*="factory-find_google"] {

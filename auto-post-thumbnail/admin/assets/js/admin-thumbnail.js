@@ -26,28 +26,30 @@
         //Отображение окна со всеми картинками в тексте поста
         window.aptModalShow = function (that, postid, wpnonce) {
 
-            var $modal = $('#post_imgs_' + postid).find('> p');
+            var $modal = $('#post_imgs_' + postid).find('> div');
             var $ajaximg = $('#post_imgs_' + postid).find('> span');
             //$modal.html('');
-            $('.imgs').find('> p').html(''); //очистка всех модальных окон, чтобы исключить конфликты
+            $('.imgs').find('> div').html(''); //очистка всех модальных окон, чтобы исключить конфликты
 
-            tb_show(apt_thumb.modal_title, '/?TB_inline&inlineId=post_imgs_' + postid + '&width=620&height=500');
+            tb_show(apt.modal_title, '/?TB_inline&inlineId=post_imgs_' + postid + '&width=650&height=' + (window.innerHeight - 150));
+            //tb_show(apt.modal_title, '/?TB_inline&inlineId=post_imgs_' + postid + '&width=650&height=500');
 
             $ajaximg.show();
             // AJAX запрос для загрузки контента окна
             jQuery.post(ajaxurl, {
-                action: action_column_get_thumbnails,
+                action: apt.action_column_get_thumbnails,
                 post_id: postid,
                 _ajax_nonce: wpnonce,
-                cookie: encodeURIComponent(document.cookie)
             }).done(function (html) {
                 $ajaximg.hide();
                 $modal.html(html);
+                /*
                 $('#wapt_thumbs').autocolumnlist({
                     columns: 3,
                     classname: 'wapt-grid-item',
                     min: 1
                 });
+                */
             });
 
             //return false; // для ссылки

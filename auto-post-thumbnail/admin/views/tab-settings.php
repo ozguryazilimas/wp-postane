@@ -11,6 +11,12 @@ $TABS        = array(
 		'icon'    => 'icon-general',
 		'url'     => $current_url . "&apt_tab=general",
 	),
+	'import'         => array(
+		'current' => false,
+		'caption' => __( 'Import images', 'apt' ),
+		'icon'    => 'icon-import',
+		'url'     => $current_url . "&apt_tab=import",
+	),
 	'img_generation' => array(
 		'current' => false,
 		'caption' => __( 'Image generation', 'apt' ),
@@ -57,7 +63,7 @@ if ( isset( $_GET['apt_tab'] ) && ! empty( $_GET['apt_tab'] ) ) {
         <div class="content">
             <section id="section-<?php echo $current_tab; ?>">
                 <div class="wrap">
-                    <div class="factory-bootstrap-444 factory-fontawesome-000">
+                    <div class="factory-bootstrap-445 factory-fontawesome-000">
                         <div class="row">
                             <div class="col-md-8">
                                 <form method="post" class="form-horizontal">
