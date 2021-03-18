@@ -503,7 +503,7 @@ class ExactMetrics_Notifications {
 		$notifications_data = array(
 			'notifications' => $this->get_active_notifications(),
 			'dismissed'     => $this->get_dismissed_notifications(),
-			'view_url'      => $this->get_view_url(),
+			'view_url'      => $this->get_view_url( 'exactmetrics-report-overview', 'exactmetrics_reports' ),
 			'sidebar_url'   => $this->get_sidebar_url(),
 		);
 
@@ -515,11 +515,18 @@ class ExactMetrics_Notifications {
 	 *
 	 * @return string
 	 */
-	public function get_view_url() {
+	public function get_view_url( $scroll_to, $page, $tab='' ) {
+		$disabled   = exactmetrics_get_option( 'dashboards_disabled', false );
 
-		$disabled = exactmetrics_get_option( 'dashboards_disabled', false );
+		$url = add_query_arg( array(
+			'page' => $page,
+			'exactmetrics-scroll' => $scroll_to,
+			'exactmetrics-highlight' => $scroll_to,
+		), admin_url( 'admin.php' ) );
 
-		$url = add_query_arg( 'page', 'exactmetrics_reports', admin_url( 'admin.php' ) );
+		if ( ! empty( $tab ) ) {
+			$url .= '#/'. $tab;
+		}
 
 		if ( false !== $disabled ) {
 			$url = is_multisite() ? network_admin_url( 'admin.php?page=exactmetrics_network' ) : admin_url( 'admin.php?page=exactmetrics_settings' );

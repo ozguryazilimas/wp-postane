@@ -29,8 +29,9 @@ final class ExactMetrics_Notification_Upgrade_For_Email_Summaries extends ExactM
 		$notification['content'] = sprintf( __( 'Wouldn’t it be easy if you could get your website’s performance report in your email inbox every week? With our new feature, Email Summaries, you can now view all your important stats in a simple report that’s delivered straight to your inbox. <br><br>You get an overview of your site\'s performance without logging in to WordPress or going through different Analytics reports. %sUpgrade to ExactMetrics Pro%s to enable the Email Summaries feature.', 'google-analytics-dashboard-for-wp' ), '<a href="' . $this->get_upgrade_url() . '" target="_blank">', '</a>' );
 		$notification['btns']    = array(
 			"get_exactmetrics_pro" => array(
-				'url'  => $this->get_upgrade_url(),
-				'text' => __( 'Get ExactMetrics Pro', 'google-analytics-dashboard-for-wp' )
+				'url'           => $this->get_upgrade_url(),
+				'text'          => __( 'Get ExactMetrics Pro', 'google-analytics-dashboard-for-wp' ),
+				'is_external'   => true,
 			),
 		);
 

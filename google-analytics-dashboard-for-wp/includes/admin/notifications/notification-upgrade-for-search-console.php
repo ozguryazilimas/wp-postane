@@ -29,8 +29,9 @@ final class ExactMetrics_Notification_Upgrade_For_Search_Console extends ExactMe
 		$notification['content'] = sprintf( __( 'Do you want to find out which search terms from Google bring your site the most visitors? %sUpgrade to ExactMetrics PRO%s today and get access to the %sSearch Console Report%s and more directly in your WordPress admin.', 'google-analytics-dashboard-for-wp' ), '<a href="' . $this->get_upgrade_url() . '" target="_blank">', '</a>', '<a href="' . $this->build_external_link( 'https://www.exactmetrics.com/feature/search-console-report/' ) . '" target="_blank">', '</a>' );
 		$notification['btns']    = array(
 			"get_exactmetrics_pro" => array(
-				'url'  => $this->get_upgrade_url(),
-				'text' => __( 'Get ExactMetrics Pro', 'google-analytics-dashboard-for-wp' )
+				'url'           => $this->get_upgrade_url(),
+				'text'          => __( 'Get ExactMetrics Pro', 'google-analytics-dashboard-for-wp' ),
+				'is_external'   => true,
 			),
 		);
 

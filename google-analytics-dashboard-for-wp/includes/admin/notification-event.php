@@ -138,7 +138,24 @@ class ExactMetrics_Notification_Event {
 	 * @return string
 	 */
 	public function build_external_link( $url ) {
-		return wp_specialchars_decode( exactmetrics_get_url( 'exactmetrics-notifications-sidebar', 'notifications', $url ) );
+		$build_url   = wp_specialchars_decode( exactmetrics_get_url( 'exactmetrics-notifications-sidebar', 'notifications', $url ) );
+		$host        = parse_url( $build_url, PHP_URL_HOST );
+		$domain_name = preg_replace( '/^www\./', '', $host );
+
+		if ( 'exactmetrics.com' != $domain_name ) {
+			parse_str( parse_url( $build_url, PHP_URL_QUERY ), $queries );
+
+			if ( isset( $queries['utm_source'] ) ) {
+				$queries['utm_source'] = 'exactmetrics';
+			}
+
+			$build_url = add_query_arg(
+				$queries,
+				trailingslashit( $url )
+			);
+		}
+
+		return $build_url;
 	}
 
 	/**
@@ -146,8 +163,8 @@ class ExactMetrics_Notification_Event {
 	 *
 	 * @return string
 	 */
-	public function get_view_url() {
-		return ExactMetrics()->notifications->get_view_url();
+	public function get_view_url( $scroll_to, $page, $tab='' ) {
+		return ExactMetrics()->notifications->get_view_url( $scroll_to, $page, $tab );
 	}
 
 	/**

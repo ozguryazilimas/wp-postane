@@ -171,7 +171,6 @@ class ExactMetrics_Popular_Posts {
 
 		// Load Popular Posts styles.
 		wp_register_style( 'exactmetrics-popular-posts-style', plugins_url( 'assets/css/frontend' . $suffix . '.css', EXACTMETRICS_PLUGIN_FILE ), array(), exactmetrics_get_asset_version() );
-		wp_enqueue_style( 'exactmetrics-popular-posts-style' );
 
 		$this->add_theme_specific_styles();
 
@@ -237,6 +236,9 @@ class ExactMetrics_Popular_Posts {
 	 * @return string
 	 */
 	public function shortcode_output( $args ) {
+		// Load frontend.css file when shortcode is available
+		wp_enqueue_style( 'exactmetrics-popular-posts-style' );
+
 		if ( $this->ajaxify ) {
 			return $this->get_ajax_json_data( $args );
 		} else {

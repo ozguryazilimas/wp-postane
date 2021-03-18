@@ -29,8 +29,9 @@ final class ExactMetrics_Notification_Upgrade_For_Form_Conversion extends ExactM
 		$notification['content'] = sprintf( __( 'Forms are one of the most important points of interaction on your website. When a visitor fills out a form on your site, they’re taking the next step in their customer journey. That’s why it’s so crucial that your WordPress forms are optimized for conversions. Upgrade to %sExactMetrics Pro%s to track %sform conversions in Google Analytics.%s', 'google-analytics-dashboard-for-wp' ), '<a href="' . $this->get_upgrade_url() . '" target="_blank">', '</a>', '<a href="' . $this->build_external_link( 'https://www.exactmetrics.com/addon/forms/' ) . '" target="_blank">', '</a>' );
 		$notification['btns']    = array(
 			"get_exactmetrics_pro" => array(
-				'url'  => $this->get_upgrade_url(),
-				'text' => __( 'Get ExactMetrics Pro', 'google-analytics-dashboard-for-wp' )
+				'url'           => $this->get_upgrade_url(),
+				'text'          => __( 'Get ExactMetrics Pro', 'google-analytics-dashboard-for-wp' ),
+				'is_external'   => true,
 			),
 		);
 

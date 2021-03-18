@@ -30,8 +30,9 @@ final class ExactMetrics_Notification_Upgrade_To_Pro extends ExactMetrics_Notifi
 		$notification['content'] = __( 'By upgrading to ExactMetrics Pro you get access to additional reports right in your WordPress dashboard and advanced tracking features like eCommerce, Custom Dimensions, Forms tracking and more!', 'google-analytics-dashboard-for-wp' );
 		$notification['btns']    = array(
 			"upgrade_to_pro" => array(
-				'url'  => $this->get_upgrade_url(),
-				'text' => __( 'Upgrade to Pro', 'google-analytics-dashboard-for-wp' )
+				'url'           => $this->get_upgrade_url(),
+				'text'          => __( 'Upgrade to Pro', 'google-analytics-dashboard-for-wp' ),
+				'is_external'   => true,
 			),
 		);
 

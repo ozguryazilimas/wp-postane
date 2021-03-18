@@ -70,7 +70,7 @@ function exactmetrics_events_tracking() {
 	$track_user = exactmetrics_track_user();
 
 	if ( $track_user ) {
-		$tracking_mode = exactmetrics_get_option( 'tracking_mode', 'gtag' );
+		$tracking_mode = ExactMetrics()->get_tracking_mode();
 		if ( 'analytics' === $tracking_mode ) {
 			require_once plugin_dir_path( EXACTMETRICS_PLUGIN_FILE ) . 'includes/frontend/events/class-analytics-events.php';
 			new ExactMetrics_Analytics_Events();

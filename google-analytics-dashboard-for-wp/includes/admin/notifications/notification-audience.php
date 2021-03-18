@@ -35,12 +35,13 @@ final class ExactMetrics_Notification_Audience extends ExactMetrics_Notification
 		$notification['content'] = sprintf( __( 'Is your site properly translated? By adding translated content specific to your audience you could gain big boosts in pageviews, time spent on page and a reduced bounce rate.<br><br>If you need help choosing a translation plugin to get you started take a look at %sthis article%s for the best options available.', 'google-analytics-dashboard-for-wp' ), '<a href="' . $this->build_external_link( 'https://www.wpbeginner.com/showcase/9-best-translation-plugins-for-wordpress-websites/' ) . '" target="_blank">', '</a>' );
 		$notification['btns']    = array(
 			"view_report" => array(
-				'url'  => $this->get_view_url(),
+				'url'  => $this->get_view_url( 'exactmetrics-report-top-countries', 'exactmetrics_reports' ),
 				'text' => __( 'View Report', 'google-analytics-dashboard-for-wp' )
 			),
 			"learn_more"  => array(
-				'url'  => $this->build_external_link( 'https://www.wpbeginner.com/showcase/9-best-translation-plugins-for-wordpress-websites/' ),
-				'text' => __( 'Learn More', 'google-analytics-dashboard-for-wp' )
+				'url'           => $this->build_external_link( 'https://www.wpbeginner.com/showcase/9-best-translation-plugins-for-wordpress-websites/' ),
+				'text'          => __( 'Learn More', 'google-analytics-dashboard-for-wp' ),
+				'is_external'   => true,
 			),
 		);
 

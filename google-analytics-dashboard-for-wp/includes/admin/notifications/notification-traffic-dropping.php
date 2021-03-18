@@ -30,11 +30,12 @@ final class ExactMetrics_Notification_Traffic_Dropping extends ExactMetrics_Noti
 			$notification['content'] = sprintf( __( 'Your website traffic is decreasing and that’s a reason to take action now. Less traffic means less opportunities to make your brand known, make relationships and ultimately sell your service or product. <br><br>Follow the marketing hacks of %sthis article%s to start growing your traffic again.', 'google-analytics-dashboard-for-wp' ), '<a href="' . $this->build_external_link( 'https://www.exactmetrics.com/marketing-hacks-guaranteed-to-grow-your-traffic/' ) . '" target="_blank">', '</a>' );
 			$notification['btns']    = array(
 				"learn_more"  => array(
-					'url'  => $this->build_external_link( 'https://www.exactmetrics.com/marketing-hacks-guaranteed-to-grow-your-traffic/' ),
-					'text' => __( 'Learn More', 'google-analytics-dashboard-for-wp' )
+					'url'           => $this->build_external_link( 'https://www.exactmetrics.com/marketing-hacks-guaranteed-to-grow-your-traffic/' ),
+					'text'          => __( 'Learn More', 'google-analytics-dashboard-for-wp' ),
+					'is_external'   => true,
 				),
 				"view_report" => array(
-					'url'  => $this->get_view_url(),
+					'url'  => $this->get_view_url( 'exactmetrics-report-overview', 'exactmetrics_reports' ),
 					'text' => __( 'View Report', 'google-analytics-dashboard-for-wp' )
 				),
 			);

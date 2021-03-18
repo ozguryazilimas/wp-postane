@@ -61,7 +61,7 @@ class ExactMetrics_Popular_Posts_Inline extends ExactMetrics_Popular_Posts {
 			return '';
 		}
 
-		if ( 'curated' === $this->sort ) {
+		if ( 'curated' === $this->sort && apply_filters( 'exactmetrics_popular_posts_inline_curated_shuffle', true ) ) {
 			// Randomize the order.
 			shuffle( $posts );
 		}
