@@ -221,7 +221,7 @@ jQuery(function($) {
       $copy_templates_button = $(this);
       $spinner = $copy_templates_button.siblings('.spinner');
 
-      $copy_templates_button.addClass( 'disabled' );
+      $copy_templates_button.addClass( 'yarpp-disabled' );
       $spinner.addClass('is-active');
 
       window.location = window.location + (window.location.search.length ? '&' : '?') + 'action=copy_templates&_ajax_nonce=' + $('#yarpp_copy_templates-nonce').val();
@@ -232,7 +232,7 @@ jQuery(function($) {
     $button = $(this);
     $spinner = $button.siblings('.spinner');
 
-    $button.addClass( 'disabled' );
+    $button.addClass( 'yarpp-disabled' );
     $spinner.addClass( 'is-active' );
   });
   

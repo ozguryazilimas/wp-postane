@@ -399,3 +399,11 @@ body.rtl #yarpp-optin-learnmore {
 .yarpp-notice{
 	border-left-color:#ffb900;;
 }
+.yarpp-disabled{
+	color: #a7aaad!important;
+    background: #f6f7f7!important;
+    border-color: #dcdcde!important;
+    box-shadow: none!important;
+    text-shadow: none!important;
+    cursor: not-allowed !important;
+}

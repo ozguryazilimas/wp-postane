@@ -483,7 +483,7 @@ class YARPP {
 
 		if (!(array_sum($stats) > 0)) return false;
 		
-		$sum = array_sum(array_map('array_product', array_map(null, array_values($stats), array_keys($stats))));
+		$sum = array_sum((array)array_map('array_product', array_map(null, array_values($stats), array_keys($stats))));
 		$avg = $sum / array_sum( $stats );
 
 		return ($this->cache->cache_status() > 0.1 && $avg > 2);
@@ -597,7 +597,7 @@ class YARPP {
 			if ($this->templates === false) $this->templates = array();
 
 			// get basenames only
-			$this->templates = array_map(array($this, 'get_template_data'), $this->templates);
+			$this->templates = (array)array_map(array($this, 'get_template_data'), $this->templates);
 		}
 		return (array) $this->templates;
 	}

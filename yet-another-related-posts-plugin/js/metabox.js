@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
     $refresh_button = $(this);
     $spinner = $refresh_button.siblings('.spinner');
 
-    $refresh_button.addClass( 'disabled' );
+    $refresh_button.addClass( 'yarpp-disabled' );
     $spinner.css( 'visibility', 'visible' );
 
     $('#yarpp-list').css( 'opacity', 0.6 );

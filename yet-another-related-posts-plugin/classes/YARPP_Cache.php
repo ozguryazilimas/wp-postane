@@ -259,7 +259,7 @@ abstract class YARPP_Cache {
 		}
 
 		$post_types = $this->core->get_query_post_types($reference_post, $args);
-		$sanitized_post_types = array_map(
+		$sanitized_post_types = (array)array_map(
 			function($item){
 				global $wpdb;
 				return $wpdb->prepare('%s', $item);
@@ -315,8 +315,10 @@ abstract class YARPP_Cache {
 		$terms = get_the_terms($reference_ID, $taxonomy);
 		// if there are no terms of that tax
 		if (false === $terms) return '(1 = 0)';
-		
-		$tt_ids = array_map(
+
+		// somehow this was returning something other than an array for
+		// https://wordpress.org/support/topic/warning-message-yarpp_cache-php/
+		$tt_ids = (array)array_map(
 			function($item){
 				return (int)$item->term_taxonomy_id;
 			},

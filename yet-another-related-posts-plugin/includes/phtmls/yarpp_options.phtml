@@ -4,7 +4,7 @@
     <div id="yarpp_switch_container">
         <ul id="yarpp_switch_tabs">
             <li>
-                <a href="options-general.php?page=yarpp&mode=basic">YARPP Basic</a>
+                <a href="options-general.php?page=yarpp&mode=basic"><?php _e('YARPP Basic', 'yarpp')?></a>
             </li>
         </ul>
 
@@ -42,7 +42,7 @@
             </script>
 
             <div>
-                <input type="submit" class='button-primary yarpp_spin_on_click' name="update_yarpp" value="<?php _e('Save Changes')?>" />
+                <input type="submit" class='button-primary yarpp_spin_on_click' name="update_yarpp" value="<?php _e('Save Changes', 'yarpp')?>" />
 								<span class="spinner yarpp-no-float"></span>
                 <?php wp_nonce_field( 'update_yarpp', 'update_yarpp-nonce' ); ?>
             </div>
