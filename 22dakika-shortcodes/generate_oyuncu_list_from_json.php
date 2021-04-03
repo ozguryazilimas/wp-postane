@@ -120,10 +120,11 @@ foreach ($oyuncu_listesi_unique as $oyuncu) {
 
   if (!isset($json_liste[$oyuncu_index])) {
     print_debug("Missing in our data " . $oyuncu);
+    $oyuncu_downcase = strtolower($oyuncu);
 
     if (isset($imdb_liste[$oyuncu])) {
       $has_changes = true;
-      $found_nmlink = $imdb_liste[$oyuncu];
+      $found_nmlink = $imdb_liste[$oyuncu_downcase];
       $json_liste[$oyuncu_index] = array('link' => "https://www.imdb.com/name/" . $found_nmlink, 'name' => $oyuncu);
       array_push($oyuncu_added, $oyuncu);
     } else {

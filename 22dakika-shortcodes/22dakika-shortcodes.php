@@ -3,7 +3,7 @@
 Plugin Name: Shortcodes for 22dakika
 Plugin URI: http://ozguryazilim.com.tr
 Description: Shortcode plugin for 22dakika.org
-Version: 1.4
+Version: 1.5
 Author: Baskın Burak Şenbaşlar, Onur Küçük
 Author URI: https://www.ozguryazilim.com.tr
 License: GPL2
