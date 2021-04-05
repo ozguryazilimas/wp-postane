@@ -697,7 +697,7 @@ class User_Role_Editor {
     
     protected function get_ure_page_url() {
 
-        $page_url = URE_WP_ADMIN_URL . URE_PARENT . '?page=users-' . URE_PLUGIN_FILE;
+        $page_url = admin_url() . URE_PARENT . '?page=users-' . URE_PLUGIN_FILE;
         $object = $this->lib->get_request_var('object', 'get');
         $user_id = (int) $this->lib->get_request_var('user_id', 'get', 'int');
         if ($object=='user' && $user_id>0) {
