@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.16.1
+Stable tag: 5.17.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -121,7 +121,11 @@ Some WordPress themes treat the home page as an archive or a "page." Go to "Sett
 
 = How can I prevent the "related posts" list from displaying on specific posts? =
 
-Add `<!--noyarpp-->` to the HTML code of any post to prevent related posts from displaying. This solution will only work if you are using "Automatic Display" in the "Display Options" section. If you are programatically calling `yarpp_related()` or the shortcode `[yarpp]` from PHP code, you'll have to do your own checking to see if related posts are appropriate to display or not.
+When editing a post or page, uncheck “Display Related Posts”, which is located next to the WordPress editor. Be sure to update or publish to save your changes.
+
+An older method was to add `<?noyarpp-->` to the HTML code of any post to prevent related posts from displaying. This solution will only work if you are using "Automatic Display" in the "Display Options" section.
+
+If you are programatically calling `yarpp_related()`, the shortcode `[yarpp]` from PHP code or the YARPP Block, you'll have to do your own checking to see if related posts are appropriate to display or not.
 
 = I'm using the Thumbnails display in YARPP 4. How do I override the style of the text that displays? The title only shows two lines, the font is larger than I'd like, I'd like to center the thumbnails, etc. =
 
@@ -309,6 +313,13 @@ add_action(
 `
 
 == Changelog ==
+= 5.17.0 (06-April-2021) =
+* [New](https://wordpress.org/support/topic/unable-to-dequeue-related-css-stylesheet/): Added filter to be able to dequeue related.css
+`
+add_filter( 'yarpp_enqueue_related_style', '_\_return_false' );
+`
+* New: Added friendly per-post meta box options to disable YARPP automatic display on a specific post
+
 = 5.16.1 (29-March-2021) =
 * Bugfix: include new minified JS files
 
@@ -1114,5 +1125,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.16.1 =
+= 5.17.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

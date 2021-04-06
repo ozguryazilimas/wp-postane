@@ -1180,7 +1180,16 @@ class YARPP {
 	public function display_related($reference_ID = null, $args = array(), $echo = true) {
 		// Avoid infinite recursion here.
         if ( $this->do_not_query_for_related()) return false;
-        wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
+        wp_register_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE ), array(), YARPP_VERSION);
+		/**
+		 * Filter to allow dequeing of related.css.
+		 *
+		 * @param boolean default true
+		 */
+		$enqueue_related_style = apply_filters( 'yarpp_enqueue_related_style', true );
+		if ( true === $enqueue_related_style ) {
+			wp_enqueue_style( 'yarppRelatedCss' );
+		}
         $output = null;
 
         if (is_numeric($reference_ID)) {
@@ -1561,7 +1570,19 @@ class YARPP {
          */
 		$wp_query->is_single = false;
 	}
-	
+	/*
+	 * Return true if user disabled the YARPP related post for the current post, false otherwise.
+	 * 
+	 * @return bool
+	 */
+	public function yarpp_disabled_for_this_post() {
+		global $post;
+		$yarpp_meta = get_post_meta( $post->ID, 'yarpp_meta', true );
+		if ( isset( $yarpp_meta['yarpp_display_for_this_post'] ) && 0 === (int) $yarpp_meta['yarpp_display_for_this_post'] ) {
+			return true;
+		}
+		return false;
+	}	
 	/*
 	 * DEFAULT CONTENT FILTERS
 	 */
@@ -1569,6 +1590,10 @@ class YARPP {
 	public function the_content($content) {
 		// Avoid infinite recursion.
 		if (is_feed() || $this->do_not_query_for_related()) return $content;
+		// If YARPP related post is disabled for this post then return original content.
+		if ( true === $this->yarpp_disabled_for_this_post() ) {
+			return $content;
+		}
 
 		/* If the content includes <!--noyarpp-->, don't display */
 		if (!stristr($content, '<!--noyarpp-->')) {

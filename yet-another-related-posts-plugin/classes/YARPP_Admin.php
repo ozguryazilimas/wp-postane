@@ -34,6 +34,7 @@ class YARPP_Admin {
     add_action('admin_init', array($this, 'ajax_register'));
     add_action('admin_init', array($this, 'review_register'));
     add_action('admin_menu', array($this, 'ui_register'));
+    add_action( 'save_post', array($this, 'yarpp_save_meta_box' ) );
 
     add_filter('current_screen', array($this, 'settings_screen'));
     add_filter('screen_settings', array($this, 'render_screen_settings'), 10, 2);
@@ -515,13 +516,12 @@ class YARPP_Admin {
   public function enqueue() {
     $version = defined('WP_DEBUG') && WP_DEBUG ? time() : YARPP_VERSION;
     $screen = get_current_screen();
-    $options_basic = false;
     if (!is_null($screen) && $screen->id === 'settings_page_yarpp') {
-      $options_basic = true;
       wp_enqueue_style('yarpp_switch_options',  plugins_url('style/options_switch.css', dirname(__FILE__)), array(), $version );
       wp_enqueue_script('yarpp_switch_options', yarpp_get_file_url_for_environment('js/options_switch.min.js', 'js/options_switch.js'), array('jquery'), $version );
       
-      wp_enqueue_style('wp-pointer');      
+      wp_enqueue_style('wp-pointer');
+      wp_enqueue_style('yarpp_options', plugins_url('style/options_basic.css', dirname(__FILE__)), array(), $version );
       wp_enqueue_style('yarpp_remodal', plugins_url('lib/plugin-deactivation-survey/remodal.css', dirname(__FILE__)), array(), $version );
       wp_enqueue_style('yarpp_deactivate', plugins_url('lib/plugin-deactivation-survey/deactivate-feedback-form.css', dirname(__FILE__)), array(), $version );
       wp_enqueue_style('yarpp_default_theme', plugins_url('lib/plugin-deactivation-survey/remodal-default-theme.css', dirname(__FILE__)), array(), $version );
@@ -546,11 +546,7 @@ class YARPP_Admin {
 
     $metabox_post_types = $this->core->get_option('auto_display_post_types');
     if (!is_null($screen) && ($screen->id == 'post' || in_array( $screen->id, $metabox_post_types))) {
-      $options_basic = true;
       wp_enqueue_script('yarpp_metabox', plugins_url('js/metabox.js', dirname(__FILE__)), array('jquery'), $version );
-    }
-    if ( true === $options_basic ) {
-      wp_enqueue_style('yarpp_options', plugins_url('style/options_basic.css', dirname(__FILE__)), array(), $version );
     }
   }
   
@@ -570,9 +566,39 @@ class YARPP_Admin {
       include_once(YARPP_DIR . '/includes/yarpp_options.php');
     }
   }
+  /**
+   * Function to save the meta box.
+   *
+   * @param mixed $post_id Post ID.
+   */
+  public function yarpp_save_meta_box( $post_id ) {
+    $yarpp_meta = array();  
+    // Return if we're doing an autosave.
+      if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+          return;
+      }
+      // Verify our nonce here.
+	    if ( ! isset( $_POST['yarpp_display-nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['yarpp_display-nonce'] ), 'yarpp_display' ) ) {
+		      return;
+	    }
+      if ( isset( $_POST['yarpp_display_for_this_post'] ) ) {
+          $yarpp_meta['yarpp_display_for_this_post'] = 1;
+      } else {
+        $yarpp_meta['yarpp_display_for_this_post'] = 0;
+      }
+      update_post_meta( $post_id, 'yarpp_meta', $yarpp_meta );
+  }
 
   // @since 3.4: don't actually compute results here, but use ajax instead    
   public function metabox() {
+    global $post;
+    $metabox_post_types = $this->core->get_option('auto_display_post_types');
+    $yarpp_meta = get_post_meta( $post->ID, 'yarpp_meta', true );
+    if ( isset( $yarpp_meta['yarpp_display_for_this_post'] ) && 0 === $yarpp_meta['yarpp_display_for_this_post'] ) {
+      $yarpp_disable_here = 0;
+    } else {
+      $yarpp_disable_here = 1;
+    }    
     ?>
     <style>
       .yarpp-metabox-options {
@@ -582,13 +608,21 @@ class YARPP_Admin {
         float: none; visibility: hidden; opacity: 1; margin: 5px 7px 0 7px;
       }
     </style>
+    <?php if ( in_array( get_post_type(), $metabox_post_types ) ) { ?>
+      <p>
+        <input type="checkbox" id="yarpp_display_for_this_post" name="yarpp_display_for_this_post" <?php checked( 1, $yarpp_disable_here, true ); ?> />
+        <label for="yarpp_display_for_this_post"><strong><?php esc_html_e( 'Automatically display related content on this post', 'yarpp' ); ?></strong></label>
+        <br />
+        <em><?php esc_html_e( 'If this is unchecked, then YARPP will not automatically insert the related posts at the end of this post.', 'yarpp' ); ?></em>
+      </p>
+    <?php } ?>
     <?php
     if ( !get_the_ID() ) {
-      echo "<div><p>".__("Related entries may be displayed once you save your entry",'yarpp').".</p></div>";
-    } else {
-      wp_nonce_field( 'yarpp_display', 'yarpp_display-nonce', false );
+      echo "<div><p>".__("Related posts will be displayed once you save this post",'yarpp').".</p></div>";
+    } else {      
       echo '<div id="yarpp-related-posts"><img height="20px" width="20px" src="' . esc_url( admin_url( 'images/spinner-2x.gif' ) ) . '" alt="loading..." /></div>';
     }
+    wp_nonce_field( 'yarpp_display', 'yarpp_display-nonce', false );
   }
   
   // @since 3.3: default metaboxes to show:
