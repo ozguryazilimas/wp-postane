@@ -1,0 +1,12 @@
+<div class="yarpp_form_row yarpp_form_radio <?php esc_attr_e( $class ) ?>">
+  <div>
+      <input
+          type="radio" 
+          name="<?php esc_attr_e( $option ) ?>" 
+          id="yarpp-<?php esc_attr_e( $option.'_'.$value ) ?>" 
+          value="<?php esc_attr_e( $value ) ?>" 
+          <?php checked( $value === yarpp_get_option_thumbnail($option, 'thumbnail')) ?>
+      />
+      <label for="yarpp-<?php echo $option.'_'.$value ?>"><?php echo $desc ?></label>
+  </div>
+</div>

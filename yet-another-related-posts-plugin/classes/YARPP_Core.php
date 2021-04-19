@@ -100,8 +100,9 @@ class YARPP {
         /**
 		 * If we're using thumbnails, register yarpp-thumbnail size, if theme has not already.
 		 * Note: see FAQ in the readme if you would like to change the YARPP thumbnail size.
+		 * If theme has already yarpp-thumbnail size registered and we also try to register yarpp-thumbnail then it will throw a fatal error. So it is necessary to check if yarpp-thumbnail size is not registered.
          */
-		if ($this->diagnostic_using_thumbnails() && (!($dimensions = $this->thumbnail_dimensions()) || isset($dimensions['_default']))) {
+		if ( false === yarpp_get_image_sizes( 'yarpp-thumbnail' ) ) {
 			$width  = 120;
 			$height = 120;
 			$crop   = true;
@@ -199,6 +200,8 @@ class YARPP {
 			'pools' => array(),
 			'manually_using_thumbnails' => false,
 			'rest_api_display' => true,
+			'thumbnail_size_display' => 0,
+			'thumbnail_size_feed_display' => 0,
 			'rest_api_client_side_caching' => false,
 			'yarpp_rest_api_cache_time' => 15
 		);
@@ -504,8 +507,16 @@ class YARPP {
 		global $_wp_additional_image_sizes;
 		if (!isset($_wp_additional_image_sizes['yarpp-thumbnail'])) return $this->default_dimensions;
 
-		$dimensions = $_wp_additional_image_sizes['yarpp-thumbnail'];
-		$dimensions['size'] = 'yarpp-thumbnail';
+		// get user selected thumbnail size.
+		if ( is_feed() ) {
+			$dimensions = yarpp_get_thumbnail_image_dimensions( 'thumbnail_size_feed_display' );
+		} else {
+			$dimensions = yarpp_get_thumbnail_image_dimensions();
+		}		
+		if ( empty($dimensions) ) {
+			$dimensions = $_wp_additional_image_sizes['yarpp-thumbnail'];
+			$dimensions['size'] = 'yarpp-thumbnail';
+		}	
 		
 		/* Ensure YARPP dimensions format: */
 		$dimensions['width']  = (int) $dimensions['width'];

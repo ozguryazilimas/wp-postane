@@ -44,6 +44,15 @@ add_meta_box(
 );
 
 add_meta_box(
+    'yarpp_display_contact',
+    __('Contact YARPP', 'yarpp'),
+    array(new YARPP_Meta_Box_Contact, 'display'),
+    'settings_page_yarpp',
+    'side',
+    'core'
+);
+
+add_meta_box(
     'yarpp_display_rss',
     __('RSS Feed Options', 'yarpp'),
     array(
@@ -73,17 +82,6 @@ if(
 		'core'
 	);
 }
-
-
-add_meta_box(
-    'yarpp_display_contact',
-    __('Contact YARPP', 'yarpp'),
-    array(new YARPP_Meta_Box_Contact, 'display'),
-    'settings_page_yarpp',
-    'side',
-    'core'
-);
-
 
 function yarpp_make_optin_classy($classes) {
 	if (!yarpp_get_option('optin') )

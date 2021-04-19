@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.17.0
+Stable tag: 5.18.1
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -209,7 +209,7 @@ Before upgrading to a new WordPress version, you should first deactivate all plu
 
 = Can I clear my cache? Can I build up the cache manually? =
 
-The official [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin adds manual cache controls, letting you flush the cache and build it up manually.
+Yes, there is a button to clear YARPP's cache table in YARPP's WP Admin options.
 
 = I removed the YARPP plugin but I still see YARPP-related database tables. Shouldn't those be removed, too? =
 
@@ -313,29 +313,33 @@ add_action(
 `
 
 == Changelog ==
+= 5.18.1 (19-April-2021) =
+* New: Choose image size for YARPP Thumbnail theme
+* [Bugfix](https://wordpress.org/support/topic/warning-message-yarpp_cache-php/): Resolves `join` warning (Part 2/2)
+
 = 5.17.0 (06-April-2021) =
-* [New](https://wordpress.org/support/topic/unable-to-dequeue-related-css-stylesheet/): Added filter to be able to dequeue related.css
+* [New](https://wordpress.org/support/topic/unable-to-dequeue-related-css-stylesheet/): Adds filter to be able to dequeue related.css
 `
 add_filter( 'yarpp_enqueue_related_style', '_\_return_false' );
 `
-* New: Added friendly per-post meta box options to disable YARPP automatic display on a specific post
+* New: Adds friendly per-post meta box options to disable YARPP automatic display on a specific post
 
 = 5.16.1 (29-March-2021) =
 * Bugfix: include new minified JS files
 
 = 5.16.0 (29-March-2021) =
-* Enhancement: Switched to minified JavaScript in YARPP Admin for a speed boost
-* [Bugfix](https://wordpress.org/support/topic/cannot-save-changes-spinning-forever/): Resolved conflict with Easy Forms for MailChimp which was preventing YARPP settings from being saved
-* [Bugfix](https://wordpress.org/support/topic/warning-message-yarpp_cache-php/): Resolved join warning
+* Enhancement: Switches to minified JavaScript in YARPP Admin for a speed boost
+* [Bugfix](https://wordpress.org/support/topic/cannot-save-changes-spinning-forever/): Resolves conflict with Easy Forms for MailChimp which was preventing YARPP settings from being saved
+* [Bugfix](https://wordpress.org/support/topic/warning-message-yarpp_cache-php/): Resolves `join` warning (Part 1/2)
 
 = 5.15.3 (15-March-2021) =
-* Enhancement: Improved readability of the database indexes prompt
+* Enhancement: Improves readability of the database indexes prompt
 
 = 5.15.2 (12-March-2021) =
 * Tested up to WordPress 5.7
 
 = 5.15.1 (11-March-2021) =
-* Bugfix: fix issue pushing 5.15.0
+* Bugfix: Fixes issue pushing 5.15.0
 
 = 5.15.0 (11-March-2021) =
 * [Enhancement](https://wordpress.org/support/topic/5-14-0-rendered-our-site-unusable/): Default to not comparing using titles and bodies and only add database indexes when they are enabled to improve performance
@@ -1125,5 +1129,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.17.0 =
+= 5.18.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

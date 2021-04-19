@@ -3,11 +3,11 @@
 /**
  * YARPP rest api functionality
  */
-class YARPP_Rest_Api extends WP_REST_Controller{
+class YARPP_Rest_Api extends WP_REST_Controller {
 
 	public function __construct() {
 		add_action('rest_api_init', array($this, 'register_api_routes'));
-		add_filter('wp_rest_cache/allowed_endpoints', array($this,'cache_endpoints'),10,1);
+		add_filter('wp_rest_cache/allowed_endpoints', array($this,'cache_endpoints'), 10, 1);
 	}
 
 	/**
@@ -18,65 +18,65 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 	/**
 	 * Initializes yarpp rest routes via rest_api_init
 	 */
-    function register_api_routes() {
+	function register_api_routes() {
 		global $yarpp;
 
-        if ($yarpp->get_option('rest_api_display')) {
-            $NAMESPACE = 'yarpp/v1';
+		if ($yarpp->get_option('rest_api_display')) {
+			$NAMESPACE = 'yarpp/v1';
 		
 			/* Register the yarpp rest route */
-            register_rest_route( $NAMESPACE, '/related/(?P<id>[\w-]+)', array(
-                array(
-                    'methods' => WP_REST_Server::READABLE,
-                    'callback' => array($this,'get_related_posts'),
-                    'permission_callback' => array( $this, 'get_item_permissions_check' ),
-                    'args' => $this->get_related_posts_args()
-                ),
-                'args'   => array(
-	                'id' => array(
-		                'description' => __( 'Unique identifier for the object.' ),
-		                'type'        => 'integer',
-	                ),
-                ),
-                'schema' => array( $this, 'get_public_item_schema' ),
+			register_rest_route( $NAMESPACE, '/related/(?P<id>[\w-]+)', array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array($this,'get_related_posts'),
+					'permission_callback' => array( $this, 'get_item_permissions_check' ),
+					'args' => $this->get_related_posts_args()
+				),
+				'args'   => array(
+					'id' => array(
+						'description' => __( 'Unique identifier for the object.' ),
+						'type'        => 'integer',
+					),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
 			));
-        }
-    }
+		}
+	}
 
 	/**
 	 * Wraps WP_REST_Posts_Controller's schema, and adds YARPP-specific fields.
 	 *
 	 * @return array
 	 */
-    public function get_public_item_schema() {
-    	$posts_schema = $this->get_posts_controller('post')->get_public_item_schema();
-    	$posts_schema['properties']['score'] = array(
-    		'description' => __('YARPP relatedness score', 'yarpp'),
-		    'type' => 'number',
-		    'context' => array('view', 'edit', 'embed'),
-		    'readonly' => true,
-	    );
-    	return $posts_schema;
-    }
+	public function get_public_item_schema() {
+		$posts_schema                        = $this->get_posts_controller('post')->get_public_item_schema();
+		$posts_schema['properties']['score'] = array(
+			'description' => __('YARPP relatedness score', 'yarpp'),
+			'type' => 'number',
+			'context' => array('view', 'edit', 'embed'),
+			'readonly' => true,
+		);
+		return $posts_schema;
+	}
 
 	/**
 	 * @param WP_REST_Request $request
 	 *
 	 * @return WP_Error
 	 */
-	public function get_item_permissions_check($request) {
+	public function get_item_permissions_check( $request) {
 		$error_response = new WP_Error(
 			'rest_forbidden_context',
 			__( 'Sorry, you are not allowed to read this post.', 'yarpp' ),
 			array( 'status' => rest_authorization_required_code() )
 		);
-		$post_obj = get_post($request->get_param('id'));
-		if(! $this->get_posts_controller($post_obj->post_type)->check_read_permission($post_obj)){
+		$post_obj       = get_post($request->get_param('id'));
+		if (! $this->get_posts_controller($post_obj->post_type)->check_read_permission($post_obj)) {
 			return $error_response;
 		}
 
 		$core_permissions_check = $this->get_posts_controller()->get_items_permissions_check($request);
-		if($core_permissions_check instanceof WP_Error){
+		if ($core_permissions_check instanceof WP_Error) {
 			return $core_permissions_check;
 		}
 		// Check for password-protected posts.
@@ -130,28 +130,28 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 	 * @param WP_REST_REQUEST $request Incoming HTTP request data.
 	 * @return WP_Error|WP_HTTP_Response
 	 */
-	public function get_related_posts($request) {
+	public function get_related_posts( $request) {
 		/**
 		 * @var $yarpp YARPP
 		 */
 		global $yarpp;
 
 		$query_params = $request->get_params();
-		$id = $query_params['id'];
+		$id           = $query_params['id'];
 
 		$post_obj = get_post($id);
-		if(! $post_obj instanceof WP_Post){
+		if (! $post_obj instanceof WP_Post) {
 			return new WP_Error('rest_invalid_id', esc_html__( 'Invalid Id', 'yarpp' ), array('status' => 404));
 		}
-        $allowed_args = array('limit');
+		$allowed_args = array('limit');
 
-        $args = array_filter(
-	        $query_params,
-	        function($key) use ($allowed_args){
-		        return in_array($key,$allowed_args);
-	        },
-	        ARRAY_FILTER_USE_KEY
-        );
+		$args          = array_filter(
+			$query_params,
+			function( $key) use ( $allowed_args) {
+				return in_array($key, $allowed_args);
+			},
+			ARRAY_FILTER_USE_KEY
+		);
 		$related_posts = $yarpp->get_related(
 			$id,
 			$args
@@ -159,8 +159,8 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 
 		// Great, we have the posts we want. But they're formatted totally differently than the WP REST API endpoints
 		// So we use the core WP_RESTS_Posts_Controller to get the response in exactly the same format.
-		$ids = wp_list_pluck( $related_posts, 'ID' );
-		$read_controller = $this->get_posts_controller($post_obj->post_type);
+		$ids               = wp_list_pluck( $related_posts, 'ID' );
+		$read_controller   = $this->get_posts_controller($post_obj->post_type);
 		$simulated_request = clone $request;
 		$simulated_request->set_route('wp/v1/posts');
 
@@ -170,7 +170,7 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 			// we only get one page at a time. WP page numbering starts at 1.
 			'page' => 1
 		);
-		if(isset($query_params['context'])){
+		if (isset($query_params['context'])) {
 			$simulated_params['context'] = $query_params['context'];
 		}
 
@@ -181,41 +181,42 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 		$read_controller_response = $read_controller->get_items($simulated_request);
 		remove_action( 'rest_' . $post_obj->post_type . '_query', array($this, 'ignore_post_type_filter_callback'), 10, 2 );
 
-		if(is_wp_error($read_controller_response)){
+		if (is_wp_error($read_controller_response)) {
 			return $read_controller_response;
 		}
 		$read_controller_posts = $read_controller_response->get_data();
-		$ordered_rest_results = array();
+		$ordered_rest_results  = array();
 		// Reorder the posts in the response according to what they were in the YARPP response.
-		foreach($related_posts as $related_post){
-			foreach($read_controller_posts as $read_controller_post){
-				if($related_post->ID === $read_controller_post['id']){
+		foreach ($related_posts as $related_post) {
+			foreach ($read_controller_posts as $read_controller_post) {
+				if ($related_post->ID === $read_controller_post['id']) {
 					// Add score, but before _links.
 					$links = $read_controller_post['_links'];
 					unset($read_controller_post['_links']);
-					$read_controller_post['score'] = (float)$related_post->score;
+					$read_controller_post['score']  = (float) $related_post->score;
 					$read_controller_post['_links'] = $links;
-					$ordered_rest_results[] = $read_controller_post;
+					$ordered_rest_results[]         = $read_controller_post;
 				}
 			}
 		}
 		$read_controller_response->set_data($ordered_rest_results);
 		$this->maybe_set_caching_headers($read_controller_response);
 		return $read_controller_response;
-    }
+	}
 
 	/**
 	 * If enables, sends HTTP headers along with the response that instructs the browser to cache the results.
+	 *
 	 * @param WP_Rest_Response $response
 	 */
-    protected function maybe_set_caching_headers(WP_Rest_Response $response){
+	protected function maybe_set_caching_headers( WP_Rest_Response $response) {
 		global $yarpp;
 		if ($yarpp->get_option('rest_api_client_side_caching')) {
-			$seconds_to_cache = (int)$yarpp->get_option('yarpp_rest_api_cache_time') * MINUTE_IN_SECONDS;
+			$seconds_to_cache = (int) $yarpp->get_option('yarpp_rest_api_cache_time') * MINUTE_IN_SECONDS;
 			$seconds_to_cache = max($seconds_to_cache, 0); // ensure non-negative values
-			$ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
-			$response->header("Expires", $ts);
-			$response->header("Cache-Control", "public, max-age=$seconds_to_cache");
+			$ts               = gmdate('D, d M Y H:i:s', time() + $seconds_to_cache) . ' GMT';
+			$response->header('Expires', $ts);
+			$response->header('Cache-Control', "public, max-age=$seconds_to_cache");
 		}
 	}
 
@@ -224,12 +225,12 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 	 *
 	 * @return WP_REST_Posts_Controller
 	 */
-    protected function get_posts_controller($post_type = null){
-		if( ! $this->posts_controller instanceof WP_REST_Posts_Controller){
+	protected function get_posts_controller( $post_type = null) {
+		if ( ! $this->posts_controller instanceof WP_REST_Posts_Controller) {
 			$this->posts_controller = new WP_REST_Posts_Controller($post_type);
 		}
 		return $this->posts_controller;
-    }
+	}
 
 	/**
 	 * Register the /wp-json/yarpp/v1/related for caching with https://wordpress.org/plugins/wp-rest-cache/
@@ -246,14 +247,15 @@ class YARPP_Rest_Api extends WP_REST_Controller{
 	 * This way we can ask the posts controller for all posts of any type (remember we're only fetching ones with
 	 * IDs that match the results of YARPP's related query.) The results are all formatted like posts, which isn't
 	 * stellar, but it's got the important info.
+	 *
 	 * @param $args
 	 * @param $request
 	 *
 	 * @return mixed
 	 */
-	public function ignore_post_type_filter_callback( $args, $request ){
+	public function ignore_post_type_filter_callback( $args, $request ) {
 			global $yarpp;
 			$args['post_type'] = $yarpp->get_post_types();
 			return $args;
-		}
+	}
 }

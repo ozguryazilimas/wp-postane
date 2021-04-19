@@ -312,19 +312,18 @@ abstract class YARPP_Cache {
 	}
 	
 	private function tax_criteria($reference_ID, $taxonomy) {
-		$terms = get_the_terms($reference_ID, $taxonomy);
-		// if there are no terms of that tax
-		if (false === $terms) return '(1 = 0)';
-
-		// somehow this was returning something other than an array for
-		// https://wordpress.org/support/topic/warning-message-yarpp_cache-php/
-		$tt_ids = (array)array_map(
-			function($item){
-				return (int)$item->term_taxonomy_id;
-			},
-			$terms
-		);
-		return "count(distinct if( terms.term_taxonomy_id in (".join(',',$tt_ids)."), terms.term_taxonomy_id, null ))";
+		$terms = get_the_terms( $reference_ID, $taxonomy );
+		// if there are no terms of that tax or WP error.
+		if ( is_wp_error( $terms ) || false === $terms ) {
+			return '(1 = 0)';
+		}
+		$make_term_object_to_array = wp_list_pluck( $terms, 'term_taxonomy_id' );
+		// If empty then return.
+		if ( empty( $make_term_object_to_array ) ) {
+			return '(1 = 0)';
+		}
+		$tt_ids = join( ',', $make_term_object_to_array );
+		return "count(distinct if( terms.term_taxonomy_id in (" . $tt_ids . "), terms.term_taxonomy_id, null ))";
 	}
 	/*
 	 * KEYWORDS

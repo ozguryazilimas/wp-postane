@@ -37,8 +37,17 @@ class YARPP_Meta_Box_Display_Feed extends YARPP_Meta_Box {
         echo ">";
         $this->textbox( 'rss_thumbnails_heading', __( 'Heading:', 'yarpp' ), 40 );
         $this->textbox( 'rss_thumbnails_default', __( 'Default image (URL):', 'yarpp' ), 40 );
-        echo "</div>";
-
+        $get_image_sizes = yarpp_get_image_sizes();
+        echo '<div class="yarpp_form_row yarpp_form_radio_label">';
+					echo '<div class="yarpp_form_label">' . esc_html( 'Thumbnail Size', 'yarpp' ) . '</div><div>';
+        	foreach ( $get_image_sizes as $key => $_size ) {
+						/* translators: %s: thumbnail key's name */
+						$name = sprintf( __( '%1$s (%2$s X %3$s)', 'yarpp' ), $key, $_size['width'], $_size['height'] );
+						$this->radio( 'thumbnail_size_feed_display', $name, '', $key );
+					}
+	      echo '</div></div>';
+	      echo "</div>";
+				
         echo "<div class='yarpp_subbox template_options_builtin'";
         if ( $choice != 'builtin' )
             echo ' style="display: none;"';

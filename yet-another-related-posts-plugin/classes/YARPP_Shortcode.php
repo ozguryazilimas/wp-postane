@@ -22,7 +22,7 @@ class YARPP_Shortcode {
 	 *
 	 * @return string
 	 */
-	public function render($atts) {
+	public function render( $atts) {
 		$atts = shortcode_atts(
 			array(
 				'reference_id' => null,
@@ -32,18 +32,18 @@ class YARPP_Shortcode {
 		);
 		/** @global $yarpp YARPP */
 		global $yarpp;
-		$post = get_post((int)$atts['reference_id']);
+		$post       = get_post((int) $atts['reference_id']);
 		$yarpp_args = array(
 			'domain' => 'shortcode'
 		);
-		if(isset($atts['template'])){
+		if (isset($atts['template'])) {
 			$yarpp_args['template'] = trim($atts['template']);
-			if(strpos($yarpp_args['template'],'.php') === false){
+			if (strpos($yarpp_args['template'], '.php') === false) {
 				$yarpp_args['template'] .= '.php';
 			}
 		}
 
-		if($post instanceof WP_Post){
+		if ($post instanceof WP_Post) {
 			return $yarpp->display_related(
 				$post->ID,
 				$yarpp_args,

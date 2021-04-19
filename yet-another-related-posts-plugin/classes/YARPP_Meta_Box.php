@@ -25,6 +25,10 @@ class YARPP_Meta_Box {
     public function checkbox($option, $desc, $class = null) {
         include(YARPP_DIR.'/includes/phtmls/yarpp_meta_box_checkbox.phtml');
     }
+    
+    public function radio($option, $desc, $class = null, $value = null) {
+        include( YARPP_DIR . '/includes/phtmls/yarpp_meta_box_radio.phtml' );
+    }
 
     public function template_checkbox($rss=false, $class = null) {
         $pre             = ($rss) ? 'rss_' : '';
