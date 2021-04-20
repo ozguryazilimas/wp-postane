@@ -36,9 +36,8 @@ function yarpp_get_option_thumbnail( $option = null, $default_option = 'thumbnai
 	if ( empty( $user_selected_thumbnail ) && 'thumbnails' === $get_template ) {
 		$thumbnail_size = 'yarpp-thumbnail';
 	} elseif ( ! empty( $user_selected_thumbnail ) && 'thumbnails' === $get_template ) {
-		// Ensure user selected thumbnail is still registered.
-		global $_wp_additional_image_sizes;
-		if (isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) && !isset($_wp_additional_image_sizes[$user_selected_thumbnail])){
+		// Check whether user selected thumbnail is still registered.
+		if ( false === yarpp_get_image_sizes( $user_selected_thumbnail ) ) {
 			$thumbnail_size = 'yarpp-thumbnail';
 		} else {
 			$thumbnail_size = $user_selected_thumbnail;

@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.18.1
+Stable tag: 5.18.2
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -313,6 +313,9 @@ add_action(
 `
 
 == Changelog ==
+= 5.18.2 (19-April-2021) =
+* [Bugfix](https://wordpress.org/support/topic/thumbnail-size-wont-change/): Allow default WP image sizes to be picked for the YARPP Thumbnail theme
+
 = 5.18.1 (19-April-2021) =
 * New: Choose image size for YARPP Thumbnail theme
 * [Bugfix](https://wordpress.org/support/topic/warning-message-yarpp_cache-php/): Resolves `join` warning (Part 2/2)
@@ -1129,5 +1132,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.18.1 =
+= 5.18.2 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
