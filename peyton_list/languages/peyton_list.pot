@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-22 00:52+0300\n"
+"POT-Creation-Date: 2021-04-24 21:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,142 +17,187 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: peyton_list.php:100
+#: peyton_list.php:105
 msgid "Running"
 msgstr ""
 
-#: peyton_list.php:101
+#: peyton_list.php:106
 msgid "Mini"
 msgstr ""
 
-#: peyton_list.php:102
+#: peyton_list.php:107
 msgid "Canceled"
 msgstr ""
 
-#: peyton_list.php:103
+#: peyton_list.php:108
 msgid "Unclear"
 msgstr ""
 
-#: peyton_list.php:104
+#: peyton_list.php:109
 msgid "Missing"
 msgstr ""
 
-#: includes/daisy_fortune_common.php:69 includes/peyton_list_common.php:69
+#: includes/peyton_list_common.php:68 includes/daisy_fortune_common.php:68
 msgid "Title can not be blank"
 msgstr ""
 
-#: includes/daisy_fortune_common.php:74 includes/peyton_list_common.php:74
+#: includes/peyton_list_common.php:73 includes/mantar_common.php:91
+#: includes/daisy_fortune_common.php:73
 msgid "This record was already added"
 msgstr ""
 
-#: includes/daisy_fortune_common.php:218 includes/peyton_list_common.php:219
+#: includes/peyton_list_common.php:218 includes/mantar_common.php:334
+#: includes/daisy_fortune_common.php:220
 msgid "Add New Entry"
 msgstr ""
 
-#: includes/daisy_fortune_common.php:236 includes/daisy_fortune_common.php:328
-#: includes/daisy_fortune_common.php:360 includes/peyton_list_common.php:237
-#: includes/peyton_list_common.php:353 includes/peyton_list_common.php:388
+#: includes/peyton_list_common.php:236 includes/peyton_list_common.php:353
+#: includes/peyton_list_common.php:388 includes/mantar_common.php:377
+#: includes/mantar_common.php:492 includes/mantar_common.php:523
+#: includes/daisy_fortune_common.php:238 includes/daisy_fortune_common.php:331
+#: includes/daisy_fortune_common.php:363
 msgid "Title"
 msgstr ""
 
-#: includes/daisy_fortune_common.php:245 includes/daisy_fortune_common.php:311
-#: includes/daisy_fortune_common.php:330 includes/daisy_fortune_common.php:361
-msgid "Onair"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:268 includes/daisy_fortune_common.php:362
-#: includes/peyton_list_common.php:292 includes/peyton_list_common.php:391
-msgid "Link"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:277 includes/daisy_fortune_common.php:331
-#: includes/daisy_fortune_common.php:363
-msgid "Comment"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:288 includes/daisy_fortune_common.php:364
-#: includes/peyton_list_common.php:303 includes/peyton_list_common.php:392
-msgid "Add"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:313 includes/daisy_fortune_common.php:352
-#: includes/peyton_list_common.php:324 includes/peyton_list_common.php:336
-#: includes/peyton_list_common.php:380
-msgid "All"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:353 includes/peyton_list_common.php:381
-msgid "No results found"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:354 includes/peyton_list_common.php:382
-msgid "Search"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:355 includes/peyton_list_common.php:383
-msgid "First"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:356 includes/peyton_list_common.php:384
-msgid "Last"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:357 includes/peyton_list_common.php:385
-msgid "Next"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:358 includes/peyton_list_common.php:386
-msgid "Previous"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:359 includes/peyton_list_common.php:387
-msgid "_TOTAL_ total"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:365 includes/peyton_list_common.php:393
-msgid "Update"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:366 includes/peyton_list_common.php:394
-msgid "Delete"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:367 includes/daisy_fortune_common.php:368
-#: includes/peyton_list_common.php:395 includes/peyton_list_common.php:396
-msgid "Created by"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:369 includes/peyton_list_common.php:397
-msgid "Created at"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:370 includes/daisy_fortune_common.php:371
-#: includes/peyton_list_common.php:398 includes/peyton_list_common.php:399
-msgid "Updated by"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:372 includes/peyton_list_common.php:400
-msgid "Updated at"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:373 includes/peyton_list_common.php:401
-msgid "Update failed"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:374 includes/peyton_list_common.php:402
-msgid "Delete failed"
-msgstr ""
-
-#: includes/daisy_fortune_common.php:375 includes/peyton_list_common.php:403
-msgid "Connection problem"
-msgstr ""
-
-#: includes/peyton_list_common.php:246 includes/peyton_list_common.php:322
+#: includes/peyton_list_common.php:245 includes/peyton_list_common.php:322
 #: includes/peyton_list_common.php:355 includes/peyton_list_common.php:389
+#: includes/mantar_common.php:352 includes/mantar_common.php:471
+#: includes/mantar_common.php:494 includes/mantar_common.php:524
+#: includes/mantar_common.php:635
 msgid "Category"
 msgstr ""
 
-#: includes/peyton_list_common.php:269 includes/peyton_list_common.php:334
+#: includes/peyton_list_common.php:268 includes/peyton_list_common.php:334
 #: includes/peyton_list_common.php:357 includes/peyton_list_common.php:390
 msgid "Status"
+msgstr ""
+
+#: includes/peyton_list_common.php:291 includes/peyton_list_common.php:391
+#: includes/mantar_common.php:408 includes/mantar_common.php:525
+#: includes/daisy_fortune_common.php:270 includes/daisy_fortune_common.php:365
+msgid "Link"
+msgstr ""
+
+#: includes/peyton_list_common.php:302 includes/peyton_list_common.php:392
+#: includes/mantar_common.php:446 includes/mantar_common.php:529
+#: includes/mantar_common.php:691 includes/daisy_fortune_common.php:290
+#: includes/daisy_fortune_common.php:367
+msgid "Add"
+msgstr ""
+
+#: includes/peyton_list_common.php:324 includes/peyton_list_common.php:336
+#: includes/peyton_list_common.php:380 includes/mantar_common.php:473
+#: includes/mantar_common.php:515 includes/daisy_fortune_common.php:316
+#: includes/daisy_fortune_common.php:355
+msgid "All"
+msgstr ""
+
+#: includes/peyton_list_common.php:381 includes/mantar_common.php:516
+#: includes/daisy_fortune_common.php:356
+msgid "No results found"
+msgstr ""
+
+#: includes/peyton_list_common.php:382 includes/mantar_common.php:517
+#: includes/daisy_fortune_common.php:357
+msgid "Search"
+msgstr ""
+
+#: includes/peyton_list_common.php:383 includes/mantar_common.php:518
+#: includes/daisy_fortune_common.php:358
+msgid "First"
+msgstr ""
+
+#: includes/peyton_list_common.php:384 includes/mantar_common.php:519
+#: includes/daisy_fortune_common.php:359
+msgid "Last"
+msgstr ""
+
+#: includes/peyton_list_common.php:385 includes/mantar_common.php:520
+#: includes/daisy_fortune_common.php:360
+msgid "Next"
+msgstr ""
+
+#: includes/peyton_list_common.php:386 includes/mantar_common.php:521
+#: includes/daisy_fortune_common.php:361
+msgid "Previous"
+msgstr ""
+
+#: includes/peyton_list_common.php:387 includes/mantar_common.php:522
+#: includes/daisy_fortune_common.php:362
+msgid "_TOTAL_ total"
+msgstr ""
+
+#: includes/peyton_list_common.php:393 includes/mantar_common.php:530
+#: includes/mantar_common.php:665 includes/daisy_fortune_common.php:368
+msgid "Update"
+msgstr ""
+
+#: includes/peyton_list_common.php:394 includes/mantar_common.php:531
+#: includes/mantar_common.php:666 includes/daisy_fortune_common.php:369
+msgid "Delete"
+msgstr ""
+
+#: includes/peyton_list_common.php:395 includes/peyton_list_common.php:396
+#: includes/mantar_common.php:532 includes/mantar_common.php:533
+#: includes/daisy_fortune_common.php:370 includes/daisy_fortune_common.php:371
+msgid "Created by"
+msgstr ""
+
+#: includes/peyton_list_common.php:397 includes/mantar_common.php:534
+#: includes/daisy_fortune_common.php:372
+msgid "Created at"
+msgstr ""
+
+#: includes/peyton_list_common.php:398 includes/peyton_list_common.php:399
+#: includes/mantar_common.php:535 includes/mantar_common.php:536
+#: includes/daisy_fortune_common.php:373 includes/daisy_fortune_common.php:374
+msgid "Updated by"
+msgstr ""
+
+#: includes/peyton_list_common.php:400 includes/mantar_common.php:537
+#: includes/daisy_fortune_common.php:375
+msgid "Updated at"
+msgstr ""
+
+#: includes/peyton_list_common.php:401 includes/mantar_common.php:538
+#: includes/daisy_fortune_common.php:376
+msgid "Update failed"
+msgstr ""
+
+#: includes/peyton_list_common.php:402 includes/mantar_common.php:539
+#: includes/daisy_fortune_common.php:377
+msgid "Delete failed"
+msgstr ""
+
+#: includes/peyton_list_common.php:403 includes/mantar_common.php:540
+#: includes/daisy_fortune_common.php:378
+msgid "Connection problem"
+msgstr ""
+
+#: includes/mantar_common.php:417 includes/mantar_common.php:495
+#: includes/mantar_common.php:526
+msgid "Date"
+msgstr ""
+
+#: includes/mantar_common.php:426 includes/mantar_common.php:527
+msgid "Without Day"
+msgstr ""
+
+#: includes/mantar_common.php:435 includes/mantar_common.php:528
+msgid "Season"
+msgstr ""
+
+#: includes/mantar_common.php:560
+#, php-format
+msgid "Click for %s"
+msgstr ""
+
+#: includes/daisy_fortune_common.php:247 includes/daisy_fortune_common.php:314
+#: includes/daisy_fortune_common.php:333 includes/daisy_fortune_common.php:364
+msgid "Onair"
+msgstr ""
+
+#: includes/daisy_fortune_common.php:279 includes/daisy_fortune_common.php:334
+#: includes/daisy_fortune_common.php:366
+msgid "Comment"
 msgstr ""

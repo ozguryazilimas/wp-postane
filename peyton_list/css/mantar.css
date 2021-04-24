@@ -1,0 +1,151 @@
+
+#mantar_main_list_filter.dataTables_filter input[type="search"] {
+  border: 0 none;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  height: 21px;
+  margin-bottom: 1px;
+  padding: 3px 0 3px 35px;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.7s ease 0s;
+  width: 200px;
+  background-color: #E3E3E3;
+  color: grey;
+  font-weight: bold;
+}
+
+#mantar_main_list_filter.dataTables_filter input[type="search"]:focus {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
+  margin-bottom: 1px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  background-color: #DDF0E9;
+  color: grey;
+  font-weight: bold;
+}
+
+form#mantar_add_entry select,
+form#mantar_inner_update_form select,
+select[name=mantar_main_list_length] {
+  padding: 3px 7px;
+}
+
+#mantar_main_list_length,
+#mantar_main_list_filter {
+  margin-bottom: 10px;
+}
+
+table#mantar_main_list > tbody td a,
+table#mantar_main_list > tbody td a:link,
+table#mantar_main_list > tbody td a:visited,
+table#mantar_main_list > tbody td a:active {
+  display: block;
+  text-decoration: none;
+  color: #343434;
+}
+
+table#mantar_main_list > tbody td a:hover {
+  color: #20AADB;
+}
+
+#mantar_main_list_selector,
+#mantar_add_entry_wrapper,
+#mantar_main_list_length,
+#mantar_main_list_filter,
+table#mantar_inner_update_table,
+table#mantar_main_list {
+  font-size: 14px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  margin-top: 20px;
+}
+
+table#mantar_main_list > tbody > tr.odd {
+  background-color: #F3F3F3;
+}
+
+table#mantar_main_list thead tr {
+  background: linear-gradient(#FF950E, #FFDBAF) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+  color: #3D3D3D;
+}
+
+input[name=mantar_inner_update_delete],
+input[name=mantar_inner_update_update] {
+  padding: 5px 10px;
+}
+
+input[name=mantar_inner_update_update] {
+  float: right;
+}
+
+#mantar_category_entry_wrapper,
+#mantar_add_entry_wrapper {
+  display: none;
+}
+
+#mantar_category_toggle_link_form,
+#mantar_toggle_link_form {
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #3D3D3D;
+  padding: 5px 10px;
+  margin: 0 20px 0 auto;
+  border: 1px solid #A2A2A2;
+  background: linear-gradient(#FFDBAF, #FF950E) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+  width: 150px;
+  text-align: center;
+}
+
+input[name=mantar_submit] {
+  text-align: center;
+  margin: 0 20px 0 auto;
+  padding: 5px 15px;
+  display: block;
+}
+
+input[name=mantar_category_add],
+input[name=mantar_category_submit],
+input[name=mantar_category_submit_delete] {
+  text-align: center;
+  margin: 5px 20px 15px auto;
+  padding: 0px 5px;
+  display: block;
+}
+
+#mantar_category_entry_wrapper,
+#mantar_add_entry_wrapper {
+  padding: 5px 10px;
+  margin: 0 10px;
+  border: 2px solid #A2A2A2;
+  border-radius: 5px;
+  box-shadow: 3px 3px #E2E2E2;
+  background: linear-gradient(#FFF, #DCDCDC) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+form#mantar_add_entry table#mantar_submit td {
+  padding: 5px 10px;
+}
+
+#mantar_link_form_error {
+  display: block;
+  text-align: center;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+#mantar_main_list_selector {
+  width: 90%;
+  margin: 30px auto 0 auto;
+  text-align: center;
+}
+
+#mantar_main_list_selector select {
+  font-size: 13px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  padding: 3px 7px;
+  margin: 0 7px;
+}
+

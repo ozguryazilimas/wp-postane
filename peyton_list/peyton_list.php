@@ -3,7 +3,7 @@
 Plugin Name: Peyton List
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: This plugin lists whatever you like with ability to make a list with catgories and links. This is dedicated to the lovely Peyton List (the more beautiful one, with black hair).
-Version: 0.9.0
+Version: 1.0.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
@@ -27,16 +27,21 @@ License: GPL2
 
 require_once(dirname(__FILE__) . '/includes/peyton_list_common.php');
 require_once(dirname(__FILE__) . '/includes/daisy_fortune_common.php');
+require_once(dirname(__FILE__) . '/includes/mantar_common.php');
 
-$peyton_list_db_version = '1.1';
+$peyton_list_db_version = '1.2';
 global $peyton_list_db_version;
 
-$peyton_list_version = '0.9.0';
+$peyton_list_version = '1.0.0';
 global $peyton_list_version;
 
 global $wpdb;
 $peyton_list_db_main = $wpdb->prefix . 'peyton_list';
 global $peyton_list_db_main;
+$mantar_db_main = $wpdb->prefix . 'mantar';
+global $mantar_db_main;
+$mantar_db_categories = $wpdb->prefix . 'mantar_categories';
+global $mantar_db_categories;
 
 $installed_version = get_option('peyton_list_db_version');
 global $installed_version;
@@ -114,6 +119,21 @@ $daisy_fortune_onair_image = array(
 );
 global $daisy_fortune_onair_image;
 
+$mantar_month_names = array(
+  1 => 'Ocak',
+  2 => 'Şubat',
+  3 => 'Mart',
+  4 => 'Nisan',
+  5 => 'Mayıs',
+  6 => 'Haziran',
+  7 => 'Temmuz',
+  8 => 'Ağustos',
+  9 => 'Eylül',
+  10 => 'Ekim',
+  11 => 'Kasım',
+  12 => 'Aralık'
+);
+global $mantar_month_names;
 
 // add css
 add_action('init', 'peyton_list_init');
@@ -125,6 +145,9 @@ add_action('plugins_loaded', 'peyton_list_update_db_check');
 function peyton_list_init_db() {
   global $peyton_list_db_version, $installed_version, $wpdb;
   $peyton_list_db_main = $wpdb->prefix . 'peyton_list';
+  $mantar_db_main = $wpdb->prefix . 'mantar';
+  $mantar_db_categories = $wpdb->prefix . 'mantar_categories';
+
   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
   if ($installed_version != $peyton_list_db_version) {
@@ -138,11 +161,40 @@ function peyton_list_init_db() {
       comment TEXT NOT NULL,
       created_by BIGINT(20) UNSIGNED NOT NULL,
       updated_by BIGINT(20) UNSIGNED NOT NULL,
-      created_at DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
-      updated_at DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
       PRIMARY KEY  (id)
     );";
     dbDelta($main_sql);
+
+    $mantar_categories_sql = "CREATE TABLE $mantar_db_categories (
+      id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+      title TEXT NOT NULL,
+      background_color_1 TEXT NOT NULL DEFAULT '#F9FFEE',
+      background_color_2 TEXT NOT NULL DEFAULT '#EEFFF9',
+      created_by BIGINT(20) UNSIGNED NOT NULL,
+      updated_by BIGINT(20) UNSIGNED NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      PRIMARY KEY  (id)
+    );";
+    dbDelta($mantar_categories_sql);
+
+    $mantar_sql = "CREATE TABLE $mantar_db_main (
+      id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+      mantar_category_id BIGINT(20) UNSIGNED NOT NULL,
+      peyton_list_id BIGINT(20) UNSIGNED NOT NULL,
+      link LONGTEXT NOT NULL,
+      date DATE DEFAULT (CURRENT_DATE + INTERVAL 1 MONTH) NOT NULL,
+      without_day BOOLEAN DEFAULT FALSE NOT NULL,
+      season TEXT NOT NULL,
+      created_by BIGINT(20) UNSIGNED NOT NULL,
+      updated_by BIGINT(20) UNSIGNED NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      PRIMARY KEY  (id)
+    );";
+    dbDelta($mantar_sql);
 
     update_option("peyton_list_db_version", $peyton_list_db_version);
   }
@@ -182,6 +234,19 @@ function daisy_fortune_add_custom_assets() {
   wp_enqueue_script('daisy_fortune');
 }
 
+function mantar_add_custom_assets() {
+  wp_enqueue_script('jquery-ui-datepicker', array('jquery'));
+
+  wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css' );
+  wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery') );
+
+  wp_register_style('mantar', plugins_url('css/mantar.css', __FILE__), $peyton_list_version);
+  wp_enqueue_style('mantar');
+
+  wp_register_script('mantar', plugins_url('js/mantar.js', __FILE__), array('jquery', 'jquery_datatables_js', 'jquery-ui-datepicker', 'select2'), $peyton_list_version);
+  wp_enqueue_script('mantar');
+}
+
 function peyton_list_init() {
   load_plugin_textdomain('peyton_list', false, basename(dirname(__FILE__)) . '/languages' );
 }
@@ -196,8 +261,20 @@ function daisy_fortune_get_main_data() {
   return daisy_fortune_main();
 }
 
+function mantar_get_main_setup($atts = [], $content = null, $tag = '') {
+  mantar_add_custom_assets();
+  return mantar_main($atts, $content, $tag);
+}
+
+function mantar_get_page_display($atts = [], $content = null, $tag = '') {
+  mantar_add_custom_assets();
+  return mantar_page_display($atts, $content, $tag);
+}
+
 add_shortcode('peyton_list', 'peyton_list_get_main_data');
 add_shortcode('daisy_fortune', 'daisy_fortune_get_main_data');
+add_shortcode('mantar_setup', 'mantar_get_main_setup');
+add_shortcode('mantar', 'mantar_get_page_display');
 
 function peyton_list_ajax() {
   $has_perm = peyton_list_user_has_permission();
@@ -272,6 +349,43 @@ function daisy_fortune_ajax() {
   wp_die();
 }
 add_action('wp_ajax_daisy_fortune', 'daisy_fortune_ajax');
+
+function mantar_ajax() {
+  $has_perm = mantar_user_has_permission();
+  $action = $_POST['mantar_action'];
+  $data = $_POST['entry'];
+
+  if (!$has_perm || !isset($data)) {
+    return;
+  }
+
+  switch ($action) {
+  case 'update':
+    $updated_data = array();
+    $success = mantar_update_entry($data);
+
+    if ($success) {
+      $updated_data = mantar_get_single_entry($data['id']);
+    }
+
+    echo json_encode(
+      array(
+        'success' => $success,
+        'data' => $updated_data
+      )
+    );
+    break;
+  case 'delete':
+    $delete_id = $data['id'];
+    $success = mantar_delete_entry($delete_id);
+
+    echo json_encode(array('success' => $success));
+    break;
+  }
+
+  wp_die();
+}
+add_action('wp_ajax_mantar', 'mantar_ajax');
 
 
 ?>
