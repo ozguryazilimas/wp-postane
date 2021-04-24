@@ -170,8 +170,8 @@ function peyton_list_init_db() {
     $mantar_categories_sql = "CREATE TABLE $mantar_db_categories (
       id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
       title TEXT NOT NULL,
-      background_color_1 TEXT NOT NULL DEFAULT '#F9FFEE',
-      background_color_2 TEXT NOT NULL DEFAULT '#EEFFF9',
+      background_color_1 VARCHAR(255) NOT NULL DEFAULT '#F9FFEE',
+      background_color_2 VARCHAR(255) NOT NULL DEFAULT '#EEFFF9',
       created_by BIGINT(20) UNSIGNED NOT NULL,
       updated_by BIGINT(20) UNSIGNED NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
