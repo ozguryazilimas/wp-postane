@@ -1,5 +1,10 @@
 
 var mantar_latest_clicked;
+var mantar_inner_form_required = {
+  link: 'Bağlantı',
+  season: 'Sezon',
+  date: 'Tarih'
+};
 
 function mantar_format_mantar_table_form(row) {
   var d = row.data();
@@ -49,7 +54,7 @@ function mantar_format_mantar_table_form(row) {
           '</tr>' +
           '<tr>' +
             '<td><label for="link">' + dt_str['form_link'] + '</label></td>' +
-            '<td><input type="text" name="link" size="50" value="' + d.link + '" /></td>' +
+            '<td><input type="text" name="link" size="50" value="' + d.link + '" required="required" /></td>' +
           '</tr>' +
           '<tr>' +
             '<td><label for="date">' + dt_str['form_date'] + '</label></td>' +
@@ -61,7 +66,7 @@ function mantar_format_mantar_table_form(row) {
           '</tr>' +
           '<tr>' +
             '<td><label for="season">' + dt_str['form_season'] + '</label></td>' +
-            '<td><input type="text" name="season" size="50" value="' + d.season + '" /></td>' +
+            '<td><input type="text" name="season" size="50" value="' + d.season + '" required="required" /></td>' +
           '</tr>';
 
   jQuery.each(['created_by_humanized', 'created_at', 'updated_by_humanized', 'updated_at'], function(ix, k) {
@@ -262,6 +267,13 @@ function initialize_mantar() {
 
     jQuery.each(form_data, function(ix, k) {
       ajax_data.entry[k.name] = k.value;
+    });
+
+    jQuery.each(mantar_inner_form_required, function(name, translated_name) {
+      if (jQuery.isEmptyObject(ajax_data.entry[name])) {
+        alert(translated_name + ' boş bırakılamaz');
+        return false;
+      }
     });
 
     if (is_update) {

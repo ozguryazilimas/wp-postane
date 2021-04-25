@@ -280,8 +280,23 @@ function mantar_get_entries_raw($mantar_category_id = null, $mantar_id = null) {
 }
 
 function mantar_prepare_for_dt($data) {
-  $date_formatter = $data->without_day ? 'Y-m' : 'Y-m-d';
-  $formatted_date = date($date_formatter, strtotime($data->date));
+  global $mantar_month_names;
+
+  # $date_formatter = $data->without_day ? 'Y-m' : 'Y-m-d';
+  # $formatted_date = date($date_formatter, strtotime($data->date));
+
+  $entry_date = explode('-', $data->date, 3);
+  $year = intval($entry_date[0]);
+  $month = intval($entry_date[1]);
+  $day = intval($entry_date[2]);
+
+  if ($data->without_day) {
+    $formatted_date = '';
+  } else {
+    $formatted_date = $day . ' ';
+  }
+
+  $formatted_date .= $mantar_month_names[$month] . ' ' . $year;
 
 
   if (empty($data->link)) {
@@ -408,7 +423,7 @@ function mantar_insert_form($formdata) {
               <label for="mantar_add_entry[link]">' .  __('Link', 'peyton_list') . '</label>
             </td>
             <td>
-              <input type="text" name="mantar_add_entry[link]" size="50" value="' . $data['link'] . '" />
+              <input type="text" name="mantar_add_entry[link]" size="50" value="' . $data['link'] . '" required="required" />
             </td>
           </tr>
 
@@ -417,7 +432,8 @@ function mantar_insert_form($formdata) {
               <label for="mantar_add_entry[date]">' .  __('Date', 'peyton_list') . '</label>
             </td>
             <td>
-              <input type="text" name="mantar_add_entry[date]" class="mantar_datepicker" size="50" value="' . $data['date'] . '" placeholder="' . date('Y-m-d') . '" />
+              <input type="text" name="mantar_add_entry[date]" class="mantar_datepicker" size="50" value="' . $data['date'] . '" placeholder="' . date('Y-m-d') . '"
+                     pattern="20[0-9]{2}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" required="required" />
             </td>
           </tr>
 
@@ -435,7 +451,7 @@ function mantar_insert_form($formdata) {
               <label for="mantar_add_entry[season]">' .  __('Season', 'peyton_list') . '</label>
             </td>
             <td>
-              <input type="text" name="mantar_add_entry[season]" size="50" value="' . $data['season'] . '" />
+              <input type="text" name="mantar_add_entry[season]" size="50" value="' . $data['season'] . '" required="required" />
             </td>
           </tr>
 
@@ -582,13 +598,15 @@ function mantar_format_entries_for_display($entries, $color_1, $color_2) {
   $color_toggle = 0;
   $current_month = -1;
   $current_year = -1;
-  $now_is = mantar_get_time();
-  $now_year = intval(explode('-', $now_is, 3)[0]);
-  $now_month = intval(explode('-', $now_is, 3)[1]);
+  $now_is = explode('-', mantar_get_time(), 3);
+  $now_year = intval($now_is[0]);
+  $now_month = intval($now_is[1]);
 
   foreach($entries as $ix => $entry) {
-    $year = intval(explode('-', $entry['date'], 3)[0]);
-    $month = intval(explode('-', $entry['date'], 3)[1]);
+    $entry_date = explode('-', $entry['date'], 3);
+    $year = intval($entry_date[0]);
+    $month = intval($entry_date[1]);
+    $day = intval($entry_date[2]);
 
     if ($current_month === -1) {
       $output .= mantar_display_container($color_1, $year, $month, $now_year, $now_month);
@@ -649,13 +667,13 @@ function mantar_category_form() {
           <input type="hidden" name="mantar_category_update_entry[update_entry]" value="Y" />
           <input type="hidden" name="mantar_category_update_entry[id]" value="' . $id . '" />
           <td>
-            <input type="text" size="40" name="mantar_category_update_entry[title]" value="' . $title . '" />
+            <input type="text" size="40" name="mantar_category_update_entry[title]" value="' . $title . '" required="required" />
           </td>
           <td>
-            <input type="text" size="5" name="mantar_category_update_entry[background_color_1]" value="' . $color_1 . '" />
+            <input type="text" size="5" name="mantar_category_update_entry[background_color_1]" value="' . $color_1 . '" required="required" />
           </td>
           <td>
-            <input type="text" size="5" name="mantar_category_update_entry[background_color_2]" value="' . $color_2 . '" />
+            <input type="text" size="5" name="mantar_category_update_entry[background_color_2]" value="' . $color_2 . '" required="required" />
           </td>
         </tr>
 
@@ -675,13 +693,13 @@ function mantar_category_form() {
           <tr>
             <input type="hidden" name="mantar_category_add_entry[add_entry]" value="Y" />
             <td>
-              <input type="text" size="40" name="mantar_category_add_entry[title]" value="" />
+              <input type="text" size="40" name="mantar_category_add_entry[title]" value="" required="required" />
             </td>
             <td>
-              <input type="text" size="5" name="mantar_category_add_entry[background_color_1]" value="#F9FFEE" />
+              <input type="text" size="5" name="mantar_category_add_entry[background_color_1]" value="#F9FFEE" required="required" />
             </td>
             <td>
-              <input type="text" size="5" name="mantar_category_add_entry[background_color_2]" value="#EEFFF9" />
+              <input type="text" size="5" name="mantar_category_add_entry[background_color_2]" value="#EEFFF9" required="required" />
             </td>
           </tr>
 
