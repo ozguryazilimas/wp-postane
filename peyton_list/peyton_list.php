@@ -3,7 +3,7 @@
 Plugin Name: Peyton List
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: This plugin lists whatever you like with ability to make a list with catgories and links. This is dedicated to the lovely Peyton List (the more beautiful one, with black hair).
-Version: 1.0.0
+Version: 1.1.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
@@ -32,7 +32,7 @@ require_once(dirname(__FILE__) . '/includes/mantar_common.php');
 $peyton_list_db_version = '1.2';
 global $peyton_list_db_version;
 
-$peyton_list_version = '1.0.0';
+$peyton_list_version = '1.1.0';
 global $peyton_list_version;
 
 global $wpdb;
