@@ -19,59 +19,22 @@
  * @param array  $data The source data.
  */
 function relevanssi_add_matches( &$post, $data ) {
-	$hits = array(
-		'body'        => 0,
-		'title'       => 0,
-		'comment'     => 0,
-		'author'      => 0,
-		'excerpt'     => 0,
-		'customfield' => 0,
-		'mysqlcolumn' => 0,
-		'taxonomy'    => array(
-			'tag'      => 0,
-			'category' => 0,
-			'taxonomy' => 0,
-		),
-		'score'       => 0,
-		'terms'       => array(),
-	);
-	if ( isset( $data['body_matches'][ $post->ID ] ) ) {
-		$hits['body'] = $data['body_matches'][ $post->ID ];
-	}
-	if ( isset( $data['title_matches'][ $post->ID ] ) ) {
-		$hits['title'] = $data['title_matches'][ $post->ID ];
-	}
-	if ( isset( $data['tag_matches'][ $post->ID ] ) ) {
-		$hits['taxonomy']['tag'] = $data['tag_matches'][ $post->ID ];
-	}
-	if ( isset( $data['category_matches'][ $post->ID ] ) ) {
-		$hits['taxonomy']['category'] = $data['category_matches'][ $post->ID ];
-	}
-	if ( isset( $data['taxonomy_matches'][ $post->ID ] ) ) {
-		$hits['taxonomy']['taxonomy'] = $data['taxonomy_matches'][ $post->ID ];
-	}
-	if ( isset( $data['comment_matches'][ $post->ID ] ) ) {
-		$hits['comment'] = $data['comment_matches'][ $post->ID ];
-	}
-	if ( isset( $data['author_matches'][ $post->ID ] ) ) {
-		$hits['author'] = $data['author_matches'][ $post->ID ];
-	}
-	if ( isset( $data['excerpt_matches'][ $post->ID ] ) ) {
-		$hits['excerpt'] = $data['excerpt_matches'][ $post->ID ];
-	}
-	if ( isset( $data['customfield_matches'][ $post->ID ] ) ) {
-		$hits['customfield'] = $data['customfield_matches'][ $post->ID ];
-	}
-	if ( isset( $data['mysqlcolumn_matches'][ $post->ID ] ) ) {
-		$hits['mysqlcolumn'] = $data['mysqlcolumn_matches'][ $post->ID ];
-	}
-	if ( isset( $data['doc_weights'][ $post->ID ] ) ) {
-		$hits['score'] = round( $data['doc_weights'][ $post->ID ], 2 );
-	}
-	if ( isset( $data['term_hits'][ $post->ID ] ) ) {
-		$hits['terms'] = $data['term_hits'][ $post->ID ];
-		arsort( $hits['terms'] );
-	}
+	$hits['body']                 = $data['body_matches'][ $post->ID ] ?? 0;
+	$hits['title']                = $data['title_matches'][ $post->ID ] ?? 0;
+	$hits['taxonomy']['tag']      = $data['tag_matches'][ $post->ID ] ?? 0;
+	$hits['taxonomy']['category'] = $data['category_matches'][ $post->ID ] ?? 0;
+	$hits['taxonomy']['taxonomy'] = $data['taxonomy_matches'][ $post->ID ] ?? 0;
+	$hits['comment']              = $data['comment_matches'][ $post->ID ] ?? 0;
+	$hits['author']               = $data['author_matches'][ $post->ID ] ?? 0;
+	$hits['excerpt']              = $data['excerpt_matches'][ $post->ID ] ?? 0;
+	$hits['customfield']          = $data['customfield_matches'][ $post->ID ] ?? 0;
+	$hits['mysqlcolumn']          = $data['mysqlcolumn_matches'][ $post->ID ] ?? 0;
+	$hits['score']                = isset( $data['doc_weights'][ $post->ID ] ) ? round( $data['doc_weights'][ $post->ID ], 2 ) : 0;
+	$hits['terms']                = $data['term_hits'][ $post->ID ] ?? array();
+	$hits['missing_terms']        = $data['missing_terms'][ $post->ID ] ?? array();
+
+	arsort( $hits['terms'] );
+
 	$post->relevanssi_hits = $hits;
 }
 
@@ -94,6 +57,7 @@ function relevanssi_show_matches( $post ) {
 	}
 
 	$text          = stripslashes( get_option( 'relevanssi_show_matches_text' ) );
+	$missing_terms = strstr( $text, '%missing%' ) !== false ? relevanssi_generate_missing_terms_list( $post ) : '';
 	$replace_these = array(
 		'%body%',
 		'%title%',
@@ -108,6 +72,7 @@ function relevanssi_show_matches( $post ) {
 		'%score%',
 		'%terms%',
 		'%total%',
+		'%missing%',
 	);
 	$replacements  = array(
 		$post->relevanssi_hits['body'],
@@ -123,6 +88,7 @@ function relevanssi_show_matches( $post ) {
 		$post->relevanssi_hits['score'],
 		$term_hits,
 		$total_hits,
+		$missing_terms,
 	);
 	$result        = ' ' . str_replace( $replace_these, $replacements, $text );
 
@@ -135,6 +101,56 @@ function relevanssi_show_matches( $post ) {
 	 * @param string $result The breakdown.
 	 */
 	return apply_filters( 'relevanssi_show_matches', $result );
+}
+
+/**
+ * Generates the "Missing:" element for the search results breakdown.
+ *
+ * @param WP_Post $post The post object, which should have the missing terms in
+ * $post->relevanssi_hits['missing_terms'].
+ *
+ * @return string The missing terms.
+ */
+function relevanssi_generate_missing_terms_list( $post ) {
+	$missing_terms = '';
+	if ( ! empty( $post->relevanssi_hits['missing_terms'] ) ) {
+		$missing_terms_list = implode(
+			' ',
+			array_map(
+				function ( $term ) {
+					/**
+					 * Determines the tag used for missing terms, default <s>.
+					 *
+					 * @param string The tag, without angle brackets. Default 's'.
+					 */
+					$tag = apply_filters( 'relevanssi_missing_terms_tag', 's' );
+					return $tag ? "<$tag>$term</$tag>" : $term;
+				},
+				$post->relevanssi_hits['missing_terms']
+			)
+		);
+		$missing_terms      = sprintf(
+			/**
+			 * Filters the template for showing missing terms. Make sure you
+			 * include the '%s', as that is where the missing terms will be
+			 * inserted.
+			 *
+			 * @param string The template.
+			 */
+			apply_filters(
+				'relevanssi_missing_terms_template',
+				'<span class="missing_terms">' . __( 'Missing', 'relevanssi' ) . ': %s</span>'
+			),
+			$missing_terms_list
+		);
+	}
+	if (
+		1 === count( $post->relevanssi_hits['missing_terms'] )
+		&& function_exists( 'relevanssi_add_must_have' )
+		) {
+		$missing_terms .= relevanssi_add_must_have( $post );
+	}
+	return $missing_terms;
 }
 
 /**
@@ -238,7 +254,7 @@ function relevanssi_populate_array( $matches, $blog_id = -1 ) {
 	foreach ( $matches as $match ) {
 		$cache_id = $blog_id . '|' . $match->doc;
 		if ( $match->doc > 0 && ! isset( $relevanssi_post_array[ $cache_id ] ) ) {
-			array_push( $ids, $match->doc );
+			$ids[] = $match->doc;
 		}
 	}
 
@@ -805,6 +821,40 @@ function relevanssi_add_synonyms( $query ) {
 		}
 
 		if ( count( $synonyms ) > 0 ) {
+			$query       = str_replace( array( '”', '“' ), '"', $query );
+			$phrases     = relevanssi_extract_phrases( $query );
+			$new_phrases = array();
+			/**
+			 * Controls how synonyms are handled when they appear inside
+			 * phrases.
+			 *
+			 * @param bool If true, synonyms inside phrases create new phrases.
+			 * If false, synonyms inside phrases are ignored.
+			 */
+			if ( apply_filters( 'relevanssi_phrase_synonyms', true ) ) {
+				foreach ( $phrases as $phrase ) {
+					$new_phrases[] = $phrase;
+					$words         = explode( ' ', $phrase );
+					foreach ( array_keys( $synonyms ) as $synonym_source ) {
+						if ( in_array( $synonym_source, $words, true ) ) {
+							foreach ( array_keys( $synonyms[ $synonym_source ] ) as $synonym_replacement ) {
+								$new_phrases[] = str_replace( $synonym_source, $synonym_replacement, $phrase );
+							}
+						}
+					}
+				}
+			} else {
+				$new_phrases = $phrases;
+			}
+
+			$query = trim(
+				str_replace(
+					array_map( 'relevanssi_add_quotes', $phrases ),
+					'',
+					$query
+				)
+			);
+
 			$new_terms = array();
 			$terms     = array_keys( relevanssi_tokenize( $query, false ) ); // Remove stopwords is false here.
 			if ( ! in_array( $query, $terms, true ) ) {
@@ -823,6 +873,12 @@ function relevanssi_add_synonyms( $query ) {
 					}
 				}
 			}
+			if ( count( $new_phrases ) > 0 ) {
+				$new_terms = array_merge(
+					$new_terms,
+					array_map( 'relevanssi_add_quotes', $new_phrases )
+				);
+			}
 			if ( count( $new_terms ) > 0 ) {
 				$new_terms = array_unique( $new_terms );
 				foreach ( $new_terms as $new_term ) {
@@ -832,7 +888,7 @@ function relevanssi_add_synonyms( $query ) {
 		}
 	}
 
-	return $query;
+	return trim( $query );
 }
 
 /**
@@ -960,7 +1016,7 @@ function relevanssi_permalink( $link, $link_post = null ) {
 		$link = $link_post->relevanssi_link;
 	}
 
-	if ( is_search() && isset( $link_post->relevance_score ) ) {
+	if ( is_search() && property_exists( $link_post, 'relevance_score' ) ) {
 		$link = relevanssi_add_highlight( $link, $link_post );
 	}
 	return $link;
@@ -1065,11 +1121,13 @@ function relevanssi_get_forbidden_post_types() {
 		'jp_mem_plan',          // Jetpack.
 		'tablepress_table',     // TablePress.
 		'ninja-table',          // Ninja Tables.
+		'shop_coupon',          // WooCommerce.
 		'shop_order',           // WooCommerce.
 		'shop_order_refund',    // WooCommerce.
 		'wc_order_status',      // WooCommerce.
 		'wc_order_email',       // WooCommerce.
 		'shop_webhook',         // WooCommerce.
+		'woo_product_tab',      // Woo Product Tab.
 		'et_theme_builder',     // Divi.
 		'et_template',          // Divi.
 		'et_header_layout',     // Divi.
@@ -1110,6 +1168,11 @@ function relevanssi_get_forbidden_post_types() {
 		'um_form',              // Ultimate Member.
 		'um_directory',         // Ultimate Member.
 		'mailpoet_page',        // Mailpoet Page.
+		'mc4wp_form',           // MailChimp.
+		'elementor_font',       // Elementor.
+		'elementor_icons',      // Elementor.
+		'elementor_library',    // Elementor.
+		'elementor_snippet',    // Elementor.
 	);
 }
 
@@ -1128,6 +1191,9 @@ function relevanssi_get_forbidden_taxonomies() {
 		'amp_template',           // AMP.
 		'edd_commission_status',  // Easy Digital Downloads.
 		'edd_log_type',           // Easy Digital Downloads.
+		'elementor_library_type', // Elementor.
+		'elementor_library_category', // Elementor.
+		'elementor_font_type',    // Elementor.
 	);
 }
 
@@ -1567,4 +1633,37 @@ function relevanssi_update_synonyms_setting() {
 
 	$array_synonyms[ $current_language ] = $synonyms;
 	update_option( 'relevanssi_synonyms', $array_synonyms );
+}
+
+/**
+ * Replaces synonyms in an array with their original counterparts.
+ *
+ * If there's a synonym "dog=hound", and the array of terms contains "hound",
+ * it will be replaced with "dog". If there are multiple matches, all
+ * replacements will happen.
+ *
+ * @param array $terms An array of words.
+ *
+ * @return array An array of words with backwards synonym replacement.
+ */
+function relevanssi_replace_synonyms_in_terms( array $terms ) : array {
+	$all_synonyms = get_option( 'relevanssi_synonyms', array() );
+	$synonyms     = explode( ';', $all_synonyms[ relevanssi_get_current_language() ] ?? '' );
+
+	return array_map(
+		function ( $term ) use ( $synonyms ) {
+			$new_term = array();
+			foreach ( $synonyms as $pair ) {
+				list( $key, $value ) = explode( '=', $pair );
+				if ( $value === $term ) {
+					$new_term[] = $key;
+				}
+			}
+			if ( ! empty( $new_term ) ) {
+				$term = implode( ' ', $new_term );
+			}
+			return $term;
+		},
+		$terms
+	);
 }
