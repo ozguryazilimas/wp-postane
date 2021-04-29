@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.18.2
+Stable tag: 5.19.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -146,7 +146,13 @@ Once you save any CSS changes, empty your browser's cache and reload your page t
 
 = I'm using the Thumbnails display. How can I change the thumbnail size? =
 
-The default YARPP thumbnail size is 120px by 120px. The thumbnail size can be specified programmatically by adding `add_image_size('yarpp-thumbnail', $width, $height, true);` to your theme's `functions.php` file with appropriate width and height variables. In the future I may add some UI to the settings to also set this. Feedback is requested on whether this is a good idea.
+As of YARPP 5.19.0, YARPP usually defaults to using WordPress' default thumbnail size. This can be changed to another thumbnail size using the YARPP setting "Thumbnail Size".
+
+However, if you used YARPP before 5.19.0, or your theme defines a "yarpp-thumbnail" size, the default is the "yarpp-thumbnail".
+
+To change "yarpp-thumbnail" size, add `add_image_size('yarpp-thumbnail', $width, $height, true);` to your theme's `functions.php` file with appropriate width and height variables.
+
+When you do this, make sure you also set the YARPP setting "Thumbnail Size" to "yarpp-thumbnail".
 
 Each time you change YARPP's thumbnail dimensions like this, you will probably want to have WordPress regenerate appropriate sized thumbnails for all of your images. I highly recommend the [Regenerate Thumbnails](https://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin for this purpose.
 
@@ -313,6 +319,12 @@ add_action(
 `
 
 == Changelog ==
+= 5.19.0 (28-April-2021) =
+* New: **YARPP Block** 🎉 now available for the WordPress Block Editor (Gutenberg) for drag and drop placement customization
+* New: Choose image size for YARPP custom theme templates
+* [Bugfix](https://wordpress.org/support/topic/database-entries-being-added-to-the-post-as-html): Indicate `yarpp_meta` postmeta is protected to prevent themes from displaying it
+* [Bugfix](https://wordpress.org/support/topic/fatal-error-3858/): Check `wp_get_additional_image_sizes` exists for backwards compatibility to older versions of WordPress
+
 = 5.18.2 (19-April-2021) =
 * [Bugfix](https://wordpress.org/support/topic/thumbnail-size-wont-change/): Allow default WP image sizes to be picked for the YARPP Thumbnail theme
 
@@ -1132,5 +1144,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.18.2 =
+= 5.19.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

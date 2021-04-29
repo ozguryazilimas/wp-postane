@@ -96,17 +96,22 @@ class YARPP {
 		add_filter('the_content_feed',   array($this, 'the_content_feed'), $feed_priority);
 		add_filter('the_excerpt_rss',    array($this, 'the_excerpt_rss' ), $excerpt_rss_priority);
 		add_action('wp_enqueue_scripts', array($this, 'maybe_enqueue_thumbnails_stylesheet'));
+		add_filter( 'is_protected_meta', array( $this, 'is_protected_meta' ), 10, 3 );
 
         /**
 		 * If we're using thumbnails, register yarpp-thumbnail size, if theme has not already.
 		 * Note: see FAQ in the readme if you would like to change the YARPP thumbnail size.
 		 * If theme has already yarpp-thumbnail size registered and we also try to register yarpp-thumbnail then it will throw a fatal error. So it is necessary to check if yarpp-thumbnail size is not registered.
          */
-		if ( false === yarpp_get_image_sizes( 'yarpp-thumbnail' ) ) {
+		global $add_image_size_by_yarpp;
+		 if ( false === yarpp_get_image_sizes( 'yarpp-thumbnail' ) ) {			
 			$width  = 120;
 			$height = 120;
 			$crop   = true;
-			add_image_size('yarpp-thumbnail', $width, $height, $crop);
+			add_image_size( 'yarpp-thumbnail', $width, $height, $crop );
+			$add_image_size_by_yarpp = true;
+		} else {
+			$add_image_size_by_yarpp = false;
 		}
 
 		if (isset($_REQUEST['yarpp_debug'])) $this->debug = true;
@@ -126,7 +131,22 @@ class YARPP {
 		$shortcode = new YARPP_Shortcode();
 		$shortcode->register();
 	}
-		
+	/**
+	 * Add yarpp_meta key to protected list.
+     *
+     * @since 5.19
+	 *
+	 * @param bool   $protected Whether the key is considered protected.
+	 * @param string $meta_key  Metadata key.
+	 * @param string $meta_type Type of object metadata is for. Accepts 'post', 'comment', 'term', 'user',
+	 *                          or any other object type with an associated meta table.
+	 */
+	public function is_protected_meta( $protected, $meta_key, $meta_type ) {
+		if ( 'yarpp_meta' === $meta_key ) {
+			return true;
+		}
+		return $protected;
+	}
 	/*
 	 * OPTIONS
 	 */
@@ -201,6 +221,7 @@ class YARPP {
 			'manually_using_thumbnails' => false,
 			'rest_api_display' => true,
 			'thumbnail_size_display' => 0,
+			'custom_theme_thumbnail_size_display' => 0,
 			'thumbnail_size_feed_display' => 0,
 			'rest_api_client_side_caching' => false,
 			'yarpp_rest_api_cache_time' => 15
@@ -502,17 +523,23 @@ class YARPP {
 		if ($this->get_option('rss_template') === 'thumbnails' && $this->get_option('rss_display')) return true;
 		return false;
 	}
-
+	public function get_thumbnail_option_name() {
+		if ( is_feed() ) {
+			return 'thumbnail_size_feed_display';
+		}
+		$chosen_template = yarpp_get_option( 'template' );
+		// check if they're using a custom template
+		if ( 'thumbnails' === $chosen_template){
+			return 'thumbnail_size_display';
+		}
+		return 'custom_theme_thumbnail_size_display';
+	}
 	public function thumbnail_dimensions() {
 		global $_wp_additional_image_sizes;
 		if (!isset($_wp_additional_image_sizes['yarpp-thumbnail'])) return $this->default_dimensions;
 
 		// get user selected thumbnail size.
-		if ( is_feed() ) {
-			$dimensions = yarpp_get_thumbnail_image_dimensions( 'thumbnail_size_feed_display' );
-		} else {
-			$dimensions = yarpp_get_thumbnail_image_dimensions();
-		}		
+		$dimensions = yarpp_get_thumbnail_image_dimensions( $this->get_thumbnail_option_name() );	
 		if ( empty($dimensions) ) {
 			$dimensions = $_wp_additional_image_sizes['yarpp-thumbnail'];
 			$dimensions['size'] = 'yarpp-thumbnail';

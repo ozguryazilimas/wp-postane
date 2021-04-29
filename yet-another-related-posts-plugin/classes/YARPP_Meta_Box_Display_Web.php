@@ -36,7 +36,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 								
         $this->template_checkbox( false );
         echo "</div>";
-				
+        $get_image_sizes = yarpp_get_image_sizes();
         $chosen_template = yarpp_get_option( "template" );
         $choice = false === $chosen_template ? 'builtin' :
             ( $chosen_template == 'thumbnails' ? 'thumbnails' : 'custom' );
@@ -50,6 +50,14 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
         echo ">";
         echo '<div class="yarpp_form_row"><div>' . $this->template_text . '</div></div>';
         $this->template_file( false );
+        echo '<div class="yarpp_form_row yarpp_form_radio_label">';
+        echo '<div class="yarpp_form_label">' . esc_html( 'Thumbnail Size', 'yarpp' ) . '</div><div>';
+        foreach ( $get_image_sizes as $key => $_size ) {
+                    /* translators: %s: thumbnail key's name */
+                    $name = sprintf( __( '%1$s (%2$sx%3$s)', 'yarpp' ), $key, $_size['width'], $_size['height'] );
+                    $this->radio( 'custom_theme_thumbnail_size_display', $name, '', $key );
+                }
+        echo '</div></div>';
         echo "</div>";
 
         echo "<div class='yarpp_subbox template_options_thumbnails'";
@@ -57,15 +65,14 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
             echo ' style="display: none;"';
         echo ">";
         $this->textbox( 'thumbnails_heading', __( 'Heading:', 'yarpp' ), 40 );
-        $this->textbox( 'thumbnails_default', __( 'Default image (URL):', 'yarpp' ), 40 );
-        $get_image_sizes = yarpp_get_image_sizes();
+        $this->textbox( 'thumbnails_default', __( 'Default image (URL):', 'yarpp' ), 40 );        
         echo '<div class="yarpp_form_row yarpp_form_radio_label">';
-        	echo '<div class="yarpp_form_label">' . esc_html( 'Thumbnail Size', 'yarpp' ) . '</div><div>';
-	        foreach ( $get_image_sizes as $key => $_size ) {
-						/* translators: %s: thumbnail key's name */
-						$name = sprintf( __( '%1$s (%2$sx%3$s)', 'yarpp' ), $key, $_size['width'], $_size['height'] );
-						$this->radio( 'thumbnail_size_display', $name, '', $key );
-					}
+        echo '<div class="yarpp_form_label">' . esc_html( 'Thumbnail Size', 'yarpp' ) . '</div><div>';
+        foreach ( $get_image_sizes as $key => $_size ) {
+                    /* translators: %s: thumbnail key's name */
+                    $name = sprintf( __( '%1$s (%2$sx%3$s)', 'yarpp' ), $key, $_size['width'], $_size['height'] );
+                    $this->radio( 'thumbnail_size_display', $name, '', $key );
+                }
         echo '</div></div>';
         echo "</div>";
 

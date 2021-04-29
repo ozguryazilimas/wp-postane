@@ -26,16 +26,20 @@ function yarpp_get_option($option = null) {
  * @return string name of thumbnail.
  */
 function yarpp_get_option_thumbnail( $option = null, $default_option = 'thumbnail' ) {
+	global $add_image_size_by_yarpp;
 	$get_template            = yarpp_get_option( 'template' );
+	$choice                  = false === $get_template ? 'builtin' : ( 'thumbnails' === $get_template ? 'thumbnails' : 'custom' );
 	$user_selected_thumbnail = yarpp_get_option( $option );
+	// If yarpp-thumbnail is added by other than yarpp plugin then default selection will be yarpp-thumbnail otherwise thumbnail.
+	$default_checked = ( true === $add_image_size_by_yarpp ? 'thumbnail' : 'yarpp-thumbnail' );
 	/**
 	 * If existing user upgrades to v5.18.1 then continue using YARPP-thumbnail as default option.
 	 * If this is a fresh install then YARPP will use "thumbnail" (WordPress default) because this is always available and does not require images to regenerate.
 	 * Lastly, fallback to the provided fallback default.
 	 */
-	if ( empty( $user_selected_thumbnail ) && 'thumbnails' === $get_template ) {
+	if ( empty( $user_selected_thumbnail ) && ( 'thumbnails' === $get_template || 'custom' === $choice ) ) {
 		$thumbnail_size = 'yarpp-thumbnail';
-	} elseif ( ! empty( $user_selected_thumbnail ) && 'thumbnails' === $get_template ) {
+	} elseif ( ! empty( $user_selected_thumbnail ) && ( 'thumbnails' === $get_template || 'custom' === $choice ) ) {
 		// Check whether user selected thumbnail is still registered.
 		if ( false === yarpp_get_image_sizes( $user_selected_thumbnail ) ) {
 			$thumbnail_size = 'yarpp-thumbnail';
@@ -43,7 +47,7 @@ function yarpp_get_option_thumbnail( $option = null, $default_option = 'thumbnai
 			$thumbnail_size = $user_selected_thumbnail;
 		}
 	} else {
-		$thumbnail_size = $default_option;
+		$thumbnail_size = $default_checked;
 	}
 	return $thumbnail_size;
 }
