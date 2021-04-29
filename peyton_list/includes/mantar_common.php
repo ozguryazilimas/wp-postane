@@ -126,24 +126,32 @@ function mantar_update_entry($data) {
   $season = stripslashes_deep($data['season']);
   $current_time = mantar_get_time();
 
-  $success = $wpdb->update(
-    $mantar_db_main,
-    array(
-      'mantar_category_id' => $mantar_category_id,
-      'peyton_list_id' => $peyton_list_id,
-      'link' => $link,
-      'date' => $date,
-      'without_day' => $without_day,
-      'season' => $season,
-      'updated_by' => $user_ID,
-      'updated_at' => $current_time
-    ),
-    array(
-      'id' => $entry_id
-    )
-  );
+  $similar_record = mantar_similar_record($peyton_list_id, $mantar_category_id, $season);
 
-  return $success;
+  if ($similar_record) {
+    $error_msg = __('This record was already added', 'peyton_list');
+  }
+
+  if ($error_msg == '') {
+    $success = $wpdb->update(
+      $mantar_db_main,
+      array(
+        'mantar_category_id' => $mantar_category_id,
+        'peyton_list_id' => $peyton_list_id,
+        'link' => $link,
+        'date' => $date,
+        'without_day' => $without_day,
+        'season' => $season,
+        'updated_by' => $user_ID,
+        'updated_at' => $current_time
+      ),
+      array(
+        'id' => $entry_id
+      )
+    );
+  }
+
+  return $error_msg;
 }
 
 function mantar_delete_entry($link_id) {
