@@ -122,7 +122,7 @@ function mantar_update_entry($data) {
   $peyton_list_id = stripslashes_deep($data['peyton_list_id']);
   $link = stripslashes_deep($data['link']);
   $date = stripslashes_deep($data['date']);
-  $without_day = stripslashes_deep($data['without_day']);
+  $without_day = $data['without_day'] ? 1 : 0;
   $season = stripslashes_deep($data['season']);
   $current_time = mantar_get_time();
 
