@@ -27,11 +27,19 @@ function mantar_user_is_admin() {
   return $has_perm;
 }
 
-function mantar_similar_record($peyton_list_id, $mantar_category_id, $season) {
+function mantar_similar_record($peyton_list_id, $mantar_category_id, $season, $existing_id = null) {
   global $wpdb, $mantar_db_main, $mantar_db_categories;
 
-  $ret = $wpdb->get_row($wpdb->prepare("SELECT * FROM $mantar_db_main WHERE peyton_list_id = $peyton_list_id " .
-                                       "AND mantar_category_id = $mantar_category_id AND season = %s", $season));
+  if ($existing_id) {
+    $existing_id_clause = ' AND id != ' . $existing_id;
+  } else {
+    $existing_id_clause = '';
+  }
+
+  $ret = $wpdb->get_row($wpdb->prepare(
+    "SELECT * FROM $mantar_db_main WHERE peyton_list_id = $peyton_list_id " .
+    "AND mantar_category_id = $mantar_category_id AND season = %s $existing_id_clause", $season
+  ));
 
   return $ret;
 }
@@ -126,7 +134,7 @@ function mantar_update_entry($data) {
   $season = stripslashes_deep($data['season']);
   $current_time = mantar_get_time();
 
-  $similar_record = mantar_similar_record($peyton_list_id, $mantar_category_id, $season);
+  $similar_record = mantar_similar_record($peyton_list_id, $mantar_category_id, $season, $entry_id);
 
   if ($similar_record) {
     $error_msg = __('This record was already added', 'peyton_list');
@@ -151,7 +159,7 @@ function mantar_update_entry($data) {
     );
   }
 
-  return $error_msg;
+  return array($error_msg, $success);
 }
 
 function mantar_delete_entry($link_id) {

@@ -291,7 +291,10 @@ function initialize_mantar() {
       data: ajax_data,
       success: function(data) {
         if (typeof data !== 'undefined') {
-          if (data.success) {
+
+          if (!jQuery.isEmptyObject(data.error)) {
+            alert(data.error);
+          } else if (data.success) {
             if (row.child.isShown()) {
               jQuery('div.mantar_inner_update', row.child()).slideUp(function () {
                 row.child.hide();
