@@ -22,7 +22,7 @@ class YARPP_Meta_Box {
         return (!$this->yarpp->diagnostic_custom_templates() && $this->yarpp->admin->can_copy_templates());
     }
 
-    public function checkbox($option, $desc, $class = null) {
+    public function checkbox($option, $desc, $class = null, $yarpp_args = array()) {
         include(YARPP_DIR.'/includes/phtmls/yarpp_meta_box_checkbox.phtml');
     }
     

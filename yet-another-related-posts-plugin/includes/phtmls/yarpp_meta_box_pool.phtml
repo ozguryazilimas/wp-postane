@@ -13,7 +13,7 @@
     }
 
     $this->checkbox('show_pass_post', __('Display password protected posts', 'yarpp'));
-
+    $this->checkbox( 'include_sticky_posts', __( "Display sticky posts", 'yarpp' ) );  
     $recent = yarpp_get_option('recent');
     if ((bool) $recent) {
         list($recent_number, $recent_units) = explode(' ', $recent);
@@ -51,5 +51,5 @@ $recent_units_html .= '</select>';
 <?php
 	$this->checkbox( 'past_only', __( "Display only posts older than current post", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "Only posts older than the current post will be displayed.", 'yarpp' ) ) . "'>&nbsp;</span>" );
 
-	$this->checkbox( 'cross_relate', __( "Display results from all post types", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "When disabled, only other posts with the same post type will be displayed. For example, only posts will be displayed as related to a post, only pages will be displayed as related to a page, etc.", 'yarpp' ) ) . "'>&nbsp;</span>" );
+	$this->checkbox( 'cross_relate', __( "Display results from all post types", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "When disabled, only other posts with the same post type will be displayed. For example, only posts will be displayed as related to a post, only pages will be displayed as related to a page, etc.", 'yarpp' ) ) . "'>&nbsp;</span>" );    
 ?>

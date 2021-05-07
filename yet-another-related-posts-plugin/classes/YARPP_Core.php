@@ -194,6 +194,8 @@ class YARPP {
 			'rss_template' => false,
 			'show_pass_post' => false,
 			'cross_relate' => false,
+			'include_sticky_posts' => true,
+			'generate_missing_thumbnails' => false,
 			'rss_display' => false,
 			'rss_excerpt_display' => true,
 			'promote_yarpp' => false,
@@ -244,7 +246,7 @@ class YARPP {
 		$this->db_options->set_yarpp_options($new_options);
 	
 		// new in 3.1: clear cache when updating certain settings.
-		$clear_cache_options = array('show_pass_post' => 1, 'recent' => 1, 'threshold' => 1, 'past_only' => 1);
+		$clear_cache_options = array('show_pass_post' => 1, 'recent' => 1, 'threshold' => 1, 'past_only' => 1, 'include_sticky_posts' => 1);
 
 		$relevant_options = array_intersect_key($options, $clear_cache_options);
 		$relevant_current_options = array_intersect_key($current_options, $clear_cache_options);
@@ -514,7 +516,7 @@ class YARPP {
 	}
 	
 	public function diagnostic_generate_thumbnails() {
-		return (defined('YARPP_GENERATE_THUMBNAILS') && YARPP_GENERATE_THUMBNAILS);
+		return (defined( 'YARPP_GENERATE_THUMBNAILS' ) && YARPP_GENERATE_THUMBNAILS) || (bool) $this->get_option( 'generate_missing_thumbnails' );
 	}
 
 	public function diagnostic_using_thumbnails() {
@@ -588,16 +590,20 @@ class YARPP {
 	/**
 	 * @param $dimensions
 	 */
-	public function enqueue_thumbnails_stylesheet($dimensions) {
-        $queryStr = http_build_query(
-            array(
-                'width'  => $dimensions['width'],
-                'height' => $dimensions['height']
-            )
-        );
-
-    $url = plugins_url('includes/styles_thumbnails.css.php?'.$queryStr, dirname(__FILE__));
-		wp_enqueue_style("yarpp-thumbnails-".$dimensions['size'], $url, array(), YARPP_VERSION, 'all');
+	public function enqueue_thumbnails_stylesheet( $dimensions ) {
+		
+		wp_register_style('yarpp-thumbnails', plugins_url('/style/styles_thumbnails.css', YARPP_MAIN_FILE ), array(), YARPP_VERSION);
+		/**
+		 * Filter to allow dequeing of styles_thumbnails.css.
+		 *
+		 * @param boolean default true
+		 */
+		$enqueue_yarpp_thumbnails = apply_filters( 'yarpp_enqueue_thumbnails_style', true );
+		if ( true === $enqueue_yarpp_thumbnails ) {
+			$yarpp_custom_css = yarpp_thumbnail_inline_css( $dimensions );			
+			wp_enqueue_style( 'yarpp-thumbnails' );
+			wp_add_inline_style( 'yarpp-thumbnails', $yarpp_custom_css );
+		}		
 	}
 
     /*
@@ -1039,13 +1045,13 @@ class YARPP {
 
 		$comments   = wp_count_comments();
 		$users      = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->users); //count_users();
-        $posts      = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->posts." WHERE post_type = 'post' AND comment_count > 0");
+    $posts      = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->posts." WHERE post_type = 'post' AND comment_count > 0");
 		$settings   = $this->get_option();
 
 		$collect = array_flip(array(
 			'threshold', 'limit', 'excerpt_length', 'recent', 'rss_limit',
 			'rss_excerpt_length', 'past_only', 'show_excerpt', 'rss_show_excerpt',
-			'template', 'rss_template', 'show_pass_post', 'cross_relate',
+			'template', 'rss_template', 'show_pass_post', 'cross_relate', 'generate_missing_thumbnails', 'include_sticky_posts', 
 			'rss_display', 'rss_excerpt_display', 'promote_yarpp', 'rss_promote_yarpp',
 			'myisam_override', 'weight', 'require_tax', 'auto_display_archive', 'exclude'
 		));

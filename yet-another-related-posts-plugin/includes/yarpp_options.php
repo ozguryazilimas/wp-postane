@@ -140,7 +140,8 @@ if (isset($_POST['update_yarpp']) && check_admin_referer('update_yarpp', 'update
     else
         $new_options['exclude'] = '';
 
-    $new_options['template'] = $_POST['use_template'] == 'custom' ? $_POST['template_file'] :
+    $new_options['include_sticky_posts'] = isset( $_POST['include_sticky_posts'] ) ? 1 : 0;
+        $new_options['template'] = $_POST['use_template'] == 'custom' ? $_POST['template_file'] :
         ( $_POST['use_template'] == 'thumbnails' ? 'thumbnails' : false );
     $new_options['rss_template'] = $_POST['rss_use_template'] == 'custom' ? $_POST['rss_template_file'] :
         ( $_POST['rss_use_template'] == 'thumbnails' ? 'thumbnails' : false );

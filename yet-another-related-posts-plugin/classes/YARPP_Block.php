@@ -20,8 +20,7 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 			add_action( 'init', array( $this, 'yarpp_gutenberg_block_func' ), 100 );
 			add_filter( 'block_categories', array( $this, 'yarpp_block_categories' ), 10, 2 );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'yarpp_enqueue_block_editor_assets' ) );
-		}
-		/**
+		}/**
 		 * YARPP enqueue thumbnail stylesheet.
 		 */
 		public function yarpp_enqueue_block_editor_assets() {

@@ -220,10 +220,7 @@ abstract class YARPP_Cache {
 		 * Where
 		 */
 	
-		$newsql .= $wpdb->prepare(
-			" where post_status in ( 'publish', 'static' ) and ID != %d",
-            $reference_ID
-		);
+		$newsql .= " where post_status in ( 'publish', 'static' )";
         /**
          * @since 3.1.8 Revised $past_only option
          */
@@ -267,7 +264,16 @@ abstract class YARPP_Cache {
 			$post_types
 		);
 		$newsql .= ' and post_type IN (' . implode(',',$sanitized_post_types). ')';
-	
+		$post_ids_to_exclude  = array( ( int )$reference_ID);
+		$include_sticky_posts = $this->core->get_option( 'include_sticky_posts' );
+		if ( 1 !== (int) $include_sticky_posts ) {
+			$get_sticky_posts    = get_option( 'sticky_posts' );
+			$post_ids_to_exclude = wp_parse_args( $get_sticky_posts, $post_ids_to_exclude );
+		}
+		// Allow to filter the exluded post ids.
+		$post_ids_to_exclude = apply_filters( 'yarpp_post_ids_to_exclude', $post_ids_to_exclude, $reference_ID );
+		$post__not_in        = implode( ',', array_map( 'absint', $post_ids_to_exclude ) );
+		$newsql             .= " AND {$wpdb->posts}.ID NOT IN ($post__not_in)";
 		// GROUP BY
 		$newsql .= "\n group by ID \n";
 	

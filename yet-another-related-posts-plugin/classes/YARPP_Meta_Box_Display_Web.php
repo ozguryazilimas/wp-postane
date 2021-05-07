@@ -74,8 +74,16 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
                     $this->radio( 'thumbnail_size_display', $name, '', $key );
                 }
         echo '</div></div>';
+        $disabled_checkbox           = '';
+        $generate_missing_thumbnails = yarpp_get_option( 'generate_missing_thumbnails' );
+        if ( defined( 'YARPP_GENERATE_THUMBNAILS' ) ) {
+            $disabled_checkbox           = 'disabled';
+            $generate_missing_thumbnails = YARPP_GENERATE_THUMBNAILS;
+        }
+        $yarpp_args = array( 'template_type' => 'right-aligned-checkbox', 'disabled_checkbox' => $disabled_checkbox, 'option_value' => $generate_missing_thumbnails );
+        $this->checkbox( 'generate_missing_thumbnails', __( "Generate missing thumbnail sizes: ", 'yarpp' ) . "<span class='yarpp_help dashicons dashicons-editor-help' data-help='" . "<p>" . esc_attr( __( "When enabled, missing thumbnail sizes will be  automatically generated on the fly. Doing this type of processing on the fly may not scale well for larger sites.", 'yarpp' ) ) . "</p><p>" . sprintf( __( 'For larger sites, we recommend the %1$s or %2$s to generate missing thumbnail sizes in a batch process.', 'yarpp' ), '<a href="https://wordpress.org/plugins/regenerate-thumbnails/" target="_blank">Regenerate Thumbnails plugin</a>', '<a href="https://developer.wordpress.org/cli/commands/media/regenerate/" target="_blank">WP-CLI</a>' ) . "</p><p>" . esc_attr( __( "New images should continue to automatically get all active thumbnail sizes generated when they are uploaded.", 'yarpp' ) ) . "</p>" .  "'>&nbsp;</span>&nbsp;&nbsp;", 'yarpp', $yarpp_args );
         echo "</div>";
-
+        
         echo "<div class='yarpp_subbox template_options_builtin'";
         if ( $choice != 'builtin' )
             echo ' style="display: none;"';

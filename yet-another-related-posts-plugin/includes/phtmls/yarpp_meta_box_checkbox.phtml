@@ -1,12 +1,20 @@
 <div class="yarpp_form_row yarpp_form_checkbox <?php echo $class ?>">
+<?php if( isset( $yarpp_args['template_type'] ) && 'right-aligned-checkbox' === $yarpp_args['template_type'] ) { ?>
+    <div class="yarpp_form_label">
+        <?php echo $desc ?>
+    </div>&nbsp;
+<?php } ?>
     <div scope="row">
         <input 
             type="checkbox" 
             name="<?php echo $option ?>" 
             id="yarpp-<?php echo $option ?>" 
             value="true" 
-            <?php checked(yarpp_get_option($option)) ?>
+            <?php checked((isset($yarpp_args['option_value'])) ? $yarpp_args['option_value'] : yarpp_get_option($option)) ?>
+            <?php echo (isset($yarpp_args['disabled_checkbox'])) ? $yarpp_args['disabled_checkbox'] : '';?>
         />
-        <label for="yarpp-<?php echo $option ?>"><?php echo $desc ?></label>
+        <?php if ( ! isset( $yarpp_args['template_type'] ) || 'right-aligned-checkbox' !== $yarpp_args['template_type'] ) { ?>
+            <label for="yarpp-<?php echo $option ?>"><?php echo $desc ?></label>
+        <?php } ?>
     </div>
 </div>
