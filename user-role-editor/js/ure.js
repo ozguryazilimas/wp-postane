@@ -222,18 +222,17 @@ var ure_main = {
                 
     show_notice: function(msg_text, msg_type) {
 
-        /* create notice div */
-        var div = document.createElement('div');
-        div.classList.add('notice', 'is-dismissible');
-        if (msg_type=='success') {
-            div.classList.add('notice-success'); // Green left border
-        } else if (msg_type=='info') {
-            div.classList.add('notice-info');   // Blue left border
-        } else if (msg_type=='error') {
-            div.classList.add('notice-error');   // Red left border
-        } else if (msg_type=='warning') {
-            div.classList.add('notice-warning');   // Yellow left border
+        var class_name = 'notice-'+ msg_type;
+        // try to use exising notice div with needed type
+        var divs = document.getElementsByClassName( class_name );
+        if ( divs === null || ( typeof divs === 'object' && divs.length===0 ) ) {
+            // create notice div
+            var div = document.createElement('div');
+            div.classList.add('notice', 'is-dismissible', class_name);
+        } else {
+            var div = divs[0];
         }
+        
         /* create paragraph element to hold message */
         var par = document.createElement('p');
         /* Add message text */
@@ -262,7 +261,7 @@ var ure_main = {
         but.addEventListener('click', function () {
             div.parentNode.removeChild(div);
         });
-        setTimeout(this.hide_notice, 7000, div);    // remove automatically after 7 sec.
+       // setTimeout(this.hide_notice, 7000, div);    // remove automatically after 7 sec.
     },
 
 

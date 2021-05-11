@@ -450,6 +450,34 @@ class URE_Editor {
         return true;
     }
     // end of save_roles()    
+
+
+    protected function leave_roles_for_blog( $blog_id, $leave_roles ) {
+        global $wpdb;
+        
+        $prefix = $wpdb->get_blog_prefix( $blog_id );
+        $options_table_name = $prefix . 'options';
+        $option_name = $prefix . 'user_roles';
+        
+        $query = "SELECT option_value
+                    FROM {$options_table_name}
+                    WHERE option_name='$option_name'
+                    LIMIT 1";
+        $value = $wpdb->get_var( $query );
+        if ( empty( $value ) ) {
+            return $this->roles;
+        }
+        $blog_roles = unserialize( $value );
+        
+        $roles = $this->roles;
+        foreach( $leave_roles as $role_id ) {
+            $roles[$role_id] = $blog_roles[$role_id];
+        }
+        $serialized_roles = serialize( $roles );
+        
+        return $serialized_roles;
+    }
+    // end of leave_roles_for_blog()
     
     
     /**
@@ -477,16 +505,31 @@ class URE_Editor {
 
         $serialized_roles = serialize( $this->roles );
         $blog_ids = $this->lib->get_blog_ids();
-        foreach ($blog_ids as $blog_id) {
-            $prefix = $wpdb->get_blog_prefix($blog_id);
+        /*
+         * Roles to leave unchanged during network update which overwrites all roles by default
+         * $leave_roles = array( blog_id => array('role_id1', 'role_id2', ... );
+         */
+        $leave_roles = apply_filters('ure_network_update_leave_roles', array(), 10, 1 );
+        if ( empty( $leave_roles ) || !is_array( $leave_roles ) ) {
+            $leave_roles = array();
+        }
+        foreach ( $blog_ids as $blog_id ) {
+            $prefix = $wpdb->get_blog_prefix( $blog_id );
             $options_table_name = $prefix . 'options';
             $option_name = $prefix . 'user_roles';
+            if ( !isset( $leave_roles[$blog_id] ) ) {
+                // overwrites all roles
+                $roles = $serialized_roles;
+            } else {
+                // overwrite except roles you have to leave untouched for this blog
+                $roles = $this->leave_roles_for_blog( $blog_id, $leave_roles[$blog_id] );
+            }
             $query = "UPDATE {$options_table_name}
-                        SET option_value='$serialized_roles'
-                        WHERE option_name='$option_name'
-                        LIMIT 1";
-            $wpdb->query($query);
-            if ($wpdb->last_error) {
+                SET option_value='$roles'
+                WHERE option_name='$option_name'
+                LIMIT 1";
+            $wpdb->query( $query );
+            if ( $wpdb->last_error ) {
                 return false;
             }
             // @TODO: save role additional options     

@@ -210,8 +210,14 @@ class User_Role_Editor {
        
         add_action('wp_ajax_ure_ajax', array($this, 'ure_ajax'));
         
-        $sort_roles = apply_filters( 'ure_sort_wp_roles_list', false );
-        if ( $sort_roles ) {
+        // Input parameter $roles_sorting_order = false by default 
+        // Acceptable values: 
+        // true - sort by role ID (for backward compatibility),
+        // 'id' - sort roles by role ID, 
+        // 'name' -  sort roles by role name.
+        $roles_sorting_order = apply_filters( 'ure_sort_wp_roles_list', false);
+        if ( !empty( $roles_sorting_order ) ) {
+            $this->lib->set('roles_sorting_order', $roles_sorting_order );
             add_filter( 'editable_roles', array( $this, 'sort_wp_roles_list' ), 11, 1 );
         }
     }
@@ -842,7 +848,17 @@ class User_Role_Editor {
      */
     public function sort_wp_roles_list( $roles ) {
         
-        ksort( $roles );
+        $roles_sorting_order = $this->lib->get('roles_sorting_order');
+        if ( $roles_sorting_order==='id' || $roles_sorting_order===true ) {
+            // sort by role ID
+            ksort( $roles );
+        } else if ( $roles_sorting_order==='name') {
+            // sort by role name
+            asort( $roles );
+        } else {    
+            // change nothing
+            return $roles;
+        }
         // wp-admin/includes/template/wp_dropdown_roles() showed roles in reversed order, #906:
         // $editable_roles = array_reverse( get_editable_roles() );
         // so we have to reverse them 1st, in order they will be reversed back to the ascending order
