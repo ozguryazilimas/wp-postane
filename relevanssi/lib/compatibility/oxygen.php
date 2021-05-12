@@ -77,7 +77,10 @@ function relevanssi_oxygen_compatibility( $value, $field, $post_id ) {
 			);
 
 			$content = preg_replace(
-				'/\[\/?ct_.*?\]/',
+				array(
+					'/\[oxygen.*?\]/',
+					'/\[\/?ct_.*?\]/',
+				),
 				' ',
 				/**
 				 * Filters the Oxygen Builder section content before the
@@ -97,11 +100,9 @@ function relevanssi_oxygen_compatibility( $value, $field, $post_id ) {
 
 			$page_content .= $content;
 		}
-		if ( 'on' === get_option( 'relevanssi_expand_shortcodes' ) ) {
-			$page_content = do_shortcode( $page_content );
-		} else {
-			$page_content = strip_shortcodes( $page_content );
-		}
+
+		$page_content = relevanssi_do_shortcode( $page_content );
+
 		$value[0] = $page_content;
 	}
 	return $value;

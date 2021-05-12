@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 5.7.1
 Requires PHP: 7.0
-Stable tag: 4.13.0
+Stable tag: 4.13.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,11 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.13.1 =
+* New feature: Adds compatibility for WP-Members plugin, preventing blocked posts from showing up in the search results.
+* New feature: New function `relevanssi_get_attachment_suffix()` can be used to return the attachment file suffix based on a post object or a post ID.
+* Minor fix: Improves the Oxygen compatibility. Now also the [oxygen] shortcode tags are removed.
+
 = 4.13.0 =
 * New feature: New filter hook `relevanssi_phrase` filters each phrase before it's used in the MySQL query.
 * New feature: Relevanssi can now add Google-style missing term lists to the search results. You can either use the `%missing%` tag in the search results breakdown settings, or you can create your own code: the missing terms are also in `$post->missing_terms`. Relevanssi Premium will also add "Must have" links when there's just one missing term.
@@ -221,6 +226,9 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: Improved Oxygen Builder support makes sure `ct_builder_shortcodes` custom field is always indexed.
 
 == Upgrade notice ==
+= 4.13.1 =
+* Compatibility for WP-Members added.
+
 = 4.13.0 =
 * Lots of new features and bug fixes.
 
