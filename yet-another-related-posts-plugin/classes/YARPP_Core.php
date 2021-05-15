@@ -1310,17 +1310,29 @@ class YARPP {
         // Be careful to avoid infinite recursion, because those templates might show each related posts' body or
 		// excerpt, which would trigger finding its related posts, which would show its related posts body or excerpt...
         $this->rendering_related_content = true;
-        $template = sanitize_file_name($template);
+
+		// avoid any monkeying around where someone could trya custom template like a template name like
+		// "yarpp-template-;../../wp-config.php". YARPP custom templates are only supported in the theme's root folder.
+        $template = str_replace('/', '', $template);
+
         if ($domain === 'metabox') {
             include(YARPP_DIR.'/includes/template_metabox.php');
         } else if ((bool) $template && $template === 'thumbnails') {
             include(YARPP_DIR.'/includes/template_thumbnails.php');
-        } else if ((bool) $template && strpos($template,'yarpp-template-') === 0 && file_exists(STYLESHEETPATH.'/'.$template)) {
-            global $post;
-            ob_start();
-            include(STYLESHEETPATH.'/'.$template);
-            $output .= ob_get_contents();
-            ob_end_clean();
+        } else if ((bool) $template) {
+        	$named_properly = strpos($template,'yarpp-template-') === 0;
+        	$template_exists = file_exists(STYLESHEETPATH.'/'.$template);
+        	if($named_properly && $template_exists){
+		        global $post;
+		        ob_start();
+		        include(STYLESHEETPATH.'/'.$template);
+		        $output .= ob_get_contents();
+		        ob_end_clean();
+	        } else {
+        		error_log('YARPP Plugin: Could not load template "' . $template .'". ' . ($named_properly ? 'It is named properly.' : 'It is NOT named properly') . ' ' . ($template_exists ? 'It exists' : 'It does NOT exist') . '. Falling back to default template.');
+		        include(YARPP_DIR.'/includes/template_builtin.php');
+	        }
+
         } else if ($domain === 'widget') {
             include(YARPP_DIR.'/includes/template_widget.php');
         } else {

@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.20.0
+Stable tag: 5.21.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -319,6 +319,10 @@ add_action(
 `
 
 == Changelog ==
+= 5.21.0 (14-May-2021) =
+* Bugfix: Disable "Edit as HTML" for YARPP Block
+* Bugfix ([1](https://wordpress.org/support/topic/template-does-not-change-ver-5-20-0/)|[2](https://wordpress.org/support/topic/custom-template-not-showing-since-v5-10-2/)): Fixes issue with the correct template not being applied
+
 = 5.20.0 (06-May-2021) =
 * New: Option to automatically generate missing thumbnail sizes on the fly
 * New: Option to include or exclude Sticky Posts
@@ -1150,5 +1154,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.20.0 =
+= 5.21.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

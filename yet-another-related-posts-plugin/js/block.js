@@ -13,6 +13,9 @@
 		category: 'yarpp',
 		icon: iconEl,
 		keywords: [ __( 'yarpp', 'yarpp' ), __( 'related posts', 'yarpp' ), __( 'posts', 'yarpp' ) ],
+		supports: {
+			html: false,
+		},
 
 		attributes: {
 			limit: {
@@ -55,8 +58,8 @@
 				 */
 				el("div", { className: props.className },
 					el( ServerSideRender, {
-					  block: 'yarpp/yarpp-block',
-					  attributes: attributes
+						block: 'yarpp/yarpp-block',
+						attributes: attributes,
 					} )
 				),
 
