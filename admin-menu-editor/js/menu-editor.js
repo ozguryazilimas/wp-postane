@@ -620,13 +620,9 @@ var knownMenuFields = {
 		caption: 'Embedded page ID',
 		defaultValue: 'Select page to display',
 		type: 'text',
-		visible: false, //Displayed on-demand.
 		addDropdown: 'ws_embedded_page_selector',
 
 		display: function(menuItem, displayValue, input) {
-			//Only show this field if the "Embed WP page" template is selected.
-			input.closest('.ws_edit_field').toggle(menuItem.template_id === wsEditorData.embeddedPageTemplateId);
-
 			input.prop('readonly', true);
 			var pageId = parseInt(getFieldValue(menuItem, 'embedded_page_id', 0), 10),
 				blogId = parseInt(getFieldValue(menuItem, 'embedded_page_blog_id', 1), 10),
@@ -659,6 +655,11 @@ var knownMenuFields = {
 
 		write: function() {
 			//The user cannot directly edit this field. We deliberately ignore writes.
+		},
+
+		visible: function(menuItem) {
+			//Only show this field if the "Embed WP page" template is selected.
+			return (menuItem.template_id === wsEditorData.embeddedPageTemplateId);
 		}
 	}),
 
@@ -2137,7 +2138,7 @@ function ameOnDomReady() {
 				verticalBoxOffset = (submenuBox.offset().top - mainMenuBox.offset().top),
 				minSubmenuHeight = (selectedMenu.offset().top - mainMenuBox.offset().top)
 					- verticalBoxOffset
-					+ menuTipHeight - submenuDropZone.outerHeight() + empiricalExtraHeight;
+					+ menuTipHeight - (submenuDropZone.outerHeight() || 0) + empiricalExtraHeight;
 			minSubmenuHeight = Math.max(minSubmenuHeight, 0);
 			submenuBox.css('min-height', minSubmenuHeight);
 		}

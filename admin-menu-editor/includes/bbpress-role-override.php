@@ -25,8 +25,8 @@ class ameBBPressRoleOverride {
 		foreach (array_keys($bbPressRoles) as $id) {
 			$settings = array();
 			foreach ($this->propertiesToSave as $property) {
-				if ( isset($wp_roles->$property[$id]) ) {
-					$settings[$property] = $wp_roles->$property[$id];
+				if ( isset($wp_roles->{$property}[$id]) ) {
+					$settings[$property] = $wp_roles->{$property}[$id];
 				}
 			}
 			if ( !empty($settings) ) {
@@ -47,7 +47,7 @@ class ameBBPressRoleOverride {
 		}
 		foreach ($this->customRoleSettings as $id => $properties) {
 			foreach ($properties as $property => $value) {
-				$wp_roles->$property[$id] = $value;
+				$wp_roles->{$property}[$id] = $value;
 			}
 		}
 		$this->customRoleSettings = array();

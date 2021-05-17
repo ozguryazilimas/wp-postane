@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
 Tested up to: 5.7
-Stable tag: 1.9.9
+Stable tag: 1.9.10
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -62,6 +62,13 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.9.10 =
+* Fixed a bug where the plugin could incorrectly identify a separator as the current menu item.
+* Fixed submenu box not expanding to align with the selected parent item.
+* Fixed a PHP 5 compatibility issue where the "Prevent bbPress from resetting role capabilities" would trigger notices and not work correctly. This bug did not affect newer PHP versions such as PHP 7.
+* Fixed a couple of icon and separator rendering bugs where the hover marker - that is, the colored vertical bar that appears next to the currently hovered menu item, introduced in WP 5.7 - could either show up in the wrong place or show up when it's not supposed to.
+* Fixed a jQuery Migrate warning about isFunction() being deprecated.
 
 = 1.9.9 =
 * Fixed a conflict with the "PRO Theme" plugin where "PRO Theme" would expand the wrong top level admin menu if the current submenu item had been moved from one parent menu to another.

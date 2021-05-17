@@ -50,6 +50,11 @@ hr.ws-submenu-separator {
 	cursor: default;
 }
 
+/* No colored bar/marker when hovering over a separator. */
+#adminmenu li.ws-submenu-separator-wrap a:hover {
+    box-shadow: none;
+}
+
 /* No extra margin in submenus with icons. The selector uses the URL prefix because we can't control the link class.
  * li.ws-submenu-separator-wrap would also work, but it's added via JS so there's an undesirable delay (FOUC).
  */
@@ -73,7 +78,7 @@ hr.ws-submenu-separator {
  * Submenu icons.
  */
 .ame-submenu-icon {
-    display: inline-block;
+    display: block;
     padding-right: 8px;
     min-width: 20px;
 
@@ -83,8 +88,8 @@ hr.ws-submenu-separator {
     it looks okay - submenu items are ~28px high when including padding/margins, so there's no visual overlap.
      */
     height: 20px;
-    margin-top: -2px;
-    margin-bottom: -2px;
+    margin-top: -1px;
+    margin-bottom: -3px;
 
     vertical-align: top;
 
@@ -97,7 +102,7 @@ hr.ws-submenu-separator {
 
 #adminmenu .ame-has-submenu-icons ul.wp-submenu li a {
     /* Push all submenus to the right to ensure that items with and without icons line up nicely. */
-    margin-left: 24px;
+    padding-left: 36px;
 }
 
 #adminmenu .ame-submenu-icon img {

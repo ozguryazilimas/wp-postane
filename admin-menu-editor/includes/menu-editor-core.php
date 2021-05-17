@@ -2003,7 +2003,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			}
 
 			if ( !isset($this->reverse_item_lookup[$topmenu['url']]) ) { //Prefer sub-menus.
-				$this->reverse_item_lookup[$topmenu['url']] = $topmenu;
+				if ( $this->is_item_visitable($topmenu) ) {
+					$this->reverse_item_lookup[$topmenu['url']] = $topmenu;
+				}
 			}
 
 			$has_submenu_icons = false;
@@ -2027,7 +2029,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 					}
 				}
 
-				$this->reverse_item_lookup[$item['url']] = $item;
+				if ( $this->is_item_visitable($item) ) {
+					$this->reverse_item_lookup[$item['url']] = $item;
+				}
 
 				//Skip missing and hidden items
 				if ( !empty($item['missing']) || !empty($item['hidden']) ) {
@@ -2127,6 +2131,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			if ( strpos($cssClass, ameMenuItem::unclickableTemplateClass) === false ) {
 				$item['css_class'] = ameMenuItem::unclickableTemplateClass . ' ' . $cssClass;
 			}
+
+			//Mark unclickable items as not visitable. The submenus (if any) can be visited,
+			//but the item itself doesn't link to anything.
+			$item['is_unvisitable'] = true;
 		}
 
 		//Make the default submenu icon the same as the parent icon.
@@ -2382,6 +2390,17 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		$item['access_level'] = $capability;
 		return $item;
+	}
+
+	/**
+	 * Check if a menu item can be visited/navigated to.
+	 * Most regular items can be visited. Separators and some special item types cannot.
+	 *
+	 * @param array $item
+	 * @return bool
+	 */
+	private function is_item_visitable($item) {
+		return empty($item['separator']) && empty($item['is_unvisitable']);
 	}
 
   /**
@@ -3733,7 +3752,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'ame-helper-style',
 			plugins_url('css/admin.css', $this->plugin_file),
 			array(),
-			'20210218'
+			'20210413'
 		);
 
 		if ( $this->options['force_custom_dashicons'] ) {
