@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.21.0
+Stable tag: 5.22.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -22,6 +22,7 @@ The most popular plugin to display a list of related posts on your site based on
 * **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
 * **REST API support** - Embed related posts in your web or JavaScript driven app! ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
 * **Shortcode support** - Use `[yarpp]` shortcode to place related posts anywhere ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#%0Ahow%20can%20i%20move%20the%20related%20posts%20display%3F%0A))
+* **Gutenberg Block support**
 * **HTTPS support**
 * **bbPress forums support**
 * **WordPress Multisite support**
@@ -72,7 +73,7 @@ You can place YARPP's related posts manually wherever you’d like in post conte
 
 To add to post content, use the shortcode:
 
-`[yarpp]` to show content related to the current post
+`[yarpp]` to show content related to the current post. You may use more than one YARPP shortcode in a given post or template.
 
 If you know the reference Post ID that you want to show content related to, use:
 
@@ -80,9 +81,11 @@ If you know the reference Post ID that you want to show content related to, use:
 
 To specify which YARPP template to use, use the "template" attribute like so:
 
-`[yarpp template="yarpp-template-photoblog"]`
+`[yarpp template="yarpp-template-photoblog"]` // where `yarpp-template-photoblog.php` is the file name of the custom template
+`[yarpp template="list"]` // built-in "List" template
+`[yarpp template="thumbnails"]` // built-in "Thumbnails" template
 
-The add YARRP related posts to your theme files (eg. single.php), we recommend using:
+To add YARPP shortcode to your theme files (eg. single.php), use:
 
 `<?php echo do_shortcode('[yarpp]'); ?>`
 `<?php echo do_shortcode('[yarpp reference_id=123]'); ?>`
@@ -319,6 +322,15 @@ add_action(
 `
 
 == Changelog ==
+= 5.22.0 (24-May-2021) =
+* [New](https://wordpress.org/support/topic/display-results-from-specific-post-types/): Choose the exact post types to include in "The Pool"
+* [New](https://wordpress.org/support/topic/is-it-possible-to-use-different-styles-of-yarpp-in-every-post/): Ability to specify built-in YARPP templates in the YARPP shortcode. You may use more than one YARPP shortcode in a given post or template and each can have a different templates specified. For example:
+    + `[yarpp template="yarpp-template-simple"]` // where `yarpp-template-simple.php` is the file name of the custom YARPP template in your active theme folder
+    + `[yarpp template="list"]` // built-in "List" template
+    + `[yarpp template="thumbnails"]` // built-in "Thumbnails" template
+* Enhancement: YARPP Automatic Placement, YARPP Shortcode, YARPP Block, YARPP Widget and RSS output are all now wrapped in a `div` with classes `yarpp`, `yarpp-related` and `yarpp-template-TEMPLATE-NAME` to facilitate easier CSS customizations
+* Enhancement: All admin CSS is now minified
+
 = 5.21.0 (14-May-2021) =
 * Bugfix: Disable "Edit as HTML" for YARPP Block
 * Bugfix ([1](https://wordpress.org/support/topic/template-does-not-change-ver-5-20-0/)|[2](https://wordpress.org/support/topic/custom-template-not-showing-since-v5-10-2/)): Fixes issue with the correct template not being applied
@@ -1154,5 +1166,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.21.0 =
+= 5.22.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

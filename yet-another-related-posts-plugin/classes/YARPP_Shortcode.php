@@ -36,9 +36,11 @@ class YARPP_Shortcode {
 		$yarpp_args = array(
 			'domain' => 'shortcode'
 		);
+		
+		// Custom templates require .php extension
 		if (isset($atts['template'])) {
 			$yarpp_args['template'] = trim($atts['template']);
-			if (strpos($yarpp_args['template'], '.php') === false) {
+			if (( strpos($yarpp_args['template'], 'yarpp-template-') === 0 ) && ( strpos($yarpp_args['template'], '.php') === false )) {
 				$yarpp_args['template'] .= '.php';
 			}
 		}

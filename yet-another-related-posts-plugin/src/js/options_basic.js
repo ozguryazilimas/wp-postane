@@ -336,6 +336,35 @@ jQuery(function($) {
       $(this).text('Show Details [+]');
     }
   });
+  $('.include_post_type input[type=checkbox]').change(function(e){
+	  var get_attr = $(this).attr('data-post-type');
+	  if ( $('#yarpp-same_post_type').is(':checked') ) {
+		  yarpp_enable_disabel_checkbox( $(this).is(':checked'), get_attr );
+	  } else {
+		  $('.yarpp_form_post_types #yarpp_post_type_' + get_attr).prop( "disabled", false );
+	  }	  
+  });
+  $('#yarpp-same_post_type').change(function(e){
+	  var get_checkboxes = '.include_post_type input[type=checkbox]';
+	  if ( $(this).is(':checked') ) {		  
+		  $(get_checkboxes).each(function () {
+			  var get_attr = $(this).attr('data-post-type');
+			  yarpp_enable_disabel_checkbox( $(this).is(':checked'), get_attr );
+		  });
+	  } else {
+		  $('.yarpp_form_post_types input[type=checkbox]').prop( "disabled", false );
+		  $('.yarpp_form_post_types input[type=checkbox]').siblings().hide();
+	  }
+  });
+  function yarpp_enable_disabel_checkbox ( checked, get_attr ) {
+	  if ( checked ) {
+		  $('.yarpp_form_post_types #yarpp_post_type_' + get_attr).prop( "disabled", false );
+		  $('.yarpp_form_post_types #yarpp_post_type_' + get_attr).siblings().hide();
+	  } else {
+		  $('.yarpp_form_post_types #yarpp_post_type_' + get_attr).prop( "disabled", true );
+		  $('.yarpp_form_post_types #yarpp_post_type_' + get_attr).siblings().show();
+	  }
+  }
   var yarpp_model  = $(
 			'\
 			<div id="shareaholic-deactivate-dialog" class="shareaholic-deactivate-dialog" data-remodal-id="">\

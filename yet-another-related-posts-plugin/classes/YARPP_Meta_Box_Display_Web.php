@@ -12,11 +12,20 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 
         echo "<div class='yarpp_form_row yarpp_form_post_types'><div>";
         echo __( "Automatically display related content on: ", 'yarpp' );
-        echo " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "This option automatically displays related posts right after the content on single entry pages. If this option is off, you will need to manually insert the shortcode <code>[yarpp]</code>, or PHP functions <code>related_posts()</code> or variants (<code>related_pages()</code> and <code>related_entries()</code>) into your theme files.", 'yarpp' ) ) . "'>&nbsp;</span>&nbsp;&nbsp;";
+        echo " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "This option automatically displays YARPP right after the content on single entry pages. If this option is off, you will need to manually insert the <code>[yarpp]</code> shortcode, block or  <code>yarpp_related()</code> PHP function into your theme files.", 'yarpp' ) ) . "'>&nbsp;</span>&nbsp;&nbsp;";
         echo "</div><div>";
         $post_types = yarpp_get_option( 'auto_display_post_types' );
+        $include_post_type       = yarpp_get_option( 'include_post_type' );
+		$include_post_type       = wp_parse_list( $include_post_type );
         foreach ($yarpp->get_post_types('objects') as $post_type) {
 	        $post_type_title = $post_type->labels->name;
+            $disabled_checkbox = '';
+            $hide_help_text = 'style="display: none;"';
+            if ( ! yarpp_get_option( 'cross_relate' ) && ! in_array( $post_type->name, $include_post_type, true ) ) {
+                $disabled_checkbox = 'disabled';
+                $hide_help_text = '';
+            }
+            $help_text = "<span {$hide_help_text} style='color: #d63638;' class='yarpp_help dashicons dashicons-warning' data-help='" . "<p>" . esc_attr( __( "This option is disabled because 'The Pool':", 'yarpp' ) ) . "</p><p>" . esc_attr( __("1. does not include this post type", 'yarpp' ) ) . "</p><p>" . esc_attr( __("2. limits results to the same post type as the current post", 'yarpp' ) ) . "</p><p>" . esc_attr( __("This combination will always result in no posts displaying on this post type. To enable, in The Pool either include this post type or do not limit results to the same post type.", 'yarpp' ) ) . "</p>" . "'>&nbsp;</span>&nbsp;&nbsp;";
 	        // Clarify "topics" are from bbPress plugin
         	if($post_type->name == 'topic' && class_exists('bbPress')){
         		$post_type_title = sprintf(
@@ -26,7 +35,8 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 	        }
             echo "<label for='yarpp_post_type_{$post_type->name}'><input id='yarpp_post_type_{$post_type->name}' name='auto_display_post_types[{$post_type->name}]' type='checkbox' ";
             checked( in_array( $post_type->name, $post_types ) );
-            echo "/> {$post_type_title}</label> ";
+            echo $disabled_checkbox;
+            echo "/> {$post_type_title}{$help_text}</label> ";
         }
         echo "</div></div>";
 

@@ -139,7 +139,18 @@ if (isset($_POST['update_yarpp']) && check_admin_referer('update_yarpp', 'update
         $new_options['exclude'] = implode(',',array_keys($_POST['exclude']));
     else
         $new_options['exclude'] = '';
+    
+    if ( isset ($_POST['same_post_type'] ) ) {
+        $new_options['cross_relate'] = false;
+    } else {
+        $new_options['cross_relate'] = true;
+    }
 
+    if ( isset ($_POST['include_post_type'] ) ) {
+        $new_options['include_post_type'] = implode( ',', array_keys( $_POST['include_post_type'] ) );
+    } else {
+        $new_options['include_post_type'] = '';
+    }
     $new_options['include_sticky_posts'] = isset( $_POST['include_sticky_posts'] ) ? 1 : 0;
         $new_options['template'] = $_POST['use_template'] == 'custom' ? $_POST['template_file'] :
         ( $_POST['use_template'] == 'thumbnails' ? 'thumbnails' : false );

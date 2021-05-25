@@ -22,7 +22,7 @@ $options = array(
 extract($this->parse_args($args, $options));
 
 if (have_posts()) {
-    
+ 	$output .= '<!-- YARPP List -->'."\n";
 	$output .= $before_related."\n";
     
 	while (have_posts()) {

@@ -518,7 +518,7 @@ class YARPP_Admin {
     $screen = get_current_screen();
     if (!is_null($screen) && $screen->id === 'settings_page_yarpp') {
       wp_enqueue_style('yarpp_switch_options',  plugins_url('style/options_switch.css', dirname(__FILE__)), array(), $version );
-      wp_enqueue_script('yarpp_switch_options', yarpp_get_file_url_for_environment('js/options_switch.min.js', 'js/options_switch.js'), array('jquery'), $version );
+      wp_enqueue_script('yarpp_switch_options', yarpp_get_file_url_for_environment('js/options_switch.min.js', 'src/js/options_switch.js'), array('jquery'), $version );
       
       wp_enqueue_style('wp-pointer');
       wp_enqueue_style('yarpp_options', plugins_url('style/options_basic.css', dirname(__FILE__)), array(), $version );
@@ -529,7 +529,7 @@ class YARPP_Admin {
       wp_enqueue_script('postbox');
       wp_enqueue_script('wp-pointer');
       wp_enqueue_script('yarpp_remodal', plugins_url('lib/plugin-deactivation-survey/remodal.min.js', dirname(__FILE__)), array(), $version );
-      wp_enqueue_script('yarpp_options', yarpp_get_file_url_for_environment('js/options_basic.min.js', 'js/options_basic.js'), array('jquery'), $version );
+      wp_enqueue_script('yarpp_options', yarpp_get_file_url_for_environment('js/options_basic.min.js', 'src/js/options_basic.js'), array('jquery'), $version );
       // Localize the script with messages
       $translation_strings = array(
         'alert_message' => __( 'This will clear all of YARPP’s cached related results.<br> Are you sure?', 'yarpp' ),
@@ -546,7 +546,7 @@ class YARPP_Admin {
 
     $metabox_post_types = $this->core->get_option('auto_display_post_types');
     if (!is_null($screen) && ($screen->id == 'post' || in_array( $screen->id, $metabox_post_types))) {
-      wp_enqueue_script('yarpp_metabox', plugins_url('js/metabox.js', dirname(__FILE__)), array('jquery'), $version );
+      wp_enqueue_script('yarpp_metabox', yarpp_get_file_url_for_environment('js/metabox.min.js', 'src/js/metabox.js'), array('jquery'), $version );
     }
   }
   

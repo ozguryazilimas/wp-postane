@@ -202,6 +202,7 @@ class YARPP {
 			'rss_promote_yarpp' => false,
 			'myisam_override' => false,
 			'exclude' => '',
+			'include_post_type' => get_post_types( array() ),
 			'weight' => array(
 				'title' => 0,
 				'body' => 0,
@@ -246,7 +247,7 @@ class YARPP {
 		$this->db_options->set_yarpp_options($new_options);
 	
 		// new in 3.1: clear cache when updating certain settings.
-		$clear_cache_options = array('show_pass_post' => 1, 'recent' => 1, 'threshold' => 1, 'past_only' => 1, 'include_sticky_posts' => 1);
+		$clear_cache_options = array('show_pass_post' => 1, 'recent' => 1, 'threshold' => 1, 'past_only' => 1, 'include_sticky_posts' => 1, 'cross_relate' => 1);
 
 		$relevant_options = array_intersect_key($options, $clear_cache_options);
 		$relevant_current_options = array_intersect_key($current_options, $clear_cache_options);
@@ -257,6 +258,7 @@ class YARPP {
             || ($new_options['weight'] != $current_options['weight'])
             || ($new_options['exclude'] != $current_options['exclude'])
             || ($new_options['require_tax'] != $current_options['require_tax'])
+						|| ($new_options['include_post_type'] != $current_options['include_post_type'])
         ) {
 		    $this->cache->flush();
         }
@@ -985,9 +987,19 @@ class YARPP {
 	 * @return string[]
 	 */
 	public function get_query_post_types($reference_ID = null, $args = array()){
+		$include_post_type       = yarpp_get_option( 'include_post_type' );
+		$include_post_type = wp_parse_list( $include_post_type );
 		if(isset($args['post_type'])){
 			$post_types = (array)$args['post_type'];
-		} else if ($this->get_option('cross_relate')) {
+		} else if ( ! $this->get_option('cross_relate') ) {
+			$current_post_type = get_post_type( $reference_ID );
+			$post_types = array( $current_post_type );
+			if ( ! in_array( $current_post_type, $include_post_type) ) {
+				$post_types = array('');
+			}
+		}else if ( ! empty( $include_post_type ) ) {
+			$post_types = $include_post_type;
+		}else if ( $this->get_option('cross_relate') ) {
 			$post_types = $this->get_post_types();
 		} else {
 			$post_types = array(get_post_type($reference_ID));
@@ -1053,7 +1065,8 @@ class YARPP {
 			'rss_excerpt_length', 'past_only', 'show_excerpt', 'rss_show_excerpt',
 			'template', 'rss_template', 'show_pass_post', 'cross_relate', 'generate_missing_thumbnails', 'include_sticky_posts', 
 			'rss_display', 'rss_excerpt_display', 'promote_yarpp', 'rss_promote_yarpp',
-			'myisam_override', 'weight', 'require_tax', 'auto_display_archive', 'exclude'
+			'myisam_override', 'weight', 'require_tax', 'auto_display_archive', 'exclude',
+			'include_post_type'
 		));
 
 		$check_changed = array(
@@ -1293,16 +1306,36 @@ class YARPP {
 
         $related_query = $wp_query; // backwards compatibility
         $related_count = $related_query->post_count;
-
-        $output .= "<div class='";
-        if ($domain === 'website') {
-            $output .= "yarpp-related";
-        } else {
-            $output .= "yarpp-related-{$domain}";
+				
+				// CSS class "yarpp-related" exists for backwards compatibility in-case older custom themes are dependent on it
+        $output .= "<div class='yarpp yarpp-related";
+				
+				// Add CSS class to identify domain
+        if (isset($domain) && $domain) {
+            $output .= " yarpp-related-{$domain}";
         }
-
+				
+				// Add CSS class to identify no results
         if ($related_count < 1) {
             $output .= " yarpp-related-none";
+        }
+				
+				// Add CSS class to identify template				
+        if (isset($template) && $template) {
+						// Normalize "thumbnail" and "thumbnails" to reference the same inbuilt template
+						if ($template === "thumbnail") {
+							$template = "thumbnails";
+						}
+						// Sanitize template name; remove file extension if exists
+						if (strpos($template, '.php')) {
+							$template_css_class_suffix = preg_replace('/'. preg_quote('.php', '/') . '$/', '', $template);
+						} else {
+							$template_css_class_suffix = $template;
+						}
+            $output .= " yarpp-template-$template_css_class_suffix";
+        } else {
+					// fallback to default template ("list")
+        	$output .= " yarpp-template-list";
         }
 
         $output .= "'>\n";
@@ -1314,11 +1347,12 @@ class YARPP {
 		// avoid any monkeying around where someone could trya custom template like a template name like
 		// "yarpp-template-;../../wp-config.php". YARPP custom templates are only supported in the theme's root folder.
         $template = str_replace('/', '', $template);
-
         if ($domain === 'metabox') {
             include(YARPP_DIR.'/includes/template_metabox.php');
         } else if ((bool) $template && $template === 'thumbnails') {
             include(YARPP_DIR.'/includes/template_thumbnails.php');
+        } else if ((bool) $template && $template === 'list') {
+            include(YARPP_DIR.'/includes/template_builtin.php');
         } else if ((bool) $template) {
         	$named_properly = strpos($template,'yarpp-template-') === 0;
         	$template_exists = file_exists(STYLESHEETPATH.'/'.$template);
@@ -1499,7 +1533,7 @@ class YARPP {
 		if ($domain === 'website') {
 			$output .= "yarpp-related";
         } else {
-			$output .= "yarpp-related-{$domain}";
+			$output .= "yarpp-related yarpp-related-{$domain}";
         }
 		$output .= "'>\n";
 

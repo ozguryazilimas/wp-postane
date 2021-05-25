@@ -28,7 +28,35 @@ class YARPP_Meta_Box_Pool extends YARPP_Meta_Box {
 
 		echo "</div></div></div>";
 	}
+	/**
+	 * Displays the "include post type" input's HTML.
+	 *
+	 * @since 5.20.1
+	 * @return void
+	 */
+	public function include_post_type() {
+		global $yarpp;
 
+		echo "<div class='yarpp_form_row yarpp_form_include_post_type'><div class='yarpp_form_label'>";
+		esc_html_e( 'Post types to include:', 'yarpp' );
+		echo "</div><div class='yarpp_scroll_wrapper'><div class='include_post_type' id='include_post_type'>";
+
+		$include_post_type       = yarpp_get_option( 'include_post_type' );
+		$include_post_type_array = wp_parse_list( $include_post_type );
+		$post_types              = $yarpp->get_post_types( 'objects' );
+		foreach ( $post_types as $post_type ) {
+			$post_type_title = $post_type->labels->name;
+	        // Clarify "topics" are from bbPress plugin
+        	if( $post_type->name == 'topic' && class_exists( 'bbPress' ) ) {
+        		$post_type_title = sprintf(
+        			__('BuddyPress %s', 'yarpp'),
+			        $post_type_title
+		        );
+	        }
+			echo "<input data-post-type='{$post_type->name}' type='checkbox' " . checked( in_array( $post_type->name, $include_post_type_array, true ), 1, false ) . " name='include_post_type[{$post_type->name}]' id='include_post_type_{$post_type->name}' value='true' /> <label for='include_post_type_{$post_type->name}'>" . esc_html( $post_type_title ) . "</label> ";
+		}
+		echo "</div></div></div>";
+	}
 	public function display() {
 		global $yarpp;
         $postTypeHelpMsg =

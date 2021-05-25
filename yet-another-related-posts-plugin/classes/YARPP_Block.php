@@ -95,7 +95,7 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 			// automatically load dependencies and version.
 			wp_register_script( // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 				'yarpp-block',
-				yarpp_get_file_url_for_environment( 'js/block.min.js', 'js/block.js' ),
+				yarpp_get_file_url_for_environment( 'js/block.min.js', 'src/js/block.js' ),
 				array(
 					'wp-blocks',
 					'wp-i18n',

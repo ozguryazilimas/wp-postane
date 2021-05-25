@@ -8,6 +8,7 @@
 </p>
 
 <?php
+    $this->include_post_type();
     foreach ($yarpp->get_taxonomies() as $taxonomy) {
         $this->exclude($taxonomy->name, sprintf(__('Disallow by %s:', 'yarpp'), ucwords($taxonomy->labels->name)), $taxonomy->_builtin);
     }
@@ -51,5 +52,10 @@ $recent_units_html .= '</select>';
 <?php
 	$this->checkbox( 'past_only', __( "Display only posts older than current post", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "Only posts older than the current post will be displayed.", 'yarpp' ) ) . "'>&nbsp;</span>" );
 
-	$this->checkbox( 'cross_relate', __( "Display results from all post types", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "When disabled, only other posts with the same post type will be displayed. For example, only posts will be displayed as related to a post, only pages will be displayed as related to a page, etc.", 'yarpp' ) ) . "'>&nbsp;</span>" );    
+	$this->checkbox(
+	        'same_post_type',
+            __( "Limit to same post type", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "When enabled, posts will only be selected from the same post type of the current post.", 'yarpp' ) ) . "'>&nbsp;</span>",
+		    '',
+            array('option_value' => ! yarpp_get_option('cross_relate'))
+    );
 ?>

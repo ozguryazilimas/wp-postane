@@ -1,0 +1,21 @@
+.yarpp-thumbnails-horizontal .yarpp-thumbnail, .yarpp-thumbnail-default, .yarpp-thumbnail-title {
+	display: inline-block;
+}
+.yarpp-thumbnails-horizontal .yarpp-thumbnail {
+	border: 1px solid rgba(127,127,127,0.1);
+	vertical-align: top;
+}
+.yarpp-thumbnails-horizontal .yarpp-thumbnail > img, .yarpp-thumbnails-horizontal .yarpp-thumbnail-default {
+	display: block;
+}
+.yarpp-thumbnails-horizontal .yarpp-thumbnail-title {
+	font-size: 1em;
+	max-height: 2.8em;
+	line-height: 1.4em;
+	text-decoration: inherit;
+	overflow: hidden;
+}
+
+.yarpp-thumbnail-default {
+	overflow: hidden;
+}
