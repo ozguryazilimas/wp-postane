@@ -141,10 +141,16 @@ class WPEditableComments{
 	
 	function qualifications($comment,$type){
 		global $post, $current_user;
-    
-        if (($comment->user_id == $current_user->ID) || (current_user_can('moderate_comments')))
+			
+		if (current_user_can('subscriber')) {
+			return false;
+		}
+		
+		if (($comment->user_id == $current_user->ID) || current_user_can('moderate_comments')) {
 			return true;
-		return false;	
+		}
+			
+		return false;
 	}
 	
 	// for backward compatibility
