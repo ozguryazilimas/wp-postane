@@ -1,5 +1,5 @@
 diff --git a/editable-comments/editable-comments.php b/editable-comments/editable-comments.php
-index 25c9888..3ee1e89 100644
+index 25c9888e..3ff02e1f 100644
 --- a/editable-comments/editable-comments.php
 +++ b/editable-comments/editable-comments.php
 @@ -9,7 +9,7 @@ Author URI: http://julienappert.com
@@ -11,19 +11,28 @@ index 25c9888..3ee1e89 100644
  		
  	function __construct(){
  		add_action('init', array(&$this, 'init'));
-@@ -140,8 +140,9 @@ class WPEditableComments{
+@@ -140,10 +140,17 @@ class WPEditableComments{
  			
  	
  	function qualifications($comment,$type){
 -		global $post;
 -		if(current_user_can( 'edit_post', $post->ID ) || ($_SERVER['REMOTE_ADDR'] == $comment->comment_author_IP && WPEditableComments::dateValid($comment->comment_date_gmt,$type)))
 +		global $post, $current_user;
-+    
-+        if (($comment->user_id == $current_user->ID) || (current_user_can('moderate_comments')))
++			
++		if (current_user_can('subscriber')) {
++			return false;
++		}
++		
++		if (($comment->user_id == $current_user->ID) || current_user_can('moderate_comments')) {
  			return true;
- 		return false;	
+-		return false;	
++		}
++			
++		return false;
  	}
-@@ -183,7 +184,7 @@ class WPEditableComments{
+ 	
+ 	// for backward compatibility
+@@ -183,7 +190,7 @@ class WPEditableComments{
  		if($date >= time() - $minutes * 60)
  			return true;
  
