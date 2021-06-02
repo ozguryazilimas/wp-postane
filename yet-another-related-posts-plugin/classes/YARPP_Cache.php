@@ -46,11 +46,17 @@ abstract class YARPP_Cache {
 	/*
 	 * POST CACHE CONTROL
 	 */
-    /*
-	 * Note: return value changed in 3.4
-	 * return YARPP_NO_RELATED | YARPP_RELATED | YARPP_DONT_RUN | false if no good input
-     */
-	function enforce($reference_ID, $force = false) {
+
+	/**
+	 * Ensures the YARPP cache is primed (if not, primes it).
+	 * Can return early if YARPP shouldn't run, for some reason.
+	 * @param int $reference_ID post ID to which we're finding related content
+	 * @param bool $force forces refreshing the cache
+	 * @param array $args @see YARPP::display_related()
+	 *
+	 * @return bool|string (YARPP_NO_RELATED | YARPP_RELATED | YARPP_DONT_RUN | false if no good input)
+	 */
+	function enforce($reference_ID, $force = false, $args = array()) {
 		/**
          * @since 3.5.3 Don't compute on revisions.
          * wp_is_post_revision will return the id of the revision parent instead.
@@ -65,7 +71,7 @@ abstract class YARPP_Cache {
 		if ($status === YARPP_DONT_RUN) return YARPP_DONT_RUN;
 	
 		// If not cached, process now:
-		if ($status === YARPP_NOT_CACHED || $force) $status = $this->update((int) $reference_ID);
+		if ($status === YARPP_NOT_CACHED || $force) $status = $this->update((int) $reference_ID, $args);
 		// Despite our earlier check, somehow the database doesn't seem to be setup properly
 		if ($status === YARPP_DONT_RUN) return YARPP_DONT_RUN;
 		// There are no related posts
@@ -466,8 +472,7 @@ abstract class YARPP_Cache {
 	 * @param string $wpdb_method method on WPDB to call
 	 * @param array $args array of arguments to pass it.
 	 *
-	 * @return mixed
-	 * @throws Exception
+	 * @return mixed|WP_Error
 	 */
 	protected function query_safely($wpdb_method, $args) {
 		global $wpdb;
@@ -509,5 +514,15 @@ abstract class YARPP_Cache {
 			),
 			$sql
 		);
+	}
+
+	/**
+	 * Updates the cache.
+	 * @param int $reference_ID post ID to which we're finding related posts
+	 * @param array $args @see YARPP::display_related()
+	 * @return string (YARPP_NO_RELATED | YARPP_RELATED | YARPP_DONT_RUN)
+	 */
+	protected function update($reference_ID, $args = array()) {
+		return YARPP_RELATED;
 	}
 }

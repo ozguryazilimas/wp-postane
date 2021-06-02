@@ -26,7 +26,8 @@ class YARPP_Shortcode {
 		$atts = shortcode_atts(
 			array(
 				'reference_id' => null,
-				'template' => null
+				'template' => null,
+				'limit' => null
 			),
 			$atts
 		);
@@ -38,13 +39,24 @@ class YARPP_Shortcode {
 		);
 		
 		// Custom templates require .php extension
-		if (isset($atts['template'])) {
+		if (isset($atts['template']) && $atts['template']) {
+			// Normalize parameter
 			$yarpp_args['template'] = trim($atts['template']);
 			if (( strpos($yarpp_args['template'], 'yarpp-template-') === 0 ) && ( strpos($yarpp_args['template'], '.php') === false )) {
 				$yarpp_args['template'] .= '.php';
 			}
 		}
-
+		
+		if (isset($atts['limit']) && $atts['limit']) {
+			// Normalize parameter
+			$atts['limit'] = trim($atts['limit']);
+			
+			// Use only if numeric value is passed
+			if (is_numeric($atts['limit'])) {
+				$yarpp_args['limit'] = (int) $atts['limit'];
+			}
+		}
+		
 		if ($post instanceof WP_Post) {
 			return $yarpp->display_related(
 				$post->ID,

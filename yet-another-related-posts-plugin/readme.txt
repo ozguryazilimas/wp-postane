@@ -5,7 +5,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.22.0
+Stable tag: 5.23.0
 
 The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
 
@@ -84,6 +84,10 @@ To specify which YARPP template to use, use the "template" attribute like so:
 `[yarpp template="yarpp-template-photoblog"]` // where `yarpp-template-photoblog.php` is the file name of the custom template
 `[yarpp template="list"]` // built-in "List" template
 `[yarpp template="thumbnails"]` // built-in "Thumbnails" template
+
+To specify maximum number of posts to show, use the "limit" attribute like so:
+
+`[yarpp template="list" limit=3]`
 
 To add YARPP shortcode to your theme files (eg. single.php), use:
 
@@ -322,9 +326,15 @@ add_action(
 `
 
 == Changelog ==
+= 5.23.0 (02-June-2021) =
+* [New](https://wordpress.org/support/topic/is-it-possible-to-use-different-styles-of-yarpp-in-every-post/): Ability to specify maximum number of posts to show in the YARPP shortcode. For example:
+    + `[yarpp template="list" limit=3]` // maximum post limit set to 3
+* Bugfix: Check `wp_parse_list` exists for backwards compatibility to older versions of WordPress
+* [Bugfix](https://wordpress.org/support/topic/yarpp_related-does-not-return-all-posts/): Use query parameters when priming cache using `yarpp_related`. Resolves bug with `yarpp_function` not fully accounting for all parameters passed to it.
+
 = 5.22.0 (24-May-2021) =
 * [New](https://wordpress.org/support/topic/display-results-from-specific-post-types/): Choose the exact post types to include in "The Pool"
-* [New](https://wordpress.org/support/topic/is-it-possible-to-use-different-styles-of-yarpp-in-every-post/): Ability to specify built-in YARPP templates in the YARPP shortcode. You may use more than one YARPP shortcode in a given post or template and each can have a different templates specified. For example:
+* [New](https://wordpress.org/support/topic/is-it-possible-to-use-different-styles-of-yarpp-in-every-post/): Ability to specify built-in YARPP templates in the YARPP shortcode. You may use more than one YARPP shortcode in a given post or template and each can have a different template specified. For example:
     + `[yarpp template="yarpp-template-simple"]` // where `yarpp-template-simple.php` is the file name of the custom YARPP template in your active theme folder
     + `[yarpp template="list"]` // built-in "List" template
     + `[yarpp template="thumbnails"]` // built-in "Thumbnails" template
@@ -1166,5 +1176,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.22.0 =
+= 5.23.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

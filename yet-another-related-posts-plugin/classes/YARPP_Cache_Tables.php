@@ -211,9 +211,14 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 			wp_cache_delete( 'is_cached_' . $id, 'yarpp' );
 	}
 
-	// @return YARPP_RELATED | YARPP_NO_RELATED | YARPP_DONT_RUN
-	// @used by enforce
-	protected function update($reference_ID) {
+	/**
+	 * Primes the YARPP related cache table.
+	 * @param int $reference_ID post ID to which we will find related content
+	 * @param array $args see YARPP::display_related()
+	 *
+	 * @return string (YARPP_RELATED | YARPP_NO_RELATED | YARPP_DONT_RUN)
+	 */
+	protected function update($reference_ID, $args = array()) {
 		global $wpdb;
 		
 		$original_related = (array) @$this->related($reference_ID);
@@ -226,7 +231,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 		$result = $this->query_safely(
 				'query',
 				array(
-					"insert into {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " (reference_ID,ID,score) " . $this->sql( $reference_ID ) . " on duplicate key update date = now()"
+					"insert into {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " (reference_ID,ID,score) " . $this->sql( $reference_ID, $args ) . " on duplicate key update date = now()"
 				)
 			);
 		if($result instanceof WP_Error){

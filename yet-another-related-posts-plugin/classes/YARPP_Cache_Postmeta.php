@@ -161,16 +161,19 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 		}
 	}
 
-	// @return YARPP_NO_RELATED | YARPP_RELATED
-	// @used by enforce
-	protected function update($reference_ID) {
-		global $wpdb;
-
+	/**
+	 * Caches the related posts in postmeta.
+	 * @param int $reference_ID post ID to which we want to find related content
+	 * @param array $args see YARPP::display_related()
+	 *
+	 * @return string (YARPP_NO_RELATED | YARPP_RELATED)
+	 */
+	protected function update($reference_ID, $args = array()) {
 		$original_related = $this->related($reference_ID);
 		$related = $this->query_safely(
 			'get_results',
 			array(
-				$this->sql($reference_ID),
+				$this->sql($reference_ID, $args),
 				ARRAY_A
 			)
 		);

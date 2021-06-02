@@ -183,14 +183,6 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
         remove_filter('posts_request',array(&$this,'demo_request_filter'));
     }
 
-    // @return YARPP_NO_RELATED | YARPP_RELATED
-    // @used by enforce
-    protected function update($reference_ID) {
-        global $wpdb;
-
-        return YARPP_RELATED;
-    }
-
     public function related($reference_ID = null, $related_ID = null) {
         global $wpdb;
 

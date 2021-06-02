@@ -1273,7 +1273,7 @@ class YARPP {
 
         extract($this->parse_args($args, $options));
 
-        $cache_status = $this->active_cache->enforce($reference_ID);
+        $cache_status = $this->active_cache->enforce($reference_ID, false, $args);
         if ($cache_status === YARPP_DONT_RUN){
         	return;
         }
@@ -1428,7 +1428,7 @@ class YARPP {
 		$options = array('limit', 'order');
 		extract($this->parse_args($args, $options));
 
-		$cache_status = $this->active_cache->enforce($reference_ID);
+		$cache_status = $this->active_cache->enforce($reference_ID, false, $args);
 		if ( in_array($cache_status, array(YARPP_DONT_RUN, YARPP_NO_RELATED), true)) return array();
 					
 		/* Get ready for YARPP TIME! */
@@ -1477,7 +1477,7 @@ class YARPP {
 				
 		$this->setup_active_cache($args);
 	
-		$cache_status = $this->active_cache->enforce($reference_ID);
+		$cache_status = $this->active_cache->enforce($reference_ID, false, $args);
 
 		if (in_array($cache_status, array(YARPP_DONT_RUN, YARPP_NO_RELATED), true)) return false;
 

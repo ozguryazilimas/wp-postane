@@ -25,3 +25,20 @@ if ( ! function_exists( 'wp_get_additional_image_sizes' ) ) {
 		return $_wp_additional_image_sizes;
 	}
 }
+
+if ( ! function_exists( 'wp_parse_list' ) ) {
+	/**
+	 * Converts a comma- or space-separated list of scalar values to an array.
+	 *
+	 * @since 5.1.0
+	 *
+	 * @param array|string $list List of values.
+	 * @return array Array of values.
+	 */
+	function wp_parse_list( $list ) {
+		if ( ! is_array( $list ) ) {
+			return preg_split( '/[\s,]+/', $list, -1, PREG_SPLIT_NO_EMPTY );
+		}
+		return $list;
+	}
+}
