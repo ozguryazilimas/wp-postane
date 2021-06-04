@@ -170,6 +170,9 @@ function relevanssi_search( $args ) {
 	 * @param string The MySQL code that restricts the query.
 	 */
 	$query_restrictions = apply_filters( 'relevanssi_where', $query_restrictions );
+	if ( ! $query_restrictions ) {
+		$query_restrictions = '';
+	}
 
 	/**
 	 * Filters the meta query JOIN for the Relevanssi search query.
@@ -1416,10 +1419,10 @@ function relevanssi_update_term_hits( &$term_hits, &$match_arrays, $match, $term
  * Increases a value. If it's not set, sets it first to the default value.
  *
  * @param int $value    The value to increase (passed by reference).
- * @param int $increase The amount to increase the value.
+ * @param int $increase The amount to increase the value, default 1.
  * @param int $default  The default value, default 0.
  */
-function relevanssi_increase_value( &$value, $increase, $default = 0 ) {
+function relevanssi_increase_value( &$value, $increase = 1, $default = 0 ) {
 	if ( ! isset( $value ) ) {
 		$value = $default;
 	}
@@ -1597,13 +1600,13 @@ function relevanssi_adjust_match_doc( $match ) {
  * @param string $term               The search term.
  * @param bool   $search_again       If true, this is a repeat search (partial matching).
  * @param bool   $no_terms           If true, no search term is used.
- * @param string $query_join         The MySQL JOIN clause.
- * @param string $query_restrictions The MySQL query restrictions.
+ * @param string $query_join         The MySQL JOIN clause, default empty string.
+ * @param string $query_restrictions The MySQL query restrictions, default empty string.
  *
  * @return string The MySQL search query.
  */
 function relevanssi_generate_search_query( string $term, bool $search_again,
-bool $no_terms, string $query_join, string $query_restrictions ) : string {
+bool $no_terms, string $query_join = '', string $query_restrictions = '' ) : string {
 	global $relevanssi_variables;
 	$relevanssi_table = $relevanssi_variables['relevanssi_table'];
 
@@ -1673,6 +1676,9 @@ function relevanssi_compile_common_args( $query ) {
 	$date_query = relevanssi_wp_date_query_from_query_vars( $query );
 
 	$post_type = false;
+	if ( isset( $query->query_vars['post_type'] ) && is_array( $query->query_vars['post_type'] ) ) {
+		$query->query_vars['post_type'] = implode( ',', $query->query_vars['post_type'] );
+	}
 	if ( isset( $query->query_vars['post_type'] ) && 'any' !== $query->query_vars['post_type'] ) {
 		$post_type = $query->query_vars['post_type'];
 	}
@@ -1700,7 +1706,19 @@ function relevanssi_compile_common_args( $query ) {
 	);
 }
 
-function relevanssi_add_include_matches( &$matches, $include, $params ) {
+/**
+ * Adds posts to the matches list from the other term queries.
+ *
+ * Without this functionality, AND searches would not return all posts. If a
+ * post appears within the best results for one word, but not for another word
+ * even though the word appears in the post (because of throttling), the post
+ * would be excluded. This functionality makes sure it is included.
+ *
+ * @param array $matches The found posts array.
+ * @param array $include The posts to include.
+ * @param array $params  Search parameters.
+ */
+function relevanssi_add_include_matches( array &$matches, array $include, array $params ) {
 	if ( count( $include['posts'] ) < 1 && count( $include['items'] ) < 1 ) {
 		return;
 	}

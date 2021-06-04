@@ -308,8 +308,8 @@ function relevanssi_create_database_tables( $relevanssi_db_version ) {
 		customfield mediumint(9) NOT NULL DEFAULT '0',
 		mysqlcolumn mediumint(9) NOT NULL DEFAULT '0',
 		taxonomy_detail longtext NOT NULL,
-		customfield_detail longtext NOT NULL,
-		mysqlcolumn_detail longtext NOT NULL,
+		customfield_detail longtext NOT NULL DEFAULT '',
+		mysqlcolumn_detail longtext NOT NULL DEFAULT '',
 		type varchar(210) NOT NULL DEFAULT 'post',
 		item bigint(20) NOT NULL DEFAULT '0',
 	    PRIMARY KEY doctermitem (doc, term, item)) $charset_collate";
@@ -468,13 +468,16 @@ function relevanssi_export_log_check() {
  */
 function relevanssi_load_compatibility_code() {
 	class_exists( 'acf', false ) && require_once 'compatibility/acf.php';
+	class_exists( 'DGWT_WC_Ajax_Search', false ) && require_once 'compatibility/fibosearch.php';
 	class_exists( 'MeprUpdateCtrl', false ) && MeprUpdateCtrl::is_activated() && require_once 'compatibility/memberpress.php';
 	class_exists( 'Obenland_Wp_Search_Suggest', false ) && require_once 'compatibility/wp-search-suggest.php';
 	class_exists( 'Polylang', false ) && require_once 'compatibility/polylang.php';
 	class_exists( 'RankMath', false ) && require_once 'compatibility/rankmath.php';
 	class_exists( 'WooCommerce', false ) && require_once 'compatibility/woocommerce.php';
 	defined( 'AIOSEO_DIR' ) && require_once 'compatibility/aioseo.php';
+	defined( 'AVADA_VERSION' ) && require_once 'compatibility/avada.php';
 	defined( 'CT_VERSION' ) && require_once 'compatibility/oxygen.php';
+	defined( 'ELEMENTOR_VERSION' ) && require_once 'compatibility/elementor.php';
 	defined( 'GROUPS_CORE_VERSION' ) && require_once 'compatibility/groups.php';
 	defined( 'NINJA_TABLES_VERSION' ) && require_once 'compatibility/ninjatables.php';
 	defined( 'PRLI_PLUGIN_NAME' ) && require_once 'compatibility/pretty-links.php';
