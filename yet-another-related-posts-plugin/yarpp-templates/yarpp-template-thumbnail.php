@@ -38,9 +38,9 @@ if ( isset( $_wp_additional_image_sizes['yarpp-thumbnail'] ) ) {
 <h3>Related Photos</h3>
 <?php if ( have_posts() ) : ?>
 <ul>
-	<?php 
+	<?php
 	while ( have_posts() ) :
-		the_post(); 
+		the_post();
 		?>
 		<?php if ( has_post_thumbnail() ) : ?>
 		<li><a href="<?php the_permalink(); ?>" rel="bookmark norewrite" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail( $dimensions['size'], array( 'data-pin-nopin' => 'true' ) ); ?></a></li>

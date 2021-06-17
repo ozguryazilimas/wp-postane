@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 YARPP Template: Starter Template
 Description: A simple starter example template that you can edit.
@@ -28,9 +28,9 @@ Notes:
 <h3>Related Posts</h3>
 <?php if ( have_posts() ) : ?>
 <ul>
-	<?php 
+	<?php
 	while ( have_posts() ) :
-		the_post(); 
+		the_post();
 		?>
 	<li><a href="<?php the_permalink(); ?>" rel="bookmark norewrite" title="<?php the_title_attribute(); ?>" ><?php the_title(); ?></a><!-- (<?php the_score(); ?>)--></li>
 	<?php endwhile; ?>
@@ -38,4 +38,3 @@ Notes:
 <?php else : ?>
 <p>No related posts.</p>
 <?php endif; ?>
-

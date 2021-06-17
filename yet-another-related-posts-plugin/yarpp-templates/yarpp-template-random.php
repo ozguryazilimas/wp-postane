@@ -28,15 +28,15 @@ Notes:
 <h3>Related Posts</h3>
 <?php if ( have_posts() ) : ?>
 <ol>
-	<?php 
+	<?php
 	while ( have_posts() ) :
-		the_post(); 
+		the_post();
 		?>
 	<li><a href="<?php the_permalink(); ?>" rel="bookmark norewrite" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a><!-- (<?php the_score(); ?>)--></li>
 	<?php endwhile; ?>
 </ol>
 
-	<?php 
+	<?php
 else :
 	query_posts( 'orderby=rand&order=asc&limit=1' );
 	the_post();

@@ -35,9 +35,9 @@ if ( function_exists( 'icl_register_string' ) ) {
 <h3><?php echo ( function_exists( 'icl_t' ) ? icl_t( 'Yet Another Related Posts Plugin', 'related posts header', 'Related Posts' ) : 'Related Posts' ); ?></h3>
 <?php if ( have_posts() ) : ?>
 <ol>
-	<?php 
+	<?php
 	while ( have_posts() ) :
-		the_post(); 
+		the_post();
 		?>
 	<li><a href="<?php the_permalink(); ?>" rel="bookmark norewrite" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
 	<?php endwhile; ?>

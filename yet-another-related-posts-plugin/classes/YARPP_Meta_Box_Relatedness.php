@@ -29,13 +29,13 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 			<div class='yarpp-callout yarpp-notice'>
 				<p>
 				<?php
-					esc_html_e('Comparing posts based on Titles or Bodies is currently disabled', 'yarpp');
+					esc_html_e( 'Comparing posts based on Titles or Bodies is currently disabled', 'yarpp' );
 				?>
 					&nbsp;&nbsp;<a href="#" id="yarpp_fulltext_expand">
 					<?php
 						printf(
 						// translators: icon to expand
-							__('Show Details %s', 'yarpp'),
+							__( 'Show Details %s', 'yarpp' ),
 							'[+]'
 						);
 					?>
@@ -45,7 +45,7 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 					<p>
 					<?php
 						printf(
-							esc_html__('Because full-text indexing is not supported by your current table engine, "%1$s", YARPP cannot compare posts based on their Titles or Bodies.', 'yarpp'),
+							esc_html__( 'Because full-text indexing is not supported by your current table engine, "%1$s", YARPP cannot compare posts based on their Titles or Bodies.', 'yarpp' ),
 							'InnoDB',
 							'5.6.4',
 							'<code>' . $wpdb->posts . '</code>',
@@ -56,7 +56,7 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 					<p>
 					<?php
 						printf(
-							esc_html__('Please contact your host about updating MySQL to at latest version %1$s, or run the following SQL code on your MySQL client (eg PHPMyAdmin) or terminal:', 'yarpp'),
+							esc_html__( 'Please contact your host about updating MySQL to at latest version %1$s, or run the following SQL code on your MySQL client (eg PHPMyAdmin) or terminal:', 'yarpp' ),
 							'5.6.4'
 						);
 					?>
@@ -64,7 +64,7 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 					<p>
 						<?php
 						printf(
-							esc_html__('See MySQL %1$sstorage engines%2$s documentation for details on MySQL engines.', 'yarpp'),
+							esc_html__( 'See MySQL %1$sstorage engines%2$s documentation for details on MySQL engines.', 'yarpp' ),
 							'<a href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html" target="_blank">',
 							'</a>'
 						);
@@ -73,32 +73,32 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 				</div>
 			</div>
 			<?php
-		} elseif ($yarpp->diagnostic_big_db() && ( ! $yarpp->db_schema->title_column_has_index() || ! $yarpp->db_schema->content_column_has_index() )) {
+		} elseif ( $yarpp->diagnostic_big_db() && ( ! $yarpp->db_schema->title_column_has_index() || ! $yarpp->db_schema->content_column_has_index() ) ) {
 			// it's a big database. So while we *can* automatically add indexes, we need to warn the site owner.
 			?>
 			<div class='yarpp-callout yarpp-notice'>
-				<p><strong><?php esc_html_e('Enabling comparisons using Titles or Bodies requires adding "fulltext indexes" to the posts table.', 'yarpp'); ?></strong>
+				<p><strong><?php esc_html_e( 'Enabling comparisons using Titles or Bodies requires adding "fulltext indexes" to the posts table.', 'yarpp' ); ?></strong>
 				<a href="#" id="yarpp_fulltext_expand">
 				<?php
 					printf(
 					// translators: icon to expand
-						__('Show Details %s', 'yarpp'),
+						__( 'Show Details %s', 'yarpp' ),
 						'[+]'
 					);
 				?>
 				</a>
 			</p>
 				<div id="yarpp_fulltext_details" class="hidden">
-					<p><?php esc_html_e('"Fulltext indexes" will improve YARPP’s algorithm but may affect performance.', 'yarpp'); ?></p>
-					<p><?php esc_html_e('You have a large database and so adding them may take several minutes and cause the website to become unresponsive during this time. We recommend performing this action during off-peak hours.', 'yarpp'); ?></p>
-					<p><?php esc_html_e('Please make a database backup before attempting this, and consider adding the indexes manually by running the following queries:', 'yarpp'); ?></p>
+					<p><?php esc_html_e( '"Fulltext indexes" will improve YARPP’s algorithm but may affect performance.', 'yarpp' ); ?></p>
+					<p><?php esc_html_e( 'You have a large database and so adding them may take several minutes and cause the website to become unresponsive during this time. We recommend performing this action during off-peak hours.', 'yarpp' ); ?></p>
+					<p><?php esc_html_e( 'Please make a database backup before attempting this, and consider adding the indexes manually by running the following queries:', 'yarpp' ); ?></p>
 										<p>
-											<span class="dashicons <?php echo ( $yarpp->db_schema->content_column_has_index() === true ) ? 'dashicons-yes': 'dashicons-clock'; ?>"></span>
+											<span class="dashicons <?php echo ( $yarpp->db_schema->content_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
 						<code>
 						   ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_content` (`post_content`);
 											</code>
 											<br/>
-											<span class="dashicons <?php echo ( $yarpp->db_schema->title_column_has_index() === true ) ? 'dashicons-yes': 'dashicons-clock'; ?>"></span>
+											<span class="dashicons <?php echo ( $yarpp->db_schema->title_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
 											<code>
 						   ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_title` (`post_title`);
 						</code>

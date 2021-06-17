@@ -20,7 +20,9 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 			add_action( 'init', array( $this, 'yarpp_gutenberg_block_func' ), 100 );
 			add_filter( 'block_categories', array( $this, 'yarpp_block_categories' ), 10, 2 );
 			add_action( 'enqueue_block_editor_assets', array( $this, 'yarpp_enqueue_block_editor_assets' ) );
-		}/**
+		}
+
+		/**
 		 * YARPP enqueue thumbnail stylesheet.
 		 */
 		public function yarpp_enqueue_block_editor_assets() {
@@ -41,7 +43,7 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 			// If preview then return preview image.
 			if ( $is_preview && ! empty( $block_attributes['yarpp_preview'] ) ) {
 				$preview_image = YARPP_URL . '/images/yarpp-grid.svg';
-				return '<img style="width:100%;" src="' . esc_attr( $preview_image ) . '">';
+				return '<img style="width:100%;" src="' . esc_url( $preview_image ) . '">';
 			}
 			$yarpp_args = array(
 				'domain' => 'block',

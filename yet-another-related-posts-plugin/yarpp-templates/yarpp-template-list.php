@@ -26,7 +26,7 @@ Notes:
 ?>
 
 <h3>Related Posts</h3>
-<?php 
+<?php
 if ( have_posts() ) :
 	$postsArray = array();
 	while ( have_posts() ) :

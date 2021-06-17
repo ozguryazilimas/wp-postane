@@ -60,19 +60,19 @@ if ( ! function_exists( 'shareaholic_deactivate_feedback' ) ) {
 		$current_user = wp_get_current_user();
 		if ( $current_user instanceof WP_User && is_user_logged_in() && $current_user->ID ) {
 			$email = $current_user->user_email;
-			if ( is_array($current_user->roles) ) {
-				$role = reset($current_user->roles);
+			if ( is_array( $current_user->roles ) ) {
+				$role = reset( $current_user->roles );
 			} else {
 				$role = '';
 			}
 		} else {
 			$email = '';
-			$role = '';
+			$role  = '';
 		}
 
 		foreach ( $plugins as $plugin ) {
 			$plugin->email = $email;
-			$plugin->role = $role;
+			$plugin->role  = $role;
 		}
 
 		// Send plugin data.

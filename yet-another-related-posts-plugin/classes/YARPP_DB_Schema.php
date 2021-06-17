@@ -130,19 +130,21 @@ class YARPP_DB_Schema {
 
 	/**
 	 * Finds out if the YARPP cache table was created or not
+	 *
 	 * @return bool
 	 */
-	public function cache_table_exists(){
-		$exists = wp_cache_get(self::CACHE_KEY_TABLE_EXISTS, self::CACHE_GROUP, false, $found);
-		if( ! $found ){
+	public function cache_table_exists() {
+		$exists = wp_cache_get( self::CACHE_KEY_TABLE_EXISTS, self::CACHE_GROUP, false, $found );
+		if ( ! $found ) {
 			global $wpdb;
 			// now check for the cache tables
-			$tabledata = $wpdb->get_col('SHOW TABLES LIKE "'. $wpdb->prefix . YARPP_TABLES_RELATED_TABLE . '"');
-			if (in_array($wpdb->prefix . YARPP_TABLES_RELATED_TABLE,$tabledata) !== false)
+			$tabledata = $wpdb->get_col( 'SHOW TABLES LIKE "' . $wpdb->prefix . YARPP_TABLES_RELATED_TABLE . '"' );
+			if ( in_array( $wpdb->prefix . YARPP_TABLES_RELATED_TABLE, $tabledata ) !== false ) {
 				$exists = true;
-			else
+			} else {
 				$exists = false;
-			wp_cache_set(self::CACHE_KEY_TABLE_EXISTS, $exists, self::CACHE_GROUP);
+			}
+			wp_cache_set( self::CACHE_KEY_TABLE_EXISTS, $exists, self::CACHE_GROUP );
 		}
 		return $exists;
 	}
@@ -150,15 +152,19 @@ class YARPP_DB_Schema {
 	/**
 	 * Create the YARPP cache table
 	 */
-	public function create_cache_table(){
+	public function create_cache_table() {
 		global $wpdb;
 
 		$charset_collate = '';
-		if (!empty($wpdb->charset)) $charset_collate = "DEFAULT CHARACTER SET ".$wpdb->charset;
-		if (!empty($wpdb->collate)) $charset_collate .= " COLLATE ".$wpdb->collate;
+		if ( ! empty( $wpdb->charset ) ) {
+			$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
+		}
+		if ( ! empty( $wpdb->collate ) ) {
+			$charset_collate .= ' COLLATE ' . $wpdb->collate;
+		}
 
 		$wpdb->query(
-			"CREATE TABLE IF NOT EXISTS `".$wpdb->prefix.YARPP_TABLES_RELATED_TABLE."` (
+			'CREATE TABLE IF NOT EXISTS `' . $wpdb->prefix . YARPP_TABLES_RELATED_TABLE . "` (
 			    `reference_ID`  bigint(20) unsigned NOT NULL default '0',
 			    `ID`            bigint(20) unsigned NOT NULL default '0',
 			    `score`         float unsigned NOT NULL default '0',
@@ -168,6 +174,6 @@ class YARPP_DB_Schema {
 			INDEX (`ID`)
 			)$charset_collate;"
 		);
-		wp_cache_delete(self::CACHE_KEY_TABLE_EXISTS, self::CACHE_GROUP);
+		wp_cache_delete( self::CACHE_KEY_TABLE_EXISTS, self::CACHE_GROUP );
 	}
 }

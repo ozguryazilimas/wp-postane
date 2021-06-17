@@ -2,21 +2,21 @@
 
 function yarpp_init() {
 	global $yarpp;
-	$yarpp = new YARPP;
+	$yarpp = new YARPP();
 }
 
-function yarpp_plugin_activate($network_wide) {
-    update_option('yarpp_activated', true);
+function yarpp_plugin_activate( $network_wide ) {
+	update_option( 'yarpp_activated', true );
 }
 
-function yarpp_set_option($options, $value = null) {
+function yarpp_set_option( $options, $value = null ) {
 	global $yarpp;
-	$yarpp->set_option($options, $value);
+	$yarpp->set_option( $options, $value );
 }
 
-function yarpp_get_option($option = null) {
+function yarpp_get_option( $option = null ) {
 	global $yarpp;
-	return $yarpp->get_option($option);
+	return $yarpp->get_option( $option );
 }
 /**
  * Get user selected thumbnail size.
@@ -86,7 +86,7 @@ function yarpp_get_image_sizes( $size = '' ) {
 			$sizes[ $_size ] = array(
 				'width'  => $wp_additional_image_sizes[ $_size ]['width'],
 				'height' => $wp_additional_image_sizes[ $_size ]['height'],
-				'crop'   => $wp_additional_image_sizes[ $_size ]['crop']
+				'crop'   => $wp_additional_image_sizes[ $_size ]['crop'],
 			);
 		}
 	}

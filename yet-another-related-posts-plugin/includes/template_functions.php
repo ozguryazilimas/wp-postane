@@ -10,7 +10,7 @@ function get_the_score() {
 	global $post;
 
 	$score = $post->score;
-	return apply_filters('get_the_score', $score);
+	return apply_filters( 'get_the_score', $score );
 }
 /**
  * Get Dynamic styles for YARPP's built-in thumbnails template

@@ -43,11 +43,12 @@ class YARPP_DB_Options {
 	 * @return bool success
 	 */
 	public function set_yarpp_options( $options ) {
-		return update_option( 'yarpp', (array)$options );
+		return update_option( 'yarpp', (array) $options );
 	}
 
 	/**
 	 * Gets whether fulltext indexes were not found to be supported.
+	 *
 	 * @deprecated in 5.14.0 because we just always try to use fulltext indexes
 	 * @return bool
 	 */
@@ -63,7 +64,7 @@ class YARPP_DB_Options {
 	 * @return bool indicating success
 	 */
 	public function set_fulltext_disabled( $new_value ) {
-		return update_option( 'yarpp_fulltext_disabled', (bool)$new_value );
+		return update_option( 'yarpp_fulltext_disabled', (bool) $new_value );
 	}
 
 	/**
@@ -138,15 +139,16 @@ class YARPP_DB_Options {
 	 */
 	public function update_fulltext_db_record() {
 		global $wpdb;
-		return update_option(self::FULLTEXT_DB_ERROR, $wpdb->last_error . '(' . current_time('mysql') . ')');
+		return update_option( self::FULLTEXT_DB_ERROR, $wpdb->last_error . '(' . current_time( 'mysql' ) . ')' );
 	}
 
 	/**
 	 * Deletes the option that indicates there was an error adding the fulltext index.
+	 *
 	 * @return bool success
 	 */
 	public function delete_fulltext_db_error_record() {
-		return delete_option(self::FULLTEXT_DB_ERROR);
+		return delete_option( self::FULLTEXT_DB_ERROR );
 	}
 
 	/**
@@ -156,13 +158,13 @@ class YARPP_DB_Options {
 	 * @return string
 	 */
 	public function get_fulltext_db_error() {
-		return (string)get_option(self::FULLTEXT_DB_ERROR, esc_html__( 'No error recorded.', 'yarpp' ));
+		return (string) get_option( self::FULLTEXT_DB_ERROR, esc_html__( 'No error recorded.', 'yarpp' ) );
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function has_fulltext_db_error() {
-		return (bool)get_option(self::FULLTEXT_DB_ERROR, false);
+		return (bool) get_option( self::FULLTEXT_DB_ERROR, false );
 	}
 }

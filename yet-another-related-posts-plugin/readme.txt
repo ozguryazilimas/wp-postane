@@ -1,37 +1,47 @@
-=== Yet Another Related Posts Plugin (YARPP) ===
+=== YARPP - Yet Another Related Posts Plugin ===
 Contributors: jeffparker, shareaholic
-Tags: related, related posts, similar posts, posts, pages, thumbnails, feeds, multisite, multilingual
+Tags: related posts, contextual related posts, similar posts, posts, seo, thumbnails, feeds, multisite, multilingual
+Donate link: https://yarpp.com
 Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.23.0
+Stable tag: 5.24.0
 
-The most popular plugin to display a list of related posts on your site based on a powerful unique algorithm.
+The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
 == Description ==
 
-*Yet Another Related Posts Plugin* (YARPP) is a professionally maintained and feature rich plugin that displays pages, posts, and custom post types related to the current entry, introducing your readers to other relevant content on your site. Automatically added Related Posts can increase your pageviews up to 10%. Just install and activate.
+*Yet Another Related Posts Plugin (YARPP)* is a professionally maintained, highly customizable, performant and feature rich plugin that displays pages, posts, and custom post types related to the current entry. YARPP introduces your visitors to other relevant content on your site -- boosting visitor engagement, time on site and SEO. Related Posts can increase your pageviews up to 10%. Simply install, activate and watch your sessions and pageviews increase.
 
 **Key Features**
 -------------------------------------------
-* **Thumbnail or list view** of related content.
-* **Related posts, pages, and custom post types.**
-* **Templating**: The YARPP templating system gives you advanced control of how your results are displayed.
-* **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site. 
-* **Related posts in feeds**: Display related posts in RSS feeds with custom display options.
-* **REST API support** - Embed related posts in your web or JavaScript driven app! ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
-* **Shortcode support** - Use `[yarpp]` shortcode to place related posts anywhere ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#%0Ahow%20can%20i%20move%20the%20related%20posts%20display%3F%0A))
-* **Gutenberg Block support**
-* **HTTPS support**
-* **bbPress forums support**
-* **WordPress Multisite support**
-* **Professionally maintained** and supported with regular updates
+* **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site
+* **Caching**: Inbuilt cache makes subsequent queries super efficient and fast
+* **Custom Templates and Styles**: Use the inbuilt **list** or **thumbnail** templates, or use the YARPP custom templating system for 100% control of how results are styles and displayed
+* **Flexible** with a full range of placement options, including:
+    + [Automatic Display Options](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation) (pick where to show YARPP from the YARPP settings page)
+    + [RSS/Feed Options](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+    + [Gutenberg Block](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+    + [[yarpp] Shortcode](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+    + [Widget](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+    + [YARPP functions()](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+    + [REST API](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+* **Works with all languages**, including those with full-width (double-byte) characters and those that don't use spaces between words
+* **Custom post type and taxonomy** support
+* **WordPress Multisite** support
+* **bbPress forums** support
+* **WooCommerce** support
+* **Professionally maintained and supported** with regular updates
 
 **YARPP Algorithm Explained**
 -------------------------------------------
 
 https://videopress.com/v/0n2TSzkb
+
+**Translate YARPP**
+
+YARPP is available for [translation directly on WordPress.org](https://translate.wordpress.org/projects/wp-plugins/yet-another-related-posts-plugin/). Check out the official [Translator Handbook](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/) to contribute.
 
 **Trusted since 2008**
 -------------------------------------------
@@ -39,33 +49,64 @@ The **Yet Another Related Posts Plugin** (YARPP) is the **most popular and widel
 
 YARPP works best with PHP 5.3 or greater, MySQL 5.6 or greater OR MariaDB 10.1 or greater, and WordPress 3.7 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
 
+== Screenshots ==
+
+1. YARPP options in WP-Admin: Automatic Display Options
+2. YARPP options in WP-Admin: "The Pool" settings
+3. YARPP options in WP-Admin: "The Algorithm" settings
+4. Example - starwars.com
+5. Example - CB2.com
+
 == Installation ==
 
-= Auto display on your website =
+= Install YARPP from within WordPress =
 
-1. Copy the folder `yet-another-related-posts-plugin` into the directory `wp-content/plugins/` and activate the plugin.
-2. (optionally) copy the sample template files inside the `yarpp-templates` folder into your active theme.
-3. Go to the "YARPP" settings page to customize YARPP.
+1. Visit the plugins page within your WordPress dashboard and select `Add New`
+1. Search for `YARPP`
+1. Press "Install Now" for the `YARPP` plugin
+1. Activate YARPP from your Plugins page
+1. Go to the "YARPP" settings page to customize YARPP
+1. *[optional]* copy the sample YARPP Custom Template files inside the `yarpp-templates` folder into your active theme folder.
 
-= Auto display in your feeds =
+= Install YARPP Manually =
+
+1. Upload the `yet-another-related-posts-plugin` folder to the `/wp-content/plugins/` directory
+1. Activate YARPP from your Plugins page
+1. Go to the "YARPP" settings page to customize YARPP
+1. *[optional]* copy the sample YARPP Custom Template files inside the `yarpp-templates` folder into your active theme folder.
+
+= Install YARPP with the WP-CLI =
+
+1. `wp plugin install yet-another-related-posts-plugin --activate`
+1. Go to the "YARPP" settings page to customize YARPP
+1. *[optional]* copy the sample YARPP Custom Template files inside the `yarpp-templates` folder into your active theme folder.
+
+The *YARPP custom template* feature allows you to easily customize look and feel using the same coding conventions and [Template Tags](https://codex.wordpress.org/Template_Tags) as in WordPress themes.
+
+Your YARPP Custom Template file must be in the *active theme's main directory* in order to be recognized by YARPP. If your theme did not ship with a YARPP templates, move the files in the `yarpp-templates` directory which ships with YARPP into your active theme's main directory. Be sure to move the *files* (which must be named `yarpp-template-`...`.php`) to your theme, not the entire directory. There is no limit restriction on custom templates.
+
+
+= After Activation =
+
+You should customize your Pool, Algorithm and Automatic Display Options settings from the YARPP settings page. YARPP supports a full range of placement options, including Automatic Display Options (pick where to show YARPP from the YARPP settings page), Block, Shortcode, Widget, YARPP functions() and REST API support. Details below.
+
+= Automatic Display Options =
+
+Configurable from the YARPP settings page, the *Automatic Display Option* automatically displays YARPP right below post content. You can configure which posts types to display YARPP on from the YARPP settings page.
+
+If you do not want to show the Related Posts display in its default position (right below the post content), first go to YARPP options and turn off the "Automatic Display Options".
+
+If you would like to instead display it in your sidebar and you have a widget-aware theme, YARPP provides a Related Posts widget which you can add under "Appearance" > "Widgets."
+
+If you would like to add Related Posts elsewhere (such as inline related posts), edit your relevant theme file (most likely something like `single.php`) and add the shortcode code `[yarpp]` or PHP function `yarpp_related();` within [The Loop](https://codex.wordpress.org/The_Loop) where you want to display the related posts. Make sure you don't add `echo yarpp_related();` or you may end up with duplicates in your related posts section. The YARPP Block is also an option.
+
+= Automatic Display in Feed Options =
 
 Make sure the "display related posts in feeds" option is turned on if you would like to show related posts in your RSS and Atom feeds. The "display related posts in feeds" option can be used regardless of whether you auto display them on your website (and vice versa).
 
-= Widget =
+= Block =
 
-Related posts can also be displayed as a widget. Go to the Appearance > Widgets options page and add the "Related Posts (YARPP)" widget. Choose to display content from YARPP Basic. The widget will only be displayed on single entry (permalink) pages.
-
-The YARPP widget can be used even if the "auto display" option is turned off.
-
-= Custom display through templates =
-
-YARPP allows the advanced user with knowledge of PHP to customize the display of related posts using a custom templating mechanism.
-
-= REST API =
-
-YARPP adds a REST API endpoint for fetching related posts. The JSON results from the REST API query are the same as you would see if you were visiting a post on your website (the same quantity and order). It is possible to override the quantity at the time of making the REST API request.
-
-[[Documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752)]
+YARPP ships with full support for Gutenberg Blocks. You can place YARPP's Block manually wherever you’d like in post content.
 
 = Shortcode =
 
@@ -81,9 +122,9 @@ If you know the reference Post ID that you want to show content related to, use:
 
 To specify which YARPP template to use, use the "template" attribute like so:
 
-`[yarpp template="yarpp-template-photoblog"]` // where `yarpp-template-photoblog.php` is the file name of the custom template
-`[yarpp template="list"]` // built-in "List" template
-`[yarpp template="thumbnails"]` // built-in "Thumbnails" template
+`[yarpp template="yarpp-template-photoblog"]` - where `yarpp-template-photoblog.php` is the file name of the custom template
+`[yarpp template="list"]` - built-in "List" template
+`[yarpp template="thumbnails"]` - built-in "Thumbnails" template
 
 To specify maximum number of posts to show, use the "limit" attribute like so:
 
@@ -96,6 +137,133 @@ To add YARPP shortcode to your theme files (eg. single.php), use:
 
 If you're adding the shortcode *outside [the loop](http://codex.wordpress.org/The_Loop)*, you must provide the reference_id.
 
+= Widget =
+
+Related posts can also be displayed as a widget. Go to the Appearance > Widgets options page and add the "Related Posts (YARPP)" widget. Choose to display content from YARPP Basic. The widget will only be displayed on single entry (permalink) pages.
+
+The YARPP widget can be used even if the "auto display" option is turned off.
+
+= REST API =
+
+Add related posts to your JavaScript driven app!
+
+YARPP adds a REST API endpoint for fetching related posts. The JSON results from the REST API query are the same as you would see if you were visiting a post on your website (the same quantity and order). It is possible to override the quantity at the time of making the REST API request.
+
+[[Documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752)]
+
+= YARPP functions() =
+
+Developers can call YARPP's powerful relatedness algorithm from anywhere in their own code. Some examples and more details are in this [WordCamp Birmingham talk](https://www.slideshare.net/mitcho/relate-all-the-things).
+
+You may use the functions defined in `includes/related_functions.php` in your own code, notably:
+
+1. `yarpp_related()` - gets the HTML for related posts and displays it
+1. `yarpp_related_exist()` - checks whether any related posts exists
+1. `yarpp_get_related()` - returns the list of related posts (`WP_Post` objects)
+
+*Examples:*
+
+Show related posts, using all the settings set in the YARPP settings page:
+
+`<?php yarpp_related(); ?>`
+
+Each of these functions will default to using the settings set in your the YARPP settings page, but can be customized. For example:
+
+<code>
+yarpp_related(
+  array(
+    // Pool options: these determine the "pool" of entities which are considered
+    'post_type' => array('post', 'page', 'wc_product', ...), //  post types to include in results
+    'show_pass_post' => false, // show password-protected posts
+    'past_only' => false, // show only posts which were published before the reference post
+    'exclude' => array(), // a list of term_taxonomy_ids. entities with any of these terms will be excluded from consideration.
+    'recent' => false, // to limit to entries published recently, set to like '15 day', '20 week', or '12 month' (https://www.mysqltutorial.org/mysql-interval/)
+    
+    // Relatedness algorithm options: these determine how "relatedness" is computed
+    // Weights are used to construct the "match score" between candidates and the reference post
+    'weight' => array(
+      'body' => 1,
+      'title' => 2, // larger weights mean this criteria will be weighted more heavily
+      'tax' => array(
+        'post_tag' => 1,
+        ... // put any taxonomies you want to consider here with their weights
+      )
+    ),
+    // Specify taxonomies and a number here to require that a certain number be shared:
+    'require_tax' => array(
+      'post_tag' => 1 // for example, this requires all results to have at least one 'post_tag' in common
+    ),
+    // The threshold which must be met by the "match score" to be considered related
+    'threshold' => 5,
+    
+    // Display options:
+    'template' => 'thumbnails', // which theme/custom template to use. Built-in ones include "list" and "thumbnails", or the name of a YARPP template file in your active theme folder starting with "yarpp-template-". Example: yarpp-template-videos or yarpp-template-videos.php
+    'limit' => 5, // maximum number of results
+    'order' => 'score DESC', // column on "wp_posts" to order by, then a space, and whether to order in ascending ("ASC") or descending ("DESC") order
+    'promote_yarpp' => true, // boolean indicating whether to add 'Powered by YARPP' below related posts
+  ),
+ $reference_ID, // second argument: (optional) the post ID. If not included, will use the current post.
+ true // third argument: (optional) true to echo the HTML block; false to return it
+);
+</code>
+
+Options which are not specified will default to those specified on the YARPP settings page. Additionally, if you are using a builtin template rather than specifying a custom template file in `template`, the following arguments can be used to override the various parts of the builtin template: `before_title`, `after_title`, `before_post`, `after_post`, `before_related`, `after_related`, `no_results`, `excerpt_length`.
+
+If you need to implement related entries programmatically or to know whether they exist, you can use the functions:
+
+1. `yarpp_get_related( $args, $reference_ID )`
+Returns an array of `post` objects, just like the WordPress function `get_posts`.
+1. `yarpp_related_exist( $args, $reference_ID )`
+Returns a boolean for whether any such related entries exist.
+
+For each of these functions, `$args` takes the same arguments as those detailed for `yarpp_related()` above, except for the various display and template options.
+
+Note that at this time custom YARPP queries using the functions mentioned here are *not* cached in the built-in YARPP caching system. Thus, if you notice any performance hits, you may need to write your own code to cache the results.
+
+Example of how to use a custom YARPP query and cache the results for a day:
+
+<code>
+$result = get_transient('yarpp_custom_results_for_' . $post->ID);
+if(! $result){
+  $result = yarpp_related(['post_type' => 'reply'],null,false);
+  set_transient('yarpp_custom_results_for_' . $post->ID, $result, DAY_IN_SECONDS);
+}
+echo $result;
+</code>
+
+Show at most 4 related WooCommerce products based on their title and especially on their categories, assuming custom YARPP template
+`yarpp-related-wc-products.php` has been added to the active theme folder:
+
+<code>
+yarpp_related(
+  array(
+    'limit' => 4,
+    'weight' => array(
+      'title' => 1,
+      'tax' => array(
+        'category' => 2
+      )
+    ),
+    'post_type' => 'wc_product',
+    'template' => 'yarpp-related-wc-products.php'
+  )
+);
+</code>
+
+Check for posts related to post with ID 123, and loop through them in order to do some more custom logic:
+
+<code>
+$related_posts = yarpp_get_related(array(), 123);
+if(! $related_posts){
+  echo 'No related posts';
+} else {
+  foreach($related_posts as $post){
+    // $post is a WP_Post object.
+    echo $post->post_title;
+  }
+}
+</code>
+
 == Frequently Asked Questions ==
 
 If your question isn't here, ask your own question at [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin).
@@ -104,64 +272,77 @@ If your question isn't here, ask your own question at [the WordPress.org forums]
 
 Most likely you have "no related posts" right now because the default "match threshold" is too high. Here's what we recommend to find an appropriate match threshold: lower your match threshold in the YARPP "Algorithm" options to something very low, like 1. (If you don't see the match threshold, you may need to display the "Algorithm" options via the "Screen Options" tab at the top.) Most likely the really low threshold will pull up many posts that aren't actually related (false positives), so look at some of your posts' related posts and their match scores. This will help you find an appropriate threshold. You want it lower than what you have now, but high enough so it doesn't have many false positives.
 
-= How can I move the related posts display? =
-
-If you do not want to show the Related Posts display in its default position (right below the post content), first go to YARPP options and turn off the "automatically display" options in the "website" section. If you would like to instead display it in your sidebar and you have a widget-aware theme, YARPP provides a Related Posts widget which you can add under "Appearance" > "Widgets."
-
-If you would like to add the Related Posts display elsewhere, edit your relevant theme file (most likely something like `single.php`) and add the shortcode code `[yarpp]` (recommended) or PHP function `yarpp_related();` within [The Loop](https://codex.wordpress.org/The_Loop) where you want to display the related posts. Make sure you don't add `echo yarpp_related();` or you may end up with duplicates in your related posts section.
-
 = How can I limit related posts to a certain time frame? For instance, I don't want to show posts from two years ago. =
 
-Yes. In Wordpress, go to "Settings" and "Related Posts (YARPP)" and make sure "The Pool" is checked in the "Screen Options" section at the top of the page.  In "The Pool" section, check the box next to "Show only posts from the past *X* months."
+In Wordpress, go to "Settings" and "Related Posts (YARPP)" and make sure "The Pool" is checked in the "Screen Options" section at the top of the page.  In "The Pool" section, check the box next to "Show only posts from the past *X* months."
 
 = Where do I tell YARPP to display related posts only by tags? =
 
 In WordPress, go to "Settings" and "YARPP" and make sure "Algorithm" is checked in the "Screen Options" section at the top of the page.  In the "Algorithm" section, configure the dropdown boxes next to "Titles," "Bodies," "Categories," and "Tags."
 
-= Can I specify related posts? =
+= Can I manually specify related posts? =
 
 Sorry, but specifying related posts, displaying related posts from external WordPress sites, and pulling content from the Comments section are all outside the scope of YARPP at this time.
 
 = I'm seeing related posts displayed on the home page. How do I prevent that? =
 
-Some WordPress themes treat the home page as an archive or a "page." Go to "Settings" then "Related Posts (YARPP)" and view the "Display Options" section. Make sure "Pages" and "Also display in archives" are not checked.
+Some WordPress themes treat the home page as an archive or a "page." Go to "Settings" then "Related Posts (YARPP)" and view the "Automatic Display Options" section. Make sure "Pages" and "Also display in archives" are not checked.
 
 = How can I prevent the "related posts" list from displaying on specific posts? =
 
-When editing a post or page, uncheck “Display Related Posts”, which is located next to the WordPress editor. Be sure to update or publish to save your changes.
+**Option 1:**
 
-An older method was to add `<?noyarpp-->` to the HTML code of any post to prevent related posts from displaying. This solution will only work if you are using "Automatic Display" in the "Display Options" section.
+On the edit post page, uncheck “Display Related Posts” in the YARPP box. Be sure to update or publish to save your changes.
 
-If you are programatically calling `yarpp_related()`, the shortcode `[yarpp]` from PHP code or the YARPP Block, you'll have to do your own checking to see if related posts are appropriate to display or not.
+**Option 2:**
 
-= I'm using the Thumbnails display in YARPP 4. How do I override the style of the text that displays? The title only shows two lines, the font is larger than I'd like, I'd like to center the thumbnails, etc. =
+Add `<?noyarpp-->` to the HTML code of any post to prevent related posts from displaying.
+
+**Option 3:**
+
+Use the `noyarpp` filter. For example:
+
+<code>
+// Disable YARPP Automatic Display in specific categories
+function yarpp_disable_categories() {
+  // Examples of in_category usage: https://codex.wordpress.org/Function_Reference/in_category
+  if ( in_category( array( 'my_category_1_slug', 'my_category_2_slug' ) ) ) {
+    return true;
+  }
+}
+add_filter( 'noyarpp', 'yarpp_disable_categories' );
+</code>
+
+These solutions only work if you are using "Automatic Display" in the "Display Options" section. If you are programatically calling `yarpp_related()`, the shortcode `[yarpp]` from PHP code or the YARPP Block, you will need to do your own conditional checks.
+
+= I'm using the Thumbnails display in YARPP 4+. How do I override the style of the text that displays? The title only shows two lines, the font is larger than I'd like, I'd like to center the thumbnails, etc. =
 
 If you're familiar with CSS, you can override any YARPP styles by editing your theme's `style.css` file, or any other CSS file you may have created that loads after the YARPP one. To edit your theme's CSS file, go to "Appearance" then "Editor" and then click `style.css` in the right sidebar. Add changes at the bottom of the file and click "Save." If you do edit this file, just make sure you add `!important` after each style declaration, to make sure they'll override the YARPP rules.
 
 Some common overrides that YARPP users have added are:
 
-`
+<code>
 /* Reduces the title font size and displays more than two title lines */
 .yarpp-thumbnail {height: 200px !important;}
 .yarpp-thumbnail-title {font-size:0.8em !important; max-height: 4em !important}
 
 /* Centers the thumbnail section */
 .yarpp-related-widget {text-align:center !important;}
-`
+</code>
 
 Once you save any CSS changes, empty your browser's cache and reload your page to see the effect.
 
 = I'm using the Thumbnails display. How can I change the thumbnail size? =
 
-As of YARPP 5.19.0, YARPP usually defaults to using WordPress' default thumbnail size. This can be changed to another thumbnail size using the YARPP setting "Thumbnail Size".
+As of YARPP v5.19.0, YARPP usually defaults to using WordPress' default thumbnail size. This can be changed to another thumbnail size using the YARPP setting "Thumbnail Size".
 
-However, if you used YARPP before 5.19.0, or your theme defines a "yarpp-thumbnail" size, the default is the "yarpp-thumbnail".
+However, if you used YARPP before v5.19.0, or your theme defines a "yarpp-thumbnail" size, the default is the "yarpp-thumbnail". To change "yarpp-thumbnail" size, add the following to your theme's `functions.php` file with appropriate width and height variables:
 
-To change "yarpp-thumbnail" size, add `add_image_size('yarpp-thumbnail', $width, $height, true);` to your theme's `functions.php` file with appropriate width and height variables.
+`add_image_size('yarpp-thumbnail', $width, $height, true);` 
 
 When you do this, make sure you also set the YARPP setting "Thumbnail Size" to "yarpp-thumbnail".
 
-Each time you change YARPP's thumbnail dimensions like this, you will probably want to have WordPress regenerate appropriate sized thumbnails for all of your images. I highly recommend the [Regenerate Thumbnails](https://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin for this purpose.
+Each time you change YARPP's thumbnail dimensions like this, you will probably want to have WordPress regenerate appropriate sized thumbnails for all of your images. We highly recommend the [Regenerate Thumbnails](https://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin for this purpose.
 
 = I'm using the Thumbnails display. Why aren't the right size thumbnails being served? =
 
@@ -175,11 +356,7 @@ There are two options for doing so:
 
 = I'm using the Thumbnails display. Why are some of my posts missing appropriate images? =
 
-YARPP's thumbnail view requires that a WordPress "featured image" be set for each post. If you have many posts that never had a featured image set, I recommend the plugin [Auto Post Thumbnail](https://wordpress.org/extend/plugins/auto-post-thumbnail/), which will generate post thumbnails for you.
-
-= How can I use the custom template feature? =
-
-YARPP's custom templates feature allows you to uber-customize the related posts display using the same coding conventions and [Template Tags](https://codex.wordpress.org/Template_Tags) as in WordPress themes. Custom templates must be in your *active theme's main directory* in order to be recognized by YARPP. If your theme did not ship with YARPP templates, move the files in the `yarpp-templates` directory which ships with YARPP into your active theme's main directory. Be sure to move the *files* (which must be named `yarpp-template-`...`.php`) to your theme, not the entire directory.
+YARPP's thumbnail view requires that a WordPress "featured image" be set for each post. If you have many posts that never had a featured image set, we recommend the plugin [Auto Post Thumbnail](https://wordpress.org/extend/plugins/auto-post-thumbnail/), which will generate post thumbnails for you.
 
 = Is YARPP compatible with WordPress Multisite? =
 
@@ -197,20 +374,16 @@ However, YARPP does have difficulty with languages that don't place spaces betwe
 
 = Does YARPP slow down my blog/server? =
 
-The YARPP calculation of related content does make a little impact, yes. However, YARPP caches all of its results, so any post's results need only be calculated once. YARPP's queries have been significantly optimized since version 3.5.
+YARPP is a highly optimized plugin with an inbuilt cache that makes subsequent queries super efficient. This means that YARPP will not slow your site down.
 
 If you are running a large site and need to throttle YARPP's computation, try the official [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin which adds this throttling functionality.
 
 = Are there any plugins that are incompatible with YARPP? =
 
-* [DISQUS](https://wordpress.org/extend/plugins/disqus-comment-system/): go to the DISQUS plugin advanced settings and turn on the "Check this if you have a problem with comment counts not showing on permalinks".
 * [SEO_Pager plugin](https://wordpress.org/support/topic/267966): turn off the automatic display option in SEO Pager and instead add the code manually.
-* [Pagebar 2](http://www.elektroelch.de/hacks/wp/pagebar/);
-* [WP Contact Form III plugin and Contact Form Plugin](https://wordpress.org/support/topic/392605);
-* [WPML](http://wpml.org): various incompatibilities have been reported. The multilingual plugin [Polylang](https://polylang.wordpress.com/) has great support for YARPP and is suggested as a replacement for WPML.
 * Other related posts plugins, obviously, may also be incompatible.
 
-Please submit similar bugs by starting a new thread on [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin). I check the forums regularly and will try to release a quick bugfix.
+Please submit similar bugs by starting a new thread on [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin). We check the forums regularly and will try to release a quick bugfix.
 
 = YARPP seems to be broken since I upgraded to WordPress X.X. =
 
@@ -218,15 +391,11 @@ Before upgrading to a new WordPress version, you should first deactivate all plu
 
 1. Visit the "YARPP" settings page to verify your settings.
 2. Deactivate YARPP, replace the YARPP files on the server with a fresh copy of the new version, and then reactivate it.
-3. Install the official [YARPP Experiments](https://wordpress.org/extend/plugins/yarpp-experiments/) plugin to flush the cache.
+3. From the "YARPP" settings page, flush the YARPP cache
 
 = Can I clear my cache? Can I build up the cache manually? =
 
 Yes, there is a button to clear YARPP's cache table in YARPP's WP Admin options.
-
-= I removed the YARPP plugin but I still see YARPP-related database tables. Shouldn't those be removed, too? =
-
-Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If you no longer wish to use YARPP, first deactivate YARPP using the "Plugins" page in WordPress, then click the "Delete" link found on the same page. This process will automatically remove all YARPP-related files, including temp tables. If you manually try to remove YARPP files instead of going through WordPress, some files or temp tables could remain.
 
 = Does YARPP support custom post types? =
 
@@ -235,61 +404,6 @@ Yes. To make YARPP support your custom post type, the attribute `yarpp_support` 
 `'yarpp_support' => true`
 
 If you would like to programmatically control which post types are considered in an automatically-displayed related posts display, use the `yarpp_map_post_types` filter.
-
-= Can I customize how YARPP displays? =
-
-Yes. Developers can call YARPP's powerful relatedness algorithm from anywhere in their own code. Some examples and more details are in my slides from my [WordCamp Birmingham talk](http://www.slideshare.net/mitcho/relate-all-the-things).
-
-`
-yarpp_related(array(
-	// Pool options: these determine the "pool" of entities which are considered
-	'post_type' => array('post', 'page', ...),
-	'show_pass_post' => false, // show password-protected posts
-	'past_only' => false, // show only posts which were published before the reference post
-	'exclude' => array(), // a list of term_taxonomy_ids. entities with any of these terms will be excluded from consideration.
-	'recent' => false, // to limit to entries published recently, set to something like '15 day', '20 week', or '12 month'.
-	// Relatedness algorithm options: these determine how "relatedness" is computed
-	// Weights are used to construct the "match score" between candidates and the reference post
-	'weight' => array(
-		'body' => 1,
-		'title' => 2, // larger weights mean this criteria will be weighted more heavily
-		'tax' => array(
-			'post_tag' => 1,
-			... // put any taxonomies you want to consider here with their weights
-		)
-	),
-	// Specify taxonomies and a number here to require that a certain number be shared:
-	'require_tax' => array(
-		'post_tag' => 1 // for example, this requires all results to have at least one 'post_tag' in common.
-	),
-	// The threshold which must be met by the "match score"
-	'threshold' => 5,
-
-	// Display options:
-	'template' => , // either the name of a file in your active theme or the boolean false to use the builtin template
-	'limit' => 5, // maximum number of results
-	'order' => 'score DESC'
-),
-$reference_ID, // second argument: (optional) the post ID. If not included, it will use the current post.
-true); // third argument: (optional) true to echo the HTML block; false to return it
-`
-
-Options which are not specified will default to those specified in the YARPP settings page. Additionally, if you are using the built-in template rather than specifying a custom template file in `template`, the following arguments can be used to override the various parts of the builtin template: `before_title`, `after_title`, `before_post`, `after_post`, `before_related`, `after_related`, `no_results`, `excerpt_length`.
-
-If you need to use related entries programmatically or to know whether they exist, you can use the functions `yarpp_get_related( $args, $reference_ID )`  and  `yarpp_related_exist( $args, $reference_ID )`. `yarpp_get_related` returns an array of `post` objects, just like the WordPress function `get_posts`. `yarpp_related_exist` returns a boolean for whether any such related entries exist. For each function, `$args` takes the same arguments as those shown for `yarpp_related` above, except for the various display and template options.
-
-Note that custom YARPP queries using the functions mentioned here are *not* cached in the built-in YARPP caching system. Thus, if you notice any performance hits, you may need to write your own code to cache the results.
-
-Here is an example of how to use a custom YARPP query and cache the results for a day:
-
-`
-$result = get_transient('yarpp_custom_results_for_' . $post->ID);
-if(! $result){
-	$result = yarpp_related(['post_type' => 'reply'],null,false);
-	set_transient('yarpp_custom_results_for_' . $post->ID, $result, DAY_IN_SECONDS);
-}
-echo $result;
-`
 
 = Does YARPP support custom taxonomies? =
 
@@ -301,7 +415,7 @@ If you would like to choose custom taxonomies to choose in the YARPP settings UI
 
 If you want to prevent the Review Notice from appearing you can use the function below:
 
-`
+<code>
 /**
  * Disable YARPP Review Notice
  *
@@ -310,22 +424,33 @@ function yarpp_disable_review_notice() {
   remove_action('admin_notices', array('YARPP_Admin', 'display_review_notice'));
 }
 add_action('admin_init', 'yarpp_disable_review_notice', 11);
-`
+</code>
 
 = Can I disable the request-for-feedback modal when deactivating the plugin? =
 Sure. Use the following code:
 
-`
+<code>
 add_action(
-	'admin_init',
-	function(){
-		remove_all_filters('shareaholic_deactivate_feedback_form_plugins');
-	},
-	11
+  'admin_init',
+  function(){
+      remove_all_filters('shareaholic_deactivate_feedback_form_plugins');
+  },
+  11
 );
-`
+</code>
+
+= I removed the YARPP plugin but I still see YARPP-related database tables. Shouldn't those be removed, too? =
+
+Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If you no longer wish to use YARPP, first deactivate YARPP using the "Plugins" page in WordPress, then click the "Delete" link found on the same page. This process will automatically remove all YARPP-related files, including temp tables. If you manually try to remove YARPP files instead of going through WordPress, some files or temp tables could remain.
+
 
 == Changelog ==
+
+= 5.24.0 (17-June-2021) =
+* Enhancement: Option to automatically generate missing thumbnail sizes on the fly when using Custom YARPP Templates
+* [New](https://wordpress.org/support/topic/remove-yarpp-from-the_content-or-the_excerpt/): Control YARPP Automatic Display programatically with filter support for `noyarpp`. For example: `add_filter( 'noyarpp', 'custom_function' );`
+* Enhancement: Use the faster and less memory intensive function `strpos()` instead of `stristr()`
+
 = 5.23.0 (02-June-2021) =
 * [New](https://wordpress.org/support/topic/is-it-possible-to-use-different-styles-of-yarpp-in-every-post/): Ability to specify maximum number of posts to show in the YARPP shortcode. For example:
     + `[yarpp template="list" limit=3]` // maximum post limit set to 3
@@ -470,7 +595,7 @@ add_filter( 'yarpp_enqueue_related_style', '_\_return_false' );
 * [Bugfix](https://wordpress.org/support/topic/please-exclude-the-gutenberg-blocks/): Exclude Gutenberg blocks so that they don't appear as related
 
 = 5.4.0 (03-August-2020) =
-* New: Shortcode support! `[yarpp]` ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#%0Ahow%20can%20i%20move%20the%20related%20posts%20display%3F%0A))
+* New: Shortcode support! `[yarpp]` ([documentation](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation))
 * Enhancement: Adds YARPP score to REST API responses ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
 * Enhancement: Prepare for default jQuery version update in upcoming WordPress Core
 * Bugfix: Fixed admin panel tooltips
@@ -1176,5 +1301,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.23.0 =
+= 5.24.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
