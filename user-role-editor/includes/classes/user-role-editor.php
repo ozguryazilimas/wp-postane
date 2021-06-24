@@ -729,7 +729,10 @@ class User_Role_Editor {
         }
         
         wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
-        wp_enqueue_script('jquery-ui-selectable', '', array('jquery-ui-core', 'jquery'));
+        wp_enqueue_script('jquery-ui-selectable', '', array('jquery-ui-core', 'jquery'));        
+        wp_enqueue_script('notifyjs', plugins_url('/js/notify.min.js', URE_PLUGIN_FULL_PATH ), array(), URE_VERSION );
+        //wp_enqueue_script('notifyjs', plugins_url('/js/notify.js', URE_PLUGIN_FULL_PATH ), array(), URE_VERSION );
+        
         wp_register_script('ure', plugins_url('/js/ure.js', URE_PLUGIN_FULL_PATH ), array(), URE_VERSION );
         wp_enqueue_script('ure');
         wp_localize_script('ure', 'ure_data', array(
