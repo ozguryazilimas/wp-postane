@@ -1,65 +1,65 @@
 <div class="wrap">
-    <?php include(YARPP_DIR.'/includes/phtmls/yarpp_settings_header.phtml') ?>
+	<?php require YARPP_DIR . '/includes/phtmls/yarpp_settings_header.phtml'; ?>
 
-    <div id="yarpp_switch_container">
-        <ul id="yarpp_switch_tabs">
-            <li>
-                <a href="options-general.php?page=yarpp&mode=basic"><?php _e('YARPP Basic', 'yarpp')?></a>
-            </li>
-        </ul>
+	<div id="yarpp_switch_container">
+		<ul id="yarpp_switch_tabs">
+			<li>
+				<a href="options-general.php?page=yarpp&mode=basic"><?php _e( 'YARPP Basic', 'yarpp' ); ?></a>
+			</li>
+		</ul>
 
-        <div class="yarpp_switch_content">
-            <p><?php _e('The settings below allow you to configure the basic settings for YARPP', 'yarpp') ?></p>
-        </div>
-    </div>
+		<div class="yarpp_switch_content">
+			<p><?php _e( 'The settings below allow you to configure the basic settings for YARPP', 'yarpp' ); ?></p>
+		</div>
+	</div>
 
-    <form method="post">
+	<form method="post">
 
-        <div id="poststuff" class="metabox-holder has-right-sidebar">
+		<div id="poststuff" class="metabox-holder has-right-sidebar">
 
-            <?php if (!$yarpp->get_option('rss_display')): ?>
-                <style>
-                    .rss_displayed {
-                        display: none;
-                    }
-                </style>
-            <?php endif ?>
+			<?php if ( ! $yarpp->get_option( 'rss_display' ) ) : ?>
+				<style>
+					.rss_displayed {
+						display: none;
+					}
+				</style>
+			<?php endif ?>
 
-            <!-- Side column -->
-            <div class="inner-sidebar" id="side-info-column">
-                <?php do_meta_boxes('settings_page_yarpp', 'side', array()) ?>
-            </div>
+			<!-- Side column -->
+			<div class="inner-sidebar" id="side-info-column">
+				<?php do_meta_boxes( 'settings_page_yarpp', 'side', array() ); ?>
+			</div>
 
-            <!-- Main Content -->
+			<!-- Main Content -->
 
-            <div id="post-body-content">
-                <?php do_meta_boxes('settings_page_yarpp', 'normal', array()) ?>
-            </div>
+			<div id="post-body-content">
+				<?php do_meta_boxes( 'settings_page_yarpp', 'normal', array() ); ?>
+			</div>
 
-            <script>
-                var spinner = '<?php echo esc_url(admin_url('images/spinner-2x.gif')) ?>',
-                    loading = '<img height="20px" width="20px" class="loading" src="'+spinner+'" alt="loading..."/>';
-            </script>
+			<script>
+				var spinner = '<?php echo esc_url( admin_url( 'images/spinner-2x.gif' ) ); ?>',
+					loading = '<img height="20px" width="20px" class="loading" src="'+spinner+'" alt="loading..."/>';
+			</script>
 
-            <div>
-                <input type="submit" class='button-primary yarpp_spin_on_click' name="update_yarpp" value="<?php _e('Save Changes', 'yarpp')?>" />
+			<div>
+				<input type="submit" class='button-primary yarpp_spin_on_click' name="update_yarpp" value="<?php _e( 'Save Changes', 'yarpp' ); ?>" />
 								<span class="spinner yarpp-no-float"></span>
-                <?php wp_nonce_field( 'update_yarpp', 'update_yarpp-nonce' ); ?>
-            </div>
-            <br><br>
-            <div class="" id="display_notices" style="display: none;">
-            </div>
-            <div>
-                <p>
-                    <input type="button" name="yarpp-clear-cache" id="yarpp-clear-cache" class="button-secondary" value="<?php _e("Empty cache", 'yarpp'); ?>">
-                    <span id="yarpp-clear-cache-label"><small><?php _e('Use this button to manually clear YARPP cache', 'yarpp'); ?></small></span>
-                    <span class="spinner" style="float: none;"></span>
-               </p>
-                <?php wp_nonce_field( 'clear_cache_yarpp', 'clear_cache-nonce' ); ?>
-            </div>
+				<?php wp_nonce_field( 'update_yarpp', 'update_yarpp-nonce' ); ?>
+			</div>
+			<br><br>
+			<div class="" id="display_notices" style="display: none;">
+			</div>
+			<div>
+				<p>
+					<input type="button" name="yarpp-clear-cache" id="yarpp-clear-cache" class="button-secondary" value="<?php _e( 'Empty cache', 'yarpp' ); ?>">
+					<span id="yarpp-clear-cache-label"><small><?php _e( 'Use this button to manually clear YARPP cache', 'yarpp' ); ?></small></span>
+					<span class="spinner" style="float: none;"></span>
+			   </p>
+				<?php wp_nonce_field( 'clear_cache_yarpp', 'clear_cache-nonce' ); ?>
+			</div>
 
-        </div>
+		</div>
 
-    </form>
+	</form>
 
 </div>

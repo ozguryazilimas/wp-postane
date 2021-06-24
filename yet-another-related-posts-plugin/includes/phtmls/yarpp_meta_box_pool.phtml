@@ -1,61 +1,61 @@
 <p>
-    <?php
-    _e(
-        '"The Pool" refers to the pool of posts and pages that are candidates for display as related to the current entry.',
-        'yarpp'
-    )
-    ?>
+	<?php
+	_e(
+		'"The Pool" refers to the pool of posts and pages that are candidates for display as related to the current entry.',
+		'yarpp'
+	)
+	?>
 </p>
 
 <?php
-    $this->include_post_type();
-    foreach ($yarpp->get_taxonomies() as $taxonomy) {
-        $this->exclude($taxonomy->name, sprintf(__('Disallow by %s:', 'yarpp'), ucwords($taxonomy->labels->name)), $taxonomy->_builtin);
-    }
+	$this->include_post_type();
+foreach ( $yarpp->get_taxonomies() as $taxonomy ) {
+	$this->exclude( $taxonomy->name, sprintf( __( 'Disallow by %s:', 'yarpp' ), ucwords( $taxonomy->labels->name ) ), $taxonomy->_builtin );
+}
 
-    $this->checkbox('show_pass_post', __('Display password protected posts', 'yarpp'));
-    $this->checkbox( 'include_sticky_posts', __( "Display sticky posts", 'yarpp' ) );  
-    $recent = yarpp_get_option('recent');
-    if ((bool) $recent) {
-        list($recent_number, $recent_units) = explode(' ', $recent);
-    } else {
-        $recent_number = 12;
-        $recent_units = 'month';
-    }
+	$this->checkbox( 'show_pass_post', __( 'Display password protected posts', 'yarpp' ) );
+	$this->checkbox( 'include_sticky_posts', __( 'Display sticky posts', 'yarpp' ) );
+	$recent = yarpp_get_option( 'recent' );
+if ( (bool) $recent ) {
+	list($recent_number, $recent_units) = explode( ' ', $recent );
+} else {
+	$recent_number = 12;
+	$recent_units  = 'month';
+}
 
-    $recent_number_html = '<input name="recent_number" type="text" id="recent_number" value="'.esc_attr($recent_number).'" size="2" />';
+	$recent_number_html = '<input name="recent_number" type="text" id="recent_number" value="' . esc_attr( $recent_number ) . '" size="2" />';
 
-    $recent_units_html  = '<select name="recent_units" id="recent_units" style="vertical-align:inherit">';
-    foreach($yarpp->recent_units() as $value => $translated_string){
-	    $recent_units_html .= '<option value="' . esc_attr($value) . '" ' . (($recent_units === $value) ? 'selected' : '') . '>' . $translated_string . '</option>';
-    }
+	$recent_units_html = '<select name="recent_units" id="recent_units" style="vertical-align:inherit">';
+foreach ( $yarpp->recent_units() as $value => $translated_string ) {
+	$recent_units_html .= '<option value="' . esc_attr( $value ) . '" ' . ( ( $recent_units === $value ) ? 'selected' : '' ) . '>' . $translated_string . '</option>';
+}
 $recent_units_html .= '</select>';
 ?>
 
 <div class='yarpp_form_row yarpp_form_checkbox'>
-    <div>
-        <input type='checkbox' name='recent_only' id='yarpp-recent_only' value='true' <?php checked((bool) $recent) ?> />
+	<div>
+		<input type='checkbox' name='recent_only' id='yarpp-recent_only' value='true' <?php checked( (bool) $recent ); ?> />
 				<label for="yarpp-recent_only">
-        <?php 
-				
-				printf(
-        // translators: 1: HTML for a number field, 2: HTML for a units dropdown (eg "week(s)", "day(s)", month(s))
-        __('Display only posts from the past %1$s %2$s', 'yarpp'),
-        $recent_number_html,
-        $recent_units_html
-				);
-        ?>
+		<?php
+
+			printf(
+			// translators: 1: HTML for a number field, 2: HTML for a units dropdown (eg "week(s)", "day(s)", month(s))
+				__( 'Display only posts from the past %1$s %2$s', 'yarpp' ),
+				$recent_number_html,
+				$recent_units_html
+			);
+			?>
 				</label>
-    </div>
+	</div>
 </div>
 
 <?php
-	$this->checkbox( 'past_only', __( "Display only posts older than current post", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "Only posts older than the current post will be displayed.", 'yarpp' ) ) . "'>&nbsp;</span>" );
+	$this->checkbox( 'past_only', __( 'Display only posts older than current post', 'yarpp' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( 'Only posts older than the current post will be displayed.', 'yarpp' ) ) . "'>&nbsp;</span>" );
 
 	$this->checkbox(
-	        'same_post_type',
-            __( "Limit to same post type", 'yarpp' )." <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( "When enabled, posts will only be selected from the same post type of the current post.", 'yarpp' ) ) . "'>&nbsp;</span>",
-		    '',
-            array('option_value' => ! yarpp_get_option('cross_relate'))
-    );
-?>
+		'same_post_type',
+		__( 'Limit to same post type', 'yarpp' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( 'When enabled, posts will only be selected from the same post type of the current post.', 'yarpp' ) ) . "'>&nbsp;</span>",
+		'',
+		array( 'option_value' => ! yarpp_get_option( 'cross_relate' ) )
+	);
+	?>

@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.24.0
+Stable tag: 5.25.0
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -56,6 +56,7 @@ YARPP works best with PHP 5.3 or greater, MySQL 5.6 or greater OR MariaDB 10.1 o
 3. YARPP options in WP-Admin: "The Algorithm" settings
 4. Example - starwars.com
 5. Example - CB2.com
+6. Example - chrisguillebeau.com
 
 == Installation ==
 
@@ -163,11 +164,11 @@ You may use the functions defined in `includes/related_functions.php` in your ow
 
 *Examples:*
 
-Show related posts, using all the settings set in the YARPP settings page:
+Show related posts, using all the settings set on the YARPP settings page:
 
 `<?php yarpp_related(); ?>`
 
-Each of these functions will default to using the settings set in your the YARPP settings page, but can be customized. For example:
+Each of these functions will default to using the settings set on the YARPP settings page, but can be customized. For example:
 
 <code>
 yarpp_related(
@@ -296,7 +297,7 @@ On the edit post page, uncheck “Display Related Posts” in the YARPP box. Be 
 
 **Option 2:**
 
-Add `<?noyarpp-->` to the HTML code of any post to prevent related posts from displaying.
+Add `<!--noyarpp-->` to the HTML code of any post to prevent related posts from displaying.
 
 **Option 3:**
 
@@ -397,11 +398,56 @@ Before upgrading to a new WordPress version, you should first deactivate all plu
 
 Yes, there is a button to clear YARPP's cache table in YARPP's WP Admin options.
 
-= Does YARPP support custom post types? =
+= How to add support for a Custom Post Type (CPT)? =
 
-Yes. To make YARPP support your custom post type, the attribute `yarpp_support` must be set to true on the custom post type when it is registered. It will then be available on options on the YARPP settings page.
+To make YARPP support your Custom Post Type (CPT), the attribute `yarpp_support` must be set to true when the CPT is registered. The CPT will then be available in the YARPP settings page.
 
 `'yarpp_support' => true`
+
+For example:
+
+<code>
+function register_my_cpt() {
+  $args = array(
+    'public' => true,
+    'label'  => 'Books',
+    'yarpp_support' => true,
+  );
+  register_post_type( 'book', $args );
+}
+add_action( 'init', 'register_my_cpt' );
+</code>
+
+If you do not have access to the code which is registering the CPT, maybe because it is a third-party plugin that is creating it, you can still add the `yarpp_support` argument:
+
+<code>
+/**
+ * Filter the CPT to register more options
+ *
+ * @param $args       array    The original CPT args.
+ * @param $post_type  string   The CPT slug.
+ *
+ * @return array
+ */
+function add_yarpp_support_to_post_types( $args, $post_type ) {
+
+  // If not our target CPT, exit.
+  if ( 'my_custom_post_type' !== $post_type ) {
+    return $args;
+  }
+
+  // Add additional YARPP support option.
+  $cpt_args = array(
+    'yarpp_support' => true
+  );
+
+  // Merge args together.
+  return array_merge( $args, $cpt_args );
+}
+add_filter( 'register_post_type_args', 'add_yarpp_support_to_post_types', 10, 2 );
+</code>
+
+*You should replace `my_custom_post_type` with the CPT that you need to add YARPP support to and add this code to the `functions.php` of your theme.*
 
 If you would like to programmatically control which post types are considered in an automatically-displayed related posts display, use the `yarpp_map_post_types` filter.
 
@@ -433,7 +479,7 @@ Sure. Use the following code:
 add_action(
   'admin_init',
   function(){
-      remove_all_filters('shareaholic_deactivate_feedback_form_plugins');
+    remove_all_filters('shareaholic_deactivate_feedback_form_plugins');
   },
   11
 );
@@ -445,6 +491,8 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.25.0 (23-June-2021) =
+* Enhancement: Cleaned up old unused code (adkengage)
 
 = 5.24.0 (17-June-2021) =
 * Enhancement: Option to automatically generate missing thumbnail sizes on the fly when using Custom YARPP Templates
@@ -1301,5 +1349,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.24.0 =
+= 5.25.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

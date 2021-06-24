@@ -15,6 +15,6 @@ $aid = ( isset( $yarpp->yarppPro['aid'] ) && $yarpp->yarppPro['aid'] ) ? $yarpp-
 $st  = ( isset( $yarpp->yarppPro['st'] ) && $yarpp->yarppPro['st'] ) ? $yarpp->yarppPro['st'] : 0;
 $v   = ( isset( $yarpp->yarppPro['v'] ) && $yarpp->yarppPro['v'] ) ? $yarpp->yarppPro['v'] : 0;
 $d   = urlencode( get_home_url() );
-$url = 'https://yarpp.adkengage.com/AdcenterUI/PublisherUI/PublisherDashboard.aspx?src=' . $src . '&d=' . $d . '&aid=' . $aid . '&st=' . $st . '&plugin=1';
+$url = 'https://yarpp.com/AdcenterUI/PublisherUI/PublisherDashboard.aspx?src=' . $src . '&d=' . $d . '&aid=' . $aid . '&st=' . $st . '&plugin=1';
 
 require YARPP_DIR . '/includes/phtmls/yarpp_pro_options.phtml';

@@ -1484,11 +1484,11 @@ class YARPP {
 
 		// Add CSS class to identify template.
 		if ( isset( $template ) && $template ) {
-						// Normalize "thumbnail" and "thumbnails" to reference the same inbuilt template
+			// Normalize "thumbnail" and "thumbnails" to reference the same inbuilt template
 			if ( $template === 'thumbnail' ) {
 				$template = 'thumbnails';
 			}
-						// Sanitize template name; remove file extension if exists
+			// Sanitize template name; remove file extension if exists
 			if ( strpos( $template, '.php' ) ) {
 				$template_css_class_suffix = preg_replace( '/' . preg_quote( '.php', '/' ) . '$/', '', $template );
 			} else {
@@ -1496,7 +1496,7 @@ class YARPP {
 			}
 			$output .= " yarpp-template-$template_css_class_suffix";
 		} else {
-					// fallback to default template ("list")
+			// fallback to default template ("list")
 			$output .= ' yarpp-template-list';
 		}
 
@@ -1552,7 +1552,7 @@ class YARPP {
 				'<p>' .
 					sprintf(
 						__(
-							"Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
+							"Powered by <a href='%s' title='WordPress Related Posts' target='_blank'>YARPP</a>.",
 							'yarpp'
 						),
 						'https://yarpp.com'

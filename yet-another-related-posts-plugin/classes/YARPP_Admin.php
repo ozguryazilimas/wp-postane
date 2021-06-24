@@ -338,7 +338,7 @@ class YARPP_Admin {
 			echo $this->markdown( $matches[1] );
 		} else {
 			echo(
-			'<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#faq" target="_blank">' .
+			'<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation" target="_blank">' .
 			  __( 'Developing with YARPP', 'yarpp' ) .
 			'</a>'
 			);
@@ -500,19 +500,15 @@ class YARPP_Admin {
 		$replacements = array(
 			// strip each line
 			'!\s*[\r\n] *!'                    => "\n",
-
 			// headers
 			'!^=(.*?)=\s*$!m'                  => '<h3>\1</h3>',
-
 			// bullets
 			'!^(\* .*([\r\n]\* .*)*)$!m'       => "<ul>\n\\1\n</ul>",
 			'!^\* (.*?)$!m'                    => '<li>\1</li>',
 			'!^(\d+\. .*([\r\n]\d+\. .*)*)$!m' => "<ol>\n\\1\n</ol>",
 			'!^\d+\. (.*?)$!m'                 => '<li>\1</li>',
-
 			// code block
 			'!^(\t.*([\r\n]\t.*)*)$!m'         => "<pre>\n\\1\n</pre>",
-
 			// wrap p
 			'!^([^<\t].*[^>])$!m'              => '<p>\1</p>',
 			// bold
