@@ -20,9 +20,9 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms442_TextareaControl') ) {
+	if( !class_exists('Wbcr_FactoryForms446_TextareaControl') ) {
 
-		class Wbcr_FactoryForms442_TextareaControl extends Wbcr_FactoryForms442_Control {
+		class Wbcr_FactoryForms446_TextareaControl extends Wbcr_FactoryForms446_Control {
 
 			public $type = 'textarea';
 

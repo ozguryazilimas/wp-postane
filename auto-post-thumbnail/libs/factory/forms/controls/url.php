@@ -4,7 +4,7 @@
 	 * Url Control
 	 *
 	 * Main options:
-	 * @see FactoryForms442_TextboxControl
+	 * @see FactoryForms446_TextboxControl
 	 *
 	 * @author Alex Kovalev <alex.kovalevv@gmail.com>
 	 * @copyright (c) 2018, Webcraftic Ltd
@@ -18,9 +18,9 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms442_UrlControl') ) {
+	if( !class_exists('Wbcr_FactoryForms446_UrlControl') ) {
 
-		class Wbcr_FactoryForms442_UrlControl extends Wbcr_FactoryForms442_TextboxControl {
+		class Wbcr_FactoryForms446_UrlControl extends Wbcr_FactoryForms446_TextboxControl {
 
 			public $type = 'url';
 

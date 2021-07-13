@@ -14,14 +14,14 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms442_AccordionItemHolder') ) {
+	if( !class_exists('Wbcr_FactoryForms446_AccordionItemHolder') ) {
 
 		/**
 		 * Tab Control Holder
 		 *
 		 * @since 1.0.0
 		 */
-		class Wbcr_FactoryForms442_AccordionItemHolder extends Wbcr_FactoryForms442_Holder {
+		class Wbcr_FactoryForms446_AccordionItemHolder extends Wbcr_FactoryForms446_Holder {
 
 			/**
 			 * A holder type.

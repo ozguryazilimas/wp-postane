@@ -1,4 +1,5 @@
 <?php
+
 namespace WBCR\APT;
 
 use WAPT_Plugin, Exception;
@@ -65,6 +66,7 @@ class GoogleImages implements ImageSearch {
 
 		if ( ! WAPT_Plugin::app()->premium->is_active() && ! WAPT_Plugin::app()->premium->is_activate() ) {
 			if ( $limit['count'] < 1 ) {
+				WAPT_Plugin::app()->logger->warning( __( 'You have reached the limit at the moment. Try again in an 1 hour', 'apt' ) );
 				throw new Exception( sprintf( __( 'You have reached the limit at the moment. Try again in an 1 hour or <a href="%s">Upgrade to Premium</a>', 'apt' ), WAPT_Plugin::app()->get_support()->get_pricing_url( true, 'license_page' ) ) );
 			}
 			$limit['count'] --;
@@ -76,6 +78,7 @@ class GoogleImages implements ImageSearch {
 
 		$response = wp_remote_get( $url, [ 'timeout' => 100 ] );
 		if ( is_wp_error( $response ) ) {
+			WAPT_Plugin::app()->logger->error( 'Google search error: ' . $response->get_error_message() );
 			throw new Exception( 'Error: ' . $response->get_error_message() );
 		}
 

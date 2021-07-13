@@ -2,7 +2,7 @@
 Contributors: creativemotion
 Tags: post thumbnails, featured image, elementor, thumbnails, featured image from title
 Requires at least: 4.8
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPLv2
@@ -112,6 +112,12 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.9.0 =
+* New appearance of the plugin pages.
+* Add: Logging the generation process.
+* Fixed: generation fixes.
+* Other minor fixes
 
 = 3.8.1 =
 * Fixed: Adding images to the post text.

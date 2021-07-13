@@ -3,7 +3,7 @@
 Plugin Name: Auto Featured Image (Auto Post Thumbnail)
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Featured Image from the first image in post or any custom post type only if Featured Image is not set manually. Featured Image Generation From Title. Native image search for Elementor, Gutenberg, Classic Editor.
-Version: 3.8.1
+Version: 3.9.0
 Author: Creative Motion <support@cm-wp.com>
 Author URI: https://cm-wp.com
 Text Domain: apt
@@ -47,7 +47,7 @@ $plugin_info = array(
 		'pages_map' => array(
 			'features' => 'features',
 			'pricing'  => 'pricing',
-			'support'  => '',
+			'support'  => 'support',
 			'docs'     => 'docs',
 		)
 	),
@@ -89,16 +89,18 @@ $plugin_info = array(
 	),
 
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_445', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_442', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_444', 'admin' ),
-		array( 'libs/factory/freemius', 'factory_freemius_133', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_123', 'admin' ),
-		array( 'libs/factory/feedback', 'factory_feedback_109', 'admin' ),
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_449', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_446', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_448', 'admin' ),
+		array( 'libs/factory/templates', 'factory_templates_101', 'admin' ),
+		array( 'libs/factory/freemius', 'factory_freemius_137', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_127', 'admin' ),
+		array( 'libs/factory/feedback', 'factory_feedback_111', 'admin' ),
+		array( 'libs/factory/logger', 'factory_logger_114', 'all' ),
 	)
 );
 
-$wapt_compatibility = new Wbcr_Factory445_Requirements( __FILE__, array_merge( $plugin_info, array(
+$wapt_compatibility = new Wbcr_Factory449_Requirements( __FILE__, array_merge( $plugin_info, array(
 	'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
 	'required_php_version'    => '7.0',
 	'required_wp_version'     => '4.8.0',
@@ -136,7 +138,7 @@ require_once( WAPT_PLUGIN_DIR . '/libs/factory/core/boot.php' );
 
 require_once( WAPT_PLUGIN_DIR . '/includes/class-apt.php' );
 require_once( WAPT_PLUGIN_DIR . '/includes/class-post-images.php' );
-require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-plugin.php' );
+require_once( WAPT_PLUGIN_DIR . '/includes/class-plugin.php' );
 require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-image.php' );
 
 require_once( WAPT_PLUGIN_DIR . '/includes/image-search/boot.php' );

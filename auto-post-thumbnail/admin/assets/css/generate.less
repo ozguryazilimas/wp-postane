@@ -1,0 +1,287 @@
+#wapt-generate-page {
+
+  .wapt-statistic-row {
+    padding: 10px 20px;
+  }
+
+  .wapt-generate-statistic {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .wapt-chart-container {
+    position: relative;
+  }
+
+  .wapt-chart-percent {
+    position: absolute;
+    left: 50px;
+    top: 65px;
+    line-height: 1;
+    text-align: center;
+    font-size: 45px;
+    font-weight: bold;
+    color: #afafaf;
+  }
+
+  #wapt-overview-chart-legend {
+    overflow: hidden;
+
+    .wapt-doughnut-legend {
+      li {
+        display: inline-block;
+        position: relative;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        padding: 3px 8px 2px 31px;
+        font-size: 11px;
+        cursor: default;
+        -webkit-transition: background-color 200ms ease-in-out;
+        -moz-transition: background-color 200ms ease-in-out;
+        -o-transition: background-color 200ms ease-in-out;
+        transition: background-color 200ms ease-in-out;
+      }
+
+      li span {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
+
+    }
+
+    span.wapt-num {
+      display: inline !important;
+      position: inherit !important;
+      font-weight: bold;
+    }
+  }
+
+  .wapt-chart-percent span {
+    font-size: 20px;
+    vertical-align: super;
+  }
+
+  .wapt-global-phrase {
+    width: 180px;
+    padding-top: 20px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .wapt-total-percent {
+    color: #8CC152;
+    font-weight: bold;
+  }
+
+  .wapt-generate-button {
+    min-width: 150px;
+    padding: 12px 30px;
+    background: #c9deb2;
+    color: #586549;
+    border: 0;
+    box-shadow: none;
+    font-size: 14px;
+    text-transform: uppercase !important;
+    font-weight: bold;
+    border-radius: 4px;
+    outline: none;
+
+    &:active {
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+    }
+
+    &:disabled {
+      background: lighten(#c9deb2, 10%);
+      color: lighten(#586549, 30%);
+    }
+
+    &.wapt-running {
+      color: #a57b3c;
+      background: #fdd599 url("../img/Spinner-1s-33px.gif") 10px center no-repeat;
+      padding-left: 50px;
+    }
+  }
+
+  .wapt-unset-button {
+    min-width: 150px;
+    padding: 12px 30px;
+    color: #586549;
+    border: 1px solid #c9deb2;
+    box-shadow: none;
+    font-size: 14px;
+    text-transform: uppercase !important;
+    font-weight: bold;
+    border-radius: 4px;
+    outline: none;
+
+    &:active {
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+    }
+
+    &:disabled {
+      background: lighten(#c9deb2, 10%);
+      color: lighten(#586549, 30%);
+    }
+
+    &.wapt-running {
+      color: #a57b3c;
+      background: #fdd599 url("../img/Spinner-1s-33px.gif") 10px center no-repeat;
+      padding-left: 50px;
+    }
+  }
+
+  .wapt-statistic-message {
+    padding: 10px 0;
+  }
+
+  .wapt-genpostthumbsbar {
+    margin: 10px;
+    border: 0;
+  }
+
+  .wapt-fillters-form {
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .wapt-filter-row {
+      padding: 5px 0;
+    }
+
+    .wapt-statistic-buttons-wrap {
+      padding: 0 20px;
+    }
+  }
+
+  .wapt-generation-progress {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    .wapt-table-container {
+      height: 25em;
+
+      table {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+        width: 100%;
+        table-layout: fixed;
+        box-sizing: border-box;
+        border-spacing: 3px;
+        background: #fff;
+        border-top: 2px dashed #cac9c9;
+      }
+
+      table thead {
+        /* head takes the height it requires,
+        and it's not scaled when table is resized */
+        flex: 0 0 auto;
+        width: calc(100% - 0.9em);
+      }
+
+      table tbody {
+        /* body takes all the remaining available space */
+        flex: 1 1 auto;
+        display: block;
+        overflow-y: scroll;
+      }
+
+      table tbody tr {
+        width: 100%;
+      }
+
+      table th,
+      table td {
+        padding: 16px 10px;
+        text-align: center;
+
+        &.wapt-image-td {
+          width: 150px;
+        }
+
+        &.wapt-title-td {
+          width: 30%;
+          word-break: break-word;
+        }
+      }
+
+      table th {
+        background: #f3f3f3;
+        color: #777777;
+        box-shadow: 0 1px 0 #d8d8d8;
+      }
+
+      table th:nth-child(2n+1) {
+        background: #f9f9f9;
+      }
+
+      table tr.wapt-error {
+        background-color: #ffe9e9 !important;
+      }
+
+      table thead,
+      table tbody tr {
+        display: table;
+        table-layout: fixed;
+      }
+
+      table tbody tr {
+        width: 100%;
+        word-break: break-all;
+
+      }
+
+      .flash {
+        -moz-animation: flash 1s ease-out;
+        -webkit-animation: flash 1s ease-out;
+        -ms-animation: flash 1s ease-out;
+        animation: flash 1s ease-out;
+      }
+
+      @-webkit-keyframes flash {
+        0% {
+          background-color: transparent;
+        }
+        30% {
+          background-color: #fffade;
+        }
+        100% {
+          background-color: transparent;
+        }
+      }
+
+      @-moz-keyframes flash {
+        0% {
+          background-color: transparent;
+        }
+        30% {
+          background-color: #fffade;
+        }
+
+        100% {
+          background-color: transparent;
+        }
+      }
+
+      @-ms-keyframes flash {
+        0% {
+          background-color: transparent;
+        }
+        30% {
+          background-color: #fffade;
+        }
+        100% {
+          background-color: transparent;
+        }
+      }
+
+    }
+  }
+}

@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once WAPT_PLUGIN_DIR . '/admin/class-wapt-page.php';
+require_once WAPT_PLUGIN_DIR . '/admin/class-page.php';
 
 /**
  * The page Settings.
@@ -20,11 +20,20 @@ class WAPT_Generate extends WAPT_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages444_AdminPage
+	 * @see   FactoryPages448_AdminPage
 	 *
 	 * @var string
 	 */
 	public $id;
+
+	/**
+	 * Тип страницы
+	 * options - предназначена для создании страниц с набором опций и настроек.
+	 * page - произвольный контент, любой html код
+	 *
+	 * @var string
+	 */
+	public $type = 'page';
 
 	/**
 	 * Menu icon (only if a page is placed as a main menu).
@@ -45,6 +54,11 @@ class WAPT_Generate extends WAPT_Page {
 	 * @var string
 	 */
 	public $menu_position = 58;
+
+	/**
+	 * @var bool
+	 */
+	public $internal = false;
 
 	/**
 	 * Menu type. Set it to add the page to the specified type menu.
@@ -68,12 +82,6 @@ class WAPT_Generate extends WAPT_Page {
 	public $menu_title;
 
 	/**
-	 * If set, an extra sub menu will be created with another title.
-	 * @var string
-	 */
-	public $menu_sub_title;
-
-	/**
 	 *
 	 * @var
 	 */
@@ -89,18 +97,22 @@ class WAPT_Generate extends WAPT_Page {
 	/**
 	 * @var int
 	 */
-	public $page_menu_position = 20;
+	public $page_menu_position = 100;
 
 
 	/**
 	 * @param WAPT_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
-		$this->id             = $plugin->getPrefix() . "generate";
-		$this->menu_title     = __( 'Auto Featured Image', 'apt' );
-		$this->menu_sub_title = __( 'Generate featured images', 'apt' );
-		$this->menu_icon      = WAPT_PLUGIN_URL . '/admin/assets/img/apt.png';
-		$this->template_name  = "main";
+		$this->id         = $plugin->getPrefix() . "generate";
+		$this->menu_title = __( 'Auto Featured Image', 'apt' );
+
+		$this->menu_sub_title = __( 'Generate images', 'apt' );
+		$this->menu_tab_title = __( 'Generate images', 'apt' );
+		$this->page_title     = __( 'Generate images', 'apt' );
+
+		$this->menu_icon     = WAPT_PLUGIN_URL . '/admin/assets/img/apt.png';
+		$this->template_name = "generate";
 
 		parent::__construct( $plugin );
 
@@ -112,16 +124,48 @@ class WAPT_Generate extends WAPT_Page {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see   FactoryPages444_AdminPage
+	 * @see   FactoryPages448_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
 
-		wp_enqueue_style( 'jquery-ui-genpostthumbs', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery-ui.min.css', [], '1.7.2' );
-		wp_enqueue_script( 'jquery-progress', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery-ui.progressbar.min.js', [], false, true );
+		wp_enqueue_style( 'jquery-ui-genpostthumbs', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery-ui.min.css', [ 'jquery' ], WAPT_PLUGIN_VERSION );
+		wp_enqueue_style( 'wapt-generate', WAPT_PLUGIN_URL . '/admin/assets/css/generate.css', [], WAPT_PLUGIN_VERSION );
+		wp_enqueue_script( 'jquery-progress', WAPT_PLUGIN_URL . '/admin/assets/jquery-ui/jquery-ui.progressbar.min.js', [ 'jquery' ], WAPT_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'wapt-chart', WAPT_PLUGIN_URL . '/admin/assets/js/Chart.min.js', [ 'jquery' ], WAPT_PLUGIN_VERSION, true );
+		wp_enqueue_script( 'wapt-generate', WAPT_PLUGIN_URL . '/admin/assets/js/generate.js', [ 'jquery' ], WAPT_PLUGIN_VERSION, true );
+		wp_localize_script( 'wapt-generate', 'wapt', [
+			'is_premium'            => $this->plugin->is_premium(),
+			'nonce_get_posts'       => wp_create_nonce( 'get-posts' ),
+			'nonce_gen_post_thumbs' => wp_create_nonce( 'generate-post-thumbnails' ),
+			'nonce_del_post_thumbs' => wp_create_nonce( 'delete-post-thumbnails' ),
+			'i8n_processed_posts'   => esc_html__( 'All done! Processed posts: ', 'apt' ),
+			'i8n_set_images'        => esc_html__( 'Set featured image in posts: ', 'apt' ),
+			'i8n_del_images'        => esc_html__( 'Unset featured image in posts: ', 'apt' ),
+			'i8n_delete_images'     => esc_html__( 'Delete featured image in posts: ', 'apt' ),
+		] );
 
+	}
 
+	/**
+	 * Show rendered template - $template_name
+	 */
+	public function showPageContent() {
+		$no_featured = $this->plugin->apt->get_posts_count();
+		$w_featured  = $this->plugin->apt->get_posts_count( true );
+		$percent     = ceil( $w_featured / ( $no_featured + $w_featured ) * 100 );
+
+		$data = [
+			'stats' => [
+				'no_featured_image'      => $no_featured,
+				'w_featured_image'       => $w_featured,
+				'featured_image_percent' => $percent,
+				'error'                  => 0,
+			],
+			'log'   => $this->plugin->getPopulateOption( 'generation_log', [] ),
+		];
+		echo $this->render( $this->template_name, $data );
 	}
 
 }

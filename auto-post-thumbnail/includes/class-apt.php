@@ -18,6 +18,11 @@ class AutoPostThumbnails {
 	public static $instance;
 
 	/**
+	 * @var \WAPT_Plugin
+	 */
+	private $plugin;
+
+	/**
 	 * После какой по счёту колонки вставлять новую (если 0, то в самом начале)
 	 *
 	 * @var integer
@@ -43,11 +48,14 @@ class AutoPostThumbnails {
 	 */
 	public $is_in_medialibrary = false;
 
+	public $allowed_generate_post_types;
+
 	/**
 	 * AutoPostThumbnails constructor.
 	 */
 	public function __construct() {
 		$this->numberOfColumn = 4;
+		$this->plugin         = \WAPT_Plugin::app();
 
 		$this->sources = [
 			'google'    => WAPT_PLUGIN_SLUG,
@@ -92,9 +100,11 @@ class AutoPostThumbnails {
 	 * Initiate all required hooks.
 	 */
 	private function init() {
-		$is_auto_generate   = \WAPT_Plugin::app()->getOption( 'auto_generation' );
-		$is_auto_upload     = \WAPT_Plugin::app()->getOption( 'auto_upload_images' );
-		$allowed_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'import_post_types', 'posts' ) );
+		$is_auto_generate          = \WAPT_Plugin::app()->getOption( 'auto_generation', true );
+		$is_auto_upload            = \WAPT_Plugin::app()->getOption( 'auto_upload_images' );
+		$allowed_import_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'import_post_types', 'post' ) );
+
+		$this->allowed_generate_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'auto_post_types', 'post,page' ) );
 
 		add_filter( 'mime_types', [ $this, 'allow_upload_webp' ] );
 
@@ -102,17 +112,19 @@ class AutoPostThumbnails {
 			add_filter( 'wp_insert_post_data', [ $this, 'auto_upload' ], 10, 2 );
 
 			// This hook handle update post via rest api. for example Wordpress mobile apps
-			foreach ( $allowed_post_types as $post_type ) {
-				add_action( "rest_after_insert_{$post_type}", [ $this, 'auto_upload' ], 10, 1 );
+			foreach ( $allowed_import_post_types as $post_type ) {
+				add_action( "rest_after_insert_{$post_type}", [ $this, 'auto_upload' ], 10, 2 );
 			}
 		}
 
 		if ( $is_auto_generate ) {
 			//add_action( 'publish_post', [ $this, 'publish_post' ], 10, 1 );
 			add_action( 'save_post', [ $this, 'publish_post' ], 10, 3 );
+
 			// This hook handle update post via rest api. for example Wordpress mobile apps
-			add_action( 'rest_after_insert_post', [ $this, 'rest_after_insert' ], 10, 3 );
-			add_action( 'rest_after_insert_page', [ $this, 'rest_after_insert' ], 10, 3 );
+			foreach ( $this->allowed_generate_post_types as $post_type ) {
+				add_action( "rest_after_insert_{$post_type}", [ $this, 'rest_after_insert' ], 10, 3 );
+			}
 			// This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
 			add_action( 'transition_post_status', [ $this, 'check_required_transition' ], 10, 3 );
 		} else {
@@ -161,6 +173,9 @@ class AutoPostThumbnails {
 		check_ajax_referer( 'get-posts' );
 
 		$generate = \WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
+
+		$this->plugin->logger->info( "START generate in mode:  {$generate}" );
+
 		switch ( $generate ) {
 			case 'generate':
 			case 'both':
@@ -179,7 +194,7 @@ class AutoPostThumbnails {
 			$status     = $_POST['poststatus'];
 			$category   = $_POST['category'];
 			$date_start = $_POST['date_start'] ? \DateTime::createFromFormat( 'd.m.Y', $_POST['date_start'] )->format( 'd.m.Y' ) : 0;
-			$date_end   = $_POST['date_end'] ? \DateTime::createFromFormat( 'd.m.Y', $_POST['date_end'] )->format( 'd.m.Y' ) : 0;
+			$date_end   = $_POST['date_end'] ? \DateTime::createFromFormat( 'd.m.Y', $_POST['date_end'] )->setTime( 23, 59 )->format( 'd.m.Y H:i' ) : 0;
 			// Get id's of the posts that satisfy the filters
 			$query = $this->get_posts_query( $has_thumb, $type, $status, $category, $date_start, $date_end );
 		} else {
@@ -191,8 +206,9 @@ class AutoPostThumbnails {
 			// Generate the list of IDs
 			$ids = [];
 			foreach ( $query->posts as $post ) {
+				$ids[] = $post->ID;
 				//если запрошены посты без тамбнеила, значит пользователь хочет сгенерировать их
-				if ( ! $has_thumb ) {
+				/*if ( ! $has_thumb ) {
 					$images = new \WBCR\APT\PostImages( $post->ID );
 					if ( ( $images->is_images() && $images->count_images() ) || $auto_generate ) {
 						$ids[] = $post->ID;
@@ -200,13 +216,17 @@ class AutoPostThumbnails {
 				} else //иначе он хочет удалить тамбнэйлы
 				{
 					$ids[] = $post->ID;
-				}
+				}*/
 			}
 			$ids = implode( ',', $ids );
-			echo $ids;
+
 		} else {
-			echo "0";
+			$ids = "0";
 		}
+		echo $ids;
+
+		$this->plugin->logger->info( "Queried posts IDs:  {$ids}" );
+
 		die( - 1 );
 	}
 
@@ -222,19 +242,25 @@ class AutoPostThumbnails {
 		check_ajax_referer( 'generate-post-thumbnails' );
 		if ( isset( $_POST['id'] ) && ! empty( $_POST['id'] ) ) {
 			$id = intval( $_POST['id'] );
-
 			if ( empty( $id ) ) {
-				die( '-1' );
+				die( '-2' );
 			}
-
 			set_time_limit( 60 );
 
-			// Pass on the id to our 'publish' callback function.
-			echo (int) $this->publish_post( $id );
+			$this->plugin->logger->info( "--Start processing post ID = {$id}" );
+			$result = $this->publish_post( $id );
+			$this->plugin->logger->info( "--End processing post ID = {$id}" );
 
-			die( - 1 );
+			$thumb_id = $result->thumbnail_id;
+
+			if ( $thumb_id ) {
+				wp_send_json_success( $result->getData( true ) );
+			} else {
+				wp_send_json_error( $result->getData( true ) );
+			}
 		}
-		die( - 1 );
+
+		die( '-3' );
 	}
 
 	/**
@@ -309,7 +335,18 @@ class AutoPostThumbnails {
 	 *
 	 * @return WP_Query
 	 */
-	public function get_posts_query( $has_thumb = false, $type = 'post', $status = 'publish', $category = 0, $date_start = 0, $date_end = 0 ) {
+	public function get_posts_query( $has_thumb = false, $type = 'post', $status = 'publish', $category = 0, $date_start = 0, $date_end = 0, $is_log = true ) {
+
+		if ( $is_log ) {
+			$this->plugin->logger->info( "Posts query: " . var_export( [
+					'has_thumb'  => $has_thumb,
+					'type'       => $type,
+					'status'     => $status,
+					'category'   => $category,
+					'date_start' => $date_start,
+					'date_end'   => $date_end,
+				], true ) );
+		}
 
 		$q_status    = $status ? $status : 'any';
 		$q_type      = $type ? $type : 'any';
@@ -328,18 +365,25 @@ class AutoPostThumbnails {
 		if ( $category ) {
 			$args['cat'] = $category;
 		}
-		if ( $date_start && $date_start ) {
+		if ( $date_start && $date_end ) {
 			$args['date_query'][] = array( 'after' => $date_start, 'before' => $date_end, 'inclusive' => true, );
 		}
 		$query = new WP_Query( $args );
 
-//		$query = "SELECT * FROM {$wpdb->posts} p WHERE {$q_status_type}
-//        {$q_date} AND (
-//        p.ID NOT IN (
-//		SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_thumbnail_id', 'skip_post_thumb')
-//		) OR {$q_without_thumb} EXISTS (SELECT p2.ID FROM {$wpdb->posts} p2 WHERE p2.ID = (SELECT meta_value FROM {$wpdb->postmeta} WHERE meta_key = '_thumbnail_id' AND post_id = p.ID) AND p2.post_type = 'attachment'))";
+		//$this->plugin->logger->debug( "Posts SQL: " . $query->request );
 
 		return $query;
+	}
+
+	/**
+	 * Return sql query, which allows to receive all the posts without thumbnails
+	 *
+	 * @return int
+	 */
+	public function get_posts_count( $has_thumb = false, $type = 'post', $status = 'publish', $category = 0, $date_start = 0, $date_end = 0 ) {
+		$query = $this->get_posts_query( $has_thumb, $type, $status, $category, $date_start, $date_end, false );
+
+		return $query->found_posts;
 	}
 
 	/**
@@ -400,30 +444,44 @@ class AutoPostThumbnails {
 	 * @param \WP_Post $post
 	 * @param bool $update
 	 *
-	 * @return int
+	 * @return GenerateResult
 	 * @throws Exception
 	 */
 	public function publish_post( $post_id, $post = null, $update = true ) {
 		global $wpdb;
 
+		$autoimage  = \WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
+		$generation = new GenerateResult( $post_id, $autoimage );
+
 		if ( ! $post ) {
 			$post = get_post( $post_id );
 			if ( ! $post ) {
-				return 0;
+				$this->plugin->logger->warning( "The post was not found (post ID = {$post_id})" );
+
+				return $generation->result( __( "The post was not found", 'apt' ) );
 			}
 		}
 
 		if ( ! $update ) {
-			return 0;
+			return $generation->result();
+
 		}
+
+		if ( ! in_array( $post->post_type, $this->allowed_generate_post_types ) ) {
+			$this->plugin->logger->warning( "The post type ({$post->post_type}) is not allowed for generation in settings" );
+
+			return $generation->result( __( "The post type is not allowed for generation in settings", 'apt' ) );
+		}
+
 		// First check whether Post Thumbnail is already set for this post.
 		$_thumbnail_id = get_post_meta( $post_id, '_thumbnail_id', true );
 		if ( $_thumbnail_id && $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE id = '" . esc_sql( $_thumbnail_id ) . "' AND post_type = 'attachment'" ) || get_post_meta( $post_id, 'skip_post_thumb', true ) ) {
-			return 0;
+			$this->plugin->logger->warning( "The post ({$post_id}) has already been assigned a featured image" );
+
+			return $generation->result( __( "The post has already been assigned a featured image", 'apt' ) );
 		}
 
-		$thumb_id  = 0;
-		$autoimage = \WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
+		$thumb_id = 0;
 
 		$images = new \WBCR\APT\PostImages( $post_id );
 		if ( ( $images->is_images() && $images->count_images() ) && $autoimage !== 'generate' && $autoimage !== 'google' ) {
@@ -432,7 +490,10 @@ class AutoPostThumbnails {
 				$thumb_id = $this->get_thumbnail_id( $image );
 				// If we succeed in generating thumb, let's update post meta
 				if ( $thumb_id ) {
+					$this->plugin->logger->info( "An attachment ({$thumb_id}) was found in the text of the post." );
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
+					$this->plugin->logger->info( "Featured image ($thumb_id) is set for post ($post_id)" );
+
 				} else {
 					if ( \WAPT_Plugin::app()->is_premium() ) {
 						$thumb_id = apply_filters( 'wapt/generate_post_thumb', $image, $post_id );
@@ -443,7 +504,8 @@ class AutoPostThumbnails {
 					}
 				}
 
-				return $thumb_id;
+				return $generation->result( '', $thumb_id );
+
 			}
 		} else {
 			// создаём свою картинку с заголовком на цветном фоне
@@ -453,22 +515,25 @@ class AutoPostThumbnails {
 				if ( $thumb_id ) {
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
 
-					return $thumb_id;
+					return $generation->result( '', $thumb_id );
 				}
 			} else if ( $autoimage == 'google' || $autoimage == 'find_google' ) {
 				$response = ( new GoogleImages() )->search( $post->post_title, 1 );
 				if ( ! empty( $response->images ) ) {
+					$this->plugin->logger->info( "Google image search results = " . var_export( $response->images, true ) );
 					$thumb_id = apply_filters( 'wapt/download_from_google', 0, $response->images, $post_id );
 				}
 				if ( $thumb_id ) {
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
+					$this->plugin->logger->info( "Successful download from google. Attachment ID = {$thumb_id}" );
 
-					return $thumb_id;
+					return $generation->result( '', $thumb_id );
 				}
+				$this->plugin->logger->error( "Error download from google. " . var_export( $thumb_id, true ) );
 			}
 		}
 
-		return $thumb_id;
+		return $generation->result( __( "No images found or generated", 'apt' ) );
 	}
 
 	/**
@@ -477,10 +542,15 @@ class AutoPostThumbnails {
 	 * @param \WP_Post|array $post
 	 * @param array $postarr
 	 */
-	public function auto_upload( $data, $postarr ) {
+	public function auto_upload( $data, $postarr = [] ) {
 		$allowed_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'import_post_types', '' ) );
 
-		if ( isset( $data['post_type'] ) && in_array( $data['post_type'], $allowed_post_types ) ) {
+		if ( $data instanceof \WP_Post ) {
+			$post_type = $data->post_type ?? '';
+		} else {
+			$post_type = $data['post_type'] ?? '';
+		}
+		if ( $post_type && in_array( $post_type, $allowed_post_types ) ) {
 			$data = apply_filters( 'wapt/upload_and_replace_post_images', $data );
 		}
 
@@ -547,7 +617,10 @@ class AutoPostThumbnails {
 	 */
 	public function generate_post_thumb( $image, $title, $post_id ) {
 		// Get the URL now for further processing
-		$imageUrl   = $image;
+		$imageUrl = $image;
+		if ( $imageUrl === wp_make_link_relative( $imageUrl ) ) {
+			$imageUrl = home_url( $imageUrl );
+		}
 		$imageTitle = $title;
 
 		// Get the file name
@@ -1189,6 +1262,8 @@ class AutoPostThumbnails {
 	 * @return integer $thumb_id
 	 */
 	public function generate_and_attachment( $post_id ) {
+		$this->plugin->logger->info( "Start generate attachment for post ID = {$post_id}" );
+
 		$format = \WAPT_Plugin::app()->getOption( "image-type", "jpg" );
 		switch ( $format ) {
 			case 'png':
@@ -1204,23 +1279,33 @@ class AutoPostThumbnails {
 		}
 		$post    = get_post( $post_id, 'OBJECT' );
 		$uploads = wp_upload_dir( current_time( 'mysql' ) );
+		$title   = apply_filters( 'wapt/generate/title', $post->post_title, $post_id );
 
 		// Generate unique file name
-		$slug      = wp_unique_post_slug( sanitize_title( $post->post_title ), $post->ID, $post->post_status, $post->post_type, $post->post_parent );
+		$slug      = wp_unique_post_slug( sanitize_title( $title ), $post->ID, $post->post_status, $post->post_type, $post->post_parent );
 		$filename  = wp_unique_filename( $uploads['path'], "{$slug}_{$post_id}.{$extension}" );
 		$file_path = "{$uploads['path']}/{$filename}";
 
+		$this->plugin->logger->info( "Generated file path = {$file_path}" );
+
 		// Move the file to the uploads dir
-		$image = apply_filters( 'wapt/generate/image', $this->generate_image_with_text( $post->post_title, $uploads['path'] . "/$filename", $extension ), $post->post_title, $uploads['path'] . "/$filename", $extension );
+		$image = apply_filters( 'wapt/generate/image', false, $title, $uploads['path'] . "/$filename", $extension );
+		if ( ! $image ) {
+			$image = apply_filters( 'wapt/generate/image', $this->generate_image_with_text( $title, $uploads['path'] . "/$filename", $extension ), $title, $uploads['path'] . "/$filename", $extension );
+		}
 
 		$thumb_id = self::insert_attachment( $post, $file_path, $mime_type );
 
 		if ( ! is_wp_error( $thumb_id ) ) {
+			$this->plugin->logger->info( "Successful generate attachment ID = {$thumb_id}" );
+			$this->plugin->logger->info( "End generate attachment for post ID = {$post_id}" );
+
 			return $thumb_id;
+		} else {
+			$this->plugin->logger->error( "Error generate attachment: " . var_export( $thumb_id, true ) );
 		}
 
 		return 0;
-
 	}
 
 	/**

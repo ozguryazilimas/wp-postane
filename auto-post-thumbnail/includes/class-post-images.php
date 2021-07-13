@@ -13,6 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class PostImages {
 
 	/**
+	 * @var \WAPT_Plugin
+	 */
+	private $plugin;
+
+	/**
 	 * @var WP_Post
 	 */
 	public $post;
@@ -28,6 +33,8 @@ class PostImages {
 	 * @param WP_Post|int|string $post Post object or post ID or post content
 	 */
 	public function __construct( $post = null ) {
+		$this->plugin = \WAPT_Plugin::app();
+
 		if ( is_numeric( $post ) ) {
 			$post       = get_post( $post, 'OBJECT' );
 			$this->post = $post;
@@ -58,6 +65,8 @@ class PostImages {
 		preg_match_all( '/<\s*img .*?src\s*=\s*[\"\']?([^\"\'> ]*).*?>/i', $post_content, $matches );
 
 		if ( count( $matches ) ) {
+			//$this->plugin->logger->debug( "Found from regex: " . var_export( $matches[0], true ) );
+
 			foreach ( $matches[0] as $key => $image ) {
 				$title = '';
 				preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\"\']?([^\"\'> ]*)/i', $image, $matchesTitle );
@@ -75,6 +84,7 @@ class PostImages {
 		}
 
 		$this->images = $images;
+		$this->plugin->logger->debug( "Found images: " . var_export( $images, true ) );
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 
-use WBCR\Factory_Adverts_123\Base;
+use WBCR\Factory_Adverts_127\Base;
 
 /**
  * Factory Adverts
@@ -12,7 +12,7 @@ use WBCR\Factory_Adverts_123\Base;
  * @package       factory-ad-inserter
  * @copyright (c) 2019, Webcraftic Ltd
  *
- * @version       1.2.3
+ * @version       1.2.4
  */
 
 // Exit if accessed directly
@@ -20,31 +20,31 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
-if( defined('FACTORY_ADVERTS_123_LOADED') || (defined('FACTORY_ADVERTS_BLOCK') && FACTORY_ADVERTS_BLOCK) ) {
+if( defined('FACTORY_ADVERTS_127_LOADED') || (defined('FACTORY_ADVERTS_BLOCK') && FACTORY_ADVERTS_BLOCK) ) {
 	return;
 }
 
 # Устанавливаем константу, что модуль уже загружен
-define('FACTORY_ADVERTS_123_LOADED', true);
+define('FACTORY_ADVERTS_127_LOADED', true);
 
 # Устанавливаем версию модуля
-define('FACTORY_ADVERTS_123_VERSION', '1.2.3');
+define('FACTORY_ADVERTS_127_VERSION', '1.2.7');
 
 # Регистрируем тектовый домен, для интернализации интерфейса модуля
-load_plugin_textdomain('wbcr_factory_adverts_123', false, dirname(plugin_basename(__FILE__)) . '/langs');
+load_plugin_textdomain('wbcr_factory_adverts_127', false, dirname(plugin_basename(__FILE__)) . '/langs');
 
 # Устанавливаем директорию модуля
-define('FACTORY_ADVERTS_123_DIR', dirname(__FILE__));
+define('FACTORY_ADVERTS_127_DIR', dirname(__FILE__));
 
 # Устанавливаем url модуля
-define('FACTORY_ADVERTS_123_URL', plugins_url(null, __FILE__));
+define('FACTORY_ADVERTS_127_URL', plugins_url(null, __FILE__));
 
-require_once(FACTORY_ADVERTS_123_DIR . '/includes/class-rest-request.php');
-require_once(FACTORY_ADVERTS_123_DIR . '/includes/class-base.php');
+require_once(FACTORY_ADVERTS_127_DIR . '/includes/class-rest-request.php');
+require_once(FACTORY_ADVERTS_127_DIR . '/includes/class-base.php');
 
 /**
- * @param Wbcr_Factory445_Plugin $plugin
+ * @param Wbcr_Factory449_Plugin $plugin
  */
-add_action('wbcr_factory_adverts_123_plugin_created', function ($plugin) {
-	$plugin->set_adverts_manager("WBCR\Factory_Adverts_123\Base");
+add_action('wbcr_factory_adverts_127_plugin_created', function ($plugin) {
+	$plugin->set_adverts_manager("WBCR\Factory_Adverts_127\Base");
 });

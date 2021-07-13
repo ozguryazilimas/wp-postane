@@ -1,8 +1,8 @@
 <?php
 
 // Exit if accessed directly
-use WBCR\Factory_445\Premium\Interfaces\License;
-use WBCR\Factory_445\Premium\Provider;
+use WBCR\Factory_449\Premium\Interfaces\License;
+use WBCR\Factory_449\Premium\Provider;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,6 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 2.0.7
  */
 class WAPT_License extends WAPT_Page {
+
+	/**
+	 * @var int
+	 */
+	public $page_menu_position = 900;
+
+	/**
+	 * @var bool
+	 */
+	public $internal = false;
 
 	/**
 	 * {@inheritdoc}
@@ -28,17 +38,12 @@ class WAPT_License extends WAPT_Page {
 	/**
 	 * {@inheritdoc}
 	 */
-	public $show_right_sidebar_in_options = false;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public $page_menu_position = 0;
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public $available_for_multisite = true;
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public $show_menu_tab = false;
 
 	/**
 	 * @var string Name of the paid plan.
@@ -87,10 +92,8 @@ class WAPT_License extends WAPT_Page {
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 
-		parent::__construct( $plugin );
-
 		$this->id            = 'license';
-		$this->menu_title    = __( 'License', 'insert-php' );
+		$this->menu_title    = '<span style="color:#f18500">' . __( 'License', 'apt' ) . '</span>';
 		$this->page_title    = __( 'License of APT', 'apt' );
 		$this->template_name = "license";
 		$this->menu_target   = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
@@ -101,6 +104,8 @@ class WAPT_License extends WAPT_Page {
 		$this->is_premium_active        = $this->premium->is_active();
 		$this->premium_has_subscription = $this->premium->has_paid_subscription();
 		$this->premium_license          = $this->premium->get_license();
+
+		parent::__construct( $plugin );
 	}
 
 	/**

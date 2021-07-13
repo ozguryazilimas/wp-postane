@@ -22,7 +22,7 @@
 .onp-page-wrap {
     max-width: 720px;
     margin: auto;
-    margin-top: 40px;
+    padding-top: 40px;
     font-size: 14px;
     line-height: 170%;
 }
@@ -340,7 +340,8 @@
 }
 
 #license-manager .license-key-wrap {
-    padding-right: 110px;
+    /*padding-right: 110px;*/
+    display: flex;
 }
 
 #license-key {

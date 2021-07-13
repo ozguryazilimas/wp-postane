@@ -1,9 +1,9 @@
 <?php
 
-namespace WBCR\Factory_445\Updates;
+namespace WBCR\Factory_449\Updates;
 
 // Exit if accessed directly
-use Wbcr_Factory445_Plugin;
+use Wbcr_Factory449_Plugin;
 
 if( !defined('ABSPATH') ) {
 	exit;
@@ -57,11 +57,11 @@ class Github_Repository extends Repository {
 	/**
 	 * Wordpress constructor.
 	 *
-	 * @param Wbcr_Factory445_Plugin $plugin
+	 * @param Wbcr_Factory449_Plugin $plugin
 	 * @param bool $is_premium
 	 * @since 4.4.1
 	 */
-	public function __construct(Wbcr_Factory445_Plugin $plugin, array $settings = [])
+	public function __construct(Wbcr_Factory449_Plugin $plugin, array $settings = [])
 	{
 		$settings = wp_parse_args($settings, [
 			'github_username' => '',
@@ -220,7 +220,7 @@ class Github_Repository extends Repository {
 		$response = wp_remote_get($request_uri);
 
 		if( is_wp_error($response) ) {
-			throw new \Exception($response->get_error_message(), $response->get_error_code());
+			throw new \Exception($response->get_error_message());
 		}
 
 		$data = @json_decode(wp_remote_retrieve_body($response), true); // Get JSON and parse it

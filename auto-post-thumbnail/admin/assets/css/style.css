@@ -1,3 +1,15 @@
+.wapt-logo-title
+{
+    display: inline-block;
+    background: transparent url('../img/logo.jpg') no-repeat center center;
+    background-size: contain;
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
 .apt_pro_advertisement
 {
     float: right;
@@ -218,11 +230,6 @@ input {
 /*Filters block*/
 .apt-filter-row
 {
-    background: #ffffff;
-    padding: 20px 10px 20px 10px;
-    margin: 10px 0px 10px 0px !important;
-    border: 1px solid #0085ba;
-    border-radius: 10px;
 }
 
 .apt-filter-input

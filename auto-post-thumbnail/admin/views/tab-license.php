@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div class="factory-bootstrap-445 factory-fontawesome-000">
+    <div class="factory-bootstrap-449 factory-fontawesome-000">
 		<?php wp_nonce_field( 'license' ); ?>
         <div id="wapt-license-wrapper"
              data-loader="<?php echo WAPT_PLUGIN_URL . '/admin/assets/img/loader.gif'; ?>"
@@ -115,19 +115,19 @@
                     <div class="license-input">
                         <form action="" method="post">
 							<?php if ( $this->is_premium ): ?>
-                        <p><?php _e( 'Have a key to activate the premium version? Paste it here:', 'apt' ) ?><p>
-						<?php else: ?>
+                                <p><?php _e( 'Have a key to activate the premium version? Paste it here:', 'apt' ) ?><p>
+						    <?php else: ?>
                             <p><?php _e( 'Have a key to activate the plugin? Paste it here:', 'apt' ) ?>
                             <p>
 								<?php endif; ?>
-                                <button data-action="activate" class="btn btn-default wapt-control-btn"
-                                        type="button"
-                                        id="license-submit">
-									<?php _e( 'Submit Key', 'apt' ) ?>
-                                </button>
                             <div class="license-key-wrap">
                                 <input type="text" id="license-key" name="licensekey" value=""
                                        class="form-control"/>
+                                <button data-action="activate" class="btn btn-default wapt-control-btn"
+                                        type="button"
+                                        id="license-submit">
+			                        <?php _e( 'Submit Key', 'apt' ) ?>
+                                </button>
                             </div>
 							<?php if ( $this->is_premium ): ?>
                                 <p style="margin-top: 10px;">

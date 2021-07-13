@@ -14,13 +14,13 @@
 	if( !defined('ABSPATH') ) {
 		exit;
 	}
-	if( !class_exists('Wbcr_IFactoryForms442_ValueProvider') ) {
+	if( !class_exists('Wbcr_IFactoryForms446_ValueProvider') ) {
 		/**
 		 * The interface for all value provides.
 		 *
 		 * @since 1.0.0
 		 */
-		interface Wbcr_IFactoryForms442_ValueProvider {
+		interface Wbcr_IFactoryForms446_ValueProvider {
 
 			/**
 			 * Inits a form a provider to get data from a storage.

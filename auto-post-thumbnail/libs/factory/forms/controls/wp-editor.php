@@ -22,9 +22,9 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms442_WpEditorControl') ) {
+	if( !class_exists('Wbcr_FactoryForms446_WpEditorControl') ) {
 
-		class Wbcr_FactoryForms442_WpEditorControl extends Wbcr_FactoryForms442_Control {
+		class Wbcr_FactoryForms446_WpEditorControl extends Wbcr_FactoryForms446_Control {
 
 			public $type = 'wp-editor';
 
@@ -42,7 +42,7 @@
 				}
 
 				if( !isset($this->options['tinymce']['content_css']) ) {
-					$this->options['tinymce']['content_css'] = FACTORY_FORMS_442_URL . '/assets/css/editor.css';
+					$this->options['tinymce']['content_css'] = FACTORY_FORMS_446_URL . '/assets/css/editor.css';
 				}
 			}
 
@@ -64,7 +64,9 @@
 						'textarea_name' => $name_on_form,
 						'wpautop' => false,
 						'teeny' => true,
-						'tinymce' => $this->getOption('tinymce', array())
+						'tinymce' => $this->getOption('tinymce', array()),
+						'editor_height' => 213, // In pixels, takes precedence and has no default value
+						'textarea_rows' => 10,  // Has no visible effect if editor_height is set, default is 20
 					)); ?>
 				</div>
 			<?php

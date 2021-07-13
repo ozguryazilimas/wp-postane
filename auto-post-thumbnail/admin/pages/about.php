@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once WAPT_PLUGIN_DIR . '/admin/class-wapt-page.php';
+require_once WAPT_PLUGIN_DIR . '/admin/class-page.php';
 
 /**
  * The page Settings.
@@ -24,6 +24,16 @@ class WAPT_About extends WAPT_Page {
 	public $type = 'page';
 
 	/**
+	 * @var int
+	 */
+	public $page_menu_position = 1000;
+
+	/**
+	 * @var bool
+	 */
+	public $internal = false;
+
+	/**
 	 * Menu icon (only if a page is placed as a main menu).
 	 * For example: '~/assets/img/menu-icon.png'
 	 * For example dashicons: '\f321'
@@ -34,7 +44,12 @@ class WAPT_About extends WAPT_Page {
 	/**
 	 * @var string
 	 */
-	public $page_menu_dashicon;
+	public $page_menu_dashicon = "dashicons-info-outline";
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public $show_menu_tab = false;
 
 	/**
 	 * @param WAPT_Plugin $plugin
