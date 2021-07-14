@@ -37,7 +37,6 @@ class YARPP_Admin {
 		add_action( 'save_post', array( $this, 'yarpp_save_meta_box' ) );
 
 		add_filter( 'current_screen', array( $this, 'settings_screen' ) );
-		add_filter( 'screen_settings', array( $this, 'render_screen_settings' ), 10, 2 );
 		add_filter( 'default_hidden_meta_boxes', array( $this, 'default_hidden_meta_boxes' ), 10, 2 );
 		add_filter( 'shareaholic_deactivate_feedback_form_plugins', array( $this, 'deactivation_survey_data' ) );
 	}
@@ -63,12 +62,12 @@ class YARPP_Admin {
 	function ajax_register() {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			add_action( 'wp_ajax_yarpp_display_exclude_terms', array( $this, 'ajax_display_exclude_terms' ) );
-			add_action( 'wp_ajax_yarpp_display_demo', array( $this, 'ajax_display_demo' ) );
+			add_action( 'wp_ajax_yarpp_display_demo', array( $this, 'ajax_display_demo' ) );  // deprecated action and function
+			add_action( 'wp_ajax_yarpp_display_preview', array( $this, 'ajax_display_preview' ) );
 			add_action( 'wp_ajax_yarpp_display', array( $this, 'ajax_display' ) );
 			add_action( 'wp_ajax_yarpp_optin_data', array( $this, 'ajax_optin_data' ) );
 			add_action( 'wp_ajax_yarpp_optin_enable', array( $this, 'ajax_optin_enable' ) );
 			add_action( 'wp_ajax_yarpp_optin_disable', array( $this, 'ajax_optin_disable' ) );
-			add_action( 'wp_ajax_yarpp_set_display_code', array( $this, 'ajax_set_display_code' ) );
 			add_action( 'wp_ajax_yarpp_switch', array( $this, 'ajax_switch' ) );
 			add_action( 'wp_ajax_yarpp_clear_cache', array( $this, 'ajax_clear_cache' ) );
 		}
@@ -523,18 +522,12 @@ class YARPP_Admin {
 		return $text;
 	}
 
+	/**
+	 * @deprecated since 5.26.0
+	 */
 	public function render_screen_settings( $output, $current_screen ) {
-		if ( $current_screen->id != 'settings_page_yarpp' ) {
-			return $output;
-		}
-
-		$output .= "<div id='yarpp_extra_screen_settings'><label for='yarpp_display_code'><input type='checkbox' name='yarpp_display_code' id='yarpp_display_code'";
-		$output .= checked( $this->core->get_option( 'display_code' ), true, false );
-		$output .= ' />';
-		$output .= __( 'Show example code output', 'yarpp' );
-		$output .= '</label></div>';
-
-		return $output;
+		_deprecated_function( 'YARPP_Admin::render_screen_settings', '5.26.0');
+		return '';
 	}
 
 	// since 3.3
@@ -565,8 +558,12 @@ class YARPP_Admin {
 				'forbidden'     => __( 'You are not allowed to do this!', 'yarpp' ),
 				'nonce_fail'    => __( 'You left this page open for too long. Please refresh the page and try again!', 'yarpp' ),
 				'error'         => __( 'There is some error. Please refresh the page and try again!', 'yarpp' ),
+				'show_code'     => __( 'Show Code', 'yarpp' ),
+				'hide_code'     => __( 'Hide Code', 'yarpp' )
 			);
 			wp_localize_script( 'yarpp_options', 'yarpp_messages', $translation_strings );
+
+			wp_enqueue_code_editor(array('type' => 'text/html'));
 		}
 
 		$metabox_post_types = $this->core->get_option( 'auto_display_post_types' );
@@ -764,20 +761,110 @@ class YARPP_Admin {
 		die();
 	}
 
+	/**
+	 * @deprecated since 5.26.0 use YARPP_Admin::ajax_display_preview() instead
+	 * @see YARPP_Admin::ajax_display_preview()
+	 */
 	public function ajax_display_demo() {
-		check_ajax_referer( 'yarpp_display_demo' );
+		_deprecated_function( 'YARPP_Admin::ajax_display_demo', '5.26.0', 'YARPP_Admin::ajax_display_preview' );
+		return $this->ajax_display_preview();
+	}
+
+	/**
+	 * Generates a Demo Preview for YARPP core templates.
+	 *
+	 * AJAX Post Call
+	 * Accepted Post parameters:
+	 *
+	 * @global int    $_POST['limit'].              Limit of Posts for display.
+	 * @global string $_POST['template'].           Template to be selected. 'thumbnails' | 'list' | {custom template name}. default: 'list'
+	 * @global string $_POST['order'].              Ordering the posts by: 'score DESC' | 'score ASC' | 'post_date DESC' | 'post_date ASC' | 'post_title ASC' | 'post_title DESC'. default: 'score DESC'
+	 * @global bool   $_POST['promote_yarpp'].      YARPP promotional text
+	 * @global string $_POST['thumbnails_heading']. Heading for the block
+	 * @global string $_POST['thumbnails_default']. Default image for the thumbnails
+	 * @global string $_POST['before_title'].       Works only for template 'list'
+	 * @global string $_POST['after_title'].        Works only for template 'list'
+	 * @global bool   $_POST['show_excerpt'].       Works only for template 'list'
+	 * @global int    $_POST['excerpt_length'].     Works only for template 'list'
+	 * @global string $_POST['before_post'].        Works only for template 'list'
+	 * @global string $_POST['after_post'].         Works only for template 'list'
+	 * @global string $_POST['before_related'].     Works only for template 'list'
+	 * @global string $_POST['after_related'].      Works only for template 'list'
+	 *
+	 * @return JSON Response with structure:
+	 *  array(
+	 *    "styles" => inline styles of the requested template
+	 *    "html" => HTML code of the requested template
+	 *    "code" => HTML code Encoded of the requested template
+	 *  )
+	 */
+	public function ajax_display_preview() {
+		check_ajax_referer( 'yarpp_display_preview' );
+
+		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array(
+				'message' => 'Not allowed'
+			), 405 );
+		}
 
 		header( 'HTTP/1.1 200' );
 		header( 'Content-Type: text/html; charset=UTF-8' );
 
-		$args = array(
-			'post_type' => array( 'post' ),
-			'domain'    => ( isset( $_REQUEST['domain'] ) ) ? $_REQUEST['domain'] : 'website',
+		$defaults = array(
+			'domain'        => 'website',
+			'limit'         => yarpp_get_option( 'limit' ),
+			'template'      => yarpp_get_option( 'template' ),
+			'order'         => yarpp_get_option( 'order' ),
+			'promote_yarpp' => yarpp_get_option( 'promote_yarpp' ),
+			'show_excerpt'  => yarpp_get_option( 'show_excerpt' ),
+			'thumbnails_default'  => yarpp_get_option( 'thumbnails_default' ),
 		);
 
+		$allowed = array(
+			'limit',
+			'template',
+			'order',
+			'promote_yarpp',
+			'thumbnails_heading',
+			'thumbnails_default',
+			'before_title',
+			'after_title',
+			'show_excerpt',
+			'excerpt_length',
+			'before_post',
+			'after_post',
+			'before_related',
+			'after_related',
+			'size',
+		);
+
+		$args = array_intersect_key( $_POST, array_flip( $allowed ) );
+		$args = array_merge( $defaults, $args );
+
+		foreach ( $args as $key => $value ) {
+			$args[$key] = wp_unslash($value);
+		}
+
 		$return = $this->core->display_demo_related( $args, false );
-		echo preg_replace( "/[\n\r]/", '', nl2br( htmlspecialchars( $return ) ) );
-		exit;
+
+		$size = isset( $_POST['size'] ) ? sanitize_text_field( $_POST['size'] ) : 'thumbnail';
+
+		$load_styles = file_get_contents( plugins_url( '/style/related.css', YARPP_MAIN_FILE ) );
+
+		if ( 'thumbnails' === $args['template'] ) {
+			$load_styles .= file_get_contents( plugins_url( '/style/styles_thumbnails.css', YARPP_MAIN_FILE ) );
+		}
+		if ( ! in_array( $args['template'], array( 'builtin', 'list' ), true ) ) {
+			$load_styles .= yarpp_thumbnail_inline_css( yarpp_get_image_sizes( $size ) );
+		}
+
+		wp_send_json(
+			array(
+				'styles' => $load_styles,
+				'html'   => $return,
+				'code'   => htmlspecialchars( $return ),
+			)
+		);
 	}
 
 	/**
@@ -872,15 +959,13 @@ class YARPP_Admin {
 		}
 	}
 
+	/**
+	 * @deprecated since 5.26.0 use YARPP_Admin::ajax_display_preview() instead
+	 * @see YARPP_Admin::ajax_display_preview()
+	 */
 	public function ajax_set_display_code() {
-		check_ajax_referer( 'yarpp_set_display_code' );
-
-		header( 'HTTP/1.1 200' );
-		header( 'Content-Type: text; charset=UTF-8' );
-
-		$data = $this->core->set_option( 'display_code', isset( $_REQUEST['checked'] ) );
-		echo 'ok';
-		die();
+		_deprecated_function( 'YARPP_Admin::ajax_set_display_code', '5.26.0', 'YARPP_Admin::ajax_display_preview' );
+		return $this->ajax_display_preview();
 	}
 
 	/**

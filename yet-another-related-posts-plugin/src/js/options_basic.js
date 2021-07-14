@@ -41,67 +41,10 @@ jQuery(function ($) {
 	}
 	$('.show_excerpt, .use_template, #yarpp-rss_display').click(excerpt);
 
-	var loaded_demo_web = false;
-	function display() {
-		if (!$('#yarpp_display_web .inside').is(':visible')) return;
-
-		$('.yarpp_code_display').toggle($('#yarpp_display_code').is(':checked'));
-		if (
-			$('#yarpp_display_web .yarpp_code_display').is(':visible') &&
-			!loaded_demo_web
-		) {
-			loaded_demo_web = true;
-			var demo_web = $('#display_demo_web');
-			$.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {
-					action: 'yarpp_display_demo',
-					domain: 'website',
-					_ajax_nonce: $('#yarpp_display_demo-nonce').val(),
-				},
-				beforeSend: function () {
-					demo_web.html(loading);
-				},
-				success: function (html) {
-					demo_web.html('<pre>' + html + '</pre>');
-				},
-				dataType: 'html',
-			});
-		}
-	}
-	$('#yarpp_display_web .handlediv, #yarpp_display_web-hide').click(display);
-	display();
-
-	var loaded_demo_rss = false;
 	function rss_display() {
 		if (!$('#yarpp_display_rss .inside').is(':visible')) return;
 		if ($('#yarpp-rss_display').is(':checked')) {
 			$('.rss_displayed').show();
-			$('.yarpp_code_display').toggle($('#yarpp_display_code').is(':checked'));
-			if (
-				$('#yarpp_display_rss .yarpp_code_display').is(':visible') &&
-				!loaded_demo_rss
-			) {
-				loaded_demo_rss = true;
-				var demo_rss = $('#display_demo_rss');
-				$.ajax({
-					type: 'POST',
-					url: ajaxurl,
-					data: {
-						action: 'yarpp_display_demo',
-						domain: 'rss',
-						_ajax_nonce: $('#yarpp_display_demo-nonce').val(),
-					},
-					beforeSend: function () {
-						demo_rss.html(loading);
-					},
-					success: function (html) {
-						demo_rss.html('<pre>' + html + '</pre>');
-					},
-					dataType: 'html',
-				});
-			}
 			$('#yarpp_display_rss').each(template);
 		} else {
 			$('.rss_displayed').hide();
@@ -272,10 +215,347 @@ jQuery(function ($) {
 		spinner.addClass('is-active');
 	});
 
+	const show_code_button = document.getElementById('yarpp-preview-show-code');
+	const code_container = document.getElementById('yarpp-display-code-preview');
+
+	function toggle_code_container(force_show = false) {
+		if (code_container.style.display === 'none' || force_show) {
+			code_container.style.display = 'block';
+
+			show_code_button.innerText = yarpp_messages.hide_code;
+		} else {
+			code_container.style.display = 'none';
+
+			show_code_button.innerText = yarpp_messages.show_code;
+		}
+	}
+
+	if (show_code_button) {
+		show_code_button.addEventListener('click', () => toggle_code_container());
+	}
+
+	const drag_container = document.querySelector(
+		'#yarpp-display-html-preview .yarpp-preview__iframe__container',
+	);
+
+	if (drag_container) {
+		let mouse_position;
+		function resize_html_preview(event) {
+			const dx = event.x - mouse_position;
+			mouse_position = event.x;
+			drag_container.style.width =
+				parseInt(getComputedStyle(drag_container, '').width) + dx + 'px';
+			update_preview_width_ui();
+		}
+
+		drag_container.addEventListener('mousedown', function (e) {
+			const dragger_position = e.layerX - e.offsetX;
+			if (dragger_position < 50) {
+				mouse_position = e.x;
+				document.addEventListener('mousemove', resize_html_preview, false);
+			}
+		});
+		document.addEventListener('mouseup', function () {
+			document.removeEventListener('mousemove', resize_html_preview, false);
+		});
+	}
+
+	let preview_body = {};
+
+	function handle_change(field, event, target_value = 'value') {
+		const new_value = event.target[target_value];
+		if (target_value === 'checked') {
+			preview_body[field] = new_value ? 1 : 0;
+		} else {
+			preview_body[field] = new_value;
+		}
+		show_display_preview();
+	}
+
+	const limit_input = document.querySelector('#limit[name=limit]');
+	if (limit_input) {
+		limit_input.addEventListener('blur', (e) => handle_change('limit', e));
+	}
+
+	const promote_yarpp_checkbox = document.querySelector(
+		'#yarpp-promote_yarpp[name=promote_yarpp]',
+	);
+	if (promote_yarpp_checkbox) {
+		promote_yarpp_checkbox.addEventListener('change', (e) =>
+			handle_change('promote_yarpp', e, 'checked'),
+		);
+	}
+
+	const order_select = document.querySelector('#order[name=order]');
+	if (order_select) {
+		order_select.addEventListener('change', (e) => handle_change('order', e));
+	}
+
+	const custom_template_select = document.querySelector(
+		'#template_file[name=template_file]',
+	);
+	if (custom_template_select) {
+		custom_template_select.addEventListener('change', (e) =>
+			handle_change('template', e),
+		);
+	}
+
+	const thumbnails_template_size_radio = document.querySelectorAll(
+		'input[name=thumbnail_size_display]',
+	);
+	if (thumbnails_template_size_radio.length > 0) {
+		thumbnails_template_size_radio.forEach((radio_button) => {
+			radio_button.addEventListener('change', (e) => handle_change('size', e));
+		});
+	}
+
+	const custom_template_size_radio = document.querySelectorAll(
+		'input[name=custom_theme_thumbnail_size_display]',
+	);
+	if (custom_template_size_radio.length > 0) {
+		custom_template_size_radio.forEach((radio_button) => {
+			radio_button.addEventListener('change', (e) => handle_change('size', e));
+		});
+	}
+
+	const thumbnails_heading_input = document.querySelector(
+		'#thumbnails_heading[name=thumbnails_heading]',
+	);
+	if (thumbnails_heading_input) {
+		thumbnails_heading_input.addEventListener('blur', (e) =>
+			handle_change('thumbnails_heading', e),
+		);
+	}
+
+	const thumbnails_default_input = document.querySelector(
+		'#thumbnails_default[name=thumbnails_default]',
+	);
+	if (thumbnails_default_input) {
+		thumbnails_default_input.addEventListener('blur', (e) =>
+			handle_change('thumbnails_default', e),
+		);
+	}
+
+	const list_before_related_input = document.querySelector(
+		'#before_related[name=before_related]',
+	);
+	if (list_before_related_input) {
+		list_before_related_input.addEventListener('blur', (e) =>
+			handle_change('before_related', e),
+		);
+	}
+
+	const list_after_related_input = document.querySelector(
+		'#after_related[name=after_related]',
+	);
+	if (list_after_related_input) {
+		list_after_related_input.addEventListener('blur', (e) =>
+			handle_change('after_related', e),
+		);
+	}
+
+	const list_before_title_input = document.querySelector(
+		'#before_title[name=before_title]',
+	);
+	if (list_before_title_input) {
+		list_before_title_input.addEventListener('blur', (e) =>
+			handle_change('before_title', e),
+		);
+	}
+
+	const list_after_title_input = document.querySelector(
+		'#after_title[name=after_title]',
+	);
+	if (list_after_title_input) {
+		list_after_title_input.addEventListener('blur', (e) =>
+			handle_change('after_title', e),
+		);
+	}
+
+	const list_show_excerpt = document.querySelector(
+		'#yarpp-show_excerpt[name=show_excerpt]',
+	);
+	if (list_show_excerpt) {
+		list_show_excerpt.addEventListener('change', (e) =>
+			handle_change('show_excerpt', e, 'checked'),
+		);
+	}
+
+	const list_excerpt_length = document.querySelector(
+		'#excerpt_length[name=excerpt_length]',
+	);
+	if (list_excerpt_length) {
+		list_excerpt_length.addEventListener('blur', (e) =>
+			handle_change('excerpt_length', e),
+		);
+	}
+
+	const list_before_post_input = document.querySelector(
+		'#before_post[name=before_post]',
+	);
+	if (list_before_post_input) {
+		list_before_post_input.addEventListener('blur', (e) =>
+			handle_change('before_post', e),
+		);
+	}
+
+	const list_after_post_input = document.querySelector('#after_post[name=after_post]');
+	if (list_after_post_input) {
+		list_after_post_input.addEventListener('blur', (e) =>
+			handle_change('after_post', e),
+		);
+	}
+
+	function set_preview_width(width) {
+		drag_container.style.width = width + 'px';
+		update_preview_width_ui();
+	}
+
+	function update_preview_width_ui() {
+		const backdrop = document.querySelector('.yarpp-preview__iframe__backdrop');
+		// Compute and display template preview iframe width in UI
+		if (backdrop) {
+			document.querySelector(
+				'#yarpp-preview__show-preview-width__value',
+			).innerText = backdrop.offsetWidth - 20 + 'px';
+		}
+	}
+
+	// If the browser window is resized, update template preview iframe width displayed in UI
+	window.addEventListener('resize', update_preview_width_ui);
+
+	const preview_mobile_button = document.querySelector('#yarpp-preview-mobile');
+	if (preview_mobile_button) {
+		preview_mobile_button.addEventListener('click', (e) => set_preview_width(320));
+	}
+
+	const preview_tablet_button = document.querySelector('#yarpp-preview-tablet');
+	if (preview_tablet_button) {
+		preview_tablet_button.addEventListener('click', (e) => set_preview_width(768));
+	}
+
+	const preview_desktop_button = document.querySelector('#yarpp-preview-desktop');
+	if (preview_desktop_button) {
+		preview_desktop_button.addEventListener('click', (e) => set_preview_width(1200));
+	}
+
+	function show_display_preview(template = null) {
+		// disables the Show Button and waits until it's available to enable it again
+		show_code_button.setAttribute('disabled', 'disabled');
+		var html_frame = $(
+			'#yarpp-display-html-preview .yarpp-preview__iframe__container',
+		);
+		var code_frame = $('#yarpp-display-code-preview');
+		const backdrop = document.querySelector(
+			'#yarpp-display-html-preview div.yarpp-preview__iframe__backdrop',
+		);
+
+		update_preview_width_ui();
+
+		if (template) {
+			// if the template is custom, checks the custom select template and changes it
+			if (template === 'custom') {
+				preview_body.template = custom_template_select.value;
+				let checked_value = null;
+
+				custom_template_size_radio.forEach((rb) => {
+					if (rb.checked) {
+						checked_value = rb.value;
+					}
+				});
+				if (checked_value) {
+					preview_body.size = checked_value;
+				}
+			} else {
+				preview_body.template = template;
+			}
+
+			if (template === 'thumbnails') {
+				thumbnails_template_size_radio.forEach((rb) => {
+					if (rb.checked) {
+						checked_value = rb.value;
+					}
+				});
+				if (checked_value) {
+					preview_body.size = checked_value;
+				}
+			}
+		}
+
+		$.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data: {
+				action: 'yarpp_display_preview',
+				_ajax_nonce: $('#yarpp_display_preview-nonce').val(),
+				...preview_body,
+			},
+			beforeSend: function () {
+				html_frame.html(loading);
+			},
+			success: function (response) {
+				const json = JSON.parse(response);
+				const inline_css = document.createElement('style');
+				inline_css.appendChild(document.createTextNode(json.styles));
+				const preview_iframe = document.createElement('iframe');
+				preview_iframe.width = '100%';
+				preview_iframe.height = '100%';
+				preview_iframe.style =
+					'overflow: hidden; user-select: none; outline: 0; background-color: white;';
+				html_frame.html(preview_iframe);
+				html_frame.prepend(backdrop);
+
+				preview_iframe.onload = (event) => {
+					const iframe_document = event.target.contentWindow.document;
+					iframe_document
+						.getElementsByTagName('head')[0]
+						.appendChild(inline_css);
+					iframe_document.body.innerHTML = json.html;
+					iframe_document.body.style = 'overflow:hidden;';
+				};
+
+				if ('codeEditor' in wp) {
+					toggle_code_container(true);
+					const settings = {
+						...wp.codeEditor.defaultSettings,
+						type: 'text/html',
+						codemirror: {
+							...wp.codeEditor.defaultSettings.codemirror,
+							indentUnit: 2,
+							tabSize: 2,
+							readOnly: true,
+						},
+					};
+					code_frame.html(
+						'<textarea id="yarpp-preview-code-textarea">' +
+							json.code +
+							'</textarea>',
+					);
+					wp.codeEditor.initialize(
+						document.getElementById('yarpp-preview-code-textarea'),
+						settings,
+					);
+					toggle_code_container();
+				} else {
+					code_frame.html('<pre><code>' + json.code + '</code></pre>');
+				}
+				// removes the disabled when it's ready
+				show_code_button.removeAttribute('disabled');
+			},
+			dataType: 'html',
+		});
+	}
+
+	show_display_preview();
+
 	$('.yarpp_template_button:not(.disabled)').click(function () {
-		$(this).siblings('input').val($(this).attr('data-value')).change();
+		const current_template = $(this).attr('data-value');
+		$(this).siblings('input').val(current_template).change();
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
+		if ($(this).parents('#yarpp_display_web').length) {
+			show_display_preview(current_template);
+		}
 	});
 
 	function template_info() {
@@ -306,6 +586,7 @@ jQuery(function ($) {
 	$('#template_file, #rss_template_file').each(template_info).change(template_info);
 
 	var loaded_optin_data = false;
+
 	function _display_optin_data() {
 		if (!$('#optin_data_frame').is(':visible') || loaded_optin_data) return;
 		loaded_optin_data = true;
@@ -326,13 +607,16 @@ jQuery(function ($) {
 			dataType: 'html',
 		});
 	}
+
 	function display_optin_data() {
 		setTimeout(_display_optin_data, 0);
 	}
+
 	$('#yarpp-optin-learnmore, a[aria-controls=tab-panel-optin]').bind(
 		'click focus',
 		display_optin_data,
 	);
+
 	display_optin_data();
 
 	function sync_no_results() {
@@ -344,17 +628,6 @@ jQuery(function ($) {
 	}
 	$('.sync_no_results, .sync_rss_no_results').change(sync_no_results);
 
-	$('#yarpp_display_code').click(function () {
-		var args = {
-			action: 'yarpp_set_display_code',
-			_ajax_nonce: $('#yarpp_set_display_code-nonce').val(),
-		};
-		if ($(this).is(':checked')) args.checked = true;
-		$.ajax({ type: 'POST', url: ajaxurl, data: args });
-		display();
-		rss_display();
-	});
-
 	function auto_display_archive() {
 		var available = $('.yarpp_form_post_types').is(
 			':has(input[type=checkbox]:checked)',
@@ -364,6 +637,7 @@ jQuery(function ($) {
 	}
 
 	$('.yarpp_form_post_types input[type=checkbox]').change(auto_display_archive);
+
 	auto_display_archive();
 
 	$('#yarpp_fulltext_expand').click(function (e) {
@@ -380,6 +654,7 @@ jQuery(function ($) {
 			$(this).text('Show Details [+]');
 		}
 	});
+
 	$('.include_post_type input[type=checkbox]').change(function (e) {
 		var get_attr = $(this).attr('data-post-type');
 		if ($('#yarpp-same_post_type').is(':checked')) {
@@ -391,6 +666,7 @@ jQuery(function ($) {
 			);
 		}
 	});
+
 	$('#yarpp-same_post_type').change(function (e) {
 		var get_checkboxes = '.include_post_type input[type=checkbox]';
 		if ($(this).is(':checked')) {
@@ -444,6 +720,7 @@ jQuery(function ($) {
 			</div>\
 		',
 	)[0];
+
 	$('#yarpp-clear-cache').click(function () {
 		var inst = $(yarpp_model).remodal({
 			hashTracking: false,
@@ -452,6 +729,7 @@ jQuery(function ($) {
 		inst.open();
 		event.preventDefault();
 	});
+
 	$(document.body).on('click', '#yarpp-clear-cache-submit', function () {
 		var inst = $(yarpp_model).remodal();
 		/**

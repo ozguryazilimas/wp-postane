@@ -16,12 +16,6 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 		);
 
 		echo '<div>';
-		echo '<div class="yarpp_code_display"';
-		if ( ! $yarpp->get_option( 'code_display' ) ) {
-			echo ' style="display: none;"';
-		}
-		echo '><strong>' . __( 'Website display code example', 'yarpp' ) . '</strong><br /><small>' . __( '(Update options to reload.)', 'yarpp' ) . "</small><br/><div id='display_demo_web'></div></div>";
-
 		echo "<div class='yarpp_form_row yarpp_form_post_types'><div>";
 		echo __( 'Automatically display related content on: ', 'yarpp' );
 		echo " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( 'This option automatically displays YARPP right after the content on single entry pages. If this option is off, you will need to manually insert the <code>[yarpp]</code> shortcode, block or  <code>yarpp_related()</code> PHP function into your theme files.', 'yarpp' ) ) . "'>&nbsp;</span>&nbsp;&nbsp;";
@@ -125,5 +119,29 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 
 		$this->displayorder( 'order' );
 		$this->checkbox( 'promote_yarpp', __( 'Link to YARPP?', 'yarpp' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( sprintf( __( 'This option will add the code %s These links are greatly appreciated and keeps us motivated.', 'yarpp' ), '<code>' . htmlspecialchars( sprintf( __( "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.", 'yarpp' ), 'https://yarpp.com' ) ) . '</code>' ) ) . "'>&nbsp;</span>", 'yarpp' );
+
+		// Theme preview section
+		echo '<div class="yarpp-preview__wrapper">';
+		echo '<div class="yarpp_form_row yarpp-preview__title">';
+		echo '<h1>' . __( 'Preview', 'yarpp' ) . '</h1>';
+		echo '</div>';
+		echo '<div id="yarpp-display-html-preview">';
+		echo '<div class="yarpp-preview__media__controls">';
+		echo '<button type="button" id="yarpp-preview-mobile" class="button-secondary">' . __( 'Mobile', 'yarpp' ) . ' ' . __( '(320px)', 'yarpp' ) . '</button>';
+		echo '<button type="button" id="yarpp-preview-tablet" class="button-secondary">' . __( 'Tablet', 'yarpp' ) . ' ' . __( '(768px)', 'yarpp' ) . '</button>';
+		echo '<button type="button" id="yarpp-preview-desktop" class="button-secondary">' . __( 'Desktop', 'yarpp' ) . ' ' . __( '(1200px)', 'yarpp' ) . '</button>';
+		echo '</div>';
+		echo '<div class="yarpp-preview__iframe__container">';
+		echo '<div class="yarpp-preview__iframe__backdrop">';
+		echo '</div>';
+		echo '</div>';
+		echo '<div class="yarpp-preview__show-preview-width"><span id="yarpp-preview__show-preview-width__value"></span></div>';
+		echo '<div class="yarpp-preview__show-code">';
+		echo '<button type="button" id="yarpp-preview-show-code" class="button-secondary">' . __( 'Show Code', 'yarpp' ) . '</button>';
+		echo '</div>';
+		echo '</div>';
+		echo '<div id="yarpp-display-code-preview">';
+		echo '</div>';
+		echo '</div>';
 	}
 }

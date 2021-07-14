@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.7
-Stable tag: 5.25.0
+Stable tag: 5.26.0
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -333,6 +333,33 @@ Some common overrides that YARPP users have added are:
 
 Once you save any CSS changes, empty your browser's cache and reload your page to see the effect.
 
+= How do I remove sold out WooCommerce products from recommendations (and otherwise filter by postmeta)? = 
+If you use YARPP to show related products and want to exclude products that are sold out, use the following code snippet:
+
+<code>
+function yarpp_custom_wp_query($query) {
+    if(isset($query->yarpp_cache_type)){
+        $query->set('post_type', 'product');
+        $meta_query = [
+            'relation' => 'AND',
+            [
+                'key' => '_stock_status',
+                'value' => ['instock','onbackorder'],
+                'compare' => 'IN',
+            ]
+        ];
+        $query->set('meta_query', $meta_query);
+    }
+
+    return $query;
+}
+add_filter('pre_get_posts', 'yarpp_custom_wp_query', 100);
+</code>
+
+Note: this filter applies after the related items were already calculated, so when it filters out an item you will see fewer related items than you requested.
+
+You can similarly [filter WordPress' meta queries](https://developer.wordpress.org/reference/classes/wp_meta_query/) to include/excluded posts from YARPP's related results.
+
 = I'm using the Thumbnails display. How can I change the thumbnail size? =
 
 As of YARPP v5.19.0, YARPP usually defaults to using WordPress' default thumbnail size. This can be changed to another thumbnail size using the YARPP setting "Thumbnail Size".
@@ -344,6 +371,10 @@ However, if you used YARPP before v5.19.0, or your theme defines a "yarpp-thumbn
 When you do this, make sure you also set the YARPP setting "Thumbnail Size" to "yarpp-thumbnail".
 
 Each time you change YARPP's thumbnail dimensions like this, you will probably want to have WordPress regenerate appropriate sized thumbnails for all of your images. We highly recommend the [Regenerate Thumbnails](https://wordpress.org/extend/plugins/regenerate-thumbnails/) plugin for this purpose.
+
+Note: if you don't use YARPP's thumbnail size, you might want to avoid generating it for newly uploaded images to save space. To do that add the following code snippet to your theme's `functions.php` file:
+
+`add_filter( 'yarpp_add_image_size', '_\_return_false' );`
 
 = I'm using the Thumbnails display. Why aren't the right size thumbnails being served? =
 
@@ -491,17 +522,24 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.26.0 (14-July-2021) =
+* [New](https://wordpress.org/support/topic/disable-yarpp-thumbnail-120x120/): Adds a `yarpp_add_image_size` filter to avoid creating YARPP thumbnail sizes
+    + `add_filter( 'yarpp_add_image_size', '__return_false' );`
+* New: Preview YARPP Templates on the YARPP settings page under Automatic Display Options
+* Docs: Added FAQ on how to remove sold out WooCommerce products from recommendations (and otherwise filter by postmeta)
+
 = 5.25.0 (23-June-2021) =
 * Enhancement: Cleaned up old unused code (adkengage)
 
 = 5.24.0 (17-June-2021) =
 * Enhancement: Option to automatically generate missing thumbnail sizes on the fly when using Custom YARPP Templates
-* [New](https://wordpress.org/support/topic/remove-yarpp-from-the_content-or-the_excerpt/): Control YARPP Automatic Display programatically with filter support for `noyarpp`. For example: `add_filter( 'noyarpp', 'custom_function' );`
+* [New](https://wordpress.org/support/topic/remove-yarpp-from-the_content-or-the_excerpt/): Adds a `noyarpp` filter to control YARPP Automatic Display programatically.
+    + For example: `add_filter( 'noyarpp', 'custom_function' );`
 * Enhancement: Use the faster and less memory intensive function `strpos()` instead of `stristr()`
 
 = 5.23.0 (02-June-2021) =
-* [New](https://wordpress.org/support/topic/is-it-possible-to-use-different-styles-of-yarpp-in-every-post/): Ability to specify maximum number of posts to show in the YARPP shortcode. For example:
-    + `[yarpp template="list" limit=3]` // maximum post limit set to 3
+* [New](https://wordpress.org/support/topic/is-it-possible-to-use-different-styles-of-yarpp-in-every-post/): Ability to specify maximum number of posts to show in the YARPP shortcode.
+    + For example, to set maximum post limit to 3: `[yarpp template="list" limit=3]`
 * Bugfix: Check `wp_parse_list` exists for backwards compatibility to older versions of WordPress
 * [Bugfix](https://wordpress.org/support/topic/yarpp_related-does-not-return-all-posts/): Use query parameters when priming cache using `yarpp_related`. Resolves bug with `yarpp_function` not fully accounting for all parameters passed to it.
 
@@ -538,10 +576,8 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 * [Bugfix](https://wordpress.org/support/topic/warning-message-yarpp_cache-php/): Resolves `join` warning (Part 2/2)
 
 = 5.17.0 (06-April-2021) =
-* [New](https://wordpress.org/support/topic/unable-to-dequeue-related-css-stylesheet/): Adds filter to be able to dequeue related.css
-`
-add_filter( 'yarpp_enqueue_related_style', '_\_return_false' );
-`
+* [New](https://wordpress.org/support/topic/unable-to-dequeue-related-css-stylesheet/): Adds `yarpp_enqueue_related_style` filter to be able to dequeue related.css
+    + `add_filter( 'yarpp_enqueue_related_style', '__return_false' );`
 * New: Adds friendly per-post meta box options to disable YARPP automatic display on a specific post
 
 = 5.16.1 (29-March-2021) =
@@ -652,7 +688,8 @@ add_filter( 'yarpp_enqueue_related_style', '_\_return_false' );
 = 5.3.0 (29-July-2020) =
 * New: REST API support! ([documentation](https://support.shareaholic.com/hc/en-us/articles/360046456752))
 * Enhancement: [WP Rest Cache Plugin](https://wordpress.org/plugins/wp-rest-cache/) support
-* Enhancement: Filters to change the priority for YARPP's filters on `the_content`, `the_content_feed` and `the_excerpt_rss`, example:  `add_filter('yarpp_content_priority', 1);`
+* Enhancement: Adds filters to change the priority for YARPP's filters on `the_content`, `the_content_feed` and `the_excerpt_rss`
+    + For example:  `add_filter( 'yarpp_content_priority', 1 );`
 * Bugfix: Fixes deactivation survey when Google Translate in Chrome auto translates the admin page
 
 = 5.2.2 (21-July-2020) =
@@ -1349,5 +1386,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.25.0 =
+= 5.26.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

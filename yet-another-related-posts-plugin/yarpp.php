@@ -2,7 +2,7 @@
 /*
 Plugin Name: Yet Another Related Posts Plugin (YARPP)
 Description: Adds related posts to your site and in RSS feeds, based on a powerful, customizable algorithm.
-Version: 5.25.0
+Version: 5.26.0
 Author: YARPP
 Author URI: https://yarpp.com/
 Plugin URI: https://yarpp.com/
@@ -25,7 +25,7 @@ if ( ! defined( 'WP_CONTENT_DIR' ) ) {
 	define( 'WP_CONTENT_DIR', substr( $tr, 0, strrpos( $tr, '/' ) ) );
 }
 
-define( 'YARPP_VERSION', '5.25.0' );
+define( 'YARPP_VERSION', '5.26.0' );
 
 define( 'YARPP_DIR', dirname( __FILE__ ) );
 /**
@@ -81,6 +81,7 @@ require_once YARPP_DIR . '/classes/YARPP_Block.php';
 require_once YARPP_DIR . '/classes/YARPP_Widget.php';
 require_once YARPP_DIR . '/classes/YARPP_Cache.php';
 require_once YARPP_DIR . '/classes/YARPP_Cache_Bypass.php';
+require_once YARPP_DIR . '/classes/YARPP_Cache_Demo_Bypass.php';
 require_once YARPP_DIR . '/classes/YARPP_Cache_' . ucfirst( YARPP_CACHE_TYPE ) . '.php';
 require_once YARPP_DIR . '/lib/plugin-deactivation-survey/deactivate-feedback-form.php';
 require_once YARPP_DIR . '/classes/YARPP_DB_Schema.php';

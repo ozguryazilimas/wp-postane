@@ -20,6 +20,10 @@ class YARPP {
 	 */
 	public $cache_bypass;
 	/**
+	 * @var YARPP_Cache_Demo_Bypass
+	 */
+	public $demo_cache_bypass;
+	/**
 	 * @var YARPP_Cache
 	 */
 	public $cache;
@@ -56,11 +60,12 @@ class YARPP {
 		load_plugin_textdomain( 'yarpp', false, plugin_basename( YARPP_DIR ) . '/lang' );
 
 		/* Load cache object. */
-		$this->storage_class = 'YARPP_Cache_' . ucfirst( YARPP_CACHE_TYPE );
-		$this->cache         = new $this->storage_class( $this );
-		$this->cache_bypass  = new YARPP_Cache_Bypass( $this );
-		$this->db_schema     = new YARPP_DB_Schema();
-		$this->db_options    = new YARPP_DB_Options();
+		$this->storage_class     = 'YARPP_Cache_' . ucfirst( YARPP_CACHE_TYPE );
+		$this->cache             = new $this->storage_class( $this );
+		$this->cache_bypass      = new YARPP_Cache_Bypass( $this );
+		$this->demo_cache_bypass = new YARPP_Cache_Demo_Bypass( $this );
+		$this->db_schema         = new YARPP_DB_Schema();
+		$this->db_options        = new YARPP_DB_Options();
 
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 
@@ -104,7 +109,13 @@ class YARPP {
 		 * If theme has already yarpp-thumbnail size registered and we also try to register yarpp-thumbnail then it will throw a fatal error. So it is necessary to check if yarpp-thumbnail size is not registered.
 		 */
 		global $add_image_size_by_yarpp;
-		if ( false === yarpp_get_image_sizes( 'yarpp-thumbnail' ) ) {
+
+		/**
+		 * Filters whether or not to register YARPP's image size "yarpp-thumbnail". Defaults to registering it
+		 * if it wasn't already by the theme or some other plugin. But if you don't want yarpp-thumbnail sizes being
+		 * generated at all, have it always return false.
+		 */
+		if ( apply_filters('yarpp_add_image_size', false === yarpp_get_image_sizes( 'yarpp-thumbnail' ) ) ) {
 			$width  = 120;
 			$height = 120;
 			$crop   = true;
@@ -222,7 +233,6 @@ class YARPP {
 			'thumbnails_default'                  => plugins_url( 'images/default.png', dirname( __FILE__ ) ),
 			'rss_thumbnails_heading'              => __( 'Related posts:', 'yarpp' ),
 			'rss_thumbnails_default'              => plugins_url( 'images/default.png', dirname( __FILE__ ) ),
-			'display_code'                        => false,
 			'auto_display_archive'                => false,
 			'auto_display_post_types'             => array( 'post' ),
 			'pools'                               => array(),
@@ -1208,7 +1218,6 @@ class YARPP {
 			'thumbnails_default',
 			'rss_thumbnails_heading',
 			'rss_thumbnails_default',
-			'display_code',
 		);
 
 		$data = array(
@@ -1474,6 +1483,7 @@ class YARPP {
 
 		// Add CSS class to identify domain.
 		if ( isset( $domain ) && $domain ) {
+			$domain  = esc_attr($domain);
 			$output .= " yarpp-related-{$domain}";
 		}
 
@@ -1695,7 +1705,7 @@ class YARPP {
 	public function display_demo_related( $args = array(), $echo = true ) {
 		// If YARPP cache is already finding the current post's content, don't ask it to do it again.
 		// Avoid infinite recursion here.
-		if ( $this->cache_bypass->demo_time ) {
+		if ( $this->demo_cache_bypass->demo_time ) {
 			return false;
 		}
 
@@ -1705,18 +1715,11 @@ class YARPP {
 			'template',
 			'order',
 			'promote_yarpp',
+			'size',
+			'thumbnails_default'
 		);
 		extract( $this->parse_args( $args, $options ) );
-
-		$this->cache_bypass->begin_demo_time( $limit );
-
-		$output = "<div class='";
-		if ( $domain === 'website' ) {
-			$output .= 'yarpp-related';
-		} else {
-			$output .= "yarpp-related yarpp-related-{$domain}";
-		}
-		$output .= "'>\n";
+		$this->demo_cache_bypass->begin_demo_time( $limit, $order, $size );
 
 		global $wp_query;
 		$wp_query = new WP_Query();
@@ -1725,6 +1728,41 @@ class YARPP {
 
 		$this->prep_query( $domain === 'rss' );
 		$related_query = $wp_query; // backwards compatibility
+		$related_count = $related_query->post_count;
+
+		$output = '';
+		// CSS class "yarpp-related" exists for backwards compatibility in-case older custom themes are dependent on it
+		$output .= "<div class='yarpp yarpp-related";
+
+		// Add CSS class to identify domain
+		if ( isset( $domain ) && $domain ) {
+			$domain  = esc_attr( $domain );
+			$output .= " yarpp-related-{$domain}";
+		}
+		// Add CSS class to identify no results
+		if ( $related_count < 1 ) {
+			$output .= ' yarpp-related-none';
+		}
+
+		// Add CSS class to identify template
+		if ( isset( $template ) && $template ) {
+			// Normalize "thumbnail" and "thumbnails" to reference the same inbuilt template
+			if ( $template === 'thumbnail' ) {
+				$template = 'thumbnails';
+			}
+			// Sanitize template name; remove file extension if exists
+			if ( strpos( $template, '.php' ) ) {
+				$template_css_class_suffix = preg_replace( '/' . preg_quote( '.php', '/' ) . '$/', '', $template );
+			} else {
+				$template_css_class_suffix = $template;
+			}
+			$output .= " yarpp-template-$template_css_class_suffix";
+		} else {
+			// fallback to default template ("list")
+			$output .= ' yarpp-template-list';
+		}
+
+		$output .= "'>\n";
 
 		if ( (bool) $template && $template === 'thumbnails' ) {
 			include YARPP_DIR . '/includes/template_thumbnails.php';
@@ -1738,7 +1776,7 @@ class YARPP {
 		}
 		$output = trim( $output ) . "\n";
 
-		$this->cache_bypass->end_demo_time();
+		$this->demo_cache_bypass->end_demo_time();
 
 		if ( $promote_yarpp ) {
 			$output .=
@@ -1896,9 +1934,9 @@ class YARPP {
 		 * "yarpp_meta" postmeta's key "yarpp_display_for_this_post", and whether the post's content contains
 		 * the magic comment "<!--noyarpp-->"`. If either one of those is true `$noyarpp` will be true, otherwise false.
 		 */
-		$noyarpp = $this->yarpp_disabled_for_this_post();                                   // post meta flag.
+		$noyarpp = $this->yarpp_disabled_for_this_post();   // post meta flag.
 		if ( strpos( $content, '<!--noyarpp-->' ) !== false ) {
-			$noyarpp = true;    // content includes <!--noyarpp--> ?
+			$noyarpp = true;    // does content includes <!--noyarpp--> ?
 		}
 		/**
 		 * Filters whether or not to disable adding YARPP's related posts on the current post.
@@ -1909,7 +1947,7 @@ class YARPP {
 		 * @param string $content post's content
 		 * @since 5.24.0
 		 */
-		$noyarpp = apply_filters( 'noyarpp', $noyarpp, $content );                                           // noyarpp filter (since 5.24.0)
+		$noyarpp = apply_filters( 'noyarpp', $noyarpp, $content );
 
 		return $noyarpp;
 	}

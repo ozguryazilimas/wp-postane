@@ -2,12 +2,10 @@
 
 class YARPP_Cache_Bypass extends YARPP_Cache {
 
-	public $name      = 'bypass';
-	public $demo_time = false;
+	public $name = 'bypass';
 
 	private $related_postdata = array();
 	private $related_IDs      = array();
-	private $demo_limit       = 0;
 
 	/**
 	 * SETUP/STATUS
@@ -81,46 +79,10 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 	}
 
 	public function demo_request_filter( $arg ) {
-		global $wpdb;
+		global $yarpp;
+		_deprecated_function( 'YARPP_Cache_Bypass::demo_request_filter', '5.26.0', 'YARPP_Cache_Demo_Bypass::demo_request_filter' );
 
-		$wpdb->query( 'set @count = 0;' );
-
-		$loremipsum =
-		'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras tincidunt justo a urna. Ut turpis. Phasellus' .
-		'convallis, odio sit amet cursus convallis, eros orci scelerisque velit, ut sodales neque nisl at ante. ' .
-		'Suspendisse metus. Curabitur auctor pede quis mi. Pellentesque lorem justo, condimentum ac, dapibus sit ' .
-		'amet, ornare et, erat. Quisque velit. Etiam sodales dui feugiat neque suscipit bibendum. Integer mattis. ' .
-		'Nullam et ante non sem commodo malesuada. Pellentesque ultrices fermentum lectus. Maecenas hendrerit neque ac ' .
-		'est. Fusce tortor mi, tristique sed, cursus at, pellentesque non, dui. Suspendisse potenti.';
-
-		return "SELECT
-                SQL_CALC_FOUND_ROWS ID + {$this->demo_limit} as ID,
-                post_author,
-                post_date,
-                post_date_gmt,
-                '{$loremipsum}' as post_content,
-		        concat('" . __( 'Example post ', 'yarpp' ) . "', @count:=@count+1) as post_title,
-		        0 as post_category,
-		        '' as post_excerpt,
-		        'publish' as post_status,
-		        'open' as comment_status,
-		        'open' as ping_status,
-		        '' as post_password,
-		        concat('example-post-',@count) as post_name,
-		        '' as to_ping,
-		        '' as pinged,
-		        post_modified,
-		        post_modified_gmt,
-		        '' as post_content_filtered,
-		        0 as post_parent,
-		        concat('PERMALINK',@count) as guid,
-		        0 as menu_order,
-		        'post' as post_type,
-		        '' as post_mime_type,
-		        0 as comment_count,
-		        'SCORE' as score
-		FROM $wpdb->posts
-		ORDER BY ID DESC LIMIT 0, {$this->demo_limit}";
+		return $yarpp->demo_cache_bypass->demo_request_filter($arg);
 	}
 
 	public function limit_filter( $arg ) {
@@ -159,12 +121,11 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 		add_action( 'parse_query', array( &$this, 'set_score_override_flag' ) ); // sets the score override flag.
 	}
 
-	public function begin_demo_time( $limit ) {
-		$this->demo_time  = true;
-		$this->demo_limit = $limit;
+	public function begin_demo_time( $limit, $order = 'score DESC', $thumbnail = '', $size = '' ) {
+		global $yarpp;
+		_deprecated_function( 'YARPP_Cache_Bypass::begin_demo_time', '5.26.0', 'YARPP_Cache_Demo_Bypass::begin_demo_time' );
 
-		add_action( 'pre_get_posts', array( &$this, 'add_signature' ) );
-		add_filter( 'posts_request', array( &$this, 'demo_request_filter' ) );
+		return $yarpp->demo_cache_bypass->begin_demo_time($limit, $order, $thumbnail, $size);
 	}
 
 	public function end_yarpp_time() {
@@ -180,10 +141,10 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 	}
 
 	public function end_demo_time() {
-		$this->demo_time = false;
+		global $yarpp;
+		_deprecated_function( 'YARPP_Cache_Bypass::end_demo_time', '5.26.0', 'YARPP_Cache_Demo_Bypass::end_demo_time' );
 
-		remove_action( 'pre_get_posts', array( &$this, 'add_signature' ) );
-		remove_filter( 'posts_request', array( &$this, 'demo_request_filter' ) );
+		return $yarpp->demo_cache_bypass->end_demo_time();
 	}
 
 	public function related( $reference_ID = null, $related_ID = null ) {
