@@ -1,8 +1,11 @@
 
 <div class="wlcms-input-group">
     <div class="wlcms-input">
-    <input class="wlcms-toggle wlcms-toggle-light" name="hide_wordpress_logo_and_links" value="1" id="hide_wordpress_logo_and_links" type="checkbox" <?php checked(wlcms_field_setting('hide_wordpress_logo_and_links'), 1, true) ?>/>
-    <label class="wlcms-toggle-btn" for="hide_wordpress_logo_and_links"></label><label class="toggle-label" for="hide_wordpress_logo_and_links"><?php _e('Hide WordPress Logo and Links', 'white-label-cms') ?></label> 
+        <input class="wlcms-toggle wlcms-toggle-light" name="hide_wordpress_logo_and_links" value="1" id="hide_wordpress_logo_and_links" type="checkbox" <?php checked(wlcms_field_setting('hide_wordpress_logo_and_links'), 1, true) ?>/>
+        <label class="wlcms-toggle-btn" for="hide_wordpress_logo_and_links"></label><label class="toggle-label" for="hide_wordpress_logo_and_links"><?php _e('Hide WordPress Logo and Links', 'white-label-cms') ?></label> 
+    </div>
+    <div class="wlcms-help branding-toggled-off" style="color: #f64031;">
+        <?php _e('You have selected no, so all custom branding images will be ignored', 'white-label-cms') ?>
     </div>
     <div class="wlcms-help">
         <?php _e('Hide mentions of WordPress and hide the links to WordPress.org.', 'white-label-cms') ?>

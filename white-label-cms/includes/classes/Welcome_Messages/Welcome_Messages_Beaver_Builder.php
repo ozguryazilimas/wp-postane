@@ -17,14 +17,7 @@ class Welcome_Messages_Beaver_Builder
     
     public function template()
     {
-        global $post;
-        
-        $old_post = $post;
-        $post = (object) [ 'ID' => $this->template ];
-        
         echo do_shortcode('[fl_builder_insert_layout id="' . $this->template . '"]');
-        
-        $post = $old_post;
     }
     
     public function welcome_panel()

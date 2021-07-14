@@ -390,7 +390,7 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         foreach ($rss_items as $item) :
 
             $rss_list .= sprintf(
-            '<li><strong><a href="%s" title="Posted %s target="_blank">%s</a> </strong> <br />',
+            '<li><strong><a href="%s" title="Posted %s" target="_blank">%s</a> </strong> <br />',
             esc_url($item->get_permalink()),
             $item->get_date('j F Y | g:i a'),
             esc_html($item->get_title())

@@ -59,7 +59,7 @@ class WLCMS_Admin_Core
             'wlcms-admin-settings',
             WLCMS_ASSETS_URL . $setting_js,
             array('jquery', 'select2', 'wp-color-picker', 'jquery-validate'),
-            WLCMS_VERSION
+            WLCMS_VERSION . '2'
         );
 
         $jquery_validate = 'js/jquery.validate.min.js';
@@ -92,7 +92,7 @@ class WLCMS_Admin_Core
             'wlcms-admin-settings',
             WLCMS_ASSETS_URL . $setting_css,
             array('select2', 'wp-color-picker'),
-            WLCMS_VERSION
+            WLCMS_VERSION . '2'
         );
 
         wp_register_style('select2', WLCMS_ASSETS_URL . 'css/select2.min.css');

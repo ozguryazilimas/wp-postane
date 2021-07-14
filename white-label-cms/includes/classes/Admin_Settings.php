@@ -8,20 +8,57 @@ class WLCMS_Admin_Settings
         add_action('admin_menu', array($this, 'admin_menu'), 9999);
         add_action('admin_init', array($this, 'init'), 9999);
         add_filter('mce_css', array($this, 'custom_editor_stylesheet'));
-        add_action('admin_init', array($this, 'remove_nag_messages'));
+        add_action('admin_init', array($this, 'admin_init'));
         add_action('init', array($this, 'remove_admin_bar'));
     }
 
+    public function admin_init()
+    {
+        $this->remove_nag_messages();
+        $this->remove_editor_wp_logo();
+    }
+    
     public function init()
     {
         $this->set_admin_css();
-        $this->remove_editor_wp_logo();
         $this->hide_screen_options();
     }
 
     public function remove_editor_wp_logo()
     {
-        wlcms_add_js(';jQuery(".edit-post-header .edit-post-fullscreen-mode-close svg").remove();');
+        if (!wlcms_field_setting('hide_wordpress_logo_and_links')) {
+            return;
+        }
+
+        $image = $this->get_editor_wp_logo();
+        
+        wlcms_set_hidden_css('.edit-post-header .edit-post-fullscreen-mode-close svg');
+        wlcms_add_js(' var wlcms_change_back = setInterval(function() {if(jQuery(".edit-post-fullscreen-mode-close svg").length > 0 ){ jQuery(".edit-post-fullscreen-mode-close").html("'. $image .'"); clearInterval(blockLoadedInterval);}}, 100);');
+    }
+
+    private function get_editor_wp_logo() {
+        $gutenberg_exit_icon = wlcms_field_setting('gutenberg_exit_icon');
+        $admin_bar_logo = wlcms_field_setting('admin_bar_logo');
+        
+        if($gutenberg_exit_icon) {
+            $icon = "";
+            if($gutenberg_exit_icon == 'admin-bar-logo') {
+                $icon = wlcms_field_setting('admin_bar_logo');
+            }elseif($gutenberg_exit_icon == 'custom-icon') {
+                $icon = wlcms_field_setting('gutenberg_exit_custom_icon');
+            }else {
+                return '<span class=\"dashicons dashicons-exit\"></span>';
+            }
+
+            return '<span id=\"wlcms_dashboard_logo\"><img src=\"' . $icon . '\" alt=\"\" /></span>';
+        }
+
+        if($admin_bar_logo) {
+            return '<span id=\"wlcms_dashboard_logo\"><img src=\"' . $admin_bar_logo. '\" alt=\"\" /></span>';
+        }
+
+        return '<span class=\"dashicons dashicons-exit\"></span>';
+
     }
 
     public function remove_admin_bar()
@@ -85,7 +122,7 @@ class WLCMS_Admin_Settings
         return $mce_css;
     }
 
-    public function remove_nag_messages()
+    private function remove_nag_messages()
     {
 
         if (!wlcms_field_setting('hide_nag_messages')) {

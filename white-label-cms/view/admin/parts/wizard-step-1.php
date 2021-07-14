@@ -51,7 +51,7 @@
                 <input type="url" name="rss_feed_address" value="<?php echo esc_url(wlcms_field_setting('rss_feed_address')) ?>" />
             </div>
             <div class="wlcms-help">
-                <?php _e('The RSS feed address. For example http://' . wlcms_site_domain() . '/feed/', 'white-label-cms') ?>
+                <?php _e('The RSS feed address. For example '. get_bloginfo('rss_url'), 'white-label-cms') ?>
             </div>
         </div>
     </div>

@@ -110,6 +110,7 @@ class WLCMS_Admin_Script
     {
         $this->admin_css = $admin_css;
     }
+    
     function compileCss()
     {
         $this->_setHiddenCss();

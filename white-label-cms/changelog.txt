@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 2.2.2 =
+* WooCommerce Analytics menu patch
+* Side Menu Link URL opening in a new tab when external link was added. Requested by @Kosta X
+* WordPress 5.6.2 tested
+
 = 2.2.1 =
 * Refactoring / Security fixes reported by @twd
 * Fixed override footer action reported by @simebern

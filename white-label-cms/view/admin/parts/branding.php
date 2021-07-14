@@ -24,6 +24,14 @@
 </div>
 <div class="wlcms-body-wrapper">
     <div class="wlcms-body-header">
+        <h2><?php _e('Gutenberg Branding', 'white-label-cms') ?></h2>
+    </div>
+    <div class="wlcms-body-main">
+        <?php wlcms()->admin_view('parts/branding-gutenberg'); ?>
+    </div>
+</div>
+<div class="wlcms-body-wrapper">
+    <div class="wlcms-body-header">
         <h2><?php _e('Footer Branding', 'white-label-cms') ?></h2>
     </div>
     <div class="wlcms-body-main">

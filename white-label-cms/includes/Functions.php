@@ -14,7 +14,7 @@ if (!function_exists('wlcms_field_setting')) {
 }
 
 if (!function_exists('wlcms_welcome_value')) {
-    function wlcms_welcome_value($key = 0, $field, $default = false)
+    function wlcms_welcome_value($key = 0, $field = 'title', $default = false)
     {
         $welcome_panel = wlcms_field_setting('welcome_panel');
 

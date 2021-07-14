@@ -333,6 +333,8 @@ class WLCMS_Settings
             'collapsed_side_menu_image' => '',
             'side_menu_link_url' => '',
             'side_menu_alt_text' => '',
+            'gutenberg_exit_icon' => '',
+            'gutenberg_exit_custom_icon' => '',
             'footer_image' => '',
             'footer_url' => '',
             'footer_html' => '',
