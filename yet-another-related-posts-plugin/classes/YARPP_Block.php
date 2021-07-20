@@ -18,7 +18,14 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 		 */
 		public function __construct() {
 			add_action( 'init', array( $this, 'yarpp_gutenberg_block_func' ), 100 );
-			add_filter( 'block_categories', array( $this, 'yarpp_block_categories' ), 10, 2 );
+
+			// block_categories_all is a replacement for block_categories filter from WP v5.8
+			// see: https://developer.wordpress.org/block-editor/reference-guides/filters/block-filters/#block_categories_all
+			if ( class_exists('WP_Block_Editor_Context') ) {
+				add_filter( 'block_categories_all', array( $this, 'yarpp_block_categories' ), 10, 2 );
+			} else {
+				add_filter( 'block_categories', array( $this, 'yarpp_block_categories' ), 10, 2 );
+			}
 			add_action( 'enqueue_block_editor_assets', array( $this, 'yarpp_enqueue_block_editor_assets' ) );
 		}
 
@@ -54,8 +61,11 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 			if ( isset( $block_attributes['template'] ) ) {
 				$yarpp_args['template'] = $block_attributes['template'];
 			}
+
+			$post_ID = $post instanceof WP_Post ? $post->ID : null;
+
 			return $yarpp->display_related(
-				$post->ID,
+				$post_ID,
 				$yarpp_args,
 				false
 			);
@@ -93,19 +103,28 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 		 * YARPP yarpp_gutenberg_block_func.
 		 */
 		public function yarpp_gutenberg_block_func() {
+			global $pagenow;
 			$version = defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : YARPP_VERSION;
+
+			$default_deps = array(
+				'wp-blocks',
+				'wp-i18n',
+				'wp-element',
+				'wp-components',
+				'wp-block-editor',
+			);
+
+			if ( $pagenow === 'widgets.php' ) {
+				$default_deps [] = 'wp-edit-widgets';
+			} else {
+				$default_deps [] = 'wp-editor';
+			}
+
 			// automatically load dependencies and version.
 			wp_register_script( // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 				'yarpp-block',
 				yarpp_get_file_url_for_environment( 'js/block.min.js', 'src/js/block.js' ),
-				array(
-					'wp-blocks',
-					'wp-i18n',
-					'wp-element',
-					'wp-components',
-					'wp-block-editor',
-					'wp-editor',
-				),
+				$default_deps,
 				$version
 			);
 			wp_register_style(

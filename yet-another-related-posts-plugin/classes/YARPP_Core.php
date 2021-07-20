@@ -543,7 +543,7 @@ class YARPP {
 	}
 
 	public function diagnostic_custom_templates() {
-		return count( $this->admin->get_templates() );
+		return count( $this->get_templates() );
 	}
 
 	public function diagnostic_happy() {
@@ -1915,9 +1915,12 @@ class YARPP {
 	 */
 	public function yarpp_disabled_for_this_post() {
 		global $post;
-		$yarpp_meta = get_post_meta( $post->ID, 'yarpp_meta', true );
-		if ( isset( $yarpp_meta['yarpp_display_for_this_post'] ) && 0 === (int) $yarpp_meta['yarpp_display_for_this_post'] ) {
-			return true;
+
+		if ( $post instanceof WP_Post ) {
+			$yarpp_meta = get_post_meta( $post->ID, 'yarpp_meta', true );
+			if ( isset( $yarpp_meta['yarpp_display_for_this_post'] ) && 0 === (int) $yarpp_meta['yarpp_display_for_this_post'] ) {
+				return true;
+			}
 		}
 		return false;
 	}

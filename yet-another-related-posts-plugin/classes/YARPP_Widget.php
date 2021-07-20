@@ -6,7 +6,11 @@
 class YARPP_Widget extends WP_Widget {
 
 	public function __construct() {
-		parent::__construct( false, 'Related Posts (YARPP)', array( 'description' => 'Related Posts and/or Sponsored Content' ) );
+		$widget_ops = array(
+			'description' => 'Related Posts and/or Sponsored Content',
+			'show_instance_in_rest' => true
+		);
+		parent::__construct( false, 'Related Posts (YARPP)', $widget_ops );
 	}
 
 	public function widget( $args, $instance ) {

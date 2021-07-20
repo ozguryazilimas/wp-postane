@@ -254,7 +254,7 @@ abstract class YARPP_Cache {
 		/**
 		 * @since 3.1.8 Revised $past_only option
 		 */
-		if ( $past_only ) {
+		if ( $past_only && ! is_null( $reference_post ) ) {
 			$newsql .= $wpdb->prepare(
 				' and post_date <= %s ',
 				$reference_post->post_date
@@ -321,7 +321,7 @@ abstract class YARPP_Cache {
 			$newsql .= ' and bit_or(terms.term_taxonomy_id in (' . join( ',', $exclude_tt_ids ) . ')) = 0';
 		}
 
-		$post_type_taxonomies = get_object_taxonomies( $reference_post->post_type, 'names' );
+		$post_type_taxonomies = ! is_null( $reference_post ) ? get_object_taxonomies( $reference_post->post_type, 'names' ) : array();
 		foreach ( (array) $require_tax as $tax => $number ) {
 			// Double-check the reference post's type actually supports this taxonomy. If not,
 			// we'll never find any related posts, as the reference post can't be assigned any terms in this taxonomy.

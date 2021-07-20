@@ -5,24 +5,26 @@ Donate link: https://yarpp.com
 Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
-Tested up to: 5.7
-Stable tag: 5.26.0
+Tested up to: 5.8
+Stable tag: 5.27.0
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
 == Description ==
 
+= Related Posts Plugin for WordPress =
+
 *Yet Another Related Posts Plugin (YARPP)* is a professionally maintained, highly customizable, performant and feature rich plugin that displays pages, posts, and custom post types related to the current entry. YARPP introduces your visitors to other relevant content on your site -- boosting visitor engagement, time on site and SEO. Related Posts can increase your pageviews up to 10%. Simply install, activate and watch your sessions and pageviews increase.
 
-**Key Features**
--------------------------------------------
+= Key Features =
+
 * **An advanced and versatile algorithm**: Using a customizable algorithm considering post titles, content, tags, categories, and custom taxonomies, YARPP finds related content from across your site
 * **Caching**: Inbuilt cache makes subsequent queries super efficient and fast
-* **Custom Templates and Styles**: Use the inbuilt **list** or **thumbnail** templates, or use the YARPP custom templating system for 100% control of how results are styles and displayed
+* **Custom Templates and Styles**: Use a pre-built **list** or **thumbnail** template, or use the YARPP custom templating system for 100% control of how results are styles and displayed
 * **Flexible** with a full range of placement options, including:
     + [Automatic Display Options](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation) (pick where to show YARPP from the YARPP settings page)
     + [RSS/Feed Options](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
-    + [Gutenberg Block](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+    + [Block Editor (Gutenberg)](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
     + [[yarpp] Shortcode](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
     + [Widget](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
     + [YARPP functions()](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
@@ -34,18 +36,23 @@ The best WordPress plugin for displaying related posts. Simple and flexible, wit
 * **WooCommerce** support
 * **Professionally maintained and supported** with regular updates
 
-**YARPP Algorithm Explained**
--------------------------------------------
+= YARPP Algorithm Explained =
 
 https://videopress.com/v/0n2TSzkb
 
-**Translate YARPP**
+= Contribute: Translate YARPP =
 
-YARPP is available for [translation directly on WordPress.org](https://translate.wordpress.org/projects/wp-plugins/yet-another-related-posts-plugin/). Check out the official [Translator Handbook](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/) to contribute.
+YARPP is available for [translation directly on WordPress.org](https://translate.wordpress.org/projects/wp-plugins/yet-another-related-posts-plugin/). Please check out the official [Translator Handbook](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/).
 
-**Trusted since 2008**
--------------------------------------------
-The **Yet Another Related Posts Plugin** (YARPP) is the **most popular and widely used** [Related Posts plugin for WordPress](https://yarpp.com/), encouraging Discovery and Engagement since 2008!
+= Wide Support =
+
+YARPP is the **most popular** and **the highest rated** [Related Posts Plugin for WordPress](https://yarpp.com/). With your support, this plugin always strives to be the best WordPress plugin for Content Discovery and Related Posts.
+
+✔ Over 10 years of development
+✔ Over 6 million downloads
+✔ Translated into more than a dozen languages
+✔ Professionally maintained and actively supported with regular updates
+✔ Works with all languages
 
 YARPP works best with PHP 5.3 or greater, MySQL 5.6 or greater OR MariaDB 10.1 or greater, and WordPress 3.7 or greater. See [the FAQ](https://wordpress.org/plugins/yet-another-related-posts-plugin/faq/) for answers to common questions.
 
@@ -54,9 +61,9 @@ YARPP works best with PHP 5.3 or greater, MySQL 5.6 or greater OR MariaDB 10.1 o
 1. YARPP options in WP-Admin: Automatic Display Options
 2. YARPP options in WP-Admin: "The Pool" settings
 3. YARPP options in WP-Admin: "The Algorithm" settings
-4. Example - starwars.com
-5. Example - CB2.com
-6. Example - chrisguillebeau.com
+4. Example - YARPP on starwars.com
+5. Example - YARPP on CB2.com
+6. Example - YARPP on chrisguillebeau.com
 
 == Installation ==
 
@@ -366,7 +373,7 @@ As of YARPP v5.19.0, YARPP usually defaults to using WordPress' default thumbnai
 
 However, if you used YARPP before v5.19.0, or your theme defines a "yarpp-thumbnail" size, the default is the "yarpp-thumbnail". To change "yarpp-thumbnail" size, add the following to your theme's `functions.php` file with appropriate width and height variables:
 
-`add_image_size('yarpp-thumbnail', $width, $height, true);` 
+`add_image_size( 'yarpp-thumbnail', $width, $height, true );` 
 
 When you do this, make sure you also set the YARPP setting "Thumbnail Size" to "yarpp-thumbnail".
 
@@ -374,7 +381,7 @@ Each time you change YARPP's thumbnail dimensions like this, you will probably w
 
 Note: if you don't use YARPP's thumbnail size, you might want to avoid generating it for newly uploaded images to save space. To do that add the following code snippet to your theme's `functions.php` file:
 
-`add_filter( 'yarpp_add_image_size', '_\_return_false' );`
+`add_filter( 'yarpp_add_image_size', "__return_false" );`
 
 = I'm using the Thumbnails display. Why aren't the right size thumbnails being served? =
 
@@ -522,6 +529,10 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.27.0 (20-July-2021) =
+* WordPress v5.8 compatibility
+* [Bugfix](https://wordpress.org/support/topic/trying-to-get-property-id-of-non-object-yarpp_core-line-1880/): Fixes PHP debug notice "Trying to get property 'ID' of non-object"
+
 = 5.26.0 (14-July-2021) =
 * [New](https://wordpress.org/support/topic/disable-yarpp-thumbnail-120x120/): Adds a `yarpp_add_image_size` filter to avoid creating YARPP thumbnail sizes
     + `add_filter( 'yarpp_add_image_size', '__return_false' );`
@@ -1386,5 +1397,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.26.0 =
+= 5.27.0 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
