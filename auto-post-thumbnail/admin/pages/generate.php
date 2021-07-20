@@ -154,7 +154,7 @@ class WAPT_Generate extends WAPT_Page {
 	public function showPageContent() {
 		$no_featured = $this->plugin->apt->get_posts_count();
 		$w_featured  = $this->plugin->apt->get_posts_count( true );
-		$percent     = ceil( $w_featured / ( $no_featured + $w_featured ) * 100 );
+		$percent     = ( $no_featured + $w_featured == 0 ) ? 0 : ceil( $w_featured / ( $no_featured + $w_featured ) * 100 );
 
 		$data = [
 			'stats' => [

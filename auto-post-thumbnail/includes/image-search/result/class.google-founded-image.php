@@ -29,7 +29,8 @@ class GoogleFoundedImage extends FoundedImage {
 		$this->image->height = $item['image']['height'] ?? '';
 
 
-		preg_match_all( '/.*\/(.*)\.(\w{3,4})?(\?|\/.*)?$/', $this->link, $match );
+		$path = parse_url( $this->link, PHP_URL_PATH );
+		preg_match_all( '/.*\/(.*)\.(\w{3,4})?(\?|\/.*)?/', $path, $match );
 
 		$this->file       = new \stdClass();
 		$this->file->name = $match[1][0] ?? '';

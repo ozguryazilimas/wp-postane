@@ -2,8 +2,8 @@
 $ajaxloader = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader-line.gif";
 $apt_google_nonce = wp_create_nonce( 'apt_api' );
 
-$apt_google_key = WAPT_Plugin::app()->getOption( 'google_apikey' );
-$apt_google_cse = WAPT_Plugin::app()->getOption( 'google_cse' );
+$apt_google_key = WAPT_Plugin::app()->getPopulateOption( 'google_apikey' );
+$apt_google_cse = WAPT_Plugin::app()->getPopulateOption( 'google_cse' );
 
 if ( isset( $_REQUEST['post'] ) ) {
 	$pid = $_REQUEST['post'];

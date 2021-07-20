@@ -23,8 +23,8 @@ class GoogleImages implements ImageSearch {
 	private $cse;
 
 	public function __construct() {
-		$this->key = WAPT_Plugin::app()->getOption( 'google_apikey' );
-		$this->cse = WAPT_Plugin::app()->getOption( 'google_cse' );
+		$this->key = WAPT_Plugin::app()->getPopulateOption( 'google_apikey' );
+		$this->cse = WAPT_Plugin::app()->getPopulateOption( 'google_cse' );
 	}
 
 
@@ -57,7 +57,7 @@ class GoogleImages implements ImageSearch {
 		 *      'count' => 10 | int,
 		 * ]
 		 */
-		$limit = WAPT_Plugin::app()->getOption( 'google_limit', [ 'expires' => time(), 'count' => 10 ] );
+		$limit = WAPT_Plugin::app()->getPopulateOption( 'google_limit', [ 'expires' => time(), 'count' => 10 ] );
 		if ( time() - $limit['expires'] > 3600 ) {
 			$limit['expires'] = time();
 			$limit['count']   = 10;

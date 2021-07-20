@@ -113,6 +113,11 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= 3.9.1 =
+* Fixed: post type generation.
+* Fixed: multisite support.
+* Other minor fixes
+
 = 3.9.0 =
 * New appearance of the plugin pages.
 * Add: Logging the generation process.

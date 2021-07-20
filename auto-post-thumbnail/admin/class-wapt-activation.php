@@ -27,9 +27,9 @@ class WAPT_Activation extends Wbcr_Factory449_Activator {
 			'count'   => 10,
 			'expires' => time(),
 		);
-		$google_limit = WAPT_Plugin::app()->getOption( 'google_limit' );
+		$google_limit = WAPT_Plugin::app()->getPopulateOption( 'google_limit' );
 		if ( ! $google_limit ) {
-			WAPT_Plugin::app()->updateOption( 'google_limit', $limit );
+			WAPT_Plugin::app()->updatePopulateOption( 'google_limit', $limit );
 		}
 
 		//update_option( $this->plugin->getOptionName( 'whats_new_v360' ), 1 );
@@ -41,7 +41,7 @@ class WAPT_Activation extends Wbcr_Factory449_Activator {
 	 * @since 1.0.0
 	 */
 	public function deactivate() {
-		$apt_ds = WAPT_Plugin::app()->getOption( 'delete_settings', false );
+		$apt_ds = WAPT_Plugin::app()->getPopulateOption( 'delete_settings', false );
 
 		if ( $apt_ds ) {
 			// remove plugin options

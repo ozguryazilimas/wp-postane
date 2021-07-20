@@ -140,7 +140,7 @@ class WAPT_ImageSettings extends WAPT_Page {
         <div id="wapt-image-preview" class="wapt-image-preview">
             <div class="wapt-image-preview-title"><h3><?php echo __( 'Post thumbnail preview', 'apt' ); ?></h3></div>
 			<?php
-			$format = WAPT_Plugin::app()->getOption( "image-type", "jpg" );
+			$format = WAPT_Plugin::app()->getPopulateOption( "image-type", "jpg" );
 			switch ( $format ) {
 				case 'png':
 					$format = 'png';

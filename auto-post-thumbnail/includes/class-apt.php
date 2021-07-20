@@ -100,11 +100,11 @@ class AutoPostThumbnails {
 	 * Initiate all required hooks.
 	 */
 	private function init() {
-		$is_auto_generate          = \WAPT_Plugin::app()->getOption( 'auto_generation', true );
-		$is_auto_upload            = \WAPT_Plugin::app()->getOption( 'auto_upload_images' );
-		$allowed_import_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'import_post_types', 'post' ) );
+		$is_auto_generate          = \WAPT_Plugin::app()->getPopulateOption( 'auto_generation', true );
+		$is_auto_upload            = \WAPT_Plugin::app()->getPopulateOption( 'auto_upload_images' );
+		$allowed_import_post_types = explode( ',', \WAPT_Plugin::app()->getPopulateOption( 'import_post_types', 'post' ) );
 
-		$this->allowed_generate_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'auto_post_types', 'post,page' ) );
+		$this->allowed_generate_post_types = explode( ',', \WAPT_Plugin::app()->getPopulateOption( 'auto_post_types', 'post,page' ) );
 
 		add_filter( 'mime_types', [ $this, 'allow_upload_webp' ] );
 
@@ -119,7 +119,7 @@ class AutoPostThumbnails {
 
 		if ( $is_auto_generate ) {
 			//add_action( 'publish_post', [ $this, 'publish_post' ], 10, 1 );
-			add_action( 'save_post', [ $this, 'publish_post' ], 10, 3 );
+			add_action( 'save_post', [ $this, 'save_post' ], 10, 3 );
 
 			// This hook handle update post via rest api. for example Wordpress mobile apps
 			foreach ( $this->allowed_generate_post_types as $post_type ) {
@@ -128,7 +128,7 @@ class AutoPostThumbnails {
 			// This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
 			add_action( 'transition_post_status', [ $this, 'check_required_transition' ], 10, 3 );
 		} else {
-			if ( \WAPT_Plugin::app()->getOption( 'auto_generation_notice', 1 ) ) {
+			if ( \WAPT_Plugin::app()->getPopulateOption( 'auto_generation_notice', 1 ) ) {
 				add_action( 'admin_notices', [ $this, 'notice_auto_generation' ] );
 			}
 		}
@@ -172,7 +172,7 @@ class AutoPostThumbnails {
 		}
 		check_ajax_referer( 'get-posts' );
 
-		$generate = \WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
+		$generate = \WAPT_Plugin::app()->getPopulateOption( "generate_autoimage", 'find' );
 
 		$this->plugin->logger->info( "START generate in mode:  {$generate}" );
 
@@ -438,6 +438,23 @@ class AutoPostThumbnails {
 	}
 
 	/**
+	 * Function for 'save_post' hook
+	 *
+	 * @param int $post_id Post ID.
+	 * @param \WP_Post $post
+	 * @param bool $update
+	 *
+	 * @throws Exception
+	 */
+	public function save_post( $post_id, $post = null, $update = true ) {
+		if ( ! in_array( $post->post_type, $this->allowed_generate_post_types ) ) {
+			$this->plugin->logger->warning( "The post type ({$post->post_type}) is not allowed for generation in settings" );
+		} else {
+			$this->publish_post( $post_id, $post, $update );
+		}
+	}
+
+	/**
 	 * Function to save first image in post as post thumbnail.
 	 *
 	 * @param int $post_id Post ID.
@@ -450,7 +467,7 @@ class AutoPostThumbnails {
 	public function publish_post( $post_id, $post = null, $update = true ) {
 		global $wpdb;
 
-		$autoimage  = \WAPT_Plugin::app()->getOption( "generate_autoimage", 'find' );
+		$autoimage  = \WAPT_Plugin::app()->getPopulateOption( "generate_autoimage", 'find' );
 		$generation = new GenerateResult( $post_id, $autoimage );
 
 		if ( ! $post ) {
@@ -465,12 +482,6 @@ class AutoPostThumbnails {
 		if ( ! $update ) {
 			return $generation->result();
 
-		}
-
-		if ( ! in_array( $post->post_type, $this->allowed_generate_post_types ) ) {
-			$this->plugin->logger->warning( "The post type ({$post->post_type}) is not allowed for generation in settings" );
-
-			return $generation->result( __( "The post type is not allowed for generation in settings", 'apt' ) );
 		}
 
 		// First check whether Post Thumbnail is already set for this post.
@@ -520,7 +531,7 @@ class AutoPostThumbnails {
 			} else if ( $autoimage == 'google' || $autoimage == 'find_google' ) {
 				$response = ( new GoogleImages() )->search( $post->post_title, 1 );
 				if ( ! empty( $response->images ) ) {
-					$this->plugin->logger->info( "Google image search results = " . var_export( $response->images, true ) );
+					$this->plugin->logger->info( "Google image search result = " . var_export( $response->images[0], true ) );
 					$thumb_id = apply_filters( 'wapt/download_from_google', 0, $response->images, $post_id );
 				}
 				if ( $thumb_id ) {
@@ -543,7 +554,7 @@ class AutoPostThumbnails {
 	 * @param array $postarr
 	 */
 	public function auto_upload( $data, $postarr = [] ) {
-		$allowed_post_types = explode( ',', \WAPT_Plugin::app()->getOption( 'import_post_types', '' ) );
+		$allowed_post_types = explode( ',', \WAPT_Plugin::app()->getPopulateOption( 'import_post_types', '' ) );
 
 		if ( $data instanceof \WP_Post ) {
 			$post_type = $data->post_type ?? '';
@@ -1105,7 +1116,7 @@ class AutoPostThumbnails {
 		// Получаем заголовок плагина
 		$plugin_title = \WAPT_Plugin::app()->getPluginTitle();
 
-		if ( ! \WAPT_Plugin::app()->getOption( 'google_apikey' ) && ! \WAPT_Plugin::app()->getOption( 'google_cse' ) ) {
+		if ( ! \WAPT_Plugin::app()->getPopulateOption( 'google_apikey' ) && ! \WAPT_Plugin::app()->getPopulateOption( 'google_cse' ) ) {
 			// Задаем текст уведомления
 			$notice_text = '<p><b>' . $plugin_title . ':</b> <br>' . sprintf( __( "To download images from Google, specify Google API keys in the <a href='%s'>settings</a>.", 'apt' ), admin_url( 'admin.php?page=wapt_settings-wbcr_apt' ) ) . "</p>";
 
@@ -1182,27 +1193,27 @@ class AutoPostThumbnails {
 	 */
 	public static function generate_image_with_text( $text, $pathToSave = '', $format = 'jpg', $width = 0, $height = 0 ) {
 		$font       = WAPT_PLUGIN_DIR . "/fonts/Arial.ttf";
-		$font_size  = \WAPT_Plugin::app()->getOption( 'font-size', 25 );
-		$font_color = \WAPT_Plugin::app()->getOption( 'font-color', "#ffffff" );
+		$font_size  = \WAPT_Plugin::app()->getPopulateOption( 'font-size', 25 );
+		$font_color = \WAPT_Plugin::app()->getPopulateOption( 'font-color', "#ffffff" );
 		if ( $width == 0 ) {
-			$width = (int) \WAPT_Plugin::app()->getOption( 'image-width', 800 );
+			$width = (int) \WAPT_Plugin::app()->getPopulateOption( 'image-width', 800 );
 		}
 		if ( $height == 0 ) {
-			$height = (int) \WAPT_Plugin::app()->getOption( 'image-height', 600 );
+			$height = (int) \WAPT_Plugin::app()->getPopulateOption( 'image-height', 600 );
 		}
 		$before_text = '';
 		$after_text  = '';
-		$shadow      = \WAPT_Plugin::app()->getOption( 'shadow', 0 );
+		$shadow      = \WAPT_Plugin::app()->getPopulateOption( 'shadow', 0 );
 		if ( ! $shadow ) {
 			$shadow_color = '';
 		} else {
-			$shadow_color = \WAPT_Plugin::app()->getOption( 'shadow-color', "#ffffff" );
+			$shadow_color = \WAPT_Plugin::app()->getPopulateOption( 'shadow-color', "#ffffff" );
 		}
 
 		$background_type = "color";
-		$background      = \WAPT_Plugin::app()->getOption( 'background-color', "#ff6262" );
+		$background      = \WAPT_Plugin::app()->getPopulateOption( 'background-color', "#ff6262" );
 
-		$text_transform = \WAPT_Plugin::app()->getOption( 'text-transform', "no" );
+		$text_transform = \WAPT_Plugin::app()->getPopulateOption( 'text-transform', "no" );
 		switch ( $text_transform ) {
 			case 'upper':
 				$text = mb_strtoupper( $text );
@@ -1212,7 +1223,7 @@ class AutoPostThumbnails {
 				break;
 		}
 
-		$text_crop = \WAPT_Plugin::app()->getOption( 'text-crop', 100 );
+		$text_crop = \WAPT_Plugin::app()->getPopulateOption( 'text-crop', 100 );
 		if ( $text_crop > 0 ) {
 			if ( strlen( $text ) > $text_crop ) {
 				$temp = substr( $text, 0, $text_crop );
@@ -1225,7 +1236,7 @@ class AutoPostThumbnails {
 		$valign       = 'center';
 		$padding_tb   = 15;
 		$padding_lr   = 15;
-		$line_spacing = \WAPT_Plugin::app()->getOption( 'text-line-spacing', 1.5 );
+		$line_spacing = \WAPT_Plugin::app()->getPopulateOption( 'text-line-spacing', 1.5 );
 
 		$params        = array(
 			'text'       => $text,
@@ -1264,7 +1275,7 @@ class AutoPostThumbnails {
 	public function generate_and_attachment( $post_id ) {
 		$this->plugin->logger->info( "Start generate attachment for post ID = {$post_id}" );
 
-		$format = \WAPT_Plugin::app()->getOption( "image-type", "jpg" );
+		$format = \WAPT_Plugin::app()->getPopulateOption( "image-type", "jpg" );
 		switch ( $format ) {
 			case 'png':
 				$extension = 'png';
