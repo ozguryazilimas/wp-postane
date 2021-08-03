@@ -4,12 +4,12 @@
 	<div id="yarpp_switch_container">
 		<ul id="yarpp_switch_tabs">
 			<li>
-				<a href="options-general.php?page=yarpp&mode=basic"><?php _e( 'YARPP Basic', 'yarpp' ); ?></a>
+				<a href="options-general.php?page=yarpp&mode=basic"><?php _e( 'YARPP Basic', 'yet-another-related-posts-plugin' ); ?></a>
 			</li>
 		</ul>
 
 		<div class="yarpp_switch_content">
-			<p><?php _e( 'The settings below allow you to configure the basic settings for YARPP', 'yarpp' ); ?></p>
+			<p><?php _e( 'The settings below allow you to configure the basic settings for YARPP', 'yet-another-related-posts-plugin' ); ?></p>
 		</div>
 	</div>
 
@@ -42,7 +42,7 @@
 			</script>
 
 			<div>
-				<input type="submit" class='button-primary yarpp_spin_on_click' name="update_yarpp" value="<?php _e( 'Save Changes', 'yarpp' ); ?>" />
+				<input type="submit" class='button-primary yarpp_spin_on_click' name="update_yarpp" value="<?php _e( 'Save Changes', 'yet-another-related-posts-plugin' ); ?>" />
 								<span class="spinner yarpp-no-float"></span>
 				<?php wp_nonce_field( 'update_yarpp', 'update_yarpp-nonce' ); ?>
 			</div>
@@ -51,8 +51,8 @@
 			</div>
 			<div>
 				<p>
-					<input type="button" name="yarpp-clear-cache" id="yarpp-clear-cache" class="button-secondary" value="<?php _e( 'Empty cache', 'yarpp' ); ?>">
-					<span id="yarpp-clear-cache-label"><small><?php _e( 'Use this button to manually clear YARPP cache', 'yarpp' ); ?></small></span>
+					<input type="button" name="yarpp-clear-cache" id="yarpp-clear-cache" class="button-secondary" value="<?php _e( 'Empty cache', 'yet-another-related-posts-plugin' ); ?>">
+					<span id="yarpp-clear-cache-label"><small><?php _e( 'Use this button to manually clear YARPP cache', 'yet-another-related-posts-plugin' ); ?></small></span>
 					<span class="spinner" style="float: none;"></span>
 			   </p>
 				<?php wp_nonce_field( 'clear_cache_yarpp', 'clear_cache-nonce' ); ?>

@@ -203,13 +203,13 @@ class YARPP_Admin {
       </script>	
       
     <div class="notice notice-info is-dismissible yarpp-review-notice">
-      <p class="yarpp-review-notice-text">' . __( 'Hey there! We noticed that you have had success using ', 'yarpp' ) . '<a href="' . admin_url( 'options-general.php?page=yarpp' ) . '">YARPP - Related Posts</a>! ' . __( 'Could you please do us a BIG favor and give us a quick 5-star rating on WordPress? It will boost our motivation and spread the word. We would really appreciate it 🤗 — Team YARPP', 'yarpp' ) . '
+      <p class="yarpp-review-notice-text">' . __( 'Hey there! We noticed that you have had success using ', 'yet-another-related-posts-plugin' ) . '<a href="' . admin_url( 'options-general.php?page=yarpp' ) . '">YARPP - Related Posts</a>! ' . __( 'Could you please do us a BIG favor and give us a quick 5-star rating on WordPress? It will boost our motivation and spread the word. We would really appreciate it 🤗 — Team YARPP', 'yet-another-related-posts-plugin' ) . '
         <br />
         <br />
-        <a onClick="' . "yarpp_openWindowReload('https://wordpress.org/support/plugin/yet-another-related-posts-plugin/reviews/?rate=5#new-post', '$dismiss_forever_url')" . '" class="button button-primary">' . __( 'Ok, you deserve it', 'shareaholic' ) . '</a> &nbsp;
-        <a href="' . $dismiss_forlater_url . '">' . __( 'No, not good enough', 'yarpp' ) . '</a> &nbsp;
-        <a href="' . $dismiss_forever_url . '">' . __( 'I already did', 'yarpp' ) . '</a>  &nbsp;
-        <a href="' . $dismiss_forever_url . '">' . __( 'Dismiss', 'yarpp' ) . '</a>
+        <a onClick="' . "yarpp_openWindowReload('https://wordpress.org/support/plugin/yet-another-related-posts-plugin/reviews/?rate=5#new-post', '$dismiss_forever_url')" . '" class="button button-primary">' . __( 'Ok, you deserve it', 'yet-another-related-posts-plugin' ) . '</a> &nbsp;
+        <a href="' . $dismiss_forlater_url . '">' . __( 'No, not good enough', 'yet-another-related-posts-plugin' ) . '</a> &nbsp;
+        <a href="' . $dismiss_forever_url . '">' . __( 'I already did', 'yet-another-related-posts-plugin' ) . '</a>  &nbsp;
+        <a href="' . $dismiss_forever_url . '">' . __( 'Dismiss', 'yet-another-related-posts-plugin' ) . '</a>
       </p>
     </div>';
 	}
@@ -254,7 +254,7 @@ class YARPP_Admin {
 		*/
 		if ( ! $this->core->yarppPro['active'] ) {
 			foreach ( $metabox_post_types as $post_type ) {
-				$title = __( 'YARPP: Related Posts', 'yarpp' );
+				$title = __( 'YARPP: Related Posts', 'yet-another-related-posts-plugin' );
 				add_meta_box( 'yarpp_relatedposts', $title, array( $this, 'metabox' ), $post_type, 'normal' );
 			}
 		}
@@ -285,7 +285,7 @@ class YARPP_Admin {
 			$current_screen->add_help_tab(
 				array(
 					'id'       => 'faq',
-					'title'    => __( 'Frequently Asked Questions', 'yarpp' ),
+					'title'    => __( 'Frequently Asked Questions', 'yet-another-related-posts-plugin' ),
 					'callback' => array( &$this, 'help_faq' ),
 				)
 			);
@@ -293,7 +293,7 @@ class YARPP_Admin {
 			$current_screen->add_help_tab(
 				array(
 					'id'       => 'dev',
-					'title'    => __( 'Developing with YARPP', 'yarpp' ),
+					'title'    => __( 'Developing with YARPP', 'yet-another-related-posts-plugin' ),
 					'callback' => array( &$this, 'help_dev' ),
 				)
 			);
@@ -301,7 +301,7 @@ class YARPP_Admin {
 			$current_screen->add_help_tab(
 				array(
 					'id'       => 'optin',
-					'title'    => __( 'Optional Data Collection', 'yarpp' ),
+					'title'    => __( 'Optional Data Collection', 'yet-another-related-posts-plugin' ),
 					'callback' => array( &$this, 'help_optin' ),
 				)
 			);
@@ -322,7 +322,7 @@ class YARPP_Admin {
 		} else {
 			echo(
 			'<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#faq">' .
-			  __( 'Frequently Asked Questions', 'yarpp' ) .
+			  __( 'Frequently Asked Questions', 'yet-another-related-posts-plugin' ) .
 			'</a>'
 			);
 		}
@@ -338,7 +338,7 @@ class YARPP_Admin {
 		} else {
 			echo(
 			'<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation" target="_blank">' .
-			  __( 'Developing with YARPP', 'yarpp' ) .
+			  __( 'Developing with YARPP', 'yet-another-related-posts-plugin' ) .
 			'</a>'
 			);
 		}
@@ -350,7 +350,7 @@ class YARPP_Admin {
 				__(
 					"With your permission, YARPP will send information about YARPP's settings, usage, and environment
                     back to a central server at ",
-					'yarpp'
+					'yet-another-related-posts-plugin'
 				) . '<code>yarpp.org</code>' . '.&nbsp;' .
 			'</p>' .
 			'<p>' .
@@ -358,28 +358,28 @@ class YARPP_Admin {
 				'for country, domain, and date installed information.' .
 			'</p>' .
 			'<p>' .
-			__(
+				__(
 				'This information will be used to improve YARPP in the future and help decide future development
                 decisions for YARPP.',
-				'yarpp'
+				'yet-another-related-posts-plugin'
 			) . ' ' .
 			'</p>' .
 			'<p>' .
 			'<strong>' .
 				__(
 					'Contributing this data will help make YARPP better for you and for other YARPP users.',
-					'yarpp'
+					'yet-another-related-posts-plugin'
 				) . '</strong>' .
 			'</p>'
 		);
 
 		echo(
 			'<p>' .
-				__( 'The following information is sent back to YARPP:', 'yarpp' ) .
+				__( 'The following information is sent back to YARPP:', 'yet-another-related-posts-plugin' ) .
 			'</p>' .
 		'<div id="optin_data_frame"></div>' .
 			'<p>' .
-				__( 'In addition, YARPP also loads an invisible pixel image with your YARPP results to know how often YARPP is being used.', 'yarpp' ) .
+				__( 'In addition, YARPP also loads an invisible pixel image with your YARPP results to know how often YARPP is being used.', 'yet-another-related-posts-plugin' ) .
 			'</p>'
 		);
 	}
@@ -462,11 +462,11 @@ class YARPP_Admin {
 		$out = '<div class="updated fade"><p>';
 
 		if ( $type === 'upgrade' ) {
-			$out .= '<strong>' . sprintf( __( '%1$s updated successfully.' ), 'Yet Another Related Posts Plugin' ) . '</strong>';
+			$out .= '<strong>' . sprintf( __( '%1$s updated successfully.', 'yet-another-related-posts-plugin' ), 'Yet Another Related Posts Plugin' ) . '</strong>';
 		}
 
 		if ( $type === 'install' ) {
-			$tmp  = __( 'Thank you for installing <span>Yet Another Related Posts Plugin</span>!', 'yarpp' );
+			$tmp  = __( 'Thank you for installing <span>Yet Another Related Posts Plugin</span>!', 'yet-another-related-posts-plugin' );
 			$out .= '<strong>' . str_replace( '<span>', '<span style="font-style:italic; font-weight: inherit;">', $tmp ) . '</strong>';
 		}
 
@@ -550,16 +550,16 @@ class YARPP_Admin {
 			wp_enqueue_script( 'yarpp_options', yarpp_get_file_url_for_environment( 'js/options_basic.min.js', 'src/js/options_basic.js' ), array( 'jquery' ), $version );
 			// Localize the script with messages
 			$translation_strings = array(
-				'alert_message' => __( 'This will clear all of YARPP’s cached related results.<br> Are you sure?', 'yarpp' ),
-				'model_title'   => __( 'YARPP Cache', 'yarpp' ),
-				'success'       => __( 'Cache cleared successfully!', 'yarpp' ),
+				'alert_message' => __( 'This will clear all of YARPP’s cached related results.<br> Are you sure?', 'yet-another-related-posts-plugin' ),
+				'model_title'   => __( 'YARPP Cache', 'yet-another-related-posts-plugin' ),
+				'success'       => __( 'Cache cleared successfully!', 'yet-another-related-posts-plugin' ),
 				'logo'          => plugins_url( '/images/icon-256x256.png', YARPP_MAIN_FILE ),
 				'bgcolor'       => '#fff',
-				'forbidden'     => __( 'You are not allowed to do this!', 'yarpp' ),
-				'nonce_fail'    => __( 'You left this page open for too long. Please refresh the page and try again!', 'yarpp' ),
-				'error'         => __( 'There is some error. Please refresh the page and try again!', 'yarpp' ),
-				'show_code'     => __( 'Show Code', 'yarpp' ),
-				'hide_code'     => __( 'Hide Code', 'yarpp' )
+				'forbidden'     => __( 'You are not allowed to do this!', 'yet-another-related-posts-plugin' ),
+				'nonce_fail'    => __( 'You left this page open for too long. Please refresh the page and try again!', 'yet-another-related-posts-plugin' ),
+				'error'         => __( 'There is some error. Please refresh the page and try again!', 'yet-another-related-posts-plugin' ),
+				'show_code'     => __( 'Show Code', 'yet-another-related-posts-plugin' ),
+				'hide_code'     => __( 'Hide Code', 'yet-another-related-posts-plugin' )
 			);
 			wp_localize_script( 'yarpp_options', 'yarpp_messages', $translation_strings );
 
@@ -633,14 +633,14 @@ class YARPP_Admin {
 		<?php if ( in_array( get_post_type(), $metabox_post_types ) ) { ?>
 	  <p>
 		<input type="checkbox" id="yarpp_display_for_this_post" name="yarpp_display_for_this_post" <?php checked( 1, $yarpp_disable_here, true ); ?> />
-		<label for="yarpp_display_for_this_post"><strong><?php esc_html_e( 'Automatically display related content on this post', 'yarpp' ); ?></strong></label>
+		<label for="yarpp_display_for_this_post"><strong><?php esc_html_e( 'Automatically display related content on this post', 'yet-another-related-posts-plugin' ); ?></strong></label>
 		<br />
-		<em><?php esc_html_e( 'If this is unchecked, then YARPP will not automatically insert the related posts at the end of this post.', 'yarpp' ); ?></em>
+		<em><?php esc_html_e( 'If this is unchecked, then YARPP will not automatically insert the related posts at the end of this post.', 'yet-another-related-posts-plugin' ); ?></em>
 	  </p>
 	<?php } ?>
 		<?php
 		if ( ! get_the_ID() ) {
-			echo '<div><p>' . __( 'Related posts will be displayed once you save this post', 'yarpp' ) . '.</p></div>';
+			echo '<div><p>' . __( 'Related posts will be displayed once you save this post', 'yet-another-related-posts-plugin' ) . '.</p></div>';
 		} else {
 			echo '<div id="yarpp-related-posts"><img height="20px" width="20px" src="' . esc_url( admin_url( 'images/spinner-2x.gif' ) ) . '" alt="loading..." /></div>';
 		}
@@ -1006,13 +1006,13 @@ class YARPP_Admin {
 				'language'         => strtolower( get_bloginfo( 'language' ) ),
 			),
 			'reasons'                 => array(
-				'error'                  => esc_html__( 'I think I found a bug', 'yarpp' ),
-				'feature-missing'        => esc_html__( 'It\'s missing a feature I need', 'yarpp' ),
-				'too-hard'               => esc_html__( 'I couldn\'t figure out how to do something', 'yarpp' ),
-				'inefficient'            => esc_html__( 'It\'s too slow or inefficient', 'yarpp' ),
-				'no-signup'              => esc_html__( 'I don\'t want to signup', 'yarpp' ),
-				'temporary-deactivation' => esc_html__( 'Temporarily deactivating or troubleshooting', 'yarpp' ),
-				'other'                  => esc_html__( 'Other', 'yarpp' ),
+				'error'                  => esc_html__( 'I think I found a bug', 'yet-another-related-posts-plugin' ),
+				'feature-missing'        => esc_html__( 'It\'s missing a feature I need', 'yet-another-related-posts-plugin' ),
+				'too-hard'               => esc_html__( 'I couldn\'t figure out how to do something', 'yet-another-related-posts-plugin' ),
+				'inefficient'            => esc_html__( 'It\'s too slow or inefficient', 'yet-another-related-posts-plugin' ),
+				'no-signup'              => esc_html__( 'I don\'t want to signup', 'yet-another-related-posts-plugin' ),
+				'temporary-deactivation' => esc_html__( 'Temporarily deactivating or troubleshooting', 'yet-another-related-posts-plugin' ),
+				'other'                  => esc_html__( 'Other', 'yet-another-related-posts-plugin' ),
 			),
 			'reasons_needing_comment' => array(
 				'error',
@@ -1021,24 +1021,24 @@ class YARPP_Admin {
 				'other',
 			),
 			'translations'            => array(
-				'quick_feedback'        => esc_html__( 'Quick Feedback', 'yarpp' ),
+				'quick_feedback'        => esc_html__( 'Quick Feedback', 'yet-another-related-posts-plugin' ),
 				'foreword'              => esc_html__(
 					'If you would be kind enough, please tell us why you are deactivating the plugin:',
-					'yarpp'
+					'yet-another-related-posts-plugin'
 				),
 				'please_tell_us'        => esc_html__(
 					'Please share anything you think might be helpful. The more we know about your problem, the faster we\'ll be able to fix it.',
-					'yarpp'
+					'yet-another-related-posts-plugin'
 				),
-				'cancel'                => esc_html__( 'Cancel', 'yarpp' ),
-				'skip_and_deactivate'   => esc_html__( 'Skip &amp; Deactivate', 'yarpp' ),
-				'submit_and_deactivate' => esc_html__( 'Submit &amp; Deactivate', 'yarpp' ),
-				'please_wait'           => esc_html__( 'Please wait...', 'yarpp' ),
-				'thank_you'             => esc_html__( 'Thank you!', 'yarpp' ),
+				'cancel'                => esc_html__( 'Cancel', 'yet-another-related-posts-plugin' ),
+				'skip_and_deactivate'   => esc_html__( 'Skip &amp; Deactivate', 'yet-another-related-posts-plugin' ),
+				'submit_and_deactivate' => esc_html__( 'Submit &amp; Deactivate', 'yet-another-related-posts-plugin' ),
+				'please_wait'           => esc_html__( 'Please wait...', 'yet-another-related-posts-plugin' ),
+				'thank_you'             => esc_html__( 'Thank you!', 'yet-another-related-posts-plugin' ),
 				'ask_for_support'       => sprintf(
 					esc_html__(
 						'Have you visited %1$sthe support forum%2$s and %3$sread the FAQs%2$s for help?',
-						'yarpp'
+						'yet-another-related-posts-plugin'
 					),
 					'<a href="https://wordpress.org/support/plugin/yet-another-related-posts-plugin/" target="_blank" >',
 					'</a>',
@@ -1046,7 +1046,7 @@ class YARPP_Admin {
 				),
 				'email_request'         => esc_html__(
 					'If you would like to tell us more, please leave your email here. We will be in touch (only for product feedback, nothing else).',
-					'yarpp'
+					'yet-another-related-posts-plugin'
 				),
 			),
 

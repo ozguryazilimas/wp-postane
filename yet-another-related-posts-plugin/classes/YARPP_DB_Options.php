@@ -158,7 +158,7 @@ class YARPP_DB_Options {
 	 * @return string
 	 */
 	public function get_fulltext_db_error() {
-		return (string) get_option( self::FULLTEXT_DB_ERROR, esc_html__( 'No error recorded.', 'yarpp' ) );
+		return (string) get_option( self::FULLTEXT_DB_ERROR, esc_html__( 'No error recorded.', 'yet-another-related-posts-plugin' ) );
 	}
 
 	/**

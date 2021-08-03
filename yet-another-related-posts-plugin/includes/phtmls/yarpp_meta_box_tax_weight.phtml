@@ -5,26 +5,26 @@
 		?>:
 		<?php
 		if ( $taxonomy->_builtin == false ) {
-			echo " <span class='yarpp_help dashicons dashicons-info' data-help='" . esc_attr( __( 'This belongs to a custom taxonomy', 'yarpp' ) ) . "'></span>";
+			echo " <span class='yarpp_help dashicons dashicons-info' data-help='" . esc_attr( __( 'This belongs to a custom taxonomy', 'yet-another-related-posts-plugin' ) ) . "'></span>";
 		}
 		?>
 	</div>
 	<div>
 		<select name=weight[tax][<?php echo $taxonomy->name; ?>]">
 			<option value="no" <?php echo ( ( ! $weight && ! $require ) ? 'selected' : null ); ?> > 
-				<?php _e( 'do not consider', 'yarpp' ); ?>
+				<?php _e( 'do not consider', 'yet-another-related-posts-plugin' ); ?>
 			</option>
 			<option value="consider" <?php echo ( ( $weight == 1 && ! $require ) ? 'selected' : null ); ?> >
-				<?php _e( 'consider', 'yarpp' ); ?>
+				<?php _e( 'consider', 'yet-another-related-posts-plugin' ); ?>
 			</option>
 			<option value="consider_extra" <?php echo ( ( $weight > 1 && ! $require ) ? 'selected' : null ); ?> >
-				<?php _e( 'consider with extra weight', 'yarpp' ); ?>
+				<?php _e( 'consider with extra weight', 'yet-another-related-posts-plugin' ); ?>
 			</option>
 			<option value="require_one" <?php echo ( ( $require == 1 ) ? 'selected' : null ); ?>>
-				<?php echo sprintf( __( 'require at least one %s in common', 'yarpp' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
+				<?php echo sprintf( __( 'require at least one %s in common', 'yet-another-related-posts-plugin' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
 			</option>
 			<option value="require_more" <?php echo ( ( $require == 2 ) ? 'selected' : null ); ?>>
-				<?php echo sprintf( __( 'require more than one %s in common', 'yarpp' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
+				<?php echo sprintf( __( 'require more than one %s in common', 'yet-another-related-posts-plugin' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
 			</option>
 		</select>
 	</div>

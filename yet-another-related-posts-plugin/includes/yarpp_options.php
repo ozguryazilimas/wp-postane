@@ -175,7 +175,7 @@ if ( isset( $_POST['update_yarpp'] ) && check_admin_referer( 'update_yarpp', 'up
 	$new_options = apply_filters( 'yarpp_settings_save', $new_options );
 	yarpp_set_option( $new_options );
 
-	echo '<div class="updated fade"><p>' . __( 'Options saved!', 'yarpp' ) . '</p></div>';
+	echo '<div class="updated fade"><p>' . __( 'Options saved!', 'yet-another-related-posts-plugin' ) . '</p></div>';
 }
 
 wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );

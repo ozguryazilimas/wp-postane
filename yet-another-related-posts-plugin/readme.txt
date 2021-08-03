@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.8
-Stable tag: 5.27.0
+Stable tag: 5.27.1
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -529,6 +529,11 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.27.1 (03-August-2021) =
+* Bugfix: i18n / localization for new text strings was not working.
+    + P.s. YARPP is available for [translation directly on WordPress.org](https://translate.wordpress.org/projects/wp-plugins/yet-another-related-posts-plugin/). Please check out the official [Translator Handbook](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/).
+* [Bugfix](https://wordpress.org/support/topic/wp_query-not-working-for-some-reason/): Remove YARPP's `WP_Query` filters after the query is done rather than waiting until rendering is done because any queries done in that time will be affected.
+
 = 5.27.0 (20-July-2021) =
 * WordPress v5.8 compatibility
 * [Bugfix](https://wordpress.org/support/topic/trying-to-get-property-id-of-non-object-yarpp_core-line-1880/): Fixes PHP debug notice "Trying to get property 'ID' of non-object"
@@ -1397,5 +1402,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.27.0 =
+= 5.27.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

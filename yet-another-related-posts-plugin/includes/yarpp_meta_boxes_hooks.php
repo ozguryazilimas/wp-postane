@@ -12,7 +12,7 @@ global $yarpp;
 
 add_meta_box(
 	'yarpp_pool',
-	__( '"The Pool"', 'yarpp' ),
+	__( '"The Pool"', 'yet-another-related-posts-plugin' ),
 	array( new YARPP_Meta_Box_Pool(), 'display' ),
 	'settings_page_yarpp',
 	'normal',
@@ -21,7 +21,7 @@ add_meta_box(
 
 add_meta_box(
 	'yarpp_relatedness',
-	__( 'The Algorithm', 'yarpp' ),
+	__( 'The Algorithm', 'yet-another-related-posts-plugin' ),
 	array(
 		new YARPP_Meta_Box_Relatedness(),
 		'display',
@@ -33,7 +33,7 @@ add_meta_box(
 
 add_meta_box(
 	'yarpp_display_web',
-	__( 'Automatic Display Options', 'yarpp' ),
+	__( 'Automatic Display Options', 'yet-another-related-posts-plugin' ),
 	array(
 		new YARPP_Meta_Box_Display_Web(),
 		'display',
@@ -45,7 +45,7 @@ add_meta_box(
 
 add_meta_box(
 	'yarpp_display_contact',
-	__( 'Contact YARPP', 'yarpp' ),
+	__( 'Contact YARPP', 'yet-another-related-posts-plugin' ),
 	array( new YARPP_Meta_Box_Contact(), 'display' ),
 	'settings_page_yarpp',
 	'side',
@@ -54,7 +54,7 @@ add_meta_box(
 
 add_meta_box(
 	'yarpp_display_rss',
-	__( 'RSS Feed Options', 'yarpp' ),
+	__( 'RSS Feed Options', 'yet-another-related-posts-plugin' ),
 	array(
 		new YARPP_Meta_Box_Display_Feed(),
 		'display',
@@ -72,7 +72,7 @@ if (
 ) {
 	add_meta_box(
 		'yarpp_display_api',
-		__( 'REST API Options', 'yarpp' ),
+		__( 'REST API Options', 'yet-another-related-posts-plugin' ),
 		array(
 			new YARPP_Meta_Box_Display_Rest_Api(),
 			'display',

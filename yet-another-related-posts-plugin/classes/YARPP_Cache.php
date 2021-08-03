@@ -23,7 +23,7 @@ abstract class YARPP_Cache {
 	public $last_sql;
 	function __construct( &$core ) {
 		$this->core = &$core;
-		$this->name = __( $this->name, 'yarpp' );
+		$this->name = $this->name;
 	}
 
 	function add_signature( $query ) {

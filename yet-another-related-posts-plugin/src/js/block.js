@@ -93,20 +93,23 @@
 	} = components;
 
 	registerBlockType('yarpp/yarpp-block', {
-		title: __('Related Posts [YARPP]', 'yarpp'),
-		description: __('Display related posts by YARPP', 'yarpp'),
+		title: __('Related Posts [YARPP]', 'yet-another-related-posts-plugin'),
+		description: __(
+			'Display related posts by YARPP',
+			'yet-another-related-posts-plugin',
+		),
 		category: 'yarpp',
 		icon: iconEl,
 		keywords: [
-			__('yarpp', 'yarpp'),
-			__('yet another', 'yarpp'),
-			__('related posts', 'yarpp'),
-			__('contextual', 'yarpp'),
-			__('popular', 'yarpp'),
-			__('similar', 'yarpp'),
-			__('thumbnail', 'yarpp'),
-			__('you may also', 'yarpp'),
-			__('posts', 'yarpp'),
+			__('yarpp', 'yet-another-related-posts-plugin'),
+			__('yet another', 'yet-another-related-posts-plugin'),
+			__('related posts', 'yet-another-related-posts-plugin'),
+			__('contextual', 'yet-another-related-posts-plugin'),
+			__('popular', 'yet-another-related-posts-plugin'),
+			__('similar', 'yet-another-related-posts-plugin'),
+			__('thumbnail', 'yet-another-related-posts-plugin'),
+			__('you may also', 'yet-another-related-posts-plugin'),
+			__('posts', 'yet-another-related-posts-plugin'),
 		],
 		supports: {
 			html: false,
@@ -170,7 +173,10 @@
 						{ title: 'YARPP Posts Settings', initialOpen: true },
 
 						el(TextControl, {
-							label: __('Maximum number of posts', 'yarpp'),
+							label: __(
+								'Maximum number of posts',
+								'yet-another-related-posts-plugin',
+							),
 							value: attributes.limit,
 							onChange: function (val) {
 								setAttributes({ limit: parseInt(val) });
@@ -181,7 +187,7 @@
 						}),
 						el(SelectControl, {
 							value: attributes.template,
-							label: __('Theme', 'yarpp'),
+							label: __('Theme', 'yet-another-related-posts-plugin'),
 							onChange: changeThumbnail,
 							options: template,
 						}),

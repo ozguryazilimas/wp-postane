@@ -57,7 +57,7 @@ class YARPP {
 		$this->yarppPro = $this->get_pro_options();
 
 		/* Loads the plugin's translated strings. */
-		load_plugin_textdomain( 'yarpp', false, plugin_basename( YARPP_DIR ) . '/lang' );
+		load_plugin_textdomain( 'yet-another-related-posts-plugin', false, plugin_basename( YARPP_DIR ) . '/lang' );
 
 		/* Load cache object. */
 		$this->storage_class     = 'YARPP_Cache_' . ucfirst( YARPP_CACHE_TYPE );
@@ -189,9 +189,9 @@ class YARPP {
 			'after_title'                         => '</li>',
 			'before_post'                         => ' <small>',
 			'after_post'                          => '</small>',
-			'before_related'                      => '<h3>' . __( 'Related posts:', 'yarpp' ) . '</h3><ol>',
+			'before_related'                      => '<h3>' . __( 'Related posts:', 'yet-another-related-posts-plugin' ) . '</h3><ol>',
 			'after_related'                       => '</ol>',
-			'no_results'                          => '<p>' . __( 'No related posts.', 'yarpp' ) . '</p>',
+			'no_results'                          => '<p>' . __( 'No related posts.', 'yet-another-related-posts-plugin' ) . '</p>',
 			'order'                               => 'score DESC',
 			'rss_limit'                           => 3,
 			'rss_excerpt_length'                  => 10,
@@ -199,9 +199,9 @@ class YARPP {
 			'rss_after_title'                     => '</li>',
 			'rss_before_post'                     => ' <small>',
 			'rss_after_post'                      => '</small>',
-			'rss_before_related'                  => '<h3>' . __( 'Related posts:', 'yarpp' ) . '</h3><ol>',
+			'rss_before_related'                  => '<h3>' . __( 'Related posts:', 'yet-another-related-posts-plugin' ) . '</h3><ol>',
 			'rss_after_related'                   => '</ol>',
-			'rss_no_results'                      => '<p>' . __( 'No related posts.', 'yarpp' ) . '</p>',
+			'rss_no_results'                      => '<p>' . __( 'No related posts.', 'yet-another-related-posts-plugin' ) . '</p>',
 			'rss_order'                           => 'score DESC',
 			'past_only'                           => false,
 			'show_excerpt'                        => false,
@@ -229,9 +229,9 @@ class YARPP {
 			),
 			'require_tax'                         => array(),
 			'optin'                               => false,
-			'thumbnails_heading'                  => __( 'Related posts:', 'yarpp' ),
+			'thumbnails_heading'                  => __( 'Related posts:', 'yet-another-related-posts-plugin' ),
 			'thumbnails_default'                  => plugins_url( 'images/default.png', dirname( __FILE__ ) ),
-			'rss_thumbnails_heading'              => __( 'Related posts:', 'yarpp' ),
+			'rss_thumbnails_heading'              => __( 'Related posts:', 'yet-another-related-posts-plugin' ),
 			'rss_thumbnails_default'              => plugins_url( 'images/default.png', dirname( __FILE__ ) ),
 			'auto_display_archive'                => false,
 			'auto_display_post_types'             => array( 'post' ),
@@ -791,9 +791,9 @@ class YARPP {
 			'after_title'         => '</li>',
 			'before_post'         => ' <small>',
 			'after_post'          => '</small>',
-			'before_related'      => '<h3>' . __( 'Related posts:', 'yarpp' ) . '</h3><ol>',
+			'before_related'      => '<h3>' . __( 'Related posts:', 'yet-another-related-posts-plugin' ) . '</h3><ol>',
 			'after_related'       => '</ol>',
-			'no_results'          => '<p>' . __( 'No related posts.', 'yarpp' ) . '</p>',
+			'no_results'          => '<p>' . __( 'No related posts.', 'yet-another-related-posts-plugin' ) . '</p>',
 			'order'               => 'score DESC',
 			'rss_limit'           => 3,
 			'rss_template_file'   => '',
@@ -802,9 +802,9 @@ class YARPP {
 			'rss_after_title'     => '</li>',
 			'rss_before_post'     => ' <small>',
 			'rss_after_post'      => '</small>',
-			'rss_before_related'  => '<h3>' . __( 'Related posts:', 'yarpp' ) . '</h3><ol>',
+			'rss_before_related'  => '<h3>' . __( 'Related posts:', 'yet-another-related-posts-plugin' ) . '</h3><ol>',
 			'rss_after_related'   => '</ol>',
-			'rss_no_results'      => '<p>' . __( 'No related posts.', 'yarpp' ) . '</p>',
+			'rss_no_results'      => '<p>' . __( 'No related posts.', 'yet-another-related-posts-plugin' ) . '</p>',
 			'rss_order'           => 'score DESC',
 			'title'               => '2',
 			'body'                => '2',
@@ -1269,7 +1269,7 @@ class YARPP {
 		}
 
 		foreach ( array( 'before_related', 'rss_before_related' ) as $key ) {
-			if ( $settings[ $key ] !== '<p>' . __( 'Related posts:', 'yarpp' ) . '</p><ol>'
+			if ( $settings[ $key ] !== '<p>' . __( 'Related posts:', 'yet-another-related-posts-plugin' ) . '</p><ol>'
 				&& $settings[ $key ] !== $this->default_options[ $key ]
 			) {
 				$changed[] = $key;
@@ -1478,6 +1478,10 @@ class YARPP {
 		$related_query = $wp_query; // backwards compatibility
 		$related_count = $related_query->post_count;
 
+		if ( $cache_status !== YARPP_NO_RELATED ) {
+			$this->active_cache->end_yarpp_time();
+		}
+
 		// CSS class "yarpp-related" exists for backwards compatibility in-case older custom themes are dependent on it.
 		$output .= "<div class='yarpp yarpp-related";
 
@@ -1547,12 +1551,6 @@ class YARPP {
 		}
 		$this->rendering_related_content = false;
 		$output                          = trim( $output ) . "\n";
-
-		if ( $cache_status === YARPP_NO_RELATED ) {
-			// Uh, do nothing. Stay very still.
-		} else {
-			$this->active_cache->end_yarpp_time();
-		}
 
 		unset( $related_query );
 		$this->restore_post_context();
@@ -2133,9 +2131,9 @@ class YARPP {
 	 */
 	public function recent_units() {
 		return array(
-			'day'   => __( 'day(s)', 'yarpp' ),
-			'week'  => __( 'week(s)', 'yarpp' ),
-			'month' => __( 'month(s)', 'yarpp' ),
+			'day'   => __( 'day(s)', 'yet-another-related-posts-plugin' ),
+			'week'  => __( 'week(s)', 'yet-another-related-posts-plugin' ),
+			'month' => __( 'month(s)', 'yet-another-related-posts-plugin' ),
 		);
 	}
 

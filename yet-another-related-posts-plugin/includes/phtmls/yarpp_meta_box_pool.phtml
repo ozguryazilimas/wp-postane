@@ -2,7 +2,7 @@
 	<?php
 	_e(
 		'"The Pool" refers to the pool of posts and pages that are candidates for display as related to the current entry.',
-		'yarpp'
+		'yet-another-related-posts-plugin'
 	)
 	?>
 </p>
@@ -10,11 +10,11 @@
 <?php
 	$this->include_post_type();
 foreach ( $yarpp->get_taxonomies() as $taxonomy ) {
-	$this->exclude( $taxonomy->name, sprintf( __( 'Disallow by %s:', 'yarpp' ), ucwords( $taxonomy->labels->name ) ), $taxonomy->_builtin );
+	$this->exclude( $taxonomy->name, sprintf( __( 'Disallow by %s:', 'yet-another-related-posts-plugin' ), ucwords( $taxonomy->labels->name ) ), $taxonomy->_builtin );
 }
 
-	$this->checkbox( 'show_pass_post', __( 'Display password protected posts', 'yarpp' ) );
-	$this->checkbox( 'include_sticky_posts', __( 'Display sticky posts', 'yarpp' ) );
+	$this->checkbox( 'show_pass_post', __( 'Display password protected posts', 'yet-another-related-posts-plugin' ) );
+	$this->checkbox( 'include_sticky_posts', __( 'Display sticky posts', 'yet-another-related-posts-plugin' ) );
 	$recent = yarpp_get_option( 'recent' );
 if ( (bool) $recent ) {
 	list($recent_number, $recent_units) = explode( ' ', $recent );
@@ -40,7 +40,7 @@ $recent_units_html .= '</select>';
 
 			printf(
 			// translators: 1: HTML for a number field, 2: HTML for a units dropdown (eg "week(s)", "day(s)", month(s))
-				__( 'Display only posts from the past %1$s %2$s', 'yarpp' ),
+				__( 'Display only posts from the past %1$s %2$s', 'yet-another-related-posts-plugin' ),
 				$recent_number_html,
 				$recent_units_html
 			);
@@ -50,11 +50,11 @@ $recent_units_html .= '</select>';
 </div>
 
 <?php
-	$this->checkbox( 'past_only', __( 'Display only posts older than current post', 'yarpp' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( 'Only posts older than the current post will be displayed.', 'yarpp' ) ) . "'>&nbsp;</span>" );
+	$this->checkbox( 'past_only', __( 'Display only posts older than current post', 'yet-another-related-posts-plugin' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( 'Only posts older than the current post will be displayed.', 'yet-another-related-posts-plugin' ) ) . "'>&nbsp;</span>" );
 
 	$this->checkbox(
 		'same_post_type',
-		__( 'Limit to same post type', 'yarpp' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( 'When enabled, posts will only be selected from the same post type of the current post.', 'yarpp' ) ) . "'>&nbsp;</span>",
+		__( 'Limit to same post type', 'yet-another-related-posts-plugin' ) . " <span class='yarpp_help dashicons dashicons-editor-help' data-help='" . esc_attr( __( 'When enabled, posts will only be selected from the same post type of the current post.', 'yet-another-related-posts-plugin' ) ) . "'>&nbsp;</span>",
 		'',
 		array( 'option_value' => ! yarpp_get_option( 'cross_relate' ) )
 	);

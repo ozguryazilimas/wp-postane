@@ -7,7 +7,7 @@ class YARPP_Meta_Box_Pool extends YARPP_Meta_Box {
 		echo "<div class='yarpp_form_row yarpp_form_exclude'><div class='yarpp_form_label'>";
 		echo $string;
 		if ( $_builtin == false ) {
-			echo " <span class='yarpp_help dashicons dashicons-info' data-help='" . esc_attr( __( 'This belongs to a custom taxonomy', 'yarpp' ) ) . "'></span>";
+			echo " <span class='yarpp_help dashicons dashicons-info' data-help='" . esc_attr( __( 'This belongs to a custom taxonomy', 'yet-another-related-posts-plugin' ) ) . "'></span>";
 		}
 		echo "</div><div class='yarpp_scroll_wrapper'><div class='exclude_terms' id='exclude_{$taxonomy}'>";
 
@@ -38,7 +38,7 @@ class YARPP_Meta_Box_Pool extends YARPP_Meta_Box {
 		global $yarpp;
 
 		echo "<div class='yarpp_form_row yarpp_form_include_post_type'><div class='yarpp_form_label'>";
-		esc_html_e( 'Post types to include:', 'yarpp' );
+		esc_html_e( 'Post types to include:', 'yet-another-related-posts-plugin' );
 		echo "</div><div class='yarpp_scroll_wrapper'><div class='include_post_type' id='include_post_type'>";
 
 		$include_post_type       = yarpp_get_option( 'include_post_type' );
@@ -49,7 +49,7 @@ class YARPP_Meta_Box_Pool extends YARPP_Meta_Box {
 			// Clarify "topics" are from bbPress plugin
 			if ( $post_type->name == 'topic' && class_exists( 'bbPress' ) ) {
 				$post_type_title = sprintf(
-					__( 'BuddyPress %s', 'yarpp' ),
+					__( 'BuddyPress %s', 'yet-another-related-posts-plugin' ),
 					$post_type_title
 				);
 			}

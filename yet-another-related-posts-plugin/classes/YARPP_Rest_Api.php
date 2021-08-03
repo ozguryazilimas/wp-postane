@@ -55,7 +55,7 @@ class YARPP_Rest_Api extends WP_REST_Controller {
 	public function get_public_item_schema() {
 		$posts_schema                        = $this->get_posts_controller( 'post' )->get_public_item_schema();
 		$posts_schema['properties']['score'] = array(
-			'description' => __( 'YARPP relatedness score', 'yarpp' ),
+			'description' => __( 'YARPP relatedness score', 'yet-another-related-posts-plugin' ),
 			'type'        => 'number',
 			'context'     => array( 'view', 'edit', 'embed' ),
 			'readonly'    => true,
@@ -71,7 +71,7 @@ class YARPP_Rest_Api extends WP_REST_Controller {
 	public function get_item_permissions_check( $request ) {
 		$error_response = new WP_Error(
 			'rest_forbidden_context',
-			__( 'Sorry, you are not allowed to read this post.', 'yarpp' ),
+			__( 'Sorry, you are not allowed to read this post.', 'yet-another-related-posts-plugin' ),
 			array( 'status' => rest_authorization_required_code() )
 		);
 		$post_obj       = get_post( $request->get_param( 'id' ) );
@@ -104,7 +104,7 @@ class YARPP_Rest_Api extends WP_REST_Controller {
 
 		return array(
 			'limit'    => array(
-				'description'       => esc_html( 'Number of posts to display', 'yarpp' ),
+				'description'       => esc_html( 'Number of posts to display', 'yet-another-related-posts-plugin' ),
 				'type'              => 'integer',
 				'default'           => $yarpp->get_option( 'limit' ),
 				'validate_callback' => 'rest_validate_request_arg',
@@ -145,7 +145,7 @@ class YARPP_Rest_Api extends WP_REST_Controller {
 
 		$post_obj = get_post( $id );
 		if ( ! $post_obj instanceof WP_Post ) {
-			return new WP_Error( 'rest_invalid_id', esc_html__( 'Invalid Id', 'yarpp' ), array( 'status' => 404 ) );
+			return new WP_Error( 'rest_invalid_id', esc_html__( 'Invalid ID', 'yet-another-related-posts-plugin' ), array( 'status' => 404 ) );
 		}
 		$allowed_args = array( 'limit' );
 

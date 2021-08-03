@@ -144,7 +144,7 @@ class YARPP_Cache_Demo_Bypass extends YARPP_Cache {
 
 		$wpdb->query( 'set @count = 0;' );
 
-		$post_title = __( 'Example post ', 'yarpp' );
+		$post_title = __( 'Example post ', 'yet-another-related-posts-plugin' );
 		$loremipsum =
 		'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras tincidunt justo a urna. Ut turpis. Phasellus' .
 		'convallis, odio sit amet cursus convallis, eros orci scelerisque velit, ut sodales neque nisl at ante. ' .

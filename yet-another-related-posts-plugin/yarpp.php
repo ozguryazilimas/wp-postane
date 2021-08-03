@@ -2,11 +2,11 @@
 /*
 Plugin Name: Yet Another Related Posts Plugin (YARPP)
 Description: Adds related posts to your site and in RSS feeds, based on a powerful, customizable algorithm.
-Version: 5.27.0
+Version: 5.27.1
 Author: YARPP
 Author URI: https://yarpp.com/
 Plugin URI: https://yarpp.com/
-Text Domain: yarpp
+Text Domain: yet-another-related-posts-plugin
 */
 
 /**
@@ -25,7 +25,7 @@ if ( ! defined( 'WP_CONTENT_DIR' ) ) {
 	define( 'WP_CONTENT_DIR', substr( $tr, 0, strrpos( $tr, '/' ) ) );
 }
 
-define( 'YARPP_VERSION', '5.27.0' );
+define( 'YARPP_VERSION', '5.27.1' );
 
 define( 'YARPP_DIR', dirname( __FILE__ ) );
 /**

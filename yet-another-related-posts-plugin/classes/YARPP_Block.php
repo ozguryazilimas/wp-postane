@@ -80,13 +80,13 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 			global $yarpp;
 			$templates       = $yarpp->get_templates();
 			$block_templates = array(
-				esc_attr( 'builtin' )    => esc_html__( 'List', 'yarpp' ),
-				esc_attr( 'thumbnails' ) => esc_html__( 'Thumbnail', 'yarpp' ),
+				esc_attr( 'builtin' )    => esc_html__( 'List', 'yet-another-related-posts-plugin' ),
+				esc_attr( 'thumbnails' ) => esc_html__( 'Thumbnail', 'yet-another-related-posts-plugin' ),
 			);
 			foreach ( $templates as $template ) {
 				$block_templates[ esc_attr( $template['basename'] ) ] = sprintf(
 					/* translators: %s: yarpp template name */
-					esc_html__( 'Custom: %s', 'yarpp' ),
+					esc_html__( 'Custom: %s', 'yet-another-related-posts-plugin' ),
 					$template['name']
 				);
 			}
@@ -177,7 +177,7 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 				array(
 					array(
 						'slug'  => 'yarpp',
-						'title' => __( 'YARPP', 'yarpp' ),
+						'title' => __( 'YARPP', 'yet-another-related-posts-plugin' ),
 					),
 				)
 			);

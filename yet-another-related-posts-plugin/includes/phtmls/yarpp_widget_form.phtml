@@ -8,7 +8,7 @@
 					name="<?php echo $this->get_field_name( 'use_template' ); ?>"
 					value="builtin" <?php checked( $choice === 'builtin' ); ?>
 				/>
-				<?php _e( 'List', 'yarpp' ); ?>
+				<?php _e( 'List', 'yet-another-related-posts-plugin' ); ?>
 			</label>
 			<br/>
 			<label style="padding-right: 10px; display: inline-block;" for="<?php echo $this->get_field_id( 'use_template_thumbnails' ); ?>">
@@ -18,7 +18,7 @@
 					name="<?php echo $this->get_field_name( 'use_template' ); ?>"
 					value="thumbnails" <?php checked( $choice === 'thumbnails' ); ?>
 				/>
-				<?php _e( 'Thumbnails', 'yarpp' ); ?>
+				<?php _e( 'Thumbnails', 'yet-another-related-posts-plugin' ); ?>
 			</label>
 			<br/>
 			<label style="padding-right: 10px; display: inline-block;" for="<?php echo $this->get_field_id( 'use_template_custom' ); ?>">
@@ -32,7 +32,7 @@
 					disabled( ! count( $templates ) );
 					?>
 				/>
-				<?php _e( 'Custom', 'yarpp' ); ?>
+				<?php _e( 'Custom', 'yet-another-related-posts-plugin' ); ?>
 			</label>
 		</p>
 		<p>
@@ -48,7 +48,7 @@
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'thumbnails_heading' ); ?>">
-				<?php _e( 'Heading:', 'yarpp' ); ?>
+				<?php _e( 'Heading:', 'yet-another-related-posts-plugin' ); ?>
 				<input
 					type="text"
 					class="widefat"
@@ -59,7 +59,7 @@
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'template_file' ); ?>">
-				<?php _e( 'Template file:', 'yarpp' ); ?>
+				<?php _e( 'Template file:', 'yet-another-related-posts-plugin' ); ?>
 			</label>
 			<select name="<?php echo $this->get_field_name( 'template_file' ); ?>" id="<?php echo $this->get_field_id( 'template_file' ); ?>">
 				<?php foreach ( $templates as $template ) : ?>

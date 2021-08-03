@@ -81,24 +81,24 @@ class YARPP_Meta_Box {
 
 		echo "<div class='yarpp_form_row yarpp_form_select'><div class='yarpp_form_label'>{$desc}</div><div>";
 		echo "<select name='weight[{$option}]'>";
-		echo "<option {$fulltext} value='no'" . ( ( ! $weight ) ? ' selected="selected"' : '' ) . '  >' . __( 'do not consider', 'yarpp' ) . '</option>';
-		echo "<option {$fulltext} value='consider'" . ( ( $weight == 1 ) ? ' selected="selected"' : '' ) . '  > ' . __( 'consider', 'yarpp' ) . '</option>';
-		echo "<option {$fulltext} value='consider_extra'" . ( ( $weight > 1 ) ? ' selected="selected"' : '' ) . '  > ' . __( 'consider with extra weight', 'yarpp' ) . '</option>';
+		echo "<option {$fulltext} value='no'" . ( ( ! $weight ) ? ' selected="selected"' : '' ) . '  >' . __( 'do not consider', 'yet-another-related-posts-plugin' ) . '</option>';
+		echo "<option {$fulltext} value='consider'" . ( ( $weight == 1 ) ? ' selected="selected"' : '' ) . '  > ' . __( 'consider', 'yet-another-related-posts-plugin' ) . '</option>';
+		echo "<option {$fulltext} value='consider_extra'" . ( ( $weight > 1 ) ? ' selected="selected"' : '' ) . '  > ' . __( 'consider with extra weight', 'yet-another-related-posts-plugin' ) . '</option>';
 		echo '</select></div></div>';
 	}
 
 	public function displayorder( $option, $class = null ) {
 		echo "<div class='yarpp_form_row yarpp_form_select $class'><div class='yarpp_form_label'>";
-			_e( 'Order results:', 'yarpp' );
+			_e( 'Order results:', 'yet-another-related-posts-plugin' );
 			echo "</div><div><select name='" . esc_attr( $option ) . "' id='" . esc_attr( $option ) . "'>";
 				$order = yarpp_get_option( $option );
 		?>
-				<option value="score DESC" <?php echo ( $order == 'score DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'score (high relevance to low)', 'yarpp' ); ?></option>
-				<option value="score ASC" <?php echo ( $order == 'score ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'score (low relevance to high)', 'yarpp' ); ?></option>
-				<option value="post_date DESC" <?php echo ( $order == 'post_date DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'date (new to old)', 'yarpp' ); ?></option>
-				<option value="post_date ASC" <?php echo ( $order == 'post_date ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'date (old to new)', 'yarpp' ); ?></option>
-				<option value="post_title ASC" <?php echo ( $order == 'post_title ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'title (alphabetical)', 'yarpp' ); ?></option>
-				<option value="post_title DESC" <?php echo ( $order == 'post_title DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'title (reverse alphabetical)', 'yarpp' ); ?></option>
+				<option value="score DESC" <?php echo ( $order == 'score DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'score (high relevance to low)', 'yet-another-related-posts-plugin' ); ?></option>
+				<option value="score ASC" <?php echo ( $order == 'score ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'score (low relevance to high)', 'yet-another-related-posts-plugin' ); ?></option>
+				<option value="post_date DESC" <?php echo ( $order == 'post_date DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'date (new to old)', 'yet-another-related-posts-plugin' ); ?></option>
+				<option value="post_date ASC" <?php echo ( $order == 'post_date ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'date (old to new)', 'yet-another-related-posts-plugin' ); ?></option>
+				<option value="post_title ASC" <?php echo ( $order == 'post_title ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'title (alphabetical)', 'yet-another-related-posts-plugin' ); ?></option>
+				<option value="post_title DESC" <?php echo ( $order == 'post_title DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'title (reverse alphabetical)', 'yet-another-related-posts-plugin' ); ?></option>
 				<?php
 				echo '</select></div></div>';
 	}
