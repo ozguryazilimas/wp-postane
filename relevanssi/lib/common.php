@@ -387,6 +387,7 @@ function relevanssi_remove_punct( $a ) {
 		'“'                     => $quote_replacement,
 		'„'                     => $quote_replacement,
 		'´'                     => $quote_replacement,
+		'″'                     => $quote_replacement,
 		'-'                     => $hyphen_replacement,
 		'–'                     => $endash_replacement,
 		'—'                     => $emdash_replacement,
@@ -1187,6 +1188,11 @@ function relevanssi_get_forbidden_post_types() {
 		'elementor_icons',      // Elementor.
 		'elementor_library',    // Elementor.
 		'elementor_snippet',    // Elementor.
+		'wffn_landing',         // WooFunnel.
+		'wffn_ty',              // WooFunnel.
+		'wffn_optin',           // WooFunnel.
+		'wffn_oty',             // WooFunnel.
+		'wp_template',          // Block templates.
 	);
 }
 
@@ -1208,6 +1214,7 @@ function relevanssi_get_forbidden_taxonomies() {
 		'elementor_library_type', // Elementor.
 		'elementor_library_category', // Elementor.
 		'elementor_font_type',    // Elementor.
+		'wp_theme',               // WordPress themes.
 	);
 }
 

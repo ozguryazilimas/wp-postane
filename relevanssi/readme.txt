@@ -3,9 +3,9 @@ Contributors: msaari
 Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
-Tested up to: 5.7.2
+Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 4.13.2
+Stable tag: 4.13.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,21 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.13.3.1 =
+* Minor fix: The Bricks compatibility was broken. This version fixes it.
+
+= 4.13.3 =
+* New feature: You can now add a post type dropdown to search forms with the [searchform] shortcode with the parameter 'dropdown' set to 'post_type'.
+* New feature: Adds compatibility for Product GTIN (EAN, UPC, ISBN) for WooCommerce plugin.
+* New feature: New filter hook `relevanssi_post_to_excerpt` lets you filter the post object before an excerpt is created from it.
+* New feature: Relevanssi is now compatible with the Bricks page builder theme (requires Bricks 1.3.2).
+* Minor fix: The ″ character is now counted as a quote.
+* Minor fix: Running indexing through WP CLI doesn't cause PHP notices anymore.
+* Minor fix: Sometimes the Did you mean would return really weird long suggestions from the search logs. That won't happen anymore.
+* Minor fix: Improves tax_query handling in fringe cases with multiple AND clauses joined together with OR.
+* Minor fix: Oxygen compatibility has been improved. Rich text fields and updating posts when they are saved in Oxygen now work better, and revisions are no longer indexed.
+* Minor fix: Searching without a search term works much better now, you get more posts in the results (default value is up to 500).
+
 = 4.13.2 =
 * New feature: Adds support for Avada Live Search.
 * New feature: Adds support for Fibo Search.
@@ -233,6 +248,12 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: Improved Oxygen Builder support makes sure `ct_builder_shortcodes` custom field is always indexed.
 
 == Upgrade notice ==
+= 4.13.3.1 =
+* Fixes the Bricks compatibility.
+
+= 4.13.3 =
+* Bug fixes and small improvements.
+
 = 4.13.2 =
 * Small bug and compatibility fixes.
 

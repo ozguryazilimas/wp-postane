@@ -476,11 +476,13 @@ function relevanssi_load_compatibility_code() {
 	class_exists( 'WooCommerce', false ) && require_once 'compatibility/woocommerce.php';
 	defined( 'AIOSEO_DIR' ) && require_once 'compatibility/aioseo.php';
 	defined( 'AVADA_VERSION' ) && require_once 'compatibility/avada.php';
+	defined( 'BRICKS_VERSION' ) && require_once 'compatibility/bricks.php';
 	defined( 'CT_VERSION' ) && require_once 'compatibility/oxygen.php';
 	defined( 'ELEMENTOR_VERSION' ) && require_once 'compatibility/elementor.php';
 	defined( 'GROUPS_CORE_VERSION' ) && require_once 'compatibility/groups.php';
 	defined( 'NINJA_TABLES_VERSION' ) && require_once 'compatibility/ninjatables.php';
 	defined( 'PRLI_PLUGIN_NAME' ) && require_once 'compatibility/pretty-links.php';
+	defined( 'WPM_PRODUCT_GTIN_WC_VERSION' ) && require_once 'compatibility/product-gtin-ean-upc-isbn-for-woocommerce.php';
 	defined( 'SIMPLE_WP_MEMBERSHIP_VER' ) && require_once 'compatibility/simplemembership.php';
 	defined( 'THE_SEO_FRAMEWORK_VERSION' ) && require_once 'compatibility/seoframework.php';
 	defined( 'WPFD_VERSION' ) && require_once 'compatibility/wp-file-download.php';
