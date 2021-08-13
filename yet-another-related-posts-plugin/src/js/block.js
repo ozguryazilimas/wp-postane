@@ -1,6 +1,7 @@
 (function (blocks, i18n, element, components, editor, blockEditor) {
 	var el = element.createElement;
-	const { registerBlockType } = blocks;
+	var useEffect = element.useEffect;
+	const { registerBlockType, createBlock } = blocks;
 	const { __ } = i18n; //translation functions
 	var ServerSideRender = wp.serverSideRender;
 	const { RichText, InspectorControls } = blockEditor;
@@ -115,7 +116,46 @@
 			html: false,
 		},
 
+		transforms: {
+			from: [
+				{
+					type: 'block',
+					blocks: ['core/legacy-widget'],
+					isMatch: ({ idBase, instance }) => {
+						if (!instance?.raw) {
+							// Can't transform if raw instance is not shown in REST API.
+							return false;
+						}
+						return idBase === 'yarpp_widget';
+					},
+					transform: ({ instance, ...rest }) => {
+						const template = instance.raw.template;
+						const heading =
+							'heading' in instance.raw
+								? instance.raw.heading
+								: template === 'thumbnails'
+								? instance.raw.thumbnails_heading
+								: instance.raw.title;
+						return createBlock('yarpp/yarpp-block', {
+							name: 'yarpp_widget',
+							template: template,
+							heading: heading,
+							domain: 'widget',
+						});
+					},
+				},
+			],
+		},
+
 		attributes: {
+			reference_id: {
+				type: 'string',
+				default: '',
+			},
+			heading: {
+				type: 'string',
+				default: __('You may also like', 'yet-another-related-posts-plugin'),
+			},
 			limit: {
 				type: 'number',
 				default: 6,
@@ -126,6 +166,14 @@
 			},
 			yarpp_preview: {
 				type: 'string',
+			},
+			domain: {
+				type: 'string',
+				default: 'block',
+			},
+			yarpp_is_admin: {
+				type: 'boolean',
+				default: yarpp_localized.yarpp_is_admin,
 			},
 		},
 		example: {
@@ -149,6 +197,22 @@
 				setAttributes({ template });
 			}
 
+			function shouldShowHeading(template) {
+				const is_widget = yarpp_localized.default_domain === 'widget';
+
+				if (is_widget) {
+					return ['', 'builtin', 'list', 'thumbnail', 'thumbnails'].includes(
+						template,
+					);
+				}
+
+				return ['thumbnail', 'thumbnails'].includes(template);
+			}
+
+			useEffect(() => {
+				setAttributes({ domain: yarpp_localized.default_domain });
+			}, []);
+
 			return [
 				/**
 				 * Server side render
@@ -171,7 +235,20 @@
 					el(
 						PanelBody,
 						{ title: 'YARPP Posts Settings', initialOpen: true },
-
+						el(TextControl, {
+							label: __(
+								'Reference ID (Optional)',
+								'yet-another-related-posts-plugin',
+							),
+							value: attributes.reference_id,
+							help: __(
+								'The ID of the post to use for finding related posts. Defaults to current post.',
+								'yet-another-related-posts-plugin',
+							),
+							onChange: function (val) {
+								setAttributes({ reference_id: val });
+							},
+						}),
 						el(TextControl, {
 							label: __(
 								'Maximum number of posts',
@@ -191,6 +268,14 @@
 							onChange: changeThumbnail,
 							options: template,
 						}),
+						shouldShowHeading(attributes.template) &&
+							el(TextControl, {
+								label: __('Heading', 'yet-another-related-posts-plugin'),
+								value: attributes.heading,
+								onChange: function (val) {
+									setAttributes({ heading: val });
+								},
+							}),
 					),
 				),
 			];
@@ -209,3 +294,28 @@
 	window.wp.blockEditor,
 	window.wp.serverSideRender,
 );
+
+// Support for Legacy Widgets per WP 5.8 widgets change
+(function ($) {
+	$(document).on('widget-added', function () {
+		$('.yarpp-widget-select-control', '#wpbody').each(ensureTemplateChoice);
+		$('.yarpp-widget-select-control select', '#wpbody').on(
+			'change',
+			ensureTemplateChoice,
+		);
+
+		function ensureTemplateChoice(e) {
+			if (typeof e === 'object' && 'type' in e) e.stopImmediatePropagation();
+			var this_form = $(this).closest('form'),
+				widget_id = this_form.find('.widget-id').val();
+			// if this widget is just in staging:
+			if (/__i__$/.test(widget_id)) return;
+
+			const select = $('#widget-' + widget_id + '-template_file').val();
+			const show_heading = select === 'builtin' || select === 'thumbnails';
+			$('#widget-' + widget_id + '-heading')
+				.closest('p')
+				.toggle(show_heading);
+		}
+	});
+})(jQuery);

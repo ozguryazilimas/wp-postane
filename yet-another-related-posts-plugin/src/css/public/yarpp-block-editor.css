@@ -1,4 +1,4 @@
-.wp-block-yarpp-yarpp-block .yarpp-related-block a {
+.wp-block-yarpp-yarpp-block .yarpp-related-block a, .yarpp-demo-related a {
   pointer-events: none;
   cursor: default;
 }

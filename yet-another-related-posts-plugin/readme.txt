@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.8
-Stable tag: 5.27.1
+Stable tag: 5.27.2
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -529,6 +529,14 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.27.2 (12-August-2021) =
+* New: Conversion of legacy widget YARPP block into YARPP Block
+* [Bugfix](https://wordpress.org/support/topic/display-in-sidebart-but-not-on-the-main-page/): New Blocks on widget's sections were showing on homepage
+* Bugfix: Remove the legacy widget YARPP block on the widgets interface
+* New: Option to add a custom reference ID on a YARPP Block
+* Enhancement: Consistency on "Heading" input fields on widgets and blocks
+* Enhancement: Show demo related post on the Widgets YARPP Blocks
+
 = 5.27.1 (03-August-2021) =
 * Bugfix: i18n / localization for new text strings was not working.
     + P.s. YARPP is available for [translation directly on WordPress.org](https://translate.wordpress.org/projects/wp-plugins/yet-another-related-posts-plugin/). Please check out the official [Translator Handbook](https://make.wordpress.org/polyglots/handbook/rosetta/theme-plugin-directories/).
@@ -1402,5 +1410,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.27.1 =
+= 5.27.2 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

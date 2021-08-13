@@ -693,6 +693,11 @@ class YARPP {
 	}
 
 	private $templates = null;
+	/**
+	 * Returns an Array of all the custom templates
+	 *
+	 * @return array
+	 */
 	public function get_templates() {
 		if ( is_null( $this->templates ) ) {
 			$this->templates = glob( STYLESHEETPATH . '/yarpp-template-*.php' );
@@ -706,6 +711,29 @@ class YARPP {
 			$this->templates = (array) array_map( array( $this, 'get_template_data' ), $this->templates );
 		}
 		return (array) $this->templates;
+	}
+
+	/**
+	 * Get all the available templates
+	 *
+	 * @since 5.28
+	 * @return array
+	 */
+	public function get_all_templates() {
+		$templates       = $this->get_templates();
+		$block_templates = array(
+			esc_attr( 'builtin' )    => esc_html__( 'List', 'yet-another-related-posts-plugin' ),
+			esc_attr( 'thumbnails' ) => esc_html__( 'Thumbnail', 'yet-another-related-posts-plugin' ),
+		);
+		foreach ( $templates as $template ) {
+			$block_templates[ esc_attr( $template['basename'] ) ] = sprintf(
+				/* translators: %s: yarpp template name */
+				esc_html__( 'Custom: %s', 'yet-another-related-posts-plugin' ),
+				$template['name']
+			);
+		}
+
+		return $block_templates;
 	}
 
 	public function get_template_data( $file ) {
@@ -1409,7 +1437,6 @@ class YARPP {
 		if ( true === $enqueue_related_style ) {
 			wp_enqueue_style( 'yarppRelatedCss' );
 		}
-		$output = null;
 
 		if ( is_numeric( $reference_ID ) ) {
 			$reference_ID = (int) $reference_ID;
@@ -1427,11 +1454,8 @@ class YARPP {
 		$this->setup_active_cache( $args );
 
 		$options = array(
-			'domain',
 			'limit',
-			'template',
 			'order',
-			'promote_yarpp',
 			'optin',
 		);
 
@@ -1482,8 +1506,38 @@ class YARPP {
 			$this->active_cache->end_yarpp_time();
 		}
 
+		// Be careful to avoid infinite recursion, because those templates might show each related posts' body or
+		// excerpt, which would trigger finding its related posts, which would show its related posts body or excerpt...
+		$this->rendering_related_content = true;
+
+		$output = $this->get_template_content($reference_ID, $args, $related_count);
+
+		$this->rendering_related_content = false;
+
+		unset( $related_query );
+		$this->restore_post_context();
+
+		if ( $echo ) {
+			echo $output;
+		}
+		return $output;
+	}
+
+	protected function get_template_content( $reference_ID = null, $args, $related_count, $is_demo = false ) {
+		$options = array(
+			'domain',
+			'template',
+			'promote_yarpp',
+		);
+
+		extract( $this->parse_args( $args, $options ) );
+
 		// CSS class "yarpp-related" exists for backwards compatibility in-case older custom themes are dependent on it.
-		$output .= "<div class='yarpp yarpp-related";
+		$output = "<div class='yarpp yarpp-related";
+
+		if ( $is_demo ) {
+			$output .= ' yarpp-demo-related';
+		}
 
 		// Add CSS class to identify domain.
 		if ( isset( $domain ) && $domain ) {
@@ -1516,10 +1570,6 @@ class YARPP {
 
 		$output .= "'>\n";
 
-		// Be careful to avoid infinite recursion, because those templates might show each related posts' body or
-		// excerpt, which would trigger finding its related posts, which would show its related posts body or excerpt...
-		$this->rendering_related_content = true;
-
 		// avoid any monkeying around where someone could trya custom template like a template name like
 		// "yarpp-template-;../../wp-config.php". YARPP custom templates are only supported in the theme's root folder.
 		$template = str_replace( '/', '', $template );
@@ -1549,11 +1599,8 @@ class YARPP {
 		} else {
 			include YARPP_DIR . '/includes/template_builtin.php';
 		}
-		$this->rendering_related_content = false;
-		$output                          = trim( $output ) . "\n";
 
-		unset( $related_query );
-		$this->restore_post_context();
+		$output = trim( $output ) . "\n";
 
 		if ( $related_count > 0 && $promote_yarpp && $domain != 'metabox' ) {
 			$output .=
@@ -1570,9 +1617,6 @@ class YARPP {
 
 		$output .= "</div>\n";
 
-		if ( $echo ) {
-			echo $output;
-		}
 		return $output;
 	}
 
@@ -1710,11 +1754,8 @@ class YARPP {
 		$options = array(
 			'domain',
 			'limit',
-			'template',
 			'order',
-			'promote_yarpp',
 			'size',
-			'thumbnails_default'
 		);
 		extract( $this->parse_args( $args, $options ) );
 		$this->demo_cache_bypass->begin_demo_time( $limit, $order, $size );
@@ -1722,73 +1763,18 @@ class YARPP {
 		global $wp_query;
 		$wp_query = new WP_Query();
 
-		$wp_query->query( '' );
+		$wp_query->query( array(
+			'showposts' => $limit,
+			'ignore_sticky_posts' => true
+		) );
 
 		$this->prep_query( $domain === 'rss' );
 		$related_query = $wp_query; // backwards compatibility
 		$related_count = $related_query->post_count;
 
-		$output = '';
-		// CSS class "yarpp-related" exists for backwards compatibility in-case older custom themes are dependent on it
-		$output .= "<div class='yarpp yarpp-related";
-
-		// Add CSS class to identify domain
-		if ( isset( $domain ) && $domain ) {
-			$domain  = esc_attr( $domain );
-			$output .= " yarpp-related-{$domain}";
-		}
-		// Add CSS class to identify no results
-		if ( $related_count < 1 ) {
-			$output .= ' yarpp-related-none';
-		}
-
-		// Add CSS class to identify template
-		if ( isset( $template ) && $template ) {
-			// Normalize "thumbnail" and "thumbnails" to reference the same inbuilt template
-			if ( $template === 'thumbnail' ) {
-				$template = 'thumbnails';
-			}
-			// Sanitize template name; remove file extension if exists
-			if ( strpos( $template, '.php' ) ) {
-				$template_css_class_suffix = preg_replace( '/' . preg_quote( '.php', '/' ) . '$/', '', $template );
-			} else {
-				$template_css_class_suffix = $template;
-			}
-			$output .= " yarpp-template-$template_css_class_suffix";
-		} else {
-			// fallback to default template ("list")
-			$output .= ' yarpp-template-list';
-		}
-
-		$output .= "'>\n";
-
-		if ( (bool) $template && $template === 'thumbnails' ) {
-			include YARPP_DIR . '/includes/template_thumbnails.php';
-		} elseif ( (bool) $template && file_exists( STYLESHEETPATH . '/' . $template ) ) {
-			ob_start();
-			include STYLESHEETPATH . '/' . $template;
-			$output .= ob_get_contents();
-			ob_end_clean();
-		} else {
-			include YARPP_DIR . '/includes/template_builtin.php';
-		}
-		$output = trim( $output ) . "\n";
-
 		$this->demo_cache_bypass->end_demo_time();
 
-		if ( $promote_yarpp ) {
-			$output .=
-				'<p>' .
-					sprintf(
-						__(
-							"Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>.",
-							'yarpp'
-						),
-						'https://yarpp.com'
-					) .
-				"</p>\n";
-		}
-		$output .= '</div>';
+		$output = $this->get_template_content(null, $args, $related_count, true);
 
 		if ( $echo ) {
 			echo $output;

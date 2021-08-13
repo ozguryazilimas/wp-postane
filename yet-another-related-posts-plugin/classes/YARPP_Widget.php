@@ -1,8 +1,5 @@
 <?php
-/**
- * Vaguely based on code by MK Safi
- * http://msafi.com/fix-yet-another-related-posts-plugin-yarpp-widget-and-add-it-to-the-sidebar/
- */
+
 class YARPP_Widget extends WP_Widget {
 
 	public function __construct() {
@@ -10,6 +7,7 @@ class YARPP_Widget extends WP_Widget {
 			'description' => 'Related Posts and/or Sponsored Content',
 			'show_instance_in_rest' => true
 		);
+		add_filter( 'widget_types_to_hide_from_legacy_widget_block', array($this,'hide_yarpp_widget_legacy_editor') );
 		parent::__construct( false, 'Related Posts (YARPP)', $widget_ops );
 	}
 
@@ -26,11 +24,17 @@ class YARPP_Widget extends WP_Widget {
 			$instance['template'] = ( $instance['use_template'] ) ? ( $instance['template_file'] ) : false;
 		}
 
-		$title  = apply_filters( 'widget_title', $instance['title'] );
-		$output = $before_widget;
+		// Per display_related the template must be false if "list" template was selected
+		if ( $instance['template'] === 'list' || $instance['template'] === 'builtin' ) {
+			$instance['template'] = false;
+		}
+
+		$instance['heading'] = $this->get_heading($instance);
+		$heading             = apply_filters( 'widget_title', $instance['heading'] );
+		$output              = $before_widget;
 		if ( ! $instance['template'] ) {
 			$output .= $before_title;
-			$output .= $title;
+			$output .= $heading;
 			$output .= $after_title;
 		}
 		$instance['domain'] = 'widget';
@@ -42,17 +46,23 @@ class YARPP_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = array(
 			'template'           => false,
-			'title'              => $new_instance['title'],
-			'thumbnails_heading' => $new_instance['thumbnails_heading'],
+			'heading'            => $new_instance['heading'],
 			'use_pro'            => false,
 			'pro_dpid'           => null,
 			'promote_yarpp'      => false,
 		);
 
-		if ( $new_instance['use_template'] === 'thumbnails' ) {
+		if ( isset($new_instance['use_template']) && $new_instance['use_template'] === 'thumbnails' ) {
 			$instance['template'] = 'thumbnails';
-		} elseif ( $new_instance['use_template'] === 'custom' ) {
+		} elseif ( isset($new_instance['use_template']) && $new_instance['use_template'] === 'custom' ) {
 			$instance['template'] = $new_instance['template_file'];
+		} else {
+			$instance['template'] = isset($new_instance['template_file']) ? $new_instance['template_file'] : false;
+		}
+
+		// Legacy Widget block triggers this function on save but with the new instance.
+		if ( isset($new_instance['template']) ) {
+			$instance['template'] = $new_instance['template'];
 		}
 
 		return $instance;
@@ -64,8 +74,7 @@ class YARPP_Widget extends WP_Widget {
 		$instance = wp_parse_args(
 			$instance,
 			array(
-				'title'              => 'Related Posts (YARPP)',
-				'thumbnails_heading' => $yarpp->get_option( 'thumbnails_heading' ),
+				'heading'            => $this->get_heading($instance),
 				'template'           => false,
 				'use_pro'            => false,
 				'pro_dpid'           => null,
@@ -84,13 +93,47 @@ class YARPP_Widget extends WP_Widget {
 		$choice = ( $instance['template'] ) ? ( ( $instance['template'] === 'thumbnails' ) ? 'thumbnails' : 'custom' ) : 'builtin';
 
 		/* Check if YARPP templates are installed */
-		$templates = $yarpp->get_templates();
+		$block_templates = $yarpp->get_all_templates();
 
 		if ( ! $yarpp->diagnostic_custom_templates() && $choice === 'custom' ) {
 			$choice = 'builtin';
 		}
 
 		include YARPP_DIR . '/includes/phtmls/yarpp_widget_form.phtml';
+	}
+
+	/**
+	 * Hides the yarpp widget from the block list
+	 * WordPress 5.8.0 - https://developer.wordpress.org/block-editor/how-to-guides/widgets/legacy-widget-block/#3-hide-the-widget-from-the-legacy-widget-block
+	 *
+	 */
+	public function hide_yarpp_widget_legacy_editor( $widget_types ) {
+		$widget_types[] = 'yarpp_widget';
+		return $widget_types;
+	}
+
+	/**
+	 * Get the heading of the widget backwards compatibility
+	 *
+	 * @param object $instance
+	 * @return string
+	 */
+	protected function get_heading( $instance ) {
+		$heading = __('You may also like', 'yet-another-related-posts-plugin');
+
+		if ( empty($instance) ) {
+			return $heading;
+		}
+
+		if ( $instance['template'] === 'thumbnails' && isset($instance['thumbnails_heading']) ) {
+			$heading = $instance['thumbnails_heading'];
+		} elseif ( $instance['template'] === false && isset($instance['title']) ) {
+			$heading = $instance['title'];
+		} elseif ( ! empty($instance['heading']) ) {
+			$heading = $instance['heading'];
+		}
+
+		return $heading;
 	}
 }
 

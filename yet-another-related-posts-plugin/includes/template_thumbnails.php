@@ -12,8 +12,13 @@ if ( ! $this->diagnostic_using_thumbnails() ) {
 	$this->set_option( 'manually_using_thumbnails', true );
 }
 
-$options = array( 'thumbnails_heading', 'thumbnails_default', 'no_results' );
+$options = array( 'thumbnails_heading', 'heading', 'thumbnails_default', 'no_results' );
+
 extract( $this->parse_args( $args, $options ) );
+
+// heading is the new field used on widgets and blocks and the thumbnails_heading is the old implementation of it
+// backward compatibility
+$thumbnails_heading = isset($heading) ? $heading : $thumbnails_heading;
 
 // a little easter egg: if the default image URL is left blank,
 // default to the theme's header image. (hopefully it has one)
