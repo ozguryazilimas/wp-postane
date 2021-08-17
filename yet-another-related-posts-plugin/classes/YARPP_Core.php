@@ -1500,7 +1500,6 @@ class YARPP {
 		);
 
 		$related_query = $wp_query; // backwards compatibility
-		$related_count = $related_query->post_count;
 
 		if ( $cache_status !== YARPP_NO_RELATED ) {
 			$this->active_cache->end_yarpp_time();
@@ -1510,7 +1509,7 @@ class YARPP {
 		// excerpt, which would trigger finding its related posts, which would show its related posts body or excerpt...
 		$this->rendering_related_content = true;
 
-		$output = $this->get_template_content($reference_ID, $args, $related_count);
+		$output = $this->get_template_content($reference_ID, $args);
 
 		$this->rendering_related_content = false;
 
@@ -1523,7 +1522,12 @@ class YARPP {
 		return $output;
 	}
 
-	protected function get_template_content( $reference_ID = null, $args, $related_count, $is_demo = false ) {
+	protected function get_template_content( $reference_ID = null, $args, $is_demo = false ) {
+		// make $related_query available to custom templates. It may be in use by old custom templates
+		global $wp_query;
+		$related_query = $wp_query;
+		$related_count = $wp_query->post_count;
+
 		$options = array(
 			'domain',
 			'template',
@@ -1769,12 +1773,10 @@ class YARPP {
 		) );
 
 		$this->prep_query( $domain === 'rss' );
-		$related_query = $wp_query; // backwards compatibility
-		$related_count = $related_query->post_count;
 
 		$this->demo_cache_bypass->end_demo_time();
 
-		$output = $this->get_template_content(null, $args, $related_count, true);
+		$output = $this->get_template_content(null, $args, true);
 
 		if ( $echo ) {
 			echo $output;
