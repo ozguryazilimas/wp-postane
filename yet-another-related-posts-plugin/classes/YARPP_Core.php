@@ -716,7 +716,7 @@ class YARPP {
 	/**
 	 * Get all the available templates
 	 *
-	 * @since 5.28
+	 * @since 5.27.2
 	 * @return array
 	 */
 	public function get_all_templates() {
@@ -1521,8 +1521,15 @@ class YARPP {
 		}
 		return $output;
 	}
-
-	protected function get_template_content( $reference_ID = null, $args, $is_demo = false ) {
+	/**
+	 * Returns the YARPP template html data.
+	 *
+	 * @param int   $reference_ID reference id.
+	 * @param array $args see readme.txt installation tab's  "YARPP functions()" section.
+	 * @param bool  $is_demo whether to add yarpp-demo-related class to div or not.
+	 * @return string return html data.
+	 */
+	protected function get_template_content( $reference_ID = null, $args = array(), $is_demo = false ) {
 		// make $related_query available to custom templates. It may be in use by old custom templates
 		global $wp_query;
 		$related_query = $wp_query;
