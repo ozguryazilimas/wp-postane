@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 2.2.3 =
+* Fixed Dashboard RSS feed missing quotation marks reported by @carterfromsl
+* Changing WordPress Logo for Gutenberg fullscreen mode close button reported by @techiechic
+* Fixed PHP Deprecated optional parameter reported by @pagehub
+* Fixed woocommerce-product-addons plugin conflict reported by @Colin
+* Minor bug fixes
+
 = 2.2.2 =
 * WooCommerce Analytics menu patch
 * Side Menu Link URL opening in a new tab when external link was added. Requested by @Kosta X

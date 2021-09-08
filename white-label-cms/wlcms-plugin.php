@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: White Label CMS
-Plugin URI: http://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
+Plugin URI: https://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Description:  A plugin that allows you to brand WordPress CMS as your own
-Version: 2.2.3
+Version: 2.2.4
 Author: www.videousermanuals.com
-Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
+Author URI: https://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Text Domain: white-label-cms
 Domain Path: /languages
  */
@@ -13,7 +13,7 @@ Domain Path: /languages
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-define('WLCMS_VERSION', '2.2.3');
+define('WLCMS_VERSION', '2.2.4');
 define("WLCMS_DIR", plugin_dir_path(__FILE__));
 define("WLCMS_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 define("WLCMS_BASENAME", plugin_basename(__FILE__));

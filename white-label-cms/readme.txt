@@ -9,7 +9,7 @@ Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
 Tested up to: 5.8
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -66,12 +66,8 @@ There is so much that you can do with White Label CMS, but we want the experienc
 
 == Changelog ==
 
-= 2.2.3 =
-* Fixed Dashboard RSS feed missing quotation marks reported by @carterfromsl
-* Changing WordPress Logo for Gutenberg fullscreen mode close button reported by @techiechic
-* Fixed PHP Deprecated optional parameter reported by @pagehub
-* Fixed woocommerce-product-addons plugin conflict reported by @Colin
-* Minor bug fixes
+= 2.2.4 =
+* Fixed javascript error reported by @davidbawiec
 
 == Frequently Asked Questions ==
 = Who is this plugin for?=
