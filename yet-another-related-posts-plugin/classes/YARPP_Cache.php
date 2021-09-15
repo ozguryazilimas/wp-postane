@@ -199,6 +199,8 @@ abstract class YARPP_Cache {
 			'exclude',
 			'recent',
 			'limit',
+			'include_sticky_posts',
+			'show_sticky_posts'
 		);
 		extract( $this->core->parse_args( $args, $options ) );
 		// The maximum number of items we'll ever want to cache
@@ -294,8 +296,10 @@ abstract class YARPP_Cache {
 		);
 		$newsql              .= ' and post_type IN (' . implode( ',', $sanitized_post_types ) . ')';
 		$post_ids_to_exclude  = array( (int) $reference_ID );
-		$include_sticky_posts = $this->core->get_option( 'include_sticky_posts' );
-		if ( 1 !== (int) $include_sticky_posts ) {
+		// Check if include_sticky_posts or show_sticky_posts is being passed in args.
+		$include_sticky_posts = isset($show_sticky_posts) ? $show_sticky_posts : $include_sticky_posts;
+		$include_sticky_posts = ( isset( $include_sticky_posts ) ) ? $include_sticky_posts : $this->core->get_option( 'include_sticky_posts' );
+		if ( ! $include_sticky_posts ) {
 			$get_sticky_posts    = get_option( 'sticky_posts' );
 			$post_ids_to_exclude = wp_parse_args( $get_sticky_posts, $post_ids_to_exclude );
 		}

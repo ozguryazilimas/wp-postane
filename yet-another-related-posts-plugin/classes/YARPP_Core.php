@@ -10,11 +10,12 @@ class YARPP {
 	 * sans the yarpp_ prefix, split up into binary options and value options. These arrays are used in updating
 	 * settings (yarpp_options.php) and other tasks.
 	 */
-	public $default_options          = array();
-	public $pro_default_options      = array();
-	public $default_hidden_metaboxes = array();
-	public $debug                    = false;
-	public $yarppPro                 = null;
+	public $default_options             = array();
+	public $pro_default_options         = array();
+	public $default_hidden_metaboxes    = array();
+	public $debug                       = false;
+	public $yarppPro                    = null;
+	public $generate_missing_thumbnails = null;
 	/**
 	 * @var YARPP_Cache_Bypass
 	 */
@@ -560,6 +561,9 @@ class YARPP {
 	}
 
 	public function diagnostic_generate_thumbnails() {
+		if ( is_bool( $this->generate_missing_thumbnails ) ) {
+			return $this->generate_missing_thumbnails;
+		}
 		return ( defined( 'YARPP_GENERATE_THUMBNAILS' ) && YARPP_GENERATE_THUMBNAILS ) || (bool) $this->get_option( 'generate_missing_thumbnails' );
 	}
 
@@ -1504,7 +1508,9 @@ class YARPP {
 		if ( $cache_status !== YARPP_NO_RELATED ) {
 			$this->active_cache->end_yarpp_time();
 		}
-
+		if ( isset( $args['generate_missing_thumbnails'] ) ) {
+			$this->generate_missing_thumbnails = $args['generate_missing_thumbnails'];
+		}
 		// Be careful to avoid infinite recursion, because those templates might show each related posts' body or
 		// excerpt, which would trigger finding its related posts, which would show its related posts body or excerpt...
 		$this->rendering_related_content = true;

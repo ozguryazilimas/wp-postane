@@ -28,6 +28,7 @@ class YARPP_Shortcode {
 				'reference_id' => null,
 				'template'     => null,
 				'limit'        => null,
+				'recent'       => null,
 			),
 			$atts
 		);
@@ -46,7 +47,10 @@ class YARPP_Shortcode {
 				$yarpp_args['template'] .= '.php';
 			}
 		}
-
+		// Can ignore validation of the "recent" attribute here as it is validated in the SQL function of the YARPP_Cache class.
+		if ( isset( $atts['recent'] ) && $atts['recent'] ) {
+			$yarpp_args['recent'] = trim( $atts['recent'] );
+		}
 		if ( isset( $atts['limit'] ) && $atts['limit'] ) {
 			// Normalize parameter.
 			$atts['limit'] = trim( $atts['limit'] );

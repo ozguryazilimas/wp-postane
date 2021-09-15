@@ -67,14 +67,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 		echo '>';
 		echo '<div class="yarpp_form_row"><div>' . $this->template_text . '</div></div>';
 		$this->template_file( false );
-		echo '<div class="yarpp_form_row yarpp_form_radio_label">';
-		echo '<div class="yarpp_form_label">' . esc_html( 'Thumbnail Size', 'yet-another-related-posts-plugin' ) . '</div><div>';
-		foreach ( $get_image_sizes as $key => $_size ) {
-					/* translators: %s: thumbnail key's name */
-					$name = sprintf( __( '%1$s (%2$sx%3$s)', 'yet-another-related-posts-plugin' ), $key, $_size['width'], $_size['height'] );
-					$this->radio( 'custom_theme_thumbnail_size_display', $name, '', $key );
-		}
-		echo '</div></div>';
+		$this->yarpp_select_option( 'custom_theme_thumbnail_size_display', $get_image_sizes, 'Thumbnail Size' );
 		echo '</div>';
 
 		echo "<div class='yarpp_subbox template_options_thumbnails'";
@@ -84,14 +77,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 		echo '>';
 		$this->textbox( 'thumbnails_heading', __( 'Heading:', 'yet-another-related-posts-plugin' ), 40 );
 		$this->textbox( 'thumbnails_default', __( 'Default image (URL):', 'yet-another-related-posts-plugin' ), 40 );
-		echo '<div class="yarpp_form_row yarpp_form_radio_label">';
-		echo '<div class="yarpp_form_label">' . esc_html__( 'Thumbnail Size', 'yet-another-related-posts-plugin' ) . '</div><div>';
-		foreach ( $get_image_sizes as $key => $_size ) {
-					/* translators: %s: thumbnail key's name */
-					$name = sprintf( __( '%1$s (%2$sx%3$s)', 'yet-another-related-posts-plugin' ), $key, $_size['width'], $_size['height'] );
-					$this->radio( 'thumbnail_size_display', $name, '', $key );
-		}
-		echo '</div></div>';
+		$this->yarpp_select_option( 'thumbnail_size_display', $get_image_sizes, 'Thumbnail Size' );
 		echo '</div>';
 		echo '<div class="generate_missing_thumbnails">';
 		$this->checkbox( 'generate_missing_thumbnails', __( 'Generate missing thumbnail sizes: ', 'yet-another-related-posts-plugin' ) . "<span class='yarpp_help dashicons dashicons-editor-help' data-help='" . '<p>' . esc_attr( __( 'When enabled, missing thumbnail sizes will be  automatically generated on the fly. Doing this type of processing on the fly may not scale well for larger sites.', 'yet-another-related-posts-plugin' ) ) . '</p><p>' . sprintf( __( 'For larger sites, we recommend the %1$s or %2$s to generate missing thumbnail sizes in a batch process.', 'yet-another-related-posts-plugin' ), '<a href="https://wordpress.org/plugins/regenerate-thumbnails/" target="_blank">Regenerate Thumbnails plugin</a>', '<a href="https://developer.wordpress.org/cli/commands/media/regenerate/" target="_blank">WP-CLI</a>' ) . '</p><p>' . esc_attr( __( 'New images should continue to automatically get all active thumbnail sizes generated when they are uploaded.', 'yet-another-related-posts-plugin' ) ) . '</p>' . "'>&nbsp;</span>&nbsp;&nbsp;", 'yarpp', $yarpp_args );

@@ -71,7 +71,17 @@ class YARPP_Meta_Box {
 
 		include YARPP_DIR . '/includes/phtmls/yarpp_meta_box_tax_weight.phtml';
 	}
-
+	/**
+	 * Render the select options.
+	 *
+	 * @param string $name Select option name.
+	 * @param array  $options Array of option value.
+	 * @param string $desc label description.
+	 * @param array  $args Array of additional argument.
+	 */
+	public function yarpp_select_option( $name, $options, $desc = '', $args = '' ) {
+		include YARPP_DIR . '/includes/phtmls/yarpp_meta_box_select.phtml';
+	}
 	/* MARK: Last cleaning spot */
 	public function weight( $option, $desc ) {
 		$weight = (int) yarpp_get_option( "weight[$option]" );

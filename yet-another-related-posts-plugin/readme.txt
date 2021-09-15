@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.8
-Stable tag: 5.27.4
+Stable tag: 5.27.5
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -138,6 +138,10 @@ To specify maximum number of posts to show, use the "limit" attribute like so:
 
 `[yarpp template="list" limit=3]`
 
+To only show recent posts, use the "recent" attribute (provide it with a number, a space, and then either "day", "week" or "month")
+
+`[yarpp recent="6 month"]`
+
 To add YARPP shortcode to your theme files (eg. single.php), use:
 
 `<?php echo do_shortcode('[yarpp]'); ?>`
@@ -182,8 +186,9 @@ yarpp_related(
   array(
     // Pool options: these determine the "pool" of entities which are considered
     'post_type' => array('post', 'page', 'wc_product', ...), //  post types to include in results
-    'show_pass_post' => false, // show password-protected posts
-    'past_only' => false, // show only posts which were published before the reference post
+    'show_pass_post' => true, // show password-protected posts
+    'show_sticky_posts' => true, // show sticky posts
+    'past_only' => true, // show only posts which were published before the reference post
     'exclude' => array(), // a list of term_taxonomy_ids. entities with any of these terms will be excluded from consideration.
     'recent' => false, // to limit to entries published recently, set to like '15 day', '20 week', or '12 month' (https://www.mysqltutorial.org/mysql-interval/)
     
@@ -209,6 +214,7 @@ yarpp_related(
     'limit' => 5, // maximum number of results
     'order' => 'score DESC', // column on "wp_posts" to order by, then a space, and whether to order in ascending ("ASC") or descending ("DESC") order
     'promote_yarpp' => true, // boolean indicating whether to add 'Powered by YARPP' below related posts
+    'generate_missing_thumbnails' => true, // automatically generate missing thumbnail sizes on the fly
   ),
  $reference_ID, // second argument: (optional) the post ID. If not included, will use the current post.
  true // third argument: (optional) true to echo the HTML block; false to return it
@@ -529,6 +535,12 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.27.5 (15-September-2021) =
+* New: Add support for "show_sticky_posts" and "generate_missing_thumbnails" to the [yarpp_related() function](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+* New: Add support for "recent" in [YARPP shortcode](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+    + For example, to limit results to those published in the past 12 months: `[yarpp recent="12 month"]`
+* Enhancement: Use dropdown select for thumbnail sizes instead of radio buttons
+
 = 5.27.4 (25-August-2021) = 
 * [Bugfix](https://wordpress.org/support/topic/php-8-deprecated-required-parameter-follows-optional/): PHP 8 compatibility by making `$args` optional on `YARPP::get_template_content()` 
 
@@ -1416,5 +1428,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.27.4 =
+= 5.27.5 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

@@ -106,6 +106,8 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 			'exclude',
 			'recent',
 			'limit',
+			'include_sticky_posts',
+			'show_sticky_posts'
 		);
 		$this->args       = $this->core->parse_args( $args, $options );
 
