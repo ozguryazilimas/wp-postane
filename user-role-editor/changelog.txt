@@ -1,5 +1,14 @@
 CHANGES LOG (full version).
 ===========================
+
+= [4.60.2] 20.09.2021 =
+* Update: Marked as compatible with WordPress 5.8.1
+* Fix: Multisite: URE_Editor::is_full_network_sync() returned FALSE, instead TRUE for the AJAX call, while call was made from the Network Admin (wp-admin/network/).
+
+= [4.60.1] 21.07.2021 =
+* Update: Marked as compatible with WordPress 5.8.
+* Fix: PHP Notice: Undefined property: URE_User_View::$multisite in /wp-content/plugins/user-role-editor/includes/classes/user-view.php on line 145
+
 = [4.60] 24.06.2021 =
 * New: Notification box was replaced with one based on the [jpillora/nofifyjs](https://notifyjs.jpillora.com/) jQuery plugin. It does not move down page content. It disappears automatically after 5 seconds. Click on it to remove it manually.
 * Fix: "Add capability" shows warning styled notification when needed (invalid characters, etc.) instead of a successful one.

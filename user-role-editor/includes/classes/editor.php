@@ -295,7 +295,11 @@ class URE_Editor {
      */
     protected function is_full_network_synch() {
         
-        if ( is_network_admin() ) {   // for Pro version
+        /* is_network_admin() returns wrong result for the AJAX calls from the network admin
+         * so have to use this way
+         */
+        $network_admin = $this->lib->get_request_var('network_admin', 'post', 'int');
+        if ( $network_admin==1 ) {   // for Pro version only
             $result = true;
         } else {
             $result = defined('URE_MULTISITE_DIRECT_UPDATE') && URE_MULTISITE_DIRECT_UPDATE == 1;
