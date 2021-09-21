@@ -88,15 +88,10 @@ function check_main( $theme_slug ) {
 		}
 	}
 	echo '</div><!-- .theme-info-->';
-
-	$plugins = get_plugins( '/theme-check' );
-	$version = explode( '.', $plugins['theme-check.php']['Version'] );
 	echo '<p>' . sprintf(
-		esc_html__( 'Running %1$s tests against %2$s using Guidelines Version: %3$s Plugin revision: %4$s', 'theme-check' ),
+		esc_html__( 'Running %1$s tests against %2$s.', 'theme-check' ),
 		'<strong>' . esc_html( $checkcount ) . '</strong>',
-		'<strong>' . esc_html( $theme['Title'] ) . '</strong>',
-		'<strong>' . esc_html( $version[0] ) . '</strong>',
-		'<strong>' . esc_html( $version[1] ) . '</strong>'
+		'<strong>' . esc_html( $theme['Title'] ) . '</strong>'
 	) . '</p>';
 
 	$results = display_themechecks();
@@ -135,6 +130,11 @@ function check_main( $theme_slug ) {
 				'class' => array(),
 			),
 			'strong' => array(),
+			'code'   => array(),
+			'pre'    => array(),
+			'a'      => array(
+				'href' => array(),
+			),
 		)
 	);
 	echo '</ul></div>';
@@ -151,16 +151,28 @@ function tc_intro() {
 	<p>
 	<?php
 	printf(
-		esc_html__( 'Theme Check is maintained by %1$s and %2$s.', 'theme-check' ),
-		'<a href="https://profiles.wordpress.org/otto42/">Otto42</a>',
-		'<a href="https://profiles.wordpress.org/pross/">Pross</a>'
+		esc_html__( 'Theme Check is maintained by %s.', 'theme-check' ),
+		'<a href="https://make.wordpress.org/themes/">' . esc_html__( 'The WordPress Themes Team', 'theme-check' ) . '</a>'
 	);
 	?>
-		</p>
-	<p><?php printf( __( 'If you have found a bug or would like to make a suggestion or contribution, please leave a post on the <a href="%1$s">WordPress forums</a>, or talk about it with the Themes Team on <a href="%2$s">Make WordPress Themes</a> site.', 'theme-check' ), 'https://wordpress.org/tags/theme-check?forum_id=10', 'https://make.wordpress.org/themes/' ); ?></p>
-	<p><?php printf( __( 'The code for Theme Check can be contributed to on <a href="%s">GitHub</a>.', 'theme-check' ), 'https://github.com/WordPress/theme-check' ); ?></p>
-	<h3><?php esc_html_e( 'Testers', 'theme-check' ); ?></h3>
-	<p><a href="https://make.wordpress.org/themes/"><?php esc_html_e( 'The WordPress Themes Team', 'theme-check' ); ?></a></p>
+	</p>
+	<p>
+	<?php
+		printf(
+			__( 'If you have found a bug or would like to make a suggestion or contribution, please leave a post on the <a href="%1$s">WordPress forums</a>, or talk about it with the Themes Team on <a href="%2$s">Make WordPress Themes</a> site.', 'theme-check' ),
+			'https://wordpress.org/support/plugin/theme-check/',
+			'https://make.wordpress.org/themes/'
+		);
+	?>
+	</p>
+	<p>
+	<?php
+		printf(
+			__( 'The code for Theme Check can be contributed to on <a href="%s">GitHub</a>.', 'theme-check' ),
+			'https://github.com/WordPress/theme-check'
+		);
+	?>
+	</p>
 	<?php
 }
 

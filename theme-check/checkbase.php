@@ -16,6 +16,10 @@ $themechecks = array();
 global $checkcount;
 $checkcount = 0;
 
+// current WP_Theme being tested. Internal use only.
+global $theme_check_current_theme;
+$theme_check_current_theme = false;
+
 // interface that all checks should implement.
 interface themecheck {
 
@@ -46,7 +50,11 @@ function run_themechecks_against_theme( $theme, $theme_slug ) {
 		-1 /* infinite recursion */,
 		true /* include parent theme files */
 	);
+	unset( $files[0] ); // Work around https://core.trac.wordpress.org/ticket/53599
 
+	$php   = array();
+	$css   = array();
+	$other = array();
 	foreach ( $files as $filename ) {
 		if ( substr( $filename, -4 ) === '.php' ) {
 			$php[ $filename ] = file_get_contents( $filename );
@@ -88,7 +96,10 @@ function run_themechecks_against_theme( $theme, $theme_slug ) {
  * @return bool
  */
 function run_themechecks( $php, $css, $other, $context = array() ) {
-	global $themechecks;
+	global $themechecks, $theme_check_current_theme;
+
+	// Provide context to some functions that need to know the current theme, but aren't passed the object.
+	$theme_check_current_theme = isset( $context['theme'] ) ? $context['theme'] : false;
 
 	$pass = true;
 
@@ -103,6 +114,8 @@ function run_themechecks( $php, $css, $other, $context = array() ) {
 			$pass = $pass & $check->check( $php, $css, $other );
 		}
 	}
+
+	$theme_check_current_theme = false;
 
 	return $pass;
 }
@@ -202,8 +215,50 @@ function tc_preg( $preg, $file ) {
 }
 
 function tc_filename( $file ) {
-	$filename = ( preg_match( '/themes\/[a-z0-9-]*\/(.*)/', $file, $out ) ) ? $out[1] : basename( $file );
-	return $filename;
+	// If we know the WP_Theme object, we can get the exact path.
+	$filename = _get_filename_from_current_theme( $file );
+	if ( $filename ) {
+		return $filename;
+	}
+
+	// If the $file exists within a theme-like folder, use that.
+	// Does not support themes nested in directories such as wp-content/themes/pub/wporg-themes/index.php
+	if ( preg_match( '!/themes/[^/]+/(.*)$!i', $file, $m ) ) {
+		return $m[1];
+	}
+
+	// If still nothing, use the basename.
+	return basename( $file );
+}
+
+/**
+ * Get a filename relative to the current theme.
+ *
+ * @param string $file the file to get a relative filename for.
+ * @return false|string The filename, or false on failure.
+ * @access private
+ */
+function _get_filename_from_current_theme( $file ) {
+	global $theme_check_current_theme;
+	static $theme_files = array();
+	static $theme_path  = '';
+
+	if ( empty( $theme_check_current_theme ) ) {
+		return false;
+	}
+
+	// Fetch the files for the theme, once per theme.
+	if ( $theme_path != $theme_check_current_theme->get_stylesheet_directory() ) {
+		$theme_path = $theme_check_current_theme->get_stylesheet_directory();
+
+		$theme_files = $theme_check_current_theme->get_files(
+			null /* all file types */,
+			-1 /* infinite recursion */,
+			true /* include parent theme files */
+		);
+	}
+
+	return array_search( $file, $theme_files, true );
 }
 
 function tc_trac( $e ) {

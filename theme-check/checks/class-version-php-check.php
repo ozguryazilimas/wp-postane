@@ -1,14 +1,18 @@
 <?php
 /**
- * Check that wordpress.org is not used for theme URI
+ * Check for Requires PHP versioning
  *
  * @package Theme Check
  */
 
 /**
- * Check that wordpress.org is not used for theme URI.
+ * Check for PHP versioning.
+ * Does "Requires PHP" include patch versions (e.g. 7.4.1)?
+ * If so, recommend including major and minor verisions only (e.g. 7.4)
+ *
+ * See: https://developer.wordpress.org/themes/basics/main-stylesheet-style-css/#explanations
  */
-class URI_Check implements themecheck {
+class Version_Requires_PHP_Check implements themecheck {
 	/**
 	 * Error messages, warnings and info notices.
 	 *
@@ -17,7 +21,7 @@ class URI_Check implements themecheck {
 	protected $error = array();
 
 	/**
-	 * Theme information. Author URI, theme URI, Author name
+	 * Theme information. Requires PHP,
 	 *
 	 * @var object $theme
 	 */
@@ -37,26 +41,22 @@ class URI_Check implements themecheck {
 	 * @param array $other_files Folder names, file paths and content for other files.
 	 */
 	public function check( $php_files, $css_files, $other_files ) {
+
 		checkcount();
-		$ret = true;
 
-		if ( ! empty( $this->theme->get( 'ThemeURI' ) ) ) {
+		if ( ! empty( $this->theme->get( 'RequiresPHP' ) ) ) {
 
-			// We allow .org user profiles as Author URI, so only check the Theme URI. We also allow WordPress.com links.
-			if (
-				$this->theme->get( 'Author' ) != 'the WordPress team' &&
-				( stripos( $this->theme->get( 'ThemeURI' ), 'wordpress.org' ) || stripos( $this->theme->get( 'ThemeURI' ), 'w.org' ) )
-			) {
+			$req_php_decimal_count = substr_count( $this->theme->get( 'RequiresPHP' ), '.' );
+
+			if ( $req_php_decimal_count > 1 ) {
 				$this->error[] = sprintf(
-					'<span class="tc-lead tc-required">%s</span>: %s',
-					__( 'REQUIRED', 'theme-check' ),
-					__( 'Using a WordPress.org Theme URI is reserved for default and bundled themes (Twenty * series).', 'theme-check' )
+					'<span class="tc-lead tc-recommended">%s</span>: %s',
+					__( 'RECOMMENDED', 'theme-check' ),
+					__( '<strong>Requires PHP</strong> is recommended to have major and minor versions only (e.g. 7.4). Patch version is not needed (e.g. 7.4.1).', 'theme-check' )
 				);
-				$ret           = false;
 			}
 		}
-
-		return $ret;
+		return true;
 	}
 
 	/**
@@ -69,4 +69,4 @@ class URI_Check implements themecheck {
 	}
 }
 
-$themechecks[] = new URI_Check();
+$themechecks[] = new Version_Requires_PHP_Check();
