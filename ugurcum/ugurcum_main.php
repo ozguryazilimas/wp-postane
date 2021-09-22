@@ -188,7 +188,8 @@ jQuery(document).ready(function() {
           form_delete: "' .  __('Delete', 'ugurcum') . '"
         };';
 
-  echo 'dt_data = ' . json_encode(ugurcum_get_media_links_json()) . ';';
+  echo "\n";
+  echo 'dt_data = ' . json_encode(ugurcum_get_media_links_json(), JSON_PRETTY_PRINT) . ';';
 ?>
 
   function ugurcum_format_mediatable_form(d) {
