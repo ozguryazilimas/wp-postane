@@ -3,7 +3,7 @@
 Plugin Name: Goembedded
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: This plugin activates Wordpress oEmbed capabilities for comments.
-Version: 0.1.0
+Version: 0.1.1
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2

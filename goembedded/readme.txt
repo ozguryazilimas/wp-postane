@@ -3,8 +3,8 @@ Contributors:
 Donate link:
 Tags: goembedded, video, multimedia, video list, embed, embedded, oembed, comments
 Requires at least: 3.5.1
-Tested up to: 4.9.6
-Stable tag: 0.1.0
+Tested up to: 5.8.1
+Stable tag: 0.1.1
 
 This plugin activates Wordpress oEmbed capabilities for comments.
 
