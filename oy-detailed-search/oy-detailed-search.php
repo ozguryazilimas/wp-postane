@@ -3,7 +3,7 @@
 Plugin Name: Detailed-Search v1
 Plugin URI: http://ozguryazilim.com.tr
 Description: Detailed Search plugin For 22dakika.org project
-Version: 1.3.0
+Version: 1.4.1
 Author: Ozguryazilim
 Author URI: https://www.ozguryazilim.com.tr
 License: GPL
