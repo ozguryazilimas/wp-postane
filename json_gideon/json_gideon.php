@@ -3,7 +3,7 @@
 Plugin Name: JSON Gideon
 Plugin URI: https://www.ozguryazilim.com.tr
 Description: Disables JSON API for anonymous and non-admin users.
-Version: 0.5.0
+Version: 0.5.1
 Author: Onur Küçük
 Author URI: https://www.delipenguen.net
 License: GPL2

@@ -3,8 +3,8 @@ Contributors:
 Donate link:
 Tags: json, captcha, recaptcha, api, login, register, protect, spam, bot, security
 Requires at least: 4.0.0
-Tested up to: 5.5.3
-Stable tag: 0.5.0
+Tested up to: 5.8.1
+Stable tag: 0.5.1
 
 Disables JSON API for anonymous users and non-admin users.
 
