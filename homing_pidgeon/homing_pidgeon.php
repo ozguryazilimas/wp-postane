@@ -4,7 +4,7 @@ Plugin Name: Homing Pidgeon
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: Notifies configured users when a post is submitted as pending
 
-Version: 0.5.0
+Version: 0.5.1
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
