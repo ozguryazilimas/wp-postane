@@ -3,7 +3,7 @@
 Plugin Name: Hodor
 Plugin URI: https://www.ozguryazilim.com.tr
 Description: Protects registration screen from automated attacks.
-Version: 0.5.0
+Version: 0.5.1
 Author: Onur Küçük
 Author URI: https://www.delipenguen.net
 License: GPL2
