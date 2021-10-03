@@ -167,7 +167,7 @@ get_footer();
 <script language="javascript" type="text/javascript">
 //<![CDATA[
 
-var dt_data;
+var dt_data = [];
 var mediatable;
 
 jQuery(document).ready(function() {
@@ -189,7 +189,6 @@ jQuery(document).ready(function() {
         };';
 
   echo "\n";
-  echo 'dt_data = ' . json_encode(ugurcum_get_media_links_json(), JSON_PRETTY_PRINT) . ';';
 ?>
 
   function ugurcum_format_mediatable_form(d) {
@@ -282,7 +281,6 @@ jQuery(document).ready(function() {
   });
 
   jQuery('.dataTables_filter input').attr("placeholder", dt_str.search);
-  mediatable.rows.add(dt_data).draw();
 
   jQuery('a#ugurcum_toggle_medialink_form').on('click', function() {
     var media_link_form = jQuery('form#ugurcum_add_media_link');
@@ -325,6 +323,18 @@ jQuery(document).ready(function() {
       td.addClass('shown');
 
       jQuery('div.ugurcum_inner_update', row.child()).slideDown();
+    }
+  });
+
+  jQuery.ajax({
+    url: "<?php echo admin_url('admin-ajax.php') ?>",
+    type: "POST",
+    data: {
+      action: "ugurcum_get_media_links_ajax"
+    },
+    success: function(response) {
+      dt_data = JSON.parse(response);
+      mediatable.rows.add(dt_data).draw();
     }
   });
 
