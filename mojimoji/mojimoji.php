@@ -3,7 +3,7 @@
 Plugin Name: MojiMoji
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: Extends Wordpress emoji library by using Emoji provided by Emoji One http://emojione.com
-Version: 0.1.0
+Version: 0.2.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: Plugin code GPL2 and Emoji One CC By 4.0
