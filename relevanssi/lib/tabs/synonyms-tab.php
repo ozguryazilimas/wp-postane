@@ -15,8 +15,12 @@
  */
 function relevanssi_synonyms_tab() {
 	$current_language = relevanssi_get_current_language();
-	$synonyms_array   = get_option( 'relevanssi_synonyms', array() );
-	$synonyms         = isset( $synonyms_array[ $current_language ] ) ? $synonyms_array[ $current_language ] : '';
+	if ( class_exists( 'Polylang', false ) && ! $current_language ) {
+		relevanssi_polylang_all_languages_synonyms();
+		return;
+	}
+	$synonyms_array = get_option( 'relevanssi_synonyms', array() );
+	$synonyms       = isset( $synonyms_array[ $current_language ] ) ? $synonyms_array[ $current_language ] : '';
 
 	if ( isset( $synonyms ) ) {
 		$synonyms = str_replace( ';', "\n", $synonyms );
@@ -45,10 +49,28 @@ function relevanssi_synonyms_tab() {
 		<p class="description"><?php _e( "It's possible to use phrases for the value, but not for the key. <code>dog = \"great dane\"</code> works, but <code>\"great dane\" = dog</code> doesn't.", 'relevanssi' ); // phpcs:ignore WordPress.Security.EscapeOutput.UnsafePrintingFunction ?></p>
 
 		<?php if ( RELEVANSSI_PREMIUM ) : ?>
-			<p class="description"><?php esc_html_e( 'If you want to use synonyms in AND searches, enable synonym indexing on the Indexing tab.', 'relevanssi' ); ?></p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">
+			<?php echo esc_html_e( 'Synonyms in AND searches', 'relevanssi' ); ?>
+		</th>
+		<td>
+			<p class="description"><?php esc_html_e( "If you want to use synonyms in AND searches, enable synonym indexing on the Indexing tab. Also, any changes to the synonyms won't take effect until you rebuild the index.", 'relevanssi' ); ?></p>
 		<?php endif; ?>
 	</td>
 </tr>
 </table>
+	<?php
+}
+
+/**
+ * Displays an error message when Polylang is in all languages mode.
+ */
+function relevanssi_polylang_all_languages_synonyms() {
+	?>
+	<h3 id="synonyms"><?php esc_html_e( 'Synonyms', 'relevanssi' ); ?></h3>
+
+	<p class="description"><?php esc_html_e( 'You are using Polylang and are in "Show all languages" mode. Please select a language before adjusting the synonym settings.', 'relevanssi' ); ?></p>
 	<?php
 }

@@ -136,15 +136,15 @@ function relevanssi_search( $args ) {
 	 */
 	$remove_stopwords = apply_filters( 'relevanssi_remove_stopwords_in_titles', true );
 
-	$terms['terms'] = array_keys( relevanssi_tokenize( $q, $remove_stopwords, $min_length ) );
+	$terms['terms'] = array_keys( relevanssi_tokenize( $q, $remove_stopwords, $min_length, 'search_query' ) );
 
 	$terms['original_terms'] = $q_no_synonyms !== $q
-		? array_keys( relevanssi_tokenize( $q_no_synonyms, $remove_stopwords, $min_length ) )
+		? array_keys( relevanssi_tokenize( $q_no_synonyms, $remove_stopwords, $min_length, 'search_query' ) )
 		: $terms['terms'];
 
 	if ( has_filter( 'relevanssi_stemmer' ) ) {
 		do_action( 'relevanssi_disable_stemmer' );
-		$terms['original_terms'] = array_keys( relevanssi_tokenize( $q_no_synonyms, $remove_stopwords, $min_length ) );
+		$terms['original_terms'] = array_keys( relevanssi_tokenize( $q_no_synonyms, $remove_stopwords, $min_length, 'search_query' ) );
 		do_action( 'relevanssi_enable_stemmer' );
 	}
 
@@ -226,7 +226,7 @@ function relevanssi_search( $args ) {
 			);
 
 			$query   = relevanssi_generate_search_query( $term, $search_again, $no_terms, $query_join, $this_query_restrictions );
-			$matches = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared.
+			$matches = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 
 			if ( count( $matches ) < 1 ) {
 				continue;
@@ -357,17 +357,17 @@ function relevanssi_search( $args ) {
 
 	if ( ! $remove_stopwords ) {
 		$strip_stops       = true;
-		$terms['no_stops'] = array_keys( relevanssi_tokenize( implode( ' ', $terms['terms'] ), $strip_stops, $min_length ) );
+		$terms['no_stops'] = array_keys( relevanssi_tokenize( implode( ' ', $terms['terms'] ), $strip_stops, $min_length, 'search_query' ) );
 
 		if ( $q !== $q_no_synonyms ) {
-			$terms['original_terms_no_stops'] = array_keys( relevanssi_tokenize( implode( ' ', $terms['original_terms'] ), $strip_stops, $min_length ) );
+			$terms['original_terms_no_stops'] = array_keys( relevanssi_tokenize( implode( ' ', $terms['original_terms'] ), $strip_stops, $min_length, 'search_query' ) );
 		} else {
 			$terms['original_terms_no_stops'] = $terms['no_stops'];
 		}
 
 		if ( has_filter( 'relevanssi_stemmer' ) ) {
 			do_action( 'relevanssi_disable_stemmer' );
-			$terms['original_terms_no_stops'] = array_keys( relevanssi_tokenize( implode( ' ', $terms['original_terms'] ), $strip_stops, $min_length ) );
+			$terms['original_terms_no_stops'] = array_keys( relevanssi_tokenize( implode( ' ', $terms['original_terms'] ), $strip_stops, $min_length, 'search_query' ) );
 			do_action( 'relevanssi_enable_stemmer' );
 		} else {
 			$terms['original_terms_no_stops'] = $terms['no_stops'];
@@ -376,7 +376,7 @@ function relevanssi_search( $args ) {
 		$terms['no_stops']                = $terms['terms'];
 		$terms['original_terms_no_stops'] = $terms['original_terms'];
 	}
-	$total_terms = count( $terms['no_stops'] );
+	$total_terms = count( $terms['original_terms_no_stops'] );
 
 	if ( isset( $doc_weight ) ) {
 		/**
@@ -1085,6 +1085,23 @@ function relevanssi_compile_search_args( $query, $q ) {
 			'author'             => $author,
 			'fields'             => $fields,
 		)
+	);
+
+	/**
+	 * Filters the Relevanssi search parameters after compiling.
+	 *
+	 * Relevanssi picks up the search parameters from the WP_Query query
+	 * variables and collects them in an array you can filter here.
+	 *
+	 * @param array    $search_params The search parameters.
+	 * @param WP_Query $query         The full WP_Query object.
+	 *
+	 * @return array The filtered parameters.
+	 */
+	$search_params = apply_filters(
+		'relevanssi_search_params',
+		$search_params,
+		$query
 	);
 
 	return $search_params;

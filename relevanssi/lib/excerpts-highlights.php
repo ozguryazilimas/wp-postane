@@ -69,7 +69,7 @@ function relevanssi_do_excerpt( $t_post, $query, $excerpt_length = null, $excerp
 		$min_word_length = 1;
 	}
 
-	$terms = relevanssi_tokenize( $query, $remove_stopwords, $min_word_length );
+	$terms = relevanssi_tokenize( $query, $remove_stopwords, $min_word_length, 'search_query' );
 
 	if ( is_array( $query ) ) {
 		$untokenized_terms = array_filter( $query );
@@ -379,7 +379,7 @@ function relevanssi_create_excerpts( $content, $terms, $query, $excerpt_length =
 	$remove_stopwords = false;
 	$non_phrase_terms = array();
 	foreach ( $phrases as $phrase ) {
-		$phrase_terms = array_keys( relevanssi_tokenize( $phrase, $remove_stopwords ) );
+		$phrase_terms = array_keys( relevanssi_tokenize( $phrase, $remove_stopwords, -1, 'search_query' ) );
 		foreach ( array_keys( $terms ) as $term ) { // array_keys(), because tokenized terms have the term as key.
 			if ( ! in_array( $term, $phrase_terms, true ) ) {
 				$non_phrase_terms[ $term ] = true;
@@ -567,7 +567,8 @@ function relevanssi_highlight_terms( $content, $query, $convert_entities = false
 		relevanssi_tokenize(
 			$query,
 			$remove_stopwords,
-			$min_word_length
+			$min_word_length,
+			'search_query'
 		)
 	);
 
@@ -603,7 +604,7 @@ function relevanssi_highlight_terms( $content, $query, $convert_entities = false
 	$remove_stopwords = false;
 	$non_phrase_terms = array();
 	foreach ( $phrases as $phrase ) {
-		$phrase_terms = array_keys( relevanssi_tokenize( $phrase, $remove_stopwords ) );
+		$phrase_terms = array_keys( relevanssi_tokenize( $phrase, $remove_stopwords, -1, 'search_query' ) );
 		foreach ( $terms as $term ) {
 			if ( ! in_array( $term, $phrase_terms, true ) ) {
 				$non_phrase_terms[] = $term;
@@ -617,7 +618,9 @@ function relevanssi_highlight_terms( $content, $query, $convert_entities = false
 
 	$content = strtr( $content, array( "\xC2\xAD" => '' ) );
 	$content = html_entity_decode( $content, ENT_QUOTES, 'UTF-8' );
-	$content = str_replace( "\n", ' ', $content );
+	if ( ! $convert_entities ) {
+		$content = str_replace( "\n", ' ', $content );
+	}
 
 	foreach ( $terms as $term ) {
 		$pr_term = preg_quote( $term, '/' );
@@ -693,7 +696,14 @@ function relevanssi_highlight_terms( $content, $query, $convert_entities = false
 			}
 		}
 
-		if ( preg_match_all( '/&.*;/U', $content, $matches ) > 0 ) {
+		$start_quoted = preg_quote( $start_emp_token, '/' );
+		$end_quoted   = preg_quote( $end_emp_token, '/' );
+		if (
+			preg_match_all(
+				'/&' . $start_quoted . '([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6})' . $end_quoted . ';/U',
+				$content,
+				$matches
+			) > 0 ) {
 			// Remove highlights from inside HTML entities.
 			foreach ( $matches as $match ) {
 				$new_match = str_replace( $start_emp_token, '', $match );
@@ -1493,16 +1503,28 @@ function relevanssi_add_excerpt( &$post, $query ) {
 	if ( isset( $post->blog_id ) ) {
 		switch_to_blog( $post->blog_id );
 	}
-	$excerpt_length         = get_option( 'relevanssi_excerpt_length' );
-	$excerpt_type           = get_option( 'relevanssi_excerpt_type' );
 	$post->original_excerpt = $post->post_excerpt;
-	$post->post_excerpt     = relevanssi_do_excerpt(
-		$post,
-		$query,
-		$excerpt_length,
-		$excerpt_type
-	);
-
+	/**
+	 * Filters whether an excerpt should be added to a post or not.
+	 *
+	 * If this filter hook returns false, Relevanssi does not create an excerpt
+	 * for the post. The original excerpt is still copied to
+	 * $post->original_excerpt.
+	 *
+	 * @param boolean If true, create an excerpt. Default true.
+	 * @param WP_Post $post  The post object.
+	 * @param string  $query The search quer.
+	 */
+	if ( apply_filters( 'relevanssi_excerpt_post', true, $post, $query ) ) {
+		$excerpt_length     = get_option( 'relevanssi_excerpt_length' );
+		$excerpt_type       = get_option( 'relevanssi_excerpt_type' );
+		$post->post_excerpt = relevanssi_do_excerpt(
+			$post,
+			$query,
+			$excerpt_length,
+			$excerpt_type
+		);
+	}
 	if ( isset( $post->blog_id ) ) {
 		restore_current_blog();
 	}
