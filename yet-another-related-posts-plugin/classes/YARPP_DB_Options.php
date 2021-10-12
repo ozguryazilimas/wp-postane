@@ -5,7 +5,7 @@
  * about the default YARPP options' values or when to clear the cache. This is just a central way to get/set
  * database options used by YARPP and to describe them.
  *
- * @author         Mike Nelson
+ * @package        YARPP
  * @since          5.2.0
  */
 class YARPP_DB_Options {

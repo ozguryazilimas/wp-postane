@@ -391,7 +391,7 @@ class YARPP {
 	 * DIAGNOSTICS
 	 *
 	 * @since 4.0 Moved into separate functions. Note return value types can differ.
-	 * @since 5.2.0 consider using $this->db_schema->posta_table_database_engine() or
+	 * @since 5.2.0 consider using $this->db_schema->posts_table_database_engine() or
 	 *        $this->db_schema->database_supports_fulltext_indexes() instead
 	 */
 	public function diagnostic_myisam_posts() {
@@ -1625,7 +1625,7 @@ class YARPP {
 					sprintf(
 						__(
 							"Powered by <a href='%s' title='WordPress Related Posts' target='_blank'>YARPP</a>.",
-							'yarpp'
+							'yet-another-related-posts-plugin'
 						),
 						'https://yarpp.com'
 					) .
@@ -1787,9 +1787,9 @@ class YARPP {
 
 		$this->prep_query( $domain === 'rss' );
 
-		$this->demo_cache_bypass->end_demo_time();
-
 		$output = $this->get_template_content(null, $args, true);
+
+		$this->demo_cache_bypass->end_demo_time();
 
 		if ( $echo ) {
 			echo $output;
@@ -2018,7 +2018,7 @@ class YARPP {
 		}
 
 		$version = YARPP_VERSION;
-		$remote  = wp_remote_post( "https://yarpp.org/checkversion.php?format=php&version={$version}" );
+		$remote  = wp_remote_post( "https://yarpp.org/checkversion.php?format=php&version={$version}", array ( 'sslverify' => false ) );
 
 		if ( is_wp_error( $remote ) || wp_remote_retrieve_response_code( $remote ) != 200 || ! isset( $remote['body'] ) || ! is_array( $remote['body'] ) ) {
 			$this->set_transient( 'yarpp_version_info', null, 60 * 60 );
@@ -2040,7 +2040,7 @@ class YARPP {
 			return true;
 		}
 
-		$remote = wp_remote_post( 'https://yarpp.org/optin/2/', array( 'body' => $this->optin_data() ) );
+		$remote = wp_remote_post( 'https://yarpp.org/optin/2/', array( 'body' => $this->optin_data(), 'sslverify' => false ) );
 
 		if ( is_wp_error( $remote )
 			|| wp_remote_retrieve_response_code( $remote ) != 200

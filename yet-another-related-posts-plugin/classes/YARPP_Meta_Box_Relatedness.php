@@ -62,6 +62,17 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 					?>
 					</p>
 					<p>
+						<span class="dashicons <?php echo ( $yarpp->db_schema->content_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
+						<code>
+							ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_content` (`post_content`);
+						</code>
+						<br/>
+						<span class="dashicons <?php echo ( $yarpp->db_schema->title_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
+						<code>
+							ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_title` (`post_title`);
+						</code>
+					</p>
+					<p>
 						<?php
 						printf(
 							esc_html__( 'See MySQL %1$sstorage engines%2$s documentation for details on MySQL engines.', 'yet-another-related-posts-plugin' ),
@@ -92,17 +103,17 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 					<p><?php esc_html_e( '"Fulltext indexes" will improve YARPP’s algorithm but may affect performance.', 'yet-another-related-posts-plugin' ); ?></p>
 					<p><?php esc_html_e( 'You have a large database and so adding them may take several minutes and cause the website to become unresponsive during this time. We recommend performing this action during off-peak hours.', 'yet-another-related-posts-plugin' ); ?></p>
 					<p><?php esc_html_e( 'Please make a database backup before attempting this, and consider adding the indexes manually by running the following queries:', 'yet-another-related-posts-plugin' ); ?></p>
-										<p>
-											<span class="dashicons <?php echo ( $yarpp->db_schema->content_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
+					<p>
+						<span class="dashicons <?php echo ( $yarpp->db_schema->content_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
 						<code>
 						   ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_content` (`post_content`);
-											</code>
-											<br/>
-											<span class="dashicons <?php echo ( $yarpp->db_schema->title_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
-											<code>
+						</code>
+						<br/>
+						<span class="dashicons <?php echo ( $yarpp->db_schema->title_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
+						<code>
 						   ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_title` (`post_title`);
 						</code>
-										</p>
+					</p>
 				</div>
 		   </div>
 			<?php

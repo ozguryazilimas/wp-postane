@@ -183,8 +183,8 @@ a.yarpp_help:hover {
 }
 
 .yarpp_form_select > div {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
 }
 
 .yarpp_form_select + .yarpp_form_select {

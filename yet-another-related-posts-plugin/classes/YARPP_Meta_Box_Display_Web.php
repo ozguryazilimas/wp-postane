@@ -65,9 +65,9 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 			echo ' style="display: none;"';
 		}
 		echo '>';
-		echo '<div class="yarpp_form_row"><div>' . $this->template_text . '</div></div>';
+		echo '<div class="yarpp_form_row"><p class="description">' . $this->template_text . '</p></div>';
 		$this->template_file( false );
-		$this->yarpp_select_option( 'custom_theme_thumbnail_size_display', $get_image_sizes, 'Thumbnail Size' );
+		$this->yarpp_select_option( 'custom_theme_thumbnail_size_display', $get_image_sizes, __( 'Thumbnail Size', 'yet-another-related-posts-plugin' ) );
 		echo '</div>';
 
 		echo "<div class='yarpp_subbox template_options_thumbnails'";
@@ -77,7 +77,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 		echo '>';
 		$this->textbox( 'thumbnails_heading', __( 'Heading:', 'yet-another-related-posts-plugin' ), 40 );
 		$this->textbox( 'thumbnails_default', __( 'Default image (URL):', 'yet-another-related-posts-plugin' ), 40 );
-		$this->yarpp_select_option( 'thumbnail_size_display', $get_image_sizes, 'Thumbnail Size' );
+		$this->yarpp_select_option( 'thumbnail_size_display', $get_image_sizes, __( 'Thumbnail Size', 'yet-another-related-posts-plugin' ) );
 		echo '</div>';
 		echo '<div class="generate_missing_thumbnails">';
 		$this->checkbox( 'generate_missing_thumbnails', __( 'Generate missing thumbnail sizes: ', 'yet-another-related-posts-plugin' ) . "<span class='yarpp_help dashicons dashicons-editor-help' data-help='" . '<p>' . esc_attr( __( 'When enabled, missing thumbnail sizes will be  automatically generated on the fly. Doing this type of processing on the fly may not scale well for larger sites.', 'yet-another-related-posts-plugin' ) ) . '</p><p>' . sprintf( __( 'For larger sites, we recommend the %1$s or %2$s to generate missing thumbnail sizes in a batch process.', 'yet-another-related-posts-plugin' ), '<a href="https://wordpress.org/plugins/regenerate-thumbnails/" target="_blank">Regenerate Thumbnails plugin</a>', '<a href="https://developer.wordpress.org/cli/commands/media/regenerate/" target="_blank">WP-CLI</a>' ) . '</p><p>' . esc_attr( __( 'New images should continue to automatically get all active thumbnail sizes generated when they are uploaded.', 'yet-another-related-posts-plugin' ) ) . '</p>' . "'>&nbsp;</span>&nbsp;&nbsp;", 'yarpp', $yarpp_args );

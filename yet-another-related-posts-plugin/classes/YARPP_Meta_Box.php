@@ -11,11 +11,13 @@ class YARPP_Meta_Box {
 		global $yarpp;
 		$this->yarpp         = $yarpp;
 		$this->template_text =
-			__(
-				'This advanced option gives you full power to customize how your related posts are displayed.&nbsp;' .
-				"Templates are written in PHP and saved in your active theme's folder.",
-				'yarpp'
-			);
+			sprintf(__(
+			'This advanced option gives you full power to easily customize the look and feel of YARPP.' . ' ' .
+			'YARPP Custom Templates are written in PHP and saved in your active theme folder.' . ' ' .
+			'%1$sLearn more about YARPP Custom Templates%2$s.',
+			'yet-another-related-posts-plugin'
+			),
+			'<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation" target="_blank">', '</a>');
 	}
 
 	private function offer_copy_templates() {
@@ -86,7 +88,6 @@ class YARPP_Meta_Box {
 	public function weight( $option, $desc ) {
 		$weight = (int) yarpp_get_option( "weight[$option]" );
 
-		/* Both require MyISAM fulltext indexing: */
 		$fulltext = $this->yarpp->db_schema->database_supports_fulltext_indexes() ? '' : ' readonly="readonly" disabled="disabled"';
 
 		echo "<div class='yarpp_form_row yarpp_form_select'><div class='yarpp_form_label'>{$desc}</div><div>";
@@ -94,7 +95,8 @@ class YARPP_Meta_Box {
 		echo "<option {$fulltext} value='no'" . ( ( ! $weight ) ? ' selected="selected"' : '' ) . '  >' . __( 'do not consider', 'yet-another-related-posts-plugin' ) . '</option>';
 		echo "<option {$fulltext} value='consider'" . ( ( $weight == 1 ) ? ' selected="selected"' : '' ) . '  > ' . __( 'consider', 'yet-another-related-posts-plugin' ) . '</option>';
 		echo "<option {$fulltext} value='consider_extra'" . ( ( $weight > 1 ) ? ' selected="selected"' : '' ) . '  > ' . __( 'consider with extra weight', 'yet-another-related-posts-plugin' ) . '</option>';
-		echo '</select></div></div>';
+		echo '</select>';
+		echo '</div></div>';
 	}
 
 	public function displayorder( $option, $class = null ) {

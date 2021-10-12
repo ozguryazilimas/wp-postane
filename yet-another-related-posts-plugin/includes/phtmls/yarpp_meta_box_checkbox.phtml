@@ -5,11 +5,11 @@
 	</div>&nbsp;
 <?php } ?>
 	<div scope="row">
-		<input 
-			type="checkbox" 
-			name="<?php echo $option; ?>" 
-			id="yarpp-<?php echo $option; ?>" 
-			value="true" 
+		<input
+			type="checkbox"
+			name="<?php echo $option; ?>"
+			id="yarpp-<?php echo $option; ?>"
+			value="true"
 			<?php checked( ( isset( $yarpp_args['option_value'] ) ) ? $yarpp_args['option_value'] : yarpp_get_option( $option ) ); ?>
 			<?php echo ( isset( $yarpp_args['disabled_checkbox'] ) ) ? $yarpp_args['disabled_checkbox'] : ''; ?>
 		/>

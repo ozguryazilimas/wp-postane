@@ -300,22 +300,22 @@ jQuery(function ($) {
 		);
 	}
 
-	const thumbnails_template_size_radio = document.querySelectorAll(
-		'input[name=thumbnail_size_display]',
+	const thumbnails_template_size_select = document.querySelector(
+		'#thumbnail_size_display[name=thumbnail_size_display]',
 	);
-	if (thumbnails_template_size_radio.length > 0) {
-		thumbnails_template_size_radio.forEach((radio_button) => {
-			radio_button.addEventListener('change', (e) => handle_change('size', e));
-		});
+	if (thumbnails_template_size_select) {
+		thumbnails_template_size_select.addEventListener('change', (e) =>
+			handle_change('size', e),
+		);
 	}
 
-	const custom_template_size_radio = document.querySelectorAll(
-		'input[name=custom_theme_thumbnail_size_display]',
+	const custom_template_size_select = document.querySelector(
+		'#custom_theme_thumbnail_size_display[name=custom_theme_thumbnail_size_display]',
 	);
-	if (custom_template_size_radio.length > 0) {
-		custom_template_size_radio.forEach((radio_button) => {
-			radio_button.addEventListener('change', (e) => handle_change('size', e));
-		});
+	if (custom_template_size_select) {
+		custom_template_size_select.addEventListener('change', (e) =>
+			handle_change('size', e),
+		);
 	}
 
 	const thumbnails_heading_input = document.querySelector(
@@ -450,37 +450,29 @@ jQuery(function ($) {
 			'#yarpp-display-html-preview div.yarpp-preview__iframe__backdrop',
 		);
 
+		// displays preview width in ui
 		update_preview_width_ui();
 
 		if (template) {
 			// if the template is custom, checks the custom select template and changes it
 			if (template === 'custom') {
 				preview_body.template = custom_template_select.value;
-				let checked_value = null;
 
-				custom_template_size_radio.forEach((rb) => {
-					if (rb.checked) {
-						checked_value = rb.value;
-					}
-				});
-				if (checked_value) {
-					preview_body.size = checked_value;
+				if (custom_template_size_select.value) {
+					preview_body.size = custom_template_size_select.value;
 				}
 			} else {
 				preview_body.template = template;
 			}
 
 			if (template === 'thumbnails') {
-				thumbnails_template_size_radio.forEach((rb) => {
-					if (rb.checked) {
-						checked_value = rb.value;
-					}
-				});
-				if (checked_value) {
-					preview_body.size = checked_value;
+				if (thumbnails_template_size_select.value) {
+					preview_body.size = thumbnails_template_size_select.value;
 				}
 			}
 		}
+
+		console.log('Rendering Template Preview: ', preview_body);
 
 		$.ajax({
 			type: 'POST',

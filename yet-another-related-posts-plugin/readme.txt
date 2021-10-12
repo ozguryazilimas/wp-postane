@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.8
-Stable tag: 5.27.5
+Stable tag: 5.27.6
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -535,11 +535,19 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.27.6 (12-October-2021) =
+* Bugfix: Support for drop-in caches. Resolves `Undefined variable: found` warnings.
+* Bugfix: Add missing string for translations
+* Bugfix: Workaround for [WordPress ca-bundle.crt issue](https://core.trac.wordpress.org/ticket/54207)
+* Bugfix: Properly update the template preview in YARPP's admin console when Thumbnail size selection is updated
+* Bugfix: Use dummy example thumbnail in previews
+* Enhancement: For RSS Feed Display Options use dropdown select for thumbnail sizes instead of radio buttons
+
 = 5.27.5 (15-September-2021) =
 * New: Add support for "show_sticky_posts" and "generate_missing_thumbnails" to the [yarpp_related() function](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
 * New: Add support for "recent" in [YARPP shortcode](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
     + For example, to limit results to those published in the past 12 months: `[yarpp recent="12 month"]`
-* Enhancement: Use dropdown select for thumbnail sizes instead of radio buttons
+* Enhancement: For Automatic Display Options use dropdown select for thumbnail sizes instead of radio buttons
 
 = 5.27.4 (25-August-2021) = 
 * [Bugfix](https://wordpress.org/support/topic/php-8-deprecated-required-parameter-follows-optional/): PHP 8 compatibility by making `$args` optional on `YARPP::get_template_content()` 
@@ -1428,5 +1436,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.27.5 =
+= 5.27.6 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

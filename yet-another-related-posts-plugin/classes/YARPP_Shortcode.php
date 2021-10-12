@@ -1,12 +1,9 @@
 <?php
-
-
-
 /**
  * Class YARPP_Shortcode
  * Adds the YARPP shortcode.
  *
- * @author         Mike Nelson
+ * @package        YARPP
  * @since          5.4.0
  */
 class YARPP_Shortcode {

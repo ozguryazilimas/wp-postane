@@ -24,7 +24,7 @@ class YARPP_Meta_Box_Display_Feed extends YARPP_Meta_Box {
 			echo ' style="display: none;"';
 		}
 		echo '>';
-		echo '<div class="yarpp_form_row"><div>' . $this->template_text . '</div></div>';
+		echo '<div class="yarpp_form_row"><p class="description">' . $this->template_text . '</p></div>';
 		$this->template_file( true );
 		echo '</div>';
 
@@ -36,15 +36,8 @@ class YARPP_Meta_Box_Display_Feed extends YARPP_Meta_Box {
 		$this->textbox( 'rss_thumbnails_heading', __( 'Heading:', 'yet-another-related-posts-plugin' ), 40 );
 		$this->textbox( 'rss_thumbnails_default', __( 'Default image (URL):', 'yet-another-related-posts-plugin' ), 40 );
 		$get_image_sizes = yarpp_get_image_sizes();
-		echo '<div class="yarpp_form_row yarpp_form_radio_label">';
-					echo '<div class="yarpp_form_label">' . esc_html__( 'Thumbnail Size', 'yet-another-related-posts-plugin' ) . '</div><div>';
-		foreach ( $get_image_sizes as $key => $_size ) {
-					/* translators: %s: thumbnail key's name */
-					$name = sprintf( __( '%1$s (%2$s X %3$s)', 'yet-another-related-posts-plugin' ), $key, $_size['width'], $_size['height'] );
-					$this->radio( 'thumbnail_size_feed_display', $name, '', $key );
-		}
-		  echo '</div></div>';
-		  echo '</div>';
+		$this->yarpp_select_option( 'thumbnail_size_feed_display', $get_image_sizes, __( 'Thumbnail Size', 'yet-another-related-posts-plugin' ) );
+		echo '</div>';
 
 		echo "<div class='yarpp_subbox template_options_builtin'";
 		if ( $choice != 'builtin' ) {
