@@ -43,7 +43,12 @@ var AmeActorSelector = /** @class */ (function () {
         }
         //Select an actor on click.
         this.selectorNode.on('click', 'li a.ws_actor_option', function (event) {
-            var actor = jQuery(event.target).attr('href').substring(1);
+            var href = jQuery(event.target).attr('href');
+            var fragmentStart = href.indexOf('#');
+            var actor = null;
+            if (fragmentStart >= 0) {
+                actor = href.substring(fragmentStart + 1);
+            }
             if (actor === '') {
                 actor = null;
             }

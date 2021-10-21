@@ -27,7 +27,10 @@ class ameRoleUtils {
 		//Iterate over all known roles and collect their capabilities
 		foreach($wp_roles->roles as $role){
 			if ( !empty($role['capabilities']) && is_array($role['capabilities']) ){ //Being defensive here
-				$capabilities = array_merge($capabilities, $role['capabilities']);
+				//We use the "+" operator instead of array_merge() to combine arrays because we don't want
+				//integer keys to be renumbered. Technically, capabilities should be strings and not integers,
+				//but in practice some plugins do create integer capabilities.
+				$capabilities = $capabilities + $role['capabilities'];
 			}
 		}
 		$regular_cache = $capabilities;
@@ -42,7 +45,7 @@ class ameRoleUtils {
 				'manage_network_options' => 1,
 				'manage_network_plugins' => 1,
 			);
-			$capabilities = array_merge($capabilities, $multisite_caps);
+			$capabilities = $capabilities + $multisite_caps;
 			$multisite_cache = $capabilities;
 		}
 

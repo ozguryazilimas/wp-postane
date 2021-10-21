@@ -28,4 +28,14 @@ if( defined( 'ABSPATH') && defined('WP_UNINSTALL_PLUGIN') ) {
 		delete_site_option('ws_ame_hide_pv_notice');
 		delete_site_option('ws_ame_dashboard_widgets');
 	}
+	
+	//Remove redirect settings.
+	delete_option('ws_ame_redirects');
+	if ( function_exists('delete_site_option') ) {
+		delete_site_option('ws_ame_redirects');
+		delete_site_option('ws_ame_rui_first_change');
+	}
+	if ( function_exists('delete_metadata') ) {
+		delete_metadata('user', 0, 'ame_rui_first_login_done', '', true);
+	}
 }

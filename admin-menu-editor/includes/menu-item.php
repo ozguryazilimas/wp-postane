@@ -257,7 +257,7 @@ abstract class ameMenuItem {
 		//This is because the URL includes a "return" parameter that contains the current page's URL. It also makes
 		//the template ID different on every page, so it's impossible to identify the menu. To fix that, lets remove
 		//the "return" parameter from the ID.
-		if ( ($parent_file === 'themes.php') && (strpos($item_file, 'customize.php?') === 0) ) {
+		if ( strpos($item_file, 'customize.php?') === 0 ) {
 			$item_file = remove_query_arg('return', $item_file);
 		}
 
@@ -640,5 +640,46 @@ abstract class ameMenuItem {
 			return substr($url, 0, $pos);
 		}
 		return $url;
+	}
+
+	/**
+	 * Remove the number of pending updates or other count elements from a menu title.
+	 *
+	 * @param string $menuTitle
+	 * @return string
+	 */
+	public static function remove_update_count($menuTitle) {
+		if ( (stripos($menuTitle, '<span') === false) || !class_exists('DOMDocument', false) ) {
+			return $menuTitle;
+		}
+
+		$dom = new DOMDocument();
+		$uniqueId = 'ame-rex-title-wrapper-' . time();
+		if ( @$dom->loadHTML('<div id="' . $uniqueId . '">' . $menuTitle . '</div>') ) {
+			/** @noinspection PhpComposerExtensionStubsInspection */
+			$xpath = new DOMXpath($dom);
+			$result = $xpath->query('//span[contains(@class,"update-plugins") or contains(@class,"awaiting-mod")]');
+			if ( $result->length > 0 ) {
+				//Remove all matched nodes. We must iterate backwards to prevent messing up the DOMNodeList.
+				for ($i = $result->length - 1; $i >= 0; $i--) {
+					$span = $result->item(0);
+					$span->parentNode->removeChild($span);
+				}
+
+				$innerHtml = '';
+				$children = $dom->getElementById($uniqueId)->childNodes;
+				//In theory, $children should always be a DOMNodeList, but there has been
+				//at least one report about the foreach() statement throwing a warning
+				//because $children was not iterable.
+				if ( $children instanceof Traversable ) {
+					foreach ($children as $child) {
+						$innerHtml .= $child->ownerDocument->saveHTML($child);
+					}
+				}
+
+				return $innerHtml;
+			}
+		}
+		return $menuTitle;
 	}
 }

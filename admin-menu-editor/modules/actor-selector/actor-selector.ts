@@ -85,7 +85,13 @@ class AmeActorSelector {
 
 		//Select an actor on click.
 		this.selectorNode.on('click', 'li a.ws_actor_option', (event) => {
-			let actor = jQuery(event.target).attr('href').substring(1);
+			const href = jQuery(event.target).attr('href');
+			const fragmentStart = href.indexOf('#');
+
+			let actor = null;
+			if (fragmentStart >= 0) {
+				actor = href.substring(fragmentStart + 1);
+			}
 			if (actor === '') {
 				actor = null;
 			}

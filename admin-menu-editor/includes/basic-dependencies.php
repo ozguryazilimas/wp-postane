@@ -13,6 +13,7 @@ require_once $thisDirectory . '/auto-versioning.php';
 require_once $thisDirectory . '/../ajax-wrapper/AjaxWrapper.php';
 require_once $thisDirectory . '/module.php';
 require_once $thisDirectory . '/persistent-module.php';
+require_once $thisDirectory . '/shortcodes.php';
 
 if ( !class_exists('WPMenuEditor', false) ) {
 	require_once $thisDirectory . '/menu-editor-core.php';

@@ -227,6 +227,7 @@ abstract class ameMenu {
 	 */
 	public static function to_json($menu) {
 		$menu = self::add_format_header($menu);
+		//todo: Maybe use wp_json_encode() instead. At least one user had invalid UTF-8 characters in their menu.
 		$result = json_encode($menu);
 		if ( !is_string($result) ) {
 			$message = sprintf(

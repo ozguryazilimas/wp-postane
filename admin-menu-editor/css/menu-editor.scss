@@ -740,7 +740,7 @@ a.ws_button.ws_button_disabled:hover {
 	width: 5px;
 }
 
-#ws_toggle_toolbar {
+#ws_toggle_toolbar, .ws_toggle_toolbar_button {
 	margin-right: 0;
 }
 
@@ -1968,6 +1968,10 @@ $userSelectionPanelPadding: 10px;
 	vertical-align: bottom;
 }
 
+.ws_tooltip_trigger.ame-warning-tooltip {
+	color: orange;
+}
+
 .ws_wide_tooltip {
 	max-width: 450px;
 }
@@ -2257,3 +2261,5 @@ span.description {
 }
 
 @import "test-access-screen";
+
+@import "main-tabs";
