@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.8
-Stable tag: 5.27.6
+Stable tag: 5.27.7
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -278,6 +278,10 @@ if(! $related_posts){
 }
 </code>
 
+= YARPP Filters =
+
+Documentation: [https://support.shareaholic.com/hc/en-us/articles/4408775687060](https://support.shareaholic.com/hc/en-us/articles/4408775687060)
+
 == Frequently Asked Questions ==
 
 If your question isn't here, ask your own question at [the WordPress.org forums](https://wordpress.org/support/plugin/yet-another-related-posts-plugin).
@@ -535,6 +539,10 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.27.7 (29-October-2021) =
+* Enhancement: CSS improvements for better cross-theme compatibility
+* Documentation: [Available YARPP filters](https://support.shareaholic.com/hc/en-us/articles/4408775687060)
+
 = 5.27.6 (12-October-2021) =
 * Bugfix: Support for drop-in caches. Resolves `Undefined variable: found` warnings.
 * Bugfix: Add missing string for translations
@@ -1436,5 +1444,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.27.6 =
+= 5.27.7 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

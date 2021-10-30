@@ -1,5 +1,6 @@
 .yarpp-related {
-    margin: 1em 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .yarpp-related a {
@@ -20,16 +21,4 @@
     font-size: 125%;
     text-transform: capitalize;
     margin: 0;
-}
-
-.yarpp-related .yarpp-promote { 
-    clear: both;
-    background: url(//api.engage.bidsystem.com/adk_mini_logo.png) no-repeat;
-    float: right;
-    text-indent: -1000px;
-    cursor: pointer;
-    color: #666;
-    font-size: 11px;
-    height: 17px;
-    width: 78px;
 }
