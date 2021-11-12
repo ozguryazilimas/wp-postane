@@ -3,7 +3,7 @@
  * Factory Templates
  *
  * @author        Alex Kovalev <alex.kovalevv@gmail.com>, Github: https://github.com/alexkovalevv
- * @since         1.0.0
+ * @since         1.0.2
  * @package       clearfy
  * @copyright (c) 2018, Webcraftic Ltd
  *
@@ -14,22 +14,22 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
-if( defined('FACTORY_TEMPLATES_101_LOADED') ) {
+if( defined('FACTORY_TEMPLATES_103_LOADED') ) {
 	return;
 }
 
-define('FACTORY_TEMPLATES_101_LOADED', true);
+define('FACTORY_TEMPLATES_103_LOADED', true);
 
-define('FACTORY_TEMPLATES_101', '1.0.1');
+define('FACTORY_TEMPLATES_103', '1.0.3');
 
-define('FACTORY_TEMPLATES_101_DIR', dirname(__FILE__));
-define('FACTORY_TEMPLATES_101_URL', plugins_url(null, __FILE__));
+define('FACTORY_TEMPLATES_103_DIR', dirname(__FILE__));
+define('FACTORY_TEMPLATES_103_URL', plugins_url(null, __FILE__));
 
-load_plugin_textdomain('wbcr_factory_templates_101', false, dirname(plugin_basename(__FILE__)) . '/langs');
+load_plugin_textdomain('wbcr_factory_templates_103', false, dirname(plugin_basename(__FILE__)) . '/langs');
 
-require(FACTORY_TEMPLATES_101_DIR . '/includes/ajax-handlers.php');
-require(FACTORY_TEMPLATES_101_DIR . '/includes/class-helpers.php');
-require(FACTORY_TEMPLATES_101_DIR . '/includes/class-configurate.php');
+require(FACTORY_TEMPLATES_103_DIR . '/includes/ajax-handlers.php');
+require(FACTORY_TEMPLATES_103_DIR . '/includes/class-helpers.php');
+require(FACTORY_TEMPLATES_103_DIR . '/includes/class-configurate.php');
 
 // module provides function only for the admin area
 if( is_admin() ) {
@@ -38,13 +38,13 @@ if( is_admin() ) {
 	 * на все страницы админпанели.
 	 */
 	add_action('admin_enqueue_scripts', function ($hook) {
-		wp_enqueue_script('wbcr-factory-templates-101-global', FACTORY_TEMPLATES_101_URL . '/assets/js/clearfy-globals.js', [
+		wp_enqueue_script('wbcr-factory-templates-103-global', FACTORY_TEMPLATES_103_URL . '/assets/js/clearfy-globals.js', [
 			'jquery',
-			'wfactory-449-core-general'
-		], FACTORY_TEMPLATES_101);
+			'wfactory-450-core-general'
+		], FACTORY_TEMPLATES_103);
 
-		require_once FACTORY_TEMPLATES_101_DIR . '/includes/class-search-options.php';
-		$all_options = \WBCR\Factory_Templates_101\Search_Options::get_all_options();
+		require_once FACTORY_TEMPLATES_103_DIR . '/includes/class-search-options.php';
+		$all_options = \WBCR\Factory_Templates_103\Search_Options::get_all_options();
 
 		if( empty($all_options) ) {
 			return;
@@ -72,21 +72,21 @@ if( is_admin() ) {
 		//return;
 		//}
 
-		wp_localize_script('wbcr-factory-templates-101-global', 'wfactory_clearfy_search_options', $formated_options);
+		wp_localize_script('wbcr-factory-templates-103-global', 'wfactory_clearfy_search_options', $formated_options);
 	});
 
-	if( defined('FACTORY_PAGES_448_LOADED') ) {
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/templates/impressive/class-page-template-impressive.php');
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/templates/impressive/class-pages.php');
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/templates/impressive-lite/class-page-template-impressive-lite.php');
+	if( defined('FACTORY_PAGES_449_LOADED') ) {
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/templates/impressive/class-page-template-impressive.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/templates/impressive/class-pages.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/templates/impressive-lite/class-page-template-impressive-lite.php');
 
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/class-page-more-features.php');
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/class-page-license.php');
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/class-pages-components.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/class-page-more-features.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/class-page-license.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/class-pages-components.php');
 
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/setup-parts/class-step.php');
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/setup-parts/class-step-form.php');
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/setup-parts/class-step-custom.php');
-		require(FACTORY_TEMPLATES_101_DIR . '/pages/class-page-setup.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/setup-parts/class-step.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/setup-parts/class-step-form.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/setup-parts/class-step-custom.php');
+		require(FACTORY_TEMPLATES_103_DIR . '/pages/class-page-setup.php');
 	}
 }

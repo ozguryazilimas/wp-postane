@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div class="factory-bootstrap-449 factory-fontawesome-000">
+    <div class="factory-bootstrap-450 factory-fontawesome-000">
 		<?php wp_nonce_field( 'license' ); ?>
         <div id="wapt-license-wrapper"
              data-loader="<?php echo WAPT_PLUGIN_URL . '/admin/assets/img/loader.gif'; ?>"
@@ -51,8 +51,11 @@
                                 </div>
 							<?php endif; ?>
                             <div class="license-key-description">
-                                <p><?php _e( 'Public License is a GPLv2 compatible license allowing you to change and use this version of the plugin for free. Please keep in mind this license covers only free edition of the plugin. Premium versions are distributed with other type of a license.', 'apt' ) ?>
-                                </p>
+	                            <?php if( !$this->is_premium ): ?>
+                                    <p><?php _e('Public License is a GPLv3 compatible license allowing you to change and use this version of the plugin for free. Please keep in mind this license covers only free edition of the plugin. Premium versions are distributed with other type of a license.', 'apt') ?></p>
+	                            <?php else: ?>
+                                    <p><?php _e('Сommercial license, only to the premium add-on to this free plugin. You cannot distribute or modify the premium add-on. But free plugin is a GPLv3 compatible license allowing you to change and use this version of the plugin for free.', 'apt') ?></p>
+	                            <?php endif; ?>
 								<?php if ( $this->is_premium && $this->premium_has_subscription ): ?>
                                     <p class="activate-trial-hint">
 										<?php _e( 'You use a paid subscription for the plugin updates. In case you don’t want to receive paid updates, please, click <a data-action="unsubscribe" class="wapt-control-btn" href="#">cancel subscription</a>', 'apt' ) ?>

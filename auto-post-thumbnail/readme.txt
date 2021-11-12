@@ -113,6 +113,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= 3.9.3 =
+* Fixed: Security issue
+* Add: Sidebar on this plugin pages
+
 = 3.9.2 =
 * Fixed: Link to the pricing page
 * Fixed: WP 5.8 compatibility.

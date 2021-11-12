@@ -15,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WAPT_Plugin extends Wbcr_Factory449_Plugin {
+class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory449_Plugin
+	 * @var Wbcr_Factory450_Plugin
 	 */
 	private static $app;
 
@@ -73,7 +73,7 @@ class WAPT_Plugin extends Wbcr_Factory449_Plugin {
 	/**
 	 * Статический метод для быстрого доступа к интерфейсу плагина.
 	 *
-	 * @return Wbcr_Factory449_Plugin
+	 * @return Wbcr_Factory450_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -249,7 +249,7 @@ class WAPT_Plugin extends Wbcr_Factory449_Plugin {
 				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages448' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages449' ) ) {
 							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
 						}
 						if ( $redirect_url ) {
@@ -457,7 +457,7 @@ class WAPT_Plugin extends Wbcr_Factory449_Plugin {
 		if ( ! empty( $screen ) && "post" == $screen->post_type ) {
 			$apt_is_image = false;
 			if ( isset( $_GET['apt_is_image'] ) ) {
-				$apt_is_image = $_GET['apt_is_image'];
+				$apt_is_image = absint($_GET['apt_is_image']);
 			}
 
 			echo '<select name="apt_is_image">' . '<option value="-1">' . __( 'Featured Image', 'apt' ) . '</option>' . '<option value="1" ' . selected( 1, $apt_is_image, 0 ) . '>' . __( 'With image', 'apt' ) . '</option>' . '<option value="0" ' . selected( 0, $apt_is_image, 0 ) . '>' . __( 'Without image', 'apt' ) . '</option>' . '</select>';

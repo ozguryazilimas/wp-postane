@@ -3,7 +3,7 @@
     padding: 0px 30px;
 }
 
-.factory-bootstrap-449 .factory-ajax-loader
+.factory-bootstrap-450 .factory-ajax-loader
 {
     width: 120px !important;
     background: url("../img/ajax-loader-line.gif") no-repeat center center !important;
@@ -14,7 +14,7 @@
     top: 5px;
 }
 
-.factory-bootstrap-449 select.form-control
+.factory-bootstrap-450 select.form-control
 {
     display: inline;
     background: #fff url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E) no-repeat right 5px top 55%;
@@ -27,7 +27,7 @@
     font-size: 16px !important;
 }
 
-.factory-bootstrap-449 .btn-default.active, .factory-bootstrap-449 .btn-default:active
+.factory-bootstrap-450 .btn-default.active, .factory-bootstrap-450 .btn-default:active
 {
     text-shadow: none;
     color: #fff !important;
@@ -152,13 +152,13 @@ span.wapt-icon-pro
     box-shadow: none !important;
 }
 
-.factory-bootstrap-449 .factory-color .factory-background, .factory-bootstrap-449 .factory-color .factory-pattern
+.factory-bootstrap-450 .factory-color .factory-background, .factory-bootstrap-450 .factory-color .factory-pattern
 {
     width: 30px;
     height: 30px;
 }
 
-.factory-bootstrap-449 .factory-color .factory-color-hex
+.factory-bootstrap-450 .factory-color .factory-color-hex
 {
     width: 70px;
     font-family: Monospace, serif;

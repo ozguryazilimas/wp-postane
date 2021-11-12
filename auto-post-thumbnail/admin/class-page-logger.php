@@ -1,6 +1,6 @@
 <?php
 
-use WBCR\Factory_Templates_101\ImpressiveLite;
+use WBCR\Factory_Templates_103\ImpressiveLite;
 
 /**
  * Class of plugin page. Must be registered in file admin/class-prefix-page.php
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WAPT_Page_Logger extends Wbcr_FactoryLogger114_Lite {
+class WAPT_Page_Logger extends Wbcr_FactoryLogger115_Lite {
 
 	/**
 	 * Name of the template to get content of. It will be based on plugins /admin/views/ dir.
@@ -163,19 +163,19 @@ class WAPT_Page_Logger extends Wbcr_FactoryLogger114_Lite {
 			$page_url = $args[0];
 		}
 
-		$page_url = apply_filters( 'wbcr_factory_pages_448_implite_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId() );
+		$page_url = apply_filters( 'wbcr_factory_pages_449_implite_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId() );
 
 		?>
         <div class="wbcr-factory-sidebar-widget">
             <p>
-                <strong><?php _e( 'Do you want the plugin to improved and update?', 'wbcr_factory_templates_101' ); ?></strong>
+                <strong><?php _e( 'Do you want the plugin to improved and update?', 'wbcr_factory_templates_103' ); ?></strong>
             </p>
-            <p><?php _e( 'Help the author, leave a review on wordpress.org. Thanks to feedback, I will know that the plugin is really useful to you and is needed.', 'wbcr_factory_templates_101' ); ?></p>
-            <p><?php _e( 'And also write your ideas on how to extend or improve the plugin.', 'wbcr_factory_templates_101' ); ?></p>
+            <p><?php _e( 'Help the author, leave a review on wordpress.org. Thanks to feedback, I will know that the plugin is really useful to you and is needed.', 'wbcr_factory_templates_103' ); ?></p>
+            <p><?php _e( 'And also write your ideas on how to extend or improve the plugin.', 'wbcr_factory_templates_103' ); ?></p>
             <p>
                 <i class="wbcr-factory-icon-5stars"></i>
                 <a href="<?php echo $page_url; ?>" title="Go rate us" target="_blank">
-                    <strong><?php _e( 'Go rate us and push ideas', 'wbcr_factory_templates_101' ); ?></strong>
+                    <strong><?php _e( 'Go rate us and push ideas', 'wbcr_factory_templates_103' ); ?></strong>
                 </a>
             </p>
         </div>
@@ -195,19 +195,19 @@ class WAPT_Page_Logger extends Wbcr_FactoryLogger114_Lite {
 
 		?>
         <div id="wbcr-clr-support-widget" class="wbcr-factory-sidebar-widget">
-            <p><strong><?php _e( 'Having Issues?', 'wbcr_factory_templates_101' ); ?></strong></p>
+            <p><strong><?php _e( 'Having Issues?', 'wbcr_factory_templates_103' ); ?></strong></p>
             <div class="wbcr-clr-support-widget-body">
                 <p>
-					<?php _e( 'We provide free support for this plugin. If you are pushed with a problem, just create a new ticket. We will definitely help you!', 'wbcr_factory_templates_101' ); ?>
+					<?php _e( 'We provide free support for this plugin. If you are pushed with a problem, just create a new ticket. We will definitely help you!', 'wbcr_factory_templates_103' ); ?>
                 </p>
                 <ul>
                     <li><span class="dashicons dashicons-sos"></span>
                         <a href="<?php echo $free_support_url; ?>" target="_blank"
-                           rel="noopener"><?php _e( 'Get starting free support', 'wbcr_factory_templates_101' ); ?></a>
+                           rel="noopener"><?php _e( 'Get starting free support', 'wbcr_factory_templates_103' ); ?></a>
                     </li>
                     <li style="margin-top: 15px;background: #fff4f1;padding: 10px;color: #a58074;">
                         <span class="dashicons dashicons-warning"></span>
-						<?php printf( __( 'If you find a php error or a vulnerability in plugin, you can <a href="%s" target="_blank" rel="noopener">create ticket</a> in hot support that we responded instantly.', 'wbcr_factory_templates_101' ), $hot_support_url ); ?>
+						<?php printf( __( 'If you find a php error or a vulnerability in plugin, you can <a href="%s" target="_blank" rel="noopener">create ticket</a> in hot support that we responded instantly.', 'wbcr_factory_templates_103' ), $hot_support_url ); ?>
                     </li>
                 </ul>
             </div>

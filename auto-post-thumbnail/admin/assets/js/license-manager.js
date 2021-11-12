@@ -55,7 +55,7 @@ jQuery(function ($) {
                 }
 
                 if (response.data && response.data.message) {
-                    $.wbcr_factory_templates_101.app.showNotice(response.data.message, 'success');
+                    $.wbcr_factory_templates_103.app.showNotice(response.data.message, 'success');
 
                     window.location.reload();
                 }

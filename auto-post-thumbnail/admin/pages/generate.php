@@ -20,7 +20,7 @@ class WAPT_Generate extends WAPT_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages448_AdminPage
+	 * @see   FactoryPages449_AdminPage
 	 *
 	 * @var string
 	 */
@@ -124,7 +124,7 @@ class WAPT_Generate extends WAPT_Page {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see   FactoryPages448_AdminPage
+	 * @see   FactoryPages449_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {
@@ -167,5 +167,4 @@ class WAPT_Generate extends WAPT_Page {
 		];
 		echo $this->render( $this->template_name, $data );
 	}
-
 }

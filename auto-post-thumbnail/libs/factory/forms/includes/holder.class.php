@@ -14,20 +14,20 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms446_Holder') ) {
+	if( !class_exists('Wbcr_FactoryForms447_Holder') ) {
 
 		/**
 		 * The base class for control holders.
 		 *
 		 * @since 1.0.0
 		 */
-		abstract class Wbcr_FactoryForms446_Holder extends Wbcr_FactoryForms446_FormElement {
+		abstract class Wbcr_FactoryForms447_Holder extends Wbcr_FactoryForms447_FormElement {
 
 			/**
 			 * Holder Elements.
 			 *
 			 * @since 1.0.0
-			 * @var Wbcr_FactoryForms446_Control[]
+			 * @var Wbcr_FactoryForms447_Control[]
 			 */
 			protected $elements = array();
 
@@ -44,7 +44,7 @@
 			 *
 			 * @since 1.0.0
 			 * @param mixed[] $options A holder options.
-			 * @param Wbcr_FactoryForms446_Form $form A parent form.
+			 * @param Wbcr_FactoryForms447_Form $form A parent form.
 			 */
 			public function __construct($options, $form)
 			{
@@ -56,7 +56,7 @@
 			 * Returns holder elements.
 			 *
 			 * @since 1.0.0
-			 * @return Wbcr_FactoryForms446_Control[].
+			 * @return Wbcr_FactoryForms447_Control[].
 			 */
 			public function getElements()
 			{
@@ -84,7 +84,7 @@
 						$is_first_item = false;
 					}
 
-					do_action('wbcr_factory_449_form_before_element_' . $element->getOption('name'));
+					do_action('wbcr_factory_450_form_before_element_' . $element->getOption('name'));
 
 					// if a current item is a control holder
 					if( $element->is_holder ) {

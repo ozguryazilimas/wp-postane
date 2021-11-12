@@ -82,7 +82,7 @@ class WAPT_Settings extends WAPT_Page {
 	 *
 	 * @return void
 	 * @since 3.8.1
-	 * @see   Wbcr_FactoryPages448_AdminPage
+	 * @see   Wbcr_FactoryPages449_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {
@@ -127,7 +127,7 @@ class WAPT_Settings extends WAPT_Page {
 			'name'    => 'auto_generation',
 			'title'   => __( 'Add featured image when saving a post', 'apt' ),
 			'default' => true,
-			'hint'    => __( 'Automatically add featured image when saving a post', 'apt' )
+			'hint'    => __( 'Automatically add featured image when saving a post', 'apt' ),
 		];
 
 		$options[] = [
@@ -168,7 +168,7 @@ class WAPT_Settings extends WAPT_Page {
 			'name'    => 'delete_settings',
 			'title'   => __( 'Delete settings when removing the plugin', 'apt' ),
 			'default' => false,
-			'hint'    => __( 'Delete settings when removing the plugin', 'apt' )
+			'hint'    => __( 'Delete settings when removing the plugin', 'apt' ),
 		];
 
 		/* ------------------ IMPORT SETTINGS -----------------------*/
@@ -223,7 +223,7 @@ class WAPT_Settings extends WAPT_Page {
 			'name'    => 'google_apikey',
 			'title'   => __( 'API key for Google', 'apt' ),
 			'hint'    => __( 'You can get API key after registration on the site' ) . ' <a href="https://developers.google.com/custom-search/v1/overview" target="_blank" rel="noopener">https://developers.google.com/custom-search/v1/overview</a>',
-			'default' => ''
+			'default' => '',
 		];
 
 		$options[] = [
@@ -231,7 +231,7 @@ class WAPT_Settings extends WAPT_Page {
 			'name'    => 'google_cse',
 			'title'   => __( 'Google Custom Search Engine ID', 'apt' ),
 			'hint'    => __( 'You can get API key after registration on the site', 'apt' ) . ' <a href="https://cse.google.com/cse/all" target="_blank" rel="noopener">https://cse.google.com/cse/all</a>',
-			'default' => ''
+			'default' => '',
 		];
 
 		$options = apply_filters( 'wapt/settings/form_options', $options );
@@ -244,4 +244,5 @@ class WAPT_Settings extends WAPT_Page {
 
 		return $form_options;
 	}
+
 }

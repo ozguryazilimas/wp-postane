@@ -8,7 +8,7 @@ $log   = $data['log'] ?? [];
 ?>
 
 <div class="wrap" id="wapt-generate-page">
-    <div class="factory-bootstrap-449 factory-fontawesome-000">
+    <div class="factory-bootstrap-450 factory-fontawesome-000">
         <div class="row wapt-statistic-row">
             <div class="wapt-generate-statistic">
                 <div class="wapt-chart-container">
@@ -39,7 +39,7 @@ $log   = $data['log'] ?? [];
                                     </li>
                                     <li>
                                         <span style="background-color:#8bc34a"></span>
-	                                    <?php echo __( 'With featured image', 'apt' ); ?> -
+										<?php echo __( 'With featured image', 'apt' ); ?> -
                                         <span class="wapt-num" id="wapt-generated-num"><?php echo $stats['w_featured_image']; ?></span>
                                     </li>
                                 </ul>
@@ -51,23 +51,23 @@ $log   = $data['log'] ?? [];
 						if ( \WAPT_Plugin::app()->is_premium() ) {
 							do_action( 'wapt/filter_form_print' );
 						} else {
-							$stati = get_post_stati( array(
+							$stati = get_post_stati( [
 								'_builtin'                  => true,
-								"show_in_admin_status_list" => true
-							), 'objects' );
+								"show_in_admin_status_list" => true,
+							], 'objects' );
 
-							$post_types = get_post_types( array(
+							$post_types = get_post_types( [
 								'public'             => true,
-								'publicly_queryable' => 1
-							), 'objects', 'or' );
+								'publicly_queryable' => 1,
+							], 'objects', 'or' );
 							unset( $post_types['attachment'] ); // удалим attachment
 
-							$categories = get_categories( array(
+							$categories = get_categories( [
 								'taxonomy' => 'category',
 								'type'     => 'post',
 								'orderby'  => 'name',
 								'order'    => 'ASC',
-							) );
+							] );
 							?>
                             <div class="row wapt-filter-row">
                                 <div class="col-md-2">
@@ -183,7 +183,7 @@ $log   = $data['log'] ?? [];
                     </thead>
                     <tbody>
 					<?php foreach ( $log as $item ):
-						if ( $item['error_msg'] ):?>
+						if ( isset( $item['error_msg'] ) && $item['error_msg'] ):?>
                             <tr class="flash wapt-table-item wapt-row-id-<?= $item['post_id']; ?> wapt-error">
                                 <td class="wapt-image-td"></td>
                                 <td class="wapt-title-td">
