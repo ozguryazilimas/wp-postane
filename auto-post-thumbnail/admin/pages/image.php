@@ -76,23 +76,23 @@ class WAPT_ImageSettings extends WAPT_Page {
 		$this->template_name = "settings";
 
 		add_action( 'wbcr_factory_forms_447_register_controls', function () {
-			$colorControls = array(
+			$colorControls = [
 				[
 					'type'    => 'wapt-color',
 					'class'   => 'Wapt_FactoryForms_ColorControl',
-					'include' => WAPT_PLUGIN_DIR . '/includes/controls/class.color.php'
+					'include' => WAPT_PLUGIN_DIR . '/includes/controls/class.color.php',
 				],
 				[
 					'type'    => 'wapt-mediabutton',
 					'class'   => 'Wapt_FactoryForms_MediaButtonControl',
-					'include' => WAPT_PLUGIN_DIR . '/includes/controls/class.mediabutton.php'
+					'include' => WAPT_PLUGIN_DIR . '/includes/controls/class.mediabutton.php',
 				],
 				[
 					'type'    => 'wapt-fonts',
 					'class'   => 'Wapt_FactoryForms_FontsControl',
-					'include' => WAPT_PLUGIN_DIR . '/includes/controls/class.fonts.php'
+					'include' => WAPT_PLUGIN_DIR . '/includes/controls/class.fonts.php',
 				],
-			);
+			];
 			$this->plugin->forms->registerControls( $colorControls );
 		} );
 
@@ -127,6 +127,7 @@ class WAPT_ImageSettings extends WAPT_Page {
 			'control.color',
 		], 'bootstrap' );
 
+		$this->scripts->add( WAPT_PLUGIN_URL . '/admin/assets/js/jscolor.js', [ 'jquery' ], 'wapt-color-control', WAPT_PLUGIN_VERSION );
 		$this->scripts->add( WAPT_PLUGIN_URL . '/admin/assets/js/settings.js', [ 'jquery' ], 'wapt-settings-script', WAPT_PLUGIN_VERSION );
 		$this->styles->add( WAPT_PLUGIN_URL . '/admin/assets/css/settings.css', [], 'wapt-settings-style', WAPT_PLUGIN_VERSION );
 	}
@@ -152,7 +153,7 @@ class WAPT_ImageSettings extends WAPT_Page {
 					break;
 			}
 
-			$posts = get_posts( array( 'numberposts' => 0, ) );
+			$posts = get_posts( [ 'numberposts' => 0, ] );
 			$id    = rand( 0, count( $posts ) - 1 );
 			if ( count( $posts ) !== 0 ) {
 				$txt = $posts[ $id ]->post_title;
@@ -247,7 +248,7 @@ class WAPT_ImageSettings extends WAPT_Page {
 			'units'   => 'px',
 			'default' => 800,
 			'title'   => __( 'Image size: width', 'apt' ),
-			'hint'    => __( 'Set width of the image for the featured image', 'apt' )
+			'hint'    => __( 'Set width of the image for the featured image', 'apt' ),
 		];
 
 		$options[] = [
@@ -257,7 +258,7 @@ class WAPT_ImageSettings extends WAPT_Page {
 			'units'   => 'px',
 			'default' => 600,
 			'title'   => __( 'Image size: height', 'apt' ),
-			'hint'    => __( 'Set height of the image for the featured image', 'apt' )
+			'hint'    => __( 'Set height of the image for the featured image', 'apt' ),
 		];
 
 
@@ -285,7 +286,7 @@ class WAPT_ImageSettings extends WAPT_Page {
 			'units'   => 'pt',
 			'default' => 25,
 			'title'   => __( 'Font size', 'apt' ),
-			'hint'    => __( 'Set the font size for the featured image', 'apt' )
+			'hint'    => __( 'Set the font size for the featured image', 'apt' ),
 		];
 
 		$options[] = [
@@ -310,10 +311,10 @@ class WAPT_ImageSettings extends WAPT_Page {
 			'title'     => __( 'Text shadow', 'apt' ),
 			'hint'      => __( 'Use text shadow?', 'apt' ),
 			'eventsOn'  => [
-				'show' => '.factory-control-shadow-color'
+				'show' => '.factory-control-shadow-color',
 			],
 			'eventsOff' => [
-				'hide' => '.factory-control-shadow-color'
+				'hide' => '.factory-control-shadow-color',
 			],
 		];
 
@@ -336,7 +337,7 @@ class WAPT_ImageSettings extends WAPT_Page {
 			],
 			'default' => 'no',
 			'title'   => __( 'Text transform', 'apt' ),
-			'hint'    => __( 'Select type of text transformation', 'apt' )
+			'hint'    => __( 'Select type of text transformation', 'apt' ),
 		];
 
 		$options[] = [
@@ -346,17 +347,17 @@ class WAPT_ImageSettings extends WAPT_Page {
 			'units'   => __( 'chars', 'apt' ),
 			'default' => 50,
 			'title'   => __( 'Text length', 'apt' ),
-			'hint'    => __( 'Set the maximum text length', 'apt' )
+			'hint'    => __( 'Set the maximum text length', 'apt' ),
 		];
 
 		$options[] = [
 			'type'    => 'integer',
 			'way'     => 'text',
 			'name'    => 'text-line-spacing',
-			'range'   => array( 0, 3 ),
+			'range'   => [ 0, 3 ],
 			'default' => 1.5,
 			'title'   => __( 'Line spacing', 'apt' ),
-			'hint'    => __( 'Set the line spacing', 'apt' )
+			'hint'    => __( 'Set the line spacing', 'apt' ),
 		];
 
 		//----------------------------------------------------------------------

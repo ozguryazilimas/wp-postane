@@ -154,6 +154,7 @@
         }
     }
 </style>
+<!--
 <div class="apt-section">
     <div class="row">
         <div class="widget-container">
@@ -361,3 +362,4 @@
         </div>
     </div>
 </div>
+-->

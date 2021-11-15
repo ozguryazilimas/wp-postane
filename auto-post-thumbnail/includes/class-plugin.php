@@ -111,7 +111,7 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 		self::app()->registerPage( 'WAPT_ImageSettings', WAPT_PLUGIN_DIR . '/admin/pages/image.php' );
 		self::app()->registerPage( 'WAPT_License', WAPT_PLUGIN_DIR . '/admin/pages/license.php' );
 		self::app()->registerPage( 'WAPT_Log', WAPT_PLUGIN_DIR . '/admin/pages/log.php' );
-		self::app()->registerPage( 'WAPT_About', WAPT_PLUGIN_DIR . '/admin/pages/about.php' );
+		//self::app()->registerPage( 'WAPT_About', WAPT_PLUGIN_DIR . '/admin/pages/about.php' );
 	}
 
 	/**
@@ -189,9 +189,9 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 		wp_enqueue_script( 'apt-admin-script-thumbnail', WAPT_PLUGIN_URL . '/admin/assets/js/admin-thumbnail.js', [], false, true );
 
 		if ( isset( $_REQUEST['post'] ) ) {
-			$pid = $_REQUEST['post'];
+			$pid = intval( $_REQUEST['post'] );
 		} else {
-			$pid = '0';
+			$pid = 0;
 		}
 		$action_column_get_thumbnails = apply_filters( 'wapt/get-thumbnails/action', "apt_get_thumbnail" );
 
@@ -210,7 +210,8 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 			$localize['modal_title'] = __( 'Change featured image', 'apt' );
 		}
 
-		wp_enqueue_script( 'apt-admin-check_api', WAPT_PLUGIN_URL . '/admin/assets/js/check-api.js', array(), false, true );
+		wp_enqueue_script( 'apt-admin-check_api', WAPT_PLUGIN_URL . '/admin/assets/js/check-api.js', [], false, true );
+		wp_enqueue_script( 'apt-admin-search-page', WAPT_PLUGIN_URL . '/admin/assets/js/search-page.js', [], false, true );
 
 		wp_localize_script( 'apt-admin-script-thumbnail', 'apt', $localize );
 		//-----------------------------------
@@ -277,7 +278,7 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 	public function my_custom_submenu_page() {
 		add_media_page( __( 'Auto Featured Images', 'apt' ), __( 'Add from APT', 'apt' ), 'manage_options', 'menu-media-apt', [
 			$this->apt,
-			'addToMediaFromApt'
+			'addToMediaFromApt',
 		] );
 	}
 
@@ -316,11 +317,11 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 			'type'            => 'info',
 			'dismissible'     => true,
 			// На каких страницах показывать уведомление ('plugins', 'dashboard', 'edit')
-			'where'           => array( 'plugins', 'dashboard', 'edit' ),
+			'where'           => [ 'plugins', 'dashboard', 'edit' ],
 			// Через какое время уведомление снова появится?
 			'dismiss_expires' => 0,
 			'text'            => $notice_text,
-			'classes'         => array()
+			'classes'         => [],
 		];
 
 		return $notices;
@@ -413,9 +414,9 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 			}
 		}
 
-		$redirect_to = add_query_arg( array(
+		$redirect_to = add_query_arg( [
 			'apt_bulk_action' => count( $post_ids ),
-		), $redirect_to );
+		], $redirect_to );
 
 		return $redirect_to;
 	}
@@ -429,8 +430,8 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 			return;
 		}
 
-		$data = $_GET['apt_bulk_action'];
-		$msg  = __( 'Processed posts: ', 'apt' ) . intval( $data );
+		$data = intval( $_GET['apt_bulk_action'] );
+		$msg  = __( 'Processed posts: ', 'apt' ) . $data;
 		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
 	}
 
@@ -457,7 +458,7 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 		if ( ! empty( $screen ) && "post" == $screen->post_type ) {
 			$apt_is_image = false;
 			if ( isset( $_GET['apt_is_image'] ) ) {
-				$apt_is_image = absint($_GET['apt_is_image']);
+				$apt_is_image = absint( $_GET['apt_is_image'] );
 			}
 
 			echo '<select name="apt_is_image">' . '<option value="-1">' . __( 'Featured Image', 'apt' ) . '</option>' . '<option value="1" ' . selected( 1, $apt_is_image, 0 ) . '>' . __( 'With image', 'apt' ) . '</option>' . '<option value="0" ' . selected( 0, $apt_is_image, 0 ) . '>' . __( 'Without image', 'apt' ) . '</option>' . '</select>';
@@ -488,7 +489,7 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 			} else {
 				$compare = 'NOT EXISTS';
 			}
-			$query->set( 'meta_query', array( array( 'key' => '_thumbnail_id', 'compare' => $compare ) ) );
+			$query->set( 'meta_query', [ [ 'key' => '_thumbnail_id', 'compare' => $compare ] ] );
 		}
 	}
 
@@ -500,7 +501,7 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 		$query = $this->apt->get_posts_query( false, 'post', 'publish' );
 		$posts = $query->post_count;
 
-		$q                   = add_query_arg( array( 'apt_is_image' => '0', 'post_type' => 'post' ), 'edit.php' );
+		$q                   = add_query_arg( [ 'apt_is_image' => '0', 'post_type' => 'post' ], 'edit.php' );
 		$views['apt_filter'] = '<a href="' . $q . '">' . __( 'Without featured image', 'apt' ) . '</a> (' . $posts . ')';
 		unset( $my );
 

@@ -37,7 +37,7 @@ if ( ! class_exists( 'Wapt_FactoryForms_ColorControl' ) ) {
 				$value = '#ffffff';
 			}
 			?>
-            <script src="<?php echo WAPT_PLUGIN_URL; ?>/admin/assets/js/jscolor.js"></script>
+
             <style>
                 .wapt-jscolor
                 {

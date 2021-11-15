@@ -1,12 +1,12 @@
 <?php
-$ajaxloader = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader-line.gif";
+$ajaxloader       = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader-line.gif";
 $apt_google_nonce = wp_create_nonce( 'apt_api' );
 
 $apt_google_key = WAPT_Plugin::app()->getPopulateOption( 'google_apikey' );
 $apt_google_cse = WAPT_Plugin::app()->getPopulateOption( 'google_cse' );
 
 if ( isset( $_REQUEST['post'] ) ) {
-	$pid = $_REQUEST['post'];
+	$pid = intval( $_REQUEST['post'] );
 } else {
 	$pid = 0;
 }
@@ -14,14 +14,13 @@ if ( isset( $_REQUEST['post'] ) ) {
 if ( $apt_google_key && $apt_google_cse ) {
 	?>
     <script>
-        window.wapt_no_hits = '<?=__( 'No hits', 'apt' )?>';
+        window.wapt_no_hits = '<?php echo __( 'No hits', 'apt' )?>';
         window.wapt_download_svg = '<?php echo WAPT_PLUGIN_URL . '/admin/assets/img/download.svg' ?>';
     </script>
-    <script src="<?=WAPT_PLUGIN_URL . '/admin/assets/js/search-page.js'?>"></script>
     <script type="text/javascript">
 
         function call_api(query, page = 1) {
-            findImages('google', 'apt_api_google', '<?=$apt_google_nonce?>', query, page, {
+            findImages('google', 'apt_api_google', '<?php echo $apt_google_nonce?>', query, page, {
                 rights: jQuery("#filter_rights").attr('checked') === 'checked' ? 1 : 0,
             });
         }
@@ -108,7 +107,7 @@ if ( $apt_google_key && $apt_google_cse ) {
             </div>
             <div style="margin:1em 0;padding-left:2px;line-height:2">
                 <label style="margin-right:15px;white-space:nowrap">
-                    <input type="checkbox" id="filter_rights"><?= __( 'Commercial and derived use', 'apt' ); ?>
+                    <input type="checkbox" id="filter_rights"><?php echo  __( 'Commercial and derived use', 'apt' ); ?>
                 </label>
             </div>
         </form>
@@ -128,6 +127,6 @@ if ( $apt_google_key && $apt_google_cse ) {
 } else {
 	?>
     <div><?php echo __( 'API key is missing. Add it in APT settings', 'apt' ); ?> ->
-        <a href="<?= admin_url( 'admin.php?page=wapt_settings-wbcr_apt' ); ?>" target="_blank">here</a></div>
+        <a href="<?php echo  admin_url( 'admin.php?page=wapt_settings-wbcr_apt' ); ?>" target="_blank">here</a></div>
 	<?php
 } ?>

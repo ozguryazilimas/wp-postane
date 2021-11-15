@@ -16,6 +16,7 @@ jQuery(function ($) {
                         '#8bc34a',
                         '#f1b1b6',
                     ],
+                    spacing: 0,
                     borderWidth: 0,
                     label: 'Dataset 1'
                 }
@@ -89,10 +90,10 @@ jQuery(function ($) {
 
             this.genpostthumbsbar.show();
             progressbar = this.genpostthumbsbar.progressbar();
-            progressbar.find( ".ui-progressbar-value" ).css({
+            progressbar.find(".ui-progressbar-value").css({
                 "background": '#c9deb2',
             });
-            progressbar.find( ".ui-widget-content" ).css({
+            progressbar.find(".ui-widget-content").css({
                 "border": '0',
             });
 
@@ -374,4 +375,5 @@ jQuery(function ($) {
         }
     }
 
-});
+})
+;

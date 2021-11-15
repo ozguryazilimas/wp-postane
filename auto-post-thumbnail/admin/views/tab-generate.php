@@ -18,9 +18,8 @@ $log   = $data['log'] ?? [];
                             data-errors="<?php echo esc_attr( $stats['error'] ); ?>"
                             style="display: block;">
                     </canvas>
-                    <div id="wapt-overview-chart-percent"
-                         class="wapt-chart-percent"><?php echo trim( esc_attr( $stats['featured_image_percent'] ) ); ?>
-                        <span>%</span>
+                    <div id="wapt-overview-chart-percent" class="wapt-chart-percent">
+                        <?php echo trim( esc_attr( $stats['featured_image_percent'] ) );?><span>%</span>
                     </div>
                     <p class="wapt-global-phrase">
                         <span class="wapt-total-percent"><?php echo esc_attr( $stats['featured_image_percent'] ); ?>%</span>
@@ -76,8 +75,8 @@ $log   = $data['log'] ?? [];
                                 </div>
                                 <div class="col-md-10">
                                     <select name="filter_posttype" id="filter_posttype" class="apt-filter-input">
-                                        <option value="post"><?= __( 'Posts', 'apt' ); ?></option>
-                                        <option value="page"><?= __( 'Pages', 'apt' ); ?></option>
+                                        <option value="post"><?php echo  __( 'Posts', 'apt' ); ?></option>
+                                        <option value="page"><?php echo  __( 'Pages', 'apt' ); ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -184,27 +183,27 @@ $log   = $data['log'] ?? [];
                     <tbody>
 					<?php foreach ( $log as $item ):
 						if ( isset( $item['error_msg'] ) && $item['error_msg'] ):?>
-                            <tr class="flash wapt-table-item wapt-row-id-<?= $item['post_id']; ?> wapt-error">
+                            <tr class="flash wapt-table-item wapt-row-id-<?php echo  $item['post_id']; ?> wapt-error">
                                 <td class="wapt-image-td"></td>
                                 <td class="wapt-title-td">
-                                    <a href="<?= $item['url']; ?>" target="_blank"><?= $item['title']; ?></a>
+                                    <a href="<?php echo  $item['url']; ?>" target="_blank"><?php echo  $item['title']; ?></a>
                                 </td>
                                 <td></td>
-                                <td><?= $item['type']; ?></td>
-                                <td><?= $item['error_msg']; ?></td>
+                                <td><?php echo  $item['type']; ?></td>
+                                <td><?php echo  $item['error_msg']; ?></td>
                             </tr>
 						<?php else: ?>
-                            <tr class="flash wapt-table-item wapt-row-id-<?= $item['post_id']; ?>">
+                            <tr class="flash wapt-table-item wapt-row-id-<?php echo  $item['post_id']; ?>">
                                 <td class="wapt-image-td">
-                                    <img height="50" src="<?= $item['thumbnail_url']; ?>" alt="<?= $item['title']; ?>">
+                                    <img height="50" src="<?php echo  $item['thumbnail_url']; ?>">
                                 </td>
                                 <td class="wapt-title-td">
-                                    <a href="<?= $item['url']; ?>" target="_blank">
-										<?= $item['title']; ?></a>
+                                    <a href="<?php echo  $item['url']; ?>" target="_blank">
+										<?php echo  $item['title']; ?></a>
                                 </td>
-                                <td><?= $item['image_size']; ?></td>
-                                <td><?= $item['type']; ?></td>
-                                <td><?= $item['status']; ?></td>
+                                <td><?php echo  $item['image_size']; ?></td>
+                                <td><?php echo  $item['type']; ?></td>
+                                <td><?php echo  $item['status']; ?></td>
                             </tr>
 						<?php endif; ?>
 					<?php endforeach; ?>

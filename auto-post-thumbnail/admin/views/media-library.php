@@ -12,7 +12,7 @@ if ( isset( $_GET['post_id'] ) ) {
 <?php if ( WAPT_Plugin::app()->premium->is_activate() ): ?>
     <div class="watson-categories">
         <div id="ajaxloader-watson" style="display: none">
-            <img src="<?= $ajaxloader ?>" alt="">
+            <img src="<?php echo $ajaxloader ?>" alt="">
         </div>
         <div id="message"></div>
         <div class="categories">

@@ -189,12 +189,14 @@ class AutoPostThumbnails {
 		}
 
 		$has_thumb = (bool) $_POST['withThumb'];
-		$type      = $_POST['posttype'];
+		$type      = esc_html( $_POST['posttype'] );
 		if ( \WAPT_Plugin::app()->is_premium() ) {
-			$status     = $_POST['poststatus'];
-			$category   = $_POST['category'];
-			$date_start = $_POST['date_start'] ? \DateTime::createFromFormat( 'd.m.Y', $_POST['date_start'] )->format( 'd.m.Y' ) : 0;
-			$date_end   = $_POST['date_end'] ? \DateTime::createFromFormat( 'd.m.Y', $_POST['date_end'] )->setTime( 23, 59 )->format( 'd.m.Y H:i' ) : 0;
+			$status     = esc_html( $_POST['poststatus'] );
+			$category   = esc_html( $_POST['category'] );
+			$date_start = esc_html( $_POST['date_start'] );
+			$date_end   = esc_html( $_POST['date_end'] );
+			$date_start = $date_start ? \DateTime::createFromFormat( 'd.m.Y', $date_start )->format( 'd.m.Y' ) : 0;
+			$date_end   = $date_end ? \DateTime::createFromFormat( 'd.m.Y', $date_end )->setTime( 23, 59 )->format( 'd.m.Y H:i' ) : 0;
 			// Get id's of the posts that satisfy the filters
 			$query = $this->get_posts_query( $has_thumb, $type, $status, $category, $date_start, $date_end );
 		} else {
@@ -352,21 +354,21 @@ class AutoPostThumbnails {
 		$q_type      = $type ? $type : 'any';
 		$q_has_thumb = $has_thumb ? "EXISTS" : "NOT EXISTS";
 
-		$args = array(
+		$args = [
 			'posts_per_page' => - 1,
 			'post_status'    => $q_status,
 			'post_type'      => $q_type,
-			'meta_query'     => array(
+			'meta_query'     => [
 				'relation' => 'AND',
-				array( 'key' => '_thumbnail_id', 'compare' => $q_has_thumb ),
-				array( 'key' => 'skip_post_thumb', 'compare' => 'NOT EXISTS' ),
-			),
-		);
+				[ 'key' => '_thumbnail_id', 'compare' => $q_has_thumb ],
+				[ 'key' => 'skip_post_thumb', 'compare' => 'NOT EXISTS' ],
+			],
+		];
 		if ( $category ) {
 			$args['cat'] = $category;
 		}
 		if ( $date_start && $date_end ) {
-			$args['date_query'][] = array( 'after' => $date_start, 'before' => $date_end, 'inclusive' => true, );
+			$args['date_query'][] = [ 'after' => $date_start, 'before' => $date_end, 'inclusive' => true, ];
 		}
 		$query = new WP_Query( $args );
 
@@ -658,9 +660,9 @@ class AutoPostThumbnails {
 
 		// Move the file to the uploads dir
 		if ( ! ini_get( 'allow_url_fopen' ) ) {
-			$file_data = $this->curl_get_file_contents( $imageUrl );
+			$file_data = $this->get_file_contents( $imageUrl );
 		} else {
-			$arrContextOptions = array( "ssl" => array( "verify_peer" => false, "verify_peer_name" => false, ), );
+			$arrContextOptions = [ "ssl" => [ "verify_peer" => false, "verify_peer_name" => false, ], ];
 			$file_data         = file_get_contents( $imageUrl, false, stream_context_create( $arrContextOptions ) );
 		}
 
@@ -726,24 +728,17 @@ class AutoPostThumbnails {
 	}
 
 	/**
-	 * Function to fetch the contents of URL using curl in absence of allow_url_fopen.
+	 * Function to fetch the contents of URL using HTTP API in absence of allow_url_fopen.
 	 *
-	 * Copied from user comment on php.net (http://in.php.net/manual/en/function.file-get-contents.php#82255)
 	 */
-	public function curl_get_file_contents( $URL ) {
-		$c = curl_init();
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $c, CURLOPT_URL, $URL );
-		curl_setopt( $c, CURLOPT_SSL_VERIFYHOST, 0 );
-		curl_setopt( $c, CURLOPT_SSL_VERIFYPEER, false );
-		$contents = curl_exec( $c );
-		curl_close( $c );
-
-		if ( $contents ) {
-			return $contents;
+	public function get_file_contents( $URL ) {
+		$response = wp_remote_get( $URL );
+		$contents = '';
+		if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
+			$contents = wp_remote_retrieve_body( $response );
 		}
 
-		return false;
+		return $contents ? $contents : false;
 	}
 
 	/**
@@ -881,7 +876,7 @@ class AutoPostThumbnails {
 		}
 		if ( isset( $_POST['is_upload'] ) ) {
 
-			$postid = $_POST['postid'];
+			$postid = intval( $_POST['postid'] );
 
 			// get image file
 			$response = wp_remote_get( $_POST['image_url'], [ 'timeout' => 100 ] );
@@ -950,7 +945,7 @@ class AutoPostThumbnails {
 				'guid'           => $wp_upload_dir['url'] . '/' . basename( $target_file_name ),
 				'post_mime_type' => $wp_filetype['type'],
 				'post_title'     => preg_replace( '/\.[^.]+$/', '', $image_title ),
-				'post_status'    => 'inherit'
+				'post_status'    => 'inherit',
 			];
 
 			$attach_id = wp_insert_attachment( $attachment, $target_file_name, $postid );
@@ -992,25 +987,25 @@ class AutoPostThumbnails {
 				mkdir( $upload_dir, 0777 );
 			}
 
-			$done_files = array();
+			$done_files = [];
 			$file_name  = $file['name'];
 
 			// Проверка, что файл является шрифтом TrueType
 			$header = file_get_contents( $file['tmp_name'], false, null, null, 4 );
 			if ( $header !== "\x00\x01\x00\x00" && $header !== "true" && $header !== "typ1" ) {
-				die( json_encode( array( 'error' => "The uploaded file is not a TrueType font" ) ) );
+				die( json_encode( [ 'error' => "The uploaded file is not a TrueType font" ] ) );
 			}
 			//-----
 			$path = pathinfo( $file['tmp_name'] );
 			if ( $path['extension'] == 'php' || $path['extension'] == 'js' ) {
-				die( json_encode( array( 'error' => "The uploaded file is not a TrueType font." ) ) );
+				die( json_encode( [ 'error' => "The uploaded file is not a TrueType font." ] ) );
 			}
 
 			if ( move_uploaded_file( $file['tmp_name'], "$upload_dir/$file_name" ) ) {
 				if ( realpath( "$upload_dir/$file_name" ) ) {
-					$data = array( 'files' => $file );
+					$data = [ 'files' => $file ];
 				} else {
-					$data = array( 'error' => "Unable to copy the file to the font folder: $upload_dir" );
+					$data = [ 'error' => "Unable to copy the file to the font folder: $upload_dir" ];
 				}
 			}
 
@@ -1029,7 +1024,7 @@ class AutoPostThumbnails {
 		}
 		if ( isset( $_POST['query'] ) ) {
 			if ( isset( $_POST['page'] ) ) {
-				$page = $_POST['page'];
+				$page = intval( $_POST['page'] );
 			} else {
 				$page = 1;
 			}
@@ -1043,9 +1038,9 @@ class AutoPostThumbnails {
 			}
 
 			if ( isset( $_POST['watson'] ) ) {
-				$query = isset( $_POST['query'] ) && ! empty( $_POST['query'] ) && (bool) (int) $_POST['watson'] ? $_POST['query'] : $post_title;
+				$query = isset( $_POST['query'] ) && ! empty( $_POST['query'] ) && (bool) $_POST['watson'] ? sanitize_text_field( $_POST['query'] ) : $post_title;
 			} else {
-				$query = isset( $_POST['query'] ) ? $_POST['query'] : '';
+				$query = sanitize_text_field( $_POST['query'] ?? '' );
 			}
 
 			try {
@@ -1089,9 +1084,9 @@ class AutoPostThumbnails {
 			die( 'Error: Invalid request.' );
 		}
 		if ( isset( $_POST['provider'] ) && isset( $_POST['key'] ) && isset( $_POST['key2'] ) ) {
-			$provider = $_POST['provider'];
-			$key      = $_POST['key'];
-			$cx       = $_POST['key2'];
+			$provider = trim( $_POST['provider'] );
+			$key      = trim( $_POST['key'] );
+			$cx       = trim( $_POST['key2'] );
 			switch ( $provider ) {
 				case "google":
 					$url = "https://www.googleapis.com/customsearch/v1?q=cat&key={$key}&cx={$cx}";
@@ -1101,7 +1096,7 @@ class AutoPostThumbnails {
 						die( 'Error: ' . $response->get_error_message() );
 					}
 					$result = json_decode( $response['body'] );
-					echo ! isset( $result->error->errors ) ? true : false;
+					echo ! isset( $result->error->errors );
 					break;
 			}
 			exit;
@@ -1127,11 +1122,11 @@ class AutoPostThumbnails {
 				'type'            => 'warning',
 				'dismissible'     => true,
 				// На каких страницах показывать уведомление ('plugins', 'dashboard', 'edit')
-				'where'           => array( 'plugins', 'dashboard', 'edit' ),
+				'where'           => [ 'plugins', 'dashboard', 'edit' ],
 				// Через какое время уведомление снова появится?
 				'dismiss_expires' => 0,
 				'text'            => $notice_text,
-				'classes'         => array()
+				'classes'         => [],
 			];
 		}
 
@@ -1147,9 +1142,9 @@ class AutoPostThumbnails {
 		$upload_dir       = wp_upload_dir();
 		$upload_dir_fonts = $upload_dir['basedir'] . "/apt_fonts";
 		$plugin_dir_fonts = WAPT_PLUGIN_DIR . "/fonts";
-		$fonts            = array();
+		$fonts            = [];
 
-		$fonts[] = array( 'title' => __( 'Standard', 'apt' ), 'type' => 'group' );
+		$fonts[] = [ 'title' => __( 'Standard', 'apt' ), 'type' => 'group' ];
 		$files   = scandir( $plugin_dir_fonts );
 		foreach ( $files as $file ) {
 			if ( $file == '.' || $file == '..' ) {
@@ -1157,21 +1152,21 @@ class AutoPostThumbnails {
 			}
 			$name    = pathinfo( $plugin_dir_fonts . '/' . $file );
 			$name    = $name['filename'];
-			$fonts[] = array( 'value' => $file, 'title' => $name );
+			$fonts[] = [ 'value' => $file, 'title' => $name ];
 		}
 
 		if ( is_dir( $upload_dir_fonts ) ) {
 			$files = scandir( $upload_dir_fonts );
 		}
 		if ( count( $files ) && \WAPT_Plugin::app()->is_premium() ) {
-			$fonts[] = array( 'title' => __( 'Uploaded', 'apt' ), 'type' => 'group' );
+			$fonts[] = [ 'title' => __( 'Uploaded', 'apt' ), 'type' => 'group' ];
 			foreach ( $files as $file ) {
 				if ( $file == '.' || $file == '..' ) {
 					continue;
 				}
 				$name    = pathinfo( $upload_dir_fonts . '/' . $file );
 				$name    = $name['filename'];
-				$fonts[] = array( 'value' => $file, 'title' => $name );
+				$fonts[] = [ 'value' => $file, 'title' => $name ];
 			}
 		}
 
@@ -1238,13 +1233,13 @@ class AutoPostThumbnails {
 		$padding_lr   = 15;
 		$line_spacing = \WAPT_Plugin::app()->getPopulateOption( 'text-line-spacing', 1.5 );
 
-		$params        = array(
+		$params        = [
 			'text'       => $text,
 			'pathToSave' => $pathToSave,
 			'format'     => $format,
 			'width'      => $width,
 			'height'     => $height,
-		);
+		];
 		$image         = new Image( $width, $height, $background, $font, $font_size, $font_color );
 		$image->params = $params;
 		$image->setPadding( $padding_lr, $padding_tb );
