@@ -113,6 +113,12 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= 3.9.7 =
+* Fixed: Errors
+
+= 3.9.6 =
+* Fixed: Some fixes
+
 = 3.9.4 =
 * Fixed: Some fixes
 

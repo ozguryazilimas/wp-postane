@@ -1,10 +1,10 @@
 jQuery(function ($) {
 
-    var $element = $(".factory-bootstrap-450 .factory-wapt-fonts");
+    var $element = $(".factory-bootstrap-453 .factory-wapt-fonts");
     var upload_button = $('#wapt-upload-button');
     var upload_loader = $('#wapt-upload-loader');
 
-    $element.factoryBootstrap450_dropdownControl();
+    $element.factoryBootstrap453_dropdownControl();
 
     upload_button.on('click', function (e) {
         e.preventDefault();

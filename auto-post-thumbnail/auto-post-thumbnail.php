@@ -3,7 +3,7 @@
 Plugin Name: Auto Featured Image (Auto Post Thumbnail)
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Featured Image from the first image in post or any custom post type only if Featured Image is not set manually. Featured Image Generation From Title. Native image search for Elementor, Gutenberg, Classic Editor.
-Version: 3.9.4
+Version: 3.9.7
 Author: Creative Motion <support@cm-wp.com>
 Author URI: https://cm-wp.com
 Text Domain: apt
@@ -32,40 +32,40 @@ if ( ! defined( 'ABSPATH' ) ) {
  * compatibility with other plugins from Creative Motion.
  * -----------------------------------------------------------------------------
  */
-// @formatter:off
-// Подключаем класс проверки совместимости
-require_once( dirname( __FILE__ ) . '/libs/factory/core/includes/class-factory-requirements.php' );
 
-$plugin_info = array(
+// Подключаем класс проверки совместимости.
+require_once dirname( __FILE__ ) . '/libs/factory/core/includes/class-factory-requirements.php';
+
+$plugin_info = [
 	'prefix'           => 'wapt_',
 	'plugin_name'      => 'wbcr_apt',
 	'plugin_title'     => __( 'Auto Featured Image', 'apt' ),
 
-	// Служба поддержки
-	'support_details'  => array(
+	// Служба поддержки.
+	'support_details'  => [
 		'url'       => 'https://cm-wp.com',
-		'pages_map' => array(
+		'pages_map' => [
 			'features' => 'features',
 			'pricing'  => 'features/pricing',
 			'support'  => 'support',
 			'docs'     => 'docs',
-		)
-	),
+		],
+	],
 
 	// Настройка обновлений плагина
 	'has_updates'      => true,
-	'updates_settings' => array(
+	'updates_settings' => [
 		'repository'        => 'wordpress',
 		'slug'              => 'auto-post-thumbnail',
 		'maybe_rollback'    => true,
-		'rollback_settings' => array(
-			'prev_stable_version' => '0.0.0'
-		)
-	),
+		'rollback_settings' => [
+			'prev_stable_version' => '0.0.0',
+		],
+	],
 
 	// Настройка премиум плагина
 	'has_premium'      => true,
-	'license_settings' => array(
+	'license_settings' => [
 		'has_updates'      => true,
 		'provider'         => 'freemius',
 		'slug'             => 'auto-post-thumbnail-premium',
@@ -73,39 +73,45 @@ $plugin_info = array(
 		'public_key'       => 'pk_5e3ec7615d3abb543e25ee6eb2fc7',
 		'price'            => 29,
 		// Настройка обновлений премиум плагина
-		'updates_settings' => array(
+		'updates_settings' => [
 			'maybe_rollback'    => true,
-			'rollback_settings' => array(
-				'prev_stable_version' => '0.0.0'
-			)
-		)
-	),
+			'rollback_settings' => [
+				'prev_stable_version' => '0.0.0',
+			],
+		],
+	],
 
 	'render_adverts'   => true,
-	'adverts_settings' => array(
+	'adverts_settings' => [
 		'dashboard_widget' => true,
 		'right_sidebar'    => true,
 		'notice'           => true,
-	),
+	],
 
-	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_450', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_447', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_449', 'admin' ),
-		array( 'libs/factory/templates', 'factory_templates_103', 'admin' ),
-		array( 'libs/factory/freemius', 'factory_freemius_138', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_128', 'admin' ),
-		array( 'libs/factory/feedback', 'factory_feedback_112', 'admin' ),
-		array( 'libs/factory/logger', 'factory_logger_115', 'all' ),
+	'load_factory_modules' => [
+		[ 'libs/factory/bootstrap', 'factory_bootstrap_453', 'admin' ],
+		[ 'libs/factory/forms', 'factory_forms_449', 'admin' ],
+		[ 'libs/factory/pages', 'factory_pages_451', 'admin' ],
+		[ 'libs/factory/templates', 'factory_templates_105', 'admin' ],
+		[ 'libs/factory/freemius', 'factory_freemius_139', 'all' ],
+		[ 'libs/factory/adverts', 'factory_adverts_129', 'admin' ],
+		[ 'libs/factory/feedback', 'factory_feedback_113', 'admin' ],
+		[ 'libs/factory/logger', 'factory_logger_117', 'all' ],
+	],
+];
+
+$wapt_compatibility = new Wbcr_Factory452_Requirements(
+	__FILE__,
+	array_merge(
+		$plugin_info,
+		[
+			'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
+			'required_php_version'    => '7.0',
+			'required_wp_version'     => '4.8.0',
+			// 'required_clearfy_check_component' => false
+		]
 	)
 );
-
-$wapt_compatibility = new Wbcr_Factory450_Requirements( __FILE__, array_merge( $plugin_info, array(
-	'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
-	'required_php_version'    => '7.0',
-	'required_wp_version'     => '4.8.0',
-	//'required_clearfy_check_component' => false
-) ) );
 
 /**
  * If the plugin is compatible, then it will continue its work, otherwise it will be stopped,
@@ -134,35 +140,45 @@ define( 'WAPT_PLUGIN_DIR', dirname( __FILE__ ) );
  * PLUGIN INIT
  * -----------------------------------------------------------------------------
  */
-require_once( WAPT_PLUGIN_DIR . '/libs/factory/core/boot.php' );
+require_once WAPT_PLUGIN_DIR . '/libs/factory/core/boot.php';
 
-require_once( WAPT_PLUGIN_DIR . '/includes/class-apt.php' );
-require_once( WAPT_PLUGIN_DIR . '/includes/class-post-images.php' );
-require_once( WAPT_PLUGIN_DIR . '/includes/class-plugin.php' );
-require_once( WAPT_PLUGIN_DIR . '/includes/class-wapt-image.php' );
+require_once WAPT_PLUGIN_DIR . '/includes/class-apt.php';
+require_once WAPT_PLUGIN_DIR . '/includes/class-post-images.php';
+require_once WAPT_PLUGIN_DIR . '/includes/class-plugin.php';
+require_once WAPT_PLUGIN_DIR . '/includes/class-wapt-image.php';
 
-require_once( WAPT_PLUGIN_DIR . '/includes/image-search/boot.php' );
+require_once WAPT_PLUGIN_DIR . '/includes/image-search/boot.php';
 
 try {
-	new WAPT_Plugin( __FILE__, array_merge( $plugin_info, array(
-		'plugin_version'     => WAPT_PLUGIN_VERSION,
-		'plugin_text_domain' => $wapt_compatibility->get_text_domain()
-	) ) );
+	new WAPT_Plugin(
+		__FILE__,
+		array_merge(
+			$plugin_info,
+			[
+				'plugin_version'     => WAPT_PLUGIN_VERSION,
+				'plugin_text_domain' => $wapt_compatibility->get_text_domain(),
+			]
+		)
+	);
 } catch ( Exception $e ) {
-	global $wapt_exeption;
+	global $wapt_exception;
 
-	$wapt_exeption = $e;
+	$wapt_exception = $e;
 	// Plugin wasn't initialized due to an error
 	define( 'WAPT_PLUGIN_THROW_ERROR', true );
 
 	function wapt_exception_notice() {
-		global $wapt_exeption;
+		global $wapt_exception;
 
-		$error = sprintf( "The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Auto Featured Image', $wapt_exeption->getMessage(), $wapt_exeption->getCode() );
+		$error = sprintf(
+			'The %s plugin has stopped. <b>Error:</b> %s Code: %s',
+			'Auto Featured Image',
+			$wapt_exception->getMessage(),
+			$wapt_exception->getCode()
+		);
 		echo '<div class="notice notice-error"><p>' . $error . '</p></div>';
 	}
 
 	add_action( 'admin_notices', 'wapt_exception_notice' );
 	add_action( 'network_admin_notices', 'wapt_exception_notice' );
 }
-// @formatter:on

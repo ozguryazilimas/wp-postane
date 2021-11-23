@@ -82,7 +82,7 @@ class WAPT_Settings extends WAPT_Page {
 	 *
 	 * @return void
 	 * @since 3.8.1
-	 * @see   Wbcr_FactoryPages449_AdminPage
+	 * @see   Wbcr_FactoryPages451_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {

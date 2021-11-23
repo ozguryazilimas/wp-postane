@@ -2,7 +2,9 @@
 
 namespace WBCR\APT;
 
-use Exception, WP_Query, WP_Error;
+use Exception;
+use WP_Query;
+use WP_Error;
 
 /**
  * Class AutoPostThumbnails
@@ -221,7 +223,6 @@ class AutoPostThumbnails {
 				}*/
 			}
 			$ids = implode( ',', $ids );
-
 		} else {
 			$ids = "0";
 		}
@@ -483,7 +484,6 @@ class AutoPostThumbnails {
 
 		if ( ! $update ) {
 			return $generation->result();
-
 		}
 
 		// First check whether Post Thumbnail is already set for this post.
@@ -498,7 +498,6 @@ class AutoPostThumbnails {
 
 		$images = new \WBCR\APT\PostImages( $post_id );
 		if ( ( $images->is_images() && $images->count_images() ) && $autoimage !== 'generate' && $autoimage !== 'google' ) {
-
 			foreach ( $images->get_images() as $image ) {
 				$thumb_id = $this->get_thumbnail_id( $image );
 				// If we succeed in generating thumb, let's update post meta
@@ -506,7 +505,6 @@ class AutoPostThumbnails {
 					$this->plugin->logger->info( "An attachment ({$thumb_id}) was found in the text of the post." );
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
 					$this->plugin->logger->info( "Featured image ($thumb_id) is set for post ($post_id)" );
-
 				} else {
 					if ( \WAPT_Plugin::app()->is_premium() ) {
 						$thumb_id = apply_filters( 'wapt/generate_post_thumb', $image, $post_id );
@@ -518,12 +516,10 @@ class AutoPostThumbnails {
 				}
 
 				return $generation->result( '', $thumb_id );
-
 			}
 		} else {
 			// создаём свою картинку с заголовком на цветном фоне
 			if ( $autoimage == 'generate' || $autoimage == 'both' ) {
-
 				$thumb_id = $this->generate_and_attachment( $post_id );
 				if ( $thumb_id ) {
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
@@ -875,7 +871,6 @@ class AutoPostThumbnails {
 			die( 'Error: Invalid request.' );
 		}
 		if ( isset( $_POST['is_upload'] ) ) {
-
 			$postid = intval( $_POST['postid'] );
 
 			// get image file
@@ -1001,16 +996,37 @@ class AutoPostThumbnails {
 				die( json_encode( [ 'error' => "The uploaded file is not a TrueType font." ] ) );
 			}
 
-			if ( move_uploaded_file( $file['tmp_name'], "$upload_dir/$file_name" ) ) {
-				if ( realpath( "$upload_dir/$file_name" ) ) {
-					$data = [ 'files' => $file ];
-				} else {
-					$data = [ 'error' => "Unable to copy the file to the font folder: $upload_dir" ];
-				}
-			}
+			add_filter( 'upload_mimes', function ( $mime_types ) {
+				$mime_types['ttf'] = 'font/sfnt';
 
-			die( json_encode( $data ) );
+				return $mime_types;
+			}, 10, 1 );
+
+			add_filter( 'upload_dir', [ $this, 'set_fonts_upload_dir' ], 10, 1 );
+
+			$data = wp_handle_upload( $file, [ 'action' => $_POST['action'] ] );
+			remove_filter( 'upload_dir', [ $this, 'set_fonts_upload_dir' ], 10 );
+
+			if ( ! isset( $data['error'] ) ) {
+				if ( realpath( $data['file'] ) ) {
+					$result = [ 'files' => $file ];
+				} else {
+					$result = [ 'error' => "Unable to copy the file to the font folder: $upload_dir" ];
+				}
+			} else {
+				$result = [ 'error' => $data['error'] ];
+            }
+
+			die( json_encode( $result ) );
 		}
+	}
+
+	public function set_fonts_upload_dir( $upload ) {
+		$upload['subdir'] = '/apt_fonts';
+		$upload['path']   = $upload['basedir'] . $upload['subdir'];
+		$upload['url']    = $upload['baseurl'] . $upload['subdir'];
+
+		return $upload;
 	}
 
 	/**
@@ -1038,7 +1054,10 @@ class AutoPostThumbnails {
 			}
 
 			if ( isset( $_POST['watson'] ) ) {
-				$query = isset( $_POST['query'] ) && ! empty( $_POST['query'] ) && (bool) $_POST['watson'] ? sanitize_text_field( $_POST['query'] ) : $post_title;
+				$query = isset( $_POST['query'] )
+				         && ! empty( $_POST['query'] )
+				         && (bool) $_POST['watson']
+					? sanitize_text_field( $_POST['query'] ) : $post_title;
 			} else {
 				$query = sanitize_text_field( $_POST['query'] ?? '' );
 			}
@@ -1171,7 +1190,6 @@ class AutoPostThumbnails {
 		}
 
 		return $fonts;
-
 	}
 
 	/**
@@ -1224,7 +1242,6 @@ class AutoPostThumbnails {
 				$temp = substr( $text, 0, $text_crop );
 				$text = substr( $temp, 0, strrpos( $temp, ' ' ) );
 			}
-
 		}
 
 		$align        = 'center';
@@ -1249,15 +1266,12 @@ class AutoPostThumbnails {
 		}
 
 		return $image;
-
 	}
 
 	public function find_from_text_category( $post_id ) {
 		$post = get_post( $post_id );
 
 		$response = ( new \WAPT_IBMWatson( strip_tags( $post->post_content ) ) )->categories()->analyze();
-
-
 	}
 
 	/**

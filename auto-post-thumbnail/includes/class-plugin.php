@@ -15,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WAPT_Plugin extends Wbcr_Factory450_Plugin {
+class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory450_Plugin
+	 * @var Wbcr_Factory452_Plugin
 	 */
 	private static $app;
 
@@ -73,7 +73,7 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 	/**
 	 * Статический метод для быстрого доступа к интерфейсу плагина.
 	 *
-	 * @return Wbcr_Factory450_Plugin
+	 * @return Wbcr_Factory452_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -250,7 +250,7 @@ class WAPT_Plugin extends Wbcr_Factory450_Plugin {
 				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages449' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages451' ) ) {
 							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
 						}
 						if ( $redirect_url ) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Templates_103\Pages;
+namespace WBCR\Factory_Templates_105\Pages;
 
 /**
  * Step
@@ -18,10 +18,10 @@ class Step_Custom extends Step {
 	public function render_button($continue = true, $skip = false, $custom_title = null, $align = 'right')
 	{
 		$this->set_button_handler();
-		$button_title = !empty($custom_title) ? $custom_title : __('Continue', 'wbcr_factory_templates_103');
+		$button_title = !empty($custom_title) ? $custom_title : __('Continue', 'wbcr_factory_templates_105');
 
 		if( !$this->get_next_id() ) {
-			$button_title = __('Finish', 'wbcr_factory_templates_103');
+			$button_title = __('Finish', 'wbcr_factory_templates_105');
 		}
 
 		if( !in_array($align, ['center', 'left', 'right']) ) {
@@ -29,13 +29,13 @@ class Step_Custom extends Step {
 		}
 
 		?>
-		<form method="post" id="w-factory-templates-103__setup-form-<?php echo $this->get_id() ?>" class="form-horizontal">
-			<div class="w-factory-templates-103__form-buttons" style="text-align: <?php echo esc_attr($align); ?>">
+		<form method="post" id="w-factory-templates-105__setup-form-<?php echo $this->get_id() ?>" class="form-horizontal">
+			<div class="w-factory-templates-105__form-buttons" style="text-align: <?php echo esc_attr($align); ?>">
 				<?php if( $skip ): ?>
-					<input type="submit" name="skip_button_<?php echo $this->get_id() ?>" class="button-primary button button-large w-factory-templates-103__skip-button" value="<?php _e('Skip', 'wbcr_factory_templates_103') ?>">
+					<input type="submit" name="skip_button_<?php echo $this->get_id() ?>" class="button-primary button button-large w-factory-templates-105__skip-button" value="<?php _e('Skip', 'wbcr_factory_templates_105') ?>">
 				<?php endif; ?>
 				<?php if( $continue ): ?>
-					<input type="submit" name="continue_button_<?php echo $this->get_id() ?>" class="button-primary button button-large w-factory-templates-103__continue-button" value="<?php echo $button_title; ?>">
+					<input type="submit" name="continue_button_<?php echo $this->get_id() ?>" class="button-primary button button-large w-factory-templates-105__continue-button" value="<?php echo $button_title; ?>">
 				<?php endif; ?>
 			</div>
 		</form>
