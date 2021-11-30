@@ -50,59 +50,64 @@ if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 				}
 			}
 			?>
-            <style>
-                .wapt-bg-image-thumb {
-                    margin: 10px 0px;
-                    border-radius: 10px;
-                    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
-                }
+			<style>
+				.wapt-bg-image-thumb
+				{
+					margin: 10px 0px;
+					border-radius: 10px;
+					box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+				}
 
-                .wapt-invisible {
-                    display: none;
-                }
+				.wapt-invisible
+				{
+					display: none;
+				}
 
-                .wapt-visible {
-                    display: block;
-                }
-            </style>
-            <script lang="js">
-                jQuery(function ($) {
+				.wapt-visible
+				{
+					display: block;
+				}
+			</style>
+			<script lang="js">
+				jQuery(function ($) {
 
-                    var frame;
-                    $(document).on('click', '#wapt-select-image', function (event) {
-                        event.preventDefault();
-                        if (frame) {
-                            frame.open();
-                            return;
-                        }
+					var frame;
+					$(document).on('click', '#wapt-select-image', function (event) {
+						event.preventDefault();
+						if (frame) {
+							frame.open();
+							return;
+						}
 
-                        frame = wp.media({
-                            //title   : 'Выберите файл',
-                            button: {
-                                //text: 'Использовать этот файл'
-                            },
-                            multiple: false
-                        });
-                        frame.on('select', function () {
-                            var attachment = frame.state().get('selection').first().toJSON();
-                            var thumb = $('#wapt-bg-image-thumb');
-                            $('#<?php echo $name; ?>').val(attachment.id);
-                            thumb.attr('src', attachment.sizes.thumbnail.url);
-                            thumb.removeClass('wapt-bg-image-invisible').addClass('wapt-visible');
+						frame = wp.media({
+							//title   : 'Выберите файл',
+							button: {
+								//text: 'Использовать этот файл'
+							},
+							multiple: false
+						});
+						frame.on('select', function () {
+							var attachment = frame.state().get('selection').first().toJSON();
+							var thumb = $('#wapt-bg-image-thumb');
+							$('#<?php echo esc_html( $name ); ?>').val(attachment.id);
+							thumb.attr('src', attachment.sizes.thumbnail.url);
+							thumb.removeClass('wapt-bg-image-invisible').addClass('wapt-visible');
 
-                        });
-                        frame.open();
-                    });
-                });
-            </script>
-            <div <?php $this->attrs() ?>>
-                <img src="<?php echo $thumbnail_url ?>" alt="" class="wapt-bg-image-thumb <?php echo $image_class; ?>"
-                     id="wapt-bg-image-thumb">
-                <button class="button button-primary button-large <?php echo $name; ?>"
-                        id="wapt-select-image"><?php echo $button_text; ?></button>
-                <input type="hidden" id="<?php echo $name; ?>" name="<?php echo $name; ?>" class="factory-input-text"
-                       value="<?php echo $value; ?>">
-            </div>
+						});
+						frame.open();
+					});
+				});
+			</script>
+			<div <?php $this->attrs(); ?>>
+				<img src="<?php echo esc_url_raw( $thumbnail_url ); ?>" alt=""
+				     class="wapt-bg-image-thumb <?php echo esc_attr( $image_class ); ?>"
+				     id="wapt-bg-image-thumb">
+				<button class="button button-primary button-large <?php echo esc_attr( $name ); ?>"
+				        id="wapt-select-image"><?php echo esc_html( $button_text ); ?></button>
+				<input type="hidden" id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>"
+				       class="factory-input-text"
+				       value="<?php echo esc_html( $value ); ?>">
+			</div>
 			<?php
 		}
 	}

@@ -7,6 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Result class
+ */
 class GenerateResult {
 
 	/**
@@ -42,8 +45,8 @@ class GenerateResult {
 	/**
 	 * GenerateResult constructor.
 	 *
-	 * @param int $post_id
-	 * @param string $generate_method
+	 * @param int $post_id Post ID
+	 * @param string $generate_method Generate method
 	 */
 	public function __construct( $post_id, $generate_method = '' ) {
 		$this->methods = [
@@ -61,9 +64,9 @@ class GenerateResult {
 	/**
 	 * Set the result data.
 	 *
-	 * @param string $message
-	 * @param int $thumbnail_id
-	 * @param string $status
+	 * @param string $message Message
+	 * @param int $thumbnail_id Thumbnail ID
+	 * @param string $status Status
 	 */
 	public function setResult( $message = '', $thumbnail_id = 0, $status = '' ) {
 
@@ -75,9 +78,9 @@ class GenerateResult {
 	/**
 	 * Return self with result data.
 	 *
-	 * @param string $message
-	 * @param int $thumbnail_id
-	 * @param string $status
+	 * @param string $message Message
+	 * @param int $thumbnail_id Thumbnail ID
+	 * @param string $status Status
 	 *
 	 * @return self
 	 */
@@ -88,7 +91,7 @@ class GenerateResult {
 	}
 
 	/**
-	 * @param $method
+	 * @param string $method Method
 	 *
 	 * @return string
 	 */
@@ -103,6 +106,11 @@ class GenerateResult {
 		return $this->generate_method;
 	}
 
+	/**
+	 * @param string $url File URL
+	 *
+	 * @return string
+	 */
 	private function get_file_size( $url ) {
 		$path       = '';
 		$parsed_url = parse_url( $url );
@@ -123,6 +131,8 @@ class GenerateResult {
 	}
 
 	/**
+	 * @param bool $write_to_log is write to log?
+	 *
 	 * @return array
 	 */
 	public function getData( $write_to_log = false ) {
@@ -147,7 +157,7 @@ class GenerateResult {
 					'type'      => $this->get_generate_method(),
 					'status'    => $this->status,
 					'error_msg' => $this->message,
-				]
+				],
 			];
 		}
 

@@ -28,7 +28,7 @@ class WAPT_License extends WAPT_Page {
 	/**
 	 * {@inheritdoc}
 	 */
-	public $type = "page";
+	public $type = 'page';
 
 	/**
 	 * {@inheritdoc}
@@ -87,6 +87,7 @@ class WAPT_License extends WAPT_Page {
 
 	/**
 	 * {@inheritdoc}
+     *
 	 * @param WAPT_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
@@ -95,9 +96,9 @@ class WAPT_License extends WAPT_Page {
 		$this->id            = 'license';
 		$this->menu_title    = '<span style="color:#f18500">' . __( 'License', 'apt' ) . '</span>';
 		$this->page_title    = __( 'License of APT', 'apt' );
-		$this->template_name = "license";
-		$this->menu_target   = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
-		$this->capabilitiy   = "manage_options";
+		$this->template_name = 'license';
+		$this->menu_target   = $plugin->getPrefix() . 'generate-' . $plugin->getPluginName();
+		$this->capabilitiy   = 'manage_options';
 
 		$this->premium                  = WAPT_Plugin::app()->premium;
 		$this->is_premium               = $this->premium->is_activate();
@@ -116,11 +117,14 @@ class WAPT_License extends WAPT_Page {
 
 		$this->styles->add( WAPT_PLUGIN_URL . '/admin/assets/css/license-manager.css' );
 
-		$this->styles->request( array(
+		$this->styles->request(
+            array(
 			'bootstrap.core',
 			'bootstrap.form-groups',
 			'bootstrap.separator',
-		), 'bootstrap' );
+            ),
+            'bootstrap'
+        );
 
 		$this->scripts->add( WAPT_PLUGIN_URL . '/admin/assets/js/license-manager.js' );
 	}
@@ -176,7 +180,7 @@ class WAPT_License extends WAPT_Page {
 
 		if ( 1 == $billing_cycle ) {
 			$billing = 'month';
-		} else if ( 12 == $billing_cycle ) {
+		} elseif ( 12 == $billing_cycle ) {
 			$billing = 'year';
 		}
 
@@ -201,7 +205,7 @@ class WAPT_License extends WAPT_Page {
 
 		if ( $license->is_lifetime() ) {
 			return 'gift';
-		} else if ( $license->get_expiration_time( 'days' ) < 1 ) {
+		} elseif ( $license->get_expiration_time( 'days' ) < 1 ) {
 			return 'trial';
 		}
 

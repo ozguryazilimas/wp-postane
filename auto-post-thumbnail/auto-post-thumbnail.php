@@ -3,7 +3,7 @@
 Plugin Name: Auto Featured Image (Auto Post Thumbnail)
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Featured Image from the first image in post or any custom post type only if Featured Image is not set manually. Featured Image Generation From Title. Native image search for Elementor, Gutenberg, Classic Editor.
-Version: 3.9.7
+Version: 3.9.8
 Author: Creative Motion <support@cm-wp.com>
 Author URI: https://cm-wp.com
 Text Domain: apt
@@ -101,16 +101,16 @@ $plugin_info = [
 ];
 
 $wapt_compatibility = new Wbcr_Factory452_Requirements(
-	__FILE__,
-	array_merge(
-		$plugin_info,
-		[
-			'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
-			'required_php_version'    => '7.0',
-			'required_wp_version'     => '4.8.0',
-			// 'required_clearfy_check_component' => false
+    __FILE__,
+    array_merge(
+        $plugin_info,
+        [
+        'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
+        'required_php_version'    => '7.0',
+        'required_wp_version'     => '4.8.0',
+        // 'required_clearfy_check_component' => false
 		]
-	)
+    )
 );
 
 /**
@@ -120,8 +120,6 @@ $wapt_compatibility = new Wbcr_Factory452_Requirements(
 if ( ! $wapt_compatibility->check() ) {
 	return;
 }
-
-/********************************************/
 
 define( 'WAPT_PLUGIN_ACTIVE', true );
 define( 'WAPT_PLUGIN_VERSION', $wapt_compatibility->get_plugin_version() );
@@ -151,15 +149,15 @@ require_once WAPT_PLUGIN_DIR . '/includes/image-search/boot.php';
 
 try {
 	new WAPT_Plugin(
-		__FILE__,
-		array_merge(
-			$plugin_info,
-			[
-				'plugin_version'     => WAPT_PLUGIN_VERSION,
-				'plugin_text_domain' => $wapt_compatibility->get_text_domain(),
+        __FILE__,
+        array_merge(
+            $plugin_info,
+            [
+            'plugin_version'     => WAPT_PLUGIN_VERSION,
+            'plugin_text_domain' => $wapt_compatibility->get_text_domain(),
 			]
-		)
-	);
+        )
+    );
 } catch ( Exception $e ) {
 	global $wapt_exception;
 
@@ -167,16 +165,14 @@ try {
 	// Plugin wasn't initialized due to an error
 	define( 'WAPT_PLUGIN_THROW_ERROR', true );
 
+	/**
+	 * Exception notice
+	 */
 	function wapt_exception_notice() {
 		global $wapt_exception;
 
-		$error = sprintf(
-			'The %s plugin has stopped. <b>Error:</b> %s Code: %s',
-			'Auto Featured Image',
-			$wapt_exception->getMessage(),
-			$wapt_exception->getCode()
-		);
-		echo '<div class="notice notice-error"><p>' . $error . '</p></div>';
+		$error = sprintf( 'The %s plugin has stopped. <b>Error:</b> %s Code: %s', 'Auto Featured Image', $wapt_exception->getMessage(), $wapt_exception->getCode() );
+		echo '<div class="notice notice-error"><p>' . wp_kses_post( $error ) . '</p></div>';
 	}
 
 	add_action( 'admin_notices', 'wapt_exception_notice' );

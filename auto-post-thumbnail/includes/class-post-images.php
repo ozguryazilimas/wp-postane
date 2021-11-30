@@ -9,7 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
+/**
+ * Post images class
+ */
 class PostImages {
 
 	/**
@@ -38,9 +40,9 @@ class PostImages {
 		if ( is_numeric( $post ) ) {
 			$post       = get_post( $post, 'OBJECT' );
 			$this->post = $post;
-		} else if ( is_object( $post ) ) {
+		} elseif ( is_object( $post ) ) {
 			$this->post = $post;
-		} else if ( is_string( $post ) ) {
+		} elseif ( is_string( $post ) ) {
 			$new_post               = new \stdClass();
 			$new_post->post_content = $post;
 
@@ -52,7 +54,6 @@ class PostImages {
 
 	/**
 	 * Get an array of images url, contained in the post
-	 *
 	 */
 	private function find_images() {
 		$matches = [];
@@ -69,9 +70,9 @@ class PostImages {
 
 			foreach ( $matches[0] as $key => $image ) {
 				$title = '';
-				preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\"\']?([^\"\'> ]*)/i', $image, $matchesTitle );
+				preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\"\']?([^\"\'> ]*)/i', $image, $matches_title );
 
-				if ( count( $matchesTitle ) && isset( $matchesTitle[1] ) && isset( $matchesTitle[1][ $key ] ) ) {
+				if ( count( $matches_title ) && isset( $matches_title[1] ) && isset( $matches_title[1][ $key ] ) ) {
 					$title = $matches[1][ $key ];
 				}
 
@@ -84,7 +85,7 @@ class PostImages {
 		}
 
 		$this->images = $images;
-		$this->plugin->logger->debug( "Found images: " . var_export( $images, true ) );
+		$this->plugin->logger->debug( 'Found images: ' . var_export( $images, true ) );
 	}
 
 	/**
@@ -124,9 +125,9 @@ class PostImages {
 	}
 
 	/**
-	 * @param string $image
-	 * @param string $suffix
-	 * @param WP_Post $post
+	 * @param string $image Image path
+	 * @param string $suffix Slug suffix
+	 * @param WP_Post $post Post object
 	 *
 	 * @return string
 	 */
@@ -147,16 +148,25 @@ class PostImages {
 	}
 
 	/**
-	 * @param string $url
-	 * @param string $path_to
+	 * @param string $url URL
+	 * @param string $path_to Path to download
 	 *
 	 * @return bool
 	 */
 	public function download( $url, $path_to ) {
 		$response = wp_remote_get( $url );
 		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-			$body       = wp_remote_retrieve_body( $response );
-			$downloaded = $path_to ? @file_put_contents( $path_to, $body ) : false;
+			$body = wp_remote_retrieve_body( $response );
+
+			global $wp_filesystem;
+			if ( ! $wp_filesystem ) {
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+				WP_Filesystem();
+			}
+
+			$downloaded = $path_to ? $wp_filesystem->put_contents( $path_to, $body ) : false;
 		}
 
 		return isset( $downloaded ) ? (bool) $downloaded : false;

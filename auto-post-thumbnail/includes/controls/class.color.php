@@ -9,7 +9,6 @@
  *
  * @author Artem Prihodko <webtemyk@yandex.ru>
  * @copyright (c) 2020, Webcraftic Ltd
- *
  */
 
 // Exit if accessed directly
@@ -38,18 +37,18 @@ if ( ! class_exists( 'Wapt_FactoryForms_ColorControl' ) ) {
 			}
 			?>
 
-            <style>
-                .wapt-jscolor
-                {
-                    padding: 15px !important;
-                    font-size: 16px !important;
-                    cursor: pointer;
-                }
-            </style>
-            <div <?php $this->attrs() ?>>
-                <input type="text" id="<?php echo $name; ?>" name="<?php echo $name; ?>"
-                       class="factory-input-text jscolor wapt-jscolor" value="<?php echo $value; ?>">
-            </div>
+			<style>
+				.wapt-jscolor
+				{
+					padding: 15px !important;
+					font-size: 16px !important;
+					cursor: pointer;
+				}
+			</style>
+			<div <?php $this->attrs(); ?>>
+				<input type="text" id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>"
+				       class="factory-input-text jscolor wapt-jscolor" value="<?php echo esc_attr( $value ); ?>">
+			</div>
 			<?php
 		}
 	}

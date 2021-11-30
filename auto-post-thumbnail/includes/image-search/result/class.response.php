@@ -53,9 +53,9 @@ class SearchResponse implements \JsonSerializable {
 	}
 
 	public function jsonSerialize() {
-		if( $this->is_error() ) {
+		if ( $this->is_error() ) {
 			return [
-				'error' => $this->error
+				'error' => $this->error,
 			];
 		}
 

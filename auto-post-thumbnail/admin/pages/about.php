@@ -37,6 +37,7 @@ class WAPT_About extends WAPT_Page {
 	 * Menu icon (only if a page is placed as a main menu).
 	 * For example: '~/assets/img/menu-icon.png'
 	 * For example dashicons: '\f321'
+     *
 	 * @var string
 	 */
 	public $menu_icon = '';
@@ -44,7 +45,7 @@ class WAPT_About extends WAPT_Page {
 	/**
 	 * @var string
 	 */
-	public $page_menu_dashicon = "dashicons-info-outline";
+	public $page_menu_dashicon = 'dashicons-info-outline';
 
 	/**
 	 * {@inheritdoc}
@@ -55,11 +56,11 @@ class WAPT_About extends WAPT_Page {
 	 * @param WAPT_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
-		$this->id            = "wapt_about";
-		$this->menu_target   = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
+		$this->id            = 'wapt_about';
+		$this->menu_target   = $plugin->getPrefix() . 'generate-' . $plugin->getPluginName();
 		$this->page_title    = __( 'About APT', 'apt' );
 		$this->menu_title    = __( 'About', 'apt' );
-		$this->template_name = "about";
+		$this->template_name = 'about';
 
 		parent::__construct( $plugin );
 

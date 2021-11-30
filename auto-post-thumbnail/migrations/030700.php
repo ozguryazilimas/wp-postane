@@ -36,7 +36,6 @@ class WAPTUpdate030700 extends Wbcr_Factory452_Update {
 
 		$this->plugin->updateOption( 'generate_autoimage', 'find' );
 
-
 		$this->plugin->updateOption( 'background-type', 'color' );
 		$this->plugin->updateOption( 'background-color', '#ff6262' );
 		$this->plugin->updateOption( 'background-image', '' );

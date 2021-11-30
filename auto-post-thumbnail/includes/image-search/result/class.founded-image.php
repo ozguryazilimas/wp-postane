@@ -71,8 +71,17 @@ abstract class FoundedImage {
 	public function download( $path_to = '' ) {
 		$response = wp_remote_get( $this->link );
 		if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-			$body       = wp_remote_retrieve_body( $response );
-			$downloaded = $path_to ? @file_put_contents( $path_to, $body ) : false;
+			$body = wp_remote_retrieve_body( $response );
+
+			global $wp_filesystem;
+			if ( ! $wp_filesystem ) {
+				if ( ! function_exists( 'WP_Filesystem' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/file.php';
+				}
+				WP_Filesystem();
+			}
+
+			$downloaded = $path_to ? $wp_filesystem->put_contents( $path_to, $body ) : false;
 		}
 
 		return isset( $downloaded ) ? (bool) $downloaded : false;

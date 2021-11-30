@@ -28,7 +28,6 @@ class GoogleFoundedImage extends FoundedImage {
 		$this->image->width  = $item['image']['width'] ?? '';
 		$this->image->height = $item['image']['height'] ?? '';
 
-
 		$path = parse_url( $this->link, PHP_URL_PATH );
 		preg_match_all( '/.*\/(.*)\.(\w{3,4})?(\?|\/.*)?/', $path, $match );
 

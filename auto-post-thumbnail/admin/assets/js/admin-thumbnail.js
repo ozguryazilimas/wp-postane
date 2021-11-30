@@ -10,49 +10,65 @@
  * global ajaxurl, apt_thumb - language array
  */
 (function ($) {
-    jQuery(document).ready(function ($) {
+	jQuery(document).ready(
+		function ($) {
 
-        jQuery(document).on('click', '#hide_notice_auto_generation', function (e) {
-            e.preventDefault();
-            jQuery('#notice_auto_generation').animate({opacity: 'hide', height: 'hide'}, 200);
-            jQuery.post(ajaxurl, {
-                action: 'hide_notice_auto_generation',
-            }).done(function (html) {
-                console.log('Hided');
-            });
+			jQuery(document).on(
+				'click',
+				'#hide_notice_auto_generation',
+				function (e) {
+					e.preventDefault();
+					jQuery('#notice_auto_generation').animate({opacity: 'hide', height: 'hide'}, 200);
+					jQuery.post(
+						ajaxurl,
+						{
+							action: 'hide_notice_auto_generation',
+						}
+					).done(
+						function (html) {
+							console.log('Hided');
+						}
+					);
 
-        });
+				}
+			);
 
-        //Отображение окна со всеми картинками в тексте поста
-        window.aptModalShow = function (that, postid, wpnonce) {
+			//Отображение окна со всеми картинками в тексте поста
+			window.aptModalShow = function (that, postid, wpnonce) {
 
-            var $modal = $('#post_imgs_' + postid).find('> div');
-            var $ajaximg = $('#post_imgs_' + postid).find('> span');
-            //$modal.html('');
-            $('.imgs').find('> div').html(''); //очистка всех модальных окон, чтобы исключить конфликты
+				var $modal = $('#post_imgs_' + postid).find('> div');
+				var $ajaximg = $('#post_imgs_' + postid).find('> span');
+				//$modal.html('');
+				$('.imgs').find('> div').html(''); //очистка всех модальных окон, чтобы исключить конфликты
 
-            tb_show(apt.modal_title, '/?TB_inline&inlineId=post_imgs_' + postid + '&width=650&height=' + (window.innerHeight - 150));
-            //tb_show(apt.modal_title, '/?TB_inline&inlineId=post_imgs_' + postid + '&width=650&height=500');
+				tb_show(apt.modal_title, '/?TB_inline&inlineId=post_imgs_' + postid + '&width=650&height=' + (window.innerHeight - 150));
+				//tb_show(apt.modal_title, '/?TB_inline&inlineId=post_imgs_' + postid + '&width=650&height=500');
 
-            $ajaximg.show();
-            // AJAX запрос для загрузки контента окна
-            jQuery.post(ajaxurl, {
-                action: apt.action_column_get_thumbnails,
-                post_id: postid,
-                _ajax_nonce: wpnonce,
-            }).done(function (html) {
-                $ajaximg.hide();
-                $modal.html(html);
-                /*
-                $('#wapt_thumbs').autocolumnlist({
-                    columns: 3,
-                    classname: 'wapt-grid-item',
-                    min: 1
-                });
-                */
-            });
+				$ajaximg.show();
+				// AJAX запрос для загрузки контента окна
+				jQuery.post(
+					ajaxurl,
+					{
+						action: apt.action_column_get_thumbnails,
+						post_id: postid,
+						_ajax_nonce: wpnonce,
+					}
+				).done(
+					function (html) {
+						$ajaximg.hide();
+						$modal.html(html);
+						/*
+						$('#wapt_thumbs').autocolumnlist({
+						columns: 3,
+						classname: 'wapt-grid-item',
+						min: 1
+						});
+						*/
+					}
+				);
 
-            //return false; // для ссылки
-        }
-    });
+				//return false; // для ссылки
+			}
+		}
+	);
 })(jQuery);

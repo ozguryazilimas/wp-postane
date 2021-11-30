@@ -1,4 +1,5 @@
 <?php
+
 namespace WBCR\APT;
 
 use WAPT_Plugin, Exception;
@@ -36,7 +37,7 @@ class Image {
 	/**
 	 * @var string
 	 */
-	private $font_path = WAPT_PLUGIN_DIR . "/fonts/arial.ttf";
+	private $font_path = WAPT_PLUGIN_DIR . '/fonts/arial.ttf';
 
 	/**
 	 * @var integer
@@ -173,7 +174,6 @@ class Image {
 	 * @param string $font = ''
 	 * @param integer $font_size = 0
 	 * @param string $font_color = '#000000'
-	 *
 	 */
 	public function __construct( $width, $height, $background = '#ffffff', $font = '', $font_size = 0, $font_color = '#000000' ) {
 		self::$app = $this;
@@ -203,8 +203,7 @@ class Image {
 	 * @return Resource
 	 */
 	public function create( $width, $height, $background = '#ffffff' ) {
-		if ( is_numeric( $background ) ) //image
-		{
+		if ( is_numeric( $background ) ) { //image
 			$image = wp_get_attachment_metadata( $background );
 			if ( $image ) {
 				$upload_dir = wp_upload_dir();
@@ -252,7 +251,7 @@ class Image {
 		if ( empty( $hex ) ) {
 			$hex = $this->font_color;
 		}
-		list( $r, $g, $b ) = sscanf( $hex, "#%02x%02x%02x" );
+		list( $r, $g, $b ) = sscanf( $hex, '#%02x%02x%02x' );
 
 		return array(
 			'r' => $r,
@@ -337,7 +336,7 @@ class Image {
 
 			$chars_per_line = ceil( $width / $char_size['width'] * 0.9 ); //count of chars per line
 			$text2          = wordwrap( $text, $chars_per_line, "\n", false );
-			$text2          = str_replace( "[br]", "\n", $text2 );
+			$text2          = str_replace( '[br]', "\n", $text2 );
 			$line_count     = count( explode( "\n", $text2 ) );
 			$lines          = explode( "\n", $text2 );
 			for ( $i = 0; $i < $line_count; $i ++ ) {
@@ -347,7 +346,6 @@ class Image {
 					$font_size --;
 					$i = 0;
 				}
-
 			}
 
 			$text_height = $line_count * $char_size['height'];
@@ -360,7 +358,7 @@ class Image {
 				}
 				$line_width  = ceil( $width / $char_size['width'] * 0.9 ); //count of chars per line
 				$text2       = wordwrap( $text, (int) $line_width, "\n", false );
-				$text2       = str_replace( "[br]", "\n", $text2 );
+				$text2       = str_replace( '[br]', "\n", $text2 );
 				$line_count  = count( explode( "\n", $text2 ) );
 				$text_height = $line_count * ( $char_size['height'] * $line_spacing );
 			}
@@ -368,7 +366,7 @@ class Image {
 			$height = $this->height;
 
 			$lines = explode( "\n", $text2 );
-			if ( $valign == "bottom" ) {
+			if ( $valign == 'bottom' ) {
 				$lines = array_reverse( $lines );
 			}
 
@@ -378,6 +376,8 @@ class Image {
 				$w   = $box[4] - $box[6];
 				$num = $line_spacing * $key;
 
+				$x = 0;
+				$y = 0;
 				switch ( $align . '-' . $valign ) {
 					case 'left-top':
 						$x = $pad_left;

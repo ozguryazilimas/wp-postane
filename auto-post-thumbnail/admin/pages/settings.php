@@ -63,13 +63,13 @@ class WAPT_Settings extends WAPT_Page {
 	 * @param WAPT_Plugin $plugin
 	 */
 	public function __construct( $plugin ) {
-		$this->id                          = $plugin->getPrefix() . "settings";
-		$this->menu_target                 = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
+		$this->id                          = $plugin->getPrefix() . 'settings';
+		$this->menu_target                 = $plugin->getPrefix() . 'generate-' . $plugin->getPluginName();
 		$this->page_title                  = __( 'Settings of APT', 'apt' );
 		$this->menu_title                  = __( 'Settings', 'apt' );
 		$this->page_menu_short_description = __( 'General settings', 'apt' );
-		$this->capabilitiy                 = "manage_options";
-		$this->template_name               = "settings";
+		$this->capabilitiy                 = 'manage_options';
+		$this->template_name               = 'settings';
 
 		$this->plugin     = $plugin;
 		$this->post_types = $this->getPostTypes();
@@ -83,22 +83,27 @@ class WAPT_Settings extends WAPT_Page {
 	 * @return void
 	 * @since 3.8.1
 	 * @see   Wbcr_FactoryPages451_AdminPage
-	 *
 	 */
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
 
-		$this->scripts->request( [
+		$this->scripts->request(
+            [
 			'control.list',
 			'bootstrap.accordion',
 			'bootstrap.tab',
-		], 'bootstrap' );
+			],
+            'bootstrap'
+        );
 
-		$this->styles->request( [
+		$this->styles->request(
+            [
 			'control.list',
 			'bootstrap.accordion',
 			'bootstrap.tab',
-		], 'bootstrap' );
+			],
+            'bootstrap'
+        );
 
 		$this->scripts->add( WAPT_PLUGIN_URL . '/admin/assets/js/settings.js', [ 'jquery' ], 'wapt-settings-script', WAPT_PLUGIN_VERSION );
 		$this->styles->add( WAPT_PLUGIN_URL . '/admin/assets/css/settings.css', [], 'wapt-settings-style', WAPT_PLUGIN_VERSION );
@@ -143,12 +148,15 @@ class WAPT_Settings extends WAPT_Page {
 			],
 			'default'  => 'find',
 			'title'    => __( 'Featured image', 'apt' ),
-			'hint'     => __( "How to generate featured image:
+			'hint'     => __(
+                'How to generate featured image:
 							<br> <b>Find in post:</b> search for the first image in the post text
 							<br> <b>Generate from title:</b> created from the title on a colored background
 							<br> <b>Find or generate:</b> find an image in the post text, if it is not present, generate it from the title
 							<br> <b>Google:</b> search for an image by title of the post in Google
-							<br> <b>Find or Google:</b> find an image in the post text, if it is not present, search for an image by title of the post in Google", 'apt' ),
+							<br> <b>Find or Google:</b> find an image in the post text, if it is not present, search for an image by title of the post in Google',
+                'apt'
+            ),
 			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro-item' ] : [],
 		];
 
@@ -159,7 +167,7 @@ class WAPT_Settings extends WAPT_Page {
 			'data'    => $is_premium ? $this->getPostTypes() : $this->post_types,
 			'default' => 'post,page',
 			'title'   => __( 'Generate for post types', 'apt' ),
-			'hint'    => __( "What types of posts to generate images for", 'apt' ),
+			'hint'    => __( 'What types of posts to generate images for', 'apt' ),
 		];
 
 		$options[] = [
@@ -194,7 +202,7 @@ class WAPT_Settings extends WAPT_Page {
 			'data'      => $is_premium ? $this->getPostTypes() : $this->post_types,
 			'default'   => '',
 			'title'     => __( 'Import for post types', 'apt' ) . $pro,
-			'hint'      => __( "What types of posts to import images for", 'apt' ),
+			'hint'      => __( 'What types of posts to import images for', 'apt' ),
 			'cssClass'  => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 			'htmlAttrs' => ( ! $is_premium ) ? [ 'disabled' => 'disabled' ] : [],
 		];
@@ -214,7 +222,7 @@ class WAPT_Settings extends WAPT_Page {
 		$options[] = [
 			'type'  => 'hidden',
 			'name'  => 'ajax_nonce',
-			'value' => ''//wp_create_nonce( 'check-api-key' )
+			'value' => '', //wp_create_nonce( 'check-api-key' )
 		];
 
 		// Текстовое поле

@@ -37,6 +37,7 @@ class WAPT_Log extends WAPT_Page_Logger {
 
 	/**
 	 * Menu position (only if a page is placed as a main menu).
+     *
 	 * @link http://codex.wordpress.org/Function_Reference/add_menu_page
 	 * @var string
 	 */
@@ -74,7 +75,7 @@ class WAPT_Log extends WAPT_Page_Logger {
 	 */
 	public function __construct( WAPT_Plugin $plugin ) {
 		$this->id          = 'log';
-		$this->menu_target = $plugin->getPrefix() . "generate-" . $plugin->getPluginName();
+		$this->menu_target = $plugin->getPrefix() . 'generate-' . $plugin->getPluginName();
 		$this->page_title  = __( 'Plugin logs', 'apt' );
 		$this->menu_title  = $this->getMenuTitle();
 

@@ -1,55 +1,61 @@
 <?php
-$ajaxloader        = WAPT_PLUGIN_URL . "/admin/assets/img/ajax-loader-line.gif";
+$ajaxloader        = WAPT_PLUGIN_URL . '/admin/assets/img/ajax-loader-line.gif';
 $apt_content_nonce = wp_create_nonce( 'apt_content' );
 $post_id           = - 1;
 if ( isset( $_GET['post_id'] ) ) {
-	$post_id = absint( $_GET['post_id'] ) ? absint( $_GET['post_id'] ) : -1;
+	$post_id = absint( $_GET['post_id'] ) ? absint( $_GET['post_id'] ) : - 1;
 }
 
 
 ?>
 
-<?php if ( WAPT_Plugin::app()->premium->is_activate() ): ?>
-    <div class="watson-categories">
-        <div id="ajaxloader-watson" style="display: none">
-            <img src="<?php echo $ajaxloader ?>" alt="">
-        </div>
-        <div id="message"></div>
-        <div class="categories">
-            <ul id="categories-list">
-                <li></li>
-            </ul>
-        </div>
-    </div>
+<?php if ( WAPT_Plugin::app()->premium->is_activate() ) : ?>
+	<div class="watson-categories">
+		<div id="ajaxloader-watson" style="display: none">
+			<img src="<?php echo esc_url_raw( $ajaxloader ); ?>" alt="">
+		</div>
+		<div id="message"></div>
+		<div class="categories">
+			<ul id="categories-list">
+				<li></li>
+			</ul>
+		</div>
+	</div>
 <?php endif; ?>
 
 <div class="tabs">
-    <ul>
-		<?php $i = 1;
+	<ul>
+		<?php
+		$i = 1;
 		foreach ( $this->sources as $src => $slug ) {
-			if ( $slug === '_skip' ) {
+			if ( '_skip' === $slug ) {
 				continue;
 			}
 
-			$is_pro = "";
+			$is_pro = '';
 			if ( empty( $slug ) && ! WAPT_Plugin::app()->premium->is_activate() ) {
-				$is_pro = " (PRO)";
+				$is_pro = ' (PRO)';
 			}
-			$is_pro = "<sup class='wapt-sup-pro'>" . $is_pro . "</sup>";
+			$is_pro = "<sup class='wapt-sup-pro'>" . $is_pro . '</sup>';
 
-			echo "<li id='tabs-" . $i ++ . "'>" . strtoupper( $src ) . $is_pro . "</li>";
-		} ?>
-    </ul>
-    <div id='ajaxloader' style='display:none;'><img src='<?php echo $ajaxloader; ?>' width='150px' alt=''></div>
-    <div id="media-frame-content">
-		<?php foreach ( $this->sources as $src => $slug ) {
-			if ( $slug === '_skip' ) {
+			echo "<li id='tabs-" . intval( $i ++ ) . "'>" . esc_html( strtoupper( $src ) ) . esc_html( $is_pro ) . '</li>';
+		}
+		?>
+	</ul>
+	<div id='ajaxloader' style='display:none;'>
+		<img src='<?php echo esc_url_raw( $ajaxloader ); ?>' width='150px' alt=''>
+	</div>
+	<div id="media-frame-content">
+		<?php
+		foreach ( $this->sources as $src => $slug ) {
+			if ( '_skip' === $slug ) {
 				continue;
 			}
 
-			echo "<div id='tab-" . strtolower( $src ) . "' class='tab'></div>";
-		} ?>
-    </div>
+			echo "<div id='tab-" . esc_attr( strtolower( $src ) ) . "' class='tab'></div>";
+		}
+		?>
+	</div>
 </div>
 
 <style>
@@ -174,78 +180,80 @@ if ( isset( $_GET['post_id'] ) ) {
 	}
 </style>
 <script type="text/javascript">
-    jQuery(document).ready(function () {
-        jQuery.fn.lightTabs = function (options) {
+	jQuery(document).ready(function () {
+		jQuery.fn.lightTabs = function (options) {
 
-            var createTabs = function () {
-                tabs = this;
-                i = 0;
+			var createTabs = function () {
+				tabs = this;
+				i = 0;
 
-                showPage = function (i) {
-                    jQuery(tabs).children("div").children("div").hide();
-                    jQuery(tabs).children("ul").children("li").removeClass("active");
-                    jQuery('#' + jQuery(tabs).children("div").children("div").attr('id')).html('');
+				showPage = function (i) {
+					jQuery(tabs).children("div").children("div").hide();
+					jQuery(tabs).children("ul").children("li").removeClass("active");
+					jQuery('#' + jQuery(tabs).children("div").children("div").attr('id')).html('');
 
-                    jQuery('#' + jQuery(tabs).children("div").children("div").eq(i).attr('id')).html('');
-                    jQuery(tabs).children("div").children("div").eq(i).show();
-                    jQuery(tabs).children("ul").children("li").eq(i).addClass("active");
+					jQuery('#' + jQuery(tabs).children("div").children("div").eq(i).attr('id')).html('');
+					jQuery(tabs).children("div").children("div").eq(i).show();
+					jQuery(tabs).children("ul").children("li").eq(i).addClass("active");
 
-                    jQuery('#ajaxloader').show();
-                    jQuery.post(ajaxurl, {
-                        action: 'source_content',
-                        source: jQuery(tabs).children("div").children("div").eq(i).attr('id'),
-                        wpnonce: '<?php echo $apt_content_nonce; ?>',
-                        post_id: <?php echo $post_id;?>,
-                    }).done(function (content) {
-                        jQuery('#ajaxloader').hide();
-                        jQuery('#' + jQuery(tabs).children("div").children("div").eq(i).attr('id')).html(content);
+					jQuery('#ajaxloader').show();
+					jQuery.post(ajaxurl, {
+						action: 'source_content',
+						source: jQuery(tabs).children("div").children("div").eq(i).attr('id'),
+						wpnonce: '<?php echo esc_attr( $apt_content_nonce ); ?>',
+						post_id: <?php echo intval( $post_id ); ?>,
+					}).done(function (content) {
+						jQuery('#ajaxloader').hide();
+						if (jQuery(tabs).children("ul").children("li").eq(i).hasClass("active")) {
+							jQuery('#' + jQuery(tabs).children("div").children("div").eq(i).attr('id')).html(content);
+						}
 
-                        if (typeof window.search_query !== 'undefined') {
-                            jQuery(".input_query").val(window.search_query);
-                            jQuery(".submit_button").click();
-                        }
-                    });
+						if (typeof window.search_query !== 'undefined') {
+							jQuery(".input_query").val(window.search_query);
+							jQuery(".submit_button").click();
+						}
+					});
 
-                };
+				};
 
-                showPage(0);
+				showPage(0);
 
-                jQuery(tabs).children("ul").children("li").each(function (index, element) {
-                    jQuery(element).attr("data-page", i);
-                    i++;
-                });
+				jQuery(tabs).children("ul").children("li").each(function (index, element) {
+					jQuery(element).attr("data-page", i);
+					i++;
+				});
 
-                jQuery(tabs).children("ul").children("li").click(function () {
-                    showPage(parseInt(jQuery(this).attr("data-page")));
-                });
-            };
-            return this.each(createTabs);
-        };
+				jQuery(tabs).children("ul").children("li").click(function () {
+					showPage(parseInt(jQuery(this).attr("data-page")));
+				});
+			};
+			return this.each(createTabs);
+		};
 
-        jQuery(".tabs").lightTabs();
+		jQuery(".tabs").lightTabs();
 
-        jQuery("#ajax-watson").on('click', function () {
-            jQuery("#ajaxloader-watson").css('display', 'block');
-            jQuery.post(ajaxurl, {
-                action: 'apt_api_watson',
-                postId: <?php echo $post_id;?>,
-                nonce: "<?php echo wp_create_nonce( 'apt_api_watson' )?>"
-            }, function (response) {
-                console.log(response);
-                if (response.success) {
-                    jQuery("#ajaxloader-watson").css('display', 'none');
-                    response.data.categories.forEach(function (category) {
-                        var ul = jQuery(`<li style="cursor: pointer; color: #007bff" data-label="${category.label}">${category.label} (${(category.score * 100).toFixed(2)}%)</li>`);
-                        ul.on('click', function () {
-                            jQuery(".input_query").val(jQuery(this).attr('data-label'));
-                            jQuery(".submit_button").click();
-                        });
-                        jQuery("#categories-list").append(ul);
-                    });
-                } else {
-                    jQuery("#message").html(response.data.message);
-                }
-            });
-        });
-    });
+		jQuery("#ajax-watson").on('click', function () {
+			jQuery("#ajaxloader-watson").css('display', 'block');
+			jQuery.post(ajaxurl, {
+				action: 'apt_api_watson',
+				postId: <?php echo intval( $post_id ); ?>,
+				nonce: "<?php echo esc_attr( wp_create_nonce( 'apt_api_watson' ) ); ?>"
+			}, function (response) {
+				console.log(response);
+				if (response.success) {
+					jQuery("#ajaxloader-watson").css('display', 'none');
+					response.data.categories.forEach(function (category) {
+						var ul = jQuery(`<li style="cursor: pointer; color: #007bff" data-label="${category.label}">${category.label} (${(category.score * 100).toFixed(2)}%)</li>`);
+						ul.on('click', function () {
+							jQuery(".input_query").val(jQuery(this).attr('data-label'));
+							jQuery(".submit_button").click();
+						});
+						jQuery("#categories-list").append(ul);
+					});
+				} else {
+					jQuery("#message").html(response.data.message);
+				}
+			});
+		});
+	});
 </script>

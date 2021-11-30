@@ -5,6 +5,9 @@
  */
 class WAPTUpdate030600 extends Wbcr_Factory452_Update {
 
+	/**
+	 * Do migration
+	 */
 	public function install() {
 		if ( is_multisite() && $this->plugin->isNetworkActive() ) {
 			global $wpdb;

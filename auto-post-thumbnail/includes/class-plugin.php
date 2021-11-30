@@ -56,14 +56,14 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 			$this->numberOfColumn = 4;
 			$this->apt            = \WBCR\APT\AutoPostThumbnails::instance();
 
-			require( WAPT_PLUGIN_DIR . '/admin/ajax/check-license.php' );
+			require WAPT_PLUGIN_DIR . '/admin/ajax/check-license.php';
 
 			// Инициализация бэкенда
 			$this->admin_scripts();
 		}
 
 		if ( $this->doing_rest_api() ) {
-			require_once WAPT_PLUGIN_DIR . "/includes/class.generate-result.php";
+			require_once WAPT_PLUGIN_DIR . '/includes/class.generate-result.php';
 			$this->apt = \WBCR\APT\AutoPostThumbnails::instance();
 		}
 
@@ -97,13 +97,12 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 	 * Регистрации класса активации/деактивации плагина
 	 */
 	protected function initActivation() {
-		include_once( WAPT_PLUGIN_DIR . '/admin/class-wapt-activation.php' );
+		include_once WAPT_PLUGIN_DIR . '/admin/class-wapt-activation.php';
 		$this->registerActivation( 'WAPT_Activation' );
 	}
 
 	/**
 	 * Регистрирует классы страниц в плагине
-	 *
 	 */
 	private function register_pages() {
 		self::app()->registerPage( 'WAPT_Generate', WAPT_PLUGIN_DIR . '/admin/pages/generate.php' );
@@ -111,13 +110,13 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 		self::app()->registerPage( 'WAPT_ImageSettings', WAPT_PLUGIN_DIR . '/admin/pages/image.php' );
 		self::app()->registerPage( 'WAPT_License', WAPT_PLUGIN_DIR . '/admin/pages/license.php' );
 		self::app()->registerPage( 'WAPT_Log', WAPT_PLUGIN_DIR . '/admin/pages/log.php' );
-		//self::app()->registerPage( 'WAPT_About', WAPT_PLUGIN_DIR . '/admin/pages/about.php' );
+		self::app()->registerPage( 'WAPT_About', WAPT_PLUGIN_DIR . '/admin/pages/about.php' );
 	}
 
 	/**
 	 */
 	private function admin_scripts() {
-		require_once WAPT_PLUGIN_DIR . "/includes/class.generate-result.php";
+		require_once WAPT_PLUGIN_DIR . '/includes/class.generate-result.php';
 
 		//$this->register_pages();
 
@@ -129,8 +128,8 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 		add_action( 'wbcr/factory/admin_notices', [ $this, 'show_about_notice' ], 10, 2 );
 
 		// Plugin hook for adding CSS and JS files required for this plugin
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets', ] );
-		add_action( 'wp_enqueue_media', [ $this, 'enqueue_media', ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'wp_enqueue_media', [ $this, 'enqueue_media' ] );
 
 		//Hook to adding "image" column in Posts table
 		add_filter( 'manage_post_posts_columns', [ $this, 'add_image_column' ], 4 );
@@ -138,9 +137,8 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 		add_action( 'manage_post_posts_custom_column', [ $this, 'fill_image_column' ], 5, 2 );
 
 		//ADD tab and button to medialibrary
-		add_filter( "media_upload_tabs", [ $this, "addTab" ] );
-		add_action( "media_upload_apttab", [ $this, "aptTabHandle" ] );
-
+		add_filter( 'media_upload_tabs', [ $this, 'addTab' ] );
+		add_action( 'media_upload_apttab', [ $this, 'aptTabHandle' ] );
 
 		// filter posts
 		add_action( 'restrict_manage_posts', [ $this, 'add_posts_filters' ] );
@@ -158,7 +156,7 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 	}
 
 	/**
-	 * Выполняет php сценарии, когда все Wordpress плагины будут загружены
+	 * Выполняет php сценарии, когда все WordPress плагины будут загружены
 	 *
 	 * @throws \Exception
 	 * @since  1.0.0
@@ -193,7 +191,7 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 		} else {
 			$pid = 0;
 		}
-		$action_column_get_thumbnails = apply_filters( 'wapt/get-thumbnails/action', "apt_get_thumbnail" );
+		$action_column_get_thumbnails = apply_filters( 'wapt/get-thumbnails/action', 'apt_get_thumbnail' );
 
 		$localize = [
 			'postid'                       => $pid,
@@ -232,7 +230,7 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 			$handler = 'apt-media-views';
 		}
 
-		$apt_media_iframe_src = ! empty( $post ) ? get_admin_url( get_current_blog_id(), 'media-upload.php?chromeless=1&post_id=' . $post->ID . '&tab=apttab' ) : "";
+		$apt_media_iframe_src = ! empty( $post ) ? get_admin_url( get_current_blog_id(), 'media-upload.php?chromeless=1&post_id=' . $post->ID . '&tab=apttab' ) : '';
 		wp_localize_script( $handler, 'apt_media_iframe', [ 'src' => esc_url( $apt_media_iframe_src ) ] );
 	}
 
@@ -251,7 +249,7 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 					try {
 						$redirect_url = '';
 						if ( class_exists( 'Wbcr_FactoryPages451' ) ) {
-							$redirect_url = admin_url( "admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1" );
+							$redirect_url = admin_url( 'admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1' );
 						}
 						if ( $redirect_url ) {
 							wp_safe_redirect( $redirect_url );
@@ -291,7 +289,7 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 
 		if ( $uploads['error'] ) {
 			echo '<div class="updated"><p>';
-			echo $uploads['error'];
+			echo esc_html( $uploads['error'] );
 
 			if ( function_exists( 'deactivate_plugins' ) ) {
 				deactivate_plugins( 'auto-post-thumbnail/auto-post-thumbnail.php', 'auto-post-thumbnail.php' );
@@ -302,15 +300,23 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 		}
 	}
 
+	/**
+	 * Show about notice
+	 *
+	 * @param array $notices Notices list
+	 * @param string $plugin_name Plugin name
+	 *
+	 * @return array
+	 */
 	public function show_about_notice( $notices, $plugin_name ) {
 		// Если экшен вызывал не этот плагин, то не выводим это уведомления
-		if ( $plugin_name != $this->getPluginName() ) {
+		if ( $plugin_name !== $this->getPluginName() ) {
 			return $notices;
 		}
 		// Получаем заголовок плагина
 		$plugin_title = $this->getPluginTitle();
 
-		$notice_text = '<p><b>' . $plugin_title . ':</b> ' . sprintf( __( "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on our website.", 'apt' ), 'https://cm-wp.com/auto-featured-image-from-title/' ) . "</p>";
+		$notice_text = '<p><b>' . $plugin_title . ':</b> ' . sprintf( __( "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on our website.", 'apt' ), 'https://cm-wp.com/auto-featured-image-from-title/' ) . '</p>';
 		$notices[]   = [
 			'id'              => 'apt_show_about_370',
 			//error, success, warning
@@ -337,7 +343,7 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 	public function add_image_column( $columns ) {
 		$pro = $this->is_premium() ? '' : ' <sup class="wapt-sup-pro">(PRO)<sup>';
 
-		$new_columns = [ 'apt-image' => __( 'Image', 'apt' ) . $pro, ];
+		$new_columns = [ 'apt-image' => __( 'Image', 'apt' ) . $pro ];
 
 		return array_slice( $columns, 0, $this->numberOfColumn ) + $new_columns + array_slice( $columns, $this->numberOfColumn );
 	}
@@ -349,10 +355,9 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 	 * @param int $post_id
 	 */
 	public function fill_image_column( $colname, $post_id ) {
-		if ( $colname === 'apt-image' ) {
+		if ( 'apt-image' === $colname ) {
 			$thumb_id = get_post_thumbnail_id( $post_id );
-			//$this->nonce = wp_create_nonce( 'set_post_thumbnail-' . $post_id );
-			echo $this->apt->apt_getThumbHtml( $post_id, $thumb_id );
+			echo $this->apt->apt_getThumbHtml( $post_id, $thumb_id ); // phpcs:ignore
 		}
 	}
 
@@ -364,18 +369,17 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 	 * @return array
 	 */
 	public function addTab( $tabs ) {
-		$tabs['apttab'] = __( "Auto Featured Image", "apt" );
+		$tabs['apttab'] = __( 'Auto Featured Image', 'apt' );
 
 		return ( $tabs );
 	}
 
 	/**
 	 * Обработчик вывода во вкладку
-	 *
 	 */
 	public function aptTabHandle() {
 		// wp_iframe() adds css for "media" when callback function has "media_" as prefix
-		wp_iframe( [ $this->apt, "media_AptTabContent" ] );
+		wp_iframe( [ $this->apt, 'media_AptTabContent' ] );
 	}
 
 	/**
@@ -423,7 +427,6 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 
 	/**
 	 * Admin notice after bulk action
-	 *
 	 */
 	public function apt_bulk_action_admin_notice() {
 		if ( empty( $_GET['apt_bulk_action'] ) ) {
@@ -432,36 +435,32 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 
 		$data = intval( $_GET['apt_bulk_action'] );
 		$msg  = __( 'Processed posts: ', 'apt' ) . $data;
-		echo '<div id="message" class="updated"><p>' . $msg . '</p></div>';
+		echo '<div id="message" class="updated"><p>' . wp_kses_post( $msg ) . '</p></div>';
 	}
 
 	/**
 	 * Admin notice
-	 *
 	 */
 	public function update_admin_notice() {
 		if ( defined( 'WAPTP_PLUGIN_VERSION' ) && str_replace( '.', '', WAPTP_PLUGIN_VERSION ) < 130 ) {
 			$msg = __( 'To use premium features, update the <b>Auto Featured Image Premium</b> plugin!', 'apt' );
-			echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . $msg . '</p></div>';
+			echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . wp_kses_post( $msg ) . '</p></div>';
 		}
 	}
 
 	/**
 	 * Add filter on the Posts list tables.
-	 *
-	 * @param $post_type string
-	 * @param $witch string
 	 */
 	public function add_posts_filters() {
 		$screen = get_current_screen();
 
-		if ( ! empty( $screen ) && "post" == $screen->post_type ) {
+		if ( ! empty( $screen ) && 'post' === $screen->post_type ) {
 			$apt_is_image = false;
 			if ( isset( $_GET['apt_is_image'] ) ) {
 				$apt_is_image = absint( $_GET['apt_is_image'] );
 			}
 
-			echo '<select name="apt_is_image">' . '<option value="-1">' . __( 'Featured Image', 'apt' ) . '</option>' . '<option value="1" ' . selected( 1, $apt_is_image, 0 ) . '>' . __( 'With image', 'apt' ) . '</option>' . '<option value="0" ' . selected( 0, $apt_is_image, 0 ) . '>' . __( 'Without image', 'apt' ) . '</option>' . '</select>';
+			echo '<select name="apt_is_image"><option value="-1">' . esc_html__( 'Featured Image', 'apt' ) . '</option><option value="1" ' . selected( 1, $apt_is_image, 0 ) . '>' . esc_html__( 'With image', 'apt' ) . '</option><option value="0" ' . selected( 0, $apt_is_image, 0 ) . '>' . esc_html__( 'Without image', 'apt' ) . '</option></select>';
 		}
 	}
 
@@ -469,7 +468,6 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 	 * Filter the Posts list tables.
 	 *
 	 * @param $query \WP_Query
-	 *
 	 */
 	public function posts_filter( $query ) {
 		if ( ! is_admin() ) {
@@ -477,9 +475,9 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 		} // выходим если не админка
 
 		// убедимся что мы на нужной странице админки
-		require_once( ABSPATH . 'wp-admin/includes/screen.php' );
+		require_once ABSPATH . 'wp-admin/includes/screen.php';
 		$cs = get_current_screen();
-		if ( empty( $cs->post_type ) || $cs->post_type != 'post' || $cs->id != 'edit-post' ) {
+		if ( empty( $cs->post_type ) || 'post' !== $cs->post_type || 'edit-post' !== $cs->id ) {
 			return;
 		}
 
@@ -489,19 +487,26 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 			} else {
 				$compare = 'NOT EXISTS';
 			}
-			$query->set( 'meta_query', [ [ 'key' => '_thumbnail_id', 'compare' => $compare ] ] );
+			$query->set( 'meta_query', [
+                [
+                'key' => '_thumbnail_id',
+                'compare' => $compare,
+				],
+			] );
 		}
 	}
 
 	/**
 	 * Add filter on the Posts list tables.
-	 *
 	 */
 	public function add_filter_link( $views ) {
 		$query = $this->apt->get_posts_query( false, 'post', 'publish' );
 		$posts = $query->post_count;
 
-		$q                   = add_query_arg( [ 'apt_is_image' => '0', 'post_type' => 'post' ], 'edit.php' );
+		$q                   = add_query_arg( [
+            'apt_is_image' => '0',
+            'post_type' => 'post',
+		], 'edit.php' );
 		$views['apt_filter'] = '<a href="' . $q . '">' . __( 'Without featured image', 'apt' ) . '</a> (' . $posts . ')';
 		unset( $my );
 
@@ -516,7 +521,7 @@ class WAPT_Plugin extends Wbcr_Factory452_Plugin {
 	 * @return array
 	 */
 	public function plugin_action_link( $links ) {
-		$link_generate = '<a href="' . esc_url( $this->getPluginPageUrl( $this->getPrefix() . "generate" ) ) . '">' . esc_html__( 'Generate', 'apt' ) . '</a>';
+		$link_generate = '<a href="' . esc_url( $this->getPluginPageUrl( $this->getPrefix() . 'generate' ) ) . '">' . esc_html__( 'Generate', 'apt' ) . '</a>';
 		array_unshift( $links, $link_generate );
 
 		return $links;
