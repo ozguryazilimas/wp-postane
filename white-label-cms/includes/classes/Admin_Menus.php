@@ -9,13 +9,14 @@ class WLCMS_Admin_Menus
     private $admin_bar_menu_setting = false;
     private $submenu_placeholder = '_wlcms_';
     private $wlcms_admin_bar_menus_option = 'wlcms_admin_bar_menus';
+    private $hide_woo_home = false;
 
     public function __construct()
     {
         add_action('init', array($this, 'set_wlcms_admin'), 10);
         add_action('admin_init', array($this, 'admin_init'));
         add_action('wlcms_save_addtional_settings', array($this, 'save'), 12, 1);
-        add_action('admin_init', array($this, 'rebuild_user_admin_menu'), 9999999); // rebuild sidebar menu
+        add_action('admin_menu', array($this, 'rebuild_user_admin_menu'), 9999999); // rebuild sidebar menu
         add_action('wp_before_admin_bar_render', array($this, 'init_admin_bar_menu'), 9999999); // setup admin bar menu
     }
 
@@ -302,8 +303,9 @@ class WLCMS_Admin_Menus
                 $main_menu = $submenu_list[0];
                 $main_submenu = $submenu_list[1];
                 $this->remove_submenu_page($main_menu, $main_submenu);
-
             }
+            $this->fix_woocommerce();
+            $this->fix_yoast($setting_admin_menus['sub']);
         }
     }
 
@@ -367,7 +369,10 @@ class WLCMS_Admin_Menus
             $submenu_item = sanitize_title($submenu_item);
 
             //Patch whitelist
-            if( in_array($submenu_slug, array('wc-admin'))) continue;
+            if( in_array($submenu_slug, array('wc-admin'))) {
+                $this->hide_woo_home = true;
+                continue;
+            }
 
             if ($submenu_slug == $submenu_item) {
                 unset($submenu[$menu_slug][$i]);
@@ -376,6 +381,48 @@ class WLCMS_Admin_Menus
         }
 
         return false;
+    }
+
+    public function fix_woocommerce()
+    {
+        global $submenu;
+        
+        if (!isset($submenu) || !$this->hide_woo_home) {
+            return false;
+        }
+
+        if (!isset($submenu['woocommerce'])) {
+            return false;
+        }
+
+        $home = $submenu['woocommerce'][0];
+        $home[1] = 'manage_woocommerce,vum';
+        unset($submenu['woocommerce'][0]);
+        $count = count($submenu['woocommerce']);
+
+        if($count == 0) {
+            wlcms_set_hidden_css('li.toplevel_page_woocommerce');
+        }
+
+        $submenu['woocommerce'] = array_values($submenu['woocommerce']);
+        $submenu['woocommerce'][$count] = $home;
+        
+    }
+    
+    public function fix_yoast($sub)
+    {
+        global $menu;
+
+        if(array_search('wpseo_dashboard_wlcms_wpseo_workouts', $sub) === false) {
+            return;
+        }
+        
+        foreach($menu as $key => $item) {
+            if($item[2] == 'wpseo_workouts') {
+                unset($menu[$key]);
+                break;
+            }
+        }
     }
 
     public function init_admin_bar_menu()

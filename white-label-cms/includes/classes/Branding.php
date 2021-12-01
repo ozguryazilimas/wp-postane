@@ -225,6 +225,11 @@ class WLCMS_Branding extends WLCMS_Previewable
         }
 
         if (empty($footer_main_text)) {
+            
+            if (wlcms_field_setting('hide_wordpress_logo_and_links')) {
+                return '';
+            }
+            
             return $original_text;
         }
 

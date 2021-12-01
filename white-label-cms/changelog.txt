@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 2.2.4 =
+* Fixed javascript error reported by @davidbawiec
+
 = 2.2.3 =
 * Fixed Dashboard RSS feed missing quotation marks reported by @carterfromsl
 * Changing WordPress Logo for Gutenberg fullscreen mode close button reported by @techiechic
