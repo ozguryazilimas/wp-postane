@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 5.8
-Stable tag: 5.27.7
+Stable tag: 5.27.8
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -124,6 +124,8 @@ To add to post content, use the shortcode:
 
 `[yarpp]` to show content related to the current post. You may use more than one YARPP shortcode in a given post or template.
 
+All the parameters accepted by `yarpp_related()` (see below) can also be used in the shortcode. Here are some examples...
+
 If you know the reference Post ID that you want to show content related to, use:
 
 `[yarpp reference_id=123]` to show content related to post 123
@@ -141,6 +143,26 @@ To specify maximum number of posts to show, use the "limit" attribute like so:
 To only show recent posts, use the "recent" attribute (provide it with a number, a space, and then either "day", "week" or "month")
 
 `[yarpp recent="6 month"]`
+
+To show another post type, use the "post_type" parameter.
+
+`
+[yarpp post_type="page"]
+`
+
+If you need to provide multiple values (eg posts and pages, or a list of categorires of posts to exlude), separate them with a comma but no space.
+`
+[yarpp post_type="post,page"] - include both posts and pages in results
+[yarpp exclude="1,2,3"] - exclude posts with categories with IDs 1,2 and 3
+`
+
+To adjust the weights and taxonomy requirements, provide the value as JSON (using the same structure as for `yarpp_related()` below). Eg
+
+`
+[yarpp weight='{"body":1}'] - only consider body content
+[yarpp weight='{"body":2,"title":2,"tax":{"category":0, "post_tag":0}}'] - give extra weight to bodies and titles, but none to categories
+[yarpp require_tax='{"category": 2, "post_tag": 0}'] - require at least one category in common
+`
 
 To add YARPP shortcode to your theme files (eg. single.php), use:
 
@@ -539,6 +561,11 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+
+= 5.27.8 (01-December-2021) =
+* New: `[yarpp]` shortcode supports all the same parameters as `yarpp_related()`. [See the updated documentation.](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
+* Bugfix: Apply the additional CSS class(es) defined in YARPP Advanced Block settings
+
 = 5.27.7 (29-October-2021) =
 * Enhancement: CSS improvements for better cross-theme compatibility
 * Documentation: [Available YARPP filters](https://support.shareaholic.com/hc/en-us/articles/4408775687060)
@@ -1444,5 +1471,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.27.7 =
+= 5.27.8 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!

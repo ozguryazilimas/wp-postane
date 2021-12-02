@@ -1119,7 +1119,7 @@ class YARPP {
 		$include_post_type = yarpp_get_option( 'include_post_type' );
 		$include_post_type = wp_parse_list( $include_post_type );
 		if ( isset( $args['post_type'] ) ) {
-			$post_types = (array) $args['post_type'];
+			$post_types = wp_parse_list( $args['post_type'] );
 		} elseif ( ! $this->get_option( 'cross_relate' ) ) {
 			$current_post_type = get_post_type( $reference_ID );
 			$post_types        = array( $current_post_type );
@@ -1431,6 +1431,15 @@ class YARPP {
 		if ( $this->do_not_query_for_related() ) {
 			return false;
 		}
+		$this->parse_json_arg($args, 'weight');
+		$this->parse_json_arg($args, 'require_tax');
+		// Custom templates require .php extension.
+		if ( isset( $args['template'] ) && $args['template'] ) {
+			// Normalize parameter.
+			if ( ( strpos( $args['template'], 'yarpp-template-' ) === 0 ) && ( strpos( $args['template'], '.php' ) === false ) ) {
+				$args['template'] .= '.php';
+			}
+		}
 		wp_register_style( 'yarppRelatedCss', plugins_url( '/style/related.css', YARPP_MAIN_FILE ), array(), YARPP_VERSION );
 		/**
 		 * Filter to allow dequeing of related.css.
@@ -1527,6 +1536,29 @@ class YARPP {
 		}
 		return $output;
 	}
+
+	/**
+	 * Handles in case JSON was provided for this argument.
+	 *
+	 * If the argument specified is a string, it is expected to be a string of JSON, otherwise an error is logged.
+	 *
+	 * Nothing is returned, modifies the $args passed in.
+	 *
+	 * @param array  $args
+	 * @param string $key
+	 *
+	 * @return null but modifies the $args array provided
+	 */
+	protected function parse_json_arg( &$args, $key ) {
+		if ( isset( $args[$key] ) && ! empty( $args[$key] ) && is_string($args[$key]) ) {
+			$decoded_json = json_decode( $args[$key], true );
+			if ( json_last_error() === JSON_ERROR_NONE ) {
+				$args[$key] = $decoded_json;
+			} else {
+				error_log(sprintf('Error parsing JSON in YARPP argument "%s". JSON was "%s" and JSON error was "%s"', $key, $args[$key], function_exists('json_last_error_msg') ? json_last_error_msg() : json_last_error()));
+			}
+		}
+	}
 	/**
 	 * Returns the YARPP template html data.
 	 *
@@ -1545,6 +1577,7 @@ class YARPP {
 			'domain',
 			'template',
 			'promote_yarpp',
+			'extra_css_class',
 		);
 
 		extract( $this->parse_args( $args, $options ) );
@@ -1583,6 +1616,11 @@ class YARPP {
 		} else {
 			// fallback to default template ("list")
 			$output .= ' yarpp-template-list';
+		}
+
+		// Add any extra CSS classes specified (blocks)
+		if ( isset( $extra_css_class ) && $extra_css_class ) {
+			$output .= " $extra_css_class";
 		}
 
 		$output .= "'>\n";
@@ -1797,6 +1835,17 @@ class YARPP {
 		return $output;
 	}
 
+	/**
+	 * Create an array whose keys come from $options, and whose values are either their values in $args or the option's
+	 * default value.
+	 * Any keys from $args that aren't in $options are ignored and not included in the returned result.
+	 *
+	 * @param array $args inputted arguments
+	 * @param array $options names of arguments to consider
+	 *
+	 * @return array with all the keys from the list of $options, with their values
+	 * from $args or the options' default values.
+	 */
 	public function parse_args( $args, $options ) {
 		$options_with_rss_variants = array(
 			'limit',

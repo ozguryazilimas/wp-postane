@@ -64,7 +64,7 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 				$reference_post = get_post( (int) $block_attributes['reference_id']);
 				$post_id        = $reference_post->ID;
 			}
-			// Checks if the block is been used on the admin interface
+			// Checks if the block is being used in the admin interface
 			if ( isset( $block_attributes['yarpp_is_admin'] ) ) {
 				$yarpp_is_admin = $block_attributes['yarpp_is_admin'];
 			}
@@ -79,6 +79,9 @@ if ( ! class_exists( 'YARPP_Block', false ) && function_exists( 'register_block_
 			}
 			if ( isset( $block_attributes['domain'] ) ) {
 				$yarpp_args['domain'] = $block_attributes['domain'];
+			}
+			if ( isset( $block_attributes['className'] ) ) {
+				$yarpp_args['extra_css_class'] = $block_attributes['className'];
 			}
 
 			$output = '';
