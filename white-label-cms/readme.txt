@@ -9,7 +9,7 @@ Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
 Tested up to: 5.8
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -66,10 +66,8 @@ There is so much that you can do with White Label CMS, but we want the experienc
 
 == Changelog ==
 
-= 2.2.5 =
-* Fixed WooCommerce Home issue
-* Fixed Yoast Menu issue reported by @davidbawiec
-* Fixed the hiding of default footer link when "Hide WordPress Logo and Links" enabled
+= 2.2.6 =
+* Fixed WooCommerce Analytics reported by @evaldash
 
 == Frequently Asked Questions ==
 = Who is this plugin for?=

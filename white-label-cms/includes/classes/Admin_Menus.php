@@ -304,6 +304,7 @@ class WLCMS_Admin_Menus
                 $main_submenu = $submenu_list[1];
                 $this->remove_submenu_page($main_menu, $main_submenu);
             }
+            
             $this->fix_woocommerce();
             $this->fix_yoast($setting_admin_menus['sub']);
         }
@@ -396,17 +397,16 @@ class WLCMS_Admin_Menus
         }
 
         $home = $submenu['woocommerce'][0];
-        $home[1] = 'manage_woocommerce,vum';
+        $home[1] = 'manage_woocommerce';
         unset($submenu['woocommerce'][0]);
         $count = count($submenu['woocommerce']);
-
+        
         if($count == 0) {
             wlcms_set_hidden_css('li.toplevel_page_woocommerce');
         }
 
         $submenu['woocommerce'] = array_values($submenu['woocommerce']);
         $submenu['woocommerce'][$count] = $home;
-        
     }
     
     public function fix_yoast($sub)
