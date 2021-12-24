@@ -99,8 +99,9 @@ function relevanssi_show_matches( $post ) {
 	 * filter lets you modify the breakdown before it is added to the excerpt.
 	 *
 	 * @param string $result The breakdown.
+	 * @param object $post   The post object
 	 */
-	return apply_filters( 'relevanssi_show_matches', $result );
+	return apply_filters( 'relevanssi_show_matches', $result, $post );
 }
 
 /**
@@ -1261,6 +1262,10 @@ function relevanssi_filter_custom_fields( $values, $field ) {
 	);
 	if ( isset( $unwanted_custom_fields[ $field ] ) ) {
 		$values = array();
+	}
+
+	if ( ! $values ) {
+		return $values;
 	}
 
 	$values = array_map(

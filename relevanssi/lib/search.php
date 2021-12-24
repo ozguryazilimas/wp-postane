@@ -321,23 +321,21 @@ function relevanssi_search( $args ) {
 			}
 		}
 
-		if ( $no_matches ) {
-			if ( $search_again ) {
-				// No hits even with fuzzy search!
-				$search_again = false;
-			} else {
-				if ( 'sometimes' === $fuzzy ) {
-					$search_again = true;
-				}
-			}
-		} else {
+		if ( $search_again ) {
 			$search_again = false;
+		} elseif ( $no_matches && ! $search_again && 'sometimes' === $fuzzy ) {
+			$search_again = true;
 		}
+
 		$params = array(
-			'no_matches'   => $no_matches,
-			'doc_weight'   => $doc_weight,
-			'terms'        => $terms,
-			'search_again' => $search_again,
+			'doc_weight'         => $doc_weight,
+			'no_matches'         => $no_matches,
+			'operator'           => $operator,
+			'phrase_queries'     => $phrase_queries,
+			'query_join'         => $query_join,
+			'query_restrictions' => $query_restrictions,
+			'search_again'       => $search_again,
+			'terms'              => $terms,
 		);
 		/**
 		 * Filters the parameters for fallback search.
@@ -348,11 +346,15 @@ function relevanssi_search( $args ) {
 		 *
 		 * @param array The search parameters.
 		 */
-		$params       = apply_filters( 'relevanssi_search_again', $params );
-		$search_again = $params['search_again'];
-		$terms        = $params['terms'];
-		$doc_weight   = $params['doc_weight'];
-		$no_matches   = $params['no_matches'];
+		$params             = apply_filters( 'relevanssi_search_again', $params );
+		$doc_weight         = $params['doc_weight'];
+		$no_matches         = $params['no_matches'];
+		$operator           = $params['operator'];
+		$phrase_queries     = $params['phrase_queries'];
+		$query_join         = $params['query_join'];
+		$query_restrictions = $params['query_restrictions'];
+		$search_again       = $params['search_again'];
+		$terms              = $params['terms'];
 	} while ( $search_again );
 
 	if ( ! $remove_stopwords ) {
@@ -914,6 +916,7 @@ function relevanssi_compile_search_args( $query, $q ) {
 	 * @param string The default relation, default 'AND'.
 	 */
 	$tax_query_relation = apply_filters( 'relevanssi_default_tax_query_relation', 'AND' );
+	$terms_found        = false;
 	if ( isset( $query->tax_query ) && empty( $query->tax_query->queries ) ) {
 		// Tax query is empty, let's get rid of it.
 		$query->tax_query = null;
@@ -935,14 +938,21 @@ function relevanssi_compile_search_args( $query, $q ) {
 			}
 			if ( is_string( $type ) && 'queries' === $type ) {
 				foreach ( $item as $tax_query_row ) {
+					if ( isset( $tax_query_row['terms'] ) ) {
+						$terms_found = true;
+					}
 					$tax_query[] = $tax_query_row;
 				}
 			}
 		}
-	} else {
+	}
+	if ( ! $terms_found ) {
 		$cat = false;
 		if ( isset( $query->query_vars['cats'] ) ) {
 			$cat = $query->query_vars['cats'];
+			if ( is_array( $cat ) ) {
+				$cat = implode( ',', $cat );
+			}
 		}
 		if ( empty( $cat ) ) {
 			$cat = get_option( 'relevanssi_cat' );
@@ -951,8 +961,9 @@ function relevanssi_compile_search_args( $query, $q ) {
 			$cat         = explode( ',', $cat );
 			$tax_query[] = array(
 				'taxonomy' => 'category',
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => $cat,
+				'operator' => 'IN',
 			);
 		}
 		$excat = get_option( 'relevanssi_excat' );
@@ -973,6 +984,9 @@ function relevanssi_compile_search_args( $query, $q ) {
 		$tag = false;
 		if ( ! empty( $query->query_vars['tags'] ) ) {
 			$tag = $query->query_vars['tags'];
+			if ( is_array( $tag ) ) {
+				$tag = implode( ',', $tag );
+			}
 			if ( false !== strpos( $tag, '+' ) ) {
 				$tag      = explode( '+', $tag );
 				$operator = 'AND';
