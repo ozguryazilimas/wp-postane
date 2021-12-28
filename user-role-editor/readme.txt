@@ -5,7 +5,7 @@ Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.4
 Tested up to: 5.8.2
 Stable tag: 4.61
-Requires PHP: 7.4
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
