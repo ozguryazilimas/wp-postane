@@ -34,7 +34,7 @@ require_once( URE_PLUGIN_DIR.'includes/classes/base-lib.php' );
 require_once( URE_PLUGIN_DIR.'includes/classes/lib.php' );
 
 // check PHP version
-$ure_required_php_version = '7.4';
+$ure_required_php_version = '7.3';
 $exit_msg = 'User Role Editor requires PHP '. $ure_required_php_version .' or newer. '. 
             '<a href="http://wordpress.org/about/requirements/">Please update!</a>';
 URE_Lib::check_version( PHP_VERSION, $ure_required_php_version, $exit_msg, __FILE__ );
