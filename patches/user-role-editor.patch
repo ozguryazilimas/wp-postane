@@ -11,3 +11,16 @@ index 820485fa..60dd4974 100644
  License: GPLv2 or later
  License URI: http://www.gnu.org/licenses/gpl-2.0.html
  
+diff --git a/user-role-editor/user-role-editor.php b/user-role-editor/user-role-editor.php
+index be0cae27..3d6ab63d 100644
+--- a/user-role-editor/user-role-editor.php
++++ b/user-role-editor/user-role-editor.php
+@@ -34,7 +34,7 @@ require_once( URE_PLUGIN_DIR.'includes/classes/base-lib.php' );
+ require_once( URE_PLUGIN_DIR.'includes/classes/lib.php' );
+ 
+ // check PHP version
+-$ure_required_php_version = '7.4';
++$ure_required_php_version = '7.3';
+ $exit_msg = 'User Role Editor requires PHP '. $ure_required_php_version .' or newer. '. 
+             '<a href="http://wordpress.org/about/requirements/">Please update!</a>';
+ URE_Lib::check_version( PHP_VERSION, $ure_required_php_version, $exit_msg, __FILE__ );
