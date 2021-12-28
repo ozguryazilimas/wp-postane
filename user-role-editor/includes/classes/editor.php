@@ -5,7 +5,7 @@
  * @package    User-Role-Editor
  * @subpackage Editor
  * @author     Vladimir Garagulya <support@role-editor.com>
- * @copyright  Copyright (c) 2010 - 2019, Vladimir Garagulia
+ * @copyright  Copyright (c) 2010 - 2021, Vladimir Garagulia
  **/
 class URE_Editor {
 

@@ -798,7 +798,8 @@ class User_Role_Editor {
             esc_html__('If any plugins (such as WooCommerce, S2Member and many others) have changed user roles and capabilities during installation, all those changes will be LOST!', 'user-role-editor') .'<br>'.
             esc_html__('For more information on how to undo undesired changes and restore plugin capabilities go to', 'user-role-editor') .'<br>'.
             '<a href="http://role-editor.com/how-to-restore-deleted-wordpress-user-roles/">http://role-editor.com/how-to-restore-deleted-wordpress-user-roles/</a>' .'<br><br>'.
-            esc_html__('Continue?', 'user-role-editor')
+            esc_html__('Continue?', 'user-role-editor'),
+            'reset_roles_secure_text' => URE_Tools::RESET_ROLES_SECURE_TEXT
         ));
                 
         do_action('ure_load_js_settings');

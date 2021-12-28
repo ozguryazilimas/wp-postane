@@ -31,7 +31,7 @@ class URE_Ajax_Processor {
     
     protected function get_action() {
         $action = $this->lib->get_request_var( 'sub_action', 'post' );
-        if (empty($action)) {
+        if ( empty( $action ) ) {
             $action = $this->lib->get_request_var( 'sub_action', 'get' );
         }
                 
@@ -42,7 +42,7 @@ class URE_Ajax_Processor {
     
     protected function get_required_cap() {
         
-        if ($this->action=='grant_roles' || $this->action=='get_user_roles') {
+        if ( $this->action=='grant_roles' || $this->action=='get_user_roles' ) {
             $cap = 'promote_users';
         } else {
             $cap = URE_Own_Capabilities::get_key_capability();
@@ -55,8 +55,8 @@ class URE_Ajax_Processor {
     
     protected function valid_nonce() {
         
-        if ( !isset($_REQUEST['wp_nonce']) || !wp_verify_nonce( $_REQUEST['wp_nonce'], 'user-role-editor' ) ) {
-            echo json_encode(array('result'=>'error', 'message'=>'URE: Wrong or expired request'));
+        if ( !isset( $_REQUEST['wp_nonce'] ) || !wp_verify_nonce( $_REQUEST['wp_nonce'], 'user-role-editor' ) ) {
+            echo json_encode( array('result'=>'error', 'message'=>'URE: Wrong or expired request') );
             return false;
         } else {
             return true;
@@ -89,7 +89,7 @@ class URE_Ajax_Processor {
             'role_id'=>$response['role_id'],  
             'role_name'=>$response['role_name'],
             'message'=>$response['message']
-                );
+            );
         
         return $answer;
     }
@@ -106,7 +106,7 @@ class URE_Ajax_Processor {
             'role_id'=>$response['role_id'],  
             'role_name'=>$response['role_name'],
             'message'=>$response['message']
-                );
+            );
         
         return $answer;
     }
@@ -177,7 +177,7 @@ class URE_Ajax_Processor {
             'message'=>$response['message'], 
             'role_id'=> $response['role_id'],
             'role_name'=>$response['role_name']
-                );
+            );
         
         return $answer;
     }
@@ -197,24 +197,29 @@ class URE_Ajax_Processor {
     protected function get_users_without_role() {
         
         $new_role = $this->lib->get_request_var( 'new_role', 'post' );
-        if (empty($new_role)) {
+        if ( empty( $new_role ) ) {
             $answer = array('result'=>'error', 'message'=>'Provide new role');
             return $answer;
         }
         
         $assign_role = $this->lib->get_assign_role();
-        if ($new_role==='no_rights') {
+        if ( $new_role==='no_rights') {
             $assign_role->create_no_rights_role();
         }        
         
         $wp_roles = wp_roles();        
-        if (!isset($wp_roles->roles[$new_role])) {
+        if ( !isset( $wp_roles->roles[$new_role] ) ) {
             $answer = array('result'=>'error', 'message'=>'Selected new role does not exist');
             return $answer;
         }
                 
         $users = $assign_role->get_users_without_role();        
-        $answer = array( 'result'=>'success', 'users'=>$users, 'new_role'=>$new_role, 'message'=>'success' );
+        $answer = array(
+            'result'=>'success', 
+            'users'=>$users, 
+            'new_role'=>$new_role, 
+            'message'=>'success'
+            );
         
         return $answer;
     }
@@ -244,19 +249,19 @@ class URE_Ajax_Processor {
     protected function get_role_caps() {
         
         $role = $this->lib->get_request_var('role', 'post' );
-        if (empty($role)) {
+        if ( empty( $role ) ) {
             $answer = array('result'=>'error', 'message'=>'Provide role ID');
             return $answer;
         }
         
         $wp_roles = wp_roles();
-        if (!isset($wp_roles->roles[$role])) {
+        if ( !isset( $wp_roles->roles[$role] ) ) {
             $answer = array('result'=>'error', 'message'=>'Requested role does not exist');
             return $answer;
         }
         
         $active_items = URE_Role_Additional_Options::get_active_items();
-        if (isset($active_items[$role])) {
+        if ( isset( $active_items[$role] ) ) {
             $role_options = $active_items[$role];
         } else {
             $role_options = array();
@@ -299,7 +304,7 @@ class URE_Ajax_Processor {
     
     protected function _dispatch() {
         
-        switch ($this->action) {
+        switch ( $this->action ) {
             case 'update_role':
                 $answer = $this->update_role();
                 break;

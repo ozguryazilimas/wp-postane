@@ -89,6 +89,13 @@ jQuery(function() {
 });
 
 
+if (typeof ure_current_role==='undefined') {
+    var ure_current_role = '';
+}
+if (typeof ure_current_role_name==='undefined') {
+    var ure_current_role_name = '';
+}
+
 // Main User Role Editor object
 var ure_main = {
     selected_group: 'all', 
