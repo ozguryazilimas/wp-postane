@@ -1,5 +1,5 @@
 <?php
-namespace WBCR\Factory_Templates_105;
+namespace WBCR\Factory_Templates_106;
 
 // Exit if accessed directly
 if( !defined('ABSPATH') ) {

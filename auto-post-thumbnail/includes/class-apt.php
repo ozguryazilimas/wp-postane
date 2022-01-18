@@ -1236,7 +1236,7 @@ class AutoPostThumbnails {
 	 * @return Image
 	 */
 	public static function generate_image_with_text( $text, $pathToSave = '', $format = 'jpg', $width = 0, $height = 0 ) {
-		$font       = WAPT_PLUGIN_DIR . '/fonts/Arial.ttf';
+		$font       = WAPT_PLUGIN_DIR . '/fonts/arial.ttf';
 		$font_size  = \WAPT_Plugin::app()->getPopulateOption( 'font-size', 25 );
 		$font_color = \WAPT_Plugin::app()->getPopulateOption( 'font-color', '#ffffff' );
 		if ( $width === 0 ) {

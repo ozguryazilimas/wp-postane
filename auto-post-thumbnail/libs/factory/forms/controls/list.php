@@ -21,9 +21,9 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms449_ListControl') ) {
+	if( !class_exists('Wbcr_FactoryForms450_ListControl') ) {
 
-		class Wbcr_FactoryForms449_ListControl extends Wbcr_FactoryForms449_Control {
+		class Wbcr_FactoryForms450_ListControl extends Wbcr_FactoryForms450_Control {
 
 			public $type = 'list';
 
@@ -93,7 +93,7 @@
 							'url': '<?php echo $data['url'] ?>',
 							'data': <?php echo json_encode( $data['data'] ) ?>,
 							'selected': <?php echo json_encode( $value ) ?>,
-							'emptyList': '<?php echo $this->getOption('empty', __('The list is empty.', 'wbcr_factory_forms_449') ) ?>'
+							'emptyList': '<?php echo $this->getOption('empty', __('The list is empty.', 'wbcr_factory_forms_450') ) ?>'
 						};
 					</script>
 					<?php
@@ -136,7 +136,7 @@
 					: array();
 
 				$is_empty = $this->isAjax() || empty($items);
-				$emptyList = $this->getOption('empty', __('The list is empty.', 'wbcr_factory_forms_449'));
+				$emptyList = $this->getOption('empty', __('The list is empty.', 'wbcr_factory_forms_450'));
 
 				if( $is_empty ) {
 					$this->addCssClass('factory-empty');

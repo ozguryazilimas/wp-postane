@@ -4,7 +4,7 @@ Tags: post thumbnails, featured image, elementor, thumbnails, featured image fro
 Requires at least: 4.8
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 3.9.8
+Stable tag: 3.9.9
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,9 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.9.9 =
+* FIX: Font for title generation
 
 = 3.9.8 =
 * Some fixes

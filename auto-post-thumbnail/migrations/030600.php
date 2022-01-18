@@ -3,7 +3,7 @@
 /**
  * Обновление параметра для редиректа на страницу About после обновления плагина
  */
-class WAPTUpdate030600 extends Wbcr_Factory452_Update {
+class WAPTUpdate030600 extends Wbcr_Factory453_Update {
 
 	/**
 	 * Do migration

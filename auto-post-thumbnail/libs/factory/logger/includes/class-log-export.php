@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Logger_117;
+namespace WBCR\Factory_Logger_118;
 
 /**
  * Prepares export files, ZIPs them and allows to download the package.

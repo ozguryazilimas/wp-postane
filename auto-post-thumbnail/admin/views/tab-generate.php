@@ -8,7 +8,7 @@ $log   = $data['log'] ?? [];
 ?>
 
 <div class="wrap" id="wapt-generate-page">
-	<div class="factory-bootstrap-453 factory-fontawesome-000">
+	<div class="factory-bootstrap-454 factory-fontawesome-000">
 		<div class="row wapt-statistic-row">
 			<div class="wapt-generate-statistic">
 				<div class="wapt-chart-container">
