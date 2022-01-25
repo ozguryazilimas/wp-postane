@@ -1,6 +1,18 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.61.1] 25.01.2022 =
+* Update: Marked as compatible with WordPress 5.9.
+* Update: PHP 7.3 is marked as required.
+* Update: If installed PHP/WordPress version is lower than required one, script termination ( wp_die() ) was replaced with notice-warning admin notice output.
+ 
+= [4.61] 28.12.2021 =
+* Update: WordPress 4.4 is marked as required.
+* Update: PHP 7.4 is marked as required.
+* Update: "Settings->User Role Editor->Tools->Reset" button is additionally protected from the unintended/accidental usage by text input field. Manual input of "Permanently delete all custom user roles and capabilities" text is required to enable the "Reset" button.
+* Update: Partial code review and refactoring according with WordPress & PHP coding standards.
+* Fix: "Users->selected user->Capabilities" page: 'select all' checkbox did not work.
+
 = [4.60.2] 20.09.2021 =
 * Update: Marked as compatible with WordPress 5.8.1
 * Fix: Multisite: URE_Editor::is_full_network_sync() returned FALSE, instead TRUE for the AJAX call, while call was made from the Network Admin (wp-admin/network/).
