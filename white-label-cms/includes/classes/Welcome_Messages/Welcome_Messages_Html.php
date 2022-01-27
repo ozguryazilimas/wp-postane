@@ -30,7 +30,7 @@ class Welcome_Messages_Html
 
     public function welcome_panel()
     {?>
-        <div id="welcome-panel<?php echo $this->key?>" data-welcome_key="<?php echo $this->key?>" class="welcome-panel wlcms-welcome-panel">
+        <div id="welcome-panel<?php echo $this->key?>" data-welcome_key="<?php echo $this->key?>" class="wlcms-welcome-panel">
             <?php
             if(isset($this->settings['dismissible'])):
             ?><a class="welcome-panel-close" href="#" aria-label="Dismiss the welcome panel">Dismiss</a>

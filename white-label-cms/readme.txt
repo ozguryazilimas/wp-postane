@@ -4,12 +4,12 @@ Contributors: VideoUserManuals
 Plugin Name: White Label CMS
 Plugin URI: https://www.videousermanuals.com/white-label-cms/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Tags: cms, custom, admin, branding, dashboard, administration, plugin, login, client, menu, navigation, appearance, menus, widgets, custom login, custom login logo, custom wp-login, login customizer, wp login
-Author URI: http://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
+Author URI: https://www.videousermanuals.com/?utm_campaign=wlcms&utm_medium=plugin&utm_source=readme-txt
 Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
-Tested up to: 5.8
-Stable tag: 2.2.6
+Tested up to: 5.9
+Stable tag: 2.2.7
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -66,8 +66,8 @@ There is so much that you can do with White Label CMS, but we want the experienc
 
 == Changelog ==
 
-= 2.2.6 =
-* Fixed WooCommerce Analytics reported by @evaldash
+= 2.2.7 =
+* Fixed Custom Welcome Dashboard Panel on WordPress 5.9
 
 == Frequently Asked Questions ==
 = Who is this plugin for?=

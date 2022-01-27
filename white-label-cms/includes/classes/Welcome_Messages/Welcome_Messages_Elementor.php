@@ -18,7 +18,7 @@ class Welcome_Messages_Elementor
         $has_dismissable = isset($this->settings['dismissible']);
         $is_show_title = isset($this->settings['page_id_elementor']) && isset($this->settings['show_title']);
         ?>
-        <div id="welcome-panel<?php echo $this->key?>" data-welcome_key="<?php echo $this->key?>" class="welcome-panel wlcms-welcome-panel" style="display:none">
+        <div id="welcome-panel<?php echo $this->key?>" data-welcome_key="<?php echo $this->key?>" class="wlcms-welcome-panel" style="display:none">
         <?php
         if($has_dismissable):
             ?><a class="welcome-panel-close" href="#" aria-label="Dismiss the welcome panel">Dismiss</a>

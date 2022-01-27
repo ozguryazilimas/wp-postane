@@ -66,7 +66,7 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-content > h2', 
             array(
                 'width' => '95%',
-                'padding' => '21px'
+                'padding' => '0 21px'
                 )
             );
         wlcms_set_css( '.wlcms-welcome-panel .wlcms-welcome-content', 
@@ -88,8 +88,40 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
                 )
             );
         
+        wlcms_set_css( '.wlcms-welcome-panel', array(
+                'position' => 'relative',
+                "border"=>"1px solid #c3c4c7",
+                "box-shadow"=>"0 1px 1px rgb(0 0 0 / 4%)",
+                "background"=>"#fff",
+                "font-size"=>"13px",
+                "line-height"=>"1.7",
+                "margin" => "16px 0"
+        ));
+
+        wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-close:before', array(
+            "background"=>"0 0",
+            "color"=>"#787c82",
+            "content"=>'"\f153"',
+            "display"=>"block",
+            "font"=>"normal 16px/20px dashicons",
+            "speak"=>"never",
+            "height"=>"20px",
+            "text-align"=>"center",
+            "width"=>"20px",
+            "-webkit-font-smoothing"=>"antialiased",
+            "-moz-osx-font-smoothing"=>"grayscale",
+            "position"=>"absolute",
+            "top"=>"8px",
+            "left"=>"0",
+            "transition"=>"all .1s ease-in-out",
+        ));
+
         wlcms_set_css( '.wlcms-welcome-panel, .wlcms-welcome-panel .welcome-panel-content', array(
-                'padding' => '0!important',
+            'padding' => '0!important',
+        ));
+
+        wlcms_set_css( '.wlcms-welcome-panel a', array(
+            "color"=>"#2271b1",
         ));
         wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-close', 
             array(
@@ -97,6 +129,13 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
                 'right' => '0!important',
                 'background' => 'white!important',
                 'z-index' => '1000',
+                "position"=>"absolute",
+                "top"=>"0",
+                "right"=>"0",
+                "padding"=>"10px 15px 10px 24px",
+                "font-size"=>"13px",
+                "line-height"=>"1.23076923",
+                "text-decoration"=>"none"
                 )
             );
     }

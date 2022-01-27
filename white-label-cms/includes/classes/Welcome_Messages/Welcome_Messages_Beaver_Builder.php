@@ -23,7 +23,7 @@ class Welcome_Messages_Beaver_Builder
     public function welcome_panel()
     {
         ?>
-        <div id="welcome-panel<?php echo $this->key?>" data-welcome_key="<?php echo $this->key?>" class="welcome-panel wlcms-welcome-panel" style="display:none">
+        <div id="welcome-panel<?php echo $this->key?>" data-welcome_key="<?php echo $this->key?>" class="wlcms-welcome-panel" style="display:none">
         <?php
         if(isset($this->settings['dismissible'])):
         ?><a class="welcome-panel-close" href="#" aria-label="Dismiss the welcome panel">Dismiss</a>

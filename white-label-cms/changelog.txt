@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 2.2.6 =
+* Fixed WooCommerce Analytics reported by @evaldash
+
 = 2.2.5 =
 * Fixed WooCommerce Home issue
 * Fixed Yoast Menu issue reported by @davidbawiec
