@@ -1,5 +1,9 @@
 == Changelog ==
 
+
+= 2.2.7 =
+* Fixed Custom Welcome Dashboard Panel on WordPress 5.9
+
 = 2.2.6 =
 * Fixed WooCommerce Analytics reported by @evaldash
 

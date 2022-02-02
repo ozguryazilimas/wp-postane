@@ -42,6 +42,10 @@ class WLCMS_Login extends WLCMS_Previewable
     public function scripts()
     {
 
+        if (isset($_GET['wlcms-action']) && $_GET['wlcms-action'] == 'preview' && !is_user_logged_in()) {
+            return;
+        }
+
         wp_print_scripts(array('jquery'));
 
         echo '<script>';
@@ -318,7 +322,7 @@ class WLCMS_Login extends WLCMS_Previewable
     }
 
     public function saving_preview_section()
-    {
+    { 
         $sections = array('wizard', 'settings');
 
         if (!isset($_REQUEST['form_section'])) {

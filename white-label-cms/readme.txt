@@ -9,7 +9,7 @@ Author:  Video User Manuals
 Requires at least: 3.3 
 Requires PHP: 5.4
 Tested up to: 5.9
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 
 Customise dashboard panels and branding, hide menus plus lots more.
 
@@ -66,8 +66,9 @@ There is so much that you can do with White Label CMS, but we want the experienc
 
 == Changelog ==
 
-= 2.2.7 =
-* Fixed Custom Welcome Dashboard Panel on WordPress 5.9
+
+= 2.2.8 =
+* Improved: Plugin security. Thanks to Erwan of WPScan
 
 == Frequently Asked Questions ==
 = Who is this plugin for?=
