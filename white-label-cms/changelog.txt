@@ -1,5 +1,7 @@
 == Changelog ==
 
+= 2.2.8 =
+* Improved: Plugin security. Thanks to Erwan of WPScan
 
 = 2.2.7 =
 * Fixed Custom Welcome Dashboard Panel on WordPress 5.9

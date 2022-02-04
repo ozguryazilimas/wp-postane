@@ -77,7 +77,9 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         wlcms_set_css( '.wlcms-welcome-panel .welcome-panel-content', 
             array(
                 'max-width' => 'none!important',
-                'margin-left' => '0!important'
+                'margin-left' => '0!important',
+                'justify-content' => 'flex-start',
+                'min-height' => 'auto'
                 )
             );
 

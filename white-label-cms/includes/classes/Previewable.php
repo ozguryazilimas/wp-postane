@@ -58,10 +58,22 @@ class WLCMS_Previewable
     public function get_settings($key)
     {
         // Prepend "_" placeholder if in preview mode to get the preview login settings
+        $key = $this->setting_key($key);
+
+        return wlcms_field_setting($key);
+    }
+
+    public function setting_key($key)
+    {
         if ($this->is_preview) {
             $key = $this->preview_setting_key_placeholder . $key;
         }
+        
+        return $key;
+    }
 
-        return wlcms_field_setting($key);
+    public function get_db_setting($key)
+    {
+        return wlcms_db_field_setting($this->setting_key($key));
     }
 }

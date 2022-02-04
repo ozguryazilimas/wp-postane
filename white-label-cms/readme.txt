@@ -67,8 +67,9 @@ There is so much that you can do with White Label CMS, but we want the experienc
 == Changelog ==
 
 
-= 2.2.8 =
-* Improved: Plugin security. Thanks to Erwan of WPScan
+= 2.2.9 =
+* Improved: Plugin security. Thanks to Krzysztof Zając and WPScan
+* Improved: Custom Dashboard for HTML wrapper justify-content
 
 == Frequently Asked Questions ==
 = Who is this plugin for?=

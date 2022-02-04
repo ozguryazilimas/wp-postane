@@ -8,8 +8,14 @@ if (!function_exists('wlcms_field_setting')) {
             }
         }
 
-        $value = wlcms()->Settings()->get($key, $default);
-        return $value;
+        return wlcms_db_field_setting($key, $default);
+    }
+}
+
+if (!function_exists('wlcms_db_field_setting')) {
+    function wlcms_db_field_setting($key = "", $default = false)
+    {
+        return wlcms()->Settings()->get($key, $default);
     }
 }
 
