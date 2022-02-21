@@ -115,7 +115,8 @@ $has_changes = false;
 $oyuncu_added = array();
 $oyuncu_could_not_add = array();
 
-foreach ($oyuncu_listesi_unique as $oyuncu) {
+foreach ($oyuncu_listesi_unique as $oyuncu_raw) {
+  $oyuncu = trim($oyuncu_raw);
   $oyuncu_index = yirmiiki_shortcode_json_key($oyuncu);
 
   if (!isset($json_liste[$oyuncu_index])) {
