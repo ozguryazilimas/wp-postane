@@ -116,7 +116,8 @@ $oyuncu_added = array();
 $oyuncu_could_not_add = array();
 
 foreach ($oyuncu_listesi_unique as $oyuncu_raw) {
-  $oyuncu = trim($oyuncu_raw);
+  // remove left right space and replace any space like char (non breaking space etc) with regular space
+  $oyuncu = preg_replace("/\s+/u", " ", trim($oyuncu_raw));
   $oyuncu_index = yirmiiki_shortcode_json_key($oyuncu);
 
   if (!isset($json_liste[$oyuncu_index])) {
