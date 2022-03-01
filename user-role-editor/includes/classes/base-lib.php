@@ -103,11 +103,11 @@ class URE_Base_Lib {
 
         if ( $message ) {
             if ( $error_style ) {
-                echo '<div id="message" class="error">';
+                echo '<div id="message" class="notice notice-warning is-dismissible">';
             } else {
-                echo '<div id="message" class="updated fade">';
+                echo '<div id="message" class="notice notice-success is-dismissible">';
             }
-            echo $message . '</div>';
+            echo '<p>'. $message . '</p></div>';
         }
     }
     // end of show_message()

@@ -38,7 +38,7 @@ class URE_User_Other_Roles {
             add_action( 'wpmu_activate_user', array($this, 'add_other_roles'), 10, 1 );
             add_action( 'added_existing_user', array($this, 'add_other_roles'), 10, 1);
         }
-        add_action( 'user_register', array($this, 'add_default_other_roles'), 10, 1 );
+        add_action( 'user_register', array($this, 'add_other_roles'), 10, 1 );
             
     }
     // end of set_hooks()

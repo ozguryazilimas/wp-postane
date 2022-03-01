@@ -1,6 +1,10 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.61.2] 01.03.2022 =
+* Fix: "Users->Add New" page - other selected roles were not saved.
+* Update: URE uses WordPress notification styles for own operation result output.
+
 = [4.61.1] 25.01.2022 =
 * Update: Marked as compatible with WordPress 5.9.
 * Update: PHP 7.3 is marked as required.

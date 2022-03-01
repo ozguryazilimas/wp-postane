@@ -758,7 +758,6 @@ class User_Role_Editor {
             'cancel' => esc_html__('Cancel', 'user-role-editor'),
             'add_capability' => esc_html__('Add Capability', 'user-role-editor'),
             'delete_capability' => esc_html__('Delete Capability', 'user-role-editor'),
-            esc_html__('Continue?', 'user-role-editor'),
             'default_role' => esc_html__('Default Role', 'user-role-editor'),
             'set_new_default_role' => esc_html__('Set New Default Role', 'user-role-editor'),
             'delete_capability' => esc_html__('Delete Capability', 'user-role-editor'),
