@@ -11,7 +11,7 @@
 /**
  * Adds the search result match breakdown to the post object.
  *
- * Reads in the number of matches and stores it in the relevanssi_hits filed
+ * Reads in the number of matches and stores it in the relevanssi_hits field
  * of the post object. The post object is passed as a reference and modified
  * on the fly.
  *
@@ -28,10 +28,14 @@ function relevanssi_add_matches( &$post, $data ) {
 	$hits['author']               = $data['author_matches'][ $post->ID ] ?? 0;
 	$hits['excerpt']              = $data['excerpt_matches'][ $post->ID ] ?? 0;
 	$hits['customfield']          = $data['customfield_matches'][ $post->ID ] ?? 0;
-	$hits['mysqlcolumn']          = $data['mysqlcolumn_matches'][ $post->ID ] ?? 0;
+	$hits['mysqlcolumn']          = 0;
 	$hits['score']                = isset( $data['doc_weights'][ $post->ID ] ) ? round( $data['doc_weights'][ $post->ID ], 2 ) : 0;
 	$hits['terms']                = $data['term_hits'][ $post->ID ] ?? array();
 	$hits['missing_terms']        = $data['missing_terms'][ $post->ID ] ?? array();
+
+	if ( function_exists( 'relevanssi_premium_add_matches' ) ) {
+		relevanssi_premium_add_matches( $hits, $data, $post->ID );
+	}
 
 	arsort( $hits['terms'] );
 
@@ -1134,6 +1138,9 @@ function relevanssi_common_words( $limit = 25, $wp_cli = false ) {
  */
 function relevanssi_get_forbidden_post_types() {
 	return array(
+		'wp_template_part',     // WP template parts.
+		'wp_global_styles',     // WP global styles.
+		'wp_navigation',        // Navigation menus.
 		'nav_menu_item',        // Navigation menu items.
 		'revision',             // Never index revisions.
 		'acf',                  // Advanced Custom Fields.
@@ -1214,6 +1221,11 @@ function relevanssi_get_forbidden_post_types() {
 		'fl-builder-template',  // Beaver Builder.
 		'itsec-dashboard',      // iThemes Security.
 		'itsec-dash-card',      // iThemes Security.
+		'astra-advanced-hook',  // Astra.
+		'astra_adv_header',     // Astra.
+		'astra_adv_header',     // Astra.
+		'udb_widgets',          // Ultimate Dashboard.
+		'udb_admin_page',       // Ultimate Dashboard.
 	);
 }
 
@@ -1224,6 +1236,7 @@ function relevanssi_get_forbidden_post_types() {
  */
 function relevanssi_get_forbidden_taxonomies() {
 	return array(
+		'wp_template_part_area',        // WP templates.
 		'nav_menu',                     // Navigation menus.
 		'link_category',                // Link categories.
 		'amp_validation_error',         // AMP.
