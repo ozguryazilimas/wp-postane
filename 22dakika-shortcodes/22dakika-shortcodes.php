@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Shortcodes for 22dakika
-Plugin URI: http://ozguryazilim.com.tr
+Plugin URI: https://ozguryazilim.com.tr
 Description: Shortcode plugin for 22dakika.org
 Version: 1.5.1
 Author: Baskın Burak Şenbaşlar, Onur Küçük
