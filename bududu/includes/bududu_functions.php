@@ -100,10 +100,10 @@ function bududu_buttons() {
       'logo' => 'fab fa-facebook-f',
       'share' => 'https://facebook.com/sharer/sharer.php?u={url}',
     ),
-    'googleplus' => array(
-      'logo' => 'fab fa-google',
-      'share' => 'https://plus.google.com/share?url={url}',
-    ),
+    #'googleplus' => array(
+    #  'logo' => 'fab fa-google',
+    #  'share' => 'https://plus.google.com/share?url={url}',
+    #),
     # 'linkedin' => array(
     #   'logo' => 'fab fa-linkedin',
     #   'share' => 'https://www.linkedin.com/shareArticle?mini=true&url={url}',

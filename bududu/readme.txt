@@ -4,7 +4,7 @@ Donate link:
 Tags: bududu, stream, feed, social media, facebook, like, twitter, tweet, google plus, pinterest, whatsapp
 Requires at least: 4.3.1
 Tested up to: 5.8.1
-Stable tag: 0.6.1
+Stable tag: 0.7.0
 
 Shows social media buttons under posts
 

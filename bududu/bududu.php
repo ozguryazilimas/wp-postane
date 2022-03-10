@@ -3,7 +3,7 @@
 Plugin Name: Bududu
 Plugin URI: http://www.ozguryazilim.com.tr
 Description: Shows social media buttons under posts. Note that this plugin does not track your site or users but the share buttons of the services shown may behave differently. Please refer to related service privacy and terms documents.
-Version: 0.6.1
+Version: 0.7.0
 Author: Onur Küçük
 Author URI: http://www.delipenguen.net
 License: GPL2
