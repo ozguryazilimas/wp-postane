@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 5.9
 Requires PHP: 7.0
-Stable tag: 4.15.0
+Stable tag: 4.15.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,12 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.15.1 =
+* Changed behaviour: Relevanssi now ignores WordPress metadata custom fields that aren't interesting for Relevanssi indexing.
+* Changed behaviour: Both `relevanssi_get_permalink()` and `relevanssi_the_permalink()` now can take post ID or a post object as a parameter and can thus be used outside the Loop.
+* Changed behaviour: The `relevanssi_hits_filter` hook now gets the WP_Query object as the second parameter.
+* Minor fix: Avoid error messages for missing `mysqlcolumn_matches` array key.
+
 = 4.15.0 =
 * New feature: The action hook `relevanssi_init` runs at the end of the `relevanssi_init()` function.
 * New feature: New filter hook `relevanssi_author_query_filter` filters the post author MySQL query.
@@ -140,5 +146,8 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: The Bricks compatibility was improved, Relevanssi now notices changes to Bricks posts more often. Relevanssi also only reads the text from the `_bricks_page_content_2` custom field.
 
 == Upgrade notice ==
+= 4.15.1 =
+* Fixes warnings, improves permalink functions and relevanssi_hits_filter.
+
 = 4.15.0 =
 * New filter hooks and improved Bricks compatibility.
