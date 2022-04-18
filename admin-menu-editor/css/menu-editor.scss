@@ -2232,6 +2232,10 @@ span.description {
 	font-style: italic;
 }
 
+.wrap :target {
+	background-color: rgba(255, 230, 81, 0.8);
+}
+
 .test-wrap {
     background-color: #444444;
     padding: 30px;

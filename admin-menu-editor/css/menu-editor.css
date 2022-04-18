@@ -102,6 +102,18 @@
   width: 16px;
   -webkit-font-smoothing: antialiased;
 }
+@media screen and (max-width: 782px) {
+  #ws_menu_editor .ws_actor_access_checkbox:indeterminate:before,
+#ws_menu_editor input[type=checkbox].ws_actor_access_checkbox:indeterminate:before {
+    height: 1.5625rem;
+    width: 1.5625rem;
+    line-height: 1.5625rem;
+    margin: -1px;
+    font-size: 18px;
+    font-family: unset;
+    font-weight: normal;
+  }
+}
 
 @media screen and (max-width: 782px) {
   #ws_menu_editor input[type=checkbox].ws_actor_access_checkbox:indeterminate:before {
@@ -556,7 +568,7 @@ to accommodate the drop-down button.
 .ws_custom_actor_permissions_flag::before {
   /*content: "\f160";*/
   /* padlock */
-  content: "";
+  content: "\f110";
   /* human silhouette */
   color: black;
   filter: alpha(opacity=25);
@@ -572,7 +584,7 @@ to accommodate the drop-down button.
 /* Item visibility can't be determined because it depends on a meta capability. */
 .ws_uncertain_meta_cap_flag::before {
   font: 16px/1 "dashicons";
-  content: "";
+  content: "\f348";
   color: black;
   filter: alpha(opacity=25);
   /*IE 5-7*/
@@ -1568,7 +1580,7 @@ a#ws-ame-delete-color-preset:hover {
   color: #7ad03a;
 }
 #ws_user_selection_panels #ws_selected_users .ws_user_action_button::before {
-  content: "";
+  content: "\f158";
 }
 #ws_user_selection_panels #ws_selected_users .ws_user_action_button:hover {
   color: #dd3d36;
@@ -1724,7 +1736,7 @@ a#ws-ame-delete-color-preset:hover {
   -webkit-border-radius: 50%;
   border-radius: 50%;
   text-indent: -1px;
-  content: "";
+  content: "\f142";
   display: inline-block;
   font: normal 20px/1 dashicons;
   -webkit-font-smoothing: antialiased;
@@ -1732,7 +1744,7 @@ a#ws-ame-delete-color-preset:hover {
   text-decoration: none !important;
 }
 .ws_ame_doc_box.closed .button-link .toggle-indicator::before, .ws_ame_custom_postbox.closed .button-link .toggle-indicator::before {
-  content: "";
+  content: "\f140";
 }
 
 .ws_basic_container .ws_ame_custom_postbox {
@@ -1872,6 +1884,10 @@ a#ws-ame-delete-color-preset:hover {
 span.description {
   color: #666;
   font-style: italic;
+}
+
+.wrap :target {
+  background-color: rgba(255, 230, 81, 0.8);
 }
 
 .test-wrap {

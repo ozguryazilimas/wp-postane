@@ -20,6 +20,7 @@ class ameCoreShortcodes {
 		add_shortcode('ame-wp-admin', array($this, 'handleAdminUrl'));
 		add_shortcode('ame-home-url', array($this, 'handleHomeUrl'));
 		add_shortcode('ame-user-info', array($this, 'handleUserInfo'));
+		//todo: Maybe a "current post id" shortcode? Would be useful for toolbar links.
 	}
 
 	/** @noinspection PhpUnusedParameterInspection Parameters are required by the shortcode API. */
@@ -69,8 +70,14 @@ class ameCoreShortcodes {
 			$user = wp_get_current_user();
 		}
 
+		//wp_get_current_user() won't work when this shortcode is used in a login redirect (for example),
+		//but we can try to get the current user from our "Redirects" module.
+		if ( !self::couldBeValidUserObject($user) ) {
+			$user = apply_filters('admin_menu_editor-redirected_user', null);
+		}
+
 		//Display the placeholder text if nobody is logged in or the user doesn't exist.
-		if ( empty($user) || !isset($user->ID) || ($user->ID === 0) ) {
+		if ( !self::couldBeValidUserObject($user) ) {
 			return $placeholder;
 		}
 
@@ -103,6 +110,17 @@ class ameCoreShortcodes {
 			return call_user_func($escapeCallback, $user->$field);
 		}
 		return $placeholder;
+	}
+
+	/**
+	 * @param WP_User|null $user
+	 * @return bool
+	 */
+	protected static function couldBeValidUserObject($user) {
+		if ( empty($user) || !isset($user->ID) || ($user->ID === 0) ) {
+			return false;
+		}
+		return true;
 	}
 
 	protected function identity($value) {

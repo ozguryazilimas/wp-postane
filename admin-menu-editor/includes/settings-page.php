@@ -79,7 +79,11 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 								<?php checked( $settings['plugins_page_allowed_user_id'] !== null ); ?>
 								<?php disabled( !$isProVersion || ($isMultisite && !is_super_admin()) ); ?>
 							>
-							Hide the "Admin Menu Editor<?php if ( $isProVersion ) { echo ' Pro'; } ?>" entry on the "Plugins" page from other users
+							Hide "Admin Menu Editor<?php if ( $isProVersion ) { echo ' Pro'; } ?>"
+							<?php if ( defined('WS_ADMIN_BAR_EDITOR_FILE') || defined('AME_BRANDING_ADD_ON_FILE') ) {
+								echo 'and its add-ons';
+							} ?>
+							from the "Plugins" page for other users
 							<?php if ( !$isProVersion ) {
 								echo '(Pro version only)';
 							} ?>
@@ -119,7 +123,7 @@ $isProVersion = apply_filters('admin_menu_editor_is_pro', false);
 
 			<?php do_action('admin-menu-editor-display_addons'); ?>
 
-			<tr>
+			<tr id="ame-available-modules">
 				<th scope="row">
 					Modules
 					<a class="ws_tooltip_trigger"

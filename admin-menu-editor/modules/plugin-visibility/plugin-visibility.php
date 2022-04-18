@@ -98,7 +98,7 @@ class amePluginVisibility extends amePersistentModule {
 
 		//Super Admin is next.
 		if ($isMultisite && is_super_admin($user->ID)) {
-			//By default the Super Admin has access to everything.
+			//By default, the Super Admin has access to everything.
 			return ameUtils::get($grantAccess, 'special:super_admin', true);
 		}
 
@@ -333,7 +333,7 @@ class amePluginVisibility extends amePersistentModule {
 			'ame-plugin-visibility',
 			plugins_url('plugin-visibility.js', __FILE__),
 			array(
-				'ame-lodash', 'knockout', 'ame-actor-selector', 'jquery-json',
+				'ame-lodash', 'knockout', 'ame-actor-selector',
 				$this->dismissNoticeAction->getScriptHandle(),
 			)
 		);

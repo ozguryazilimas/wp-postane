@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
-Tested up to: 5.8.1
-Stable tag: 1.10
+Tested up to: 5.9.3
+Stable tag: 1.10.1
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -74,6 +74,17 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.10.1 =
+* Fixed the `[ame-user-info]` shortcode not working in login redirects. It would always output "(No user)" instead of the actual user data.
+* Fixed a warning caused by a conflict with plugins and themes that call the "login_redirect" filter with only 1 parameter instead of the expected 3.
+* Probably fixed a bug where menu items that use fully qualified URLs would lose their custom settings when the site URL changed (such as when migrating the site to a different domain).
+* Fixed a minor conflict with the plugin "Google Analytics for WordPress by MonsterInsights" where the "Getting Started" menu item that is usually hidden would become visible when AME was activated.
+* Fixed an edge case where the plugin would incorrectly show an "is this option enabled for everyone" checkbox in an indeterminate state when it was actually enabled for all roles but was not explicitly enabled (or disabled) for individual users.
+* Fixed a bug where AME did not prefer submenu items when detecting the current menu item based on the current URL.
+* Switched from `jQuery.toJSON()` to `JSON.stringify()`. The old jQuery JSON plugin appears to be unmaintained, and all modern browsers have supported `JSON.stringify()` for a long time.
+* Other minor fixes.
+* Tested up to WP 6.0-beta1.
 
 = 1.10 =
 * Added a "Redirects" feature. You can create login redirects, logout redirects, and registration redirects. You can configure redirects for specific roles and users. You can also set up a default redirect that will apply to everyone who doesn't have a specific setting. Redirect URLs can contain shortcodes, but not all shortcodes will work in this context.

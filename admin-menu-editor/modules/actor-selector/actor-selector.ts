@@ -1,5 +1,4 @@
 /// <reference path="../../js/jquery.d.ts" />
-/// <reference path="../../js/jquery-json.d.ts" />
 /// <reference path="../../js/actor-manager.ts" />
 
 declare var wsAmeLodash: _.LoDashStatic;
@@ -273,7 +272,7 @@ class AmeActorSelector {
 			{
 				'action': this.ajaxParams.ajaxUpdateAction,
 				'_ajax_nonce': this.ajaxParams.ajaxUpdateNonce,
-				'visible_users': jQuery.toJSON(this.visibleUsers)
+				'visible_users': JSON.stringify(this.visibleUsers)
 			}
 		);
 	}
@@ -296,7 +295,7 @@ class AmeActorSelector {
 	}
 
 	/**
-	 * Wrap the selected actor in a computed observable so that it can be used with Knockout.
+	 * Wrap the selected actor ID in a computed observable so that it can be used with Knockout.
 	 * @param ko
 	 */
 	createKnockoutObservable(ko: KnockoutStatic): KnockoutComputed<string> {
@@ -311,6 +310,36 @@ class AmeActorSelector {
 		});
 		this.onChange((newSelectedActor: string) => {
 			internalObservable(newSelectedActor);
+		});
+		return publicObservable;
+	}
+
+	createIdObservable(ko: KnockoutStatic): KnockoutComputed<string|null> {
+		return this.createKnockoutObservable(ko);
+	}
+
+	createActorObservable(ko: KnockoutStatic): KnockoutComputed<IAmeActor|null> {
+		const internalObservable = ko.observable(
+			(this.selectedActor === null) ? null : this.actorManager.getActor(this.selectedActor)
+		);
+		const publicObservable = ko.computed<IAmeActor|null>({
+			read: function () {
+				return internalObservable();
+			},
+			write: (newActor: IAmeActor|null) => {
+				this.setSelectedActor(
+					(newActor !== null) ? newActor.getId() : null
+				);
+			}
+		});
+
+		const self = this;
+		this.onChange(function (newSelectedActor: string) {
+			if (newSelectedActor === null) {
+				internalObservable(null);
+			} else {
+				internalObservable(self.actorManager.getActor(newSelectedActor));
+			}
 		});
 		return publicObservable;
 	}

@@ -302,7 +302,7 @@ class AmePluginVisibilityModule {
 		});
 
 		//Populate form field(s).
-		this.settingsData(jQuery.toJSON(settings));
+		this.settingsData(JSON.stringify(settings));
 
 		return true;
 	}

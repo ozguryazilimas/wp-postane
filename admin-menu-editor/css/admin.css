@@ -51,7 +51,8 @@ hr.ws-submenu-separator {
 }
 
 /* No colored bar/marker when hovering over a separator. */
-#adminmenu li.ws-submenu-separator-wrap a:hover {
+#adminmenu li.ws-submenu-separator-wrap a:hover,
+#adminmenu li.ws-submenu-separator-wrap a:focus {
     box-shadow: none;
 }
 

@@ -101,6 +101,23 @@ class ameUtils {
 		}
 		return ucwords($input);
 	}
+
+	/**
+	 * Check if two arrays have the same keys and values. Arrays with string keys
+	 * or mixed keys can be in different order and still be considered "equal".
+	 *
+	 * @param array $a
+	 * @param array $b
+	 * @return bool
+	 */
+	public static function areAssocArraysEqual($a, $b) {
+		$secondArraySize = count($b);
+		if ( count($a) !== $secondArraySize ) {
+			return false;
+		}
+		$sameItems = array_intersect_assoc($a, $b);
+		return count($sameItems) === $secondArraySize;
+	}
 }
 
 class ameFileLock {

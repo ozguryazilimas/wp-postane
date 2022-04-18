@@ -1,5 +1,4 @@
 /// <reference path="../../js/jquery.d.ts" />
-/// <reference path="../../js/jquery-json.d.ts" />
 /// <reference path="../../js/actor-manager.ts" />
 var AmeActorSelector = /** @class */ (function () {
     function AmeActorSelector(actorManager, isProVersion, allOptionEnabled) {
@@ -195,7 +194,7 @@ var AmeActorSelector = /** @class */ (function () {
         jQuery.post(this.ajaxParams.adminAjaxUrl, {
             'action': this.ajaxParams.ajaxUpdateAction,
             '_ajax_nonce': this.ajaxParams.ajaxUpdateNonce,
-            'visible_users': jQuery.toJSON(this.visibleUsers)
+            'visible_users': JSON.stringify(this.visibleUsers)
         });
     };
     AmeActorSelector.prototype.getCurrentUserActor = function () {
@@ -215,7 +214,7 @@ var AmeActorSelector = /** @class */ (function () {
         return name;
     };
     /**
-     * Wrap the selected actor in a computed observable so that it can be used with Knockout.
+     * Wrap the selected actor ID in a computed observable so that it can be used with Knockout.
      * @param ko
      */
     AmeActorSelector.prototype.createKnockoutObservable = function (ko) {
@@ -231,6 +230,31 @@ var AmeActorSelector = /** @class */ (function () {
         });
         this.onChange(function (newSelectedActor) {
             internalObservable(newSelectedActor);
+        });
+        return publicObservable;
+    };
+    AmeActorSelector.prototype.createIdObservable = function (ko) {
+        return this.createKnockoutObservable(ko);
+    };
+    AmeActorSelector.prototype.createActorObservable = function (ko) {
+        var _this = this;
+        var internalObservable = ko.observable((this.selectedActor === null) ? null : this.actorManager.getActor(this.selectedActor));
+        var publicObservable = ko.computed({
+            read: function () {
+                return internalObservable();
+            },
+            write: function (newActor) {
+                _this.setSelectedActor((newActor !== null) ? newActor.getId() : null);
+            }
+        });
+        var self = this;
+        this.onChange(function (newSelectedActor) {
+            if (newSelectedActor === null) {
+                internalObservable(null);
+            }
+            else {
+                internalObservable(self.actorManager.getActor(newSelectedActor));
+            }
         });
         return publicObservable;
     };

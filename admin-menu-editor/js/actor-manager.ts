@@ -228,9 +228,7 @@ class AmeActorManager implements AmeActorManagerInterface {
 			this.users[user.userLogin] = user;
 		});
 
-		if (this.isMultisite) {
-			this.superAdmin = new AmeSuperAdmin();
-		}
+		this.superAdmin = new AmeSuperAdmin();
 
 		this.suspectedMetaCaps = suspectedMetaCaps;
 
@@ -732,6 +730,112 @@ class AmeObservableActorSettings {
 			if (this.items.hasOwnProperty(actorId)) {
 				this.items[actorId](null);
 			}
+		}
+	}
+
+	isEnabledFor(
+		selectedActor: IAmeActor | null,
+		allActors: IAmeActor[] | null = null,
+		roleDefault: boolean | null = false,
+		superAdminDefault: boolean | null = null,
+		noValueDefault: boolean = false,
+		outIsIndeterminate: KnockoutObservable<boolean> = null
+	): boolean {
+		if ((selectedActor === null) && (allActors === null)) {
+			throw 'When the selected actor is NULL, you must provide ' +
+			'a list of all visible actors to determine if the item is enabled for all/any of them';
+		}
+
+		if (selectedActor === null) {
+			//All: Enabled only if it's enabled for all actors.
+
+			//Handle the theoretically impossible case where the actor list is empty.
+			const actorCount = allActors.length;
+			if (actorCount <= 0) {
+				return noValueDefault;
+			}
+
+			let isEnabledForSome = false, isDisabledForSome = false;
+			for (let index = 0; index < actorCount; index++) {
+				if (this.isEnabledFor(allActors[index], allActors, roleDefault, superAdminDefault, noValueDefault)) {
+					isEnabledForSome = true;
+				} else {
+					isDisabledForSome = true;
+				}
+			}
+
+			if (outIsIndeterminate !== null) {
+				outIsIndeterminate(isEnabledForSome && isDisabledForSome);
+			}
+
+			return isEnabledForSome && (!isDisabledForSome);
+		}
+
+		//Is there an explicit setting for this actor?
+		let ownSetting = this.get(selectedActor.getId(), null);
+		if (ownSetting !== null) {
+			return ownSetting;
+		}
+
+		if (selectedActor instanceof AmeUser) {
+			//The "Super Admin" setting takes precedence over regular roles.
+			if (selectedActor.isSuperAdmin) {
+				let superAdminSetting = this.get(AmeSuperAdmin.permanentActorId, superAdminDefault);
+				if (superAdminSetting !== null) {
+					return superAdminSetting;
+				}
+			}
+
+			//Use role settings.
+			//Enabled for at least one role = enabled.
+			//Disabled for at least one role and no settings for other roles = disabled.
+			let isEnabled: boolean|null = null;
+			for (let i = 0; i < selectedActor.roles.length; i++) {
+				let roleSetting = this.get('role:' + selectedActor.roles[i], roleDefault);
+				if (roleSetting !== null) {
+					if (isEnabled === null) {
+						isEnabled = roleSetting;
+					} else {
+						isEnabled = isEnabled || roleSetting;
+					}
+				}
+			}
+
+			if (isEnabled !== null) {
+				return isEnabled;
+			}
+
+			//If we get this far, it means that none of the user's roles have
+			//a setting for this item. Fall through to the final default.
+		}
+
+		return noValueDefault;
+	}
+
+	setEnabledFor(
+		selectedActor: IAmeActor|null,
+		enabled: boolean,
+		allActors: IAmeActor[]|null = null,
+		defaultValue: boolean|null = null
+	) {
+		if ((selectedActor === null) && (allActors === null)) {
+			throw 'When the selected actor is NULL, you must provide ' +
+			'a list of all visible actors so that the item can be enabled or disabled for all of them';
+		}
+
+		if (selectedActor === null) {
+			//Enable/disable the item for all actors.
+			if (enabled === defaultValue) {
+				//Since the new value is the same as the default,
+				//this is equivalent to removing all settings.
+				this.resetAll();
+			} else {
+				for (let i = 0; i < allActors.length; i++) {
+					this.set(allActors[i].getId(), enabled);
+				}
+			}
+		} else {
+			this.set(selectedActor.getId(), enabled);
 		}
 	}
 }

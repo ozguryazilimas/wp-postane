@@ -210,7 +210,7 @@ var AmePluginVisibilityModule = /** @class */ (function () {
             return !_.isEmpty(value);
         });
         //Populate form field(s).
-        this.settingsData(jQuery.toJSON(settings));
+        this.settingsData(JSON.stringify(settings));
         return true;
     };
     AmePluginVisibilityModule._ = wsAmeLodash;

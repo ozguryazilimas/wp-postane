@@ -33,6 +33,9 @@ abstract class ameMenuItem {
 
 	private static $mappable_parent_whitelist = '@^(?:profile|import|post-new|edit-tags)\.php@';
 
+	private static $cached_site_url = null;
+	private static $is_switch_hook_set = false;
+
 	/**
 	 * Convert a WP menu structure to an associative array.
 	 *
@@ -259,6 +262,26 @@ abstract class ameMenuItem {
 		//the "return" parameter from the ID.
 		if ( strpos($item_file, 'customize.php?') === 0 ) {
 			$item_file = remove_query_arg('return', $item_file);
+		}
+
+		//Special case: Remove the current site URL from fully qualified URLs.
+		//This way template IDs will still match if the menu configuration is imported on a different site.
+		if ( strpos($item_file, '://') !== false ) {
+			$site_url = self::get_site_url();
+			$site_url_length = strlen($site_url);
+			if (
+				($site_url_length > 0)
+				//Does the item URL start with the site URL?
+				&& (strncmp($item_file, $site_url, $site_url_length) === 0)
+				//Only cut off the site URL if there will be something left.
+				//We don't want the ID to be an empty string.
+				&& (strlen($item_file) > $site_url_length)
+			) {
+				//The site URL usually doesn't have a trailing slash, but sometimes it does,
+				//so we could end up either with "/wp-admin/foo.php" or "wp-admin/foo.php".
+				//For consistency, let's always prepend a slash to the result.
+				$item_file = '/' .ltrim(substr($item_file, $site_url_length), '/');
+			}
 		}
 
 		//Special case: A menu item can have an empty slug. This is technically very wrong, but it works (sort of)
@@ -681,5 +704,32 @@ abstract class ameMenuItem {
 			}
 		}
 		return $menuTitle;
+	}
+
+	/**
+	 * Get the current site URL.
+	 *
+	 * This is equivalent to calling the get_site_url() WordPress API function without
+	 * arguments, except this method caches the result and doesn't run filters every time.
+	 *
+	 * @return string
+	 */
+	private static function get_site_url() {
+		if ( self::$cached_site_url !== null ) {
+			return self::$cached_site_url;
+		}
+		self::$cached_site_url = get_site_url();
+
+		//Clear the cache when WordPress switches to a different site.
+		if ( !self::$is_switch_hook_set ) {
+			self::$is_switch_hook_set = true;
+			add_action('switch_blog', array(__CLASS__, 'clear_per_site_cache'), 10, 0);
+		}
+
+		return self::$cached_site_url;
+	}
+
+	public static function clear_per_site_cache() {
+		self::$cached_site_url = null;
 	}
 }

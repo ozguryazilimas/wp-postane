@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .ame-rui-redirect-list {
   display: flex;
   flex-direction: column;
@@ -63,7 +62,7 @@
   color: #1d2327;
 }
 .ame-rui-url-dropdown-trigger .am-rui-trigger-icon:before {
-  content: "";
+  content: "\f140";
   font: normal 20px dashicons;
   line-height: 28px;
   vertical-align: middle;
@@ -341,7 +340,7 @@
   padding: 0;
 }
 #ame-rui-main-actions .ws-ame-postbox-toggle:before {
-  content: "";
+  content: "\f142";
   display: inline-block;
   vertical-align: middle;
 }
@@ -360,7 +359,7 @@
   display: none;
 }
 #ame-rui-main-actions.ws-ame-closed-postbox .ws-ame-postbox-toggle:before {
-  content: "";
+  content: "\f140";
 }
 #ame-rui-main-actions input.button {
   max-width: 150px;

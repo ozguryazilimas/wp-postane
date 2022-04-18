@@ -2337,7 +2337,7 @@ function encodeMenuAsJSON(tree){
 	//Compress the admin menu.
 	tree = compressMenu(tree);
 
-	return $.toJSON(tree);
+	return JSON.stringify(tree);
 }
 
 function readMenuTreeState(){

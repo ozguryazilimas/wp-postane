@@ -1,7 +1,7 @@
-@mixin ame-indeterminate-checkbox {
+@mixin ame-indeterminate-checkbox($markColor: #1e8cbe) {
 	&:indeterminate:before {
 		content: '\25a0'; //Unicode black square. Another option would be BLACK LARGE SQUARE (U+2B1B).
-		color: #1e8cbe;
+		color: $markColor;
 
 		//Large square.
 		//margin: -6px 0 0 -1px;
@@ -20,5 +20,19 @@
 		vertical-align: middle;
 		width: 16px;
 		-webkit-font-smoothing: antialiased;
+	}
+
+	@media screen and (max-width: 782px) {
+		&:indeterminate:before {
+			$boxSize: 1.5625rem;
+			height: $boxSize;
+			width: $boxSize;
+			line-height: $boxSize;
+			margin: -1px;
+
+			font-size: 18px;
+			font-family: unset;
+			font-weight: normal;
+		}
 	}
 }

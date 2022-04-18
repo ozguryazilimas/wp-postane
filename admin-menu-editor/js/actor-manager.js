@@ -154,9 +154,7 @@ var AmeActorManager = /** @class */ (function () {
             var user = AmeUser.createFromProperties(userDetails);
             _this.users[user.userLogin] = user;
         });
-        if (this.isMultisite) {
-            this.superAdmin = new AmeSuperAdmin();
-        }
+        this.superAdmin = new AmeSuperAdmin();
         this.suspectedMetaCaps = suspectedMetaCaps;
         var exclusiveCaps = [
             'update_core', 'update_plugins', 'delete_plugins', 'install_plugins', 'upload_plugins', 'update_themes',
@@ -567,6 +565,97 @@ var AmeObservableActorSettings = /** @class */ (function () {
             if (this.items.hasOwnProperty(actorId)) {
                 this.items[actorId](null);
             }
+        }
+    };
+    AmeObservableActorSettings.prototype.isEnabledFor = function (selectedActor, allActors, roleDefault, superAdminDefault, noValueDefault, outIsIndeterminate) {
+        if (allActors === void 0) { allActors = null; }
+        if (roleDefault === void 0) { roleDefault = false; }
+        if (superAdminDefault === void 0) { superAdminDefault = null; }
+        if (noValueDefault === void 0) { noValueDefault = false; }
+        if (outIsIndeterminate === void 0) { outIsIndeterminate = null; }
+        if ((selectedActor === null) && (allActors === null)) {
+            throw 'When the selected actor is NULL, you must provide ' +
+                'a list of all visible actors to determine if the item is enabled for all/any of them';
+        }
+        if (selectedActor === null) {
+            //All: Enabled only if it's enabled for all actors.
+            //Handle the theoretically impossible case where the actor list is empty.
+            var actorCount = allActors.length;
+            if (actorCount <= 0) {
+                return noValueDefault;
+            }
+            var isEnabledForSome = false, isDisabledForSome = false;
+            for (var index = 0; index < actorCount; index++) {
+                if (this.isEnabledFor(allActors[index], allActors, roleDefault, superAdminDefault, noValueDefault)) {
+                    isEnabledForSome = true;
+                }
+                else {
+                    isDisabledForSome = true;
+                }
+            }
+            if (outIsIndeterminate !== null) {
+                outIsIndeterminate(isEnabledForSome && isDisabledForSome);
+            }
+            return isEnabledForSome && (!isDisabledForSome);
+        }
+        //Is there an explicit setting for this actor?
+        var ownSetting = this.get(selectedActor.getId(), null);
+        if (ownSetting !== null) {
+            return ownSetting;
+        }
+        if (selectedActor instanceof AmeUser) {
+            //The "Super Admin" setting takes precedence over regular roles.
+            if (selectedActor.isSuperAdmin) {
+                var superAdminSetting = this.get(AmeSuperAdmin.permanentActorId, superAdminDefault);
+                if (superAdminSetting !== null) {
+                    return superAdminSetting;
+                }
+            }
+            //Use role settings.
+            //Enabled for at least one role = enabled.
+            //Disabled for at least one role and no settings for other roles = disabled.
+            var isEnabled = null;
+            for (var i = 0; i < selectedActor.roles.length; i++) {
+                var roleSetting = this.get('role:' + selectedActor.roles[i], roleDefault);
+                if (roleSetting !== null) {
+                    if (isEnabled === null) {
+                        isEnabled = roleSetting;
+                    }
+                    else {
+                        isEnabled = isEnabled || roleSetting;
+                    }
+                }
+            }
+            if (isEnabled !== null) {
+                return isEnabled;
+            }
+            //If we get this far, it means that none of the user's roles have
+            //a setting for this item. Fall through to the final default.
+        }
+        return noValueDefault;
+    };
+    AmeObservableActorSettings.prototype.setEnabledFor = function (selectedActor, enabled, allActors, defaultValue) {
+        if (allActors === void 0) { allActors = null; }
+        if (defaultValue === void 0) { defaultValue = null; }
+        if ((selectedActor === null) && (allActors === null)) {
+            throw 'When the selected actor is NULL, you must provide ' +
+                'a list of all visible actors so that the item can be enabled or disabled for all of them';
+        }
+        if (selectedActor === null) {
+            //Enable/disable the item for all actors.
+            if (enabled === defaultValue) {
+                //Since the new value is the same as the default,
+                //this is equivalent to removing all settings.
+                this.resetAll();
+            }
+            else {
+                for (var i = 0; i < allActors.length; i++) {
+                    this.set(allActors[i].getId(), enabled);
+                }
+            }
+        }
+        else {
+            this.set(selectedActor.getId(), enabled);
         }
     };
     return AmeObservableActorSettings;
