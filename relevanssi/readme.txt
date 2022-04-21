@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 5.9
 Requires PHP: 7.0
-Stable tag: 4.15.1
+Stable tag: 4.15.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,12 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.15.2 =
+* New feature: New filter hook `relevanssi_didyoumean_token` lets you filter Did you mean words before correction. You can use this filter hook to exclude words from being corrected.
+* Minor fix: Phrase search couldn't find phrases that include an ampersand if they matched the post title. This works now.
+* Minor fix: Relevanssi now adds spaces after table cell tags to avoid table cell content sticking together in excerpts.
+* Minor fix: The 'Allowable tags in excerpts' function now automatically corrects the entered value to match what Relevanssi expects the value to be.
+
 = 4.15.1 =
 * Changed behaviour: Relevanssi now ignores WordPress metadata custom fields that aren't interesting for Relevanssi indexing.
 * Changed behaviour: Both `relevanssi_get_permalink()` and `relevanssi_the_permalink()` now can take post ID or a post object as a parameter and can thus be used outside the Loop.
@@ -146,6 +152,9 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: The Bricks compatibility was improved, Relevanssi now notices changes to Bricks posts more often. Relevanssi also only reads the text from the `_bricks_page_content_2` custom field.
 
 == Upgrade notice ==
+= 4.15.2 =
+* New filter hook for Did you mean words, small bug fixes for excerpts and phrases.
+
 = 4.15.1 =
 * Fixes warnings, improves permalink functions and relevanssi_hits_filter.
 
