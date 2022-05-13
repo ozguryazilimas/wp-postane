@@ -699,6 +699,85 @@ function relevanssi_intval( array $request, string $option ) {
 }
 
 /**
+ * Returns true if the search is from Relevanssi Live Ajax Search.
+ *
+ * Checks if $wp_query->query_vars['action'] is set to "relevanssi_live_search".
+ *
+ * @return bool True if the search is from Relevanssi Live Ajax Search, false
+ * otherwise.
+ */
+function relevanssi_is_live_search() {
+	global $wp_query;
+	$relevanssi_live_search = false;
+	if ( isset( $wp_query->query_vars['action'] ) && 'relevanssi_live_search' === $wp_query->query_vars['action'] ) {
+		$relevanssi_live_search = true;
+	}
+	return $relevanssi_live_search;
+}
+
+/**
+ * Checks if a string is a multiple-word phrase.
+ *
+ * Replaces hyphens, quotes and ampersands with spaces if necessary based on
+ * the Relevanssi advanced indexing settings.
+ *
+ * @param string $string The string to check.
+ *
+ * @return boolean True if the string is a multiple-word phrase, false otherwise.
+ */
+function relevanssi_is_multiple_words( string $string ) : bool {
+	if ( empty( $string ) ) {
+		return false;
+	}
+	$punctuation = get_option( 'relevanssi_punctuation' );
+	if ( 'replace' === $punctuation['hyphens'] ) {
+		$string = str_replace(
+			array(
+				'-',
+				'–',
+				'—',
+			),
+			' ',
+			$string
+		);
+	}
+	if ( 'replace' === $punctuation['quotes'] ) {
+		$string = str_replace(
+			array(
+				'&#8217;',
+				"'",
+				'’',
+				'‘',
+				'”',
+				'“',
+				'„',
+				'´',
+				'″',
+			),
+			' ',
+			$string
+		);
+	}
+	if ( 'replace' === $punctuation['ampersands'] ) {
+		$string = str_replace(
+			array(
+				'&#038;',
+				'&amp;',
+				'&',
+			),
+			' ',
+			$string
+		);
+	}
+
+	if ( count( explode( ' ', $string ) ) > 1 ) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
  * Launches an asynchronous Ajax action.
  *
  * Makes a wp_remote_post() call with the specific action. Handles nonce
@@ -1007,9 +1086,10 @@ function relevanssi_strip_all_tags( $content ) : string {
 	if ( ! is_string( $content ) ) {
 		$content = '';
 	}
-	$content = preg_replace( '/<!--.*?-->/ms', '', $content );
-	$content = preg_replace( '/<[!a-zA-Z\/][^>].*?>/ms', ' ', $content );
-	return $content;
+	$content = preg_replace( '/<!--.*?-->/ums', '', $content );
+	$content = preg_replace( '/<[!a-zA-Z\/][^>].*?>/ums', ' ', $content );
+
+	return $content ?? '';
 }
 
 /**
