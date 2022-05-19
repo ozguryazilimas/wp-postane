@@ -2,10 +2,10 @@
 Contributors: nosilver4u
 Donate link: https://ewww.io/donate/
 Tags: image, scale, resize, space saver, quality, upload
-Requires at least: 5.1
-Tested up to: 5.7
-Requires PHP: 5.6
-Stable tag: 2.7.2
+Requires at least: 5.5
+Tested up to: 6.0
+Requires PHP: 7.2
+Stable tag: 2.8.0
 License: GPLv3
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually resizing your images? Imsanity to the rescue!
@@ -105,6 +105,12 @@ Imsanity is short for "Image Sanity Limit". A sanity limit is a term for limitin
 Questions may be posted on the support forum at https://wordpress.org/support/plugin/imsanity but if you don't get an answer, please use https://ewww.io/contact-us/.
 
 == Changelog ==
+
+= 2.8.0 =
+* added: support for resizing WebP images via ImageMagick
+* changed: update attachment file size to keep WP 6.0 metadata in sync
+* changed: use original image for resizing if full size version was scaled by WordPress
+* fixed: JS scroller during bulk resize causes unexpected behavior
 
 = 2.7.2 =
 * fixed: delete originals might remove full-size version in rare cases

@@ -14,7 +14,9 @@ Plugin URI: https://wordpress.org/plugins/imsanity/
 Description: Imsanity stops insanely huge image uploads
 Author: Exactly WWW
 Domain Path: /languages
-Version: 2.7.2
+Version: 2.8.0
+Requires at least: 5.5
+Requires PHP: 7.2
 Author URI: https://ewww.io/
 License: GPLv3
 */
@@ -23,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'IMSANITY_VERSION', '2.7.2' );
+define( 'IMSANITY_VERSION', '2.8.0' );
 define( 'IMSANITY_SCHEMA_VERSION', '1.1' );
 
 define( 'IMSANITY_DEFAULT_MAX_WIDTH', 1920 );
@@ -367,3 +369,5 @@ add_action( 'plugins_loaded', 'imsanity_init' );
 add_filter( 'manage_media_columns', 'imsanity_media_columns' );
 // Outputs the actual column information for each attachment.
 add_action( 'manage_media_custom_column', 'imsanity_custom_column', 10, 2 );
+// Checks for WebP support and adds it to the allowed mime types.
+add_filter( 'imsanity_allowed_mimes', 'imsanity_add_webp_support' );
