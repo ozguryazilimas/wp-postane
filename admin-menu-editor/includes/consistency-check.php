@@ -97,13 +97,13 @@ foreach($requiredFiles as $filename) {
 
 echo '<pre>';
 $divider = str_repeat('-', 50);
-echo "File consistency checks:\n", $divider, "\n";
+echo "File consistency checks:\n", esc_html($divider), "\n";
 foreach($log as $message) {
-	echo $message, "\n";
+	echo esc_html($message), "\n";
 }
 
 //Test for buggy plugins_url filters.
-echo $divider, "\nTesting for problems with the 'plugins_url' hook...\n";
+echo esc_html($divider), "\nTesting for problems with the 'plugins_url' hook...\n";
 add_filter('plugins_url', 'ame_plugins_url_test_first', -9999, 3);
 add_filter('plugins_url', 'ame_plugins_url_test_last', 9999, 3);
 
@@ -117,7 +117,7 @@ function ame_plugins_url_test_first($url, $path = '', $plugin = '') {
 		'[Info] plugins_url() output before plugin hooks: %s' . "\n",
 		esc_html($url)
 	);
-	echo ame_test_url_access($url, 'css/menu-editor.css'), "\n";
+	echo esc_html(ame_test_url_access($url, 'css/menu-editor.css')), "\n";
 	return $url;
 }
 
@@ -126,7 +126,7 @@ function ame_plugins_url_test_last($url, $path = '', $plugin = '') {
 		'[Info] plugins_url() output after plugin hooks: %s' . "\n",
 		esc_html($url)
 	);
-	echo ame_test_url_access($url, 'css/menu-editor.css'), "\n";
+	echo esc_html(ame_test_url_access($url, 'css/menu-editor.css')), "\n";
 	return $url;
 }
 
@@ -136,24 +136,24 @@ function ame_test_url_access($url, $filename) {
 	if ( is_wp_error($result) ) {
 		return sprintf(
 			'[Error] Can not load URL: %s (%s)',
-			esc_html($url),
+			$url,
 			$result->get_error_message()
 		);
 	} else if ( $result['response']['code'] == 200 ) {
 		return sprintf(
 			'[OK] URL is accessible: %s',
-			esc_html($url)
+			$url
 		);
 	} else {
 		return sprintf(
-			'[Error] Can no load "%s", URL : %s (%d %s)',
-			esc_html($filename),
-			esc_html($url),
+			'[Error] Can not load "%s", URL : %s (%d %s)',
+			$filename,
+			$url,
 			$result['response']['code'],
 			$result['response']['message']
 		);
 	}
 }
 
-echo $divider;
+echo esc_html($divider);
 echo '</pre>';

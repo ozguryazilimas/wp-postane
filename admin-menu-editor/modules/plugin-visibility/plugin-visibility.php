@@ -237,6 +237,10 @@ class amePluginVisibility extends amePersistentModule {
 	 * @param string $action
 	 */
 	public function authorizePluginAction($action) {
+		//PHPCS special case: This hook callback runs inside a function that validates
+		//nonces and selectively overrides the behaviour of that function.
+		//phpcs:disable WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- See above
+
 		//Is the user trying to edit a plugin?
 		if (preg_match('@^edit-plugin_(?P<file>.+)$@', $action, $matches)) {
 
@@ -278,7 +282,7 @@ class amePluginVisibility extends amePersistentModule {
 			if (!$isVisible) {
 				wp_die(sprintf(
 					'You do not have sufficient permissions to %s this plugin.',
-					$matches['action']
+					esc_html($matches['action'])
 				));
 			}
 
@@ -290,11 +294,12 @@ class amePluginVisibility extends amePersistentModule {
 				if (!$this->isPluginVisible(strval($pluginFile), $user)) {
 					wp_die(sprintf(
 						'You do not have sufficient permissions to manage this plugin: "%s".',
-						$pluginFile
+						esc_html($pluginFile)
 					));
 				}
 			}
 		}
+		//phpcs:enable
 	}
 
 	public function addSettingsTab($tabs) {

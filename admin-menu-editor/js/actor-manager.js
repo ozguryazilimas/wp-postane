@@ -666,3 +666,4 @@ if (typeof wsAmeActorData !== 'undefined') {
         AmeActors.generateCapabilitySuggestions(wsAmeActorData['capPower']);
     }
 }
+//# sourceMappingURL=actor-manager.js.map

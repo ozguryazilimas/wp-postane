@@ -65,7 +65,11 @@ abstract class ameModule {
 		$this->menuEditor->display_settings_page_header();
 
 		if ( !$this->outputMainTemplate() ) {
-			printf("[ %1\$s : Module \"%2\$s\" doesn't have a primary template. ]", __METHOD__, $this->moduleId);
+			printf(
+				"[ %1\$s : Module \"%2\$s\" doesn't have a primary template. ]",
+				esc_html(__METHOD__),
+				esc_html($this->moduleId)
+			);
 		}
 
 		$this->menuEditor->display_settings_page_footer();

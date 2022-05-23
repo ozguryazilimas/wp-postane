@@ -42,7 +42,7 @@ abstract class amePersistentModule extends ameModule {
 	}
 
 	public function saveSettings() {
-		$settings = json_encode($this->settings);
+		$settings = wp_json_encode($this->settings);
 		//Save per site or site-wide based on plugin configuration.
 		$this->setScopedOption($this->optionName, $settings);
 	}

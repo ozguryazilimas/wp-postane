@@ -484,14 +484,14 @@ abstract class ameMenuItem {
 		foreach($capability_fields as $field) {
 			$value = self::get($item, $field);
 			if ( !self::is_default($item, $field) && is_string($value) ) {
-				$item[$field] = strip_tags($value);
+				$item[$field] = wp_strip_all_tags($value);
 			}
 		}
 
 		//Menu icons can be all kinds of stuff (dashicons, data URIs, etc), but they can't contain HTML.
 		//See /wp-admin/menu-header.php line #90 and onwards for how WordPress handles icons.
 		if ( !self::is_default($item, 'icon_url') ) {
-			$item['icon_url'] = strip_tags($item['icon_url']);
+			$item['icon_url'] = wp_strip_all_tags($item['icon_url']);
 		}
 
 		//WordPress already sanitizes the menu ID (hookname) on display, but, again, lets clean it just in case.

@@ -134,7 +134,7 @@ if ( defined('AME_DISABLE_REDIRECTS') && constant('AME_DISABLE_REDIRECTS') ) {
 	</div>
 
 	<form class="ame-rui-save-form" method="post" data-bind="submit: saveChanges" action="<?php
-	echo esc_attr(add_query_arg(array('noheader' => '1'), $moduleTabUrl));
+	echo esc_url(add_query_arg(array('noheader' => '1'), $moduleTabUrl));
 	?>">
 		<?php
 		submit_button(
@@ -168,7 +168,7 @@ if ( defined('AME_DISABLE_REDIRECTS') && constant('AME_DISABLE_REDIRECTS') ) {
 		     class="ame-rui-redirect-list">
 			<div class="ame-rui-redirect">
 				<div class="ame-rui-drag-handle">
-					<img src="<?php echo esc_attr($dragIconUrl); ?>" alt="Drag indicator" width="24">
+					<img src="<?php echo esc_url($dragIconUrl); ?>" alt="Drag indicator" width="24">
 				</div>
 				<div class="ame-rui-redirect-content">
 					<div class="ame-rui-actor">

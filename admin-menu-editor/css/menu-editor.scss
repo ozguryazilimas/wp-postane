@@ -451,6 +451,7 @@ $basicInputWp53Height: 28px;
 
 	.ame-is-wp53-plus & {
 		height: $basicInputWp53Height;
+		margin-top: 1px;
 	}
 }
 
@@ -483,12 +484,14 @@ $dropdownButtonWidth: 25px;
 	min-height: 25px;
 	
 	margin: 1px 1px 1px 0;
-	padding: 0;
+	padding: 0 1px 0 0;
 	
 	text-align: center;
-	font-size: 9px !important;
+
+	font-family: dashicons;
+	font-size: 16px !important;
 	line-height: 25px;
-	
+
 	border-color: #dfdfdf;
 	box-shadow: none;
 	
@@ -496,16 +499,6 @@ $dropdownButtonWidth: 25px;
 	border-bottom-right-radius: 3px;
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
-	
-	-moz-border-radius-topright: 3px;
-	-moz-border-radius-bottomright: 3px;
-	-moz-border-radius-topleft: 0;
-	-moz-border-radius-bottomleft: 0;
-	
-	-webkit-border-top-right-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	-webkit-border-top-left-radius: 0;
-	-webkit-border-bottom-left-radius: 0;
 }
 
 .ame-is-wp53-plus #ws_menu_editor .ws_dropdown_button,
@@ -517,7 +510,7 @@ $dropdownButtonWidth: 25px;
 	background-color: white;
 	border-left-style: none;
 
-	font-size: 10px !important;
+	font-size: 16px !important;
 	line-height: 24px;
 	color: #555;
 
@@ -552,18 +545,13 @@ to accommodate the drop-down button.
 	
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-
-	-moz-border-radius-topright: 0;
-	-moz-border-radius-bottomright: 0;
-
-	-webkit-border-top-right-radius: 0;
-	-webkit-border-bottom-right-radius: 0;
 }
 
 #ws_menu_access_editor input.ws_has_dropdown {
 	width: 90%;
 	box-sizing: border-box;
 	height: 27px;
+	margin-top: 1px;
 }
 
 #ws_menu_access_editor.ame-is-wp53-plus input.ws_has_dropdown {
@@ -1349,7 +1337,6 @@ $colorFieldRightMargin: 5px;
 }
 
 .ws_dialog_buttons {
-	/*height: 30px;*/
 	text-align: right;
 	margin-top: 20px;
     margin-bottom: 1px;
@@ -2233,7 +2220,7 @@ span.description {
 }
 
 .wrap :target {
-	background-color: rgba(255, 230, 81, 0.8);
+	background-color: rgba(255, 230, 81, 0.7);
 }
 
 .test-wrap {

@@ -2,9 +2,9 @@
 Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
-Requires at least: 4.1
-Tested up to: 5.9.3
-Stable tag: 1.10.1
+Requires at least: 4.7
+Tested up to: 6.0
+Stable tag: 1.10.2
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -74,6 +74,14 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.10.2 =
+* Added additional validation in escaping in multiple places.
+* Fixed a number of issues related to the WordPress coding standard and the WordPress-VIP-Go coding standard.
+* Fixed visual misalignment of menu property fields and accompanying dropdown buttons.
+* Fixed inconsistent spacing aroud some radio buttons on the settings page.
+* Introduced a limit to how many unique menu URLs can be remembered by the "highlight new menu items" feature. Previously, when this feature was enabled, the plugin would record each "seen" menu item, which could cause the associated database entry to grow endlessly. Now the plugin will remember up to 700 items per user.
+* Tested with WordPress 6.0 (release candidate) and 6.1-alpha.
 
 = 1.10.1 =
 * Fixed the `[ame-user-info]` shortcode not working in login redirects. It would always output "(No user)" instead of the actual user data.

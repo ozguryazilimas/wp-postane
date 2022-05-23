@@ -21,6 +21,7 @@ $allDashiconDefinitions = '';
 $ignoreIcons = array('dashboard', 'editor-bold', 'editor-italic');
 $ignoreIcons = array_flip($ignoreIcons);
 
+// phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown -- Not fetching remote data.
 $parser = new Sabberworm\CSS\Parser(file_get_contents($dashiconsStylesheet));
 $cssDocument = $parser->parse();
 
@@ -74,8 +75,9 @@ foreach($blocks as $block) {
 
 $dashiconComment = sprintf(
 	"/*\nThis file was automatically generated from /wp-includes/css/dashicons.css.\nLast update: %s\n*/",
-	date('c')
+	gmdate('c')
 );
+// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_file_put_contents -- Dev stuff; WP_DEBUG must be enabled to get here.
 file_put_contents(
 	dirname(__FILE__) . '/../css/_dashicons.scss',
 	$dashiconComment . "\n" . $allDashiconDefinitions
@@ -101,7 +103,7 @@ foreach($icons as $name => $character) {
 	//Output each icon for visual verification.
 	printf(
 		'<div class="ame-debug-dashicon"><div class="dashicons dashicons-%1$s"></div> %1$s</div>',
-		$name
+		esc_html($name)
 	);
 
 	//Wrap the array definition at about 80 characters for legibility.

@@ -4,7 +4,7 @@ if ( isset($GLOBALS['wp_version']) && version_compare($GLOBALS['wp_version'], '5
 	$ameDialogClasses[] = 'ame-is-wp53-plus';
 }
 ?>
-<div id="ws_menu_access_editor" title="Permissions" class="<?php echo implode(' ', $ameDialogClasses); ?>">
+<div id="ws_menu_access_editor" title="Permissions" class="<?php echo esc_attr(implode(' ', $ameDialogClasses)); ?>">
 
 	<div class="ws_dialog_panel">
 		<div class="error inline" id="ws_hardcoded_role_error">
@@ -86,21 +86,21 @@ if ( isset($GLOBALS['wp_version']) && version_compare($GLOBALS['wp_version'], '5
 				<table class="widefat ws_ext_permissions_table" id="ws_post_type_permissions_table">
 					<?php foreach($cpt_actions as $group => $actions): ?>
 						<tr>
-							<td class="ws_ext_group_title" colspan="2"><?php echo $group; ?></td>
+							<td class="ws_ext_group_title" colspan="2"><?php echo esc_html($group); ?></td>
 						</tr>
-						<?php foreach($actions as $action => $readable_name): ?>
-							<?php $checkbox_id = 'ws_cpt_action-' . $action; ?>
-							<tr class="ws_ext_action-<?php echo esc_attr($action); ?>">
+						<?php foreach($actions as $action_key => $readable_name): ?>
+							<?php $checkbox_id = 'ws_cpt_action-' . $action_key; ?>
+							<tr class="ws_ext_action-<?php echo esc_attr($action_key); ?>">
 								<td class="ws_ext_action_check_column">
 									<input
 										type="checkbox"
 										id="<?php echo esc_attr($checkbox_id); ?>"
 										class="ws_ext_action_allowed"
-										data-ext_action="<?php echo esc_attr($action); ?>">
+										data-ext_action="<?php echo esc_attr($action_key); ?>">
 								</td>
 								<td class="ws_ext_action_name_column">
 									<label for="<?php echo esc_attr($checkbox_id); ?>" class="ws_ext_action_name">
-										<?php echo $readable_name; ?>
+										<?php echo esc_html($readable_name); ?>
 									</label>
 								</td>
 							</tr>
@@ -120,19 +120,19 @@ if ( isset($GLOBALS['wp_version']) && version_compare($GLOBALS['wp_version'], '5
 				?>
 
 				<table class="widefat ws_ext_permissions_table" id="ws_taxonomy_permissions_table">
-					<?php foreach($taxonomy_actions as $action => $readable_name): ?>
-						<?php $checkbox_id = 'ws_taxonomy_action-' . $action; ?>
-						<tr class="ws_ext_action-<?php echo esc_attr($action); ?>">
+					<?php foreach($taxonomy_actions as $action_key => $readable_name): ?>
+						<?php $checkbox_id = 'ws_taxonomy_action-' . $action_key; ?>
+						<tr class="ws_ext_action-<?php echo esc_attr($action_key); ?>">
 							<td class="ws_ext_action_check_column">
 								<input
 									type="checkbox"
 									id="<?php echo esc_attr($checkbox_id); ?>"
 									class="ws_ext_action_allowed"
-									data-ext_action="<?php echo esc_attr($action); ?>">
+									data-ext_action="<?php echo esc_attr($action_key); ?>">
 							</td>
 							<td class="ws_ext_action_name_column">
 								<label for="<?php echo esc_attr($checkbox_id); ?>" class="ws_ext_action_name">
-									<?php echo $readable_name; ?>
+									<?php echo esc_html($readable_name); ?>
 								</label>
 							</td>
 						</tr>
@@ -174,7 +174,7 @@ if ( isset($GLOBALS['wp_version']) && version_compare($GLOBALS['wp_version'], '5
 				Leave empty to disable.
 			">[?]</a>
 			<br>
-			<input type="text" id="ws_extra_capability" class="ws_has_dropdown" value=""><input type="button" id="ws_trigger_capability_dropdown" value="&#9660;"
+			<input type="text" id="ws_extra_capability" class="ws_has_dropdown" value=""><input type="button" id="ws_trigger_capability_dropdown" value="&#xf347;"
 			       class="button ws_dropdown_button" tabindex="-1">
 		</div>
 

@@ -97,7 +97,7 @@ abstract class ameMenu {
 			$color_presets = array();
 
 			foreach($arr['color_presets'] as $name => $preset) {
-				$name = substr(trim(strip_tags(strval($name))), 0, 250);
+				$name = substr(trim(wp_strip_all_tags(strval($name))), 0, 250);
 				if ( empty($name) || !is_array($preset) ) {
 					continue;
 				}
@@ -228,7 +228,7 @@ abstract class ameMenu {
 	public static function to_json($menu) {
 		$menu = self::add_format_header($menu);
 		//todo: Maybe use wp_json_encode() instead. At least one user had invalid UTF-8 characters in their menu.
-		$result = json_encode($menu);
+		$result = wp_json_encode($menu);
 		if ( !is_string($result) ) {
 			$message = sprintf(
 				'Failed to encode the menu configuration as JSON. json_encode returned a %s.',

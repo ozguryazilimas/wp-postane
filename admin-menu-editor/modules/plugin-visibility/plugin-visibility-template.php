@@ -6,7 +6,7 @@
 
 <div id="ame-plugin-visibility-editor">
 		<form method="post" data-bind="submit: saveChanges" class="ame-pv-save-form" action="<?php
-		echo esc_attr(add_query_arg(array('noheader' => '1'), $tabUrl));
+		echo esc_url(add_query_arg(array('noheader' => '1'), $tabUrl));
 		?>">
 
 			<?php submit_button('Save Changes', 'primary', 'submit', false); ?>

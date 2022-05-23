@@ -42,10 +42,10 @@ class ameActorSelector extends ameModule {
 
 	public function ajaxSetVisibleUsers() {
 		if ( !check_ajax_referer(self::ajaxUpdateAction, false, false) ){
-			die(__("Access denied. Invalid nonce.", 'admin-menu-editor'));
+			die(esc_html__("Access denied. Invalid nonce.", 'admin-menu-editor'));
 		}
 		if ( !$this->menuEditor->current_user_can_edit_menu() ) {
-			die(__("You don't have permission to use Admin Menu Editor Pro.", 'admin-menu-editor'));
+			die(esc_html__("You don't have permission to use Admin Menu Editor Pro.", 'admin-menu-editor'));
 		}
 
 		$post = $this->menuEditor->get_post_params();

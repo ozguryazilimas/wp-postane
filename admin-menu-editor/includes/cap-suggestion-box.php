@@ -1,3 +1,8 @@
+<?php
+if ( !defined('ABSPATH') ) {
+	exit('Direct access denied.');
+}
+?>
 <div id="ws_capability_suggestions" style="display: none;">
 	<p id="ws_previewed_caps">&nbsp;</p>
 	<table class="widefat striped">

@@ -112,7 +112,7 @@ class AutoVersioning {
 	}
 }
 
-} //class_exists()
+} // End of class exists check
 
 if ( !function_exists('wp_register_auto_versioned_script') ) {
 	function wp_register_auto_versioned_script($handle, $src, $deps = array(), $in_footer = false, $add_ver_to_filename = false) {

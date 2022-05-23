@@ -75,10 +75,7 @@ class ameRoleUtils {
 	 * @return WP_Roles
 	 */
 	public static function get_roles() {
-		global $wp_roles;
-		if ( !isset($wp_roles) ) {
-			$wp_roles = new WP_Roles();
-		}
-		return $wp_roles;
+		//Requires WP 4.3.0.
+		return wp_roles();
 	}
 }

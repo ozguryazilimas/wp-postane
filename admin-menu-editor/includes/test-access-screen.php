@@ -1,3 +1,8 @@
+<?php
+if ( !defined('ABSPATH') ) {
+	exit('Direct access denied');
+}
+?>
 <div id="ws_ame_test_access_screen">
 	<div id="ws_ame_test_inputs">
 		<label class="ws_ame_test_input">

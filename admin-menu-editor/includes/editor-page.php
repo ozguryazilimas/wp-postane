@@ -2,7 +2,7 @@
 /**
  * @var array $editor_data Various pieces of data passed by the plugin.
  */
-$current_user = wp_get_current_user();
+$ame_current_user = wp_get_current_user();
 $images_url = $editor_data['images_url'];
 $is_pro_version = apply_filters('admin_menu_editor_is_pro', false);
 $is_second_toolbar_visible = isset($_COOKIE['ame-show-second-toolbar']) && (intval($_COOKIE['ame-show-second-toolbar']) === 1);
@@ -146,6 +146,7 @@ function ame_output_toolbar_row($buttons, $icons, $classes = array()) {
 			$pairs[] = $name . '="' . esc_attr($value) . '"';
 		}
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attribute $pairs and $icon attributes were escaped with esc_attr() above.
 		printf('<a %s>%s</a>' . "\n", implode(' ', $pairs), $icon);
 	}
 
@@ -174,10 +175,9 @@ if ( !apply_filters('admin_menu_editor_is_pro', false) ){
 <?php do_action('admin_menu_editor-display_header'); ?>
 
 <?php
-if ( !empty($_GET['message']) ){
-	if ( intval($_GET['message']) == 2 ) {
-		echo '<div id="message" class="error"><p><strong>Failed to decode input! The menu wasn\'t modified.</strong></p></div>';
-	}
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Don't need that here, just showing a notice.
+if ( !empty($_GET['message']) && (intval($_GET['message']) == 2) ){
+	echo '<div id="message" class="error"><p><strong>Failed to decode input! The menu wasn\'t modified.</strong></p></div>';
 }
 
 include dirname(__FILE__) . '/../modules/access-editor/access-editor-template.php';
@@ -266,7 +266,7 @@ function ame_register_sort_buttons($toolbar) {
 	<div class="ws_basic_container">
 
 		<div class="ws_main_container" id="ws_editor_sidebar">
-		<form method="post" action="<?php echo esc_attr(add_query_arg('noheader', '1', $editor_data['current_tab_url'])); ?>" id='ws_main_form' name='ws_main_form'>
+		<form method="post" action="<?php echo esc_url(add_query_arg('noheader', '1', $editor_data['current_tab_url'])); ?>" id='ws_main_form' name='ws_main_form'>
 			<?php wp_nonce_field('menu-editor-form'); ?>
 			<input type="hidden" name="action" value="save_menu">
 			<?php
@@ -302,7 +302,7 @@ function ame_register_sort_buttons($toolbar) {
 			?>
 			<input type="button"
 			       id='ws_toggle_editor_layout'
-			       value="<?php echo $compact_layout_title; ?>"
+			       value="<?php echo esc_attr($compact_layout_title); ?>"
 			       class="button ws_main_button" />
 
 			<?php
@@ -321,7 +321,7 @@ function ame_register_sort_buttons($toolbar) {
 			$box_class = $is_general_box_open ? '' : 'closed';
 
 			?>
-				<div class="postbox ws_ame_custom_postbox <?php echo $box_class; ?>" id="ws_ame_general_vis_box">
+				<div class="postbox ws_ame_custom_postbox <?php echo esc_attr($box_class); ?>" id="ws_ame_general_vis_box">
 					<button type="button" class="handlediv button-link">
 						<span class="toggle-indicator"></span>
 					</button>
@@ -346,11 +346,11 @@ function ame_register_sort_buttons($toolbar) {
 		}
 
 		/** @noinspection HtmlUnknownTarget */
-		$how_to_link_template = '<a href="' . htmlspecialchars($tutorial_base_url) . '%1$s" target="_blank" title="Opens in a new tab">%2$s</a>';
+		$how_to_link_template = '<a href="' . esc_url($tutorial_base_url) . '%1$s" target="_blank" title="Opens in a new tab">%2$s</a>';
 		$how_to_item_template = '<li>' . $how_to_link_template . '</li>';
 
 		?>
-			<div class="postbox ws_ame_custom_postbox <?php echo $box_class; ?>" id="ws_ame_how_to_box">
+			<div class="postbox ws_ame_custom_postbox <?php echo esc_attr($box_class); ?>" id="ws_ame_how_to_box">
 				<button type="button" class="handlediv button-link">
 					<span class="toggle-indicator"></span>
 				</button>
@@ -362,7 +362,12 @@ function ame_register_sort_buttons($toolbar) {
 							//Pro version tutorials.
 							?>
 							<li><?php
-								printf($how_to_link_template, 'how-to-hide-a-menu-item/', 'Hide a Menu...');
+								printf(
+									//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML template contains HTML.
+									$how_to_link_template,
+									'how-to-hide-a-menu-item/',
+									'Hide a Menu...'
+								);
 								?>
 								<ul class="ame-tutorial-list">
 									<?php
@@ -375,7 +380,12 @@ function ame_register_sort_buttons($toolbar) {
 										)
 										as $how_to_url => $how_to_title
 									) {
-										printf($how_to_item_template, esc_attr($how_to_url), $how_to_title);
+										printf(
+											//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML template.
+											$how_to_item_template,
+											esc_attr($how_to_url),
+											esc_html($how_to_title)
+										);
 									}
 									?>
 								</ul>
@@ -389,7 +399,12 @@ function ame_register_sort_buttons($toolbar) {
 								)
 								as $how_to_url => $how_to_title
 							) {
-								printf($how_to_item_template, esc_attr($how_to_url), $how_to_title);
+								printf(
+								//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML template
+									$how_to_item_template,
+									esc_attr($how_to_url),
+									esc_html($how_to_title)
+								);
 							}
 
 						else:
@@ -402,7 +417,12 @@ function ame_register_sort_buttons($toolbar) {
 								)
 								as $how_to_url => $how_to_title
 							) {
-								printf($how_to_item_template, esc_attr($how_to_url), $how_to_title);
+								printf(
+								//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML template
+									$how_to_item_template,
+									esc_attr($how_to_url),
+									esc_html($how_to_title)
+								);
 							}
 						endif;
 						?>
@@ -439,11 +459,11 @@ function ame_register_sort_buttons($toolbar) {
 						<li>Hide items from specific users.</li>
 						<li>Menu import and export.</li>
 						<li>Change menu colors.</li>
-						<li><?php echo $selected_variation; ?></li>
+						<li><?php echo esc_html($selected_variation); ?></li>
 					</ul>
-					<a href="<?php echo esc_attr($pro_version_link); ?>" target="_blank">Learn more</a>
+					<a href="<?php echo esc_url($pro_version_link); ?>" target="_blank">Learn more</a>
 					|
-					<a href="http://amedemo.com/" target="_blank">Try online demo</a>
+					<a href="https://amedemo.com/" target="_blank">Try online demo</a>
 				</div>
 			</div>
 		<?php
@@ -471,7 +491,7 @@ function ame_register_sort_buttons($toolbar) {
  		$capSelector[] = sprintf(
 		 	'<option value="%s">%s</option>',
 		 	esc_attr($role_id),
-		 	$role_name
+		 	esc_html($role_name)
 	 	);
  	}
  	$capSelector[] = '</optgroup>';
@@ -481,12 +501,13 @@ function ame_register_sort_buttons($toolbar) {
  		$capSelector[] = sprintf(
 		 	'<option value="%s">%s</option>',
 		 	esc_attr($cap),
-		 	$cap
+		 	esc_html($cap)
 	 	);
  	}
  	$capSelector[] = '</optgroup>';
  	$capSelector[] = '</select>';
 
+	 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated HTML, should be escaped above.
  	echo implode("\n", $capSelector);
 ?>
 
@@ -500,15 +521,15 @@ function ame_register_sort_buttons($toolbar) {
 			'admin_menu_editor-icon_selector_tabs',
 			array('ws_core_icons_tab' => 'Dashicons')
 		);
-		foreach($iconSelectorTabs as $id => $caption) {
-			printf('<li><a href="#%s">%s</a></li>', esc_attr($id), $caption);
+		foreach($iconSelectorTabs as $tabId => $caption) {
+			printf('<li><a href="#%s">%s</a></li>', esc_attr($tabId), esc_html($caption));
 		}
 		?>
 	</ul>
 
 	<?php
 	//Let the user select a custom icon via the media uploader.
-	//We only support the new WP 3.5+ media API. Hence the function_exists() check.
+	//We only support the new WP 3.5+ media API. Hence, the function_exists() check.
 	if ( function_exists('wp_enqueue_media') ):
 		?>
 		<input type="button" class="button"
@@ -540,7 +561,7 @@ function ame_register_sort_buttons($toolbar) {
 					<div class="ws_icon_image icon16 icon-%2$s"><br></div>
 				</div>',
 				esc_attr(ucwords($icon)),
-				$icon
+				esc_attr($icon)
 			);
 		}
 	}
@@ -623,7 +644,7 @@ function ame_register_sort_buttons($toolbar) {
 
 	?>
 	<div class="ws_icon_option ws_custom_image_icon" title="Custom image" style="display: none;">
-		<img src="<?php echo esc_attr(admin_url('images/loading.gif')); ?>">
+		<img src="<?php echo esc_url(admin_url('images/loading.gif')); ?>" alt="Loading indicator">
 	</div>
 
 		<div class="clear"></div>
@@ -691,7 +712,7 @@ function ame_register_sort_buttons($toolbar) {
 		<?php
 		submit_button('Hide it from all users', 'secondary', 'ws_hide_menu_from_everyone', false);
 		submit_button(
-			sprintf('Hide it from everyone except "%s"', $current_user->get('user_login')),
+			sprintf('Hide it from everyone except "%s"', $ame_current_user->get('user_login')),
 			'secondary',
 			'ws_hide_menu_except_current_user',
 			false
@@ -720,6 +741,12 @@ if ( $is_pro_version ) {
 
 <!--suppress JSUnusedLocalSymbols These variables are actually used by menu-editor.js -->
 <script type='text/javascript'>
-var defaultMenu = <?php echo $editor_data['default_menu_js']; ?>;
-var customMenu = <?php echo $editor_data['custom_menu_js']; ?>;
+	var defaultMenu = <?php
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Should be JSON.
+		echo $editor_data['default_menu_js'];
+		?>;
+	var customMenu = <?php
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Should also be JSON.
+		echo $editor_data['custom_menu_js'];
+		?>;
 </script>
