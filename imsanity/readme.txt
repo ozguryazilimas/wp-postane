@@ -5,7 +5,7 @@ Tags: image, scale, resize, space saver, quality, upload
 Requires at least: 5.5
 Tested up to: 6.0
 Requires PHP: 7.2
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 License: GPLv3
 
 Imsanity automatically resizes huge image uploads. Are contributors uploading huge photos? Tired of manually resizing your images? Imsanity to the rescue!
@@ -106,6 +106,10 @@ Questions may be posted on the support forum at https://wordpress.org/support/pl
 
 == Changelog ==
 
+= 2.8.1 =
+* changed: escape and sanitize more things
+* changed: tighten PHPCS rules used for pre-release testing
+
 = 2.8.0 =
 * added: support for resizing WebP images via ImageMagick
 * changed: update attachment file size to keep WP 6.0 metadata in sync
@@ -129,23 +133,6 @@ Questions may be posted on the support forum at https://wordpress.org/support/pl
 * changed: PNG images will not be converted if transparency is found
 * fixed: BMP files not converted when server uses image/x-ms-bmp as mime identifier
 * removed: Deep Scan option is the default behavior now, no need for configuration
-
-= 2.6.1 =
-* fixed: wrong parameter passed to imsanity_attachment_path()
-
-= 2.6.0 =
-* added: wp-cli command 'wp help imsanity resize'
-* fixed: adding an image to a post in pre-draft status uses wrong settings/dimensions
-
-= 2.5.0 =
-* added: imsanity_allowed_mimes filter to override the default list of image formats allowed
-* added: imsanity_orientation filter to modify auto-rotation behavior, return 1 to bypass
-* added: imsanity_get_max_width_height filter to customize max width/height
-* added: define network settings as defaults for new sites in multi-site mode
-* fixed: WP threshold of 2560 overrides Imsanity when using larger dimensions
-* fixed: settings link on plugins page broken in some cases
-* fixed: crop filter not applied if max width or height is equal to existing dimension
-* fixed: invalid capabilities used for settings page - props @cfoellmann
 
 = Earlier versions =
 Please refer to the separate changelog.txt file.
