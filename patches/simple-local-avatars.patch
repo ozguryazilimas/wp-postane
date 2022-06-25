@@ -1,17 +1,16 @@
 diff --git a/simple-local-avatars/includes/class-simple-local-avatars.php b/simple-local-avatars/includes/class-simple-local-avatars.php
-index bacb9576..ed2e5264 100644
+index 0a2cdb1c..869cd5cc 100644
 --- a/simple-local-avatars/includes/class-simple-local-avatars.php
 +++ b/simple-local-avatars/includes/class-simple-local-avatars.php
-@@ -277,6 +277,8 @@ class Simple_Local_Avatars {
- 	 * @param int   $size        Requested avatar size.
+@@ -294,6 +294,7 @@ class Simple_Local_Avatars {
+ 	 * @return int|false
  	 */
- 	public function get_simple_local_avatar_url( $id_or_email, $size ) {
+ 	public function get_user_id( $id_or_email ) {
 +		global $wpdb;
-+
+ 		$user_id = false;
+ 
  		if ( is_numeric( $id_or_email ) ) {
- 			$user_id = (int) $id_or_email;
- 		} elseif ( is_object( $id_or_email ) && ! empty( $id_or_email->user_id ) ) {
-@@ -286,6 +288,8 @@ class Simple_Local_Avatars {
+@@ -305,6 +306,8 @@ class Simple_Local_Avatars {
  		} elseif ( is_string( $id_or_email ) ) {
  			$user    = get_user_by( 'email', $id_or_email );
  			$user_id = $user ? $user->ID : '';
@@ -19,4 +18,4 @@ index bacb9576..ed2e5264 100644
 +			$user_id = $wpdb->get_var("SELECT user_id FROM wp_comments WHERE comment_author_email = '" . $id_or_email . "' LIMIT 1");
  		}
  
- 		if ( empty( $user_id ) ) {
+ 		return $user_id;
