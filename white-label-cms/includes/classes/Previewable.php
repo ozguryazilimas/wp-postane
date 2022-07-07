@@ -55,6 +55,10 @@ class WLCMS_Previewable
         return $this->preview_section;
     }
 
+    public function settings() {
+        return [];
+    }
+
     public function get_settings($key)
     {
         // Prepend "_" placeholder if in preview mode to get the preview login settings

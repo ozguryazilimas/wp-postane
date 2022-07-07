@@ -4,11 +4,6 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
 {
 
     private $is_dashboard_all_hidden;
-    private $is_fullwidth;
-    private $welcome_title;
-    private $welcome_show_title;
-    private $welcome_description;
-    private $welcome_content;
 
     public function __construct()
     {
@@ -191,58 +186,55 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
     {
         global $wp_meta_boxes;
 
-        if ($this->is_dashboard_all_hidden() && ($this->get_settings('hide_at_a_glance') &&
-            $this->get_settings('hide_activities') &&
-            $this->get_settings('hide_recent_comments') &&
-            $this->get_settings('hide_news_and_events') &&
-            $this->get_settings('hide_quick_press'))) {
-
-            if (isset($wp_meta_boxes['dashboard'])) :
-                foreach ($wp_meta_boxes['dashboard'] as $key => $widget) {
-
-                if (isset($wp_meta_boxes['dashboard'][$key]['core'])) :
-                    foreach ($wp_meta_boxes['dashboard'][$key]['core'] as $dashboard_key => $dashboard) {
-                    if ($this->remove_dashboard_widget($dashboard_key)) {
-                        unset($wp_meta_boxes['dashboard'][$key]['core'][$dashboard_key]);
-                    }
-                }
-                endif;
-            }
-            endif;
+        $wlcms_widgets = $this->get_settings('dashboard_widgets');
+        
+        if (!(isset($wp_meta_boxes['dashboard']) && is_array($wp_meta_boxes['dashboard']))) {
             return;
         }
-
-        if ($this->get_settings('hide_at_a_glance')) {
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
-        }
-
-        if ($this->get_settings('hide_activities')) {
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
-        }
-
-        if ($this->get_settings('hide_recent_comments')) {
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
-        }
-
-        if ($this->get_settings('hide_news_and_events')) {
-            unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
-        }
-
-        if ($this->get_settings('hide_quick_press')) {
-            unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
+        
+        foreach ($wp_meta_boxes['dashboard'] as $section_key => $section) {
+            if (!is_array($section)) {
+                continue;
+            }
+            foreach ( $section as $position_key => $position ) {
+                if (!is_array($position)) {
+                    continue;
+                }
+                foreach ( $position as $widget_id => $widget ) {
+                    if ($this->is_wlcms_widget($widget_id)) {
+                        continue;
+                    }elseif (!$this->is_dashboard_all_hidden()) {
+                        if($wlcms_widgets && is_array($wlcms_widgets) && count($wlcms_widgets) > 0){
+                            if (!in_array($widget_id, $wlcms_widgets)) {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
+                    }
+                    unset($wp_meta_boxes['dashboard'][$section_key][$position_key][$widget_id]);
+                }
+            
+            }
         }
     }
-    private function remove_dashboard_widget($dashboard_key = false)
+
+    private function is_wlcms_widget($dashboard_key = false)
     {
-        if (!$dashboard_key) return false;
+        if (!$dashboard_key){
+            return false;
+        }
 
-        if (strpos($dashboard_key, 'custom_help_widget') !== false) return false;
+        if (strpos($dashboard_key, 'custom_vum_widget') !== false) {
+            return true;
+        }
 
-        return !in_array($dashboard_key, $this->excluded_widgets());
+        return in_array($dashboard_key, $this->excluded_widgets());
     }
+    
     private function excluded_widgets()
     {
-        return array('wlcms_rss_box');
+        return apply_filters('wlcms_exclude_dashboard_metaboxes', array('wlcms_rss_box'));
     }
 
     /**
@@ -334,7 +326,7 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
             return;
         }
 
-        wlcms_set_css('.postbox-container .meta-box-sortables.empty-container, .index-php .empty-container', array('border' => '0'));
+        wlcms_set_css('body.index-php #dashboard-widgets .postbox-container .empty-container', array('border' => '0', 'visibility' => 'hidden'));
     }
 
     /**
@@ -480,5 +472,25 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         delete_metadata( 'user', 0, 'vum_hide_dashboard'. $key, '', true );
 
         WLCMS_Queue('Welcome dashboard message successfully reset.');
+    }
+
+    public function widgets()
+    {
+		global $wp_meta_boxes;
+
+        if (isset( $wp_meta_boxes['dashboard'] ) && is_array( $wp_meta_boxes['dashboard'])) {
+            return $wp_meta_boxes['dashboard'];
+        }
+        
+        require_once ABSPATH . '/wp-admin/includes/dashboard.php';
+
+        set_current_screen( 'dashboard' );
+        //remove wlcms hook
+        remove_action('wp_dashboard_setup', array($this, 'dashboard_setup'), 999);
+        wp_dashboard_setup();
+        //re-apply wlcms hook
+        add_action('wp_dashboard_setup', array($this, 'dashboard_setup'), 999);
+        set_current_screen( get_current_screen() );
+		return $wp_meta_boxes['dashboard'];
     }
 }

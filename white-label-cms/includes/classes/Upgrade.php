@@ -19,7 +19,51 @@ class WLCMS_Upgrades
         global $wpdb;
 
         $this->settings = wlcms()->Settings();
+        
+        if (version_compare($this->settings->get('version'), '2.3', '<')) {
+            $this->process_upgrade_settings_dashboard();
+        }
+        
+        
+        $this->process_legacy();
+    }
+    public function process_upgrade_settings_dashboard()
+    {
+        $widgets = [];
+        
+        if ($this->settings->get('hide_at_a_glance') || $this->settings->get('hide_all_dashboard_panels')) {
+            $widgets[] = 'dashboard_right_now';
+            $this->settings->remove('hide_at_a_glance');
+        }
+        
+        if ($this->settings->get('hide_activities') || $this->settings->get('hide_all_dashboard_panels')) {
+            $widgets[] = 'dashboard_activity';
+            $this->settings->remove('hide_activities');
+        }
+        
+        if ($this->settings->get('hide_recent_comments') || $this->settings->get('hide_all_dashboard_panels')) {
+            $widgets[] = 'dashboard_recent_comments';
+            $this->settings->remove('hide_recent_comments');
+        }
+        
+        if ($this->settings->get('hide_news_and_events') || $this->settings->get('hide_all_dashboard_panels')) {
+            $widgets[] = 'dashboard_primary';
+            $this->settings->remove('hide_news_and_events');
+        }
+        
+        if ($this->settings->get('hide_quick_press')) {
+            $widgets[] = 'dashboard_quick_press';
+            $this->settings->remove('hide_quick_press');
+        }
+        $this->settings->set('dashboard_widgets', $widgets);
+        $this->settings->set('version', WLCMS_VERSION);
+        $this->settings->save();
 
+    }
+
+    public function process_legacy()
+    {
+        global $wpdb;
         $legacy_version = get_option('wlcms_o_ver', false);
 
         if (!$legacy_version) {
@@ -27,6 +71,8 @@ class WLCMS_Upgrades
         }
 
         $new_wlcms_options = get_option('wlcms_options', false);
+        
+
         if ($legacy_version && $new_wlcms_options) {
             return;
         }
@@ -217,16 +263,6 @@ class WLCMS_Upgrades
         $url = 'themes.php';
         $count_sub_menus = 0;
         
-        /*
-            'wlcms_o_hide_links', //////          
-            'wlcms_o_subtemplate_hide_16', = Hide Header
-            'wlcms_o_subtemplate_hide_15', = Hide Header
-            'wlcms_o_subtemplate_hide_10', = Hide Menus
-            'wlcms_o_subtemplate_hide_7', = Hide Widgets
-            'wlcms_o_subtemplate_hide_6', = Hide Customize
-            'wlcms_o_subtemplate_hide_5', = Hide Themes
-         */
-
         $theme_subs = array(
             'wlcms_o_subtemplate_hide_16' => 'custom-header',
             'wlcms_o_subtemplate_hide_15' => 'customize-php038autofocus%5bcontrol%5dheader_image',

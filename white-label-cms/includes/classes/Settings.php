@@ -310,7 +310,7 @@ class WLCMS_Settings
         $settings = $this->default_options();
         return isset($settings[$key]) ? $settings[$key] : null;
     }
-
+    
     public function default_options()
     {
 
@@ -342,6 +342,7 @@ class WLCMS_Settings
             'dashboard_title' => 'Dashboard',
             'dashboard_role_stat' => false,
             'dashboard_widgets_visibility_roles' => array('administrator', 'editor', 'author', 'contributor', 'subscriber'),
+            'dashboard_widgets' => array(),
             'hide_all_dashboard_panels' => false,
             'hide_at_a_glance' => false,
             'hide_activities' => false,

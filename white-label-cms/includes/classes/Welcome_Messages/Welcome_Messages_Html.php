@@ -15,7 +15,7 @@ class Welcome_Messages_Html
         }
 
         wp_add_dashboard_widget(
-            'custom_help_widget' . $key,
+            'custom_vum_widget' . $key,
             isset($this->settings['title']) ? $this->settings['title'] : '&nbsp;',
             array($this, 'welcome_description'),
             null,
@@ -51,6 +51,6 @@ class Welcome_Messages_Html
 
     public function template()
     {
-        return isset($this->settings['description']) ? $this->settings['description'] : '';
+        return isset($this->settings['description']) ? wpautop($this->settings['description']) : '';
     }
 }
