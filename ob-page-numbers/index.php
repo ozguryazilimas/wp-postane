@@ -16,15 +16,15 @@ $obPageNumbers-> init('ob_page_numbers_values');
 
 
 
-class ob_page_numbers {
+class ob_page_numbers_class {
  
 function stylesheet($head_stylesheet = NULL) {
-	if(is_archive() || is_search() || is_home() ||is_page()) : 
+	if(is_archive() || is_search() || is_home() ||is_page()) {
 		$theme = get_option("ob_page_numbers_theme",array('text_string' => "default"));
 		printf('<link rel="stylesheet" href="%s" type="text/css" media="screen" />',
 				plugins_url( sprintf('css/%s.css',$theme['text_string']), __FILE__ ));
-		endif;
-    }
+	}
+}
 
 
 function action() {
@@ -90,17 +90,24 @@ function action() {
  
   	$pagingString.= "</ul>\n<div style='float: none; clear: both;'></div>\n</div>\n";
 	
-  echo $pagingString;
+	echo $pagingString;
 }
 
 // end class
 }
 
-add_action('wp_head', array('ob_page_numbers','stylesheet'));
+function ob_page_numbers_stylesheet($args = null) {
+	$a = new ob_page_numbers_class();
+	$a->stylesheet($args);
+}
+
+// add_action('wp_head', array('ob_page_numbers','stylesheet'));
+add_action('wp_head', 'ob_page_numbers_stylesheet');
 
 function ob_page_numbers () {
-	$a = "ob_page_numbers";
-	$b = new $a;
+	// $a = "ob_page_numbers";
+	// $b = new $a;
+	$b = new ob_page_numbers_class();
 	$b->action();
 	}
 
