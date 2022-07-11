@@ -141,6 +141,6 @@ index c5f33bb1..b93eed7c 100644
 +    <?php
 +  }
 +}
-+add_action('admin_print_footer_scripts', 'ispiyon_shortcode_button');
++add_action('after_wp_tiny_mce', 'ispiyon_shortcode_button');
 +
 +?>

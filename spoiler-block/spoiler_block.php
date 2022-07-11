@@ -156,6 +156,6 @@ function ispiyon_shortcode_button() {
     <?php
   }
 }
-add_action('admin_print_footer_scripts', 'ispiyon_shortcode_button');
+add_action('after_wp_tiny_mce', 'ispiyon_shortcode_button');
 
 ?>
