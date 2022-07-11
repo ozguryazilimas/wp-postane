@@ -1,5 +1,9 @@
 CHANGES LOG (full version).
 ===========================
+= [4.63] 11.07.2022 =
+* Update: Marked as compatible with WordPress 6.1
+* Update: Few notices (e.g. "Constant FILTER_SANITIZE_STRING is deprecated") was fixed for better compatibility with PHP 8.1.
+* Update: URE does not try to deactivate itself in case another instance is active, just shows notice and stops execution. 
 
 = [4.62] 05.05.2022 =
 * Update: Marked as compatible with WordPress 6.0

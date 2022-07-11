@@ -120,7 +120,7 @@ class URE_Role_View extends URE_View {
         $caps = array_keys($caps_to_remove);
         asort($caps);
         $network_admin = filter_input(INPUT_POST, 'network_admin', FILTER_SANITIZE_NUMBER_INT);
-        $current_role = filter_input(INPUT_POST, 'current_role', FILTER_SANITIZE_STRING);
+        $current_role = isset( $_POST['current_role'] ) ? URE_Base_Lib::filter_string_var( $_POST['current_role'] ) : '';
         if (!isset($wp_roles->roles[$current_role])) {
             $current_role = '';
         }

@@ -113,6 +113,26 @@ class URE_Base_Lib {
     // end of show_message()
     
 
+    /*
+     * Replacer for FILTER_SANITIZE_STRING deprecated with PHP 8.1
+     */
+    public static function filter_string_polyfill(string $string): string {
+        
+        $str = preg_replace('/\x00|<[^>]*>?/', '', $string);
+        return str_replace(["'", '"'], ['&#39;', '&#34;'], $str);
+        
+    }
+    // end of filter_string_polyfill()
+    
+    public static function filter_string_var( $raw_str ) {
+        
+        $value1 = filter_var( $raw_str, FILTER_UNSAFE_RAW );
+        $value2 = self::filter_string_polyfill( $value1 );
+        
+        return $value2;
+    }
+    // end of filter_string_var()
+    
     /**
      * Returns value by name from GET/POST/REQUEST. Minimal type checking is provided
      * 
@@ -128,14 +148,14 @@ class URE_Base_Lib {
         switch ( $request_type ) {
             case 'get': {
                 if ( isset( $_GET[$var_name] ) ) {
-                    $result = filter_var( $_GET[$var_name], FILTER_SANITIZE_STRING );
+                    $result = self::filter_string_var( $_GET[$var_name] );
                 }                
                 break;
             }
             case 'post': {
                 if ( isset( $_POST[$var_name] ) ) {
                     if ( $var_type!='checkbox') {
-                        $result = filter_var( $_POST[$var_name], FILTER_SANITIZE_STRING );
+                        $result = self::filter_string_var( $_POST[$var_name] );
                     } else {
                         $result = 1;
                     }
@@ -144,7 +164,7 @@ class URE_Base_Lib {
             }
             case 'request': {
                 if ( isset( $_REQUEST[$var_name] ) ) {
-                    $result = filter_var( $_REQUEST[$var_name], FILTER_SANITIZE_STRING );
+                    $result = self::filter_string_var( $_REQUEST[$var_name] );
                 }
                 break;
             }

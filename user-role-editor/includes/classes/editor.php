@@ -675,7 +675,7 @@ class URE_Editor {
         
         $select_primary_role = apply_filters( 'ure_users_select_primary_role', true );
         if ( $select_primary_role  || $this->lib->is_super_admin()) {
-            $role = isset( $_POST['values']['primary_role'] ) ? filter_var( $_POST['values']['primary_role'], FILTER_SANITIZE_STRING ) : false;  
+            $role = isset( $_POST['values']['primary_role'] ) ? URE_Base_Lib::filter_string_var( $_POST['values']['primary_role'] ) : false;  
             if ( empty( $role ) || !isset( $wp_roles->roles[$role] ) ) {
                 $role = '';
             }

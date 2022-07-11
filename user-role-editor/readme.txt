@@ -2,8 +2,8 @@
 Contributors: shinephp
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.4
-Tested up to: 6.0
-Stable tag: 4.62
+Tested up to: 6.1
+Stable tag: 4.63
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,17 +80,17 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog =
 
+= [4.63] 11.07.2022 =
+* Update: Marked as compatible with WordPress 6.1
+* Update: Few notices (e.g. "Constant FILTER_SANITIZE_STRING is deprecated") was fixed for better compatibility with PHP 8.1.
+* Update: URE does not try to deactivate itself in case another instance is active, just shows notice and stops execution. 
+
 = [4.62] 05.05.2022 =
 * Update: Marked as compatible with WordPress 6.0
 * New: It's possible to translate custom role names using [PolyLang](https://wordpress.org/plugins/polylang/) plugin.
 * Update: URE does not sort roles in WordPress dropdown lists. In order to sort roles by name return 'name' from 'ure_sort_wp_roles_list' filter.
 * Update: User capabilities view page minor CSS enhancements.
 * Update: Settings->About: "Donate" link was removed.
-
-= [4.61.2] 01.03.2022 =
-* Update: Marked as compatible with WordPress 5.9.1
-* Fix: "Users->Add New" page - other selected roles were not saved.
-* Update: URE uses WordPress notification styles for own operation result output.
  
 File changelog.txt contains the full list of changes.
 
@@ -102,11 +102,10 @@ I am ready to answer on your questions about plugin usage. Use [plugin page comm
 
 == Upgrade Notice ==
 
-= [4.62] 01.05.2022 =
-* Update: Marked as compatible with WordPress 6.0
-* New: It's possible to translate custom role names using [PolyLang](https://wordpress.org/plugins/polylang/) plugin.
-* Update: URE does not sort roles in WordPress dropdown lists. In order to sort roles by name return 'name' from 'ure_sort_wp_roles_list' filter.
-* Update: User capabilities view page minor CSS enhancements.
-* Update: Settings->About: "Donate" link was removed.
+= [4.63] 11.07.2022 =
+* Update: Marked as compatible with WordPress 6.1
+* Update: Few notices (e.g. "Constant FILTER_SANITIZE_STRING is deprecated") was fixed for better compatibility with PHP 8.1.
+* Update: URE does not try to deactivate itself in case another instance is active, just shows notice and stops execution. 
+
 
 
