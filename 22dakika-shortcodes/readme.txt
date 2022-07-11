@@ -3,8 +3,8 @@ Contributors:
 Donate link:
 Tags: 22dakika, shortcodes, oyuncu, dizi, serial, actor, actress
 Requires at least: 4.3.0
-Tested up to: 5.8.1
-Stable tag: 1.5.1
+Tested up to: 6.0.1
+Stable tag: 1.5.2
 
 Shortcode plugin for 22dakika.
 
