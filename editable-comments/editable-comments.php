@@ -284,5 +284,6 @@ class WPEditableComments{
 		return $comment_text;
 	}
 }
-new WPEditableComments();
+global $wp_editable_comments;
+$wp_editable_comments = new WPEditableComments();
 ?>
