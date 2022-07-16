@@ -1,5 +1,5 @@
 diff --git a/editable-comments/editable-comments.php b/editable-comments/editable-comments.php
-index 25c9888e..3ff02e1f 100644
+index 25c9888e..43598a09 100644
 --- a/editable-comments/editable-comments.php
 +++ b/editable-comments/editable-comments.php
 @@ -9,7 +9,7 @@ Author URI: http://julienappert.com
@@ -41,3 +41,11 @@ index 25c9888e..3ff02e1f 100644
  		
  	}
  	
+@@ -277,5 +284,6 @@ class WPEditableComments{
+ 		return $comment_text;
+ 	}
+ }
+-new WPEditableComments();
++global $wp_editable_comments;
++$wp_editable_comments = new WPEditableComments();
+ ?>
