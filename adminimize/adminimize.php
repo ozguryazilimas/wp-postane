@@ -7,7 +7,7 @@
  * Description: Visually compresses the administrative meta-boxes so that more admin page content can be initially seen. The plugin that lets you hide 'unnecessary' items from the WordPress administration menu, for all roles of your install. You can also hide post meta controls on the edit-area to simplify the interface. It is possible to simplify the admin in different for all roles.
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de/
- * Version:     1.11.7
+ * Version:     1.11.8
  * License:     GPLv2+
  *
  * Php Version 5.6
@@ -15,7 +15,7 @@
  * @package WordPress
  * @author  Frank Bültge <frank@bueltge.de>
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @version 2020-07-15
+ * @version 2022-07-19
  */
 
 /**
@@ -689,6 +689,12 @@ function _mw_adminimize_set_menu_option() {
 			// Sub Menu Settings.
 			if ( isset( $wp_submenu ) && ! empty( $wp_submenu[ $menu_slug ] ) ) {
 				foreach ( (array) $wp_submenu[ $menu_slug ] as $subindex => $subitem ) {
+
+					// @see https://github.com/bueltge/adminimize/issues/149
+					if ( is_object( $subitem ) ) {
+						$subitem = json_decode( json_encode( $subitem ), true );
+					}
+
 					// Check, if is Sub Menu item in the user role settings?
 					if (
 						isset( $mw_adminimize_submenu )
@@ -1238,15 +1244,15 @@ function _mw_adminimize_on_load_page() {
  *
  * @return string
  */
-function _mw_adminimize_get_option_value( $key = FALSE ) {
+function _mw_adminimize_get_option_value( $key = false ) {
 
-	$adminimizeoptions = FALSE;
+	$adminimizeoptions = false;
 	if ( ! _mw_adminimize_exclude_settings_page() ) {
 		$adminimizeoptions = wp_cache_get( 'mw_adminimize' );
 	}
 
-	if ( FALSE === $adminimizeoptions ) {
-		// check for use on multisite
+	if ( false === $adminimizeoptions ) {
+		// check for use on multisite.
 		if ( _mw_adminimize_is_active_on_multisite() ) {
 			$adminimizeoptions = (array) get_site_option( 'mw_adminimize', array() );
 		} else {
@@ -1259,7 +1265,7 @@ function _mw_adminimize_get_option_value( $key = FALSE ) {
 		return $adminimizeoptions;
 	}
 
-	return array_key_exists( $key, $adminimizeoptions ) ? $adminimizeoptions[ $key ] : NULL;
+	return array_key_exists( $key, $adminimizeoptions ) ? $adminimizeoptions[ $key ] : null;
 }
 
 /**
