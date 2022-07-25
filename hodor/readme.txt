@@ -3,8 +3,8 @@ Contributors:
 Donate link:
 Tags: hodor, captcha, recaptcha, login, register, protect, spam, bot, security
 Requires at least: 4.0.0
-Tested up to: 5.8.1
-Stable tag: 0.5.1
+Tested up to: 6.0.1
+Stable tag: 0.6.0
 
 Hodor (Human only detection of registration) makes it hard for spam bots to
 register.

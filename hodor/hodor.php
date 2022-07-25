@@ -3,7 +3,7 @@
 Plugin Name: Hodor
 Plugin URI: https://www.ozguryazilim.com.tr
 Description: Protects registration screen from automated attacks.
-Version: 0.5.1
+Version: 0.6.0
 Author: Onur Küçük
 Author URI: https://www.delipenguen.net
 License: GPL2
@@ -134,7 +134,7 @@ function hodor_register_form_customize() {
       echo ';';
 
       foreach ($shuffled_keys as $k) {
-        if (hash_equals($redirect_key, $k) || hash_equals($register_form_salt_key, $k)) {
+        if (hash_equals($redirect_key, strval($k)) || hash_equals($register_form_salt_key, strval($k))) {
           continue;
         }
 
