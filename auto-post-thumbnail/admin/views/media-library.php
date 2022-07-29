@@ -38,7 +38,7 @@ if ( isset( $_GET['post_id'] ) ) {
 			}
 			$is_pro = "<sup class='wapt-sup-pro'>" . $is_pro . '</sup>';
 
-			echo "<li id='tabs-" . intval( $i ++ ) . "'>" . esc_html( strtoupper( $src ) ) . esc_html( $is_pro ) . '</li>';
+			echo "<li id='tabs-" . intval( $i ++ ) . "'>" . esc_html( strtoupper( $src ) ) . $is_pro . '</li>';
 		}
 		?>
 	</ul>

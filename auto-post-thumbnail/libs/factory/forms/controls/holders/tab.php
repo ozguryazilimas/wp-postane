@@ -14,14 +14,14 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms450_TabHolder') ) {
+	if( !class_exists('Wbcr_FactoryForms455_TabHolder') ) {
 
 		/**
 		 * Tab Control Holder
 		 *
 		 * @since 1.0.0
 		 */
-		class Wbcr_FactoryForms450_TabHolder extends Wbcr_FactoryForms450_Holder {
+		class Wbcr_FactoryForms455_TabHolder extends Wbcr_FactoryForms455_Holder {
 
 			/**
 			 * A holder type.
@@ -44,7 +44,7 @@
 			 *
 			 * @since 1.0.0
 			 * @param mixed[] $options A holder options.
-			 * @param FactoryForms450_Form $form A parent form.
+			 * @param FactoryForms455_Form $form A parent form.
 			 */
 			public function __construct($options, $form)
 			{
@@ -88,7 +88,7 @@
 								$tab_icon = $element->options['icon'];
 							}
 
-							$builder = new Wbcr_FactoryForms450_HtmlAttributeBuilder();
+							$builder = new Wbcr_FactoryForms455_HtmlAttributeBuilder();
 
 							$builder->addCssClass('factory-tab-item-header');
 							$builder->addCssClass('factory-tab-item-header-' . $element->getName());

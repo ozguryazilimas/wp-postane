@@ -36,20 +36,23 @@ class GoogleImages implements ImageSearch {
 	 * @throws Exception
 	 */
 	public function search( $query, $page ) {
+		/*
 		if ( isset( $_POST['rights'] ) && (int) $_POST['rights'] ) {
 			$rights = '&rights=(cc_publicdomain%7Ccc_attribute%7Ccc_sharealike).-(cc_noncommercial%7Ccc_nonderived)';
 		} else {
 			$rights = '';
 		}
+		*/
+		$rights = '&rights=(cc_publicdomain%7Ccc_attribute%7Ccc_sharealike).-(cc_noncommercial%7Ccc_nonderived)';
 
 		$start = ( ( $page - 1 ) * 10 ) + 1;
 		$url   = sprintf( '%s?%s', self::URL, http_build_query( [
-					'searchType' => 'image',
-					'start'      => $start . $rights,
-					'q'          => $query,
-					'key'        => $this->key,
-					'cx'         => $this->cse,
-				] ) );
+			'searchType' => 'image',
+			'start'      => $start . $rights,
+			'q'          => $query,
+			'key'        => $this->key,
+			'cx'         => $this->cse,
+		] ) );
 
 		/**
 		 * @var array|null $limit = [
@@ -58,9 +61,9 @@ class GoogleImages implements ImageSearch {
 		 * ]
 		 */
 		$limit = WAPT_Plugin::app()->getPopulateOption( 'google_limit', [
-				'expires' => time(),
-				'count'   => 10,
-			] );
+			'expires' => time(),
+			'count'   => 10,
+		] );
 		if ( time() - $limit['expires'] > 3600 ) {
 			$limit['expires'] = time();
 			$limit['count']   = 10;

@@ -82,7 +82,7 @@ class WAPT_Settings extends WAPT_Page {
 	 *
 	 * @return void
 	 * @since 3.8.1
-	 * @see   Wbcr_FactoryPages452_AdminPage
+	 * @see   Wbcr_FactoryPages457_AdminPage
 	 */
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
@@ -145,6 +145,7 @@ class WAPT_Settings extends WAPT_Page {
 				[ 'both', __( 'Find or generate', 'apt' ) ],
 				[ 'google', __( 'Google', 'apt' ) ],
 				[ 'find_google', __( 'Find or Google', 'apt' ) ],
+                [ 'use_default', __('Find or use default image',  'apt' )]
 			],
 			'default'  => 'find',
 			'title'    => __( 'Featured image', 'apt' ),
@@ -154,7 +155,9 @@ class WAPT_Settings extends WAPT_Page {
 							<br> <b>Generate from title:</b> created from the title on a colored background
 							<br> <b>Find or generate:</b> find an image in the post text, if it is not present, generate it from the title
 							<br> <b>Google:</b> search for an image by title of the post in Google
-							<br> <b>Find or Google:</b> find an image in the post text, if it is not present, search for an image by title of the post in Google',
+							<br> <b>Find or Google:</b> find an image in the post text, if it is not present, search for an image by title of the post in Google
+							<br> <b>Find or use default Image</b> find an image in the post text, if it is not present, use default image for posts',
+
                 'apt'
             ),
 			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro-item' ] : [],

@@ -1,8 +1,8 @@
 <?php
 
 // Exit if accessed directly
-use WBCR\Factory_453\Premium\Interfaces\License;
-use WBCR\Factory_453\Premium\Provider;
+use WBCR\Factory_458\Premium\Interfaces\License;
+use WBCR\Factory_458\Premium\Provider;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

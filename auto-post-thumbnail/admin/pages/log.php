@@ -37,7 +37,7 @@ class WAPT_Log extends WAPT_Page_Logger {
 
 	/**
 	 * Menu position (only if a page is placed as a main menu).
-     *
+	 *
 	 * @link http://codex.wordpress.org/Function_Reference/add_menu_page
 	 * @var string
 	 */

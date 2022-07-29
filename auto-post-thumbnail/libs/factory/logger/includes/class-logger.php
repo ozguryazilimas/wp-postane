@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Logger_118;
+namespace WBCR\Factory_Logger_123;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -48,7 +48,7 @@ class Logger {
 	const LEVEL_DEBUG = 'debug';
 
 	/**
-	 * @var \Wbcr_Factory453_Plugin Plugin class.
+	 * @var \Wbcr_Factory458_Plugin Plugin class.
 	 */
 	public $plugin;
 
@@ -92,7 +92,7 @@ class Logger {
 	/**
 	 * Logger constructor.
 	 *
-	 * @param \Wbcr_Factory453_Plugin $plugin
+	 * @param \Wbcr_Factory458_Plugin $plugin
 	 * @param array $settings
 	 */
 	public function __construct( $plugin, $settings = [] ) {
@@ -373,15 +373,7 @@ class Logger {
 	 */
 	public function add( $level, $message ) {
 
-		//if ( $level === $this->LEVEL_DEBUG ) {
-		//$log_debug = defined( 'WP_DEBUG' ) && WP_DEBUG;
-
-		//if ( ! $log_debug ) {
-		//return false;
-		//}
-		//}
-
-		$this->_logs[] = $this->get_format( $level, htmlspecialchars( $message ) );
+		$this->_logs[] = $this->get_format( $level, $message );
 
 		if ( count( $this->_logs ) >= $this->flush_interval ) {
 			$this->flush();

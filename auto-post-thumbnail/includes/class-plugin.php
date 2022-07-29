@@ -15,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WAPT_Plugin extends Wbcr_Factory453_Plugin {
+class WAPT_Plugin extends Wbcr_Factory458_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory453_Plugin
+	 * @var Wbcr_Factory458_Plugin
 	 */
 	private static $app;
 
@@ -73,7 +73,7 @@ class WAPT_Plugin extends Wbcr_Factory453_Plugin {
 	/**
 	 * Статический метод для быстрого доступа к интерфейсу плагина.
 	 *
-	 * @return Wbcr_Factory453_Plugin
+	 * @return Wbcr_Factory458_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -248,7 +248,7 @@ class WAPT_Plugin extends Wbcr_Factory453_Plugin {
 				if ( $need_show_about && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 					try {
 						$redirect_url = '';
-						if ( class_exists( 'Wbcr_FactoryPages452' ) ) {
+						if ( class_exists( 'Wbcr_FactoryPages457' ) ) {
 							$redirect_url = admin_url( 'admin.php?page=wapt_about-wbcr_apt&wapt_about_page_viewed=1' );
 						}
 						if ( $redirect_url ) {
@@ -488,9 +488,9 @@ class WAPT_Plugin extends Wbcr_Factory453_Plugin {
 				$compare = 'NOT EXISTS';
 			}
 			$query->set( 'meta_query', [
-                [
-                'key' => '_thumbnail_id',
-                'compare' => $compare,
+				[
+					'key'     => '_thumbnail_id',
+					'compare' => $compare,
 				],
 			] );
 		}
@@ -500,14 +500,15 @@ class WAPT_Plugin extends Wbcr_Factory453_Plugin {
 	 * Add filter on the Posts list tables.
 	 */
 	public function add_filter_link( $views ) {
-		$query = $this->apt->get_posts_query( false, 'post', 'publish' );
-		$posts = $query->post_count;
+		//$posts = $this->apt->get_posts_count( false, 'post');
 
-		$q                   = add_query_arg( [
-            'apt_is_image' => '0',
-            'post_type' => 'post',
+		$q = add_query_arg( [
+			'apt_is_image' => '0',
+			'post_type'    => 'post',
 		], 'edit.php' );
-		$views['apt_filter'] = '<a href="' . $q . '">' . __( 'Without featured image', 'apt' ) . '</a> (' . $posts . ')';
+
+		//$views['apt_filter'] = '<a href="' . $q . '">' . __( 'Without featured image', 'apt' ) . '</a> (' . $posts . ')';
+		$views['apt_filter'] = '<a href="' . $q . '">' . __( 'Without featured image', 'apt' ) . '</a>';
 		unset( $my );
 
 		return $views;
@@ -542,8 +543,8 @@ class WAPT_Plugin extends Wbcr_Factory453_Plugin {
 		$prefix     = rest_get_url_prefix();
 		$rest_route = $this->request->get( 'rest_route', null );
 		if ( defined( 'REST_REQUEST' ) && REST_REQUEST // (#1)
-		     || ! is_null( $rest_route ) // (#2)
-		        && strpos( trim( $rest_route, '\\/' ), $prefix, 0 ) === 0 ) {
+			 || ! is_null( $rest_route ) // (#2)
+				&& strpos( trim( $rest_route, '\\/' ), $prefix, 0 ) === 0 ) {
 			return true;
 		}
 

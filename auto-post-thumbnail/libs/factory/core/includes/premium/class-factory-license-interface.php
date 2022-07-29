@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_453\Premium\Interfaces;
+namespace WBCR\Factory_458\Premium\Interfaces;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {

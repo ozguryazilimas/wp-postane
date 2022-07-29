@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 
-	class Wapt_FactoryForms_MediaButtonControl extends Wbcr_FactoryForms450_Control {
+	class Wapt_FactoryForms_MediaButtonControl extends Wbcr_FactoryForms455_Control {
 
 		public $type = 'wapt-mediabutton';
 
@@ -53,9 +53,9 @@ if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 			<style>
 				.wapt-bg-image-thumb
 				{
-					margin: 10px 0px;
+					margin: 10px 0;
 					border-radius: 10px;
-					box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+					box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.5);
 				}
 
 				.wapt-invisible
@@ -72,8 +72,22 @@ if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 				jQuery(function ($) {
 
 					var frame;
-					$(document).on('click', '#wapt-select-image', function (event) {
+					$(document).on('click', '#wapt-select-image-<?php echo esc_attr( $name ); ?>', function (event) {
 						event.preventDefault();
+
+						let customPreview = document.getElementById('wapt-thumb-preview-input');
+						let customPreviewTwo = document.getElementById('wapt-thumb-form-input');
+
+						if (customPreview) {
+							customPreview.remove();
+							customPreviewTwo.remove();
+							$(this).closest('.factory-wapt-mediabutton').prepend('<input type="hidden" id="wapt-thumb-preview-input">');
+							$(this).closest('.factory-wapt-mediabutton').append('<input type="hidden" id="wapt-thumb-form-input">');
+						} else {
+							$(this).closest('.factory-wapt-mediabutton').prepend('<input type="hidden" id="wapt-thumb-preview-input">');
+							$(this).closest('.factory-wapt-mediabutton').append('<input type="hidden" id="wapt-thumb-form-input">');
+						}
+
 						if (frame) {
 							frame.open();
 							return;
@@ -86,14 +100,24 @@ if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 							},
 							multiple: false
 						});
+
+						var inputImg = $('#wapt-thumb-form-input').prev();
+						frame.on('open', function () {
+							if ($(inputImg).val())
+								frame.state().get('selection').add(wp.media.attachment($(inputImg).val()));
+						});
+
 						frame.on('select', function () {
 							var attachment = frame.state().get('selection').first().toJSON();
-							var thumb = $('#wapt-bg-image-thumb');
-							$('#<?php echo esc_html( $name ); ?>').val(attachment.id);
+							var thumb = $('#wapt-thumb-preview-input').next();
+
+							$(inputImg).val(attachment.id);
 							thumb.attr('src', attachment.sizes.thumbnail.url);
 							thumb.removeClass('wapt-bg-image-invisible').addClass('wapt-visible');
 
+							frame.close();
 						});
+
 						frame.open();
 					});
 				});
@@ -103,7 +127,7 @@ if ( ! class_exists( 'Wapt_FactoryForms_MediaButtonControl' ) ) {
 				     class="wapt-bg-image-thumb <?php echo esc_attr( $image_class ); ?>"
 				     id="wapt-bg-image-thumb">
 				<button class="button button-primary button-large <?php echo esc_attr( $name ); ?>"
-				        id="wapt-select-image"><?php echo esc_html( $button_text ); ?></button>
+				        id="wapt-select-image-<?php echo esc_attr( $name ); ?>"><?php echo esc_html( $button_text ); ?></button>
 				<input type="hidden" id="<?php echo esc_attr( $name ); ?>" name="<?php echo esc_attr( $name ); ?>"
 				       class="factory-input-text"
 				       value="<?php echo esc_html( $value ); ?>">

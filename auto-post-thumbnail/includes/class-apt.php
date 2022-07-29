@@ -206,33 +206,17 @@ class AutoPostThumbnails {
 			$query = $this->get_posts_query( $has_thumb, $type );
 		}
 
+		$ids = [];
 		if ( ! empty( $query->posts ) ) {
 			// Generate the list of IDs
-			$ids = [];
 			foreach ( $query->posts as $post ) {
-				$ids[] = $post->ID;
-				// если запрошены посты без тамбнеила, значит пользователь хочет сгенерировать их
-				/*
-				if ( ! $has_thumb ) {
-					$images = new \WBCR\APT\PostImages( $post->ID );
-					if ( ( $images->is_images() && $images->count_images() ) || $auto_generate ) {
-						$ids[] = $post->ID;
-					}
-				} else //иначе он хочет удалить тамбнэйлы
-				{
-					$ids[] = $post->ID;
-				}
-				*/
+				$ids[] = $post;
 			}
-			$ids = implode( ',', $ids );
-		} else {
-			$ids = '0';
 		}
-		echo esc_js( $ids );
 
 		$this->plugin->logger->info( "Queried posts IDs:  {$ids}" );
 
-		die( - 1 );
+		wp_send_json_success( $ids );
 	}
 
 	/**
@@ -360,10 +344,12 @@ class AutoPostThumbnails {
 		$q_has_thumb = $has_thumb ? 'EXISTS' : 'NOT EXISTS';
 
 		$args = [
-				'posts_per_page' => - 1,
-				'post_status'    => $q_status,
-				'post_type'      => $q_type,
-				'meta_query'     => [
+				'posts_per_page'   => - 1,
+				'post_status'      => $q_status,
+				'post_type'        => $q_type,
+				'suppress_filters' => true,
+				'fields'           => 'ids',
+				'meta_query'       => [
 						'relation' => 'AND',
 						[
 								'key'     => '_thumbnail_id',
@@ -393,14 +379,72 @@ class AutoPostThumbnails {
 	}
 
 	/**
-	 * Return sql query, which allows to receive all the posts without thumbnails
+	 * Return count of the posts
 	 *
 	 * @return int
 	 */
-	public function get_posts_count( $has_thumb = false, $type = 'post', $status = 'publish', $category = 0, $date_start = 0, $date_end = 0 ) {
-		$query = $this->get_posts_query( $has_thumb, $type, $status, $category, $date_start, $date_end, false );
+	public function get_posts_count( $has_thumb = false, $type = 'post' ) {
+		//global $wpdb;
+		if ( $has_thumb ) {
+			$args = [
+					'orderby'        => 'date',
+					'order'          => 'DESC ',
+					'post_type'      => $type,
+					'posts_per_page' => - 1,
+					'fields'         => 'ids',
+					'meta_query'     => [
+							'relation' => 'AND',
+							[
+									'key'     => '_thumbnail_id',
+									'compare' => 'EXISTS',
+							],
+							[
+									'key'     => '_thumbnail_id',
+									'compare' => '!=',
+									'value'   => '',
+									'type'    => 'NUMERIC ',
+							],
+					],
+			];
 
-		return $query->found_posts;
+			/*$query = "SELECT {$wpdb->posts}.ID FROM {$wpdb->posts}
+			LEFT JOIN {$wpdb->postmeta} ON ( {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id )
+			LEFT JOIN {$wpdb->postmeta} AS mt1 ON ( {$wpdb->posts}.ID = mt1.post_id AND mt1.meta_key = 'skip_post_thumb' )
+			WHERE ({$wpdb->postmeta}.meta_key = '_thumbnail_id' AND mt1.post_id IS NULL)
+			AND {$wpdb->posts}.post_type = '{$type}' GROUP BY {$wpdb->posts}.ID ORDER BY {$wpdb->posts}.post_date DESC";*/
+		} else {
+			$args = [
+					'orderby'        => 'date',
+					'order'          => 'DESC ',
+					'post_type'      => $type,
+					'posts_per_page' => - 1,
+					'fields'         => 'ids',
+					'meta_query'     => [
+							'relation' => 'OR',
+							[
+									'key'     => '_thumbnail_id',
+									'compare' => 'NOT EXISTS',
+							],
+							[
+									'key'     => '_thumbnail_id',
+									'compare' => '=',
+									'value'   => '',
+							],
+					],
+			];
+
+			/*$query = "SELECT {$wpdb->posts}.ID FROM {$wpdb->posts}
+			LEFT JOIN {$wpdb->postmeta} ON ( {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id AND {$wpdb->postmeta}.meta_key = '_thumbnail_id' )
+			LEFT JOIN {$wpdb->postmeta} AS mt1 ON ( {$wpdb->posts}.ID = mt1.post_id AND mt1.meta_key = 'skip_post_thumb' )
+			WHERE ({$wpdb->postmeta}.post_id IS NULL AND mt1.post_id IS NULL)
+			AND (mt1.meta_key = '_thumbnail_id' AND mt1.meta_value = '')
+			AND {$wpdb->posts}.post_type = '{$type}' GROUP BY {$wpdb->posts}.ID ORDER BY {$wpdb->posts}.post_date DESC";*/
+		}
+
+		//$result = $wpdb->get_results( $query );
+		$query = new WP_Query( $args );
+
+		return $query->post_count;
 	}
 
 	/**
@@ -553,6 +597,13 @@ class AutoPostThumbnails {
 					return $generation->result( '', $thumb_id );
 				}
 				$this->plugin->logger->error( 'Error download from google. ' . var_export( $thumb_id, true ) );
+			} elseif ( $autoimage === 'use_default' ) {
+				$thumb_id = $this->UseDefault( $post_id );
+				if ( $thumb_id ) {
+					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
+
+					return $generation->result( '', $thumb_id );
+				}
 			}
 		}
 
@@ -1354,6 +1405,23 @@ class AutoPostThumbnails {
 			return $thumb_id;
 		} else {
 			$this->plugin->logger->error( 'Error generate attachment: ' . var_export( $thumb_id, true ) );
+		}
+
+		return 0;
+	}
+
+
+	public function UseDefault( $post_id ) {
+		$this->plugin->logger->info( "Start set default attachment for post ID = {$post_id}" );
+
+		$thumb_id = \WAPT_Plugin::app()->getPopulateOption( 'default-background', '' );
+
+		if ( ! is_wp_error( $thumb_id ) ) {
+			$this->plugin->logger->info( "Successful set default attachment ID = {$thumb_id}" );
+
+			return $thumb_id;
+		} else {
+			$this->plugin->logger->error( 'Error set default attachment: ' . var_export( $thumb_id, true ) );
 		}
 
 		return 0;
