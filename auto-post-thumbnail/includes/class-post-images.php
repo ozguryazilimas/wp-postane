@@ -50,6 +50,7 @@ class PostImages {
 		}
 
 		$this->find_images();
+
 	}
 
 	/**
@@ -72,6 +73,7 @@ class PostImages {
 				$title = '';
 				preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\"\']?([^\"\'> ]*)/i', $image, $matches_title );
 
+
 				if ( count( $matches_title ) && isset( $matches_title[1] ) && isset( $matches_title[1][ $key ] ) ) {
 					$title = $matches[1][ $key ];
 				}
@@ -82,11 +84,83 @@ class PostImages {
 					'title' => $title,
 				];
 			}
+		} else {
+			// find all matches youtube links :
+
+			// youtube.com/v/vidid
+			//youtube.com/vi/vidid
+			//youtube.com/?v=vidid
+			//youtube.com/?vi=vidid
+			//youtube.com/watch?v=vidid
+			//youtube.com/watch?vi=vidid
+			//youtu.be/vidid
+			//youtube.com/embed/vidid
+			//http://youtube.com/v/vidid
+			//http://www.youtube.com/v/vidid
+			//https://www.youtube.com/v/vidid
+			//youtube.com/watch?v=vidid&wtv=wtv
+			//http://www.youtube.com/watch?dev=inprogress&v=vidid&feature=related
+			//https://m.youtube.com/watch?v=vidid
+
+			preg_match_all("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $post_content, $matches);
+
+			if (count($matches)) {
+
+				foreach ($matches[0] as $key=> $image) {
+					$image = '<img src="//img.youtube.com/vi/'.$image.'/maxresdefault.jpg">';
+					$title = '';
+					preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\"\']?([^\"\'> ]*)/i', $image, $matches_title );
+
+					if ( count( $matches_title ) && isset( $matches_title[1] ) && isset( $matches_title[1][ $key ] ) ) {
+						$title = $matches[1][ $key ];
+					}
+
+					$images[] = [
+						'tag'   => $image,
+						'url'   => $matches[1][ $key ],
+						'title' => $title,
+					];
+				}
+			}
 		}
 
 		$this->images = $images;
 		$this->plugin->logger->debug( 'Found images: ' . var_export( $images, true ) );
 	}
+
+	private function find_videos() {
+		$matches = [];
+		$videos  = [];
+
+		//do shortcodes before search images
+		$post_content = do_shortcode( $this->post->post_content ?? '' );
+
+		// Get all youtube videos from post's body
+		preg_match_all( "#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $post_content, $matches );
+
+		if ( count( $matches ) ) {
+			//$this->plugin->logger->debug( "Found from regex: " . var_export( $matches[0], true ) );
+
+			foreach ( $matches[0] as $key => $video ) {
+				$title = '';
+				preg_match_all( '/<\s*img [^\>]*title\s*=\s*[\"\']?([^\"\'> ]*)/i', $video, $matches_title );
+
+				if ( count( $matches_title ) && isset( $matches_title[1] ) && isset( $matches_title[1][ $key ] ) ) {
+					$title = $matches[1][ $key ];
+				}
+
+				$videos[] = [
+					'tag'   => $video,
+					'url'   => $matches[1][ $key ],
+					'title' => $title,
+				];
+			}
+		}
+
+		$this->images = $videos;
+		$this->plugin->logger->debug( 'Found videos: ' . var_export( $videos, true ) );
+	}
+
 
 	/**
 	 * Get the post object
@@ -106,6 +180,10 @@ class PostImages {
 		return $this->images;
 	}
 
+	public function get_videos() {
+		return $this->videos;
+	}
+
 	/**
 	 * Get count of images url, contained in the post
 	 *
@@ -115,6 +193,10 @@ class PostImages {
 		return count( $this->images );
 	}
 
+	public function count_videos() {
+		return count( $this->videos );
+	}
+
 	/**
 	 * If images is founded in post
 	 *
@@ -122,6 +204,10 @@ class PostImages {
 	 */
 	public function is_images() {
 		return (bool) $this->count_images();
+	}
+
+	public function is_videos() {
+		return (bool) $this->count_videos();
 	}
 
 	/**

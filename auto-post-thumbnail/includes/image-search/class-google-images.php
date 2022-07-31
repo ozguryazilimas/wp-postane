@@ -43,12 +43,13 @@ class GoogleImages implements ImageSearch {
 			$rights = '';
 		}
 		*/
-		$rights = '&rights=(cc_publicdomain%7Ccc_attribute%7Ccc_sharealike).-(cc_noncommercial%7Ccc_nonderived)';
+		$rights = '(cc_publicdomain%7Ccc_attribute%7Ccc_sharealike).-(cc_noncommercial%7Ccc_nonderived)';
 
 		$start = ( ( $page - 1 ) * 10 ) + 1;
 		$url   = sprintf( '%s?%s', self::URL, http_build_query( [
 			'searchType' => 'image',
-			'start'      => $start . $rights,
+			'start'      => $start,
+			'rights'     => $rights,
 			'q'          => $query,
 			'key'        => $this->key,
 			'cx'         => $this->cse,
