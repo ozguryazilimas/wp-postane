@@ -535,7 +535,8 @@ function relevanssi_prevent_default_request( $request, $query ) {
 
 		if ( ! is_admin() && $prevent ) {
 			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";
-		} elseif ( 'on' === get_option( 'relevanssi_admin_search' ) && $admin_search_ok ) {
+		}
+		if ( is_admin() && 'on' === get_option( 'relevanssi_admin_search' ) && $admin_search_ok ) {
 			$request = "SELECT * FROM $wpdb->posts WHERE 1=2";
 		}
 	}
@@ -981,7 +982,11 @@ function relevanssi_add_highlight( $permalink, $link_post = null ) {
 	$highlight_docs = get_option( 'relevanssi_highlight_docs', 'off' );
 	$query          = get_search_query();
 	if ( isset( $highlight_docs ) && 'off' !== $highlight_docs && ! empty( $query ) ) {
-		if ( ! relevanssi_is_front_page_id( isset( $link_post->ID ) ?? null ) ) {
+		if ( ! relevanssi_is_front_page_id( $link_post->ID ?? null ) ) {
+			global $wp_query;
+			if ( isset( $wp_query->query_vars['sentence'] ) && '&quot;' !== substr( $query, 0, 6 ) ) {
+				$query = relevanssi_add_quotes( $query );
+			}
 			$query     = str_replace( '&quot;', '"', $query );
 			$permalink = esc_attr( add_query_arg( array( 'highlight' => rawurlencode( $query ) ), $permalink ) );
 		}
@@ -1046,11 +1051,23 @@ function relevanssi_permalink( $link, $link_post = null ) {
 		}
 	}
 
-	if ( is_search() && is_object( $link_post ) && property_exists( $link_post, 'relevance_score' ) ) {
+	global $wp_query;
+
+	$add_highlight_and_tracking = false;
+	if ( is_search() && ! is_admin() ) {
+		$add_highlight_and_tracking = true;
+	}
+	if ( is_search() && is_admin() &&
+		( isset( $wp_query->query_vars['relevanssi'] ) || isset( $wp_query->query_vars['rlvquery'] ) )
+		) {
+		$add_highlight_and_tracking = true;
+	}
+
+	if ( $add_highlight_and_tracking && is_object( $link_post ) && property_exists( $link_post, 'relevance_score' ) ) {
 		$link = relevanssi_add_highlight( $link, $link_post );
 	}
 
-	if ( function_exists( 'relevanssi_add_tracking' ) ) {
+	if ( $add_highlight_and_tracking && function_exists( 'relevanssi_add_tracking' ) ) {
 		$link = relevanssi_add_tracking( $link, $link_post );
 	}
 
@@ -1227,6 +1244,15 @@ function relevanssi_get_forbidden_post_types() {
 		'udb_widgets',          // Ultimate Dashboard.
 		'udb_admin_page',       // Ultimate Dashboard.
 		'oxy_user_library',     // Oxygen.
+		'aw_workflow',          // AutomateWoo.
+		'paypal_transaction',   // PayPal for WooCommerce.
+		'scheduled-action',
+		'divi_bars',            // Divi Bars.
+		'br_product_filter',    // BeRocket Product Filters.
+		'br_filters_group',     // BeRocket Product Filters.
+		'wfob_bump',            // WooFunnel.
+		'wfocu_funnel',         // WooFunnel.
+		'wfocu_offer',          // WooFunnel.
 	);
 }
 

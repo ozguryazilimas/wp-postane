@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 4.16.0
+Stable tag: 4.17.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,29 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.17.0 =
+* New feature: You can now look at how the posts appear in the database from the Debugging tab.
+* New feature: Relevanssi now works with WooCommerce layered navigation filters. The filter post counts should now match the Relevanssi search results.
+* New feature: New function `relevanssi_count_term_occurrances()` can be used to display how many times search terms appear in the database.
+* Changed behaviour: Relevanssi post update trigger is now on `wp_after_insert_post` instead of `wp_insert_post`. This makes the indexing more reliable and better compatible with other plugins.
+* Changed behaviour: Previously, throttling searches has been impossible when results are sorted by date. Now if you set Relevanssi to sort by post date from the searching settings, you can enable the throttle and the throttling will make sure to keep the most recent posts. This does not work if you set the `orderby` to `post_date` elsewhere.
+* Minor fix: Prevents Relevanssi from interfering in fringe cases (including The Event Calendar event search).
+* Minor fix: Relevanssi added the `highlight` parameter to home page URLs, even though it shouldn't.
+* Minor fix: Indexing `nav_menu_item` posts is stopped earlier in the process to avoid problems with big menus.
+* Minor fix: If the `sentence` query variable is used to enable phrase searching, Relevanssi now adds quotes to the `highlight` parameter.
+* Minor fix: Add support for JetSmartFilters.
+* Minor fix: Add support for WooCommerce products attribute lookup table filtering.
+* Minor fix: Improve excerpts to avoid breaking HTML tags when tags are allowed.
+* Minor fix: Fix broken tag and category weight settings.
+* Minor fix: Improve Polylang language detection.
+* Minor fix: Relevanssi now hyphenates long search terms in the User searches page. This prevents long search terms from messing up the display.
+* Minor fix: Improve WPFD file content indexing support. Relevanssi indexing now happens after the WPFD indexing is done.
+* Minor fix: Add support for TablePress `table_filter` shortcodes.
+* Minor fix: Stopped some problems with Did you mean suggestions suggesting the same word if a hyphen was included.
+* Minor fix: Paging didn't work in admin searches for hierarchical post types (like pages).
+* Minor fix: In-document highlighting could break certain elements thanks to Relevanssi messing up data attributes.
+* Minor fix: Relevanssi now recursively runs `relevanssi_block_to_render` and the CSS `relevanssi_noindex` filtering for inner blocks.
+
 = 4.16.0 =
 * New feature: Oxygen compatibility has been upgraded to support JSON data from Oxygen 4. This is still in early stages, so feedback from Oxygen users is welcome.
 * New feature: New filter hook `relevanssi_oxygen_element` is used to filter Oxygen JSON elements. The earlier `relevanssi_oxygen_section_filters` and `relevanssi_oxygen_section_content` filters are no longer used with Oxygen 4; this hook is the only way to filter Oxygen elements.
@@ -161,5 +184,8 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: The Bricks compatibility was improved, Relevanssi now notices changes to Bricks posts more often. Relevanssi also only reads the text from the `_bricks_page_content_2` custom field.
 
 == Upgrade notice ==
+= 4.17.0 =
+* Large number of bug fixes and general improvements.
+
 = 4.16.0 =
 * Indexing update; please reindex after the upgrade! Oxygen 4 compatibility.

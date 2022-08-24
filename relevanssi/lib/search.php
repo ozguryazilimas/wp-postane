@@ -719,8 +719,11 @@ function relevanssi_limit_filter( $query ) {
 		if ( $limit < 0 ) {
 			$limit = 500;
 		}
+
 		if ( $termless_search ) {
 			$query = $query . " GROUP BY doc, item, type ORDER BY doc ASC LIMIT $limit";
+		} elseif ( 'post_date' === get_option( 'relevanssi_default_orderby' ) ) {
+			$query = $query . " ORDER BY p.post_date DESC LIMIT $limit";
 		} else {
 			$query = $query . " ORDER BY tf DESC LIMIT $limit";
 		}
@@ -881,11 +884,11 @@ function relevanssi_taxonomy_score( &$match, $post_type_weights ) {
 	$match->taxonomy_detail = json_decode( $match->taxonomy_detail );
 	if ( is_object( $match->taxonomy_detail ) ) {
 		foreach ( $match->taxonomy_detail as $tax => $count ) {
-			if ( empty( $post_type_weights[ 'post_tagged_with_' . $tax ] ) ) {
-				$match->taxonomy_score += $count * 1;
-			} else {
-				$match->taxonomy_score += $count * $post_type_weights[ 'post_tagged_with_' . $tax ];
+			$weight = $post_type_weights[ 'post_tagged_with_' . $tax ] ?? null;
+			if ( ! $weight ) {
+				$weight = $post_type_weights[ $tax ] ?? 1;
 			}
+			$match->taxonomy_score += $count * $weight;
 		}
 	}
 }
@@ -1314,13 +1317,13 @@ function relevanssi_calculate_tf( $match, $post_type_weights ) {
 		relevanssi_taxonomy_score( $match, $post_type_weights );
 	} else {
 		$tag_weight = 1;
-		if ( isset( $post_type_weights['post_tagged_with_post_tag'] ) && is_numeric( $post_type_weights['post_tagged_with_post_tag'] ) ) {
-			$tag_weight = $post_type_weights['post_tagged_with_post_tag'];
+		if ( isset( $post_type_weights['post_tag'] ) && is_numeric( $post_type_weights['post_tag'] ) ) {
+			$tag_weight = $post_type_weights['post_tag'];
 		}
 
 		$category_weight = 1;
-		if ( isset( $post_type_weights['post_tagged_with_category'] ) && is_numeric( $post_type_weights['post_tagged_with_category'] ) ) {
-			$category_weight = $post_type_weights['post_tagged_with_category'];
+		if ( isset( $post_type_weights['category'] ) && is_numeric( $post_type_weights['category'] ) ) {
+			$category_weight = $post_type_weights['category'];
 		}
 
 		$taxonomy_weight = 1;
@@ -1645,10 +1648,11 @@ bool $no_terms, string $query_join = '', string $query_restrictions = '' ) : str
 	} else {
 		$term_cond = relevanssi_generate_term_where( $term, $search_again, $no_terms, get_option( 'relevanssi_fuzzy' ) );
 
-		$content_boost = floatval( get_option( 'relevanssi_content_boost', 1 ) );
-		$title_boost   = floatval( get_option( 'relevanssi_title_boost' ) );
-		$link_boost    = floatval( get_option( 'relevanssi_link_boost' ) );
-		$comment_boost = floatval( get_option( 'relevanssi_comment_boost' ) );
+		$content_boost     = floatval( get_option( 'relevanssi_content_boost', 1 ) );
+		$title_boost       = floatval( get_option( 'relevanssi_title_boost' ) );
+		$link_boost        = floatval( get_option( 'relevanssi_link_boost' ) );
+		$comment_boost     = floatval( get_option( 'relevanssi_comment_boost' ) );
+		$post_type_weights = get_option( 'relevanssi_post_type_weights' );
 
 		$tag = ! empty( $post_type_weights['post_tag'] ) ? $post_type_weights['post_tag'] : $relevanssi_variables['post_type_weight_defaults']['post_tag'];
 		$cat = ! empty( $post_type_weights['category'] ) ? $post_type_weights['category'] : $relevanssi_variables['post_type_weight_defaults']['category'];
@@ -1870,6 +1874,9 @@ function relevanssi_get_boundaries( $query ) : array {
 		$search_low_boundary  += $query->query_vars['offset'];
 	}
 
+	if ( $search_low_boundary < 0 ) {
+		$search_low_boundary = 0;
+	}
 	if ( $search_high_boundary > $hits_count ) {
 		$search_high_boundary = $hits_count;
 	}
@@ -1919,4 +1926,41 @@ function relevanssi_generate_id_type( string $post_id ) {
 		$object->type = 'post';
 	}
 	return $object;
+}
+
+/**
+ * Adds a join for wp_posts for post_date searches.
+ *
+ * If the default orderby is post_date, this function adds a wp_posts join to
+ * the search query.
+ *
+ * @param string $query_join The join query.
+ *
+ * @return string The modified join query.
+ */
+function relevanssi_post_date_throttle_join( $query_join ) {
+	if ( 'post_date' === get_option( 'relevanssi_default_orderby' ) &&
+		'on' === get_option( 'relevanssi_throttle', 'on' ) ) {
+		global $wpdb;
+		$query_join = ', ' . $wpdb->posts . ' AS p';
+	}
+	return $query_join;
+}
+
+/**
+ * Adds a join for wp_posts for post_date searches.
+ *
+ * If the default orderby is post_date, this function connects the wp_posts
+ * table joined in another filter function.
+ *
+ * @param string $query_restrictions The where query restrictions.
+ *
+ * @return string The modified query restrictions.
+ */
+function relevanssi_post_date_throttle_where( $query_restrictions ) {
+	if ( 'post_date' === get_option( 'relevanssi_default_orderby' ) &&
+		'on' === get_option( 'relevanssi_throttle', 'on' ) ) {
+		$query_restrictions .= ' AND p.ID = relevanssi.doc';
+	}
+	return $query_restrictions;
 }

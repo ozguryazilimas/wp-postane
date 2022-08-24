@@ -25,7 +25,12 @@ add_filter( 'relevanssi_prevent_default_request', 'relevanssi_block_on_admin_sea
 add_filter( 'relevanssi_search_ok', 'relevanssi_control_media_queries', 11, 2 );
 
 // Post indexing.
-add_action( 'wp_insert_post', 'relevanssi_insert_edit', 99, 1 );
+global $wp_version;
+if ( version_compare( $wp_version, '5.6', '>=' ) ) {
+	add_action( 'wp_after_insert_post', 'relevanssi_insert_edit', 99, 1 );
+} else {
+	add_action( 'wp_insert_post', 'relevanssi_insert_edit', 99, 1 );
+}
 add_action( 'delete_post', 'relevanssi_remove_doc' );
 
 // Comment indexing.
@@ -51,6 +56,8 @@ add_action( 'relevanssi_trim_logs', 'relevanssi_trim_logs' );
 add_action( 'relevanssi_update_counts', 'relevanssi_update_counts' );
 add_action( 'relevanssi_custom_field_value', 'relevanssi_filter_custom_fields', 10, 2 );
 add_filter( 'relevanssi_index_custom_fields', 'relevanssi_remove_metadata_fields' );
+add_filter( 'relevanssi_join', 'relevanssi_post_date_throttle_join', 1 );
+add_filter( 'relevanssi_where', 'relevanssi_post_date_throttle_where', 1 );
 
 // Excerpts and highlights.
 add_action( 'relevanssi_pre_the_content', 'relevanssi_kill_autoembed' );
@@ -472,14 +479,20 @@ function relevanssi_rest_api_disable() {
 /**
  * Checks if a log export is requested.
  *
- * If the 'relevanssi_export' query variable is set, a log export has been requested
- * and one will be provided by relevanssi_export_log().
+ * If the 'relevanssi_export' query variable is set, a log export has been
+ * requested and one will be provided by relevanssi_export_log(). The click
+ * tracking log export checks 'relevanssi_export_clicks' and uses the function
+ * relevanssi_export_click_log().
  *
  * @see relevanssi_export_log
+ * @see relevanssi_export_click_log
  */
 function relevanssi_export_log_check() {
 	if ( isset( $_REQUEST['relevanssi_export'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification, just checking the parameter exists.
 		relevanssi_export_log();
+	}
+	if ( isset( $_REQUEST['relevanssi_export_clicks'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification, just checking the parameter exists.
+		function_exists( 'relevanssi_export_click_log' ) && relevanssi_export_click_log();
 	}
 }
 
@@ -489,6 +502,7 @@ function relevanssi_export_log_check() {
 function relevanssi_load_compatibility_code() {
 	class_exists( 'acf', false ) && require_once 'compatibility/acf.php';
 	class_exists( 'DGWT_WC_Ajax_Search', false ) && require_once 'compatibility/fibosearch.php';
+	class_exists( 'Jet_Smart_Filters', false ) && require_once 'compatibility/jetsmartfilters.php';
 	class_exists( 'MeprUpdateCtrl', false ) && MeprUpdateCtrl::is_activated() && require_once 'compatibility/memberpress.php';
 	class_exists( 'Obenland_Wp_Search_Suggest', false ) && require_once 'compatibility/wp-search-suggest.php';
 	class_exists( 'Polylang', false ) && require_once 'compatibility/polylang.php';
