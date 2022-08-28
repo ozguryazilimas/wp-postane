@@ -3,8 +3,8 @@ Contributors: RavanH
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravanhagen%40gmail%2ecom&item_name=Easy%20FancyBox
 Tags: fancybox, lightbox, gallery, image, photo, video, flash, overlay, youtube, vimeo, dailymotion, pdf, svg, iframe, swf, jquery, webp
 Requires at least: 3.3
-Tested up to: 5.2
-Stable tag: 1.8.18
+Tested up to: 6.0
+Stable tag: 1.8.19
 
 Easily enable the FancyBox jQuery extension on just about all media links. Multi-Site compatible. Supports iFrame and Flash movies.
 
@@ -89,7 +89,7 @@ If you wish to help build this plugin, you're very welcome to [translate Easy Fa
 
 = Plugin conflicts =
 
-- **jQuery Updater** moves jQuery to version 2+ which is incompatible.
+- Google Translate plugins like **GTranslate**, **Weglot** and **Google Language Translator** cause the light box to be off-center, pushed downward for logged-in users (with admin bar). A work-around: add `.admin-bar #fancybox-outer{margin-top:-32px}` to Custom CSS in your theme Customizer.
 - **WP Slimstat** and **Matomo/Piwik** with Track Outbound Clicks enabled, will break the light box effect on some browsers. Adding `fancybox` (or any of the other classes like `fancybox-youtube,fancybox-iframe,fancybox-inline` depending on which media should be displayed in FancyBox) to the Do Not Track field is reported to solve the issue. Slimstat also might interfere with the YouTube url conversion. When clicking a Youtube link, the movie opens in an overlay as it is supposed to but immediately after that, the complete page gets redirected to the original YouTube page. Adding a `class="noslimstat"` to the link is reported to work around the issue.
 - **Google Analytics for WordPress** converts links like `href="#anyID"` to `href="http://yoursite.url/page/#anyID"`, disabling inline content shown in FancyBox.
 - Both the **uBillBoard** and **Camera slideshow** have their own easing script hard-coded which conflicts with the one in Easy FancyBox. The only way around the conflict is to set both the Easing In and Easing Out options on your Settings > Media page to **Swing**.
@@ -493,11 +493,17 @@ If you still do not get to see your images in FancyBox, ask on the [Easy FancyBo
 
 == Upgrade Notice ==
 
-= 1.8.18 =
-Fix Jetpack Tiled Gallery compat + security issue reported by Jakob Hagl sba-research.org
+= 1.8.19 =
 
+Admin settings links, new Exclude selector option.
 
 == Changelog ==
+
+= 1.8.19 =
+* Admin settings links
+* Pro compatibility message for VideoPress
+* NEW: Exclude selector option
+* FIX: border 0 ignored sometimes
 
 = 1.8.18 =
 * FIX: Jetpack Tiled Gallery block compatibility
@@ -661,7 +667,7 @@ Fix Jetpack Tiled Gallery compat + security issue reported by Jakob Hagl sba-res
 * Some small Touch device compatibility improvement hacks to the 1.3.4 script
 * Major plugin overhaul: Class implementation
 * NEW: Disable hide on overlay click
-* NEW: Allow automatic resizing to large image size set on Settings > Media during media upload via the hidden WordPress function media_upload_max_image_resize() TODO test more!
+* NEW: Allow automatic resizing to large image size set on Settings > Media during media upload via the hidden WordPress function media_upload_max_image_resize()
 * NEW Options: iFrame scrolling, autoScale, key navigation/close, cyclic galleries
 * Metadata custom parameters and Mousewheel gallery scrolling scripts optional
 * Basic RTL languages/text direction support (gallery navigation inversion, title position)

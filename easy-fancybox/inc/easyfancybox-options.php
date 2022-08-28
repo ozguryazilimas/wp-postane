@@ -2,7 +2,6 @@
 /**
 * Easy FancyBox options and their defaults array
 */
-$efb_url = "https://premium.status301.com/downloads/easy-fancybox-pro/";
 
 $efb_options = array (
 	'Global' => array(
@@ -23,67 +22,75 @@ $efb_options = array (
 						'id' => 'fancybox_enableImg',
 						'input' => 'checkbox',
 						'hide' => true,
-						'default' => ( function_exists('is_plugin_active_for_network') && is_plugin_active_for_network( easyFancyBox::$plugin_basename ) ) ? '' : '1',
-						'description' => '<strong>' . __('Images','easy-fancybox') . '</strong>'
+						'default' => ( function_exists( 'is_plugin_active_for_network' ) && is_plugin_active_for_network( easyFancyBox::$plugin_basename ) ) ? '' : '1',
+						'description' => '<strong>' . __( 'Images', 'easy-fancybox' ) . '</strong>' . ( get_option('fancybox_enableImg') ? ' &mdash; <a href="#IMG">' . translate( 'Settings' ) . '</a>' : '' )
 					),
 					'Inline' => array (
 						'id' => 'fancybox_enableInline',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('Inline content','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __( 'Inline content', 'easy-fancybox' ) . '</strong>' . '</strong>' . ( get_option('fancybox_enableInline') ? ' &mdash; <a href="#Inline">' . translate( 'Settings' ) . '</a>' : '' )
 					),
 					'PDF' => array (
 						'id' => 'fancybox_enablePDF',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('PDF','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __( 'PDF', 'easy-fancybox' ) . '</strong>' . '</strong>' . ( get_option('fancybox_enablePDF') ? ' &mdash; <a href="#PDF">' . translate( 'Settings' ) . '</a>' : '' )
 					),
 					'SWF' => array (
 						'id' => 'fancybox_enableSWF',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('SWF','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __( 'SWF', 'easy-fancybox' ) . '</strong>' . '</strong>' . ( get_option('fancybox_enableSWF') ? ' &mdash; <a href="#SWF">' . translate( 'Settings' ) . '</a>' : '' )
 					),
 					'SVG' => array (
 						'id' => 'fancybox_enableSVG',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('SVG','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __( 'SVG', 'easy-fancybox' ) . '</strong>' . '</strong>' . ( get_option('fancybox_enableSVG') ? ' &mdash; <a href="#SVG">' . translate( 'Settings' ) . '</a>' : '' )
+					),
+					'VideoPress' => array (
+						'id' => 'fancybox_enableVideoPress',
+						'input' => 'checkbox',
+						'hide' => true,
+						'default' => '',
+						'status' => 'disabled',
+						'description' => '<strong>' . __( 'VideoPress', 'easy-fancybox' ) . '</strong>' . ' ' . '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em>'
 					),
 					'YouTube' => array (
 						'id' => 'fancybox_enableYoutube',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('YouTube','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __( 'YouTube', 'easy-fancybox' ) . '</strong>' . '</strong>' . ( get_option('fancybox_enableYouTube') ? ' &mdash; <a href="#YouTube">' . translate( 'Settings' ) . '</a>' : '' )
 					),
 					'Vimeo' => array (
 						'id' => 'fancybox_enableVimeo',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('Vimeo','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __( 'Vimeo', 'easy-fancybox' ) . '</strong>' . '</strong>' . ( get_option('fancybox_enableVimeo') ? ' &mdash; <a href="#Vimeo">' . translate( 'Settings' ) . '</a>' : '' )
 					),
 					'Dailymotion' => array (
 						'id' => 'fancybox_enableDailymotion',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('Dailymotion','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __( 'Dailymotion', 'easy-fancybox' ) . '</strong>' . '</strong>' . ( get_option('fancybox_enableDailymotion') ? ' &mdash; <a href="#Dailymotion">' . translate( 'Settings' ) . '</a>' : '' )
 					),
 					'iFrame' => array (
 						'id' => 'fancybox_enableiFrame',
 						'input' => 'checkbox',
 						'hide' => true,
 						'default' => '',
-						'description' => '<strong>' . __('iFrames','easy-fancybox') . '</strong>'
+						'description' => '<strong>' . __('iFrames','easy-fancybox') . '</strong>' . '</strong>' . ( get_option('fancybox_enableiFrame') ? ' &mdash; <a href="#iFrame">' . translate( 'Settings' ) . '</a>' : '' )
 					)
 				),
-				'description' => '<a href="'.$efb_url.'"><strong><em>' . __('For advanced options and support, please get the Easy FancyBox - Pro extension.','easy-fancybox') . '</strong></a>'
+				'description' => ''
 			),
 			'Overlay' => array (
 				'title' => __('Overlay','easy-fancybox'),
@@ -132,7 +139,7 @@ $efb_options = array (
 						'hide' => true,
 						'status' => get_option('fancybox_overlaySpotlight') ? '' : 'disabled',
 						'default' => '',
-						'description' => __('Spotlight effect','easy-fancybox') . ( get_option('fancybox_overlaySpotlight') ? '' : '. <em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') ) . '</a></em>'
+						'description' => __('Spotlight effect','easy-fancybox') . ( get_option('fancybox_overlaySpotlight') ? '' : '. <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') ) . '</a></em>'
 					)
 				)
 			),
@@ -174,7 +181,7 @@ $efb_options = array (
 						'status' => 'disabled',
 						'class' => 'small-text',
 						'default' => '',
-						'description' => '<em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
+						'description' => '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
 					),
 					'titleColor' => array (
 						'id' => 'fancybox_titleColor',
@@ -211,7 +218,7 @@ $efb_options = array (
 						'status' => 'disabled',
 						'class' => 'small-text',
 						'default' => '',
-						'description' => '<em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
+						'description' => '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
 					),
 
 					'p11' => array (
@@ -345,7 +352,7 @@ $efb_options = array (
 							'1' => __('Link with ID "fancybox-auto"','easy-fancybox'),
 						),
 						'default' => '1',
-						'description' => '<em><a href="'.$efb_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
+						'description' => '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
 					),
 					'delayClick' => array (
 						'id' => 'fancybox_delayClick',
@@ -376,7 +383,7 @@ $efb_options = array (
 							'30' => __('1 Month','easy-fancybox'),
 							'365' => __('1 Year','easy-fancybox')
 						),
-						'description' => ' <em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
+						'description' => ' <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
 					),
 					'cookiePath' => array (
 						'id' => '',
@@ -465,7 +472,7 @@ $efb_options = array (
 						'input' => 'checkbox',
 						'status' => get_option('fancybox_metaData') ? '' : 'disabled',
 						'default' =>  '',
-						'description' => __('Include the Metadata jQuery extension script to allow passing custom parameters via link class.','easy-fancybox') . ( get_option('fancybox_metaData') ? '' : '. <em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') ) . '</a></em>'
+						'description' => __('Include the Metadata jQuery extension script to allow passing custom parameters via link class.','easy-fancybox') . ( get_option('fancybox_metaData') ? '' : '. <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') ) . '</a></em>'
 					),
 					'vcMasonryCompat' => array (
 						'id' => 'fancybox_vcMasonryCompat',
@@ -473,7 +480,18 @@ $efb_options = array (
 						'input' => 'checkbox',
 						'status' => 'disabled',
 						'default' =>  '',
-						'description' => __('WPBakery / Visual Composer - Masonry Grid Gallery compatibility.','easy-fancybox') . ' <em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em>'
+						'description' => __('WPBakery / Visual Composer - Masonry Grid Gallery compatibility.','easy-fancybox') . ' <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em>'
+					),
+					'autoExclude' => array (
+						'id' => 'fancybox_autoExclude',
+						'title' => __('Exclude','easy-fancybox'),
+						'label_for' => 'fancybox_autoExclude',
+						'input' => 'text',
+						'class' => 'regular-text',
+						'hide' => true,
+						'default' => '.nolightbox,a.wp-block-file__button,a.pin-it-button,a[href*=\'pinterest.com/pin/create\'],a[href*=\'facebook.com/share\'],a[href*=\'twitter.com/share\']',
+						'sanitize_callback' => 'csl_text',
+						'description' => __('A comma-separated list of selectors for elements to which FancyBox should not automatically bind itself. Media links inside these elements will be ignored by Autodetect.','easy-fancybox') . ' <em>' . __('Default:','easy-fancybox') . ' .nolightbox,a.wp-block-file__button,a.pin-it-button,a[href*=\'pinterest.com/pin/create\'],a[href*=\'facebook.com/share\'],a[href*=\'twitter.com/share\']</em><br />'
 					)
 				)
 			)
@@ -503,9 +521,10 @@ $efb_options = array (
 				'input' => 'text',
 				'class' => 'regular-text',
 				'hide' => true,
-				'default' => '.jpg .jpeg .png .webp',
+				'default' => '.jpg,.png,.webp',
+				'sanitize_callback' => 'csl_text',
 				'selector' => 'href*=',
-				'description' => ' <em>' . __('Example:','easy-fancybox') . ' .jpg .jpeg .png .gif</em><br />'
+				'description' => __('A comma-separated list of image file extensions to which FancyBox should automatically bind itself.','easy-fancybox') . ' <em>' . __('Example:','easy-fancybox') . ' .jpg,.png,.gif,.jpeg</em><br />'
 			),
 			'autoAttributeLimit' => array (
 				'id' => 'fancybox_autoAttributeLimit',
@@ -517,7 +536,7 @@ $efb_options = array (
 					'' => __('All image links', 'easy-fancybox')
 				),
 				'default' => '',
-				'description' => '<em><a href="'.$efb_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
+				'description' => '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
 			),
 			'type' => array (
 				'id' => 'fancybox_classType',
@@ -560,7 +579,7 @@ $efb_options = array (
 					'easeOutBack' => __('easeOutBack','easy-fancybox')
 				),
 				'default' => 'easeOutBack',
-				'description' => ' <em><a href="'.$efb_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
+				'description' => ' <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
 			),
 			'transitionOut' => array (
 				'id' => 'fancybox_transitionOut',
@@ -587,7 +606,7 @@ $efb_options = array (
 					'easeOutBack' => __('easeOutBack','easy-fancybox')
 				),
 				'default' => 'easeInBack',
-				'description' => ' <em><a href="'.$efb_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />' . __('Note:','easy-fancybox') . ' ' . __('Easing effects only apply when Transition is set to Elastic. ','easy-fancybox')  . '<br /><br />'
+				'description' => ' <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />' . __('Note:','easy-fancybox') . ' ' . __('Easing effects only apply when Transition is set to Elastic. ','easy-fancybox')  . '<br /><br />'
 			),
 			'opacity' => array (
 				'id' => 'fancybox_opacity',
@@ -644,7 +663,7 @@ $efb_options = array (
 					'' => __('Hide/show title on mouse hover action','easy-fancybox')
 				),
 				'default' => '',
-				'description' =>  '<em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
+				'description' =>  '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em><br />'
 			),
 			'p3' => array (
 				'hide' => true,
@@ -662,7 +681,7 @@ $efb_options = array (
 					'2' => __('All in one gallery','easy-fancybox')
 				),
 				'default' => '1',
-				'description' => '<em><a href="'.$efb_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />' . __('Note:','easy-fancybox') . ' ' . __('When disabled, you can use the rel attribute to manually group image links together.','easy-fancybox') . '<br /><br />'
+				'description' => '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />' . __('Note:','easy-fancybox') . ' ' . __('When disabled, you can use the rel attribute to manually group image links together.','easy-fancybox') . '<br /><br />'
 			),
 			'showNavArrows' => array (
 				'id' => 'fancybox_showNavArrows',
@@ -725,7 +744,7 @@ $efb_options = array (
 					'' => __('Slideshow','easy-fancybox')
 				),
 				'default' => '',
-				'description' =>  '<em><a href="'.$efb_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em>'
+				'description' =>  '<em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('Make available &raquo;','easy-fancybox') . '</a></em>'
 			)
 		)
 	),
@@ -794,7 +813,7 @@ $efb_options = array (
 					'easeOutBack' => __('easeOutBack','easy-fancybox')
 				),
 				'default' => 'easeOutBack',
-				'description' => ' <em><a href="'.$efb_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
+				'description' => ' <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />'
 			),
 			'transitionOut' => array (
 				'id' => 'fancybox_transitionOutInline',
@@ -821,7 +840,7 @@ $efb_options = array (
 					'easeOutBack' => __('easeOutBack','easy-fancybox')
 				),
 				'default' => 'easeInBack',
-				'description' => ' <em><a href="'.$efb_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />' . __('Note:','easy-fancybox') . ' ' . __('Easing effects only apply when Transition is set to Elastic. ','easy-fancybox')  . '<br /><br />'
+				'description' => ' <em><a href="'.easyFancyBox::$pro_plugin_url.'">' . __('More options &raquo;','easy-fancybox') . '</a></em><br />' . __('Note:','easy-fancybox') . ' ' . __('Easing effects only apply when Transition is set to Elastic. ','easy-fancybox')  . '<br /><br />'
 			),
 			'opacity' => array (
 				'id' => 'fancybox_opacityInline',
@@ -1144,6 +1163,9 @@ $efb_options = array (
 				'default' => '{\'wmode\':\'opaque\',\'allowfullscreen\':true}'
 			)
 		)
+	),
+
+	'VideoPress' => array(
 	),
 
 	'YouTube' => array(
