@@ -13,15 +13,23 @@
     position: relative;
   }
 
+  .wapt-chart-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
   .wapt-chart-percent {
-    position: absolute;
-    left: 50px;
-    top: 65px;
-    line-height: 1;
-    text-align: center;
-    font-size: 45px;
-    font-weight: bold;
     color: #afafaf;
+    position: absolute;
+    font-size: 45px;
+    font-weight: 600;
+    left: 50%;
+    bottom: 160px;
+    z-index: 100;
+    transform: translateX(-45%);
+    -webkit-transform: translateX(-45%);
+    -ms-transform: translateX(-45%);
   }
 
   #wapt-overview-chart-legend {

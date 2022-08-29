@@ -1,8 +1,5 @@
 <?php
 
-use WBCR\APT;
-use WBCR\APT\PostImagesPro;
-
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Основной класс плагина Auto Featured Image
  *
- * @author        Alexander Kovalev <alex.kovalevv@gmail.com>
- * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
 class WAPT_Plugin extends Wbcr_Factory458_Plugin {
@@ -48,23 +43,18 @@ class WAPT_Plugin extends Wbcr_Factory458_Plugin {
 		parent::__construct( $plugin_path, $data );
 
 		self::$app = $this;
+		$this->apt = \WBCR\APT\AutoPostThumbnails::instance();
 
 		if ( is_admin() ) {
 			// Регистрации класса активации/деактивации плагина
 			$this->initActivation();
 
 			$this->numberOfColumn = 4;
-			$this->apt            = \WBCR\APT\AutoPostThumbnails::instance();
 
 			require WAPT_PLUGIN_DIR . '/admin/ajax/check-license.php';
 
 			// Инициализация бэкенда
 			$this->admin_scripts();
-		}
-
-		if ( $this->doing_rest_api() ) {
-			require_once WAPT_PLUGIN_DIR . '/includes/class.generate-result.php';
-			$this->apt = \WBCR\APT\AutoPostThumbnails::instance();
 		}
 
 		$this->global_scripts();
@@ -116,8 +106,6 @@ class WAPT_Plugin extends Wbcr_Factory458_Plugin {
 	/**
 	 */
 	private function admin_scripts() {
-		require_once WAPT_PLUGIN_DIR . '/includes/class.generate-result.php';
-
 		//$this->register_pages();
 
 		//------ ACTIONS ------
@@ -171,6 +159,7 @@ class WAPT_Plugin extends Wbcr_Factory458_Plugin {
 	/**
 	 */
 	private function global_scripts() {
+		require_once WAPT_PLUGIN_DIR . '/includes/class.generate-result.php';
 	}
 
 	/**

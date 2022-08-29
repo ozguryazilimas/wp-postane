@@ -50,6 +50,9 @@ class AutoPostThumbnails {
 	 */
 	public $is_in_medialibrary = false;
 
+	/**
+	 * @var
+	 */
 	public $allowed_generate_post_types;
 
 	/**
@@ -65,7 +68,7 @@ class AutoPostThumbnails {
 				'pixabay'   => '',
 				'unsplash'  => '',
 		];
-		if ( \WAPT_Plugin::app()->is_premium() ) {
+		if ( $this->plugin->is_premium() ) {
 			$this->sources = [
 					'recommend' => '',
 					'google'    => WAPT_PLUGIN_SLUG,
@@ -102,15 +105,15 @@ class AutoPostThumbnails {
 	 * Initiate all required hooks.
 	 */
 	private function init() {
-		$is_auto_generate          = \WAPT_Plugin::app()->getPopulateOption( 'auto_generation', true );
-		$is_auto_upload            = \WAPT_Plugin::app()->getPopulateOption( 'auto_upload_images' );
-		$allowed_import_post_types = explode( ',', \WAPT_Plugin::app()->getPopulateOption( 'import_post_types', 'post' ) );
+		$is_auto_generate          = $this->plugin->getPopulateOption( 'auto_generation', true );
+		$is_auto_upload            = $this->plugin->getPopulateOption( 'auto_upload_images' );
+		$allowed_import_post_types = explode( ',', $this->plugin->getPopulateOption( 'import_post_types', 'post' ) );
 
-		$this->allowed_generate_post_types = explode( ',', \WAPT_Plugin::app()->getPopulateOption( 'auto_post_types', 'post,page' ) );
+		$this->allowed_generate_post_types = explode( ',', $this->plugin->getPopulateOption( 'auto_post_types', 'post,page' ) );
 
 		add_filter( 'mime_types', [ $this, 'allow_upload_webp' ] );
 
-		if ( $is_auto_upload && \WAPT_Plugin::app()->is_premium() ) {
+		if ( $is_auto_upload && $this->plugin->is_premium() ) {
 			add_filter( 'wp_insert_post_data', [ $this, 'auto_upload' ], 10, 2 );
 
 			// This hook handle update post via rest api. for example WordPress mobile apps
@@ -130,7 +133,7 @@ class AutoPostThumbnails {
 			// This hook will now handle all sort publishing including posts, custom types, scheduled posts, etc.
 			add_action( 'transition_post_status', [ $this, 'check_required_transition' ], 10, 3 );
 		} else {
-			if ( \WAPT_Plugin::app()->getPopulateOption( 'auto_generation_notice', 1 ) ) {
+			if ( $this->plugin->getPopulateOption( 'auto_generation_notice', 1 ) ) {
 				add_action( 'admin_notices', [ $this, 'notice_auto_generation' ] );
 			}
 		}
@@ -174,7 +177,7 @@ class AutoPostThumbnails {
 		}
 		check_ajax_referer( 'get-posts' );
 
-		$generate = \WAPT_Plugin::app()->getPopulateOption( 'generate_autoimage', 'find' );
+		$generate = $this->plugin->getPopulateOption( 'generate_autoimage', 'find' );
 
 		$this->plugin->logger->info( "START generate in mode:  {$generate}" );
 
@@ -192,7 +195,7 @@ class AutoPostThumbnails {
 
 		$has_thumb = sanitize_text_field( wp_unslash( $_POST['withThumb'] ?? false ) );
 		$type      = sanitize_text_field( wp_unslash( $_POST['posttype'] ?? '' ) );
-		if ( \WAPT_Plugin::app()->is_premium() ) {
+		if ( $this->plugin->is_premium() ) {
 			$status     = sanitize_text_field( wp_unslash( $_POST['poststatus'] ?? '' ) );
 			$category   = sanitize_text_field( wp_unslash( $_POST['category'] ?? '' ) );
 			$date_start = sanitize_text_field( wp_unslash( $_POST['date_start'] ?? '' ) );
@@ -200,10 +203,21 @@ class AutoPostThumbnails {
 			$date_start = $date_start ? \DateTime::createFromFormat( 'd.m.Y', $date_start )->format( 'd.m.Y' ) : 0;
 			$date_end   = $date_end ? \DateTime::createFromFormat( 'd.m.Y', $date_end )->setTime( 23, 59 )->format( 'd.m.Y H:i' ) : 0;
 			// Get id's of the posts that satisfy the filters
-			$query = $this->get_posts_query( $has_thumb, $type, $status, $category, $date_start, $date_end );
+			//$query = $this->get_posts_query( $has_thumb, $type, $status, $category, $date_start, $date_end );
+			$query = $this->get_posts_query( [
+					'has_thumb'  => $has_thumb,
+					'type'       => $type,
+					'status'     => $status,
+					'category'   => $category,
+					'date_start' => $date_start,
+					'date_end'   => $date_end,
+			] );
 		} else {
 			// Get id's of all the published posts for which post thumbnails exist or does not exist
-			$query = $this->get_posts_query( $has_thumb, $type );
+			$query = $this->get_posts_query( [
+					'has_thumb' => $has_thumb,
+					'type'      => $type,
+			] );
 		}
 
 		$ids = [];
@@ -214,7 +228,8 @@ class AutoPostThumbnails {
 			}
 		}
 
-		$this->plugin->logger->info( "Queried posts IDs:  {$ids}" );
+		$ids_str = implode( ',', $ids );
+		$this->plugin->logger->info( "Queried posts IDs:  {$ids_str}" );
 
 		wp_send_json_success( $ids );
 	}
@@ -243,9 +258,11 @@ class AutoPostThumbnails {
 			$thumb_id = $result->thumbnail_id;
 
 			if ( $thumb_id ) {
-				wp_send_json_success( $result->getData( true ) );
+				$result->write_to_log();
+				wp_send_json_success( $result->getData() );
 			} else {
-				wp_send_json_error( $result->getData( true ) );
+				$result->write_to_log();
+				wp_send_json_error( $result->getData() );
 			}
 		}
 
@@ -299,7 +316,7 @@ class AutoPostThumbnails {
 	 */
 	public function hide_notice_auto_generation() {
 		if ( isset( $_POST['action'] ) && 'hide_notice_auto_generation' === $_POST['action'] ) {
-			\WAPT_Plugin::app()->updateOption( 'auto_generation_notice', 0 );
+			$this->plugin->updateOption( 'auto_generation_notice', 0 );
 		}
 	}
 
@@ -322,35 +339,48 @@ class AutoPostThumbnails {
 	/**
 	 * Return sql query, which allows to receive all the posts without thumbnails
 	 *
+	 * @param array $args
+	 *
 	 * @return WP_Query
 	 */
-	public function get_posts_query( $has_thumb = false, $type = 'post', $status = 'publish', $category = 0, $date_start = 0, $date_end = 0, $is_log = true ) {
+	public function get_posts_query( $params ) {
+		$default_params = [
+				'has_thumb'  => false,
+				'type'       => 'post',
+				'status'     => 'publish',
+				'category'   => 0,
+				'date_start' => 0,
+				'date_end'   => 0,
+				'is_log'     => true,
+				'count'      => 0,
+		];
 
+		$params = wp_parse_args( $params, $default_params );
 		// phpcs:disable WordPress.PHP.DevelopmentFunctions
-		if ( $is_log ) {
+		if ( $params['is_log'] ) {
 			$this->plugin->logger->info( 'Posts query: ' . var_export( [
-							'has_thumb'  => $has_thumb,
-							'type'       => $type,
-							'status'     => $status,
-							'category'   => $category,
-							'date_start' => $date_start,
-							'date_end'   => $date_end,
+							'has_thumb'  => $params['has_thumb'],
+							'type'       => $params['is_log'],
+							'status'     => $params['type'],
+							'category'   => $params['category'],
+							'date_start' => $params['date_start'],
+							'date_end'   => $params['date_end'],
 					], true ) );
 		}
 		// phpcs:enable
 
-		$q_status    = $status ? $status : 'any';
-		$q_type      = $type ? $type : 'any';
-		$q_has_thumb = $has_thumb ? 'EXISTS' : 'NOT EXISTS';
+		$q_status    = $params['status'] ? $params['status'] : 'any';
+		$q_type      = $params['type'] ? $params['type'] : 'any';
+		$q_has_thumb = $params['has_thumb'] ? 'EXISTS' : 'NOT EXISTS';
 
 		$args = [
-				'posts_per_page'   => - 1,
+				'posts_per_page'   => $params['count'] ? $params['count'] : - 1,
 				'post_status'      => $q_status,
 				'post_type'        => $q_type,
 				'suppress_filters' => true,
 				'fields'           => 'ids',
 				'meta_query'       => [
-						'relation' => 'AND',
+						'relation' => ' and ',
 						[
 								'key'     => '_thumbnail_id',
 								'compare' => $q_has_thumb,
@@ -361,13 +391,13 @@ class AutoPostThumbnails {
 						],
 				],
 		];
-		if ( $category ) {
-			$args['cat'] = $category;
+		if ( $params['category'] ) {
+			$args['cat'] = $params['category'];
 		}
-		if ( $date_start && $date_end ) {
+		if ( $params['date_start'] && $params['date_end'] ) {
 			$args['date_query'][] = [
-					'after'     => $date_start,
-					'before'    => $date_end,
+					'after'     => $params['date_start'],
+					'before'    => $params['date_end'],
 					'inclusive' => true,
 			];
 		}
@@ -384,67 +414,12 @@ class AutoPostThumbnails {
 	 * @return int
 	 */
 	public function get_posts_count( $has_thumb = false, $type = 'post' ) {
-		//global $wpdb;
-		if ( $has_thumb ) {
-			$args = [
-					'orderby'        => 'date',
-					'order'          => 'DESC ',
-					'post_type'      => $type,
-					'posts_per_page' => - 1,
-					'fields'         => 'ids',
-					'meta_query'     => [
-							'relation' => 'AND',
-							[
-									'key'     => '_thumbnail_id',
-									'compare' => 'EXISTS',
-							],
-							[
-									'key'     => '_thumbnail_id',
-									'compare' => '!=',
-									'value'   => '',
-									'type'    => 'NUMERIC ',
-							],
-					],
-			];
+		$query = $this->get_posts_query( [
+				'has_thumb' => $has_thumb,
+				'type'      => $type,
+		] );
 
-			/*$query = "SELECT {$wpdb->posts}.ID FROM {$wpdb->posts}
-			LEFT JOIN {$wpdb->postmeta} ON ( {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id )
-			LEFT JOIN {$wpdb->postmeta} AS mt1 ON ( {$wpdb->posts}.ID = mt1.post_id AND mt1.meta_key = 'skip_post_thumb' )
-			WHERE ({$wpdb->postmeta}.meta_key = '_thumbnail_id' AND mt1.post_id IS NULL)
-			AND {$wpdb->posts}.post_type = '{$type}' GROUP BY {$wpdb->posts}.ID ORDER BY {$wpdb->posts}.post_date DESC";*/
-		} else {
-			$args = [
-					'orderby'        => 'date',
-					'order'          => 'DESC ',
-					'post_type'      => $type,
-					'posts_per_page' => - 1,
-					'fields'         => 'ids',
-					'meta_query'     => [
-							'relation' => 'OR',
-							[
-									'key'     => '_thumbnail_id',
-									'compare' => 'NOT EXISTS',
-							],
-							[
-									'key'     => '_thumbnail_id',
-									'compare' => '=',
-									'value'   => '',
-							],
-					],
-			];
-
-			/*$query = "SELECT {$wpdb->posts}.ID FROM {$wpdb->posts}
-			LEFT JOIN {$wpdb->postmeta} ON ( {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id AND {$wpdb->postmeta}.meta_key = '_thumbnail_id' )
-			LEFT JOIN {$wpdb->postmeta} AS mt1 ON ( {$wpdb->posts}.ID = mt1.post_id AND mt1.meta_key = 'skip_post_thumb' )
-			WHERE ({$wpdb->postmeta}.post_id IS NULL AND mt1.post_id IS NULL)
-			AND (mt1.meta_key = '_thumbnail_id' AND mt1.meta_value = '')
-			AND {$wpdb->posts}.post_type = '{$type}' GROUP BY {$wpdb->posts}.ID ORDER BY {$wpdb->posts}.post_date DESC";*/
-		}
-
-		//$result = $wpdb->get_results( $query );
-		$query = new WP_Query( $args );
-
-		return $query->post_count;
+		return $query->post_count ?? 0;
 	}
 
 	/**
@@ -463,7 +438,7 @@ class AutoPostThumbnails {
 		 * Look for this id in the IMG tag.
 		 */
 		if ( isset( $image['tag'] ) && ! empty( $image['tag'] ) ) {
-			preg_match( '/wp-image-([\d]*)/i', $image['tag'], $thumb_id );
+			preg_match( ' / wp - image - ( [ \d ] *) / i', $image['tag'], $thumb_id );
 
 			if ( $thumb_id ) {
 				$thumb_id = $thumb_id[1];
@@ -479,8 +454,9 @@ class AutoPostThumbnails {
 			if ( isset( $image['url'] ) && ! empty( $image['url'] ) ) {
 				$image_url = $image['url'];
 				// если ссылка на миниатюру, то регулярка сделает ссылку на оригинал. убирает в конце названия файла -150x150
-				$image_url = preg_replace( '/-[0-9]{1,}x[0-9]{1,}\./', '.', $image_url );
-				$thumb_id  = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE '%" . esc_sql( $image_url ) . "%'" );
+				$image_url = preg_replace( ' / - [ 0 - 9 ]{
+			1,}x[ 0 - 9 ]{1,}\./', ' . ', $image_url );
+				$thumb_id  = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE ' % " . esc_sql( $image_url ) . " % '" );
 			}
 		}
 
@@ -522,13 +498,17 @@ class AutoPostThumbnails {
 	 * @param \WP_Post $post
 	 * @param bool $update
 	 *
-	 * @return GenerateResult
+	 * @return GenerateResult|null
 	 * @throws Exception
 	 */
 	public function publish_post( $post_id, $post = null, $update = true ) {
 		global $wpdb;
 
-		$autoimage  = \WAPT_Plugin::app()->getPopulateOption( 'generate_autoimage', 'find' );
+		if ( $post->post_status === 'auto-draft' ) {
+			return null;
+		}
+
+		$autoimage  = $this->plugin->getPopulateOption( 'generate_autoimage', 'find' );
 		$generation = new GenerateResult( $post_id, $autoimage );
 
 		if ( ! $post ) {
@@ -564,7 +544,7 @@ class AutoPostThumbnails {
 					update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
 					$this->plugin->logger->info( "Featured image ($thumb_id) is set for post ($post_id)" );
 				} else {
-					if ( \WAPT_Plugin::app()->is_premium() ) {
+					if ( $this->plugin->is_premium() ) {
 						$thumb_id = apply_filters( 'wapt/generate_post_thumb', $image, $post_id );
 
 						if ( $thumb_id ) {
@@ -617,7 +597,7 @@ class AutoPostThumbnails {
 	 * @param array $postarr
 	 */
 	public function auto_upload( $data, $postarr = [] ) {
-		$allowed_post_types = explode( ',', \WAPT_Plugin::app()->getPopulateOption( 'import_post_types', '' ) );
+		$allowed_post_types = explode( ',', $this->plugin->getPopulateOption( 'import_post_types', '' ) );
 
 		if ( $data instanceof \WP_Post ) {
 			$post_type = $data->post_type ?? '';
@@ -915,7 +895,7 @@ class AutoPostThumbnails {
 		if ( isset( $_POST['source'] ) && ! empty( $_POST['source'] ) ) {
 			$source = str_replace( 'tab-', '', sanitize_text_field( $_POST['source'] ) );
 
-			// if( empty($this->sources[$source]) && !\WAPT_Plugin::app()->premium->is_activate() )
+			// if( empty($this->sources[$source]) && !$this->plugin->premium->is_activate() )
 			if ( empty( $this->sources[ $source ] ) ) {
 				require_once WAPT_PLUGIN_DIR . '/admin/views/pro.php';
 			} else {
@@ -1026,6 +1006,8 @@ class AutoPostThumbnails {
 
 			$attach_data = wp_generate_attachment_metadata( $attach_id, $target_file_name );
 			$result      = wp_update_attachment_metadata( $attach_id, $attach_data );
+			update_attached_file( $attach_id, $target_file_name );
+
 			if ( ! $result ) {
 				// die( 'Error: File attachment metadata error' );
 			}
@@ -1194,13 +1176,13 @@ class AutoPostThumbnails {
 
 	public function check_api_notice( $notices, $plugin_name ) {
 		// Если экшен вызывал не этот плагин, то не выводим это уведомления
-		if ( $plugin_name !== \WAPT_Plugin::app()->getPluginName() ) {
+		if ( $plugin_name !== $this->plugin->getPluginName() ) {
 			return $notices;
 		}
 		// Получаем заголовок плагина
-		$plugin_title = \WAPT_Plugin::app()->getPluginTitle();
+		$plugin_title = $this->plugin->getPluginTitle();
 
-		if ( ! \WAPT_Plugin::app()->getPopulateOption( 'google_apikey' ) && ! \WAPT_Plugin::app()->getPopulateOption( 'google_cse' ) ) {
+		if ( ! $this->plugin->getPopulateOption( 'google_apikey' ) && ! $this->plugin->getPopulateOption( 'google_cse' ) ) {
 			// Задаем текст уведомления
 			$notice_text = '<p><b>' . $plugin_title . ':</b> <br>' . sprintf( __( "To download images from Google, specify Google API keys in the <a href='%s'>settings</a>.", 'apt' ), admin_url( 'admin.php?page=wapt_settings-wbcr_apt' ) ) . '</p>';
 
@@ -1366,7 +1348,7 @@ class AutoPostThumbnails {
 	public function generate_and_attachment( $post_id ) {
 		$this->plugin->logger->info( "Start generate attachment for post ID = {$post_id}" );
 
-		$format = \WAPT_Plugin::app()->getPopulateOption( 'image-type', 'jpg' );
+		$format = $this->plugin->getPopulateOption( 'image-type', 'jpg' );
 		switch ( $format ) {
 			case 'png':
 				$extension = 'png';
@@ -1414,7 +1396,7 @@ class AutoPostThumbnails {
 	public function UseDefault( $post_id ) {
 		$this->plugin->logger->info( "Start set default attachment for post ID = {$post_id}" );
 
-		$thumb_id = \WAPT_Plugin::app()->getPopulateOption( 'default-background', '' );
+		$thumb_id = $this->plugin->getPopulateOption( 'default-background', '' );
 
 		if ( ! is_wp_error( $thumb_id ) ) {
 			$this->plugin->logger->info( "Successful set default attachment ID = {$thumb_id}" );

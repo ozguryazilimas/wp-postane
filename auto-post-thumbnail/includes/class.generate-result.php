@@ -55,6 +55,7 @@ class GenerateResult {
 			'both'        => __( 'Find or generate', 'apt' ),
 			'google'      => __( 'Google', 'apt' ),
 			'find_google' => __( 'Find or Google', 'apt' ),
+			'use_default' => __( 'Find or use default image', 'apt' ),
 		];
 
 		$this->post_id         = $post_id;
@@ -86,6 +87,7 @@ class GenerateResult {
 	 */
 	public function result( $message = '', $thumbnail_id = 0, $status = '' ) {
 		$this->setResult( $message, $thumbnail_id, $status );
+		$this->write_to_log();
 
 		return $this;
 	}
@@ -120,7 +122,7 @@ class GenerateResult {
 		$file = ABSPATH . ltrim( $parsed_url['path'], '/' );
 		if ( file_exists( $file ) ) {
 			$bytes = filesize( $file );
-			$s     = array( 'b', 'Kb', 'Mb', 'Gb' );
+			$s     = [ 'b', 'Kb', 'Mb', 'Gb' ];
 			$e     = floor( log( $bytes ) / log( 1024 ) );
 
 			return sprintf( '%d ' . $s[ $e ], ( $bytes / pow( 1024, floor( $e ) ) ) );
@@ -131,11 +133,10 @@ class GenerateResult {
 	}
 
 	/**
-	 * @param bool $write_to_log is write to log?
 	 *
 	 * @return array
 	 */
-	public function getData( $write_to_log = false ) {
+	public function getData() {
 		if ( $this->thumbnail_id ) {
 			$data = [
 				[
@@ -161,14 +162,17 @@ class GenerateResult {
 			];
 		}
 
-		if ( $write_to_log ) {
-			$log = \WAPT_Plugin::app()->getPopulateOption( 'generation_log', [] );
-			if ( count( $log ) > 100 ) {
-				$log = array_slice( $log, 0, 100 );
-			}
-			\WAPT_Plugin::app()->updatePopulateOption( 'generation_log', array_merge( $data, $log ) );
-		}
-
 		return $data;
+	}
+
+	public function write_to_log() {
+		$data = $this->getData();
+
+		$log = \WAPT_Plugin::app()->getPopulateOption( 'generation_log', [] );
+		if ( count( $log ) > 100 ) {
+			$log = array_slice( $log, 0, 100 );
+		}
+		\WAPT_Plugin::app()->updatePopulateOption( 'generation_log', array_merge( $data, $log ) );
+
 	}
 }

@@ -36,24 +36,28 @@ class GoogleImages implements ImageSearch {
 	 * @throws Exception
 	 */
 	public function search( $query, $page ) {
-		/*
-		if ( isset( $_POST['rights'] ) && (int) $_POST['rights'] ) {
-			$rights = '&rights=(cc_publicdomain%7Ccc_attribute%7Ccc_sharealike).-(cc_noncommercial%7Ccc_nonderived)';
-		} else {
-			$rights = '';
-		}
-		*/
 		$rights = '(cc_publicdomain%7Ccc_attribute%7Ccc_sharealike).-(cc_noncommercial%7Ccc_nonderived)';
 
-		$start = ( ( $page - 1 ) * 10 ) + 1;
-		$url   = sprintf( '%s?%s', self::URL, http_build_query( [
+		$start  = ( ( $page - 1 ) * 10 ) + 1;
+		$params = [
 			'searchType' => 'image',
 			'start'      => $start,
 			'rights'     => $rights,
 			'q'          => $query,
 			'key'        => $this->key,
 			'cx'         => $this->cse,
-		] ) );
+		];
+
+		/**
+		 * Filters the list of GET params for Google search query.
+		 *
+		 * @param array $params Array of GET params for search query.
+		 *
+		 * @since 3.9.12
+		 */
+		$params = apply_filters( 'wysc/generation/google_search_params', $params, $query );
+
+		$url = sprintf( '%s?%s', self::URL, http_build_query( $params ) );
 
 		/**
 		 * @var array|null $limit = [

@@ -8,15 +8,22 @@
 #wapt-generate-page .wapt-chart-container {
   position: relative;
 }
+#wapt-generate-page .wapt-chart-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
 #wapt-generate-page .wapt-chart-percent {
-  position: absolute;
-  left: 55px;
-  top: 75px;
-  line-height: 1;
-  text-align: center;
-  font-size: 40px;
-  font-weight: bold;
   color: #afafaf;
+  position: absolute;
+  font-size: 45px;
+  font-weight: 600;
+  left: 50%;
+  bottom: 160px;
+  z-index: 100;
+  transform: translateX(-45%);
+  -webkit-transform: translateX(-45%);
+  -ms-transform: translateX(-45%);
 }
 #wapt-generate-page #wapt-overview-chart-legend {
   overflow: hidden;

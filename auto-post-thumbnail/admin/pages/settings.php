@@ -87,23 +87,19 @@ class WAPT_Settings extends WAPT_Page {
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
 
-		$this->scripts->request(
-            [
+		$this->scripts->request( [
 			'control.list',
 			'bootstrap.accordion',
 			'bootstrap.tab',
-			],
-            'bootstrap'
-        );
+			'plugin.ddslick',
+		], 'bootstrap' );
 
-		$this->styles->request(
-            [
+		$this->styles->request( [
 			'control.list',
 			'bootstrap.accordion',
 			'bootstrap.tab',
-			],
-            'bootstrap'
-        );
+			'plugin.ddslick',
+		], 'bootstrap' );
 
 		$this->scripts->add( WAPT_PLUGIN_URL . '/admin/assets/js/settings.js', [ 'jquery' ], 'wapt-settings-script', WAPT_PLUGIN_VERSION );
 		$this->styles->add( WAPT_PLUGIN_URL . '/admin/assets/css/settings.css', [], 'wapt-settings-style', WAPT_PLUGIN_VERSION );
@@ -136,30 +132,91 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		$options[] = [
+			'type'      => 'checkbox',
+			'way'       => 'buttons',
+			'name'      => 'scheduled_generation',
+			'title'     => __( 'Add featured image on a schedule', 'apt' ),
+			'default'   => false,
+			'hint'      => __( 'Automatically add featured image according to a CRON schedule', 'apt' ),
+			'eventsOn'  => [
+				'show' => '.factory-control-auto_generation_schedule',
+			],
+			'eventsOff' => [
+				'hide' => '.factory-control-auto_generation_schedule',
+			],
+			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
+		];
+
+		$options[] = [
+			'type'    => 'dropdown',
+			'way'     => 'ddslick',
+			'name'    => 'auto_generation_schedule',
+			'title'   => __( 'Image generation schedule', 'apt' ),
+			'data'    => [
+				[
+					'title' => __( 'Once an hour', 'apt' ),
+					'value' => 'hourly',
+				],
+				[
+					'title' => __( 'Once a day', 'apt' ),
+					'value' => 'daily',
+				],
+				[
+					'title' => __( 'Twice a day', 'apt' ),
+					'value' => 'twicedaily',
+				],
+				[
+					'title' => __( 'Once a week', 'apt' ),
+					'value' => 'weekly',
+				],
+				[
+					'title' => __( 'Once a month', 'apt' ),
+					'value' => 'monthly',
+				],
+			],
+			'default' => 'daily',
+			'hint'    => __( 'How often to run image generation', 'apt' ),
+		];
+
+		$options[] = [
 			'type'     => 'dropdown',
-			'way'      => 'buttons',
+			'way'      => 'ddslick',
 			'name'     => 'generate_autoimage',
 			'data'     => [
-				[ 'find', __( 'Find in post', 'apt' ) ],
-				[ 'generate', __( 'Generate from title', 'apt' ) ],
-				[ 'both', __( 'Find or generate', 'apt' ) ],
-				[ 'google', __( 'Google', 'apt' ) ],
-				[ 'find_google', __( 'Find or Google', 'apt' ) ],
-                [ 'use_default', __('Find or use default image',  'apt' )]
+				[
+					'title' => __( 'Find in post', 'apt' ),
+					'value' => 'find',
+					'hint'  => __( 'Search for the first image in the post text', 'apt' ),
+				],
+				[
+					'title' => __( 'Generate from title', 'apt' ),
+					'value' => 'generate',
+					'hint'  => __( 'Create from the title on a colored background', 'apt' ),
+				],
+				[
+					'title' => __( 'Find or generate', 'apt' ),
+					'value' => 'both',
+					'hint'  => __( 'Find an image in the post text, if it is not present, generate it from the title', 'apt' ),
+				],
+				[
+					'title' => __( 'Google', 'apt' ),
+					'value' => 'google',
+					'hint'  => __( 'Search for an image by title of the post in Google', 'apt' ),
+				],
+				[
+					'title' => __( 'Find or Google', 'apt' ),
+					'value' => 'find_google',
+					'hint'  => __( 'Find an image in the post text, if it is not present, search for an image by title of the post in Google', 'apt' ),
+				],
+				[
+					'title' => __( 'Find or use default image', 'apt' ),
+					'value' => 'use_default',
+					'hint'  => __( 'Find an image in the post text, if it is not present, use default image for posts', 'apt' ),
+				],
 			],
 			'default'  => 'find',
 			'title'    => __( 'Featured image', 'apt' ),
-			'hint'     => __(
-                'How to generate featured image:
-							<br> <b>Find in post:</b> search for the first image in the post text
-							<br> <b>Generate from title:</b> created from the title on a colored background
-							<br> <b>Find or generate:</b> find an image in the post text, if it is not present, generate it from the title
-							<br> <b>Google:</b> search for an image by title of the post in Google
-							<br> <b>Find or Google:</b> find an image in the post text, if it is not present, search for an image by title of the post in Google
-							<br> <b>Find or use default Image</b> find an image in the post text, if it is not present, use default image for posts',
-
-                'apt'
-            ),
+			'hint'     => __( 'How to generate featured image', 'apt' ),
 			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro-item' ] : [],
 		];
 

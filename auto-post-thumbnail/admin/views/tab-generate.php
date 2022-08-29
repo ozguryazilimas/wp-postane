@@ -12,12 +12,14 @@ $log   = $data['log'] ?? [];
 		<div class="row wapt-statistic-row">
 			<div class="wapt-generate-statistic">
 				<div class="wapt-chart-container">
-					<canvas id="wapt-main-chart" width="180" height="180"
-					        data-no_featured_image="<?php echo esc_attr( $stats['no_featured_image'] ); ?>"
-					        data-w_featured_image="<?php echo esc_attr( $stats['w_featured_image'] ); ?>"
-					        data-errors="<?php echo esc_attr( $stats['error'] ); ?>"
-					        style="display: block;">
-					</canvas>
+					<div class="wapt-chart-wrapper">
+						<canvas id="wapt-main-chart" width="200" height="200"
+						        data-no_featured_image="<?php echo esc_attr( $stats['no_featured_image'] ); ?>"
+						        data-w_featured_image="<?php echo esc_attr( $stats['w_featured_image'] ); ?>"
+						        data-errors="<?php echo esc_attr( $stats['error'] ); ?>"
+						        style="display: block;">
+						</canvas>
+					</div>
 					<div id="wapt-overview-chart-percent" class="wapt-chart-percent">
 						<?php echo esc_attr( trim( $stats['featured_image_percent'] ) ); ?><span>%</span>
 					</div>

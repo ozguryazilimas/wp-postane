@@ -4,7 +4,7 @@ Tags: post thumbnails, featured image, elementor, thumbnails, featured image fro
 Requires at least: 4.8
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 3.9.11
+Stable tag: 4.0.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,12 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.9.12 =
+* ADD: CRON scheduled image generation (New option in settings) - PREMIUM
+* FIX: Compatibility with ShortPixel plugin
+* FIX: Generating images after importing via XML-RPC
+* FIX: Optimization of image generation
 
 = 3.9.11 =
 * FIX: Google search API issue
