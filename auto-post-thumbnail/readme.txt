@@ -114,6 +114,9 @@ This section describes how to install the plugin and get it working.
 == Changelog ==
 
 = 3.9.12 =
+* Some fixes for compatibility with premium plugin
+
+= 3.9.12 =
 * ADD: CRON scheduled image generation (New option in settings) - PREMIUM
 * FIX: Compatibility with ShortPixel plugin
 * FIX: Generating images after importing via XML-RPC

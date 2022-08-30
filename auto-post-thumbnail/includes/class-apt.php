@@ -99,6 +99,7 @@ class AutoPostThumbnails {
 	 */
 	private function init_includes() {
 		// require __DIR__ . '/src/class.template.php';
+		require_once WAPT_PLUGIN_DIR . '/includes/class-processing.php';
 	}
 
 	/**
