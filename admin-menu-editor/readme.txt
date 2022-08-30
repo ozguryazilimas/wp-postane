@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.7
-Tested up to: 6.0
-Stable tag: 1.10.2
+Tested up to: 6.0.1
+Stable tag: 1.10.3
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -74,6 +74,15 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.10.3 =
+* Increased the minimum required PHP version to 5.6. 
+* Fixed a number of deprecation warnings related to PHP 8.
+* Fixed a conflict with "Anti-Spam by CleanTalk" that could potentially cause a fatal error.
+* Fixed a conflict with "Admin Theme - Musik" where the menu order settings in the other plugin would override the menu order configured in AME.
+* Fixed missing padding in the "edit plugin details" panel (in the "Plugins" tab). Also updated the button layout to match the changed button layout of the "Quick Edit" panel introduced in WP 6.0.
+* Fixed a visual issue where some form fields might briefly show up and then disappear if the settings page stylesheet(s) took a while to load.
+* Removed dependency on the "icon16" CSS class.
 
 = 1.10.2 =
 * Added additional validation in escaping in multiple places.

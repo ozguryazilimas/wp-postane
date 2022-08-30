@@ -544,28 +544,6 @@ function ame_register_sort_buttons($toolbar) {
 	<div class="ws_tool_tab" id="ws_core_icons_tab">
 
 	<?php
-	//The old "menu-icon-something" icons are only available in WP 3.8.x and below. Newer versions use Dashicons.
-	//Plugins can change $wp_version to something useless for security, so lets check if Dashicons are available
-	//before we throw away the old icons.
-	$oldMenuIconsAvailable = ( !$editor_data['dashicons_available'] )
-		|| version_compare($GLOBALS['wp_version'], '3.9-beta', '<');
-
-	if ($oldMenuIconsAvailable) {
-		$defaultWpIcons = array(
-			'generic', 'dashboard', 'post', 'media', 'links', 'page', 'comments',
-			'appearance', 'plugins', 'users', 'tools', 'settings', 'site',
-		);
-		foreach($defaultWpIcons as $icon) {
-			printf(
-				'<div class="ws_icon_option" title="%1$s" data-icon-class="menu-icon-%2$s">
-					<div class="ws_icon_image icon16 icon-%2$s"><br></div>
-				</div>',
-				esc_attr(ucwords($icon)),
-				esc_attr($icon)
-			);
-		}
-	}
-
 	//These dashicons are used in the default admin menu.
 	$defaultDashicons = array(
 		'admin-generic', 'dashboard', 'admin-post', 'admin-media', 'admin-links', 'admin-page', 'admin-comments',
@@ -612,7 +590,7 @@ function ame_register_sort_buttons($toolbar) {
 		function ws_ame_print_dashicon_option($icon, $isExtraIcon = false) {
 			printf(
 				'<div class="ws_icon_option%3$s" title="%1$s" data-icon-url="dashicons-%2$s">
-					<div class="ws_icon_image icon16 dashicons dashicons-%2$s"></div>
+					<div class="ws_icon_image dashicons dashicons-%2$s"></div>
 				</div>',
 				esc_attr(ucwords(str_replace('-', ' ', $icon))),
 				$icon,
@@ -620,10 +598,8 @@ function ame_register_sort_buttons($toolbar) {
 			);
 		}
 
-		if ( !$oldMenuIconsAvailable ) {
-			foreach($defaultDashicons as $icon) {
-				ws_ame_print_dashicon_option($icon);
-			}
+		foreach($defaultDashicons as $icon) {
+			ws_ame_print_dashicon_option($icon);
 		}
 		foreach($dashicons as $icon) {
 			ws_ame_print_dashicon_option($icon, true);

@@ -75,78 +75,84 @@
 			<tr class="inline-edit-row" data-bind="if: isBeingEdited, visible: true"
 			    style="display: none;">
 				<td class="colspanchange" colspan="3">
-					<fieldset class="ame-pv-inline-edit-left">
-						<legend class="inline-edit-legend" data-bind="text: defaultProperties['name']">
-							Edit Plugin Properties
-						</legend>
-						<div class="inline-edit-col">
-							<label>
-								<span class="title">Name</span>
-								<span class="input-text-wrap">
-									<input type="text" data-bind="value: editableProperties['name']" class="ame-pv-custom-name">
+					<div class="inline-edit-wrapper">
+						<fieldset class="ame-pv-inline-edit-left">
+							<legend class="inline-edit-legend" data-bind="text: defaultProperties['name']">
+								Edit Plugin Properties
+							</legend>
+							<div class="inline-edit-col">
+								<label>
+									<span class="title">Name</span>
+									<span class="input-text-wrap">
+									<input type="text" data-bind="value: editableProperties['name']"
+									       class="ame-pv-custom-name">
 								</span>
-							</label>
-							<label>
-								<span class="title">Author</span>
-								<span class="input-text-wrap">
-									<input type="text" data-bind="value: editableProperties['author']" class="ame-pv-custom-author">
+								</label>
+								<label>
+									<span class="title">Author</span>
+									<span class="input-text-wrap">
+									<input type="text" data-bind="value: editableProperties['author']"
+									       class="ame-pv-custom-author">
 								</span>
-							</label>
-							<label>
-								<span class="title">Site URL</span>
-								<span class="input-text-wrap">
-									<input type="text" data-bind="value: editableProperties['siteUrl']" class="ame-pv-custom-site-url">
+								</label>
+								<label>
+									<span class="title">Site URL</span>
+									<span class="input-text-wrap">
+									<input type="text" data-bind="value: editableProperties['siteUrl']"
+									       class="ame-pv-custom-site-url">
 								</span>
-							</label>
-							<label>
-								<span class="title">Version</span>
-								<span class="input-text-wrap">
-									<input type="text" data-bind="value: editableProperties['version']" class="ame-pv-custom-version-number">
+								</label>
+								<label>
+									<span class="title">Version</span>
+									<span class="input-text-wrap">
+									<input type="text" data-bind="value: editableProperties['version']"
+									       class="ame-pv-custom-version-number">
 								</span>
-							</label>
-						</div>
-					</fieldset>
-					<fieldset class="ame-pv-inline-edit-right">
-						<div class="inline-edit-col">
-							<label>
-								<span class="title">Description</span>
-								<textarea name="plugin-description" cols="30" rows="5"
-								          class="ame-pv-custom-description"
-								          data-bind="value: editableProperties['description']"></textarea>
-							</label>
-						</div>
-					</fieldset>
+								</label>
+							</div>
+						</fieldset>
+						<fieldset class="ame-pv-inline-edit-right">
+							<div class="inline-edit-col">
+								<label>
+									<span class="title">Description</span>
+									<textarea name="plugin-description" cols="30" rows="5"
+									          class="ame-pv-custom-description"
+									          data-bind="value: editableProperties['description']"></textarea>
+								</label>
+							</div>
+						</fieldset>
 
-					<p class="submit">
-						<?php
-						submit_button(
-							'Cancel',
-							'secondary cancel alignleft',
-							'pv-cancel',
-							false,
-							array(
-								'data-bind' => 'click: cancelEdit.bind($data)'
-							)
-						);
-						?>
+						<p class="submit">
+							<?php
+							submit_button(
+								'Update',
+								'primary save',
+								'pv-update',
+								false,
+								array(
+									'data-bind' => 'click: confirmEdit.bind($data)',
+								)
+							);
+							?>
 
-						<a class="alignleft ame-pv-inline-reset" href="#"
-						   title="Reset name and description to default values"
-						   data-bind="click: resetNameAndDescription.bind($data)">Reset to default</a>
+							<?php
+							submit_button(
+								'Cancel',
+								'secondary cancel',
+								'pv-cancel',
+								false,
+								array(
+									'data-bind' => 'click: cancelEdit.bind($data)',
+								)
+							);
+							?>
 
-						<?php
-						submit_button(
-							'Update',
-							'primary save alignright',
-							'pv-update',
-							false,
-							array(
-								'data-bind' => 'click: confirmEdit.bind($data)'
-							)
-						);
-						?>
-						<br class="clear">
-					</p>
+							<a class="ame-pv-inline-reset" href="#"
+							   title="Reset name and description to default values"
+							   data-bind="click: resetNameAndDescription.bind($data)">Reset to default</a>
+
+							<br class="clear">
+						</p></div>
 				</td>
 			</tr>
 			</tbody>

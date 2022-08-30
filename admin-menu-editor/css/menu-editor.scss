@@ -1,6 +1,7 @@
 /* Admin Menu Editor CSS file */
 
 @import "boxes";
+@import "input-group";
 
 #ws_menu_editor {
 	min-width: 780px;
@@ -196,7 +197,7 @@ $mainContainerBorderColor: $amePostboxBorderColor; //Was #cdd5d5 before WP 5.3.
 
 	display: block;
 	width: $itemWidth;
-	
+
 	padding : $itemPadding;
 	margin: 2px 0 2px $itemHorizontalMargin;
 
@@ -237,8 +238,8 @@ $mainContainerBorderColor: $amePostboxBorderColor; //Was #cdd5d5 before WP 5.3.
 	cursor: pointer;
 	display:block;
 	width: 40px;
-	height: 22px; 
-	
+	height: 22px;
+
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -337,7 +338,7 @@ $mainContainerBorderColor: $amePostboxBorderColor; //Was #cdd5d5 before WP 5.3.
 	border-radius: 2px;
 	border-top-right-radius: 0;
 
-	-moz-border-radius: 2px;	
+	-moz-border-radius: 2px;
 	-moz-border-radius-topright: 0;
 
 	-webkit-border-radius: 2px;
@@ -399,7 +400,7 @@ $mainContainerBorderColor: $amePostboxBorderColor; //Was #cdd5d5 before WP 5.3.
 .ws_reset_button {
 	display: block;
 	float: right;
-	
+
 	margin-left: 4px;
 	margin-top: 2px;
 	margin-right: 6px;
@@ -436,7 +437,7 @@ $mainContainerBorderColor: $amePostboxBorderColor; //Was #cdd5d5 before WP 5.3.
 $basicInputWidth: 254px;
 $basicInputWp53Height: 28px;
 
-#ws_menu_editor .ws_editbox input[type="text"], 
+#ws_menu_editor .ws_editbox input[type="text"],
 #ws_menu_editor .ws_editbox select {
 	display: block;
 	float: left;
@@ -482,10 +483,10 @@ $dropdownButtonWidth: 25px;
 	width: $dropdownButtonWidth;
 	height: 25px;
 	min-height: 25px;
-	
+
 	margin: 1px 1px 1px 0;
 	padding: 0 1px 0 0;
-	
+
 	text-align: center;
 
 	font-family: dashicons;
@@ -494,7 +495,7 @@ $dropdownButtonWidth: 25px;
 
 	border-color: #dfdfdf;
 	box-shadow: none;
-	
+
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 	border-top-left-radius: 0;
@@ -542,7 +543,7 @@ to accommodate the drop-down button.
 {
 	margin-right: 0;
 	border-right: 0;
-	
+
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
@@ -694,7 +695,7 @@ to accommodate the drop-down button.
 
 	width: 16px;
 	height: 16px;
-	
+
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -739,11 +740,11 @@ a.ws_button.ws_button_disabled:hover {
 select.ws_dropdown {
 	width: 252px;
 	height: 20em;
-	
+
 	z-index: 1002;
 	position: absolute;
 	display: none;
-	
+
 	font-family : "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
 	font-size: 12px;
 }
@@ -810,6 +811,8 @@ $activeToolTabBackground: #FDFDFD;
            Icon selector
 *************************************/
 
+$iconFontColor: #85888c;
+
 #ws_icon_selector {
 	border: 1px solid silver;
 	border-radius: 3px;
@@ -869,9 +872,15 @@ $activeToolTabBackground: #FDFDFD;
 	background-image: none;
 }
 
-#ws_icon_selector .icon16 {
+#ws_icon_selector .ws_icon_option .ws_icon_image {
 	float: none;
 	margin: 0;
+	padding: 0;
+
+	&:before {
+		color: $iconFontColor;
+		display: inline-block;
+	}
 }
 
 #ws_icon_selector .ws_icon_option .ws_icon_image.dashicons {
@@ -911,23 +920,16 @@ $activeToolTabBackground: #FDFDFD;
 	}
 }
 
-/* Current icon node (CSS class version, for the built-in WP icon sprites) */
-.ws_select_icon .icon16 {
-	margin: 0;
-	float: none;
+.ws_select_icon .ws_icon_image {
+	color: $iconFontColor;
 	padding: 3px;
 
-	/*
-	The default .icon16 style has a 6px padding which would normally make it too large
-	to fit in the button. We can't change the padding without making the background-position
-	look wrong, so lets offset the icon so that it fits.
-	*/
-	position: relative;
-	top: -3px;
-	left: -3px;
+	&.dashicons {
+		padding: 3px 2px;
 
-	.ame-is-wp53-plus & {
-		top: -1px;
+		&:before {
+			width: 20px;
+		}
 	}
 }
 
@@ -959,16 +961,6 @@ $activeToolTabBackground: #FDFDFD;
 		max-height: 324px;
 		overflow-y: auto;
 	}
-}
-
-/* MP6 admin style compatibility */
-#ws_icon_selector .ws_icon_option .icon16::before {
-	margin: 0;
-	padding: 0;
-}
-.ws_select_icon .icon16::before {
-	padding: 0;
-	margin: 1px 0 0 2px;
 }
 
 #ws_choose_icon_from_media {
@@ -1749,7 +1741,7 @@ $userSelectionPanelPadding: 10px;
 
 #ws_user_selection_panels {
 	min-width: $userSelectionPanelWidth * 2 + $userSelectionPanelPadding;
-	
+
 	.ws_user_selection_panel {
 		display: block;
 		float: left;

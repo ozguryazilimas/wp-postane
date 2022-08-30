@@ -1,5 +1,20 @@
 @charset "UTF-8";
 /* Admin Menu Editor CSS file */
+.ame-input-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.ame-input-group > :not(:first-child) {
+  margin-left: -1px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.ame-input-group > :not(:last-child) {
+  margin-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 #ws_menu_editor {
   min-width: 780px;
 }
@@ -760,9 +775,14 @@ select.ws_dropdown optgroup option {
   background-image: none;
 }
 
-#ws_icon_selector .icon16 {
+#ws_icon_selector .ws_icon_option .ws_icon_image {
   float: none;
   margin: 0;
+  padding: 0;
+}
+#ws_icon_selector .ws_icon_option .ws_icon_image:before {
+  color: #85888c;
+  display: inline-block;
 }
 
 #ws_icon_selector .ws_icon_option .ws_icon_image.dashicons {
@@ -799,22 +819,15 @@ select.ws_dropdown optgroup option {
   margin-top: 1px;
 }
 
-/* Current icon node (CSS class version, for the built-in WP icon sprites) */
-.ws_select_icon .icon16 {
-  margin: 0;
-  float: none;
+.ws_select_icon .ws_icon_image {
+  color: #85888c;
   padding: 3px;
-  /*
-  The default .icon16 style has a 6px padding which would normally make it too large
-  to fit in the button. We can't change the padding without making the background-position
-  look wrong, so lets offset the icon so that it fits.
-  */
-  position: relative;
-  top: -3px;
-  left: -3px;
 }
-.ame-is-wp53-plus .ws_select_icon .icon16 {
-  top: -1px;
+.ws_select_icon .ws_icon_image.dashicons {
+  padding: 3px 2px;
+}
+.ws_select_icon .ws_icon_image.dashicons:before {
+  width: 20px;
 }
 
 /* Current icon node (image version) */
@@ -837,17 +850,6 @@ select.ws_dropdown optgroup option {
   padding: 4px 4px 2px;
   max-height: 324px;
   overflow-y: auto;
-}
-
-/* MP6 admin style compatibility */
-#ws_icon_selector .ws_icon_option .icon16::before {
-  margin: 0;
-  padding: 0;
-}
-
-.ws_select_icon .icon16::before {
-  padding: 0;
-  margin: 1px 0 0 2px;
 }
 
 #ws_choose_icon_from_media {

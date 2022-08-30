@@ -31,6 +31,15 @@
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
     </rule>
     
+    <rule ref="WordPress.Security.EscapeOutput">
+		<properties>
+			<property name="customEscapingFunctions" type="array">
+				<!-- Register a custom escaping function for WP_Error objects. -->
+				<element value="wsAmeEscapeWpError"/>
+			</property>
+		</properties>
+	</rule>
+    
     <exclude-pattern type="relative">^/vendor/*</exclude-pattern>
     <!-- Third-party JavaScript libraries and jQuery plugins -->
     <exclude-pattern type="relative">^js/knockout\.js</exclude-pattern>

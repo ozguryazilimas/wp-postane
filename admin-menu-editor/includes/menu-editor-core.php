@@ -701,7 +701,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//Replace the admin menu just before it is displayed and restore it afterwards.
 			//The fact that replace_wp_menu() is attached to the 'parent_file' hook is incidental;
 			//there just wasn't any other, more suitable hook available.
-			add_filter('parent_file', array($this, 'replace_wp_menu'));
+			add_filter('parent_file', array($this, 'replace_wp_menu'), 1001);
 			add_action('adminmenu', array($this, 'restore_wp_menu'));
 
 			//A compatibility hack for Ozh's Admin Drop Down Menu. Make sure it also sees the modified menu.
@@ -4593,16 +4593,26 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 * @return WP_User|null
 	 */
 	private function get_user_by_id($user_id) {
-		$current_user = wp_get_current_user();
-		if ( $current_user->ID == $user_id ) {
-			$user = $current_user;
-		} else {
+		//Usually, pluggable functions will already be loaded by this point,
+		//but there is at least one plugin that indirectly triggers this method
+		//before wp_get_current_user() is available by checking user caps early.
+		if ( function_exists('wp_get_current_user') ) {
+			$current_user = wp_get_current_user();
+			if ( $current_user && ($current_user->ID == $user_id) ) {
+				return $current_user;
+			}
+		}
+
+		if ( function_exists('get_user_by') ) {
 			$user = get_user_by('id', $user_id);
 			if ( $user === false ) {
 				return null;
+			} else {
+				return $user;
 			}
 		}
-		return $user;
+
+		return null;
 	}
 
 	/**

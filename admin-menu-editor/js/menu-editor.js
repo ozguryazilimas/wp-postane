@@ -1542,7 +1542,7 @@ var knownMenuFields = {
 			}
 
 			var selectButton = input.closest('.ws_edit_field').find('.ws_select_icon');
-			var cssIcon = selectButton.find('.icon16');
+			var cssIcon = selectButton.find('.ws_icon_image');
 			var imageIcon = selectButton.find('img');
 
 			var matches = cssClass.match(/\b(ame-)?menu-icon-([^\s]+)\b/);
@@ -1554,7 +1554,7 @@ var knownMenuFields = {
 				cssIcon.hide();
 				imageIcon.prop('src', iconUrl).show();
 			} else if ( iconFontMatches ) {
-				cssIcon.removeClass().addClass('icon16');
+				cssIcon.removeClass().addClass('ws_icon_image');
 				if ( iconFontMatches[2] === 'dashicons' ) {
 					//Dashicon.
 					cssIcon.addClass('dashicons ' + iconFontMatches[1]);
@@ -1568,12 +1568,12 @@ var knownMenuFields = {
 				//Other CSS-based icon.
 				imageIcon.hide();
 				var iconClass = (matches[1] ? matches[1] : '') + 'icon-' + matches[2];
-				cssIcon.removeClass().addClass('icon16 ' + iconClass).show();
+				cssIcon.removeClass().addClass('ws_icon_image ' + iconClass).show();
 			} else {
 				//This menu has no icon at all. This is actually a valid state
 				//and WordPress will display a menu like that correctly.
 				imageIcon.hide();
-				cssIcon.removeClass().addClass('icon16').show();
+				cssIcon.removeClass().addClass('ws_icon_image').show();
 			}
 
 			return displayValue;
@@ -1817,7 +1817,7 @@ function buildEditboxField(entry, field_name, field_settings){
 		case 'icon_selector':
 			//noinspection HtmlUnknownTag
 			inputBox = $(basicTextField)
-                .add('<button class="button ws_select_icon" title="Select icon"><div class="icon16 icon-settings"></div><img src="" style="display:none;" alt="Icon"></button>');
+                .add('<button class="button ws_select_icon" title="Select icon"><div class="ws_icon_image dashicons dashicons-admin-generic"></div><img src="" style="display:none;" alt="Icon"></button>');
 			break;
 
 		case 'color_scheme_editor':
@@ -5360,7 +5360,7 @@ function ameOnDomReady() {
 		}
 	});
 
-	//Set up menu field toltips.
+	//Set up menu field tooltips.
 	menuEditorNode.on('mouseenter click', '.ws_edit_field .ws_field_tooltip_trigger', function(event) {
 		var $trigger = $(this),
 			fieldName = $trigger.closest('.ws_edit_field').data('field_name');

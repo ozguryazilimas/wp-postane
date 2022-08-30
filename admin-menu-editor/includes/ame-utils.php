@@ -4,13 +4,42 @@
  * Miscellaneous utility functions.
  */
 class ameUtils {
+	/**
+	 * HTML tags allowed in WP_Error messages and titles.
+	 *
+	 * This is based on the default list of allowed tags in /wp-includes/kses.php.
+	 */
+	const ALLOWED_WP_ERROR_TAGS = array(
+		'abbr'       => array(
+			'title' => true,
+		),
+		'acronym'    => array(
+			'title' => true,
+		),
+		'b'          => array(),
+		'blockquote' => array(
+			'cite' => true,
+		),
+		'cite'       => array(),
+		'code'       => array(),
+		'del'        => array(
+			'datetime' => true,
+		),
+		'em'         => array(),
+		'i'          => array(),
+		'q'          => array(
+			'cite' => true,
+		),
+		's'          => array(),
+		'strong'     => array(),
+	);
 
 	/**
 	 * Get a value from a nested array or object based on a path.
 	 *
 	 * @param array|object $array Get an entry from this array.
 	 * @param array|string $path A list of array keys in hierarchy order, or a string path like "foo.bar.baz".
-	 * @param mixed $default The value to return if the specified path is not found.
+	 * @param mixed $default The value to return if the specified path is not found. Defaults to NULL.
 	 * @param string $separator Path element separator. Only applies to string paths.
 	 * @return mixed
 	 */
@@ -91,7 +120,7 @@ class ameUtils {
 
 		if ( $hasUnicodeSupport ) {
 			$totalLength = mb_strlen($input);
-			$words = preg_split('/([\s\-_]++)/u', $input, null, PREG_SPLIT_DELIM_CAPTURE);
+			$words = preg_split('/([\s\-_]++)/u', $input, -1, PREG_SPLIT_DELIM_CAPTURE);
 			$output = array();
 			foreach ($words as $word) {
 				$firstCharacter = mb_substr($word, 0, 1, $charset);
@@ -120,6 +149,104 @@ class ameUtils {
 		$sameItems = array_intersect_assoc($a, $b);
 		return count($sameItems) === $secondArraySize;
 	}
+
+	/**
+	 * Escape a WP_Error object for passing it to wp_die().
+	 *
+	 * Converts special characters in error messages to HTML entities.
+	 * Returns a new WP_Error instance. Does not modify the input object.
+	 *
+	 * @param WP_Error $error
+	 * @return WP_Error New WP_Error instance.
+	 */
+	public static function escapeWpError($error) {
+		return self::copyErrorWithFilter($error, 'esc_html');
+	}
+
+	/**
+	 * Strip disallowed HTML from a WP_Error object.
+	 *
+	 * @param WP_Error $error
+	 * @return WP_Error New WP_Error instance.
+	 */
+	public static function ksesWpError($error) {
+		return self::copyErrorWithFilter($error, array(__CLASS__, 'ksesCallbackForErrors'));
+	}
+
+	protected static function ksesCallbackForErrors($message) {
+		return wp_kses($message, self::ALLOWED_WP_ERROR_TAGS);
+	}
+
+	/**
+	 * Copy a WP_Error object and apply a filter callback to each message.
+	 *
+	 * Also, if an error has a data item that's an array with a 'title' key,
+	 * this escapes HTML in the title.
+	 *
+	 * @param \WP_Error $error
+	 * @param callable $callback
+	 * @return \WP_Error
+	 */
+	protected static function copyErrorWithFilter($error, $callback) {
+		$result = new WP_Error();
+		$canGetAllData = method_exists($error, 'get_all_error_data'); //WP 5.6+
+
+		foreach ($error->get_error_codes() as $code) {
+			foreach ($error->get_error_messages($code) as $message) {
+				$result->add($code, call_user_func($callback, $message));
+			}
+
+			if ( $canGetAllData ) {
+				$dataItems = $error->get_all_error_data($code);
+			} else {
+				$data = $error->get_error_data($code);
+				if ( $data !== null ) {
+					$dataItems = array($data);
+				} else {
+					$dataItems = array();
+				}
+			}
+
+			foreach ($dataItems as $data) {
+				//Page titles should never contain unescaped HTML tags.
+				//As of this writing, this plugin doesn't put titles in error data,
+				//but other code might, and wp_die() supports it.
+				if ( isset($data['title']) ) {
+					$data['title'] = esc_html($data['title']);
+				}
+				$result->add_data($data, $code);
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Get the first element of an iterable collection.
+	 *
+	 * @param iterable $collection Array, Traversable, Generator, etc.
+	 * @param mixed $defaultValue Value to return if the collection is empty.
+	 * @return mixed
+	 */
+	public static function getFirstItem($collection, $defaultValue = null) {
+		foreach ($collection as $value) {
+			return $value;
+		}
+		return $defaultValue;
+	}
+}
+
+/**
+ * @see ameUtils::escapeWpError
+ *
+ * This function exists because the "EscapeOutput" sniff in the WordPress coding standards
+ * doesn't understand class methods.
+ *
+ * @param \WP_Error $error
+ * @return \WP_Error
+ */
+function wsAmeEscapeWpError($error) {
+	return ameUtils::escapeWpError($error);
 }
 
 class ameFileLock {
@@ -347,28 +474,34 @@ class ameOrderedMap implements Iterator, Countable {
 		return $this;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function current() {
 		return $this->currentNode->value;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function next() {
 		if ( $this->currentNode !== null ) {
 			$this->currentNode = $this->currentNode->next;
 		}
 	}
 
+	#[\ReturnTypeWillChange]
 	public function key() {
 		return $this->currentNode->key;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function valid() {
 		return ($this->currentNode !== null);
 	}
 
+	#[\ReturnTypeWillChange]
 	public function rewind() {
 		$this->currentNode = $this->head;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function count() {
 		return count($this->nodesByKey);
 	}

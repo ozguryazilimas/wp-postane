@@ -1,0 +1,15 @@
+$invalidColor: #d63638; //Matches the Theme Customizer.
+
+@mixin ame-invalid-input-styles {
+	select, input {
+		&:invalid {
+			border-color: $invalidColor;
+
+			//Override the box shadow that WordPress adds on focus.
+			&:focus {
+				box-shadow: 0 0 0 1px $invalidColor;
+			}
+		}
+	}
+}
+

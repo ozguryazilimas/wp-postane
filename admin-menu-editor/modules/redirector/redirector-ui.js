@@ -45,8 +45,8 @@ var AmeRedirectorUi;
     };
     var Redirect = /** @class */ (function () {
         function Redirect(properties, actorProvider) {
-            var _this = this;
             if (actorProvider === void 0) { actorProvider = null; }
+            var _this = this;
             this.actorId = properties.actorId;
             this.trigger = properties.trigger;
             this.urlTemplate = ko.observable(properties.urlTemplate);
@@ -134,9 +134,9 @@ var AmeRedirectorUi;
     AmeRedirectorUi.Redirect = Redirect;
     var TriggerView = /** @class */ (function () {
         function TriggerView(trigger, supportsUserSettings, supportsRoleSettings) {
-            var _this = this;
             if (supportsUserSettings === void 0) { supportsUserSettings = null; }
             if (supportsRoleSettings === void 0) { supportsRoleSettings = null; }
+            var _this = this;
             this.users = ko.observableArray([]);
             this.roles = ko.observableArray([]);
             this.supportsUserSettings = true;
