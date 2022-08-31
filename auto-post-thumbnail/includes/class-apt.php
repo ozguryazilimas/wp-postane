@@ -439,7 +439,7 @@ class AutoPostThumbnails {
 		 * Look for this id in the IMG tag.
 		 */
 		if ( isset( $image['tag'] ) && ! empty( $image['tag'] ) ) {
-			preg_match( ' / wp - image - ( [ \d ] *) / i', $image['tag'], $thumb_id );
+			preg_match( '/wp-image-([\d]*)/i', $image['tag'], $thumb_id );
 
 			if ( $thumb_id ) {
 				$thumb_id = $thumb_id[1];
@@ -455,8 +455,7 @@ class AutoPostThumbnails {
 			if ( isset( $image['url'] ) && ! empty( $image['url'] ) ) {
 				$image_url = $image['url'];
 				// если ссылка на миниатюру, то регулярка сделает ссылку на оригинал. убирает в конце названия файла -150x150
-				$image_url = preg_replace( ' / - [ 0 - 9 ]{
-			1,}x[ 0 - 9 ]{1,}\./', ' . ', $image_url );
+				$image_url = preg_replace( '/-[0-9]{1,}x[0-9]{1,}\./', ' . ', $image_url );
 				$thumb_id  = $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE guid LIKE ' % " . esc_sql( $image_url ) . " % '" );
 			}
 		}
@@ -485,6 +484,10 @@ class AutoPostThumbnails {
 	 * @throws Exception
 	 */
 	public function save_post( $post_id, $post = null, $update = true ) {
+		if ( 'revision' === $post->post_type ) {
+			return;
+		}
+
 		if ( ! in_array( $post->post_type, $this->allowed_generate_post_types ) ) {
 			$this->plugin->logger->warning( "The post type ({$post->post_type}) is not allowed for generation in settings" );
 		} else {

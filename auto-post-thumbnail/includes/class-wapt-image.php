@@ -87,7 +87,7 @@ class Image {
 	/**
 	 * @var array
 	 */
-	public $params = array();
+	public $params = [];
 
 	/**
 	 * @return
@@ -251,13 +251,13 @@ class Image {
 		if ( empty( $hex ) ) {
 			$hex = $this->font_color;
 		}
-		list( $r, $g, $b ) = sscanf( $hex, '#%02x%02x%02x' );
+		[ $r, $g, $b ] = sscanf( $hex, '#%02x%02x%02x' );
 
-		return array(
+		return [
 			'r' => $r,
 			'g' => $g,
 			'b' => $b,
-		);
+		];
 	}
 
 	/**
@@ -277,12 +277,12 @@ class Image {
 			$text = ! empty( $this->text ) ? $this->text : $this->reference_text;
 			//$txt_image = $this->create( 500, 500 );
 			$box    = imagettfbbox( $this->font_size, 0, $this->font_path, $text );
-			$width  = $box[2] - $box[0];
+			$width  = ceil( ( $box[2] - $box[0] ) / strlen( $text ) );
 			$height = $box[1] - $box[7];
-			$result = array(
-				'width'  => ceil( $width / strlen( $text ) ), //средняя ширина одного символа
-				'height' => $height, //высота одного символа
-			);
+			$result = [
+				'width'  => $width ? $width : 1, //средняя ширина одного символа
+				'height' => $height ? $height : 1, //высота одного символа
+			];
 
 			return $result;
 		} else {

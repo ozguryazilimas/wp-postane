@@ -113,7 +113,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= 3.9.12 =
+= 3.9.14 =
+* FIX: Image search in the post text
+
+= 3.9.13 =
 * Some fixes for compatibility with premium plugin
 
 = 3.9.12 =
