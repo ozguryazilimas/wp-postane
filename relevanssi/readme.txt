@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 4.17.0
+Stable tag: 4.17.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,10 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.17.1 =
+* Minor fix: WooCommerce layered navigation compatibility caused enough problems that I've disabled it by default. You can enable it with `add_filter( 'woocommerce_get_filtered_term_product_counts_query', 'relevanssi_filtered_term_product_counts_query' );`.
+* Minor fix: Data attribute handling for in-document highlighting is now better.
+
 = 4.17.0 =
 * New feature: You can now look at how the posts appear in the database from the Debugging tab.
 * New feature: Relevanssi now works with WooCommerce layered navigation filters. The filter post counts should now match the Relevanssi search results.
@@ -184,6 +188,9 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: The Bricks compatibility was improved, Relevanssi now notices changes to Bricks posts more often. Relevanssi also only reads the text from the `_bricks_page_content_2` custom field.
 
 == Upgrade notice ==
+= 4.17.1 =
+* Disables the WooCommerce layered navigation support by default.
+
 = 4.17.0 =
 * Large number of bug fixes and general improvements.
 
