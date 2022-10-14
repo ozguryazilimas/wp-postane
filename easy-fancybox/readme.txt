@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ravan
 Tags: fancybox, lightbox, gallery, image, photo, video, overlay, youtube, vimeo, dailymotion, pdf, svg, iframe, jquery, webp
 Requires at least: 3.3
 Tested up to: 6.1-RC1
-Stable tag: 1.9
+Stable tag: 1.9.1
 
 Easily enable the FancyBox light box on just about all media links. Multi-Site compatible. Supports iframe, inline content and well known video hosts.
 
@@ -462,11 +462,16 @@ If you still do not get to see your images in FancyBox, ask on the [Easy FancyBo
 
 == Upgrade Notice ==
 
-= 1.8.19 =
+= 1.9.1 =
 
-Admin settings links, new Exclude selector option.
+Bugfix release.
 
 == Changelog ==
+
+= 1.9.1 =
+* FIX: Passing event parameters failing
+* FIX: Case insesitive selectors failing
+* FIX: Admin message display issue
 
 = 1.9 =
 * NEW: Swipe support
