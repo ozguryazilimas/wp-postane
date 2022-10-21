@@ -8,24 +8,26 @@
  * That said, it is hardly a one-person project. Many people have submitted bugs, code, and offered their advice freely. Their support is greatly appreciated.
  *
  * Copyright (c) 2020 - RavanH
- * Version: 1.5.2 (2020/11/09)
+ * Version: 1.5.3 (2020/11/09)
  *
  * Dual licensed under the MIT and GPL licenses:
  *	 http://www.opensource.org/licenses/mit-license.php
  *	 http://www.gnu.org/licenses/gpl.html
  */
 
-html.fancybox-active, html.fancybox-active body {
+html.fancybox-active:not(.fancybox-allowscroll), html.fancybox-active:not(.fancybox-allowscroll) body {
 	touch-action: none;
 	overscroll-behavior: none;
 	-webkit-overflow-scrolling: auto;
 	overflow: hidden;
 }
-html.fancybox-active body {
+
+html.fancybox-active:not(.fancybox-allowscroll) body {
 	margin-right: var(--vertical-scrollbar);
 	margin-bottom: var(--horizontal-scrollbar);
 }
-html.fancybox-active body.rtl {
+
+html.fancybox-active:not(.fancybox-allowscroll) body.rtl {
 	margin-right: 0;
 	margin-left: var(--vertical-scrollbar);
 }
@@ -76,23 +78,24 @@ html.fancybox-active body.rtl {
 	box-shadow:0 0 20px #111;
 	-moz-box-shadow:0 0 20px #111;
 	-webkit-box-shadow:0 0 20px #111;
+	background: #fff;
 }
 
 #fancybox-content {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	-webkit-overflow-scrolling: touch;
-	overflow-y: auto;
+	overflow: hidden;
 	z-index: 111102;
 	border: 0px solid #fff;
 	background: #fff;
 	background-clip: padding-box;
 }
 
-#fancybox-content > div {
+#fancybox-content > * {
 	max-width: 100%;
 	max-height: 100%;
+	-webkit-overflow-scrolling: touch;
 }
 
 #fancybox-error {
@@ -108,6 +111,7 @@ html.fancybox-active body.rtl {
 }
 
 #fancybox-img {
+	position: absolute;
 	padding: 0;
 	margin: 0;
 	line-height: 0;
@@ -120,7 +124,9 @@ html.fancybox-active body.rtl {
 	display: block;
 	z-index: 0; /* z-index bug with -webkit-overflow-scrolling */
 }
+
 /* buttons */
+
 .fancy-ico {
 	position: absolute;
 	width: 48px;
@@ -146,7 +152,9 @@ html.fancybox-active body.rtl {
 #fancybox-prev:hover span, body.rtl #fancybox-next:hover span {
 	transform: rotate(-360deg);
 }
+
 /* close button */
+
 #fancybox-close {
 	top: -24px;
 	right: -24px;
@@ -171,6 +179,7 @@ html.fancybox-active body.rtl {
 }
 
 /* navigation elements */
+
 #fancybox-prev, #fancybox-next {
 	top: 50%;
 	margin-top: -24px;
@@ -269,6 +278,7 @@ body.rtl .fancybox-title-over {
 }
 
 /* loader animation */
+
 #fancybox-loading {
 	position: fixed;
 	top: 50%;
@@ -357,9 +367,11 @@ body.rtl .fancybox-title-over {
 }
 
 /* other */
+
 .fancybox-hidden {
 	display: none;
 }
+
 #fancybox-content .fancybox-hidden,
 #fancybox-tmp .fancybox-hidden {
 	display: revert;
