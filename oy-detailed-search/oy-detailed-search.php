@@ -3,7 +3,7 @@
 Plugin Name: Detailed-Search v1
 Plugin URI: http://ozguryazilim.com.tr
 Description: Detailed Search plugin For 22dakika.org project
-Version: 1.4.1
+Version: 1.5.0
 Author: Ozguryazilim
 Author URI: https://www.ozguryazilim.com.tr
 License: GPL
@@ -282,9 +282,18 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
 
   if ($words_included != NULL) {
     foreach ($words_included as $key) {
-      $query->extend_query("AND (post_title LIKE '%s' OR post_content REGEXP %s)",
+      $key_raw = html_entity_decode($key);
+      $key_escaped = htmlentities($key_raw, ENT_QUOTES, 'UTF-8');
+
+      $query->extend_query("AND (post_title LIKE '%s' post_title LIKE '%s' OR post_content REGEXP %s OR post_content REGEXP %s)",
                            $key . ' ',
-                           array('%' . $key . '%', $key . '(?![^<>]*>)'));
+                           array(
+                             '%' . $key_raw . '%',
+                             '%' . $key_escaped . '%',
+                             $key_raw . '(?![^<>]*>)',
+                             $key_escaped . '(?![^<>]*>)'
+                           )
+      );
     }
       $query->extend_query('', 'ifadeleri geçen ');
   }
@@ -293,18 +302,35 @@ function oy_generate_post_query($author_id, $date_begin, $date_end, $words_inclu
     $query->extend_query('AND ( 1=0');
 
     foreach ($words_at_least_one as $key) {
-      $query->extend_query("OR post_title LIKE '%s' OR post_content REGEXP %s",
+      $key_raw = html_entity_decode($key);
+      $key_escaped = htmlentities($key_raw, ENT_QUOTES, 'UTF-8');
+
+      $query->extend_query("OR post_title LIKE '%s' OR post_title LIKE '%s' OR post_content REGEXP %s OR post_content REGEXP %s",
                            $key . ' ',
-                           array('%' . $key . '%', $key . '(?![^<>]*>)'));
+                           array(
+                             '%' . $key_raw . '%',
+                             '%' . $key_escaped . '%',
+                             $key_raw . '(?![^<>]*>)',
+                             $key_escaped . '(?![^<>]*>)'
+                           )
+      );
     }
 
     $query->extend_query(')', 'kelimelerinden en az birine sahip olan');
   }
 
   if ($words_ordered != NULL) {
-    $query->extend_query("AND (post_title LIKE '%s' OR post_content REGEXP %s)",
+    $words_ordered_raw = html_entity_decode($words_ordered);
+    $words_ordered_escaped = htmlentities($words_ordered_raw, ENT_QUOTES, 'UTF-8');
+
+    $query->extend_query("AND (post_title LIKE '%s' OR post_title LIKE '%s' OR post_content REGEXP %s OR post_content REGEXP %s)",
                          $words_ordered . ' kelimeleri sıralı olan ',
-                         array('%' . $words_ordered . '%', $words_ordered . '(?![^<>]*>)'));
+                         array('%' . $words_ordered_raw . '%',
+                               '%' . $words_ordered_escaped . '%',
+                               $words_ordered_raw . '(?![^<>]*>)',
+                               $words_ordered_escaped . '(?![^<>]*>)'
+                         )
+    );
   }
 
   if ($words_excluded != NULL) {
