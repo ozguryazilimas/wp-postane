@@ -101,7 +101,8 @@ hr.ws-submenu-separator {
     text-align: center;
 }
 
-#adminmenu .ame-has-submenu-icons ul.wp-submenu li a {
+#adminmenu .ame-has-submenu-icons > ul.wp-submenu > li > a,
+.folded #adminmenu .ame-has-submenu-icons > ul.wp-submenu > li > a {
     /* Push all submenus to the right to ensure that items with and without icons line up nicely. */
     padding-left: 36px;
 }
@@ -118,4 +119,11 @@ hr.ws-submenu-separator {
 #adminmenu .wp-submenu li.current .ame-submenu-icon img {
     opacity: 1;
     filter: alpha(opacity=100);
+}
+
+/*
+When the admin menu is collapsed, don't show a submenu icon in the submenu header.
+*/
+.folded #adminmenu li.wp-submenu-head .ame-submenu-icon {
+    display: none;
 }

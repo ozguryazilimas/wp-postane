@@ -3993,7 +3993,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'ame-helper-style',
 			plugins_url('css/admin.css', $this->plugin_file),
 			array(),
-			'20211207'
+			'20220912'
 		);
 
 		if ( $this->options['force_custom_dashicons'] ) {

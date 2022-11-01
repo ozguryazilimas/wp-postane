@@ -743,7 +743,7 @@ function loadMenuConfiguration(adminMenu) {
 				verticalBoxOffset = (submenuBox.offset().top - mainMenuBox.offset().top),
 				minSubmenuHeight = (selectedMenu.offset().top - mainMenuBox.offset().top)
 					- verticalBoxOffset
-					+ menuTipHeight - submenuDropZone.outerHeight() + empiricalExtraHeight;
+					+ menuTipHeight - (submenuDropZone.outerHeight() || 0) + empiricalExtraHeight;
 			minSubmenuHeight = Math.max(minSubmenuHeight, 0);
 			submenuBox.css('min-height', minSubmenuHeight);
 		}
@@ -2856,6 +2856,7 @@ function ameOnDomReady() {
     }));
 
 	function updateSubmenuBoxHeight(selectedMenu) {
+		//TODO: Eliminate this duplication. Maybe we could just call the corresponding column method.
 		const myColumn = menuPresenter.getColumnImmediate(selectedMenu.closest('.ws_main_container').data('ame-menu-level') || 1);
 		const nextColumn = menuPresenter.getColumnImmediate(myColumn.level + 1);
 		if (!nextColumn || (nextColumn === myColumn)) {
