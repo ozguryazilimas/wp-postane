@@ -5,7 +5,7 @@ if ( have_posts() ) {
 	while ( have_posts() ) {
 		the_post();
 		$output .= '<li><a href="' . get_permalink() . '" rel="bookmark">' . get_the_title() . '</a>';
-		// $output .= ' ('.round(get_the_score(),3).')';
+		// $output .= ' ('.round(float()get_the_score(),3).')';
 		$output .= '</li>';
 	}
 	$output .= '</ol>';

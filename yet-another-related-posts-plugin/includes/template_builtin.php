@@ -30,7 +30,7 @@ if ( have_posts() ) {
 		$link    = get_permalink();
 		$tooltip = esc_attr( ( get_the_title() ) ? get_the_title() : get_the_ID() );
 		$title   = get_the_title();
-		$round   = round( get_the_score(), 1 );
+		$round   = round( (float)get_the_score(), 1 );
 		$score   = ( current_user_can( 'manage_options' ) && $domain !== 'rss' && ! is_admin() )
 					? '<abbr title="' . sprintf( __( '%f is the YARPP match score between the current entry and this related entry. You are seeing this value because you are logged in to WordPress as an administrator. It is not shown to regular visitors.', 'yet-another-related-posts-plugin' ), $round ) . '">(' . $round . ')</abbr>'
 					: null;

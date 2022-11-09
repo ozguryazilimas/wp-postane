@@ -5,8 +5,8 @@ Donate link: https://yarpp.com
 Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
-Tested up to: 5.8
-Stable tag: 5.27.8
+Tested up to: 6.1
+Stable tag: 5.30.1
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -237,6 +237,7 @@ yarpp_related(
     'order' => 'score DESC', // column on "wp_posts" to order by, then a space, and whether to order in ascending ("ASC") or descending ("DESC") order
     'promote_yarpp' => true, // boolean indicating whether to add 'Powered by YARPP' below related posts
     'generate_missing_thumbnails' => true, // automatically generate missing thumbnail sizes on the fly
+    'extra_css_class' => 'class_1 class_2', // add CSS classes to YARPP's parent div
   ),
  $reference_ID, // second argument: (optional) the post ID. If not included, will use the current post.
  true // third argument: (optional) true to echo the HTML block; false to return it
@@ -561,6 +562,9 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+
+= 5.30.1 (08-November-2022) =
+* [Bugfix](https://wordpress.org/support/topic/something-wrong-with-yaarp-plugin-this-morning/): Fixes issue caused by stricter type checks for arithmetic operators in PHP8
 
 = 5.27.8 (01-December-2021) =
 * New: `[yarpp]` shortcode supports all the same parameters as `yarpp_related()`. [See the updated documentation.](https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation)
@@ -1471,5 +1475,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.27.8 =
+= 5.30.1 =
 We update this plugin regularly so we can make it better for you. Update to the latest version for all of the available features and improvements. Thank you for using YARPP!
