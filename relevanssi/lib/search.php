@@ -149,9 +149,10 @@ function relevanssi_search( $args ) {
 	}
 
 	if ( function_exists( 'relevanssi_process_terms' ) ) {
-		$process_terms_results = relevanssi_process_terms( $terms['terms'], $q );
-		$query_restrictions   .= $process_terms_results['query_restrictions'];
-		$terms['terms']        = $process_terms_results['terms'];
+		$process_terms_results   = relevanssi_process_terms( $terms['terms'], $terms['original_terms'], $q );
+		$query_restrictions     .= $process_terms_results['query_restrictions'];
+		$terms['terms']          = $process_terms_results['terms'];
+		$terms['original_terms'] = $process_terms_results['original_terms'];
 	}
 
 	$no_terms = false;
@@ -921,7 +922,7 @@ function relevanssi_compile_search_args( $query, $q ) {
 		// Tax query is empty, let's get rid of it.
 		$query->tax_query = null;
 	}
-	if ( isset( $query->query_vars['tax_query'] ) ) {
+	if ( ! empty( $query->query_vars['tax_query'] ) ) {
 		// This is user-created tax_query array as described in WP Codex.
 		foreach ( $query->query_vars['tax_query'] as $type => $item ) {
 			if ( is_string( $type ) && 'relation' === $type ) {

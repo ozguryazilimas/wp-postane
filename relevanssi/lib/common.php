@@ -984,7 +984,7 @@ function relevanssi_add_highlight( $permalink, $link_post = null ) {
 	if ( isset( $highlight_docs ) && 'off' !== $highlight_docs && ! empty( $query ) ) {
 		if ( ! relevanssi_is_front_page_id( $link_post->ID ?? null ) ) {
 			global $wp_query;
-			if ( isset( $wp_query->query_vars['sentence'] ) && '&quot;' !== substr( $query, 0, 6 ) ) {
+			if ( ! empty( $wp_query->query_vars['sentence'] ) && '&quot;' !== substr( $query, 0, 6 ) ) {
 				$query = relevanssi_add_quotes( $query );
 			}
 			$query     = str_replace( '&quot;', '"', $query );
@@ -1067,7 +1067,7 @@ function relevanssi_permalink( $link, $link_post = null ) {
 		$link = relevanssi_add_highlight( $link, $link_post );
 	}
 
-	if ( $add_highlight_and_tracking && function_exists( 'relevanssi_add_tracking' ) ) {
+	if ( $add_highlight_and_tracking && function_exists( 'relevanssi_add_tracking' ) && property_exists( $link_post, 'relevance_score' ) ) {
 		$link = relevanssi_add_tracking( $link, $link_post );
 	}
 
