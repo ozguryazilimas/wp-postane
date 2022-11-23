@@ -259,7 +259,7 @@ class AutoPostThumbnails {
 			$thumb_id = $result->thumbnail_id;
 
 			if ( $thumb_id ) {
-				$result->write_to_log();
+				//$result->write_to_log();
 				wp_send_json_success( $result->getData() );
 			} else {
 				$result->write_to_log();

@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Templates_110;
+namespace WBCR\Factory_Templates_112;
 
 /**
  * Class Search options

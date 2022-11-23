@@ -1,4 +1,4 @@
-function wbcr_factory_logger_123_LogCleanup(element) {
+function wbcr_factory_logger_124_LogCleanup(element) {
     var btn = jQuery(element),
         currentBtnText = btn.html();
 
@@ -10,18 +10,18 @@ function wbcr_factory_logger_123_LogCleanup(element) {
         url: ajaxurl,
         method: 'post',
         data: {
-            action: 'wbcr_factory_logger_123_'+wbcr_factory_logger_123.plugin_prefix+'logs_cleanup',
-            nonce: wbcr_factory_logger_123.clean_logs_nonce
+            action: 'wbcr_factory_logger_124_'+wbcr_factory_logger_124.plugin_prefix+'logs_cleanup',
+            nonce: wbcr_factory_logger_124.clean_logs_nonce
         },
         success: function (data) {
             btn.html(currentBtnText);
 
             jQuery('#wbcr-log-viewer').html('');
             jQuery('#wbcr-log-size').text('0B');
-            jQuery.wbcr_factory_templates_110.app.showNotice(data.message, data.type);
+            jQuery.wbcr_factory_templates_112.app.showNotice(data.message, data.type);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            jQuery.wbcr_factory_templates_110.app.showNotice('Error: ' + errorThrown + ', status: ' + textStatus, 'danger');
+            jQuery.wbcr_factory_templates_112.app.showNotice('Error: ' + errorThrown + ', status: ' + textStatus, 'danger');
             btn.html(currentBtnText);
         }
     });

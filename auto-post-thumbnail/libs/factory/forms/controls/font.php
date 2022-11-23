@@ -20,9 +20,9 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms455_FontControl') ) {
+	if( !class_exists('Wbcr_FactoryForms457_FontControl') ) {
 
-		class Wbcr_FactoryForms455_FontControl extends Wbcr_FactoryForms455_ComplexControl {
+		class Wbcr_FactoryForms457_FontControl extends Wbcr_FactoryForms457_ComplexControl {
 
 			public $type = 'font';
 
@@ -54,9 +54,9 @@
 					'pickerTarget' => '.factory-control-' . $this->options['name'] . ' .factory-picker-target'
 				);
 
-				$this->size = new Wbcr_FactoryForms455_IntegerControl($option_font_size, $form, $provider);
-				$this->family = new Wbcr_FactoryForms455_DropdownControl($option_font_family, $form, $provider);
-				$this->color = new Wbcr_FactoryForms455_ColorControl($optionFontColor, $form, $provider);
+				$this->size = new Wbcr_FactoryForms457_IntegerControl($option_font_size, $form, $provider);
+				$this->family = new Wbcr_FactoryForms457_DropdownControl($option_font_family, $form, $provider);
+				$this->color = new Wbcr_FactoryForms457_ColorControl($optionFontColor, $form, $provider);
 
 				$this->innerControls = array($this->family, $this->size, $this->color);
 			}
@@ -66,8 +66,8 @@
 
 				$fonts = $this->getDefaultFonts();
 
-				$fonts = apply_filters('wbcr_factory_forms_455_fonts', $fonts);
-				$fonts = apply_filters('wbcr_factory_forms_455_fonts-' . $this->options['name'], $fonts);
+				$fonts = apply_filters('wbcr_factory_forms_457_fonts', $fonts);
+				$fonts = apply_filters('wbcr_factory_forms_457_fonts-' . $this->options['name'], $fonts);
 
 				return $fonts;
 			}
@@ -77,10 +77,10 @@
 
 				$fonts = array(
 
-					array('inherit', __('(use default website font)', 'wbcr_factory_forms_455')),
+					array('inherit', __('(use default website font)', 'wbcr_factory_forms_457')),
 					array(
 						'group',
-						__('Sans Serif:', 'wbcr_factory_forms_455'),
+						__('Sans Serif:', 'wbcr_factory_forms_457'),
 						array(
 							array('Arial, "Helvetica Neue", Helvetica, sans-serif', 'Arial'),
 							array('"Arial Black", "Arial Bold", Gadget, sans-serif', 'Arial Black'),
@@ -131,7 +131,7 @@
 					),
 					array(
 						'group',
-						__('Serif:', 'wbcr_factory_forms_455'),
+						__('Serif:', 'wbcr_factory_forms_457'),
 						array(
 							array(
 								'Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif',
@@ -187,7 +187,7 @@
 					),
 					array(
 						'group',
-						__('Monospaced:', 'wbcr_factory_forms_455'),
+						__('Monospaced:', 'wbcr_factory_forms_457'),
 						array(
 							array('"Andale Mono", AndaleMono, monospace', 'Andale Mono'),
 							array('Consolas, monaco, monospace', 'Consolas'),
@@ -222,7 +222,7 @@
 			{
 				$values = parent::getValuesToSave();
 
-				$family_key = $this->options['name'] . '__family';
+				$family_key = sanitize_key($this->options['name']) . '__family';
 				$values[$family_key] = sanitize_text_field($values[$family_key]);
 
 				return $values;
