@@ -96,7 +96,7 @@ class WLCMS_Branding extends WLCMS_Previewable
         $args = array(
             'id' => 'wlcms-admin-logo',
             'href' => $admin_menu_bar_url,
-            'title' => sprintf('<img src="%s" />', $admin_menu_bar_image),
+            'title' => sprintf('<img src="%s" alt="%s" />', $admin_menu_bar_image, $admin_menu_bar_alt_text),
             'meta' => array('class' => 'wlcms-admin-logo', 'title' => $admin_menu_bar_alt_text, 'target' => '_blank')
         );
         $wp_admin_bar->add_node($args);
@@ -128,7 +128,7 @@ class WLCMS_Branding extends WLCMS_Previewable
             return;
         }
 
-        $logo = sprintf('<img src=\"%s\" title=\"%s\" class=\"large-side-bar-logo\" /><img src=\"%s\" alt=\"%s\" class=\"collapsed-side-bar-logo\" />', $sidebar_image, $sidebar_text, $collapsed_sidebar_image, $sidebar_text);
+        $logo = sprintf('<img src=\"%s\" alt=\"%s\" class=\"large-side-bar-logo\" /><img src=\"%s\" alt=\"%s\" class=\"collapsed-side-bar-logo\" />', $sidebar_image, $sidebar_text, $collapsed_sidebar_image, $sidebar_text);
 
         $target = '_self';
         if($sidebar_url) {
@@ -217,7 +217,7 @@ class WLCMS_Branding extends WLCMS_Previewable
         $footer_main_text = "";
 
         if ($footer_image) {
-            $footer_main_text .= '<img src="' . $footer_image . '" /> ';
+            $footer_main_text .= '<img src="' . $footer_image . '" alt="" /> ';
         }
 
         if ($footer_text) {

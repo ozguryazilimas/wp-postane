@@ -12,6 +12,9 @@
 <div class="wlcms-input-group custom_gutenberg_exit_wrapper">
     <?php echo wlcms_form_upload_field(__('Custom Image', 'white-label-cms'), 'gutenberg_exit_custom_icon', __('Max width and height 50px', 'white-label-cms')) ?>
 </div>
+<div class="wlcms-help branding-toggled-off" style="color: #f64031;">
+Note: You need to turn on the Hide WordPress Logo and Links, for this to work.
+</div>
 <div class="wlcms-help help_gutenberg_exit">
         <?php _e('Replace the WordPress logo on the Gutenberg Editor page with <span></span>', 'white-label-cms') ?>
 </div>

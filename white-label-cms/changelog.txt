@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 2.3 =
+* Improved: Hiding of Dashboard Widgets. Props to @tanohex
+* Bug Fix: Fixed hiding WooCommerce Home
+
 = 2.2.9 =
 * Improved: Plugin security. Thanks to Krzysztof Zając and WPScan
 * Improved: Custom Dashboard for HTML wrapper justify-content
