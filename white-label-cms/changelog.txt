@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 2.4 =
+* Improved: Improved Web Accessibility reported by @jflds
+* Minor fixes
+
 = 2.3 =
 * Improved: Hiding of Dashboard Widgets. Props to @tanohex
 * Bug Fix: Fixed hiding WooCommerce Home

@@ -191,9 +191,6 @@ class WLCMS_Settings
         $uploaded_file_type = $arr_file_type['type'];
         $allowed_file_types = array('application/json');
 
-		//Check if legacy
-        $this->legacy_import($temp_file, $uploaded_file_type);
-
         if (!in_array($uploaded_file_type, $allowed_file_types)) {
             WLCMS_Queue('Upload a valid .json file.', 'error');
             wp_redirect(wlcms()->admin_url());
@@ -224,45 +221,6 @@ class WLCMS_Settings
         exit;
     }
 
-    function legacy_import($temp_file, $uploaded_file_type)
-    {
-        global $wpdb;
-
-        if (!in_array($uploaded_file_type, array('text/plain'))) {
-            return false;
-        }
-
-        $import = file_get_contents($temp_file);
-        $import = preg_replace_callback('/s:([0-9]+):\"(.*?)\";/', 'vum_fix_json', $import);
-        $import = unserialize($import);
-
-        if (!is_array($import)) {
-            return false;
-        }
-
-
-        delete_option("wlcms_options");
-        $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->options WHERE option_name LIKE %s", 'wlcms_o_%'));
-
-        $site_url = get_bloginfo('url');
-
-        foreach ($import as $name => $value) {
-
-			// If the value includes this shortcode, replace it.
-            $val = str_replace('{SITEURL}', $site_url, $value);
-
-			// Check that our option key starts with WLCMS
-            if (strpos($name, 'wlcms_o') === 0) {
-                update_option($name, $val);
-            } else {
-                wp_die(__('<strong>Error!</strong> During the import process we almost imported a non White Label CMS setting - please ensure you uploaded the correct file and try again.'));
-            }
-        }
-
-        WLCMS_Queue('Your import has been completed.');
-        wp_redirect(wlcms()->admin_url());
-        exit;
-    }
 
     public function export()
     {
