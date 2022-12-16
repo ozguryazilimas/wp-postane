@@ -331,7 +331,7 @@ class URE_Capabilities_Groups_Manager {
         $pt_without_caps = array();
         $wc_pts = URE_Woocommerce_Capabilities::get_post_types_without_caps();
         
-        $pt_without_caps = array_merge( $pt_without_caps, $wc_pts );
+        $pt_without_caps = ure_array_merge( $pt_without_caps, $wc_pts );
         
         return $pt_without_caps;
     }
@@ -450,10 +450,10 @@ class URE_Capabilities_Groups_Manager {
         
         $groups = array('custom');
         if ( !empty( $groups1 ) ) {
-            $groups = array_merge( $groups, $groups1 );
+            $groups = ure_array_merge( $groups, $groups1 );
         }
         if ( !empty( $groups2 ) ) {
-            $groups = array_merge( $groups, $groups2 );
+            $groups = ure_array_merge( $groups, $groups2 );
         }
         
         return $groups;

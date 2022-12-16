@@ -407,7 +407,7 @@ class URE_Capabilities {
         $caps_to_exclude = $this->built_in_wp_caps;
         $ure_caps = URE_Own_Capabilities::get_caps();
         $visual_composer_caps = $this->get_visual_composer_caps($full_caps_list);
-        $caps_to_exclude = array_merge($caps_to_exclude, $ure_caps, $visual_composer_caps);
+        $caps_to_exclude = ure_array_merge($caps_to_exclude, $ure_caps, $visual_composer_caps);
 
         $caps_to_remove = array();
         $caps = array_keys( $full_caps_list );

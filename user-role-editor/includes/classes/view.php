@@ -172,7 +172,7 @@ class URE_View {
             }
             
             $cap_groups = $caps_groups_manager->get_cap_groups($cap_id, $built_in_wp_caps);
-            $classes = array_merge($classes, $cap_groups);
+            $classes = ure_array_merge( $classes, $cap_groups );
             
             $checked = '';
             $disabled = '';

@@ -9,16 +9,11 @@
  **/
 
 class URE_Capability {
-
-    const SPACE_REPLACER = '_URE-SR_';
-    const SLASH_REPLACER = '_URE-SLR_';
-    const VERT_LINE_REPLACER = '_URE-VLR_';
-
     
     public static function escape( $cap_id ) {
         
-        $search = array(' ', '/', '|');
-        $replace = array(self::SPACE_REPLACER, self::SLASH_REPLACER, self::VERT_LINE_REPLACER);
+        $search = array(' ', '/', '|', '{', '}', '$');
+        $replace = array('_', '_', '_', '_', '_', '_');
         
         $cap_id_esc = str_replace( $search, $replace, $cap_id );
                 
@@ -232,7 +227,12 @@ class URE_Capability {
                     $short_list_str;
         }
 
-        return array('message'=>$mess, 'deleted_caps'=>$caps);
+        // Escape every capability ID to remove from the HTML markup related div by ID
+        $esc_caps = array();
+        foreach( $caps as $key=>$cap ) {
+            $esc_caps[$key] = self::escape( $cap );
+        }
+        return array('message'=>$mess, 'deleted_caps'=>$esc_caps);
     }
     // end of delete()
     

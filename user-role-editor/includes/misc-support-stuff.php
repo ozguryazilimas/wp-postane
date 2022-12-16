@@ -82,3 +82,31 @@ if ( ! function_exists( 'wp_roles' ) ) {
     }
 
 }
+
+
+if ( ! function_exists( 'ure_array_merge' ) ) {
+    /**
+     * Wrapper for PHP array_merge() function - for 2 input parameters only
+     * Excludes PHP Fatal error:  Uncaught TypeError: array_merge(): Argument #2 must be of type array
+     * Checks that parameters are not null and not empty before a real call of array_merge()
+     */
+     function ure_array_merge( ...$args ) {
+         
+         $result = array();
+         foreach( $args as $value ) {
+             if ( $value===null ) {
+                continue;
+            }
+            if ( !is_array( $value ) ) {
+                continue;
+            }
+            if ( empty( $value ) ) {
+                continue;
+            }
+         
+            $result = array_merge( $result, $value );
+         }
+                                            
+         return $result;
+     }    
+}
