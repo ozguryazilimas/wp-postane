@@ -508,10 +508,6 @@ class AutoPostThumbnails {
 	public function publish_post( $post_id, $post = null, $update = true ) {
 		global $wpdb;
 
-		if ( $post->post_status === 'auto-draft' ) {
-			return null;
-		}
-
 		$autoimage  = $this->plugin->getPopulateOption( 'generate_autoimage', 'find' );
 		$generation = new GenerateResult( $post_id, $autoimage );
 
@@ -522,6 +518,10 @@ class AutoPostThumbnails {
 
 				return $generation->result( __( 'The post was not found', 'apt' ) );
 			}
+		}
+
+		if ( $post->post_status === 'auto-draft' ) {
+			return null;
 		}
 
 		if ( ! $update ) {
@@ -552,7 +552,10 @@ class AutoPostThumbnails {
 						$thumb_id = apply_filters( 'wapt/generate_post_thumb', $image, $post_id );
 
 						if ( $thumb_id ) {
+							$this->plugin->logger->info( "An image was found in the text of the post and uploaded to medialibrary ({$thumb_id})." );
 							update_post_meta( $post_id, '_thumbnail_id', $thumb_id );
+						} else {
+							$this->plugin->logger->info( "An image was not found in the text of the post" );
 						}
 					}
 				}
@@ -712,10 +715,13 @@ class AutoPostThumbnails {
 							'verify_peer_name' => false,
 					],
 			];
-			$file_data         = file_get_contents( $imageUrl, false, stream_context_create( $arrContextOptions ) );
+
+			$file_data = file_get_contents( $imageUrl, false, stream_context_create( $arrContextOptions ) );
 		}
 
 		if ( ! $file_data ) {
+			$this->plugin->logger->debug( "Failed to download the file from the link {$imageUrl}" );
+
 			return null;
 		}
 
@@ -727,6 +733,8 @@ class AutoPostThumbnails {
 
 		$allowed = get_allowed_mime_types();
 		if ( ! $this->array_contains_key( $allowed, $ext ) ) {
+			$this->plugin->logger->debug( "File type ({$ext}) is not allowed for upload" );
+
 			return null;
 		}
 
@@ -737,10 +745,8 @@ class AutoPostThumbnails {
 		$perms = $stat['mode'] & 0000666;
 		@ chmod( $new_file, $perms );
 
-		$mimes = $type = $file = null;
-
 		// Get the file type. Must to use it as a post thumbnail.
-		$wp_filetype = wp_check_filetype( $filename, $mimes );
+		$wp_filetype = wp_check_filetype( $filename );
 
 		extract( $wp_filetype );
 
@@ -761,7 +767,7 @@ class AutoPostThumbnails {
 				'post_content'   => '',
 		];
 
-		$thumb_id = wp_insert_attachment( $attachment, $file, $post_id );
+		$thumb_id = wp_insert_attachment( $attachment, $new_file, $post_id );
 		if ( ! is_wp_error( $thumb_id ) ) {
 			require_once ABSPATH . '/wp-admin/includes/image.php';
 
@@ -770,6 +776,8 @@ class AutoPostThumbnails {
 			update_attached_file( $thumb_id, $new_file );
 
 			return $thumb_id;
+		} else {
+			$this->plugin->logger->error( "Failed to add an attachment ({$new_file}) " . var_export( $attachment ) );
 		}
 
 		return null;
@@ -842,6 +850,30 @@ class AutoPostThumbnails {
 	 * @uses apt_thumb
 	 */
 	public function apt_get_thumbnail() {
+		if ( isset( $_POST['post_id'] ) && ! empty( $_POST['post_id'] ) ) {
+			$post_id = intval( $_POST['post_id'] );
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+				wp_die( - 1 );
+			} else {
+				check_ajax_referer( 'set_post_thumbnail-' . $post_id );
+				$nonce = $_POST['_ajax_nonce'];
+				?>
+				<div class='apt_thumbs' id='wapt_thumbs'>
+					<div class='wapt-grid-item'>
+						<div class="wapt-image-box-library"
+						     data-choose='<?php echo __( 'Choose featured image', 'apt' ); ?>'
+						     data-update='<?php echo __( 'Select image', 'apt' ); ?>'
+						     data-postid='<?php echo $post_id; ?>'
+						     data-nonce='<?php echo $nonce; ?>'
+						     style="background-color: #a3d2ff;">
+							<div class="wapt-item-generated"><?php echo __( 'Set featured image from medialibrary', 'apt' ); ?></div>
+						</div>
+					</div>
+				</div>
+				<?php
+			}
+		}
+
 		include WAPT_ABSPATH . '/admin/views/pro_column.php';
 		die();
 	}
@@ -954,6 +986,10 @@ class AutoPostThumbnails {
 					}
 					$image_title = sanitize_text_field( wp_unslash( $_POST['title'] ?? '' ) );
 					break;
+			}
+
+			if ( ! $this->is_allowed_file_ext( $file_ext ) ) {
+				die( 'Error: File extension is not allowed' );
 			}
 
 			$q                 = sanitize_text_field( wp_unslash( $_POST['q'] ?? '' ) );
@@ -1462,5 +1498,21 @@ class AutoPostThumbnails {
 		}
 
 		return new WP_Error( 'apt_attachment', 'File not exists (insert_attachment)' );
+	}
+
+	/**
+	 * @param $file_ext
+	 *
+	 * @return bool
+	 */
+	public function is_allowed_file_ext( $file_ext ) {
+		$mimes = get_allowed_mime_types();
+		foreach ( $mimes as $type => $mime ) {
+			if ( strpos( $type, $file_ext ) !== false ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

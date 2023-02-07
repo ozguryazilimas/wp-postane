@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Wapt_FactoryForms_FontsControl' ) ) {
 
-	class Wapt_FactoryForms_FontsControl extends Wbcr_FactoryForms457_DropdownControl {
+	class Wapt_FactoryForms_FontsControl extends Wbcr_FactoryForms459_DropdownControl {
 
 		public $type = 'wapt-fonts';
 

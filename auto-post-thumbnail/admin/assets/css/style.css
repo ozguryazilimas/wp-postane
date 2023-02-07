@@ -127,7 +127,7 @@
     margin: 5px;
 }
 
-.wapt-image-box
+.wapt-image-box, .wapt-image-box-library
 {
     display: flex;
     /*width: 180px;*/

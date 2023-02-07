@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Processing_103;
+namespace WBCR\Factory_Processing_104;
 /**
  * WP Background Process
  *

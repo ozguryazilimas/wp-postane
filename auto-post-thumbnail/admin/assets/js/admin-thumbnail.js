@@ -33,6 +33,48 @@
 				}
 			);
 
+			var file_frame;
+			jQuery(document).on('click', '#wapt_thumbs div.wapt-image-box-library', function (event) {
+				var $el = $(this);
+				var $post_id = $el.data('postid');
+
+				event.preventDefault();
+
+				// Create the media frame.
+				file_frame = wp.media.frames.media_file = wp.media({
+					// Set the title of the modal.
+					title: $el.data('choose'),
+					button: {
+						text: $el.data('update')
+					},
+					states: [
+						new wp.media.controller.Library({
+							title: $el.data('choose'),
+							library: wp.media.query({type: 'image'})
+						})
+					]
+				});
+
+				// When an image is selected, run a callback.
+				file_frame.on('select', function () {
+					var attachment = file_frame.state().get('selection').first().toJSON();
+
+					tb_remove();
+					// AJAX запрос для обновления картинки поста
+					jQuery.post(ajaxurl, {
+						action: 'apt_replace_thumbnail',
+						post_id: $post_id,
+						thumbnail_id: attachment.id,
+						_ajax_nonce: $el.data('nonce'),
+					}).done(function (thumb_url) {
+						window.location.reload();
+					});
+				});
+
+				// Finally, open the modal.
+				file_frame.open();
+			});
+
 			//Отображение окна со всеми картинками в тексте поста
 			window.aptModalShow = function (that, postid, wpnonce) {
 

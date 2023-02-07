@@ -2,7 +2,7 @@
 
 namespace WBCR\APT;
 
-use WBCR\Factory_Processing_103\WP_Background_Process;
+use WBCR\Factory_Processing_104\WP_Background_Process;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {

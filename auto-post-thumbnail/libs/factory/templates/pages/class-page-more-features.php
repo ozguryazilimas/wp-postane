@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Templates_112\Pages;
+namespace WBCR\Factory_Templates_113\Pages;
 
 /**
  * The page Settings.
@@ -18,7 +18,7 @@ if( !defined('ABSPATH') ) {
 }
 
 
-class MoreFeatures extends \WBCR\Factory_Templates_112\Impressive {
+class MoreFeatures extends \WBCR\Factory_Templates_113\Impressive {
 
 	/**
 	 * {@inheritDoc}
@@ -63,9 +63,9 @@ class MoreFeatures extends \WBCR\Factory_Templates_112\Impressive {
 	 */
 	public $internal = true;
 
-	public function __construct(\Wbcr_Factory460_Plugin $plugin)
+	public function __construct(\Wbcr_Factory462_Plugin $plugin)
 	{
-		$this->menu_title = __('More features (<b>free</b>)', 'wbcr_factory_templates_112');
+		$this->menu_title = __('More features (<b>free</b>)', 'wbcr_factory_templates_113');
 
 		parent::__construct($plugin);
 
@@ -79,7 +79,7 @@ class MoreFeatures extends \WBCR\Factory_Templates_112\Impressive {
 	 */
 	public function getPageTitle()
 	{
-		return __('More features', 'wbcr_factory_templates_112');
+		return __('More features', 'wbcr_factory_templates_113');
 	}
 
 	/**
@@ -94,66 +94,66 @@ class MoreFeatures extends \WBCR\Factory_Templates_112\Impressive {
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-yes"></span>
-					<h3><?php _e('Code cleaning', 'wbcr_factory_templates_112') ?></h3>
-					<p><?php _e('Clears the source code of the page from unused code.', 'wbcr_factory_templates_112') ?></p>
+					<h3><?php _e('Code cleaning', 'wbcr_factory_templates_113') ?></h3>
+					<p><?php _e('Clears the source code of the page from unused code.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-chart-bar"></span>
-					<h3><?php _e('Improve SEO', 'wbcr_factory_templates_112') ?></h3>
-					<p><?php _e('Removes duplicate pages, closes external links, changes the headers of the server.', 'wbcr_factory_templates_112') ?></p>
+					<h3><?php _e('Improve SEO', 'wbcr_factory_templates_113') ?></h3>
+					<p><?php _e('Removes duplicate pages, closes external links, changes the headers of the server.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-shield-alt"></span>
-					<h3><?php _e('Site protection', 'wbcr_factory_templates_112') ?></h3>
-					<p><?php _e('Enables and disables features that improve the protection of your site.', 'wbcr_factory_templates_112') ?></p>
+					<h3><?php _e('Site protection', 'wbcr_factory_templates_113') ?></h3>
+					<p><?php _e('Enables and disables features that improve the protection of your site.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-welcome-comments"></span>
-					<h3><?php _e('Disable comments', 'wbcr_factory_templates_112') ?></h3>
-					<p><?php _e('Disables comments on the entire site or on specific pages.', 'wbcr_factory_templates_112') ?></p>
+					<h3><?php _e('Disable comments', 'wbcr_factory_templates_113') ?></h3>
+					<p><?php _e('Disables comments on the entire site or on specific pages.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-update"></span>
-					<h3><?php _e('Manage updates', 'wbcr_factory_templates_112') ?></h3>
+					<h3><?php _e('Manage updates', 'wbcr_factory_templates_113') ?></h3>
 					<p><?php _e('Enables or disables automatically updates for plugins, themes and core. It is also possible
-							to disable all updates.', 'wbcr_factory_templates_112') ?></p>
+							to disable all updates.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-admin-plugins"></span>
-					<h3><?php _e('Manage widgets', 'wbcr_factory_templates_112') ?></h3>
-					<p><?php _e('Allows you to remove unused widgets.', 'wbcr_factory_templates_112') ?></p>
+					<h3><?php _e('Manage widgets', 'wbcr_factory_templates_113') ?></h3>
+					<p><?php _e('Allows you to remove unused widgets.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-dashboard"></span>
-					<h3><?php _e('Speed Optimization', 'wbcr_factory_templates_112') ?></h3>
-					<p><?php _e('Increases performance by disabling unused functions and reducing the number of requests.', 'wbcr_factory_templates_112') ?></p>
+					<h3><?php _e('Speed Optimization', 'wbcr_factory_templates_113') ?></h3>
+					<p><?php _e('Increases performance by disabling unused functions and reducing the number of requests.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-visibility"></span>
-					<h3><?php _e('Site privacy', 'wbcr_factory_templates_112') ?></h3>
+					<h3><?php _e('Site privacy', 'wbcr_factory_templates_113') ?></h3>
 					<p><?php _e('Allows you to hide the version of the site and plugins. Allows you to hide your
-							WordPress.', 'wbcr_factory_templates_112') ?></p>
+							WordPress.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="wbcr-factory-feature-box">
 					<span class="dashicons dashicons-admin-settings"></span>
-					<h3><?php _e('Easy setup', 'wbcr_factory_templates_112') ?></h3>
-					<p><?php _e('In quick mode, you can easily configure the plugin according to your needs.', 'wbcr_factory_templates_112') ?></p>
+					<h3><?php _e('Easy setup', 'wbcr_factory_templates_113') ?></h3>
+					<p><?php _e('In quick mode, you can easily configure the plugin according to your needs.', 'wbcr_factory_templates_113') ?></p>
 				</div>
 			</div>
 		</div>
@@ -167,7 +167,7 @@ class MoreFeatures extends \WBCR\Factory_Templates_112\Impressive {
 			$url .= '?utm_source=wordpress.org&utm_campaign=' . $this->plugin->getPluginName();
 			?>
 			<a href="<?php echo $url ?>" class="wbcr-factory-premium-button" target="_blank">
-				<?php _e('Get the ultimate plugin 100% FREE', 'wbcr_factory_templates_112') ?>
+				<?php _e('Get the ultimate plugin 100% FREE', 'wbcr_factory_templates_113') ?>
 			</a>
 		</div>
 		<?php

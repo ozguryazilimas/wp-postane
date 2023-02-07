@@ -21,9 +21,9 @@
 		exit;
 	}
 	
-	if ( ! class_exists( 'Wbcr_FactoryForms457_DropdownControl' ) ) {
+	if ( ! class_exists( 'Wbcr_FactoryForms459_DropdownControl' ) ) {
 		
-		class Wbcr_FactoryForms457_DropdownControl extends Wbcr_FactoryForms457_Control {
+		class Wbcr_FactoryForms459_DropdownControl extends Wbcr_FactoryForms459_Control {
 			
 			public $type = 'dropdown';
 			
@@ -123,7 +123,7 @@
 							'url': '<?php echo esc_url($data['url']); ?>',
 							'data': <?php echo json_encode( $data['data'] ) ?>,
 							'selected': '<?php echo esc_attr($value); ?>',
-							'empty_list': '<?php echo esc_attr($this->getOption( 'empty', __( 'The list is empty.', 'wbcr_factory_forms_457' ) )); ?>'
+							'empty_list': '<?php echo esc_attr($this->getOption( 'empty', __( 'The list is empty.', 'wbcr_factory_forms_459' ) )); ?>'
 						};
                     </script>
 					<?php
@@ -171,7 +171,7 @@
 							<?php if ( isset( $item[2] ) ) { ?>
                                 <div class="factory-hint factory-hint-<?php echo esc_attr($item[0]); ?>" <?php if ( $value !== $item[0] ) {
 									echo 'style="display: none;"';
-								} ?>><?php echo esc_html($item[2]); ?></div>
+								} ?>><?php echo wp_kses( $item[2], 'default' ); ?></div>
 							<?php } ?>
 						<?php } ?>
                     </div>
@@ -211,7 +211,7 @@
 								} else {
 									echo 'false';
 								} ?>,
-								description: "<?php echo( isset( $item['hint'] ) ? esc_html($item['hint']) : '' ); ?>",
+								description: "<?php echo( isset( $item['hint'] ) ? wp_kses( $item['hint'], 'default' ) : '' ); ?>",
 								imageSrc: "<?php echo( isset( $item['image'] ) ? esc_url($item['image']) : '' ); ?>",
 								imageHoverSrc: "<?php echo( isset( $item['hover'] ) ? esc_url($item['hover']) : '' ); ?>"
 							},
@@ -268,7 +268,7 @@
 				}
 				
 				$is_empty   = $this->isAjax() || empty( $items );
-				$empty_list = $this->getOption( 'empty', __( '- empty -', 'wbcr_factory_forms_457' ) );
+				$empty_list = $this->getOption( 'empty', __( '- empty -', 'wbcr_factory_forms_459' ) );
 				
 				?>
                 <select <?php $this->attrs() ?>>
@@ -286,8 +286,8 @@
 							if ( isset( $item['type'] ) && $item['type'] == 'group' && ! empty( $item['items'] ) ) {
 								foreach ( (array) $item['items'] as $group_item ) {
 									
-									$hint = isset( $group_item[2] ) ? esc_attr( $group_item[2] ) : null;
-									$hint = isset( $group_item['hint'] ) ? esc_attr( $group_item['hint'] ) : $hint;
+									$hint = isset( $group_item[2] ) ? wp_kses( $group_item[2], 'default' ) : null;
+									$hint = isset( $group_item['hint'] ) ? wp_kses( $group_item['hint'], 'default' ) : $hint;
 									
 									$value = isset( $group_item[0] ) ? esc_attr( $group_item[0] ) : null;
 									$value = isset( $group_item['value'] ) ? esc_attr( $group_item['value'] ) : $value;
@@ -349,7 +349,7 @@
 						}
 						
 						$value = isset( $item['value'] ) ? $item['value'] : '';
-						$title = isset( $item['title'] ) ? $item['title'] : __( '- empty -', 'wbcr_factory_forms_457' );
+						$title = isset( $item['title'] ) ? $item['title'] : __( '- empty -', 'wbcr_factory_forms_459' );
 						
 						$data = isset( $item['data'] ) ? $item['data'] : null;
 					} else {

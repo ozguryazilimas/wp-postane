@@ -4,7 +4,7 @@ Tags: post thumbnails, featured image, elementor, thumbnails, featured image fro
 Requires at least: 4.8
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 3.9.15
+Stable tag: 3.9.16
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,10 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.9.16 =
+* ADD: The ability to select an image from the media library in a pop-up window in the list of posts
+* FIX: Vulnerability with file extension
 
 = 3.9.15 =
 * FIX: Some fixes

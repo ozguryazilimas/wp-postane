@@ -14,13 +14,13 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms457_HtmlAttributeBuilder') ) {
+	if( !class_exists('Wbcr_FactoryForms459_HtmlAttributeBuilder') ) {
 		/**
 		 * Html Attribute Builder
 		 *
 		 * @since 1.0.0
 		 */
-		class Wbcr_FactoryForms457_HtmlAttributeBuilder {
+		class Wbcr_FactoryForms459_HtmlAttributeBuilder {
 
 			/**
 			 * An array to store css classes.
