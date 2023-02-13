@@ -21,7 +21,7 @@ abstract class Step {
 	protected $page;
 
 	/**
-	 * @var \Wbcr_Factory462_Plugin
+	 * @var \Wbcr_Factory463_Plugin
 	 */
 	protected $plugin;
 
@@ -51,7 +51,7 @@ abstract class Step {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see   FactoryPages462_AdminPage
+	 * @see   FactoryPages463_AdminPage
 	 *
 	 */
 	public function assets($scripts, $styles)

@@ -14,9 +14,9 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms459_PaddingsEditorControl') ) {
+	if( !class_exists('Wbcr_FactoryForms460_PaddingsEditorControl') ) {
 
-		class Wbcr_FactoryForms459_PaddingsEditorControl extends Wbcr_FactoryForms459_Control {
+		class Wbcr_FactoryForms460_PaddingsEditorControl extends Wbcr_FactoryForms460_Control {
 
 			public $type = 'paddings-editor';
 
@@ -67,7 +67,7 @@
 					</div>
 					<div class="factory-slider-container">
 						<label class="factory-title">
-							<?php _e('Select a side and move the slider to set up:', 'wbcr_factory_forms_459') ?>
+							<?php _e('Select a side and move the slider to set up:', 'wbcr_factory_forms_460') ?>
 						</label>
 
 						<div class="factory-slider">

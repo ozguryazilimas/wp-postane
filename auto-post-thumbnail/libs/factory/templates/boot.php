@@ -40,7 +40,7 @@ if( is_admin() ) {
 	add_action('admin_enqueue_scripts', function ($hook) {
 		wp_enqueue_script('wbcr-factory-templates-113-global', FACTORY_TEMPLATES_113_URL . '/assets/js/clearfy-globals.js', [
 			'jquery',
-			'wfactory-462-core-general'
+			'wfactory-463-core-general'
 		], FACTORY_TEMPLATES_113);
 
 		require_once FACTORY_TEMPLATES_113_DIR . '/includes/class-search-options.php';
@@ -75,7 +75,7 @@ if( is_admin() ) {
 		wp_localize_script('wbcr-factory-templates-113-global', 'wfactory_clearfy_search_options', $formated_options);
 	});
 
-	if( defined('FACTORY_PAGES_462_LOADED') ) {
+	if( defined('FACTORY_PAGES_463_LOADED') ) {
 		require(FACTORY_TEMPLATES_113_DIR . '/pages/templates/impressive/class-page-template-impressive.php');
 		require(FACTORY_TEMPLATES_113_DIR . '/pages/templates/impressive/class-pages.php');
 		require(FACTORY_TEMPLATES_113_DIR . '/pages/templates/impressive-lite/class-page-template-impressive-lite.php');

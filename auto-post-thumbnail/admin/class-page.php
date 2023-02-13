@@ -191,7 +191,7 @@ class WAPT_Page extends ImpressiveLite {
 			$page_url = $args[0];
 		}
 
-		$page_url = apply_filters( 'wbcr_factory_pages_462_implite_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId() );
+		$page_url = apply_filters( 'wbcr_factory_pages_463_implite_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId() );
 
 		?>
 		<div class="wbcr-factory-sidebar-widget">

@@ -82,7 +82,7 @@ class License extends PageBase {
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_462\Premium\Provider
+	 * @var \WBCR\Factory_463\Premium\Provider
 	 */
 	protected $premium;
 
@@ -100,7 +100,7 @@ class License extends PageBase {
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_462\Premium\Interfaces\License
+	 * @var \WBCR\Factory_463\Premium\Interfaces\License
 	 */
 	protected $premium_license;
 
@@ -109,9 +109,9 @@ class License extends PageBase {
 
 	/**
 	 * {@inheritdoc}
-	 * @param \Wbcr_Factory462_Plugin $plugin
+	 * @param \Wbcr_Factory463_Plugin $plugin
 	 */
-	public function __construct(\Wbcr_Factory462_Plugin $plugin)
+	public function __construct(\Wbcr_Factory463_Plugin $plugin)
 	{
 		$this->plugin = $plugin;
 
@@ -281,7 +281,7 @@ class License extends PageBase {
 	{
 		?>
 		<div id="license-manager"
-		     class="factory-bootstrap-463 onp-page-wrap <?php echo $this->get_license_type() ?>-license-manager-content">
+		     class="factory-bootstrap-464 onp-page-wrap <?php echo $this->get_license_type() ?>-license-manager-content">
 			<div>
 				<h3><?php printf(__('Activate %s', 'wbcr_factory_templates_113'), $this->plan_name) ?></h3>
 				<?php echo $this->get_plan_description() ?>

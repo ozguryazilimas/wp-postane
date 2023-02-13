@@ -33,12 +33,12 @@ class Step_Form extends Step {
 	protected function instance_form($options)
 	{
 
-		$form = new \Wbcr_FactoryForms459_Form([
+		$form = new \Wbcr_FactoryForms460_Form([
 			'scope' => rtrim($this->plugin->getPrefix(), '_'),
 			'name' => $this->page->getResultId() . "-options-" . $this->get_id()
 		], $this->plugin);
 
-		$form->setProvider(new \Wbcr_FactoryForms459_OptionsValueProvider($this->plugin));
+		$form->setProvider(new \Wbcr_FactoryForms460_OptionsValueProvider($this->plugin));
 
 		$form_options = [];
 
@@ -83,7 +83,7 @@ class Step_Form extends Step {
 		return $form;
 	}
 
-	protected function render_form(\Wbcr_FactoryForms459_Form $form)
+	protected function render_form(\Wbcr_FactoryForms460_Form $form)
 	{
 		?>
 		<form method="post" id="w-factory-templates-113__setup-form-<?php echo $this->get_id() ?>" class="w-factory-templates-113__setup-form form-horizontal">
@@ -96,7 +96,7 @@ class Step_Form extends Step {
 		<?php
 	}
 
-	protected function set_form_handler(\Wbcr_FactoryForms459_Form $form)
+	protected function set_form_handler(\Wbcr_FactoryForms460_Form $form)
 	{
 		if( isset($_POST['continue_button_' . $this->get_id()]) ) {
 			$form->save();
@@ -123,7 +123,7 @@ class Step_Form extends Step {
 		$form = $this->instance_form($this->get_form_options());
 		?>
 		<div id="WBCR" class="wrap">
-			<div class="wbcr-factory-templates-113-impressive-page-template factory-bootstrap-463 factory-fontawesome-000">
+			<div class="wbcr-factory-templates-113-impressive-page-template factory-bootstrap-464 factory-fontawesome-000">
 				<div class="w-factory-templates-113-setup__inner-wrap">
 					<h3><?php echo $this->get_title(); ?></h3>
 					<p style="text-align: left;"><?php echo $this->get_form_description(); ?></p>

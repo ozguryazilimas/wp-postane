@@ -24,7 +24,7 @@ class Components extends \WBCR\Factory_Templates_113\Pages\PageBase {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages462_AdminPage
+	 * @see   FactoryPages463_AdminPage
 	 *
 	 * @var string
 	 */
@@ -41,9 +41,9 @@ class Components extends \WBCR\Factory_Templates_113\Pages\PageBase {
 	public $available_for_multisite = true;
 
 	/**
-	 * @param \Wbcr_Factory462_Plugin $plugin
+	 * @param \Wbcr_Factory463_Plugin $plugin
 	 */
-	public function __construct(\Wbcr_Factory462_Plugin $plugin)
+	public function __construct(\Wbcr_Factory463_Plugin $plugin)
 	{
 		$this->menu_title = __('Components', 'wbcr_factory_templates_113');
 		$this->page_menu_short_description = __('More features for plugin', 'wbcr_factory_templates_113');
@@ -58,7 +58,7 @@ class Components extends \WBCR\Factory_Templates_113\Pages\PageBase {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see   FactoryPages462_AdminPage
+	 * @see   FactoryPages463_AdminPage
 	 *
 	 */
 	public function assets($scripts, $styles)
@@ -68,8 +68,8 @@ class Components extends \WBCR\Factory_Templates_113\Pages\PageBase {
 		$this->styles->add(FACTORY_TEMPLATES_113_URL . '/assets/css/components.css');
 
 		/**
-		 * @param \Wbcr_Factory462_StyleList $styles
-		 * @param \Wbcr_Factory462_ScriptList $scripts
+		 * @param \Wbcr_Factory463_StyleList $styles
+		 * @param \Wbcr_Factory463_ScriptList $scripts
 		 * @since 1.4.0
 		 *
 		 */
@@ -80,10 +80,10 @@ class Components extends \WBCR\Factory_Templates_113\Pages\PageBase {
 	 * We register notifications for some actions
 	 *
 	 * @param                        $notices
-	 * @param \Wbcr_Factory462_Plugin $plugin
+	 * @param \Wbcr_Factory463_Plugin $plugin
 	 *
 	 * @return array
-	 * @see libs\factory\pages\themplates\FactoryPages462_ImpressiveThemplate
+	 * @see libs\factory\pages\themplates\FactoryPages463_ImpressiveThemplate
 	 */
 	public function getActionNotices($notices)
 	{

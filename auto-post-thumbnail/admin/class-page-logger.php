@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WAPT_Page_Logger extends Wbcr_FactoryLogger126_Lite {
+class WAPT_Page_Logger extends Wbcr_FactoryLogger127_Lite {
 
 	/**
 	 * Name of the template to get content of. It will be based on plugins /admin/views/ dir.
@@ -163,7 +163,7 @@ class WAPT_Page_Logger extends Wbcr_FactoryLogger126_Lite {
 			$page_url = $args[0];
 		}
 
-		$page_url = apply_filters( 'wbcr_factory_pages_462_implite_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId() );
+		$page_url = apply_filters( 'wbcr_factory_pages_463_implite_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId() );
 
 		?>
 		<div class="wbcr-factory-sidebar-widget">
