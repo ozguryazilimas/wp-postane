@@ -1,5 +1,5 @@
 diff --git a/simple-local-avatars/includes/class-simple-local-avatars.php b/simple-local-avatars/includes/class-simple-local-avatars.php
-index eeadfb58..faee16fe 100644
+index 2148b696..d12d0d0b 100644
 --- a/simple-local-avatars/includes/class-simple-local-avatars.php
 +++ b/simple-local-avatars/includes/class-simple-local-avatars.php
 @@ -301,6 +301,7 @@ class Simple_Local_Avatars {
@@ -10,7 +10,7 @@ index eeadfb58..faee16fe 100644
  		$user_id = false;
  
  		if ( is_numeric( $id_or_email ) ) {
-@@ -312,6 +313,8 @@ class Simple_Local_Avatars {
+@@ -314,6 +315,8 @@ class Simple_Local_Avatars {
  		} elseif ( is_string( $id_or_email ) ) {
  			$user    = get_user_by( 'email', $id_or_email );
  			$user_id = $user ? $user->ID : '';
