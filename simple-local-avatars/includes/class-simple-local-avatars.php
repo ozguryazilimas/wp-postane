@@ -301,20 +301,19 @@ class Simple_Local_Avatars {
 	 * @return int|false
 	 */
 	public function get_user_id( $id_or_email ) {
-		global $wpdb;
 		$user_id = false;
 
 		if ( is_numeric( $id_or_email ) ) {
 			$user_id = (int) $id_or_email;
 		} elseif ( is_object( $id_or_email ) && ! empty( $id_or_email->user_id ) ) {
 			$user_id = (int) $id_or_email->user_id;
+		} elseif ( $id_or_email instanceof WP_User ) {
+			$user_id = $id_or_email->ID;
 		} elseif ( $id_or_email instanceof WP_Post && ! empty( $id_or_email->post_author ) ) {
 			$user_id = (int) $id_or_email->post_author;
 		} elseif ( is_string( $id_or_email ) ) {
 			$user    = get_user_by( 'email', $id_or_email );
 			$user_id = $user ? $user->ID : '';
-		} else {
-			$user_id = $wpdb->get_var("SELECT user_id FROM wp_comments WHERE comment_author_email = '" . $id_or_email . "' LIMIT 1");
 		}
 
 		return $user_id;
@@ -527,13 +526,13 @@ class Simple_Local_Avatars {
 		 */
 		$this->avatar_ratings = array(
 			/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-			'G'  => __( 'G &#8212; Suitable for all audiences', ),
+			'G'  => __( 'G &#8212; Suitable for all audiences' ),
 			/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-			'PG' => __( 'PG &#8212; Possibly offensive, usually for audiences 13 and above', ),
+			'PG' => __( 'PG &#8212; Possibly offensive, usually for audiences 13 and above' ),
 			/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-			'R'  => __( 'R &#8212; Intended for adult audiences above 17', ),
+			'R'  => __( 'R &#8212; Intended for adult audiences above 17' ),
 			/* translators: Content suitability rating: https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system */
-			'X'  => __( 'X &#8212; Even more mature than above', ),
+			'X'  => __( 'X &#8212; Even more mature than above' ),
 		);
 	}
 
