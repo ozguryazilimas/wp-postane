@@ -77,16 +77,15 @@ class URE_View {
     
     private function deprecated_show_and_color($cap_id, $builtin_wp_caps, &$label_style, &$hidden_class) {
         
-        if (isset($builtin_wp_caps[$cap_id])) {
-            if (in_array('deprecated', $builtin_wp_caps[$cap_id])) {
+        if ( isset( $builtin_wp_caps[$cap_id] ) && 
+             is_array( $builtin_wp_caps[$cap_id] ) &&
+             in_array('deprecated', $builtin_wp_caps[$cap_id] ) ) {
                 $show_deprecated_caps = $this->editor->get('show_deprecated_caps');
                 if (!$show_deprecated_caps) {
                     $hidden_class = 'hidden';
                 }
                 $label_style = 'style="color:#BBBBBB;"';
-            }                
-        }
-        
+        }        
     }
     // end of deprecated_show_and_color()
 

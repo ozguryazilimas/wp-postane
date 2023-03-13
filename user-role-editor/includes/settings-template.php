@@ -15,7 +15,7 @@ $tabs_index = array();
     </a>    
     <h1><?php esc_html_e( 'User Role Editor - Options', 'user-role-editor' ); ?></h1>
 
-    <div id="ure_tabs" style="clear: left;">
+    <div id="ure_tabs" style="clear: left; display: none;">
         <ul>
             <li><a href="#ure_tabs-1"><?php esc_html_e( 'General', 'user-role-editor' );?></a></li>
 <?php
@@ -254,6 +254,7 @@ if ( ! $multisite ) {
 <?php
     }
 ?>               
+        $('#ure_tabs').show();
         
     });
 </script>

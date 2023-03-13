@@ -19,7 +19,8 @@ class User_Role_Editor {
     protected $user_other_roles = null;
     
     // plugin's Settings page reference, we've got it from add_options_pages() call
-    protected $setting_page_hook = null;
+    protected $settings_page_hook = null;
+    
     // URE's key capability
     public $key_capability = 'not allowed';
 	

@@ -116,7 +116,7 @@ class URE_Base_Lib {
     /*
      * Replacer for FILTER_SANITIZE_STRING deprecated with PHP 8.1
      */
-    public static function filter_string_polyfill(string $string): string {
+    public static function filter_string_polyfill( $string ) {
         
         $str = preg_replace('/\x00|<[^>]*>?/', '', $string);
         return str_replace(["'", '"'], ['&#39;', '&#34;'], $str);

@@ -2,8 +2,8 @@
 Contributors: shinephp
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.4
-Tested up to: 6.1.1
-Stable tag: 4.63.2
+Tested up to: 6.2
+Stable tag: 4.63.3
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -81,21 +81,11 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.63.3] 12.03.2023 =
+* Fix: PHP version 8.2 showed warning: Creation of dynamic property User_Role_Editor::$settings_page_hook is deprecated : wp-content/plugins/user-role-editor/includes/classes/user-role-editor.php:603
+* Fix: PHP Fatal error:  Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, int given in wp-content/plugins/user-role-editor/includes/classes/view.php:81
+* Fix: PHP Parse error: syntax error, unexpected ‘:’, expecting ‘;’ or ‘{‘: wp-content/plugins/user-role-editor/includes/classes/base-lib.php on line 119, type declarations were removed for compatibility with older PHP versions. 
 
-= [4.63.2] 16.12.2022 =
-* Update: symbols '{}$' are removed from capability name before use it for internal purpose, to exclude cases like when one of plugins broke URE work adding capability like 'edit_{$type}s'.
-* Update: array_merge() function is replaced with wrapper ure_array_merge(), to exclude fatal error: Argument #2 must be of type array.
-
-= [4.63.1] 20.09.2022 =
-* Marked as compatible with WordPress version 6.0.2
-* Fix: PHP Warning: Attempt to read property “ID” on null in /wp-content/plugins/user-role-editor/includes/classes/user-role-editor.php on line 369
-* Fix: Deprecated: Automatic conversion of false to array is deprecated in ./includes/classes/base-lib.php on line 212
-
-= [4.63] 11.07.2022 =
-* Update: Marked as compatible with WordPress 6.0.1
-* Update: Few notices (e.g. "Constant FILTER_SANITIZE_STRING is deprecated") was fixed for better compatibility with PHP 8.1.
-* Update: URE does not try to deactivate itself in case another instance is active, just shows notice and stops execution. 
- 
 File changelog.txt contains the full list of changes.
 
 == Additional Documentation ==
@@ -106,10 +96,10 @@ I am ready to answer on your questions about plugin usage. Use [plugin page comm
 
 == Upgrade Notice ==
 
-= [4.63.1] 19.09.2022 =
-* Marked as compatible with WordPress version 6.0.2
-* Fix: PHP Warning: Attempt to read property “ID” on null in /wp-content/plugins/user-role-editor/includes/classes/user-role-editor.php on line 369
-* Fix: Deprecated: Automatic conversion of false to array is deprecated in ./includes/classes/base-lib.php on line 212
+= [4.63.3] 12.03.2023 =
+* Fix: PHP version 8.2 showed warning: Creation of dynamic property User_Role_Editor::$settings_page_hook is deprecated : wp-content/plugins/user-role-editor/includes/classes/user-role-editor.php:603
+* Fix: PHP Fatal error:  Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, int given in wp-content/plugins/user-role-editor/includes/classes/view.php:81
+* Fix: PHP Parse error: syntax error, unexpected ‘:’, expecting ‘;’ or ‘{‘: wp-content/plugins/user-role-editor/includes/classes/base-lib.php on line 119, type declarations were removed for compatibility with older PHP versions. 
 
 
 

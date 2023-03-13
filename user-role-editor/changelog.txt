@@ -1,6 +1,11 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.63.3] 12.03.2023 =
+* Fix: PHP version 8.2 showed warning: Creation of dynamic property User_Role_Editor::$settings_page_hook is deprecated : wp-content/plugins/user-role-editor/includes/classes/user-role-editor.php:603
+* Fix: PHP Fatal error:  Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, int given in wp-content/plugins/user-role-editor/includes/classes/view.php:81
+* Fix: PHP Parse error: syntax error, unexpected ‘:’, expecting ‘;’ or ‘{‘: wp-content/plugins/user-role-editor/includes/classes/base-lib.php on line 119, type declarations were removed for compatibility with older PHP versions. 
+
 = [4.63.2] 16.12.2022 =
 * Update: symbols '{}$' are removed from capability name before use it for internal purpose, to exclude cases like when one of plugins broke URE work adding capability like 'edit_{$type}s'.
 * Update: array_merge() function is replaced with wrapper ure_array_merge(), to exclude fatal error: Argument #2 must be of type array.
