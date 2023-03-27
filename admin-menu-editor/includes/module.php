@@ -1,4 +1,5 @@
 <?php
+
 abstract class ameModule {
 	protected $tabSlug = '';
 	protected $tabTitle = '';
@@ -19,7 +20,6 @@ abstract class ameModule {
 
 		if ( class_exists('ReflectionClass', false) ) {
 			//This should never throw an exception since the current class must exist for this constructor to be run.
-			/** @noinspection PhpUnhandledExceptionInspection */
 			$reflector = new ReflectionClass(get_class($this));
 			$this->moduleDir = dirname($reflector->getFileName());
 			$this->moduleId = basename($this->moduleDir);
@@ -41,7 +41,10 @@ abstract class ameModule {
 
 			//Optionally, handle settings form submission.
 			if ( $this->settingsFormAction !== '' ) {
-				add_action('admin_menu_editor-header', array($this, '_processAction'), 10, 2);
+				add_action(
+					'admin_menu_editor-page_action-' . $this->settingsFormAction,
+					array($this, '_processAction')
+				);
 			}
 		}
 	}
@@ -90,7 +93,6 @@ abstract class ameModule {
 	protected function outputTemplate($name) {
 		$templateFile = $this->moduleDir . '/' . $name . '-template.php';
 		if ( file_exists($templateFile) ) {
-			/** @noinspection PhpUnusedLocalVariableInspection Used in some templates. */
 			$moduleTabUrl = $this->getTabUrl();
 
 			$templateVariables = $this->getTemplateVariables($name);
@@ -98,14 +100,13 @@ abstract class ameModule {
 				extract($templateVariables, EXTR_SKIP);
 			}
 
-			/** @noinspection PhpIncludeInspection */
 			require $templateFile;
 			return true;
 		}
 		return false;
 	}
 
-	protected function getTemplateVariables(/** @noinspection PhpUnusedParameterInspection */ $templateName) {
+	protected function getTemplateVariables($templateName) {
 		//Override this method to pass variables to a template.
 		return array();
 	}
@@ -124,14 +125,11 @@ abstract class ameModule {
 
 	/**
 	 * @access private
-	 * @param string $action
 	 * @param array $post
 	 */
-	public function _processAction($action, $post = array()) {
-		if ( $action === $this->settingsFormAction ) {
-			check_admin_referer($action);
-			$this->handleSettingsForm($post);
-		}
+	public function _processAction($post = array()) {
+		check_admin_referer($this->settingsFormAction);
+		$this->handleSettingsForm($post);
 	}
 
 	public function handleSettingsForm($post = array()) {

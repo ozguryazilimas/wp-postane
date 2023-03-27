@@ -234,6 +234,58 @@ class ameUtils {
 		}
 		return $defaultValue;
 	}
+
+	/**
+	 * Get the first key of an iterable collection.
+	 *
+	 * @param iterable $collection
+	 * @param iterable $defaultValue
+	 * @return int|string|null
+	 */
+	public static function getFirstKey($collection, $defaultValue = null) {
+		foreach ($collection as $key => $value) {
+			return $key;
+		}
+		return $defaultValue;
+	}
+
+	/**
+	 * Send HTTP caching headers.
+	 *
+	 * @param int|null $lastModified Unix timestamp for the last modification time.
+	 * @param int $cacheLifetime Cache lifetime in seconds.
+	 * @return bool True if the response body should be omitted because an If-Modified-Since header
+	 *              was sent and the resource hasn't changed.
+	 */
+	public static function sendCachingHeaders($lastModified, $cacheLifetime = 30 * 24 * 3600) {
+		//Support the If-Modified-Since header.
+		$omitResponseBody = false;
+		if (
+			!empty($lastModified)
+			&& !empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])
+			&& is_string($_SERVER['HTTP_IF_MODIFIED_SINCE'])
+		) {
+			//strtotime() should be able to handle invalid strings safely.
+			//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$threshold = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
+			if ( $threshold >= $lastModified ) {
+				header('HTTP/1.1 304 Not Modified');
+				$omitResponseBody = true;
+			}
+		}
+
+		//Enable browser caching.
+		//Note that admin-ajax.php always adds HTTP headers that prevent caching, so we will
+		//override all of them even though we don't actually need some of them, like "Expires".
+		if ( !empty($lastModified) ) {
+			header('Last-Modified: ' . gmdate('D, d M Y H:i:s ', $lastModified) . 'GMT');
+		}
+		$expires = !empty($lastModified) ? ($lastModified + $cacheLifetime) : (time() + $cacheLifetime);
+		header('Expires: ' . gmdate('D, d M Y H:i:s ', $expires) . 'GMT');
+		header('Cache-Control: public, max-age=' . $cacheLifetime);
+
+		return $omitResponseBody;
+	}
 }
 
 /**

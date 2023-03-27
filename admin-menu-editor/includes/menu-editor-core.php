@@ -107,6 +107,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	 */
 	private $loaded_modules = array();
 	private $are_modules_loaded = false;
+	private $is_loading_modules = false;
 
 	/**
 	 * @var array List of capabilities that are used in the default admin menu. Used to detect meta capabilities.
@@ -342,6 +343,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'admin.php?page=wpgb-facet-settings' => true,
 			//Google Analytics for WordPress by MonsterInsights 8.4.0
 			'index.php?page=monsterinsights-getting-started' => true,
+			//WPForms Lite 1.7.8 (and possibly the paid version)
+			'index.php?page=wpforms-getting-started' => true,
 		);
 
 		//AJAXify screen options
@@ -472,13 +475,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	}
 
 	public function load_modules() {
+		//Prevent indirect recursion. This can happen if, for example, a module
+		//immediately tries to check user capabilities when it's loaded.
+		if ( $this->is_loading_modules ) {
+			return;
+		}
+		$this->is_loading_modules = true;
+
 		//Load any active modules that haven't been loaded yet.
 		foreach($this->get_active_modules() as $id => $module) {
 			if ( array_key_exists($id, $this->loaded_modules) ) {
 				continue;
 			}
 
-			/** @noinspection PhpIncludeInspection */
 			include ($module['path']);
 			if ( !empty($module['className']) ) {
 				$instance = new $module['className']($this);
@@ -498,6 +507,8 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$this->tabs = apply_filters('admin_menu_editor-tabs', $firstTabs);
 		//The "Settings" tab is always last.
 		$this->tabs['settings'] = 'Settings';
+
+		$this->is_loading_modules = false;
 	}
 
 	/**
@@ -882,6 +893,29 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		// phpcs:enable
 	}
 
+	public function register_safe_js_libraries() {
+		static $isDone = false;
+		if ( $isDone ) {
+			return;
+		}
+		$isDone = true;
+
+		//Lodash library
+		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash.min.js', $this->plugin_file));
+
+		//Knockout
+		foreach(array('ame-knockout', 'knockout') as $koAlias) {
+			wp_register_auto_versioned_script($koAlias, plugins_url('js/knockout.js', $this->plugin_file));
+		}
+
+		//Mini utilities for more functional programming.
+		wp_register_auto_versioned_script('ame-mini-functional-lib', plugins_url('js/mini-func.js', $this->plugin_file));
+
+		if ( function_exists('ws_ame_register_customizable_js_lib') ) {
+			ws_ame_register_customizable_js_lib();
+		}
+	}
+
 	public function register_base_dependencies() {
 		static $done = false;
 		if ( $done ) {
@@ -890,15 +924,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$done = true;
 
 		$this->register_jquery_plugins();
+		$this->register_safe_js_libraries();
 
 		//Base styles.
 		wp_register_auto_versioned_style('menu-editor-base-style', plugins_url('css/menu-editor.css', $this->plugin_file));
-
-		//Lodash library
-		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash.min.js', $this->plugin_file));
-
-		//Knockout
-		wp_register_auto_versioned_script('knockout', plugins_url('js/knockout.js', $this->plugin_file));
 
 		//Actor manager.
 		wp_register_auto_versioned_script(
@@ -1217,6 +1246,10 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'expandSelectedSubmenu' => isset($this->get['expand_submenu']) && ($this->get['expand_submenu'] === '1'),
 
 			'deepNestingEnabled' => $this->options['deep_nesting_enabled'],
+			'auxDataConfig' => apply_filters(
+				'admin_menu_editor-aux_data_config',
+				array('keys' => array('color_presets' => null), 'settingIdMap' => array(), 'prefixMap' => array())
+			),
 
 			'isDemoMode' => defined('IS_DEMO_MODE'),
 			'isMasterMode' => defined('IS_MASTER_MODE'),
@@ -1387,7 +1420,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$config_id = $this->guess_menu_config_id();
 		}
 
-		$custom_menu = apply_filters('ame_pre_set_custom_menu', $custom_menu);
+		$custom_menu = apply_filters('ame_pre_set_custom_menu', $custom_menu, $config_id);
 
 		$previous_custom_menu = $this->load_custom_menu($config_id);
 		if ( !empty($this->options['wpml_support_enabled']) ) {
@@ -2576,6 +2609,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		}
 
 		$action = isset($this->post['action']) ? $this->post['action'] : (isset($this->get['action']) ? $this->get['action'] : '');
+		if ( !empty($action) ) {
+			do_action('admin_menu_editor-page_action-' . $action, $this->post);
+		}
 		do_action('admin_menu_editor-header', $action, $this->post);
 
 		if ( !empty($action) ) {
@@ -2983,10 +3019,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			//Start out with the default menu if there is no user-created one
 			$custom_menu = $default_menu;
 		}
-
-		//The editor doesn't use the color CSS. Including it would just make the page bigger and waste bandwidth.
-		unset($custom_menu['color_css']);
-		unset($custom_menu['color_css_modified']);
 
 		//Encode both menus as JSON
 		$editor_data['default_menu_js'] = ameMenu::to_json($default_menu);
@@ -4044,6 +4076,15 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$this->options[$key] = $value;
 		}
 		$this->save_options();
+	}
+
+	/**
+	 * Get the default configuration options.
+	 *
+	 * @return array
+	 */
+	public function get_default_options() {
+		return $this->defaults;
 	}
 
 	/**

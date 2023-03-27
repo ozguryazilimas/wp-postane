@@ -1,6 +1,20 @@
 <?php
+
 class amePluginVisibility extends amePersistentModule {
 	const HIDE_USAGE_NOTICE_FLAG = 'ws_ame_hide_pv_notice';
+
+	/**
+	 * Any role that has any of the following capabilities has some degree of control
+	 * over plugins, so plugin visibility settings apply to that role.
+	 */
+	const PLUGIN_MANAGEMENT_CAPS = array(
+		'activate_plugins',
+		'install_plugins',
+		'edit_plugins',
+		'update_plugins',
+		'delete_plugins',
+		'manage_network_plugins',
+	);
 
 	protected $optionName = 'ws_ame_plugin_visibility';
 
@@ -9,7 +23,7 @@ class amePluginVisibility extends amePersistentModule {
 	protected $tabOrder = 20;
 
 	protected $defaultSettings = array(
-		'plugins' => array(),
+		'plugins'              => array(),
 		'grantAccessByDefault' => array(),
 	);
 
@@ -62,27 +76,27 @@ class amePluginVisibility extends amePersistentModule {
 	 *  - Precedence order: user > super admin > all roles.
 	 *
 	 * @param string $pluginFileName Plugin file name as returned by plugin_basename().
-	 * @param WP_User $user Current user.
+	 * @param WP_User $user          Current user.
 	 * @return bool
 	 */
 	private function isPluginVisible($pluginFileName, $user = null) {
 		//TODO: Can we refactor this to be shorter?
 		static $isMultisite = null;
-		if (!isset($isMultisite)) {
+		if ( !isset($isMultisite) ) {
 			$isMultisite = is_multisite();
 		}
 
-		if ($user === null) {
+		if ( $user === null ) {
 			$user = wp_get_current_user();
 		}
 		$settings = $this->loadSettings();
 
 		//Do we have custom settings for this plugin?
-		if (isset($settings['plugins'][$pluginFileName])) {
+		if ( isset($settings['plugins'][$pluginFileName]) ) {
 			$isVisibleByDefault = ameUtils::get($settings['plugins'][$pluginFileName], 'isVisibleByDefault', true);
 			$grantAccess = ameUtils::get($settings['plugins'][$pluginFileName], 'grantAccess', array());
 
-			if ($isVisibleByDefault) {
+			if ( $isVisibleByDefault ) {
 				$grantAccess = array_merge($settings['grantAccessByDefault'], $grantAccess);
 			}
 		} else {
@@ -92,24 +106,41 @@ class amePluginVisibility extends amePersistentModule {
 
 		//User settings take precedence over everything else.
 		$userActor = 'user:' . $user->get('user_login');
-		if (isset($grantAccess[$userActor])) {
+		if ( isset($grantAccess[$userActor]) ) {
 			return $grantAccess[$userActor];
 		}
 
 		//Super Admin is next.
-		if ($isMultisite && is_super_admin($user->ID)) {
+		if ( $isMultisite && is_super_admin($user->ID) ) {
 			//By default, the Super Admin has access to everything.
 			return ameUtils::get($grantAccess, 'special:super_admin', true);
 		}
 
 		//Finally, the user can see the plugin if at least one of their roles can.
+		$anyRoleHasSettings = false;
 		$roles = $this->menuEditor->get_user_roles($user);
 		foreach ($roles as $roleId) {
-			if (ameUtils::get($grantAccess, 'role:' . $roleId, $isVisibleByDefault && $this->canManagePlugins($roleId))) {
+			/** @noinspection PhpRedundantOptionalArgumentInspection -- In case the default changes. */
+			$hasAccess = ameUtils::get($grantAccess, 'role:' . $roleId, null);
+			if ( $hasAccess !== null ) {
+				$anyRoleHasSettings = true;
+			} else {
+				$hasAccess = $isVisibleByDefault && $this->roleCanManagePlugins($roleId);
+			}
+
+			if ( $hasAccess ) {
 				return true;
 			}
 		}
 
+		if ( $anyRoleHasSettings ) {
+			//At least one role had per-plugin settings or access-by-default settings,
+			//and those settings did not grant access.
+			return false;
+		} else if ( $isVisibleByDefault ) {
+			//Check user capabilities.
+			return $this->userCanManagePlugins($user);
+		}
 		return false;
 	}
 
@@ -119,27 +150,20 @@ class amePluginVisibility extends amePersistentModule {
 	 * @param WP_Role $role
 	 * @return bool
 	 */
-	private function canManagePlugins($roleId, $role = null) {
+	private function roleCanManagePlugins($roleId, $role = null) {
 		static $cache = array();
 
-		if (isset($cache[$roleId])) {
+		if ( isset($cache[$roleId]) ) {
 			return $cache[$roleId];
 		}
 
-		//Any role that has any of the following capabilities has some degree of control over plugins,
-		//so plugin visibility settings apply to that role.
-		$pluginCaps = array(
-			'activate_plugins', 'install_plugins', 'edit_plugins', 'update_plugins', 'delete_plugins',
-			'manage_network_plugins',
-		);
-
-		if (!isset($role)) {
+		if ( !isset($role) ) {
 			$role = get_role($roleId);
 		}
 
 		$result = false;
-		foreach ($pluginCaps as $cap) {
-			if ($role->has_cap($cap)) {
+		foreach (self::PLUGIN_MANAGEMENT_CAPS as $cap) {
+			if ( $role->has_cap($cap) ) {
 				$result = true;
 				break;
 			}
@@ -147,6 +171,29 @@ class amePluginVisibility extends amePersistentModule {
 
 		$cache[$roleId] = $result;
 
+		return $result;
+	}
+
+	/**
+	 * @param \WP_User $user
+	 * @return boolean
+	 */
+	private function userCanManagePlugins($user) {
+		static $cache = array();
+		$userId = $user->ID;
+		if ( isset($cache[$userId]) ) {
+			return $cache[$userId];
+		}
+
+		$result = false;
+		foreach (self::PLUGIN_MANAGEMENT_CAPS as $cap) {
+			if ( user_can($user, $cap) ) {
+				$result = true;
+				break;
+			}
+		}
+
+		$cache[$userId] = $result;
 		return $result;
 	}
 
@@ -170,16 +217,16 @@ class amePluginVisibility extends amePersistentModule {
 		}
 
 		$editableProperties = array(
-			'Name' => 'name',
+			'Name'        => 'name',
 			'Description' => 'description',
-			'Author' => 'author',
-			'PluginURI' => 'siteUrl',
-			'AuthorURI' => 'siteUrl',
-			'Version' => 'version',
+			'Author'      => 'author',
+			'PluginURI'   => 'siteUrl',
+			'AuthorURI'   => 'siteUrl',
+			'Version'     => 'version',
 		);
 
 		$pluginFileNames = array_keys($plugins);
-		foreach($pluginFileNames as $fileName) {
+		foreach ($pluginFileNames as $fileName) {
 			//Remove all hidden plugins.
 			if ( !$this->isPluginVisible($fileName, $user) ) {
 				unset($plugins[$fileName]);
@@ -187,7 +234,7 @@ class amePluginVisibility extends amePersistentModule {
 			}
 
 			//Set custom names, descriptions, and other properties.
-			foreach($editableProperties as $header => $property) {
+			foreach ($editableProperties as $header => $property) {
 				$customValue = ameUtils::get($settings, array('plugins', $fileName, 'custom' . ucfirst($property)), '');
 				if ( $customValue !== '' ) {
 					$plugins[$fileName][$header] = $customValue;
@@ -218,7 +265,7 @@ class amePluginVisibility extends amePersistentModule {
 		}
 
 		$pluginFileNames = array_keys($updates->response);
-		foreach($pluginFileNames as $fileName) {
+		foreach ($pluginFileNames as $fileName) {
 			//Remove all hidden plugins.
 			if ( !$this->isPluginVisible($fileName, $user) ) {
 				unset($updates->response[$fileName]);
@@ -234,6 +281,7 @@ class amePluginVisibility extends amePersistentModule {
 	 * Note that this doesn't catch bulk (de-)activation or various plugin management plugins.
 	 *
 	 * This is a callback for the "check_admin_referer" action.
+	 *
 	 * @param string $action
 	 */
 	public function authorizePluginAction($action) {
@@ -242,7 +290,7 @@ class amePluginVisibility extends amePersistentModule {
 		//phpcs:disable WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- See above
 
 		//Is the user trying to edit a plugin?
-		if (preg_match('@^edit-plugin_(?P<file>.+)$@', $action, $matches)) {
+		if ( preg_match('@^edit-plugin_(?P<file>.+)$@', $action, $matches) ) {
 
 			//The file that's being edited is part of a plugin. Find that plugin.
 			$fileName = wp_normalize_path($matches['file']);
@@ -252,34 +300,34 @@ class amePluginVisibility extends amePersistentModule {
 			$pluginFiles = array_keys(get_plugins());
 			foreach ($pluginFiles as $pluginFile) {
 				//Is the user editing the main plugin file?
-				if ($pluginFile === $fileName) {
+				if ( $pluginFile === $fileName ) {
 					$selectedPlugin = $pluginFile;
 					break;
 				}
 
 				//Is the file inside this plugin's directory?
 				$pluginDirectory = ameUtils::getFirstDirectory($pluginFile);
-				if (($pluginDirectory !== null) && ($pluginDirectory === $fileDirectory)) {
+				if ( ($pluginDirectory !== null) && ($pluginDirectory === $fileDirectory) ) {
 					$selectedPlugin = $pluginFile;
 					break;
 				}
 			}
 
-			if ($selectedPlugin !== null) {
+			if ( $selectedPlugin !== null ) {
 				//Can the current user see the selected plugin?
 				$isVisible = $this->isPluginVisible($selectedPlugin);
 
-				if (!$isVisible) {
+				if ( !$isVisible ) {
 					wp_die('You do not have sufficient permissions to edit this plugin.');
 				}
 			}
 
 			//Is the user trying to (de-)activate a single plugin?
-		} elseif (preg_match('@(?P<action>deactivate|activate)-plugin_(?P<plugin>.+)$@', $action, $matches)) {
+		} elseif ( preg_match('@(?P<action>deactivate|activate)-plugin_(?P<plugin>.+)$@', $action, $matches) ) {
 			//Can the current user see this plugin?
 			$isVisible = $this->isPluginVisible($matches['plugin']);
 
-			if (!$isVisible) {
+			if ( !$isVisible ) {
 				wp_die(sprintf(
 					'You do not have sufficient permissions to %s this plugin.',
 					esc_html($matches['action'])
@@ -287,11 +335,11 @@ class amePluginVisibility extends amePersistentModule {
 			}
 
 			//Are they acting on multiple plugins? One of them might be hidden.
-		} elseif (($action === 'bulk-plugins') && isset($_POST['checked']) && is_array($_POST['checked'])) {
+		} elseif ( ($action === 'bulk-plugins') && isset($_POST['checked']) && is_array($_POST['checked']) ) {
 
 			$user = wp_get_current_user();
 			foreach ($_POST['checked'] as $pluginFile) {
-				if (!$this->isPluginVisible(strval($pluginFile), $user)) {
+				if ( !$this->isPluginVisible(strval($pluginFile), $user) ) {
 					wp_die(sprintf(
 						'You do not have sufficient permissions to manage this plugin: "%s".',
 						esc_html($pluginFile)
@@ -338,7 +386,9 @@ class amePluginVisibility extends amePersistentModule {
 			'ame-plugin-visibility',
 			plugins_url('plugin-visibility.js', __FILE__),
 			array(
-				'ame-lodash', 'knockout', 'ame-actor-selector',
+				'ame-lodash',
+				'ame-knockout',
+				'ame-actor-selector',
 				$this->dismissNoticeAction->getScriptHandle(),
 			)
 		);
@@ -356,19 +406,19 @@ class amePluginVisibility extends amePersistentModule {
 		wp_localize_script('ame-plugin-visibility', 'wsPluginVisibilityData', $scriptData);
 	}
 
-	public function getScriptData(){
+	public function getScriptData() {
 		//Pass the list of installed plugins and their state (active/inactive) to UI JavaScript.
 		$installedPlugins = get_plugins();
 
 		$activePlugins = array_map('plugin_basename', wp_get_active_and_valid_plugins());
 		$activeNetworkPlugins = array();
-		if (function_exists('wp_get_active_network_plugins')) {
+		if ( function_exists('wp_get_active_network_plugins') ) {
 			//This function is only available on Multisite.
 			$activeNetworkPlugins = array_map('plugin_basename', wp_get_active_network_plugins());
 		}
 
 		$plugins = array();
-		foreach($installedPlugins as $pluginFile => $header) {
+		foreach ($installedPlugins as $pluginFile => $header) {
 			$isActiveForNetwork = in_array($pluginFile, $activeNetworkPlugins);
 			$isActive = in_array($pluginFile, $activePlugins);
 
@@ -376,27 +426,27 @@ class amePluginVisibility extends amePersistentModule {
 				'fileName' => $pluginFile,
 				'isActive' => $isActive || $isActiveForNetwork,
 
-				'name' => $header['Name'],
+				'name'        => $header['Name'],
 				'description' => isset($header['Description']) ? $header['Description'] : '',
-				'author' => isset($header['Author']) ? $header['Author'] : '',
-				'siteUrl' => isset($header['PluginURI']) ? $header['PluginURI'] : '',
-				'version' => isset($header['Version']) ? $header['Version'] : '',
+				'author'      => isset($header['Author']) ? $header['Author'] : '',
+				'siteUrl'     => isset($header['PluginURI']) ? $header['PluginURI'] : '',
+				'version'     => isset($header['Version']) ? $header['Version'] : '',
 			);
 		}
 
 		//Flag roles that can manage plugins.
 		$canManagePlugins = array();
 		$wpRoles = ameRoleUtils::get_roles();
-		foreach($wpRoles->role_objects as $id => $role) {
-			$canManagePlugins[$id] = $this->canManagePlugins($id, $role);
+		foreach ($wpRoles->role_objects as $id => $role) {
+			$canManagePlugins[$id] = $this->roleCanManagePlugins($id, $role);
 		}
 
 		return array(
-			'settings' => $this->loadSettings(),
+			'settings'         => $this->loadSettings(),
 			'installedPlugins' => $plugins,
 			'canManagePlugins' => $canManagePlugins,
-			'isMultisite' => is_multisite(),
-			'isProVersion' => $this->menuEditor->is_pro_version(),
+			'isMultisite'      => is_multisite(),
+			'isProVersion'     => $this->menuEditor->is_pro_version(),
 		);
 	}
 

@@ -183,7 +183,6 @@ if ( !empty($_GET['message']) && (intval($_GET['message']) == 2) ){
 include dirname(__FILE__) . '/../modules/access-editor/access-editor-template.php';
 $extrasDirectory = dirname(__FILE__) . '/../extras';
 if ( $is_pro_version ) {
-	include $extrasDirectory . '/menu-color-dialog.php';
 	include $extrasDirectory . '/copy-permissions-dialog.php';
 }
 

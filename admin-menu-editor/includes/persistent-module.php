@@ -32,6 +32,9 @@ abstract class amePersistentModule extends ameModule {
 		$json = $this->getScopedOption($this->optionName, null);
 		if ( is_string($json) && !empty($json) ) {
 			$settings = json_decode($json, true);
+			if ( !is_array($settings) ) {
+				$settings = array(); //JSON decoding failed, fall back to an empty array.
+			}
 		} else {
 			$settings = array();
 		}

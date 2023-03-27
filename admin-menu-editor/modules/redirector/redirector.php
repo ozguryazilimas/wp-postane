@@ -9,9 +9,11 @@ use ameUtils;
 use DateTime;
 use DateTimeZone;
 use Exception;
-use RuntimeException;
 use WP_Error;
 use WP_User;
+use YahnisElsts\AdminMenuEditor\Options\Option;
+use YahnisElsts\AdminMenuEditor\Options\Some;
+use YahnisElsts\AdminMenuEditor\Options\None;
 
 class Module extends amePersistentModule {
 	const FILTER_PRIORITY = 1000000;
@@ -312,7 +314,7 @@ class Module extends amePersistentModule {
 		wp_register_auto_versioned_script(
 			'ame-knockout-sortable',
 			plugins_url('knockout-sortable.js', __FILE__),
-			['knockout', 'jquery', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable']
+			['ame-knockout', 'jquery', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable']
 		);
 	}
 
@@ -326,7 +328,7 @@ class Module extends amePersistentModule {
 				'jquery',
 				'jquery-ui-position',
 				'jquery-ui-autocomplete',
-				'knockout',
+				'ame-knockout',
 				'ame-actor-selector',
 				'ame-actor-manager',
 				'ame-knockout-sortable',
@@ -868,100 +870,6 @@ abstract class Triggers {
 
 	public static function getValues() {
 		return [self::LOGIN, self::LOGOUT, self::REGISTRATION, self::FIRST_LOGIN];
-	}
-}
-
-/**
- * Really basic Option type implementation.
- *
- * @template T
- */
-abstract class Option {
-	/**
-	 * @return T
-	 */
-	abstract public function get();
-
-	/**
-	 * @return boolean
-	 */
-	abstract public function isEmpty();
-
-	/**
-	 * @return boolean
-	 */
-	abstract public function nonEmpty();
-
-	/**
-	 * @return boolean
-	 */
-	public function isDefined() {
-		return $this->nonEmpty();
-	}
-}
-
-/**
- * @template T
- * @extends Option<T>
- */
-final class Some extends Option {
-	/**
-	 * @var T
-	 */
-	private $value;
-
-	/**
-	 * Some constructor.
-	 *
-	 * @param T $value
-	 */
-	public function __construct($value) {
-		$this->value = $value;
-	}
-
-	/**
-	 * @return T
-	 */
-	public function get() {
-		return $this->value;
-	}
-
-	public function isEmpty() {
-		return false;
-	}
-
-	public function nonEmpty() {
-		return true;
-	}
-}
-
-/**
- * @template T
- * @extends Option<T>
- */
-final class None extends Option {
-	private function __construct() {
-		//This constructor only exists to prevent others from creating instances.
-	}
-
-	public function get() {
-		throw new RuntimeException('Option value is not set');
-	}
-
-	public function isEmpty() {
-		return true;
-	}
-
-	public function nonEmpty() {
-		return false;
-	}
-
-	public static function getInstance() {
-		static $instance = null;
-		if ( $instance === null ) {
-			$instance = new self();
-		}
-		return $instance;
 	}
 }
 

@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.7
-Tested up to: 6.1
-Stable tag: 1.10.4
+Tested up to: 6.2
+Stable tag: 1.11
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -74,6 +74,16 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.11 =
+* Fixed a minor conflict with the WPForms plugin where the hidden menu item "Dashboard -> Welcome to WPForms" became visible when Admin Menu Editor was installed.
+* Fixed a conflict with Toolset Types 3.4.7 that prevented redirect settings from being saved.
+* Fixed a PHP warning triggered when a menu item didn't have a URL or a required capability.
+* Fixed a plugin visibility bug where, if none of the user's roles had custom access settings for a specific plugin or in general, AME would immediatly deny access instead of also checking user capabilities. This could theoretically happen if all the user's roles were new or if the user didn't have any roles (they might still have access due to directly granted capabilities).
+* Prevent a potential fatal error if JSON-encoded module settings stored in the database have been corrupted and can't be decoded.
+* Added some missing `.map` files that could cause 404 errors for users looking at the developer console.
+* Lots of internal reorganization that likely won't have any visible effects in this version.
+* Tested up to WP 6.2.
 
 = 1.10.4 =
 * Fixed a layout bug in the menu editor where the submenu column did not increase its height to align with the currently selected top level menu.

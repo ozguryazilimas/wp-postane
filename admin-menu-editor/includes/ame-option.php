@@ -107,6 +107,22 @@ abstract class Option implements \IteratorAggregate {
 	public static function fromCallable($callable, $arguments = array()) {
 		return new LazyOption($callable, $arguments);
 	}
+
+	/**
+	 * @template A
+	 * @param A $value
+	 * @return Option<A>
+	 */
+	public static function some($value) {
+		return new Some($value);
+	}
+
+	/**
+	 * @return Option<T>
+	 */
+	public static function none() {
+		return None::getInstance();
+	}
 }
 
 /**

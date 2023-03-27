@@ -51,6 +51,8 @@
  *
  * @property {string|null} wsEditorData.deepNestingEnabled
  *
+ * @property {object} wsEditorData.auxDataConfig
+ *
  * @property {boolean} wsEditorData.isDemoMode
  * @property {boolean} wsEditorData.isMasterMode
  */
@@ -467,11 +469,14 @@ function loadMenuConfiguration(adminMenu) {
 
 					const thingContainer = thing.closest('.ws_main_container');
 					return (
+						//It must actually be a menu item.
+						thing.hasClass('ws_container')
+
 						//Accept only menus from other columns.
-						!self.container.is(thingContainer) &&
+						&& !self.container.is(thingContainer)
 
 						//Prevent users from dropping a parent menu on one of its own sub-menus.
-						!isParentOf(thing, visibleSubmenu)
+						&& !isParentOf(thing, visibleSubmenu)
 					);
 				}),
 
@@ -1231,6 +1236,8 @@ function formatMenuTitle(title) {
 	title = truncateString(title, 34, '\u2026');
 	return title;
 }
+
+AmeEditorApi.formatMenuTitle = formatMenuTitle;
 
 //Editor field spec template.
 var baseField = {
@@ -2396,7 +2403,6 @@ function readMenuTreeState(){
 
 	var result = {
 		tree: tree,
-		color_presets: $.extend(true, {}, colorPresets),
 		granted_capabilities: AmeCapabilityManager.getGrantedCapabilities(),
 		component_visibility: $.extend(true, {}, generalComponentVisibility)
 	};
@@ -3941,322 +3947,6 @@ function ameOnDomReady() {
 	});
 
 
-	/*************************************************************************
-	                             Color picker
-	 *************************************************************************/
-
-	var menuColorDialog = $('#ws-ame-menu-color-settings');
-	if (menuColorDialog.length > 0) {
-		menuColorDialog.dialog({
-			autoOpen: false,
-			closeText: ' ',
-			draggable: false,
-			modal: true,
-			minHeight: 400,
-			minWidth: 520
-		});
-	}
-
-	var colorDialogState = {
-		menuItem: null,
-		editingGlobalColors: false
-	};
-
-	var menuColorVariables = [
-		'base-color',
-		'text-color',
-		'highlight-color',
-		'icon-color',
-
-		'menu-highlight-text',
-		'menu-highlight-icon',
-		'menu-highlight-background',
-
-		'menu-current-text',
-		'menu-current-icon',
-		'menu-current-background',
-
-		'menu-submenu-text',
-		'menu-submenu-background',
-		'menu-submenu-focus-text',
-		'menu-submenu-current-text',
-
-		'menu-bubble-text',
-		'menu-bubble-background',
-		'menu-bubble-current-text',
-		'menu-bubble-current-background'
-	];
-
-	var colorPresetDropdown = $('#ame-menu-color-presets'),
-		colorPresetDeleteButton = $("#ws-ame-delete-color-preset"),
-		areColorChangesIgnored = false;
-
-	//Show only the primary color settings by default.
-	var showAdvancedColors = false;
-	$('#ws-ame-show-advanced-colors').on('click', function() {
-		showAdvancedColors = !showAdvancedColors;
-		$('#ws-ame-menu-color-settings').find('.ame-advanced-menu-color').toggle(showAdvancedColors);
-		$(this).text(showAdvancedColors ? 'Hide advanced options' : 'Show advanced options');
-	});
-
-	var colorPickersInitialized = false;
-	function setUpColorDialog(dialogTitle) {
-		//Initializing the color pickers takes a while, so we only do it when needed instead of on document ready.
-		if ( !colorPickersInitialized ) {
-			menuColorDialog.find('.ame-color-picker').wpColorPicker({
-				//Deselect the current preset when the user changes any of the color options.
-				change: deselectPresetOnColorChange,
-				clear: deselectPresetOnColorChange
-			});
-			colorPickersInitialized = true;
-		}
-
-		//Populate presets and deselect the previously selected option.
-		colorPresetDropdown.val('');
-		if (!wasPresetDropdownPopulated) {
-			populatePresetDropdown();
-			wasPresetDropdownPopulated = true;
-		}
-
-		//Update the dialog title.
-		menuColorDialog.dialog('option', 'title', dialogTitle);
-	}
-
-	//"Edit.." color schemes.
-	menuEditorNode.on('click', '.ws_open_color_editor, .ws_color_scheme_display', function() {
-		var containerNode = $(this).parents('.ws_container').first();
-		var menuItem = containerNode.data('menu_item');
-
-		colorDialogState.containerNode = containerNode;
-		colorDialogState.menuItem = menuItem;
-		colorDialogState.editingGlobalColors = false;
-
-		//Add menu title to the dialog caption.
-		var title = getFieldValue(menuItem, 'menu_title', null);
-		setUpColorDialog(title ? ('Colors: ' + formatMenuTitle(title)) : 'Colors');
-
-		//Show the [global] preset only if the user has set it up.
-		var globalPresetExists = colorPresets.hasOwnProperty('[global]');
-		menuColorDialog.find('#ame-global-colors-preset').toggle(globalPresetExists);
-
-		var colors = getFieldValue(menuItem, 'colors', {}),
-			colorsToDisplay = colors || {};
-		if (_.isEmpty(colors)) {
-			//Normalization. No custom colors = use default colors, and null is used to indicate default settings.
-			menuItem.colors = null;
-			//If no custom colors, select and display the global preset.
-			if (globalPresetExists) {
-				colorsToDisplay = colorPresets['[global]'];
-				colorPresetDropdown.val('[global]');
-				colorPresetDeleteButton.hide();
-			}
-		}
-		displayColorSettingsInDialog(colorsToDisplay);
-
-		menuColorDialog.dialog('open');
-	});
-
-	//The "Colors" button in the main sidebar.
-	$('#ws_edit_global_colors').on('click', function() {
-		colorDialogState.editingGlobalColors = true;
-		colorDialogState.menuItem = null;
-		colorDialogState.containerNode = null;
-
-		setUpColorDialog('Default menu colors');
-		displayColorSettingsInDialog(_.get(colorPresets, '[global]', {}));
-
-		//Hide the [global] preset. We'll be editing it.
-		menuColorDialog.find('#ame-global-colors-preset').hide();
-
-		menuColorDialog.dialog('open');
-	});
-
-	function getColorSettingsFromDialog() {
-		var colors = {}, colorCount = 0;
-
-		for (var i = 0; i < menuColorVariables.length; i++) {
-			var name = menuColorVariables[i];
-			var value = $('#ame-color-' + name).val();
-			if (value) {
-				colors[name] = value;
-				colorCount++;
-			}
-		}
-
-		if (colorCount > 0) {
-			return colors;
-		} else {
-			return null;
-		}
-	}
-
-	function displayColorSettingsInDialog(colors) {
-		//noinspection JSUnusedAssignment
-		areColorChangesIgnored = true;
-		var customColorCount = 0;
-
-		for (var i = 0; i < menuColorVariables.length; i++) {
-			var name = menuColorVariables[i];
-			var value = colors.hasOwnProperty(name) ? colors[name] : false;
-
-			if ( value ) {
-				$('#ame-color-' + name).wpColorPicker('color', value);
-				customColorCount++;
-			} else {
-				$('#ame-color-' + name).closest('.wp-picker-container').find('.wp-picker-clear').trigger('click');
-			}
-		}
-
-		areColorChangesIgnored = false;
-		return customColorCount;
-	}
-
-	//The "Save Changes" button in the color dialog.
-	$('#ws-ame-save-menu-colors').on('click', function() {
-		menuColorDialog.dialog('close');
-		var colors = getColorSettingsFromDialog();
-
-		if ( colorDialogState.editingGlobalColors ) {
-			if (colors === null) {
-				delete colorPresets['[global]'];
-			} else {
-				colorPresets['[global]'] = colors;
-			}
-		} else if ( colorDialogState.menuItem ) {
-			var menuItem = colorDialogState.menuItem;
-			//If colors match the global settings, reset them to null. Using the [global] preset is the default.
-			if (_.has(colorPresets, '[global]') && _.isEqual(colors, colorPresets['[global]'])) {
-				menuItem.colors = null;
-			} else {
-				menuItem.colors = colors;
-			}
-			updateItemEditor(colorDialogState.containerNode);
-		}
-
-		colorDialogState.containerNode = null;
-		colorDialogState.menuItem = null;
-		colorDialogState.editingGlobalColors = false;
-	});
-
-	//The "Apply to All" button in the same dialog.
-	$('#ws-ame-apply-colors-to-all').on('click', function() {
-		if (!confirm('Apply these color settings to ALL top level menus?')) {
-			return;
-		}
-
-		//Set this as the global preset and remove custom settings from all items.
-		var newColors = getColorSettingsFromDialog();
-		if (newColors === null) {
-			delete colorPresets['[global]'];
-		} else {
-			colorPresets['[global]'] = newColors;
-		}
-		$('#ws_menu_box').find('.ws_menu').each(function() {
-			var containerNode = $(this),
-				menuItem = containerNode.data('menu_item');
-			if (!menuItem.separator) {
-				menuItem.colors = null;
-				updateItemEditor(containerNode);
-			}
-		});
-
-		menuColorDialog.dialog('close');
-		colorDialogState.containerNode = null;
-		colorDialogState.menuItem = null;
-	});
-
-	function addColorPreset(name, colors) {
-		colorPresets[name] = colors;
-		populatePresetDropdown();
-		colorPresetDropdown.val(name);
-		colorPresetDeleteButton.removeClass('hidden');
-	}
-
-	function deleteColorPreset(name) {
-		delete colorPresets[name];
-		populatePresetDropdown();
-		colorPresetDropdown.val('');
-		colorPresetDeleteButton.addClass('hidden');
-	}
-
-	function populatePresetDropdown() {
-		var separator = colorPresetDropdown.find('#ame-color-preset-separator');
-
-		//Delete the old options, but keep the "save preset" option and so on.
-		colorPresetDropdown.find('option').not('.ame-meta-option').remove();
-
-		//Sort presets alphabetically.
-		var presetNames = $.map(colorPresets, function(unused, name) {
-			return name;
-		}).sort(function(a, b) {
-			return a.localeCompare(b);
-		});
-
-		//Add them all to the dropdown.
-		var newOptions = jQuery([]);
-		$.each(presetNames, function(unused, name) {
-			if (name === '[global]') {
-				return;
-			}
-
-			newOptions = newOptions.add($('<option>', {
-				val: name,
-				text: name
-			}));
-		});
-		newOptions.insertBefore(separator);
-	}
-
-	function deselectPresetOnColorChange() {
-		//Most jQuery widgets don't trigger change events when you update them via JavaScript,
-		//but apparently wpColorPicker does. We want to ignore those superfluous events.
-		if (!areColorChangesIgnored && (colorPresetDropdown.val() !== '')) {
-			colorPresetDropdown.val('');
-		}
-	}
-
-	colorPresetDropdown.on('change', function() {
-		var dropdown = $(this),
-			presetName = dropdown.val();
-
-		colorPresetDeleteButton.toggleClass('hidden', _.includes(['[save_preset]', '[global]', '', null], presetName));
-
-		if ((presetName === '[save_preset]') && menuColorDialog.dialog('isOpen')) {
-			//Create a new preset.
-			var colors = getColorSettingsFromDialog();
-			if (colors === null) {
-				dropdown.val('');
-				alert('Error: No colors selected');
-				return;
-			}
-
-			var newPresetName = window.prompt('New preset name:', '');
-			if ((newPresetName === null) || (jsTrim(newPresetName) === '')) {
-				dropdown.val('');
-				return;
-			}
-
-			addColorPreset(newPresetName, colors);
-		} else if (presetName !== '') {
-			//Apply the selected preset.
-			var preset = colorPresets[presetName];
-			displayColorSettingsInDialog(preset);
-		}
-	});
-
-	colorPresetDeleteButton.on('click', function() {
-		var presetName = $('#ame-menu-color-presets').val();
-		if ( _.includes(['[save_preset]', '[global]', '', null], presetName) ) {
-			return false;
-		}
-		if (!confirm('Are you sure you want to delete the preset "' + presetName + '"?')) {
-			return false;
-		}
-
-		deleteColorPreset(presetName);
-		return false;
-	});
-
 	//region Toolbar buttons
 
     /*************************************************************************
@@ -5344,6 +5034,198 @@ function ameOnDomReady() {
 			AmeEditorApi.refreshComponentVisibility();
 		});
 	}
+
+	//region Aux menu data adapter
+	/******************************************************************
+	                     Auxiliary menu data adapter
+	 ******************************************************************/
+
+	/**
+	 * Provides read/write access to additional arbitrary data that can be stored
+	 * in the admin menu configuration (i.e. everything that's not the menu tree).
+	 *
+	 * @constructor
+	 */
+	class AuxiliaryConfigDataAdapter {
+		currentConfig = {};
+		registeredKeys = {};
+		settingIdMap = {};
+		prefixMap = {};
+
+		constructor(adapterConfig = {}) {
+			adapterConfig = adapterConfig || {};
+			const initialPrefixes = _.get(adapterConfig, 'prefixMap', {});
+			//Convert dot-separated paths like "a.b.c" to arrays.
+			this.prefixMap = _.mapValues(initialPrefixes, (value) => {
+				return _.isString(value) ? value.split('.') : value;
+			});
+
+			const initialKeys = _.get(adapterConfig, 'keys', {});
+			for (const key in initialKeys) {
+				this.registerKey(key, initialKeys[key]);
+			}
+			const initialSettingIdMap = _.get(adapterConfig, 'settingIdMap', {});
+			for (const key in initialSettingIdMap) {
+				this.registerSettingId(key, initialSettingIdMap[key]);
+			}
+
+			$(document)
+				.on('menuConfigurationLoaded.adminMenuEditor', (event, menuConfiguration) => {
+					//To avoid accidentally modifying the original config, make
+					//a copy of each key except "tree" and "format".
+					let configCopy = {};
+					for (const key in menuConfiguration) {
+						if (!menuConfiguration.hasOwnProperty(key) || (key === 'tree') || (key === 'format')) {
+							continue;
+						}
+
+						if ((typeof menuConfiguration[key] === 'object') && (menuConfiguration[key] !== null)) {
+							configCopy[key] = $.extend(true, {}, menuConfiguration[key]);
+						} else {
+							configCopy[key] = menuConfiguration[key];
+						}
+
+					}
+					this.currentConfig = configCopy;
+				})
+				.on('getMenuConfiguration.adminMenuEditor', (event, menuConfiguration) => {
+					//Copy registered settings to the menu configuration.
+					for (let key in this.registeredKeys) {
+						if (
+							!this.registeredKeys.hasOwnProperty(key)
+							|| (key === 'tree')
+							|| (key === 'format')
+						) {
+							continue;
+						}
+
+						//Don't overwrite keys added by other scripts/event callbacks.
+						if (typeof menuConfiguration[key] !== 'undefined') {
+							continue;
+						}
+
+						if ((typeof this.currentConfig[key] !== 'undefined') && (this.currentConfig[key] !== null)) {
+							const newValue = this.currentConfig[key];
+							if (typeof newValue === 'object') {
+								menuConfiguration[key] = $.extend(true, {}, newValue);
+							} else {
+								menuConfiguration[key] = newValue;
+							}
+						} else {
+							delete menuConfiguration[key];
+						}
+					}
+				});
+		}
+
+		/**
+		 * Register a key on the menu configuration object. It will be preserved
+		 * when the menu configuration is saved.
+		 *
+		 * @param {string} key
+		 * @param {string|null} settingIdPrefix
+		 */
+		registerKey(key, settingIdPrefix = null) {
+			this.registeredKeys[key] = true;
+			this.prefixMap[settingIdPrefix] = [key];
+		}
+
+		/**
+		 * Register a setting ID that corresponds to a specific path in the menu configuration object.
+		 * You will be able to use the setting ID to read and write the corresponding value.
+		 *
+		 * @param {string} settingId
+		 * @param {string|string[]} path
+		 */
+		registerSettingId(settingId, path) {
+			this.settingIdMap[settingId] = path;
+		}
+
+		/**
+		 * Get a list of all setting prefixes that this adapter may be able to handle.
+		 *
+		 * @returns {string[]}
+		 */
+		getKnownPrefixes() {
+			return Object.keys(this.prefixMap);
+		}
+
+		getSettingValue(settingId, defaultValue = null) {
+			const path = this.mapSettingIdToPath(settingId);
+			if (path === null) {
+				return defaultValue;
+			}
+			return _.get(this.currentConfig, path, defaultValue);
+		}
+
+		/**
+		 * @param {string} settingId
+		 * @returns {null|string|string[]}
+		 */
+		mapSettingIdToPath(settingId) {
+			const knownPath = this.settingIdMap[settingId];
+			if (typeof knownPath !== 'undefined') {
+				return knownPath;
+			}
+
+			//Does this ID start with a known prefix?
+			for (const prefix in this.prefixMap) {
+				if (!this.prefixMap.hasOwnProperty(prefix)) {
+					continue;
+				}
+
+				if (settingId.indexOf(prefix) === 0) {
+					const suffix = settingId.substring(prefix.length);
+					//Strip leading dots and convert to an array.
+					const suffixPath = suffix.replace(/^\.+/, '').split('.');
+					//Combine the prefix path with the suffix path.
+					return this.prefixMap[prefix].concat(suffixPath);
+				}
+			}
+
+			return null;
+		}
+
+		/**
+		 * Set multiple settings at once.
+		 *
+		 * @param {object} settingsById Object where keys are setting IDs and values are the new setting values.
+		 */
+		updateSettingsById(settingsById) {
+			for (const settingId in settingsById) {
+				if (settingsById.hasOwnProperty(settingId)) {
+					const path = this.mapSettingIdToPath(settingId);
+					if (path !== null) {
+						_.set(this.currentConfig, path, settingsById[settingId]);
+					}
+				}
+			}
+		}
+
+		/**
+		 * Get a value from the menu configuration object. Uses a simple path, not a setting ID.
+		 *
+		 * @param {string|string[]} path
+		 * @param {*} defaultValue
+		 * @returns {*}
+		 */
+		getPath(path, defaultValue = null) {
+			return _.get(this.currentConfig, path, defaultValue);
+		}
+
+		/**
+		 * Directly set a value in the menu configuration object. Does not translate setting IDs.
+		 *
+		 * @param {string|string[]} path Plain path, not a setting ID.
+		 * @param {*} value
+		 */
+		setPath(path, value) {
+			_.set(this.currentConfig, path, value);
+		}
+	}
+
+	AmeEditorApi.configDataAdapter = new AuxiliaryConfigDataAdapter(wsEditorData.auxDataConfig);
+	//endregion
 
 	/******************************************************************
 	                      Tooltips and hints

@@ -40,7 +40,7 @@ abstract class ameMenuItem {
 	 * Convert a WP menu structure to an associative array.
 	 *
 	 * @param array $item An menu item.
-	 * @param int|string $position The position (index) of the the menu item.
+	 * @param int|string $position The position (index) of the menu item.
 	 * @param string|null $parent The slug of the parent menu that owns this item. Null for top level menus.
 	 * @return array
 	 */
@@ -49,8 +49,8 @@ abstract class ameMenuItem {
 		$default_css_class = ($parent === null) ? 'menu-top' : '';
 		$item = array(
 			'menu_title'   => strval($item[0]),
-			'access_level' => strval($item[1]), //= required capability
-			'file'         => $item[2],
+			'access_level' => (isset($item[1]) ? strval($item[1]) : ''), //= required capability
+			'file'         => (array_key_exists(2, $item) ? $item[2] : ''),
 			'page_title'   => (isset($item[3]) ? strval($item[3]) : ''),
 			'css_class'    => (isset($item[4]) ? strval($item[4]) : $default_css_class),
 			'hookname'     => (isset($item[5]) ? strval($item[5]) : ''), //Used as the ID attr. of the generated HTML tag.

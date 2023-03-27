@@ -118,3 +118,86 @@
 	};
 
 }));
+
+
+/**
+ * A wrapper object for a user preference stored in a cookie.
+ *
+ * Created by Jānis Elsts. Added to the same file as the cookie library
+ * to avoid a separate HTTP request.
+ *
+ * @param {string} name
+ * @param {number} [expirationInDays]
+ * @param {boolean} [jsonEncodingEnabled]
+ * @constructor
+ */
+function WsAmePreferenceCookie(name, expirationInDays, jsonEncodingEnabled) {
+	if (typeof expirationInDays === 'undefined') {
+		expirationInDays = 90;
+	}
+	if (typeof jsonEncodingEnabled === 'undefined') {
+		jsonEncodingEnabled = false;
+	}
+
+	//Full name = unique prefix + name with the first letter capitalized.
+	this.fullCookieName = 'amePref' + name.charAt(0).toUpperCase() + name.slice(1);
+	this.jsonEncodingEnabled = jsonEncodingEnabled;
+	this.cookieOptions = {
+		'path': '/',
+		'samesite': 'lax'
+	};
+	if (expirationInDays > 0) {
+		this.cookieOptions.expires = expirationInDays;
+	}
+}
+
+WsAmePreferenceCookie.prototype.read = function (defaultValue) {
+	let cookieValue = jQuery.cookie(this.fullCookieName);
+	if (typeof cookieValue === 'undefined') {
+		return defaultValue;
+	}
+
+	if (this.jsonEncodingEnabled) {
+		if ((typeof cookieValue === 'string') && (cookieValue !== '')) {
+			try {
+				cookieValue = JSON.parse(cookieValue);
+			} catch (error) {
+				return defaultValue; //Use the default value if the stored JSON is invalid.
+			}
+		} else {
+			return defaultValue;
+		}
+	}
+
+	return cookieValue;
+}
+
+WsAmePreferenceCookie.prototype.write = function (value) {
+	if (this.jsonEncodingEnabled) {
+		value = JSON.stringify(value);
+	}
+	jQuery.cookie(this.fullCookieName, value, this.cookieOptions);
+}
+
+WsAmePreferenceCookie.prototype.removeCookie = function () {
+	return jQuery.removeCookie(this.fullCookieName, this.cookieOptions);
+}
+
+/**
+ * Read the cookie value, and if it's set, write it back to the cookie.
+ * This extends the cookie's expiration date by the configured number of days.
+ *
+ * @param {*} defaultValue
+ * @returns {*}
+ */
+WsAmePreferenceCookie.prototype.readAndRefresh = function (defaultValue) {
+	const notFound = {};
+	const value = this.read(notFound);
+	if (value === notFound) {
+		return defaultValue;
+	}
+
+	//phpcs:ignore WordPressVIPMinimum.JS.HTMLExecutingFunctions.write -- This is not document.write(), but a custom method.
+	this.write(value);
+	return value;
+}
