@@ -3,9 +3,9 @@ Contributors: msaari
 Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 4.18.3
+Stable tag: 4.18.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,10 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.18.4 =
+* New feature: New filter hook `relevanssi_highlight_query` lets you modify the search query for highlighting.
+* Changed behavior: Relevanssi no longer searches in feed searches by default.
+
 = 4.18.3 =
 * New feature: New filter hook `relevanssi_blocked_field_types` can be used to control which ACF field types are excluded from the index. By default, this includes 'repeater', 'flexible_content', and 'group'.
 * New feature: New filter hook `relevanssi_acf_field_object` can be used to filter the ACF field object before Relevanssi indexes it. Return false to have Relevanssi ignore the field type.
@@ -192,6 +196,9 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: Prevents fatal errors from `relevanssi_strip_all_tags()`.
 
 == Upgrade notice ==
+= 4.18.4 =
+* No more searching in RSS feeds, new filter hook.
+
 = 4.18.3 =
 * Better ACF field controls, bug fixes.
 
