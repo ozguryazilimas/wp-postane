@@ -2,9 +2,9 @@
 Contributors: creativemotion
 Tags: post thumbnails, featured image, elementor, thumbnails, featured image from title
 Requires at least: 4.8
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 3.9.17
+Stable tag: 3.9.18
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,10 @@ This section describes how to install the plugin and get it working.
 11. Text settings
 
 == Changelog ==
+
+= 3.9.18 =
+* Wordpress 6.2 compatibility
+* ADD: The current generation method selected in the settings is displayed on the generation form
 
 = 3.9.17 =
 * FIX: Some compatibility error

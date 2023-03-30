@@ -82,7 +82,7 @@ class WAPT_Settings extends WAPT_Page {
 	 *
 	 * @return void
 	 * @since 3.8.1
-	 * @see   Wbcr_FactoryPages463_AdminPage
+	 * @see   Wbcr_FactoryPages466_AdminPage
 	 */
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
@@ -144,7 +144,7 @@ class WAPT_Settings extends WAPT_Page {
 			'eventsOff' => [
 				'hide' => '.factory-control-auto_generation_schedule',
 			],
-			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
+			'cssClass'  => ( ! $is_premium ) ? [ 'wapt-icon-pro' ] : [],
 		];
 
 		$options[] = [
@@ -182,40 +182,9 @@ class WAPT_Settings extends WAPT_Page {
 			'type'     => 'dropdown',
 			'way'      => 'ddslick',
 			'name'     => 'generate_autoimage',
-			'data'     => [
-				[
-					'title' => __( 'Find in post', 'apt' ),
-					'value' => 'find',
-					'hint'  => __( 'Search for the first image in the post text', 'apt' ),
-				],
-				[
-					'title' => __( 'Generate from title', 'apt' ),
-					'value' => 'generate',
-					'hint'  => __( 'Create from the title on a colored background', 'apt' ),
-				],
-				[
-					'title' => __( 'Find or generate', 'apt' ),
-					'value' => 'both',
-					'hint'  => __( 'Find an image in the post text, if it is not present, generate it from the title', 'apt' ),
-				],
-				[
-					'title' => __( 'Google', 'apt' ),
-					'value' => 'google',
-					'hint'  => __( 'Search for an image by title of the post in Google', 'apt' ),
-				],
-				[
-					'title' => __( 'Find or Google', 'apt' ),
-					'value' => 'find_google',
-					'hint'  => __( 'Find an image in the post text, if it is not present, search for an image by title of the post in Google', 'apt' ),
-				],
-				[
-					'title' => __( 'Find or use default image', 'apt' ),
-					'value' => 'use_default',
-					'hint'  => __( 'Find an image in the post text, if it is not present, use default image for posts', 'apt' ),
-				],
-			],
+			'data'     => self::get_generate_options(),
 			'default'  => 'find',
-			'title'    => __( 'Featured image', 'apt' ),
+			'title'    => __( 'Generation method', 'apt' ),
 			'hint'     => __( 'How to generate featured image', 'apt' ),
 			'cssClass' => ( ! $is_premium ) ? [ 'wapt-icon-pro-item' ] : [],
 		];
@@ -311,6 +280,41 @@ class WAPT_Settings extends WAPT_Page {
 		];
 
 		return $form_options;
+	}
+
+	public static function get_generate_options() {
+		return [
+			'find'        => [
+				'title' => __( 'Find in post', 'apt' ),
+				'value' => 'find',
+				'hint'  => __( 'Search for the first image in the post text', 'apt' ),
+			],
+			'generate'    => [
+				'title' => __( 'Generate from title', 'apt' ),
+				'value' => 'generate',
+				'hint'  => __( 'Create from the title on a colored background', 'apt' ),
+			],
+			'both'        => [
+				'title' => __( 'Find or generate', 'apt' ),
+				'value' => 'both',
+				'hint'  => __( 'Find an image in the post text, if it is not present, generate it from the title', 'apt' ),
+			],
+			'google'      => [
+				'title' => __( 'Google', 'apt' ),
+				'value' => 'google',
+				'hint'  => __( 'Search for an image by title of the post in Google', 'apt' ),
+			],
+			'find_google' => [
+				'title' => __( 'Find or Google', 'apt' ),
+				'value' => 'find_google',
+				'hint'  => __( 'Find an image in the post text, if it is not present, search for an image by title of the post in Google', 'apt' ),
+			],
+			'use_default' => [
+				'title' => __( 'Find or use default image', 'apt' ),
+				'value' => 'use_default',
+				'hint'  => __( 'Find an image in the post text, if it is not present, use default image for posts', 'apt' ),
+			],
+		];
 	}
 
 }

@@ -3,12 +3,13 @@
  * @var array $data
  */
 
-$stats = $data['stats'] ?? [];
-$log   = $data['log'] ?? [];
+$stats           = $data['stats'] ?? [];
+$log             = $data['log'] ?? [];
+$generate_option = $data['generate_option'];
 ?>
 
 <div class="wrap" id="wapt-generate-page">
-	<div class="factory-bootstrap-464 factory-fontawesome-000">
+	<div class="factory-bootstrap-467 factory-fontawesome-000">
 		<div class="row wapt-statistic-row">
 			<div class="wapt-generate-statistic">
 				<div class="wapt-chart-container">
@@ -136,6 +137,22 @@ $log   = $data['log'] ?? [];
 								</div>
 							</div>
 						<?php } ?>
+
+						<div class="row wapt-filter-row">
+							<div class="col-md-2">
+								<label for="filter_posttype" class="apt-filter-label">
+									<?php echo esc_html__( 'Generation method', 'apt' ); ?>
+								</label>
+							</div>
+							<div class="col-md-10">
+								<?php echo "<strong>{$generate_option['title']}</strong> <br> {$generate_option['hint']}"; ?>
+								<br>
+								<a href="<?php echo esc_url_raw( admin_url( 'admin.php?page=wapt_settings-wbcr_apt' ) ); ?>">
+									<?php echo esc_html__( 'Change method in the settings', 'apt' ); ?>
+								</a>
+							</div>
+						</div>
+
 					</div>
 					<div class="wapt-row2">
 						<div class="row wapt-filter-row">
@@ -156,7 +173,6 @@ $log   = $data['log'] ?? [];
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 			<div id="genpostthumbsbar" class="wapt-genpostthumbsbar"
@@ -202,13 +218,13 @@ $log   = $data['log'] ?? [];
 						<?php else : ?>
 							<tr class="flash wapt-table-item wapt-row-id-<?php echo intval( $item['post_id'] ); ?>">
 								<td class="wapt-image-td">
-									<img height="50" src="<?php echo esc_url_raw( $item['thumbnail_url'] ); ?>">
+									<img height="50" src="<?php echo esc_url_raw( $item['thumbnail_url'] ?? '' ); ?>">
 								</td>
 								<td class="wapt-title-td">
 									<a href="<?php echo esc_url_raw( $item['url'] ); ?>" target="_blank">
 										<?php echo esc_html( $item['title'] ); ?></a>
 								</td>
-								<td><?php echo esc_html( $item['image_size'] ); ?></td>
+								<td><?php echo esc_html( $item['image_size'] ?? '' ); ?></td>
 								<td><?php echo esc_html( $item['type'] ); ?></td>
 								<td><?php echo esc_html( $item['status'] ); ?></td>
 							</tr>

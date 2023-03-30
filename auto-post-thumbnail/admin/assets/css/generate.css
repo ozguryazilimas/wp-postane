@@ -19,7 +19,7 @@
   font-size: 45px;
   font-weight: 600;
   left: 50%;
-  bottom: 160px;
+  bottom: 215px;
   z-index: 100;
   transform: translateX(-45%);
   -webkit-transform: translateX(-45%);
@@ -136,7 +136,7 @@
   padding: 5px 0;
 }
 #wapt-generate-page .wapt-fillters-form .wapt-statistic-buttons-wrap {
-  padding: 0 20px;
+  /*padding: 0 20px;*/
 }
 #wapt-generate-page .wapt-generation-progress {
   margin-left: 0 !important;

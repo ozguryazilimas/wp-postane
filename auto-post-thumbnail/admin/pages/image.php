@@ -77,7 +77,7 @@ class WAPT_ImageSettings extends WAPT_Page
         $this->capabilitiy = 'manage_options';
         $this->template_name = 'settings';
 
-        add_action('wbcr_factory_forms_460_register_controls', function () {
+        add_action('wbcr_factory_forms_463_register_controls', function () {
             $colorControls = [
                 [
                     'type' => 'wapt-color',
@@ -111,7 +111,7 @@ class WAPT_ImageSettings extends WAPT_Page
      *
      * @return void
      * @since 3.8.1
-     * @see   Wbcr_FactoryPages463_AdminPage
+     * @see   Wbcr_FactoryPages466_AdminPage
      */
     public function assets($scripts, $styles)
     {

@@ -3,7 +3,7 @@
 Plugin Name: Auto Featured Image (Auto Post Thumbnail)
 Plugin URI: https://cm-wp.com/apt
 Description: Automatically generate the Featured Image from the first image in post or any custom post type only if Featured Image is not set manually. Featured Image Generation From Title. Native image search for Elementor, Gutenberg, Classic Editor.
-Version: 3.9.17
+Version: 3.9.18
 Author: Creative Motion <support@cm-wp.com>
 Author URI: https://cm-wp.com
 Text Domain: apt
@@ -89,19 +89,19 @@ $plugin_info = [
 	],
 
 	'load_factory_modules' => [
-		[ 'libs/factory/bootstrap', 'factory_bootstrap_464', 'admin' ],
-		[ 'libs/factory/forms', 'factory_forms_460', 'admin' ],
-		[ 'libs/factory/pages', 'factory_pages_463', 'admin' ],
-		[ 'libs/factory/templates', 'factory_templates_113', 'admin' ],
-		[ 'libs/factory/freemius', 'factory_freemius_150', 'all' ],
-		[ 'libs/factory/adverts', 'factory_adverts_140', 'admin' ],
-		[ 'libs/factory/feedback', 'factory_feedback_121', 'admin' ],
-		[ 'libs/factory/logger', 'factory_logger_127', 'all' ],
+		[ 'libs/factory/bootstrap', 'factory_bootstrap_467', 'admin' ],
+		[ 'libs/factory/forms', 'factory_forms_463', 'admin' ],
+		[ 'libs/factory/pages', 'factory_pages_466', 'admin' ],
+		[ 'libs/factory/templates', 'factory_templates_116', 'admin' ],
+		[ 'libs/factory/freemius', 'factory_freemius_154', 'all' ],
+		[ 'libs/factory/adverts', 'factory_adverts_143', 'admin' ],
+		[ 'libs/factory/feedback', 'factory_feedback_122', 'admin' ],
+		[ 'libs/factory/logger', 'factory_logger_130', 'all' ],
 		[ 'libs/factory/processing', 'factory_processing_104', 'all' ],
 	],
 ];
 
-$wapt_compatibility = new Wbcr_Factory463_Requirements( __FILE__, array_merge( $plugin_info, [
+$wapt_compatibility = new Wbcr_Factory466_Requirements( __FILE__, array_merge( $plugin_info, [
 			'plugin_already_activate' => defined( 'WAPT_PLUGIN_ACTIVE' ),
 			'required_php_version'    => '7.0',
 			'required_wp_version'     => '4.8.0',

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Auto Featured Image\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-07 12:30+0000\n"
+"POT-Creation-Date: 2023-03-30 07:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,18 +15,11 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.2.0; wp-4.9.8"
 
-#: admin/views/tab-license.php:134
-#, php-format
-msgid ""
-"<a href=\"%s\" target=\"_blank\" rel=\"noopener\">Lean more</a> about the "
-"premium version and get the license key to activate it now!"
-msgstr ""
-
-#: admin/pages/about.php:61
+#: admin/pages/about.php:62
 msgid "About"
 msgstr ""
 
-#: admin/pages/about.php:60
+#: admin/pages/about.php:61
 msgid "About APT"
 msgstr ""
 
@@ -35,48 +28,52 @@ msgstr ""
 msgid "Activate %s"
 msgstr ""
 
-#: admin/views/tab-license.php:84
+#: admin/views/tab-license.php:87
 msgid "active sites"
 msgstr ""
 
-#: admin/pages/settings.php:128
+#: admin/pages/settings.php:138
+msgid "Add featured image on a schedule"
+msgstr ""
+
+#: admin/pages/settings.php:129
 msgid "Add featured image when saving a post"
 msgstr ""
 
-#: includes/class-plugin.php:263
+#: includes/class-plugin.php:266
 msgid "Add from APT"
 msgstr ""
 
-#: admin/pages/image.php:419
+#: admin/pages/image.php:446
 msgid "Addition of text"
 msgstr ""
 
-#: admin/pages/image.php:437
+#: admin/pages/image.php:464
 msgid "Additional string after text. For a line break, use <b>[br]</b>"
 msgstr ""
 
-#: admin/pages/image.php:427
+#: admin/pages/image.php:454
 msgid "Additional string before text. For a line break, use <b>[br]</b>"
 msgstr ""
 
-#: admin/pages/image.php:355
+#: admin/pages/image.php:382
 msgid "Alignment"
 msgstr ""
 
-#: admin/pages/generate.php:143
+#: admin/pages/generate.php:146
 msgid "All done! Processed posts: "
 msgstr ""
 
-#: admin/pages/settings.php:224
+#: admin/pages/settings.php:261
 msgid "API key for Google"
 msgstr ""
 
-#: admin/views/sources/google.php:130
+#: admin/views/sources/google.php:119
 msgid "API key is missing. Add it in APT settings"
 msgstr ""
 
-#: auto-post-thumbnail.php:42 includes/class-plugin.php:351
-#: admin/pages/generate.php:108
+#: auto-post-thumbnail.php:42 includes/class-plugin.php:361
+#: admin/pages/generate.php:112
 msgid "Auto Featured Image"
 msgstr ""
 
@@ -84,15 +81,19 @@ msgstr ""
 msgid "Auto Featured Image (Auto Post Thumbnail)"
 msgstr ""
 
-#: includes/class-plugin.php:263
+#: includes/class-plugin.php:266
 msgid "Auto Featured Images"
 msgstr ""
 
-#: admin/pages/settings.php:184
+#: admin/pages/settings.php:221
 msgid "Auto images import"
 msgstr ""
 
-#: admin/pages/settings.php:130
+#: admin/pages/settings.php:140
+msgid "Automatically add featured image according to a CRON schedule"
+msgstr ""
+
+#: admin/pages/settings.php:131
 msgid "Automatically add featured image when saving a post"
 msgstr ""
 
@@ -104,71 +105,83 @@ msgid ""
 "Classic Editor."
 msgstr ""
 
-#: admin/pages/image.php:203
+#: admin/pages/image.php:219
 msgid "Background color for the image"
 msgstr ""
 
-#: admin/pages/image.php:213
+#: admin/pages/image.php:229
 msgid "Background image"
 msgstr ""
 
-#: admin/pages/image.php:182
+#: admin/pages/image.php:198
 msgid "Background settings"
 msgstr ""
 
-#: admin/pages/image.php:194
+#: admin/pages/image.php:210
 msgid "Background type"
 msgstr ""
 
-#: admin/pages/settings.php:121
+#: admin/pages/settings.php:122
 msgid "Basic plugin settings"
 msgstr ""
 
-#: admin/pages/image.php:380
+#: admin/pages/image.php:407
 msgid "Bottom"
 msgstr ""
 
-#: admin/views/tab-license.php:138
-#, php-format
-msgid ""
-"Can’t find your key? Go to <a href=\"%s\" target=\"_blank\" rel=\"noopener\">"
-"this page</a> and login using the e-mail address associated with your "
-"purchase."
-msgstr ""
-
-#: admin/pages/image.php:364 admin/pages/image.php:379
+#: admin/pages/image.php:391 admin/pages/image.php:406
 msgid "Center"
 msgstr ""
 
-#: includes/class-apt.php:810 includes/class-plugin.php:195
+#: includes/class-apt.php:895 includes/class-plugin.php:197
 msgid "Change featured image"
 msgstr ""
 
-#: admin/pages/image.php:336
+#: admin/views/tab-generate.php:151
+msgid "Change method in the settings"
+msgstr ""
+
+#: admin/pages/image.php:363
 msgid "chars"
 msgstr ""
 
-#: admin/pages/image.php:190
+#: admin/pages/image.php:242
+msgid "Choose a default image for posts. JPG or PNG only."
+msgstr ""
+
+#: includes/class-apt.php:864
+msgid "Choose featured image"
+msgstr ""
+
+#: admin/pages/image.php:206
 msgid "Color"
 msgstr ""
 
-#: admin/views/sources/google.php:111
+#: admin/views/sources/google.php:98
 msgid "Commercial and derived use"
+msgstr ""
+
+#: admin/pages/settings.php:295
+msgid "Create from the title on a colored background"
 msgstr ""
 
 #. Author of the plugin
 msgid "Creative Motion <support@cm-wp.com>"
 msgstr ""
 
-#: admin/views/tab-license.php:105
+#: admin/views/tab-license.php:108
 msgid "day(s)"
 msgstr ""
 
-#: admin/pages/generate.php:146
+#: admin/pages/image.php:241
+msgid "Default image"
+msgstr ""
+
+#: admin/pages/generate.php:149
 msgid "Delete featured image in posts: "
 msgstr ""
 
-#: admin/views/tab-generate.php:149
+#: admin/views/tab-generate.php:169
 msgid "Delete Featured images"
 msgstr ""
 
@@ -176,59 +189,77 @@ msgstr ""
 msgid "Delete Key"
 msgstr ""
 
-#: admin/pages/settings.php:169 admin/pages/settings.php:171
+#: admin/pages/settings.php:206 admin/pages/settings.php:208
 msgid "Delete settings when removing the plugin"
 msgstr ""
 
-#: admin/views/tab-license.php:72
+#: admin/views/tab-license.php:75
 msgid "domain"
 msgstr ""
 
-#: includes/class.generate-result.php:71
+#: includes/class.generate-result.php:75
 msgid "Done"
 msgstr ""
 
-#: admin/views/tab-license.php:94
+#: admin/views/tab-license.php:97
 msgid "EXPIRED!"
 msgstr ""
 
-#: includes/class-plugin.php:448
+#: includes/class-plugin.php:452
 msgid "Featured Image"
 msgstr ""
 
-#: admin/pages/settings.php:145
-msgid "Featured image"
+#: admin/pages/settings.php:300
+msgid ""
+"Find an image in the post text, if it is not present, generate it from the "
+"title"
 msgstr ""
 
-#: includes/class.generate-result.php:50 admin/pages/settings.php:138
+#: admin/pages/settings.php:310
+msgid ""
+"Find an image in the post text, if it is not present, search for an image by "
+"title of the post in Google"
+msgstr ""
+
+#: admin/pages/settings.php:315
+msgid ""
+"Find an image in the post text, if it is not present, use default image for "
+"posts"
+msgstr ""
+
+#: includes/class.generate-result.php:53 admin/pages/settings.php:288
 msgid "Find in post"
 msgstr ""
 
-#: includes/class.generate-result.php:52 admin/pages/settings.php:140
+#: includes/class.generate-result.php:55 admin/pages/settings.php:298
 msgid "Find or generate"
 msgstr ""
 
-#: includes/class.generate-result.php:54 admin/pages/settings.php:142
+#: includes/class.generate-result.php:57 admin/pages/settings.php:308
 msgid "Find or Google"
 msgstr ""
 
-#: admin/pages/image.php:284
+#: includes/class.generate-result.php:58 admin/pages/settings.php:313
+msgid "Find or use default image"
+msgstr ""
+
+#: admin/pages/image.php:311
 msgid "Font color"
 msgstr ""
 
-#: admin/pages/image.php:265
+#: admin/pages/image.php:292
 msgid "Font name"
 msgstr ""
 
-#: admin/pages/image.php:257
+#: admin/pages/image.php:284
 msgid "Font settings"
 msgstr ""
 
-#: admin/pages/image.php:277
+#: admin/pages/image.php:304
 msgid "Font size"
 msgstr ""
 
-#: admin/pages/settings.php:121
+#: admin/pages/settings.php:122
 msgid "General"
 msgstr ""
 
@@ -236,83 +267,80 @@ msgstr ""
 msgid "General settings"
 msgstr ""
 
-#: includes/class-plugin.php:503
+#: includes/class-plugin.php:514
 msgid "Generate"
 msgstr ""
 
-#: includes/class-plugin.php:371
+#: includes/class-plugin.php:380
 msgid "Generate featured image"
 msgstr ""
 
-#: admin/views/tab-generate.php:144
+#: admin/views/tab-generate.php:164
 msgid "Generate Featured images"
 msgstr ""
 
-#: admin/pages/settings.php:161
+#: admin/pages/settings.php:198
 msgid "Generate for post types"
 msgstr ""
 
-#: includes/class.generate-result.php:51 admin/pages/settings.php:139
+#: includes/class.generate-result.php:54 admin/pages/settings.php:293
 msgid "Generate from title"
 msgstr ""
 
-#: admin/pages/generate.php:110 admin/pages/generate.php:111
-#: admin/pages/generate.php:112
+#: admin/pages/generate.php:114 admin/pages/generate.php:115
+#: admin/pages/generate.php:116
 msgid "Generate images"
 msgstr ""
 
-#: admin/views/tab-generate.php:170
+#: admin/views/tab-generate.php:189
 msgid "Generation log"
 msgstr ""
 
-#: admin/views/tab-generate.php:171
+#: admin/views/tab-generate.php:190
 msgid "Generation log shows the last 100 generated images."
 msgstr ""
 
-#: admin/views/tab-generate.php:180
+#: admin/pages/settings.php:187 admin/views/tab-generate.php:144
+msgid "Generation method"
+msgstr ""
+
+#: admin/views/tab-generate.php:199
 msgid "Generation type"
 msgstr ""
 
-#: includes/class.generate-result.php:53 admin/pages/settings.php:141
+#: includes/class.generate-result.php:56 admin/pages/settings.php:303
 msgid "Google"
 msgstr ""
 
-#: admin/pages/settings.php:205 admin/pages/settings.php:211
+#: admin/pages/settings.php:242 admin/pages/settings.php:248
 msgid "Google API"
 msgstr ""
 
-#: admin/pages/settings.php:232
+#: admin/pages/settings.php:269
 msgid "Google Custom Search Engine ID"
 msgstr ""
 
-#: admin/views/tab-license.php:120
+#: admin/views/tab-license.php:123
 msgid "Have a key to activate the plugin? Paste it here:"
 msgstr ""
 
-#: admin/views/tab-license.php:118
+#: admin/views/tab-license.php:121
 msgid "Have a key to activate the premium version? Paste it here:"
 msgstr ""
 
-#: admin/pages/image.php:368
+#: admin/pages/image.php:395
 msgid "Horizontal text alignment"
 msgstr ""
 
-#: admin/pages/settings.php:146
-msgid ""
-"How to generate featured image:\n"
-"\t\t\t\t\t\t\t<br> <b>Find in post:</b> search for the first image in the "
-"post text\n"
-"\t\t\t\t\t\t\t<br> <b>Generate from title:</b> created from the title on a "
-"colored background\n"
-"\t\t\t\t\t\t\t<br> <b>Find or generate:</b> find an image in the post text, "
-"if it is not present, generate it from the title\n"
-"\t\t\t\t\t\t\t<br> <b>Google:</b> search for an image by title of the post "
-"in Google\n"
-"\t\t\t\t\t\t\t<br> <b>Find or Google:</b> find an image in the post text, if "
-"it is not present, search for an image by title of the post in Google"
+#: admin/pages/settings.php:178
+msgid "How often to run image generation"
 msgstr ""
 
-#: admin/pages/settings.php:211
+#: admin/pages/settings.php:188
+msgid "How to generate featured image"
+msgstr ""
+
+#: admin/pages/settings.php:248
 msgid "How to get google api key & custom search engine id"
 msgstr ""
 
@@ -324,62 +352,66 @@ msgstr ""
 msgid "https://cm-wp.com/apt"
 msgstr ""
 
-#: includes/class-plugin.php:324 admin/pages/image.php:74
-#: admin/pages/image.php:191
+#: includes/class-plugin.php:335 admin/pages/image.php:76
+#: admin/pages/image.php:207
 msgid "Image"
 msgstr ""
 
-#: admin/pages/image.php:229
+#: admin/pages/image.php:257
 msgid "Image format"
 msgstr ""
 
-#: admin/pages/image.php:73
+#: admin/pages/settings.php:154
+msgid "Image generation schedule"
+msgstr ""
+
+#: admin/pages/image.php:75
 msgid "Image generation settings"
 msgstr ""
 
-#: admin/views/tab-generate.php:179
+#: admin/views/tab-generate.php:198
 msgid "Image size"
 msgstr ""
 
-#: admin/pages/image.php:249
+#: admin/pages/image.php:277
 msgid "Image size: height"
 msgstr ""
 
-#: admin/pages/image.php:239
+#: admin/pages/image.php:267
 msgid "Image size: width"
 msgstr ""
 
-#: admin/pages/settings.php:177
+#: admin/pages/settings.php:214
 msgid "Images import settings"
 msgstr ""
 
-#: admin/pages/settings.php:177
+#: admin/pages/settings.php:214
 msgid "Import"
 msgstr ""
 
-#: admin/pages/settings.php:196
+#: admin/pages/settings.php:233
 msgid "Import for post types"
 msgstr ""
 
-#: admin/pages/settings.php:186
+#: admin/pages/settings.php:223
 msgid ""
 "Import post images to the media library and replacing them in the text when "
 "saving the post"
 msgstr ""
 
-#: admin/pages/image.php:225
+#: admin/pages/image.php:253
 msgid "JPEG"
 msgstr ""
 
-#: admin/pages/image.php:363
+#: admin/pages/image.php:390
 msgid "Left"
 msgstr ""
 
-#: admin/pages/image.php:411
+#: admin/pages/image.php:438
 msgid "Left/right text padding"
 msgstr ""
 
-#: admin/pages/license.php:96
+#: admin/pages/license.php:97
 msgid "License"
 msgstr ""
 
@@ -389,7 +421,7 @@ msgid ""
 "long)"
 msgstr ""
 
-#: admin/pages/license.php:97
+#: admin/pages/license.php:98
 msgid "License of APT"
 msgstr ""
 
@@ -397,19 +429,19 @@ msgstr ""
 msgid "Licensing action not passed or this action is prohibited!"
 msgstr ""
 
-#: admin/pages/image.php:348
+#: admin/pages/image.php:375
 msgid "Line spacing"
 msgstr ""
 
-#: admin/pages/log.php:90
+#: admin/pages/log.php:91
 msgid "Logs"
 msgstr ""
 
-#: admin/pages/image.php:325
+#: admin/pages/image.php:352
 msgid "Lowercase"
 msgstr ""
 
-#: admin/views/sources/google.php:122
+#: admin/views/sources/google.php:111
 msgid "Next"
 msgstr ""
 
@@ -417,181 +449,204 @@ msgstr ""
 msgid "No hits"
 msgstr ""
 
-#: includes/class-apt.php:807
+#: includes/class-apt.php:892
 msgid "No image"
 msgstr ""
 
-#: includes/class-apt.php:536
+#: includes/class-apt.php:597
 msgid "No images found or generated"
 msgstr ""
 
-#: admin/pages/image.php:323
+#: admin/pages/image.php:350
 msgid "No transform"
 msgstr ""
 
-#: admin/views/tab-generate.php:165
-msgid ""
-"Note: Thumbnails won't be generated for posts that already have post "
-"thumbnail or <strong><em>skip_post_thumb</em></strong> custom meta field."
-msgstr ""
-
-#: admin/views/tab-license.php:82
+#: admin/views/tab-license.php:85
 msgid "of"
 msgstr ""
 
-#: admin/views/tab-generate.php:27
+#: admin/views/tab-generate.php:29
 msgid "of your posts have a featured image"
 msgstr ""
 
-#: admin/pages/image.php:391
+#: admin/pages/settings.php:161
+msgid "Once a day"
+msgstr ""
+
+#: admin/pages/settings.php:173
+msgid "Once a month"
+msgstr ""
+
+#: admin/pages/settings.php:169
+msgid "Once a week"
+msgstr ""
+
+#: admin/pages/settings.php:157
+msgid "Once an hour"
+msgstr ""
+
+#: admin/pages/image.php:418
 msgid "Padding"
 msgstr ""
 
-#: admin/pages/image.php:412
+#: admin/pages/image.php:439
 msgid "Padding at the left and right of the text"
 msgstr ""
 
-#: admin/pages/image.php:401
+#: admin/pages/image.php:428
 msgid "Padding at the top and bottom of the text"
 msgstr ""
 
-#: admin/views/tab-generate.php:80
+#: admin/views/tab-generate.php:84
 msgid "Pages"
 msgstr ""
 
-#: admin/views/tab-license.php:76
+#: admin/views/tab-license.php:79
 msgid "plan"
 msgstr ""
 
-#: admin/views/tab-license.php:95
+#: admin/views/tab-license.php:98
 msgid "please update the key"
 msgstr ""
 
-#: admin/pages/log.php:78
+#: admin/pages/log.php:79
 msgid "Plugin logs"
 msgstr ""
 
-#: admin/pages/image.php:226
+#: admin/pages/image.php:254
 msgid "PNG"
 msgstr ""
 
-#: admin/pages/image.php:131
+#: admin/pages/image.php:146
 msgid "Post thumbnail preview"
 msgstr ""
 
-#: admin/views/tab-generate.php:178
+#: admin/views/tab-generate.php:197
 msgid "Post title"
 msgstr ""
 
-#: admin/views/tab-generate.php:75
+#: admin/views/tab-generate.php:79
 msgid "Post type"
 msgstr ""
 
-#: admin/views/tab-generate.php:79
+#: admin/views/tab-generate.php:83
 msgid "Posts"
 msgstr ""
 
-#: admin/views/sources/google.php:119
+#: admin/views/sources/google.php:108
 msgid "Prev"
 msgstr ""
 
-#: includes/class-plugin.php:418
+#: includes/class-plugin.php:426
 msgid "Processed posts: "
 msgstr ""
 
-#: admin/views/tab-license.php:54
+#: admin/views/tab-license.php:55
 msgid ""
-"Public License is a GPLv2 compatible license allowing you to change and use "
+"Public License is a GPLv3 compatible license allowing you to change and use "
 "this version of the plugin for free. Please keep in mind this license covers "
 "only free edition of the plugin. Premium versions are distributed with other "
 "type of a license."
 msgstr ""
 
-#: admin/pages/image.php:398 admin/pages/image.php:409
+#: admin/pages/image.php:425 admin/pages/image.php:436
 msgid "px"
 msgstr ""
 
-#: admin/views/tab-license.php:107
+#: admin/views/tab-license.php:110
 msgid "remained"
 msgstr ""
 
-#: admin/pages/image.php:365
+#: admin/pages/image.php:392
 msgid "Right"
 msgstr ""
 
-#: admin/views/sources/google.php:106
+#: admin/views/sources/google.php:91
 msgid "Search"
 msgstr ""
 
-#: admin/views/sources/google.php:104
+#: admin/pages/settings.php:305
+msgid "Search for an image by title of the post in Google"
+msgstr ""
+
+#: admin/pages/settings.php:290
+msgid "Search for the first image in the post text"
+msgstr ""
+
+#: admin/views/sources/google.php:89
 msgid "Search..."
 msgstr ""
 
-#: admin/pages/image.php:266
+#: admin/pages/image.php:293
 msgid "Select a font for the text in the featured image"
 msgstr ""
 
-#: admin/pages/image.php:369
+#: admin/pages/image.php:396
 msgid "Select how to horizontally align the text on the image"
 msgstr ""
 
-#: admin/pages/image.php:384
+#: admin/pages/image.php:411
 msgid "Select how to vertically align the text on the image"
 msgstr ""
 
-#: admin/pages/image.php:212
+#: includes/class-apt.php:865 admin/pages/image.php:228
+#: admin/pages/image.php:240
 msgid "Select image"
 msgstr ""
 
-#: admin/pages/image.php:195
+#: admin/pages/image.php:211
 msgid "Select the background type for the featured image"
 msgstr ""
 
-#: admin/pages/image.php:329
+#: admin/pages/image.php:356
 msgid "Select type of text transformation"
 msgstr ""
 
-#: admin/pages/generate.php:144
+#: includes/class-apt.php:869
+msgid "Set featured image from medialibrary"
+msgstr ""
+
+#: admin/pages/generate.php:147
 msgid "Set featured image in posts: "
 msgstr ""
 
-#: admin/pages/image.php:230
+#: admin/pages/image.php:258
 msgid "Set format to save images"
 msgstr ""
 
-#: admin/pages/image.php:250
+#: admin/pages/image.php:278
 msgid "Set height of the image for the featured image"
 msgstr ""
 
-#: admin/pages/image.php:204
+#: admin/pages/image.php:220
 msgid "Set the background color for the featured image"
 msgstr ""
 
-#: admin/pages/image.php:214
+#: admin/pages/image.php:230
 msgid "Set the background image. Only JPG or PNG"
 msgstr ""
 
-#: admin/pages/image.php:285
+#: admin/pages/image.php:312
 msgid "Set the font color for the featured image"
 msgstr ""
 
-#: admin/pages/image.php:278
+#: admin/pages/image.php:305
 msgid "Set the font size for the featured image"
 msgstr ""
 
-#: admin/pages/image.php:349
+#: admin/pages/image.php:376
 msgid "Set the line spacing"
 msgstr ""
 
-#: admin/pages/image.php:339
+#: admin/pages/image.php:366
 msgid "Set the maximum text length"
 msgstr ""
 
-#: admin/pages/image.php:314
+#: admin/pages/image.php:341
 msgid "Set the shadow color for the text"
 msgstr ""
 
-#: admin/pages/image.php:240
+#: admin/pages/image.php:268
 msgid "Set width of the image for the featured image"
 msgstr ""
 
@@ -599,7 +654,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: admin/pages/settings.php:205
+#: admin/pages/settings.php:242
 msgid "Settings connecting to the Google API service"
 msgstr ""
 
@@ -607,27 +662,27 @@ msgstr ""
 msgid "Settings of APT"
 msgstr ""
 
-#: admin/pages/image.php:313
+#: admin/pages/image.php:340
 msgid "Shadow color"
 msgstr ""
 
-#: includes/class-apt.php:1141
+#: includes/class-apt.php:1259
 msgid "Standard"
 msgstr ""
 
-#: admin/views/tab-generate.php:181
+#: admin/views/tab-generate.php:200
 msgid "Status"
 msgstr ""
 
-#: admin/pages/image.php:436
+#: admin/pages/image.php:463
 msgid "String after text"
 msgstr ""
 
-#: admin/pages/image.php:426
+#: admin/pages/image.php:453
 msgid "String before text"
 msgstr ""
 
-#: admin/views/tab-license.php:129
+#: admin/views/tab-license.php:132
 msgid "Submit Key"
 msgstr ""
 
@@ -639,19 +694,19 @@ msgstr ""
 msgid "Synchronization"
 msgstr ""
 
-#: admin/pages/image.php:338
+#: admin/pages/image.php:365
 msgid "Text length"
 msgstr ""
 
-#: admin/pages/image.php:292
+#: admin/pages/image.php:319
 msgid "Text settings"
 msgstr ""
 
-#: admin/pages/image.php:300
+#: admin/pages/image.php:327
 msgid "Text shadow"
 msgstr ""
 
-#: admin/pages/image.php:328
+#: admin/pages/image.php:355
 msgid "Text transform"
 msgstr ""
 
@@ -663,48 +718,48 @@ msgstr ""
 msgid "The license is deactivated"
 msgstr ""
 
-#: includes/class-apt.php:481
+#: includes/class-apt.php:536
 msgid "The post has already been assigned a featured image"
 msgstr ""
 
-#: includes/class-apt.php:473
-msgid "The post type is not allowed for generation in settings"
-msgstr ""
-
-#: includes/class-apt.php:461
+#: includes/class-apt.php:519
 msgid "The post was not found"
 msgstr ""
 
-#: includes/class-plugin.php:282
+#: includes/class-plugin.php:285
 msgid "This plugin has been automatically deactivated."
 msgstr ""
 
-#: includes/class-apt.php:1110
+#: includes/class-apt.php:1227
 #, php-format
 msgid ""
 "To download images from Google, specify Google API keys in the <a href='%s'>"
 "settings</a>."
 msgstr ""
 
-#: includes/class-plugin.php:428
+#: includes/class-plugin.php:435
 msgid ""
 "To use premium features, update the <b>Auto Featured Image Premium</b> "
 "plugin!"
 msgstr ""
 
-#: admin/pages/image.php:378
+#: admin/pages/image.php:405
 msgid "Top"
 msgstr ""
 
-#: admin/pages/image.php:400
+#: admin/pages/image.php:427
 msgid "Top/bottom text padding"
 msgstr ""
 
-#: includes/class-plugin.php:372
+#: admin/pages/settings.php:165
+msgid "Twice a day"
+msgstr ""
+
+#: includes/class-plugin.php:381
 msgid "Unset featured image"
 msgstr ""
 
-#: admin/pages/generate.php:145
+#: admin/pages/generate.php:148
 msgid "Unset featured image in posts: "
 msgstr ""
 
@@ -712,81 +767,81 @@ msgstr ""
 msgid "Upgrade to Premium"
 msgstr ""
 
-#: includes/class-plugin.php:373
+#: includes/class-plugin.php:382
 msgid "Upload post images"
 msgstr ""
 
-#: includes/class-apt.php:1156
+#: includes/class-apt.php:1280
 msgid "Uploaded"
 msgstr ""
 
-#: admin/pages/image.php:324
+#: admin/pages/image.php:351
 msgid "Uppercase"
 msgstr ""
 
-#: includes/class-plugin.php:194
+#: includes/class-plugin.php:196
 msgid "Use as thumbnail"
 msgstr ""
 
-#: admin/pages/image.php:301
+#: admin/pages/image.php:328
 msgid "Use text shadow?"
 msgstr ""
 
-#: admin/views/tab-license.php:89
+#: admin/views/tab-license.php:92
 msgid "version"
 msgstr ""
 
-#: admin/pages/image.php:383
+#: admin/pages/image.php:410
 msgid "Vertical text alignment"
 msgstr ""
 
-#: admin/pages/settings.php:162
+#: admin/pages/settings.php:199
 msgid "What types of posts to generate images for"
 msgstr ""
 
-#: admin/pages/settings.php:197
+#: admin/pages/settings.php:234
 msgid "What types of posts to import images for"
 msgstr ""
 
-#: includes/class-plugin.php:297
+#: includes/class-plugin.php:308
 #, php-format
 msgid ""
 "What's new in version 3.7.0? Find out from <a href='%s'>the article</a> on "
 "our website."
 msgstr ""
 
-#: admin/views/tab-generate.php:42
+#: admin/views/tab-generate.php:45
 msgid "With featured image"
 msgstr ""
 
-#: includes/class-plugin.php:448
+#: includes/class-plugin.php:452
 msgid "With image"
 msgstr ""
 
-#: includes/class-plugin.php:489 admin/views/tab-generate.php:37
+#: includes/class-plugin.php:500 admin/views/tab-generate.php:39
 msgid "Without featured image"
 msgstr ""
 
-#: includes/class-plugin.php:448
+#: includes/class-plugin.php:452
 msgid "Without image"
 msgstr ""
 
-#: admin/pages/settings.php:233
+#: admin/pages/settings.php:270
 msgid "You can get API key after registration on the site"
 msgstr ""
 
-#: includes/image-search/class-google-images.php:69
+#: includes/image-search/class-google-images.php:80
 msgid "You have reached the limit at the moment. Try again in an 1 hour"
 msgstr ""
 
-#: includes/image-search/class-google-images.php:70
+#: includes/image-search/class-google-images.php:81
 #, php-format
 msgid ""
 "You have reached the limit at the moment. Try again in an 1 hour or <a "
 "href=\"%s\">Upgrade to Premium</a>"
 msgstr ""
 
-#: admin/views/tab-license.php:58
+#: admin/views/tab-license.php:61
 msgid ""
 "You use a paid subscription for the plugin updates. In case you don’t want "
 "to receive paid updates, please, click <a data-action=\"unsubscribe\" "
@@ -802,8 +857,16 @@ msgstr ""
 msgid "Your license has been successfully activated"
 msgstr ""
 
-#: admin/views/tab-license.php:64
+#: admin/views/tab-license.php:67
 msgid ""
 "Your license has expired, please extend the license to get updates and "
 "support."
+msgstr ""
+
+#: admin/views/tab-license.php:57
+msgid ""
+"Сommercial license, only to the premium add-on to this free plugin. You "
+"cannot distribute or modify the premium add-on. But free plugin is a GPLv3 "
+"compatible license allowing you to change and use this version of the plugin "
+"for free."
 msgstr ""
