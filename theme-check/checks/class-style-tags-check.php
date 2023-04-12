@@ -9,6 +9,7 @@
  * Checks if the tags in style.css are valid.
  */
 class Style_Tags_Check implements themecheck {
+
 	/**
 	 * Error messages, warnings and info notices.
 	 *
@@ -87,6 +88,24 @@ class Style_Tags_Check implements themecheck {
 				if ( in_array( strtolower( $tag ), $subject_tags ) ) {
 					$subject_tags_name .= strtolower( $tag ) . ', ';
 					$subject_tags_count++;
+				}
+
+				if ( $tag === 'full-site-editing' ) {
+
+					$theme_name = isset( $_POST['themename'] ) ? wp_unslash( $_POST['themename'] ) : get_stylesheet();
+					$root_dir   = get_theme_root( $theme_name );
+					$theme_dir  = "$root_dir/$theme_name";
+
+					if ( ! file_exists( $theme_dir . '/theme.json' ) || ( ! file_exists( $theme_dir . '/templates/index.html' ) && ! file_exists( $theme_dir . '/block-templates/index.html' ) ) ) {
+						$this->error[] = sprintf(
+							'<span class="tc-lead tc-required">%s</span> %s',
+							__( 'REQUIRED', 'theme-check' ),
+							sprintf(
+								__( 'The tag %s is being  used, please remove it from your style.css header. It is only allowed for Block Theme. ', 'theme-check' ),
+								'<strong>' . $tag . '</strong>'
+							)
+						);
+					}
 				}
 
 				if ( in_array( strtolower( $tag ), $allowed_tags ) ) {
@@ -230,5 +249,4 @@ class Style_Tags_Check implements themecheck {
 		);
 	}
 }
-
 $themechecks[] = new Style_Tags_Check();
