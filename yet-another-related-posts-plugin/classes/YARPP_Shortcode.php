@@ -37,7 +37,8 @@ class YARPP_Shortcode {
 			'yarpp'
 		);
 		$atts = array_map(function( $item ) {
-			$trimmed_value = trim($item);
+			// Sanitize user input.
+			$trimmed_value = trim( esc_attr ($item) );
 			// check for the strings "true" and "false" to mean boolean true and false
 			if ( is_string($trimmed_value) ) {
 				$lower_trimmed_value = strtolower($trimmed_value);
@@ -47,13 +48,25 @@ class YARPP_Shortcode {
 					$trimmed_value = false;
 				}
 			}
-
 			return $trimmed_value;
 		},
 			$atts
 		);
+		
+		// Validate "limit" user input.
+		if ( isset( $atts['limit'] ) && $atts['limit'] ) {
+			// Use user input only if numeric value is passed.
+			if ( filter_var( $atts['limit'], FILTER_VALIDATE_INT) !== false ) {
+				// Variable is an integer.
+				$atts['limit'] = (int) $atts['limit'];
+			} else {
+				unset($atts['limit']);
+			}
+		}
+
 		// Hardcoded the domain name because it should not be editable by the user.
 		$atts['domain'] = 'shortcode';
+
 		$post           = get_post( isset($atts['reference_id']) ? (int) $atts['reference_id'] : null );
 		unset($atts['reference_id']);
 		if ( $post instanceof WP_Post ) {

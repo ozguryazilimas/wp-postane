@@ -504,7 +504,7 @@ class YARPP {
 		if ( ! defined( 'YARPP_BIG_DB' ) ) {
 			define( 'YARPP_BIG_DB', 5000 );
 		}
-		$sql = 'SELECT count(*) FROM ' . $wpdb->posts;
+		$sql = 'SELECT COUNT(*) FROM ' . $wpdb->posts;
 		// Note: count includes drafts, revisions, etc.
 		$posts_count = $wpdb->get_var( $sql );
 		return (int) $posts_count > YARPP_BIG_DB;
@@ -1620,8 +1620,6 @@ class YARPP {
 
 		// Add any extra CSS classes specified (blocks)
 		if ( isset( $extra_css_class ) && $extra_css_class ) {
-			// Escape user input
-			$extra_css_class = esc_attr( $extra_css_class );
 			$output .= " $extra_css_class";
 		}
 

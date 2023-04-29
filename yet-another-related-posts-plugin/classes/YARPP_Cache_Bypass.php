@@ -35,17 +35,35 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 	 */
 	public function where_filter( $arg ) {
 		global $wpdb;
-
+		
 		// modify the where clause to use the related ID list.
 		if ( ! count( $this->related_IDs ) ) {
 			$this->related_IDs = array( 0 );
 		}
 
 		$arg = preg_replace( "!{$wpdb->posts}.ID = \d+!", "{$wpdb->posts}.ID in (" . join( ',', $this->related_IDs ) . ')', $arg );
-
-		// if we have recent set, add an additional condition
+		
+		// if we have recent set, add an additional condition.
 		if ( (bool) $this->args['recent'] ) {
-			$arg .= " and post_date > date_sub(now(), interval {$this->args['recent']}) ";
+			$recent = $this->args['recent'];
+			$recent_parts = explode( ' ', $recent );
+			if ( count( $recent_parts ) === 2 && isset( $recent_parts[0], $recent_parts[1] ) ) {
+				$recent_number = $recent_parts[0];
+				if ( in_array(
+					$recent_parts[1],
+					array_keys(
+						$this->core->recent_units()
+					)
+				) ) {
+					$recent_unit = $recent_parts[1];
+				} else {
+					$recent_unit = 'day';
+				}
+				$arg .= $wpdb->prepare(
+					" AND post_date > date_sub(now(), INTERVAL %d {$recent_unit}) ",
+					$recent_number
+				);
+			}
 		}
 
 		return $arg;
@@ -87,7 +105,7 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 
 	public function limit_filter( $arg ) {
 		global $wpdb;
-		return ( $this->online_limit ) ? " limit {$this->online_limit} " : $arg;
+		return ( $this->online_limit ) ? " LIMIT {$this->online_limit} " : $arg;
 	}
 
 	/**

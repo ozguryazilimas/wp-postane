@@ -34,9 +34,9 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 	public function cache_status() {
 		global $wpdb;
 		return $wpdb->get_var(
-			"select (count(p.ID)-sum(m.meta_value IS NULL))/count(p.ID)
+			"select (COUNT(p.ID)-sum(m.meta_value IS NULL))/COUNT(p.ID)
 			FROM `{$wpdb->posts}` as p
-			LEFT JOIN `{$wpdb->postmeta}` as m ON (p.ID = m.post_id and m.meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "')
+			LEFT JOIN `{$wpdb->postmeta}` AS m ON (p.ID = m.post_id AND m.meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "')
 			WHERE p.post_status = 'publish'"
 		);
 	}
@@ -48,8 +48,8 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 			$wpdb->prepare(
 				"select SQL_CALC_FOUND_ROWS p.ID
 				FROM `{$wpdb->posts}` as p
-				LEFT JOIN `{$wpdb->postmeta}` as m ON (p.ID = m.post_id and m.meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "')
-				WHERE p.post_status = 'publish' and m.meta_value IS NULL
+				LEFT JOIN `{$wpdb->postmeta}` AS m ON (p.ID = m.post_id AND m.meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "')
+				WHERE p.post_status = 'publish' AND m.meta_value IS NULL
 				LIMIT %d OFFSET %d",
 				$limit,
 				$offset
@@ -59,7 +59,7 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 
 	public function stats() {
 		global $wpdb;
-		return wp_list_pluck( $wpdb->get_results( "select num, count(*) as ct from (select 0 + if(meta_value = '" . YARPP_NO_RELATED . "', 0, substring(substring_index(meta_value,':',2),3)) as num from `{$wpdb->postmeta}` where meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "') as t group by num order by num asc", OBJECT_K ), 'ct' );
+		return wp_list_pluck( $wpdb->get_results( "select num, COUNT(*) AS ct FROM (select 0 + IF(meta_value = '" . YARPP_NO_RELATED . "', 0, substring(substring_index(meta_value,':',2),3)) AS num FROM `{$wpdb->postmeta}` WHERE meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "') AS t GROUP BY num ORDER BY num ASC", OBJECT_K ), 'ct' );
 	}
 
 	/**
@@ -76,8 +76,9 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 		// if recent is set, add an additional condition
 		$recent = $this->core->get_option( 'recent' );
 		if ( (bool) $recent ) {
-			$arg .= " and post_date > date_sub(now(), interval {$recent}) ";
+			$arg .= " AND post_date > date_sub(now(), INTERVAL {$recent}) ";
 		}
+
 		return $arg;
 	}
 
@@ -109,7 +110,7 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 
 	public function limit_filter( $arg ) {
 		if ( $this->online_limit ) {
-			return " limit {$this->online_limit} ";
+			return " LIMIT {$this->online_limit} ";
 		}
 		return $arg;
 	}
@@ -255,7 +256,7 @@ class YARPP_Cache_Postmeta extends YARPP_Cache {
 		if ( ! is_null( $related_ID ) ) {
 			return $wpdb->get_col(
 				$wpdb->prepare(
-					"select post_id from `{$wpdb->postmeta}` where meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "' and meta_value regexp 's:2:\"ID\";s:\d+:\"%d\"'",
+					"select post_id FROM `{$wpdb->postmeta}` WHERE meta_key = '" . YARPP_POSTMETA_RELATED_KEY . "' AND meta_value regexp 's:2:\"ID\";s:\d+:\"%d\"'",
 					$reference_ID
 				)
 			);

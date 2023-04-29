@@ -52,7 +52,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 	public function cache_status() {
 		global $wpdb;
 		return $wpdb->get_var(
-			"select (count(p.ID)-sum(c.ID IS NULL))/count(p.ID)
+			"select (COUNT(p.ID)-sum(c.ID IS NULL))/COUNT(p.ID)
 			FROM `{$wpdb->posts}` as p
 			LEFT JOIN `{$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . "` as c ON (p.ID = c.reference_ID)
 			WHERE p.post_status = 'publish' "
@@ -65,8 +65,8 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 			$wpdb->prepare(
 				"select SQL_CALC_FOUND_ROWS p.ID
 				FROM `{$wpdb->posts}` as p
-				LEFT JOIN `{$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . "` as c ON (p.ID = c.reference_ID)
-				WHERE p.post_status = 'publish' and c.ID IS NULL
+				LEFT JOIN `{$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . "` AS c ON (p.ID = c.reference_ID)
+				WHERE p.post_status = 'publish' AND c.ID IS NULL
 				LIMIT %d OFFSET %d",
 				$limit,
 				$offset
@@ -76,7 +76,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 
 	public function stats() {
 		global $wpdb;
-		return wp_list_pluck( $wpdb->get_results( "select num, count(*) as ct from (select 0 + if(id = 0, 0, count(ID)) as num from {$wpdb->prefix}yarpp_related_cache group by reference_ID) as t group by num order by num asc", OBJECT_K ), 'ct' );
+		return wp_list_pluck( $wpdb->get_results( "select num, count(*) AS ct FROM (select 0 + if(id = 0, 0, COUNT(ID)) AS num FROM {$wpdb->prefix}yarpp_related_cache group by reference_ID) AS t GROUP BY num ORDER BY num ASC", OBJECT_K ), 'ct' );
 	}
 
 	public function graph_data( $threshold = 5 ) {
@@ -84,12 +84,12 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 
 		$threshold = absint( $threshold );
 		$results   = $wpdb->get_results(
-			"select pair, sum(score) as score from 
-			((select concat(reference_ID, '-', ID) as pair, score from {$wpdb->prefix}yarpp_related_cache where reference_ID < ID)
+			"select pair, SUM(score) AS score FROM 
+			((SELECT concat(reference_ID, '-', ID) AS pair, score FROM {$wpdb->prefix}yarpp_related_cache WHERE reference_ID < ID)
 			union
-			(select concat(ID, '-', reference_ID) as pair, score from {$wpdb->prefix}yarpp_related_cache where ID < reference_ID)) as t
-			group by pair
-			having sum(score) > {$threshold}"
+			(SELECT concat(ID, '-', reference_ID) AS pair, score FROM {$wpdb->prefix}yarpp_related_cache WHERE ID < reference_ID)) AS t
+			GROUP BY pair
+			HAVING sum(score) > {$threshold}"
 		);
 		return $results;
 	}
@@ -100,7 +100,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 	public function join_filter( $arg ) {
 		global $wpdb;
 		if ( $this->yarpp_time ) {
-			$arg .= " join {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " as yarpp on {$wpdb->posts}.ID = yarpp.ID";
+			$arg .= " JOIN {$wpdb->prefix}" . YARPP_TABLES_RELATED_TABLE . " AS yarpp ON {$wpdb->posts}.ID = yarpp.ID";
 		}
 		return $arg;
 	}
@@ -110,11 +110,11 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 		$threshold = $this->core->get_option( 'threshold' );
 		if ( $this->yarpp_time ) {
 
-			$arg = str_replace( "$wpdb->posts.ID = ", "yarpp.score >= $threshold and yarpp.reference_ID = ", $arg );
+			$arg = str_replace( "$wpdb->posts.ID = ", "yarpp.score >= $threshold AND yarpp.reference_ID = ", $arg );
 
 			$recent = $this->core->get_option( 'recent' );
 			if ( (bool) $recent ) {
-				$arg .= " and post_date > date_sub(now(), interval {$recent}) ";
+				$arg .= " AND post_date > date_sub(now(), INTERVAL {$recent}) ";
 			}
 		}
 		return $arg;
@@ -141,7 +141,7 @@ class YARPP_Cache_Tables extends YARPP_Cache {
 	public function limit_filter( $arg ) {
 		global $wpdb;
 		if ( $this->yarpp_time and $this->online_limit ) {
-			return " limit {$this->online_limit} ";
+			return " LIMIT {$this->online_limit} ";
 		}
 		return $arg;
 	}
