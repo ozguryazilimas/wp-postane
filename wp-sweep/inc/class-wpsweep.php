@@ -37,9 +37,8 @@ class WPSweep {
 	 * @since 1.0.0
 	 *
 	 * @access public
-	 * @param string $plugin_file Main plugin file.
 	 */
-	public function __construct( $plugin_file = '' ) {
+	public function __construct() {
 		// Add Plugin Hooks.
 		add_action( 'plugins_loaded', array( $this, 'add_hooks' ) );
 
@@ -47,8 +46,8 @@ class WPSweep {
 		load_plugin_textdomain( 'wp-sweep' );
 
 		// Plugin Activation/Deactivation.
-		register_activation_hook( $plugin_file, array( $this, 'plugin_activation' ) );
-		register_deactivation_hook( $plugin_file, array( $this, 'plugin_deactivation' ) );
+		register_activation_hook( WP_SWEEP_MAIN_FILE, array( $this, 'plugin_activation' ) );
+		register_deactivation_hook( WP_SWEEP_MAIN_FILE, array( $this, 'plugin_deactivation' ) );
 	}
 
 	/**
@@ -59,10 +58,11 @@ class WPSweep {
 	 * @access public
 	 * @return object The plugin object instance
 	 */
-	public static function get_instance( $plugin_file = '' ) {
+	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self( $plugin_file );
+			self::$instance = new self();
 		}
+
 		return self::$instance;
 	}
 
@@ -152,21 +152,16 @@ class WPSweep {
 	 * @return void
 	 */
 	public function ajax_sweep_details() {
-		if ( ! empty( $_GET['action'] )
-			&& ! empty( $_GET['sweep_name'] )
-			&& ! empty( $_GET['sweep_type'] )
+		// Verify referer and check permissions.
+		if (
+			empty( $_GET['sweep_name'] )
+			|| ! check_admin_referer( 'wp_sweep_details_' . $_GET['sweep_name'] )
+			|| ! current_user_can( 'activate_plugins' )
 		) {
-			// Verify Referer.
-			if ( ! check_admin_referer( 'wp_sweep_details_' . $_GET['sweep_name'] ) ) {
-				wp_send_json_error(
-					array(
-						'error' => __( 'Failed to verify referrer.', 'wp-sweep' ),
-					)
-				);
-			} elseif ( 'sweep_details' === $_GET['action'] ) {
-				wp_send_json_success( $this->details( $_GET['sweep_name'] ) );
-			}
+			wp_send_json_error( array( 'error' => __( 'Invalid AJAX request.', 'wp-sweep' ) ) );
 		}
+
+		wp_send_json_success( $this->details( $_GET['sweep_name'] ) );
 	}
 
 	/**
@@ -178,74 +173,70 @@ class WPSweep {
 	 * @return void
 	 */
 	public function ajax_sweep() {
-		if ( ! empty( $_GET['action'] )
-			&& ! empty( $_GET['sweep_name'] )
-			&& ! empty( $_GET['sweep_type'] )
+		// Verify referer and check permissions.
+		if (
+			empty( $_GET['sweep_name'] )
+			|| empty( $_GET['sweep_type'] )
+			|| ! check_admin_referer( 'wp_sweep_' . $_GET['sweep_name'] )
+			|| ! current_user_can( 'activate_plugins' )
 		) {
-			// Verify Referer.
-			if ( ! check_admin_referer( 'wp_sweep_' . $_GET['sweep_name'] ) ) {
-				wp_send_json_error(
-					array(
-						'error' => __( 'Failed to verify referrer.', 'wp-sweep' ),
-					)
-				);
-			} elseif ( 'sweep' === $_GET['action'] ) {
-				$sweep       = $this->sweep( $_GET['sweep_name'] );
-				$count       = $this->count( $_GET['sweep_name'] );
-				$total_count = $this->total_count( $_GET['sweep_type'] );
-				$total_stats = array();
-				switch ( $_GET['sweep_type'] ) {
-					case 'posts':
-					case 'postmeta':
-						$total_stats = array(
-							'posts'    => $this->total_count( 'posts' ),
-							'postmeta' => $this->total_count( 'postmeta' ),
-						);
-						break;
-					case 'comments':
-					case 'commentmeta':
-						$total_stats = array(
-							'comments'    => $this->total_count( 'comments' ),
-							'commentmeta' => $this->total_count( 'commentmeta' ),
-						);
-						break;
-					case 'users':
-					case 'usermeta':
-						$total_stats = array(
-							'users'    => $this->total_count( 'users' ),
-							'usermeta' => $this->total_count( 'usermeta' ),
-						);
-						break;
-					case 'term_relationships':
-					case 'term_taxonomy':
-					case 'terms':
-					case 'termmeta':
-						$total_stats = array(
-							'term_relationships' => $this->total_count( 'term_relationships' ),
-							'term_taxonomy'      => $this->total_count( 'term_taxonomy' ),
-							'terms'              => $this->total_count( 'terms' ),
-							'termmeta'           => $this->total_count( 'termmeta' ),
-						);
-						break;
-					case 'options':
-						$total_stats = array( 'options' => $this->total_count( 'options' ) );
-						break;
-					case 'tables':
-						$total_stats = array( 'tables' => $this->total_count( 'tables' ) );
-						break;
-				}
-
-				wp_send_json_success(
-					array(
-						'sweep'      => $sweep,
-						'count'      => $count,
-						'total'      => $total_count,
-						'percentage' => $this->format_percentage( $count, $total_count ),
-						'stats'      => $total_stats,
-					)
-				);
-			}
+			wp_send_json_error( array( 'error' => __( 'Invalid AJAX request.', 'wp-sweep' ) ) );
 		}
+
+		$sweep       = $this->sweep( $_GET['sweep_name'] );
+		$count       = $this->count( $_GET['sweep_name'] );
+		$total_count = $this->total_count( $_GET['sweep_type'] );
+		$total_stats = array();
+		switch ( $_GET['sweep_type'] ) {
+			case 'posts':
+			case 'postmeta':
+				$total_stats = array(
+					'posts'    => $this->total_count( 'posts' ),
+					'postmeta' => $this->total_count( 'postmeta' ),
+				);
+				break;
+			case 'comments':
+			case 'commentmeta':
+				$total_stats = array(
+					'comments'    => $this->total_count( 'comments' ),
+					'commentmeta' => $this->total_count( 'commentmeta' ),
+				);
+				break;
+			case 'users':
+			case 'usermeta':
+				$total_stats = array(
+					'users'    => $this->total_count( 'users' ),
+					'usermeta' => $this->total_count( 'usermeta' ),
+				);
+				break;
+			case 'term_relationships':
+			case 'term_taxonomy':
+			case 'terms':
+			case 'termmeta':
+				$total_stats = array(
+					'term_relationships' => $this->total_count( 'term_relationships' ),
+					'term_taxonomy'      => $this->total_count( 'term_taxonomy' ),
+					'terms'              => $this->total_count( 'terms' ),
+					'termmeta'           => $this->total_count( 'termmeta' ),
+				);
+				break;
+			case 'options':
+				$total_stats = array( 'options' => $this->total_count( 'options' ) );
+				break;
+			case 'tables':
+				$total_stats = array( 'tables' => $this->total_count( 'tables' ) );
+				break;
+		}
+
+		wp_send_json_success(
+			array(
+				'sweep'      => $sweep,
+				'count'      => $count,
+				'total'      => $total_count,
+				'percentage' => $this->format_percentage( $count, $total_count ),
+				'stats'      => $total_stats,
+			)
+		);
 	}
 
 	/**
