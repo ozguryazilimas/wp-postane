@@ -103,12 +103,12 @@ class WLCMS_Login extends WLCMS_Previewable
     {
         $logo_css = '#login h1 a, .login h1 a { ';
         if ($login_logo = $this->get_db_setting('login_logo')) {
-            $logo_css .= 'background-image: url(' . $login_logo . ');';
+            $logo_css .= 'background-image: url(' . $login_logo . ')!important;';
         }
 
         $has_width = false;
         if ($logo_width = $this->get_db_setting('logo_width')) {
-            $logo_css .= 'width:' . wlcms_css_metrics($logo_width) . ';';
+            $logo_css .= 'width:' . wlcms_css_metrics($logo_width) . '!important;';
             $has_width = true;
         } else {
             $logo_css .= 'width:auto!important;';
@@ -138,7 +138,7 @@ class WLCMS_Login extends WLCMS_Previewable
 
         if ($retina_login_logo = $this->get_db_setting('retina_login_logo')) {
             $logo_css .= '@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
-                #login h1 a, .login h1 a { background-image: url(' . $retina_login_logo . ');}
+                #login h1 a, .login h1 a { background-image: url(' . $retina_login_logo . ')!important;}
             }';
 
         }
@@ -162,15 +162,15 @@ class WLCMS_Login extends WLCMS_Previewable
         }
 
         if ($background_image = $this->get_db_setting('background_image')) {
-            $body_login .= 'background-image: url(' . $background_image . ');';
+            $body_login .= 'background-image: url(' . $background_image . ')!important;';
         }
 
         if ($background_positions = $this->get_db_setting('background_positions')) {
-            $body_login .= 'background-position:' . $background_positions . ';';
+            $body_login .= 'background-position:' . $background_positions . '!important;';
         }
 
         if ($background_repeat = $this->get_db_setting('background_repeat')) {
-            $body_login .= 'background-repeat:' . $background_repeat . ';';
+            $body_login .= 'background-repeat:' . $background_repeat . '!important;';
         }
 
         $body_login .= '}';

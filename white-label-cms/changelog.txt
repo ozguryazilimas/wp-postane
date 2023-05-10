@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 2.5 =
+* Security Patch: Discontinuing the support for legacy import reported by @Animesh of Automattic
+
 = 2.4 =
 * Improved: Improved Web Accessibility reported by @jflds
 * Minor fixes

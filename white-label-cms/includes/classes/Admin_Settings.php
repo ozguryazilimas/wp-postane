@@ -33,7 +33,8 @@ class WLCMS_Admin_Settings
         $image = $this->get_editor_wp_logo();
         
         wlcms_set_hidden_css('.edit-post-header .edit-post-fullscreen-mode-close svg');
-        wlcms_add_js(' var wlcms_change_back = setInterval(function() {if(jQuery(".edit-post-fullscreen-mode-close svg").length > 0 ){ jQuery(".edit-post-fullscreen-mode-close").html("'. $image .'");}}, 1000);');
+        wlcms_add_js(' var wlcms_change_back = setInterval(function() {if(jQuery(".edit-post-fullscreen-mode-close .wlcms_icon").length == 0 ){ jQuery(".edit-post-fullscreen-mode-close").html("' . $image . '");}if(jQuery(".edit-post-fullscreen-mode-close_site-icon").length > 0){jQuery(".edit-post-fullscreen-mode-close_site-icon").remove();}}, 1000);');
+
     }
 
     private function get_editor_wp_logo() {
@@ -47,18 +48,17 @@ class WLCMS_Admin_Settings
             }elseif($gutenberg_exit_icon == 'custom-icon') {
                 $icon = wlcms_field_setting('gutenberg_exit_custom_icon');
             }else {
-                return '<span class=\"dashicons dashicons-exit\"></span>';
+                return '<span class=\"wlcms_icon dashicons dashicons-exit\"></span>';
             }
 
-            return '<span id=\"wlcms_dashboard_logo\"><img src=\"' . $icon . '\" alt=\"\" /></span>';
+            return '<span id=\"wlcms_dashboard_logo\" class=\"wlcms_icon\"><img src=\"' . $icon . '\" alt=\"\" /></span>';
         }
 
         if($admin_bar_logo) {
-            return '<span id=\"wlcms_dashboard_logo\"><img src=\"' . $admin_bar_logo. '\" alt=\"\" /></span>';
+            return '<span id=\"wlcms_dashboard_logo\" class=\"wlcms_icon\"><img src=\"' . $admin_bar_logo. '\" alt=\"\" /></span>';
         }
 
-        return '<span class=\"dashicons dashicons-exit\"></span>';
-
+        return '<span class=\"wlcms_icon wlcms_dashboard_exitdashicons dashicons-exit\"></span>';
     }
 
     public function remove_admin_bar()
