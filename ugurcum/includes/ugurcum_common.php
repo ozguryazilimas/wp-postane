@@ -263,7 +263,7 @@ function display_new_video_count() {
   $ret = '';
   $video_count_sql = "SELECT count(*) FROM $ugurcum_db_main ";
 
-  if ($user_ID != '') {
+  if ($user_ID != '' && $user_ID != 0) {
     $last_read_time = ugurcum_get_last_read_time();
     $video_count_sql .= "WHERE created_at > '$last_read_time'";
   }
