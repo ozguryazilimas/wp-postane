@@ -99,7 +99,7 @@ function ugurcum_get_media_links_json() {
 function ugurcum_get_media_links() {
   global $wp_query, $wpdb, $user_ID, $ugurcum_db_main;
 
-  if ($user_ID != '') {
+  if ($user_ID != '' && $user_ID != 0) {
     $last_read_time = ugurcum_get_last_read_time();
     $last_read_time_sql = "SELECT '$last_read_time' < um.created_at";
 
