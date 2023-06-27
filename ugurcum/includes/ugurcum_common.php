@@ -265,7 +265,10 @@ function display_new_video_count() {
 
   if ($user_ID != '' && $user_ID != 0) {
     $last_read_time = ugurcum_get_last_read_time();
-    $video_count_sql .= "WHERE created_at > '$last_read_time'";
+
+    if ($last_read_time) {
+      $video_count_sql .= "WHERE created_at > '$last_read_time'";
+    }
   }
 
   $new_video_count = $wpdb->get_var($video_count_sql);
