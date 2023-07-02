@@ -26,7 +26,7 @@ function postane_autocomplete($input) {
   $ret_array = array();
 
   foreach ($results as $res) {
-    $ret_array[] = array(value => $res['display_name']);
+    $ret_array[] = array('value' => $res['display_name']);
   }
 
   return $ret_array;
