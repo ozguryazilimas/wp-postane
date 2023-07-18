@@ -1620,6 +1620,7 @@ class YARPP {
 
 		// Add any extra CSS classes specified (blocks)
 		if ( isset( $extra_css_class ) && $extra_css_class ) {
+			$extra_css_class = esc_attr($extra_css_class);
 			$output .= " $extra_css_class";
 		}
 

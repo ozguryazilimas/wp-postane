@@ -563,7 +563,9 @@ class YARPP_Admin {
 			);
 			wp_localize_script( 'yarpp_options', 'yarpp_messages', $translation_strings );
 
-			wp_enqueue_code_editor(array('type' => 'text/html'));
+			if ( function_exists( 'wp_enqueue_code_editor' ) ) {
+				wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
+			}
 		}
 
 		$metabox_post_types = $this->core->get_option( 'auto_display_post_types' );

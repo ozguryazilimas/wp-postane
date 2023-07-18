@@ -126,7 +126,7 @@ class YARPP_Meta_Box_Display_Web extends YARPP_Meta_Box {
 		echo '<button type="button" id="yarpp-preview-show-code" class="button-secondary">' . __( 'Show Code', 'yet-another-related-posts-plugin' ) . '</button>';
 		echo '</div>';
 		echo '</div>';
-		echo '<div id="yarpp-display-code-preview">';
+		echo '<div id="yarpp-display-code-preview" style="display:none;">';
 		echo '</div>';
 		echo '</div>';
 	}

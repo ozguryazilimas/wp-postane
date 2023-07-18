@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 6.2
-Stable tag: 5.30.3
+Stable tag: 5.30.4
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -562,11 +562,16 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.30.4 (17-July-2023) =
+* [Bugfix](https://www.cve.org/CVERecord?id=CVE-2023-2433): Improves how YARPP function attributes are sanitized to avoid possible security issues
+* [Bugfix](https://wordpress.org/support/topic/wordpress-bug-related-to-yarpp/): Fixes translation bug in fr_FR locale
+* [Bugfix](https://wordpress.org/support/topic/settings-page-does-not-work-3/): Fixes YARPP settings page compatibility with WordPress versions 4.8 and below
+
 = 5.30.3 (28-APRIL-2023) =
-* [Bugfix](https://wpscan.com/vulnerability/b34976b3-54c3-45b7-86a0-387ee0a4b680): Improved how function attributes are sanitized to avoid possible security issues
+* [Bugfix](https://wpscan.com/vulnerability/574f7607-96d8-4ef8-b96c-0425ad7e7690): Improves how function attributes are sanitized to avoid possible security issues
 
 = 5.30.2 (29-January-2023) =
-* [Bugfix](https://wpscan.com/vulnerability/c6cf792b-054c-4d77-bcae-3b700f42130b): Improved how function attributes are sanitized to avoid possible security issues
+* [Bugfix](https://wpscan.com/vulnerability/c6cf792b-054c-4d77-bcae-3b700f42130b): Improves how function attributes are sanitized to avoid possible security issues
 
 = 5.30.1 (08-November-2022) =
 * [Bugfix](https://wordpress.org/support/topic/something-wrong-with-yaarp-plugin-this-morning/): Fixes issue caused by stricter type checks for arithmetic operators in PHP8
@@ -1480,5 +1485,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.30.3 =
+= 5.30.4 =
 We update YARPP regularly so we can keep making it better for you. Update to the latest version for the latest features and improvements. Thank you for using YARPP!

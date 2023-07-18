@@ -1,657 +1,768 @@
+# Translation of Plugins - YARPP &#8211; Yet Another Related Posts Plugin - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - YARPP &#8211; Yet Another Related Posts Plugin - Stable (latest release) package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Yet Another Related Posts Plugin v4.0.3\n"
-"Report-Msgid-Bugs-To: mitcho (Michael 芳貴 Erlewine) <mitcho@mitcho.com>\n"
-"POT-Creation-Date: 2012-12-27 15:30+0100\n"
-"PO-Revision-Date: 2012-12-28 16:32:21+0000\n"
-"Last-Translator: Lionel Chollet <lionel.chollet@gmail.com>\n"
-"Language-Team: Lionel Chollet <lionel.chollet@gmail.com>\n"
+"PO-Revision-Date: 2023-05-03 19:42:24+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-Bookmarks: \n"
-"X-Poedit-SearchPath-0: .:\n"
-"X-Textdomain-Support: yes"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.0-alpha.4\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - YARPP &#8211; Yet Another Related Posts Plugin - Stable (latest release)\n"
 
-#: class-admin.php:67
-#: class-widget.php:7
-#: class-widget.php:72
-#@ yet-another-related-posts-plugin
-msgid "Related Posts (YARPP)"
-msgstr "YARPP (Entrées similaires)"
+#: classes/YARPP_Meta_Box.php:14
+msgid "This advanced option gives you full power to easily customize the look and feel of YARPP. YARPP Custom Templates are written in PHP and saved in your active theme folder. %1$sLearn more about YARPP Custom Templates%2$s."
+msgstr "Cette option avancée vous permet de personnaliser facilement l’aspect et la convivialité de YARPP. Les modèles personnalisés de YARPP sont écrits en PHP et sauvegardés dans le dossier de votre thème actif. %1$sPour en savoir plus sur les modèles personnalisés de YARPP%2$s."
 
-#: class-admin.php:78
-#@ yet-another-related-posts-plugin
-msgid "Related Posts"
-msgstr "Entrées similaires"
+#: src/js/block.js:273
+msgid "Heading"
+msgstr "Titre"
 
-#: class-admin.php:78
-#@ default
-msgid "Configure"
-msgstr "Configurer"
+#: src/js/block.js:244
+msgid "The ID of the post to use for finding related posts. Defaults to current post."
+msgstr "L’ID de la publication à utiliser pour trouver des publications similaires. Par défaut, il s’agit de la publication actuelle."
 
-#: class-admin.php:97
-#: class-admin.php:126
-#@ yet-another-related-posts-plugin
-msgid "Frequently Asked Questions"
-msgstr "Questions fréquentes (en&nbsp;anglais)"
+#: src/js/block.js:239
+msgid "Reference ID (Optional)"
+msgstr "ID de référence (facultatif)"
 
-#: class-admin.php:102
-#: class-admin.php:138
-#@ yet-another-related-posts-plugin
-msgid "Developing with YARPP"
-msgstr "Coder avec YARPP (en&nbsp;anglais)"
+#: includes/template_metabox.php:12
+msgid "Related Posts:"
+msgstr "Publications similaires :"
 
-#: class-admin.php:107
-#@ yet-another-related-posts-plugin
-msgid "Optional Data Collection"
-msgstr "Envoi de données (facultatif)"
+#: classes/YARPP_Block.php:205 classes/YARPP_Widget.php:122 src/js/block.js:157
+msgid "You may also like"
+msgstr "Vous pourriez également aimer"
 
-#: class-admin.php:143
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "With your permission, YARPP will send information about YARPP's settings, usage, and environment back to a central server at %s."
-msgstr "Si vous le permettez, vos données de configuration, de réglages et d’usage seront transmises à un serveur situé à l’adresse %s."
+#: src/js/block.js:267
+msgid "Theme"
+msgstr "Thème"
 
-#: class-admin.php:144
-#@ yet-another-related-posts-plugin
-msgid "This information will be used to improve YARPP in the future and help decide future development decisions for YARPP."
-msgstr "Ces informations contribueront à l’évolution du code de l’extension YARPP et à l’amélioration des versions futures."
+#: src/js/block.js:253
+msgid "Maximum number of posts"
+msgstr "Nombre maximum d’articles"
 
-#: class-admin.php:145
-#@ yet-another-related-posts-plugin
-msgid "Contributing this data will help make YARPP better for you and for other YARPP users."
-msgstr "Vous contribuerez ainsi à rendre YARPP plus utile et plus performant pour vous-même et pour tous les autres utilisateurs."
+#: src/js/block.js:113
+msgid "posts"
+msgstr "publications"
 
-#: class-admin.php:153
-#@ yet-another-related-posts-plugin
-msgid "If you opt-in, the following information is sent back to YARPP:"
-msgstr "Si vous choisissez d’activer l’option, voici les données qui seront transmises à YARPP:"
+#: src/js/block.js:112
+msgid "you may also"
+msgstr "vous pourriez également"
 
-#: class-admin.php:155
-#@ yet-another-related-posts-plugin
-msgid "In addition, YARPP also loads an invisible pixel image with your YARPP results to know how often YARPP is being used."
-msgstr "En outre, YARPP chargera, avec vos résultats d’entrées similaires, une image d’un pixel, indécelable visuellement, afin d’établir la fréquence d’utilisation de l’extension."
+#: src/js/block.js:111
+msgid "thumbnail"
+msgstr "miniature"
 
-#: class-admin.php:159
-#: options-meta-boxes.php:424
-#@ yet-another-related-posts-plugin
-msgid "Send settings and usage data back to YARPP"
-msgstr "Transmettre réglages et données d’utilisation à YARPP"
+#: src/js/block.js:110
+msgid "similar"
+msgstr "similaire"
 
-#: class-admin.php:159
-#@ yet-another-related-posts-plugin
-msgid "Thank you!"
-msgstr "Merci!"
+#: src/js/block.js:109
+msgid "popular"
+msgstr "populaire"
 
-#: class-admin.php:188
-#@ yet-another-related-posts-plugin
-msgid "<strong>Help make YARPP better</strong> by sending information about YARPP's settings and usage statistics."
-msgstr "<strong>Aidez YARPP à s’améliorer</strong> en transmettant vos données de réglages et vos statistiques d’utilisation."
+#: src/js/block.js:108
+msgid "contextual"
+msgstr "contextuel"
 
-#: class-admin.php:192
-#: options-meta-boxes.php:428
-#@ yet-another-related-posts-plugin
-msgid "Learn More"
-msgstr "En savoir plus"
+#: src/js/block.js:106
+msgid "yet another"
+msgstr "encore un autre"
 
-#: class-admin.php:235
-#@ yet-another-related-posts-plugin
-msgid "Show example code output"
-msgstr "Afficher un exemple du code produit"
+#: src/js/block.js:105
+msgid "yarpp"
+msgstr "yarpp"
 
-#: class-admin.php:264
-#@ yet-another-related-posts-plugin
-msgid "Thank you for installing <span>Yet Another Related Posts Plugin</span>!"
-msgstr "Merci d’avoir installé l’extension <span>YARPP</span>!"
+#: src/js/block.js:98
+msgid "Display related posts by YARPP"
+msgstr "Afficher les publications similaires par YARPP"
 
-#: class-admin.php:265
-#@ yet-another-related-posts-plugin
-msgid "Make sure to visit the <a>Related Posts settings page</a> to customize YARPP."
-msgstr "Pour configurer l’extension, rendez-vous sur <a>la page des réglages YARPP</a>."
+#: src/js/block.js:97
+msgid "Related Posts [YARPP]"
+msgstr "Publications similaires [YARPP]"
 
-#: class-admin.php:311
-#@ default
-msgid "Settings"
-msgstr "Réglages"
+#: includes/yarpp_options.php:65
+msgid "There is a new beta (%s) of Yet Another Related Posts Plugin. You can <a href=\"%s\">download it here</a> at your own risk."
+msgstr "Une nouvelle version beta (%s) de l’extension Yet Another Related Posts Plugin. Vous pouvez <a href=\"%s\">la télécharger ici</a> à vos risques et périls."
 
-#: class-admin.php:337
-#@ yet-another-related-posts-plugin
-msgid "Related entries may be displayed once you save your entry"
-msgstr "Les entrées similaires seront affichées après enregistrement de votre entrée"
+#: includes/yarpp_options.php:47
+msgid "There is a new version of %1$s available.<a href=\"%2$s\" class=\"thickbox\" title=\"%3$s\">View version %4$s details</a>or <a href=\"%5$s\">update automatically</a>."
+msgstr "Une nouvelle version de %1$s est disponible.<a href=\"%2$s\" class=\"thickbox\" title=\"%3$s\">Voir les détaile de la version %4$s</a>ou <a href=\"%5$s\">mettre à jour automatiquement</a>."
 
-#: class-cache.php:530
-#@ yet-another-related-posts-plugin
-msgid "Example post "
-msgstr "Exemple d’entrée "
+#: includes/yarpp_myisam_notice.php:18
+msgid "Titles and bodies still cannot be used as relatedness criteria."
+msgstr "Les titres et le corps de l’article ne peuvent toujours pas être utilisés comme critères de relation."
 
-#: class-core.php:81
-#: class-core.php:91
-#: class-core.php:118
-#: class-core.php:120
-#: class-core.php:452
-#: class-core.php:463
-#: class-core.php:785
-#@ yet-another-related-posts-plugin
-msgid "Related posts:"
-msgstr "Entrées similaires:"
+#: includes/yarpp_myisam_notice.php:12
+msgid "There was an error adding the full-text index to your posts table: %s"
+msgstr "Une erreur s’est produite lors de l’ajout de l’index de texte entier à la table des publications : %s"
 
-#: class-core.php:83
-#: class-core.php:93
-#: class-core.php:454
-#: class-core.php:465
-#: template-metabox.php:30
-#: template-widget.php:13
-#@ yet-another-related-posts-plugin
-msgid "No related posts."
-msgstr "Il n’y a pas d’entrée similaire."
+#: includes/yarpp_myisam_notice.php:9
+msgid "Full-text Index creation did not work!"
+msgstr "La création de l’index plein texte n’a pas fonctionné !"
 
-#: class-core.php:933
-#: class-core.php:1075
-#: options-meta-boxes.php:295
-#: options-meta-boxes.php:356
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "Related posts brought to you by <a href='%s'>Yet Another Related Posts Plugin</a>."
-msgstr "La liste des entrées similaires est établie par le module d’extension <a href='%s' title='WordPress Related Posts Plugin'>YARPP</a>."
+#: includes/yarpp_meta_boxes_hooks.php:75
+msgid "REST API Options"
+msgstr "Options de l’API REST"
 
-#: class-widget.php:92
-#: options-meta-boxes.php:35
-#@ yet-another-related-posts-plugin
-msgid "List"
-msgstr "Liste"
+#: includes/yarpp_meta_boxes_hooks.php:57
+msgid "RSS Feed Options"
+msgstr "Options de flux RSS"
 
-#: class-widget.php:94
-#: options-meta-boxes.php:45
-#@ yet-another-related-posts-plugin
-msgid "Thumbnails"
-msgstr "Vignettes"
+#: includes/yarpp_meta_boxes_hooks.php:36
+msgid "Automatic Display Options"
+msgstr "Afficher automatiquement les options"
 
-#: class-widget.php:96
-#: options-meta-boxes.php:59
-#@ yet-another-related-posts-plugin
-msgid "Custom"
-msgstr "Personnalisé"
+#: includes/yarpp_meta_boxes_hooks.php:24
+msgid "The Algorithm"
+msgstr "L’algorithme"
 
-#: class-widget.php:99
-#@ default
-msgid "Title:"
-msgstr "Titre&nbsp;:"
+#: includes/template_metabox.php:34
+msgid "Refresh"
+msgstr "Actualiser"
 
-#: class-widget.php:101
-#: options-meta-boxes.php:70
-#@ yet-another-related-posts-plugin
-msgid "Template file:"
-msgstr "Fichier-modèle:"
+#: includes/template_metabox.php:34
+msgid "Configure Options"
+msgstr "Configurer les options"
 
-#: class-widget.php:119
-#: options-meta-boxes.php:294
-#: options-meta-boxes.php:356
-#@ yet-another-related-posts-plugin
-msgid "Help promote Yet Another Related Posts Plugin?"
-msgstr "Aider à la promotion de l’extension YARPP?"
+#: includes/template_metabox.php:31
+msgid "No related posts matched."
+msgstr "Aucune publication similaire n’a été trouvée."
 
-#: options-meta-boxes.php:7
-#@ yet-another-related-posts-plugin
-msgid "This advanced option gives you full power to customize how your related posts are displayed. Templates (stored in your theme folder) are written in PHP."
-msgstr "Cette option avancée vous permet de personnaliser la présentation de vos listes d’entrées similaires. Les fichiers-modèles (à placer dans le dossier de votre thème WordPress) sont écrits en PHP."
+#: includes/template_metabox.php:29 includes/template_metabox.php:31
+msgid "Updating the post may change the matches."
+msgstr "La mise à jour de la publication peut modifier les correspondances."
 
-#: options-meta-boxes.php:44
-#@ yet-another-related-posts-plugin
-msgid "This option is disabled because your theme does not support post thumbnails."
-msgstr "Cette option est désactivée car votre thème WordPress ne gère pas les images-vignettes pour les articles."
+#: includes/template_metabox.php:25
+msgid "View"
+msgstr "Voir"
 
-#: options-meta-boxes.php:54
-#@ yet-another-related-posts-plugin
-msgid "This option is disabled because no YARPP templates were found in your theme."
-msgstr "Cette option est désactivée car aucun fichier-modèle YARPP ne se trouve dans votre thème WordPress."
+#: includes/template_metabox.php:25
+msgid "Edit"
+msgstr "Modifier"
 
-#: options-meta-boxes.php:56
-#@ yet-another-related-posts-plugin
-msgid "Would you like to copy some sample templates bundled with YARPP into your theme?"
-msgstr "Souhaitez-vous importer dans votre thème WordPress des fichiers-modèles fournis avec YARPP?"
+#: classes/YARPP_Rest_Api.php:148
+msgid "Invalid ID"
+msgstr "ID invalide"
 
-#: options-meta-boxes.php:56
-#@ yet-another-related-posts-plugin
-msgid "Copy Templates"
-msgstr "Importer des modèles"
+#: classes/YARPP_Rest_Api.php:125
+msgid "The password for the post if it is password protected."
+msgstr "Le mot de passe de la publication si elle est protégée par mot de passe."
 
-#: options-meta-boxes.php:79
-#@ yet-another-related-posts-plugin
-msgid "Author:"
-msgstr "Auteur:"
+#: classes/YARPP_Rest_Api.php:74
+msgid "Sorry, you are not allowed to read this post."
+msgstr "Désolé, vous n’êtes pas autorisé à lire cette publication."
 
-#: options-meta-boxes.php:105
-#: options-meta-boxes.php:123
-#@ yet-another-related-posts-plugin
-msgid "do not consider"
-msgstr "ne pas prendre en compte"
+#: classes/YARPP_Rest_Api.php:58
+msgid "YARPP relatedness score"
+msgstr "Score de relation YARPP"
 
-#: options-meta-boxes.php:106
-#: options-meta-boxes.php:124
-#@ yet-another-related-posts-plugin
-msgid "consider"
-msgstr "prendre en compte"
+#: classes/YARPP_Rest_Api.php:40
+msgid "Unique identifier for the object."
+msgstr "Identifiant unique pour l’objet."
 
-#: options-meta-boxes.php:107
-#: options-meta-boxes.php:125
-#@ yet-another-related-posts-plugin
-msgid "consider with extra weight"
-msgstr "prendre en compte avec plus d’importance"
+#: classes/YARPP_Meta_Box_Relatedness.php:105
+msgid "Please make a database backup before attempting this, and consider adding the indexes manually by running the following queries:"
+msgstr "Veuillez faire une sauvegarde de la base de données avant de tenter cette opération et envisagez d’ajouter les index manuellement en exécutant les requêtes suivantes :"
 
-#: options-meta-boxes.php:108
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "require at least one %s in common"
-msgstr "nécessite d’avoir au moins 1 %s en commun"
+#: classes/YARPP_Meta_Box_Relatedness.php:104
+msgid "You have a large database and so adding them may take several minutes and cause the website to become unresponsive during this time. We recommend performing this action during off-peak hours."
+msgstr "Vous disposez d’une base de données volumineuse et leur ajout peut donc prendre plusieurs minutes et entraîner l’indisponibilité du site web pendant cette période. Nous vous recommandons d’effectuer cette opération en dehors des heures de pointe."
 
-#: options-meta-boxes.php:109
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "require more than one %s in common"
-msgstr "nécessite d’avoir plusieurs %ss en commun"
+#: classes/YARPP_Meta_Box_Relatedness.php:103
+msgid "\"Fulltext indexes\" will improve YARPP’s algorithm but may affect performance."
+msgstr "Les « index plein texte » améliorent l‘algorithme de YARPP mais peuvent affecter les performances."
 
-#: options-meta-boxes.php:131
-#@ yet-another-related-posts-plugin
-msgid "Order results:"
-msgstr "Classement des résultats:"
+#: classes/YARPP_Meta_Box_Relatedness.php:91
+msgid "Enabling comparisons using Titles or Bodies requires adding \"fulltext indexes\" to the posts table."
+msgstr "Pour permettre les comparaisons à l’aide des titres ou des corps de contenu, il faut ajouter des « index plein texte » à la table des publications."
 
-#: options-meta-boxes.php:135
-#@ yet-another-related-posts-plugin
-msgid "score (high relevance to low)"
-msgstr "par similarité (de la plus forte à la plus faible)"
+#: classes/YARPP_Meta_Box_Relatedness.php:78
+msgid "See MySQL %1$sstorage engines%2$s documentation for details on MySQL engines."
+msgstr "Voir la documentation des %1$smoteurs de stockage%2$s MySQL pour plus de détails sur les moteurs MySQL."
 
-#: options-meta-boxes.php:136
-#@ yet-another-related-posts-plugin
-msgid "score (low relevance to high)"
-msgstr "par similarité (de la plus faible à la plus forte)"
+#: classes/YARPP_Meta_Box_Relatedness.php:59
+msgid "Please contact your host about updating MySQL to at latest version %1$s, or run the following SQL code on your MySQL client (eg PHPMyAdmin) or terminal:"
+msgstr "Veuillez contacter votre hébergeur pour mettre à jour MySQL à la dernière version %1$s, ou exécutez le code SQL suivant sur votre client MySQL (ex : PHPMyAdmin) ou sur votre terminal :"
 
-#: options-meta-boxes.php:137
-#@ yet-another-related-posts-plugin
-msgid "date (new to old)"
-msgstr "par date (de la plus récente à la plus ancienne)"
+#: classes/YARPP_Meta_Box_Relatedness.php:48
+msgid "Because full-text indexing is not supported by your current table engine, \"%1$s\", YARPP cannot compare posts based on their Titles or Bodies."
+msgstr "L’indexation plein texte n’étant pas prise en charge par votre moteur de table actuel, \"%1$s\", YARPP ne peut pas comparer les publications sur la base de leur titre ou de leur corps de contenu."
 
-#: options-meta-boxes.php:138
-#@ yet-another-related-posts-plugin
-msgid "date (old to new)"
-msgstr "par date (de la plus ancienne à la plus récente)"
+#. translators: icon to expand
+#: classes/YARPP_Meta_Box_Relatedness.php:38
+#: classes/YARPP_Meta_Box_Relatedness.php:96
+msgid "Show Details %s"
+msgstr "Afficher les détails %s"
 
-#: options-meta-boxes.php:139
-#@ yet-another-related-posts-plugin
-msgid "title (alphabetical)"
-msgstr "par titre (en ordre alphabétique)"
+#: classes/YARPP_Meta_Box_Relatedness.php:32
+msgid "Comparing posts based on Titles or Bodies is currently disabled"
+msgstr "La comparaison des publications basée sur les titres ou les corps des publications est actuellement désactivée."
 
-#: options-meta-boxes.php:140
-#@ yet-another-related-posts-plugin
-msgid "title (reverse alphabetical)"
-msgstr "par titre (en ordre contre-alphabétique)"
+#: classes/YARPP_Meta_Box_Pool.php:41
+msgid "Post types to include:"
+msgstr "Types de publication à inclure :"
 
-#: options-meta-boxes.php:170
-#@ yet-another-related-posts-plugin
-msgid "\"The Pool\" refers to the pool of posts and pages that are candidates for display as related to the current entry."
-msgstr "Le <em>corpus</em> représente l’ensemble des articles et pages pouvant apparaître dans la liste des entrées similaires établie par l’extension YARPP."
+#: classes/YARPP_Meta_Box_Pool.php:10
+msgid "This belongs to a custom taxonomy"
+msgstr "Ceci appartient à une taxonomie personnalisée"
 
-#: options-meta-boxes.php:173
-#@ yet-another-related-posts-plugin
-msgid "Post types considered:"
-msgstr "Types d’entrées à prendre en compte:"
+#: classes/YARPP_Meta_Box_Display_Web.php:118
+msgid "(1200px)"
+msgstr "(1200px)"
 
-#: options-meta-boxes.php:177
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "Disallow by %s:"
-msgstr "%s à ne pas inclure:"
+#: classes/YARPP_Meta_Box_Display_Web.php:118
+msgid "Desktop"
+msgstr "Ordinateur"
 
-#: options-meta-boxes.php:179
-#@ yet-another-related-posts-plugin
-msgid "Show password protected posts?"
-msgstr "Inclure les entrées protégées par mot de passe?"
+#: classes/YARPP_Meta_Box_Display_Web.php:117
+msgid "(768px)"
+msgstr "(768px)"
 
-#: options-meta-boxes.php:190
-#@ yet-another-related-posts-plugin
-msgid "day(s)"
-msgstr "jour(s)"
+#: classes/YARPP_Meta_Box_Display_Web.php:117
+msgid "Tablet"
+msgstr "Tablette"
 
-#: options-meta-boxes.php:191
-#@ yet-another-related-posts-plugin
-msgid "week(s)"
-msgstr "semaine(s)"
+#: classes/YARPP_Meta_Box_Display_Web.php:116
+msgid "(320px)"
+msgstr "(320px)"
 
-#: options-meta-boxes.php:192
-#@ yet-another-related-posts-plugin
+#: classes/YARPP_Meta_Box_Display_Web.php:116
+msgid "Mobile"
+msgstr "Mobile"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:112
+msgid "Preview"
+msgstr "Prévisualisation"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:83
+msgid "New images should continue to automatically get all active thumbnail sizes generated when they are uploaded."
+msgstr "Les nouvelles images devraient continuer à bénéficier automatiquement de toutes les tailles de miniatures actives générées lorsqu’elles sont téléversées."
+
+#: classes/YARPP_Meta_Box_Display_Web.php:83
+msgid "For larger sites, we recommend the %1$s or %2$s to generate missing thumbnail sizes in a batch process."
+msgstr "Pour les sites plus importants, nous recommandons l’utilisation de %1$s ou %2$s pour générer les tailles de miniatures manquantes lors d’un processus par lots."
+
+#: classes/YARPP_Meta_Box_Display_Web.php:83
+msgid "When enabled, missing thumbnail sizes will be  automatically generated on the fly. Doing this type of processing on the fly may not scale well for larger sites."
+msgstr "Lorsque cette option est activée, les tailles de miniatures manquantes sont automatiquement générées à la volée. Ce type de traitement à la volée peut ne pas être adapté aux sites de grande taille."
+
+#: classes/YARPP_Meta_Box_Display_Web.php:83
+msgid "Generate missing thumbnail sizes: "
+msgstr "Générer les tailles de miniatures manquantes : "
+
+#: classes/YARPP_Meta_Box_Display_Web.php:49
+msgid "Display on the front page, category and archive pages"
+msgstr "Afficher sur la page d’accueil, les pages de catégories et d’archives"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:38 classes/YARPP_Meta_Box_Pool.php:52
+msgid "BuddyPress %s"
+msgstr "BuddyPress %s"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:34
+msgid "This combination will always result in no posts displaying on this post type. To enable, in The Pool either include this post type or do not limit results to the same post type."
+msgstr "Cette combinaison aura toujours pour conséquence qu’aucune publication ne s’affichera sur ce type de publication. Pour l’activer, dans le Pool, il faut soit inclure ce type de publication, soit ne pas limiter les résultats au même type de publication."
+
+#: classes/YARPP_Meta_Box_Display_Web.php:34
+msgid "2. limits results to the same post type as the current post"
+msgstr "2. limite les résultats au même type de publication que la publication actuelle"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:34
+msgid "1. does not include this post type"
+msgstr "1. n’inclut pas ce type de publication"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:34
+msgid "This option is disabled because 'The Pool':"
+msgstr "Cette option est désactivée à cause de « The Pool » :"
+
+#: classes/YARPP_Meta_Box_Display_Web.php:21
+msgid "This option automatically displays YARPP right after the content on single entry pages. If this option is off, you will need to manually insert the <code>[yarpp]</code> shortcode, block or  <code>yarpp_related()</code> PHP function into your theme files."
+msgstr "Cette option affiche automatiquement YARPP juste après le contenu sur les pages à entrée unique. Si cette option est inactive, vous devrez insérer manuellement le code court <code>[yarpp]</code>, le bloc ou la fonction PHP <code>yarpp_related()</code> dans les fichiers de votre thème."
+
+#: classes/YARPP_Meta_Box_Display_Web.php:20
+msgid "Automatically display related content on: "
+msgstr "Afficher automatiquement le contenu similaire sur :"
+
+#: classes/YARPP_Meta_Box_Display_Rest_Api.php:14
+msgid "YARPP REST API documentation →"
+msgstr "Documentation de l’API REST de YARPP →"
+
+#: classes/YARPP_Meta_Box_Display_Rest_Api.php:10
+msgid "Cache time (in minutes)"
+msgstr "Durée du cache (en minutes)"
+
+#: classes/YARPP_Meta_Box_Display_Rest_Api.php:8
+msgid "Web browsers will be instructed to cache YARPP REST API results. This can dramatically increase the speed of subsequent YARPP REST API requests, but it also means stale content might be served for the length of the cache time."
+msgstr "Les navigateurs web auront pour instruction de mettre en cache les résultats de l’API REST YARPP. Cela peut augmenter considérablement la vitesse des requêtes ultérieures de l’API REST YARPP, mais cela signifie également qu’un contenu périmé peut être servi pendant la durée de la mise en cache."
+
+#: classes/YARPP_Meta_Box_Display_Rest_Api.php:8
+msgid "Enable in-browser caching?"
+msgstr "Activer la mise en cache dans le navigateur ?"
+
+#: classes/YARPP_Meta_Box_Display_Rest_Api.php:6
+msgid "This option adds related posts to the REST API."
+msgstr "Cette option ajoute les publications similaires à l’API REST."
+
+#: classes/YARPP_Meta_Box_Display_Rest_Api.php:6
+msgid "Display related posts in REST API?"
+msgstr "Afficher les publications similaires dans l’API REST ?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:65
+#: classes/YARPP_Meta_Box_Display_Web.php:107
+msgid "This option will add the code %s These links are greatly appreciated and keeps us motivated."
+msgstr "Cette option ajoutera le code %s. Ces liens sont très appréciés et nous permettent de rester motivés."
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:65
+#: classes/YARPP_Meta_Box_Display_Web.php:107
+msgid "Link to YARPP?"
+msgstr "Lien vers YARPP ?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:39
+#: classes/YARPP_Meta_Box_Display_Web.php:70
+#: classes/YARPP_Meta_Box_Display_Web.php:80
+msgid "Thumbnail Size"
+msgstr "Taille de la miniature"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:12
+#: classes/YARPP_Meta_Box_Display_Web.php:51
+msgid "Maximum number of posts:"
+msgstr "Nombre maximum d’articles :"
+
+#: classes/YARPP_Meta_Box_Contact.php:23
+msgid "YARPP User Group on Facebook"
+msgstr "Groupe Facebook YARPP"
+
+#: classes/YARPP_DB_Options.php:161
+msgid "No error recorded."
+msgstr "Aucune erreur enregistrée."
+
+#: classes/YARPP_Core.php:2186
 msgid "month(s)"
 msgstr "mois"
 
-#: options-meta-boxes.php:198
-#@ yet-another-related-posts-plugin
-msgid "Show only posts from the past NUMBER UNITS"
-msgstr "N’afficher que des entrées publiées depuis moins de NUMBER UNITS"
+#: classes/YARPP_Core.php:2185
+msgid "week(s)"
+msgstr "semaine(s)"
 
-#: options-meta-boxes.php:204
-#@ yet-another-related-posts-plugin
-msgid "\"The Pool\""
-msgstr "Le <em>corpus</em>"
+#: classes/YARPP_Core.php:2184
+msgid "day(s)"
+msgstr "jour(s)"
 
-#: options-meta-boxes.php:210
-#@ yet-another-related-posts-plugin
-msgid "YARPP limits the related posts list by (1) a maximum number and (2) a <em>match threshold</em>."
-msgstr "La liste d’entrées similaires YARPP est déterminée par: 1) un nombre maximum d’entrées; 2) un <em>seuil de similarité</em>."
+#: classes/YARPP_Meta_Box_Display_Feed.php:65
+#: classes/YARPP_Meta_Box_Display_Web.php:107
+msgid "Powered by <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>."
+msgstr "Propulsé par <a href='%s' title='WordPress Related Posts Plugin' target='_blank'>YARPP</a>."
 
-#: options-meta-boxes.php:210
-#@ yet-another-related-posts-plugin
-msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
-msgstr "Plus le seuil de similarité sera élevé, plus la sélection sera restrictive, et les listes d’entrées similaires présenteront, dans l’ensemble, moins d’éléments. La valeur du seuil de similarité, par défaut, est fixée à 5. Faites des essais avec différentes valeurs, afin de déterminer le seuil de similarité le mieux adapté à votre site et à vos entrées."
+#: classes/YARPP_Core.php:1664
+msgid "Powered by <a href='%s' title='WordPress Related Posts' target='_blank'>YARPP</a>."
+msgstr "Propulsé par <a href='%s' title='WordPress Related Posts' target='_blank'>YARPP</a>."
 
-#: options-meta-boxes.php:213
-#@ yet-another-related-posts-plugin
-msgid "Match threshold:"
-msgstr "Seuil de similarité:"
+#. translators: %s: yarpp template name
+#: classes/YARPP_Core.php:735
+msgid "Custom: %s"
+msgstr "Personnalisé : %s"
 
-#: options-meta-boxes.php:214
-#@ yet-another-related-posts-plugin
-msgid "Titles: "
-msgstr "Titres:"
+#: classes/YARPP_Core.php:730
+msgid "Thumbnail"
+msgstr "Miniature"
 
-#: options-meta-boxes.php:215
-#@ yet-another-related-posts-plugin
-msgid "Bodies: "
-msgstr "Contenus:"
+#: classes/YARPP_Core.php:729
+msgid "List"
+msgstr "Liste"
 
-#: options-meta-boxes.php:221
-#@ yet-another-related-posts-plugin
-msgid "Display results from all post types"
-msgstr "Inclure tous les types d’entrée dans les résultats"
+#: classes/YARPP_Admin.php:1047
+msgid "If you would like to tell us more, please leave your email here. We will be in touch (only for product feedback, nothing else)."
+msgstr "Si vous souhaitez nous en dire plus, veuillez laisser votre e-mail ici. Nous vous contacterons (uniquement pour des retours sur les produits, rien d’autre)."
 
-#: options-meta-boxes.php:221
-#@ yet-another-related-posts-plugin
-msgid "When \"display results from all post types\" is off, only posts will be displayed as related to a post, only pages will be displayed as related to a page, etc."
-msgstr "Quand l’option “Inclure tous les types d’entrée dans les résultats” est désactivée, la liste des entrées similaires pour un article contiendra seulement des articles et, pour une page, seulement des pages."
+#: classes/YARPP_Admin.php:1039
+msgid "Have you visited %1$sthe support forum%2$s and %3$sread the FAQs%2$s for help?"
+msgstr "Avez-vous visité le %1$sforum%2$s et %3$slu la FAQ%2$s pour obtenir de l‘aide ?"
 
-#: options-meta-boxes.php:222
-#@ yet-another-related-posts-plugin
-msgid "Show only previous posts?"
-msgstr "Afficher seulement les entrées publiées antérieurement?"
+#: classes/YARPP_Admin.php:1037
+msgid "Thank you!"
+msgstr "Merci !"
 
-#: options-meta-boxes.php:226
-#@ yet-another-related-posts-plugin
-msgid "\"Relatedness\" options"
-msgstr "Réglages de similarité"
+#: classes/YARPP_Admin.php:1036
+msgid "Please wait..."
+msgstr "Veuillez patienter…"
 
-#: options-meta-boxes.php:236
-#@ yet-another-related-posts-plugin
-msgid "Website display code example"
-msgstr "Exemple du code produit pour l’affichage des entrées similaires sur votre site"
+#: classes/YARPP_Admin.php:1035
+msgid "Submit &amp; Deactivate"
+msgstr "Envoyer & désactiver"
 
-#: options-meta-boxes.php:236
-#: options-meta-boxes.php:309
-#@ yet-another-related-posts-plugin
-msgid "(Update options to reload.)"
-msgstr "(Enregistrez les réglages pour actualiser.)"
+#: classes/YARPP_Admin.php:1034
+msgid "Skip &amp; Deactivate"
+msgstr "Passer & désactiver"
 
-#: options-meta-boxes.php:239
-#@ yet-another-related-posts-plugin
-msgid "Automatically display:"
-msgstr "Afficher automatiquement:"
+#: classes/YARPP_Admin.php:1033
+msgid "Cancel"
+msgstr "Annuler"
 
-#: options-meta-boxes.php:240
-#@ yet-another-related-posts-plugin
-msgid "This option automatically displays related posts right after the content on single entry pages. If this option is off, you will need to manually insert <code>related_posts()</code> or variants (<code>related_pages()</code> and <code>related_entries()</code>) into your theme files."
-msgstr "Quand cette option est activée, la liste d’entrées similaires sera affichée automatiquement après le contenu de l’entrée. Si cette option n’est pas activée, vous devrez insérer vous-même le code <code>related_posts()</code> ou ses variantes (<code>related_pages()</code> et <code>related_entries()</code>) dans vos fichiers-modèles."
+#: classes/YARPP_Admin.php:1029
+msgid "Please share anything you think might be helpful. The more we know about your problem, the faster we'll be able to fix it."
+msgstr "Faites-nous part de tout ce qui pourrait vous être utile. Plus nous en saurons sur votre problème, plus nous pourrons le résoudre rapidement."
 
-#: options-meta-boxes.php:250
-#@ yet-another-related-posts-plugin
-msgid "Also display in archives"
-msgstr "Afficher aussi sur les pages d’archives"
+#: classes/YARPP_Admin.php:1025
+msgid "If you would be kind enough, please tell us why you are deactivating the plugin:"
+msgstr "Si vous avez la gentillesse de nous dire pourquoi vous désactivez l’extension, nous vous en remercions :"
 
-#: options-meta-boxes.php:252
-#: options-meta-boxes.php:314
-#@ yet-another-related-posts-plugin
-msgid "Maximum number of related posts:"
-msgstr "Nombre maximal d’entrées similaires:"
+#: classes/YARPP_Admin.php:1024
+msgid "Quick Feedback"
+msgstr "Retour rapide"
 
-#: options-meta-boxes.php:272
-#: options-meta-boxes.php:334
-#@ yet-another-related-posts-plugin
-msgid "Heading:"
-msgstr "Titre:"
+#: classes/YARPP_Admin.php:1015
+msgid "Other"
+msgstr "Autre"
 
-#: options-meta-boxes.php:273
-#: options-meta-boxes.php:335
-#@ yet-another-related-posts-plugin
-msgid "Default image (URL):"
-msgstr "Image par défaut (URL):"
+#: classes/YARPP_Admin.php:1014
+msgid "Temporarily deactivating or troubleshooting"
+msgstr "Désactivation temporaire ou dépannage"
 
-#: options-meta-boxes.php:274
-#: options-meta-boxes.php:289
-#: options-meta-boxes.php:336
-#: options-meta-boxes.php:351
-#@ yet-another-related-posts-plugin
-msgid "Default display if no results:"
-msgstr "Texte à afficher s’il n’y a pas d’entrée similaire:"
+#: classes/YARPP_Admin.php:1013
+msgid "I don't want to signup"
+msgstr "Je ne veux pas m’inscrire"
 
-#: options-meta-boxes.php:281
-#: options-meta-boxes.php:343
-#@ yet-another-related-posts-plugin
-msgid "Before / after related entries:"
-msgstr "Avant / Après la liste <br />des entrées similaires:"
+#: classes/YARPP_Admin.php:1012
+msgid "It's too slow or inefficient"
+msgstr "C’est trop lent ou inefficace"
 
-#: options-meta-boxes.php:281
-#: options-meta-boxes.php:282
-#: options-meta-boxes.php:287
-#: options-meta-boxes.php:343
-#: options-meta-boxes.php:344
-#: options-meta-boxes.php:349
-#@ yet-another-related-posts-plugin
-msgid "For example:"
-msgstr "Par exemple:"
+#: classes/YARPP_Admin.php:1011
+msgid "I couldn't figure out how to do something"
+msgstr "Je n’arrive pas à comprendre comment faire quelque chose"
 
-#: options-meta-boxes.php:281
-#: options-meta-boxes.php:282
-#: options-meta-boxes.php:287
-#: options-meta-boxes.php:343
-#: options-meta-boxes.php:344
-#: options-meta-boxes.php:349
-#@ yet-another-related-posts-plugin
-msgid " or "
-msgstr " ou "
+#: classes/YARPP_Admin.php:1010
+msgid "It's missing a feature I need"
+msgstr "Il manque une fonctionnalité dont j’ai besoin"
 
-#: options-meta-boxes.php:282
-#: options-meta-boxes.php:344
-#@ yet-another-related-posts-plugin
-msgid "Before / after each related entry:"
-msgstr "Avant / Après chaque entrée similaire:"
+#: classes/YARPP_Admin.php:1009
+msgid "I think I found a bug"
+msgstr "Je pense avoir découvert un bogue"
 
-#: options-meta-boxes.php:284
-#: options-meta-boxes.php:346
-#@ yet-another-related-posts-plugin
-msgid "Show excerpt?"
-msgstr "Afficher l’extrait?"
+#: classes/YARPP_Admin.php:643
+msgid "Related posts will be displayed once you save this post"
+msgstr "Les publications similaires seront affichées une fois que vous aurez enregistré cette publication."
 
-#: options-meta-boxes.php:285
-#: options-meta-boxes.php:347
-#@ yet-another-related-posts-plugin
-msgid "Excerpt length (No. of words):"
-msgstr "Taille de l’extrait <br />(nombre de mots):"
+#: classes/YARPP_Admin.php:638
+msgid "If this is unchecked, then YARPP will not automatically insert the related posts at the end of this post."
+msgstr "Si cette case n’est pas cochée, YARPP n’insérera pas automatiquement les publications similaires à la fin de cette publication."
 
-#: options-meta-boxes.php:287
-#: options-meta-boxes.php:349
-#@ yet-another-related-posts-plugin
-msgid "Before / after (excerpt):"
-msgstr "Avant / Après l’extrait:"
+#: classes/YARPP_Admin.php:636
+msgid "Automatically display related content on this post"
+msgstr "Afficher automatiquement le contenu similaire sur cette publication"
 
-#: options-meta-boxes.php:295
-#: options-meta-boxes.php:356
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "This option will add the code %s. Try turning it on, updating your options, and see the code in the code example to the right. These links and donations are greatly appreciated."
-msgstr "Cette option affiche la mention: %s Activez l’option, enregistrez les réglages, et vous verrez la mention apparaître sous l’exemple de code, à droite. Ces liens et vos dons sont grandement appréciés."
+#: classes/YARPP_Admin.php:562
+msgid "Hide Code"
+msgstr "Masquer le code"
 
-#: options-meta-boxes.php:299
-#@ yet-another-related-posts-plugin
-msgid "Display options <small>for your website</small>"
-msgstr "Réglages de présentation <small>pour votre site</small>"
+#: classes/YARPP_Admin.php:561 classes/YARPP_Meta_Box_Display_Web.php:126
+msgid "Show Code"
+msgstr "Afficher le code"
 
-#: options-meta-boxes.php:309
-#@ yet-another-related-posts-plugin
-msgid "RSS display code example"
-msgstr "Exemple du code produit pour l’affichage des entrées similaires dans vos flux RSS"
+#: classes/YARPP_Admin.php:560
+msgid "There is some error. Please refresh the page and try again!"
+msgstr "Il y a une erreur. Veuillez actualiser la page et réessayer !"
 
-#: options-meta-boxes.php:311
-#@ yet-another-related-posts-plugin
-msgid "Display related posts in feeds?"
-msgstr "Afficher les entrées similaires dans les flux RSS?"
+#: classes/YARPP_Admin.php:559
+msgid "You left this page open for too long. Please refresh the page and try again!"
+msgstr "Vous avez laissé cette page ouverte trop longtemps. Veuillez actualiser la page et réessayer !"
 
-#: options-meta-boxes.php:311
-#@ yet-another-related-posts-plugin
-msgid "This option displays related posts at the end of each item in your RSS and Atom feeds. No template changes are needed."
-msgstr "Cette option affiche les entrées similaires sous le texte de l’entrée dans vos flux RSS. Il n’est pas nécessaire de modifier un fichier-modèle."
+#: classes/YARPP_Admin.php:558
+msgid "You are not allowed to do this!"
+msgstr "Vous n’êtes pas autorisé à faire cela."
 
-#: options-meta-boxes.php:312
-#@ yet-another-related-posts-plugin
-msgid "Display related posts in the descriptions?"
-msgstr "Afficher les entrées similaires dans les descriptions?"
+#: classes/YARPP_Admin.php:555
+msgid "Cache cleared successfully!"
+msgstr "Le cache a bien été vidé !"
 
-#: options-meta-boxes.php:312
-#@ yet-another-related-posts-plugin
-msgid "This option displays the related posts in the RSS description fields, not just the content. If your feeds are set up to only display excerpts, however, only the description field is used, so this option is required for any display at all."
-msgstr "Cette option affiche les entrées similaires après l’extrait d’entrée dans vos flux RSS. Si vos flux RSS sont configurés pour n’afficher que les extraits, vous devez activer cette option si vous souhaitez faire apparaître la liste des entrées similaires."
+#: classes/YARPP_Admin.php:554
+msgid "YARPP Cache"
+msgstr "Cache de YARPP"
 
-#: options-meta-boxes.php:360
-#@ yet-another-related-posts-plugin
-msgid "Display options <small>for RSS</small>"
-msgstr "Réglages de présentation <small>pour les flux RSS</small>"
+#: classes/YARPP_Admin.php:553
+msgid "This will clear all of YARPP’s cached related results.<br> Are you sure?"
+msgstr "Ceci effacera tous les résultats similaires de YARPP mis en cache.<br> Confirmez-vous cette action ?"
 
-#: options-meta-boxes.php:368
-#@ yet-another-related-posts-plugin
-msgid "YARPP Forum"
-msgstr "Forum YARPP"
+#: classes/YARPP_Admin.php:257
+msgid "YARPP: Related Posts"
+msgstr "YARPP : Publications similaires"
 
-#: options-meta-boxes.php:369
-#@ yet-another-related-posts-plugin
-msgid "YARPP on Twitter"
-msgstr "YARPP sur Twitter"
+#: classes/YARPP_Admin.php:212
+msgid "Dismiss"
+msgstr "Ignorer"
 
-#: options-meta-boxes.php:370
-#@ yet-another-related-posts-plugin
-msgid "YARPP on the Web"
-msgstr "YARPP sur le web"
+#: classes/YARPP_Admin.php:211
+msgid "I already did"
+msgstr "Je l’ai déjà fait"
 
-#: options-meta-boxes.php:371
-#@ yet-another-related-posts-plugin
-msgid "Review YARPP on WordPress.org"
-msgstr "Avis d’utilisateurs YARPP chez WordPress.org"
+#: classes/YARPP_Admin.php:210
+msgid "No, not good enough"
+msgstr "Non, pas assez bien"
 
-#: options-meta-boxes.php:405
-#@ yet-another-related-posts-plugin
-msgid "Help Improve YARPP"
-msgstr "Aidez YARPP à s’améliorer"
+#: classes/YARPP_Admin.php:209
+msgid "Ok, you deserve it"
+msgstr "Ok, vous le méritez"
 
-#: options-meta-boxes.php:427
-#@ yet-another-related-posts-plugin
-msgid "This is entirely optional, but will help improve future versions of YARPP."
-msgstr "Cette option (facultative) contribuera à l’amélioration des versions futures de YARPP."
+#: classes/YARPP_Admin.php:206
+msgid "Could you please do us a BIG favor and give us a quick 5-star rating on WordPress? It will boost our motivation and spread the word. We would really appreciate it 🤗 — Team YARPP"
+msgstr "Pourriez-vous nous faire une GRANDE faveur et nous donner une note de 5 étoiles sur WordPress ? Cela renforcera notre motivation et connaître l’extension. Nous vous en serions très reconnaissants 🤗 - Équipe YARPP"
 
-#: options-meta-boxes.php:432
-#@ yet-another-related-posts-plugin
-msgid "Contact YARPP"
-msgstr "Restez en contact avec YARPP"
+#: classes/YARPP_Admin.php:206
+msgid "Hey there! We noticed that you have had success using "
+msgstr "Hey ! Nous avons remarqué que vous avez réussi à utiliser "
 
-#: yarpp_options.php:36
-#, php-format
-#@ default
-msgid "There is a new version of %1$s available. <a href=\"%2$s\" class=\"thickbox\" title=\"%3$s\">View version %4$s details</a> or <a href=\"%5$s\">update automatically</a>."
-msgstr "Une nouvelle version de %1$s est disponible. <a href=\"%2$s\" class=\"thickbox\" title=\"%3$s\">Afficher les détails de la version %4$s</a> ou <a href=\"%5$s\">lancer la mise à jour automatique</a>."
+#. Author of the plugin
+#: classes/YARPP_Block.php:241
+msgid "YARPP"
+msgstr "YARPP"
 
-#: yarpp_options.php:40
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "There is a new beta (%s) of Yet Another Related Posts Plugin. You can <a href=\"%s\">download it here</a> at your own risk."
-msgstr "Une nouvelle version beta (%s) du module d’extension YARPP est disponible. Si vous souhaitez l’essayer, vous pouvez <a href=\"%s\">la télécharger ici</a>."
+#. Description of the plugin
+msgid "Adds related posts to your site and in RSS feeds, based on a powerful, customizable algorithm."
+msgstr "Ajoute des publications similaires à votre site et dans les flux RSS, sur la base d’un algorithme puissant et personnalisable."
 
-#: yarpp_options.php:48
-#@ yet-another-related-posts-plugin
-msgid "The MyISAM check has been overridden. You may now use the \"consider titles\" and \"consider bodies\" relatedness criteria."
-msgstr "La vérification MyISAM sera ignorée. Vous pouvez maintenant activer les options “Prendre en compte le titre” et “Prendre en compte le contenu” pour définir le calcul de similarité."
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://yarpp.com/"
+msgstr "https://yarpp.com/"
 
-#: yarpp_options.php:56
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "YARPP's \"consider titles\" and \"consider bodies\" relatedness criteria require your <code>%s</code> table to use the <a href='http://dev.mysql.com/doc/refman/5.0/en/storage-engines.html'>MyISAM storage engine</a>, but the table seems to be using the <code>%s</code> engine. These two options have been disabled."
-msgstr "Les options YARPP “Prendre en compte le titre” et “Prendre en compte le contenu” pour le calcul de similarité requièrent que votre table <code>%s</code> utilise le <a href='http://dev.mysql.com/doc/refman/5.0/en/storage-engines.html'>moteur de classement MyISAM</a>, mais votre table utilise apparemment le moteur <code>%s</code>. Ces deux options ont été désactivées."
+#. Plugin Name of the plugin
+msgid "Yet Another Related Posts Plugin (YARPP)"
+msgstr "Yet Another Related Posts Plugin (YARPP)"
 
-#: yarpp_options.php:58
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "To restore these features, please update your <code>%s</code> table by executing the following SQL directive: <code>ALTER TABLE `%s` ENGINE = MyISAM;</code> . No data will be erased by altering the table's engine, although there are performance implications."
-msgstr "Pour rétablir ces fonctionnalités, mettez à jour votre table <code>%s</code> en exécutant la commande SQL suivante: <code>ALTER TABLE `%s` ENGINE = MyISAM;</code><br />Le changement de moteur de classement n’entraînera pas de perte de données, mais pourra influer sur les performances."
-
-#: yarpp_options.php:60
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "If, despite this check, you are sure that <code>%s</code> is using the MyISAM engine, press this magic button:"
-msgstr "Si, malgré cette vérification, vous êtes certain que <code>%s</code> utilise le moteur MyISAM, cliquez ce bouton magique:"
-
-#: yarpp_options.php:63
-#@ yet-another-related-posts-plugin
-msgid "Trust me. Let me use MyISAM features."
-msgstr "Faites-moi confiance. Laissez-moi utiliser le moteur MyISAM."
-
-#: yarpp_options.php:78
-#@ yet-another-related-posts-plugin
-msgid "The YARPP database had an error but has been fixed."
-msgstr "La base de données YARPP a rencontré une erreur, mais celle-ci a pu être corrigée."
-
-#: yarpp_options.php:80
-#@ yet-another-related-posts-plugin
-msgid "The YARPP database has an error which could not be fixed."
-msgstr "La base de données YARPP a rencontré une erreur qui n’a pas pu être corrigée."
-
-#: yarpp_options.php:81
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "Please try <a href=\"%s\" target=\"_blank\">manual SQL setup</a>."
-msgstr "Essayez <a href=\"%s\" target=\"_blank\">la configuration SQL manuelle</a>."
-
-#: yarpp_options.php:144
-#@ yet-another-related-posts-plugin
+#: includes/yarpp_options.php:178
 msgid "Options saved!"
 msgstr "Réglages enregistrés."
 
-#: yarpp_options.php:150
-#@ yet-another-related-posts-plugin
-msgid "Yet Another Related Posts Plugin Options"
-msgstr "Réglages YARPP"
+#: includes/yarpp_meta_boxes_hooks.php:48
+msgid "Contact YARPP"
+msgstr "Restez en contact avec YARPP"
 
-#: yarpp_options.php:158
-#, php-format
-#@ yet-another-related-posts-plugin
-msgid "by <a href=\"%s\" target=\"_blank\">mitcho (Michael 芳貴 Erlewine)</a>"
-msgstr "par <a href=\"%s\" target=\"_blank\">mitcho (Michael 芳貴 Erlewine)</a>"
+#: includes/yarpp_meta_boxes_hooks.php:15
+msgid "\"The Pool\""
+msgstr "Le <em>corpus</em>"
 
-#: yarpp_options.php:199
-#@ default
-msgid "Save Changes"
-msgstr "Enregistrer les réglages"
+#: includes/template_metabox.php:29
+msgid "Whether all matches are actually displayed and how they are displayed depends on your YARPP display options."
+msgstr "Que tous les correspondances soient effectivement affichées et comment elles sont affichées dépendent de vos options d‘affichage YARPP."
 
-#: template-builtin.php:22
-#, php-format
-#@ yet-another-related-posts-plugin
+#: includes/template_builtin.php:35
 msgid "%f is the YARPP match score between the current entry and this related entry. You are seeing this value because you are logged in to WordPress as an administrator. It is not shown to regular visitors."
 msgstr "%f représente le degré de similarité entre l’entrée considérée et cette entrée similaire. Cette valeur n’est affichée que pour les administrateurs connectés au site; elle n’apparaît pas pour les simples visiteurs."
 
-#: template-metabox.php:12
-#@ yet-another-related-posts-plugin
-msgid "These are the related entries for this entry. Updating this post may change these related posts."
-msgstr "Voici les entrées similaires à cette entrée. Les modifications ultérieures apportées à cette entrée pourront entraîner une modification de la liste des entrées qui lui sont similaires."
+#: classes/YARPP_Meta_Box_Relatedness.php:13
+msgid "Bodies: "
+msgstr "Contenus : "
 
-#: template-metabox.php:28
-#@ yet-another-related-posts-plugin
-msgid "Whether all of these related entries are actually displayed and how they are displayed depends on your YARPP display options."
-msgstr "La composition finale de la liste des entrées similaires ainsi que sa présentation sur votre site dépendent des options d’affichage YARPP que vous aurez choisies."
+#: classes/YARPP_Meta_Box_Relatedness.php:12
+msgid "Titles: "
+msgstr "Titres : "
 
+#: classes/YARPP_Meta_Box_Relatedness.php:10
+msgid "Match threshold:"
+msgstr "Seuil de similarité:"
+
+#: classes/YARPP_Meta_Box_Relatedness.php:7
+msgid "The higher the match threshold, the more restrictive, and you get less related posts overall. The default match threshold is 5. If you want to find an appropriate match threshold, take a look at some post's related posts display and their scores. You can see what kinds of related posts are being picked up and with what kind of match scores, and determine an appropriate threshold for your site."
+msgstr "Plus le seuil de correspondance est élevé, plus il est restrictif et vous obtenez moins de publications similaires au total. Le seuil de correspondance par défaut est de 5. Si vous souhaitez trouver un seuil de correspondance approprié, jetez un coup d‘œil à l‘affichage des publications similaires d‘un article et à leurs scores. Vous pouvez voir quels types de publications similaires sont sélectionnées et avec quels scores de correspondance, et déterminer un seuil approprié pour votre site."
+
+#: classes/YARPP_Meta_Box_Relatedness.php:7
+msgid "YARPP limits the related posts list by (1) a maximum number and (2) a <em>match threshold</em>."
+msgstr "La liste d’entrées similaires YARPP est déterminée par: 1) un nombre maximum d’entrées; 2) un <em>seuil de similarité</em>."
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:53
+#: classes/YARPP_Meta_Box_Display_Web.php:96
+msgid "Before / after (excerpt):"
+msgstr "Avant / Après l’extrait:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:51
+#: classes/YARPP_Meta_Box_Display_Web.php:94
+msgid "Excerpt length (No. of words):"
+msgstr "Taille de l’extrait <br />(nombre de mots):"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:50
+#: classes/YARPP_Meta_Box_Display_Web.php:93
+msgid "Show excerpt?"
+msgstr "Afficher l’extrait ?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:48
+#: classes/YARPP_Meta_Box_Display_Web.php:91
+msgid "Before / after each related entry:"
+msgstr "Avant / Après chaque entrée similaire:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:47
+#: classes/YARPP_Meta_Box_Display_Feed.php:48
+#: classes/YARPP_Meta_Box_Display_Feed.php:53
+#: classes/YARPP_Meta_Box_Display_Web.php:90
+#: classes/YARPP_Meta_Box_Display_Web.php:91
+#: classes/YARPP_Meta_Box_Display_Web.php:96
+msgid " or "
+msgstr " ou "
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:47
+#: classes/YARPP_Meta_Box_Display_Feed.php:48
+#: classes/YARPP_Meta_Box_Display_Feed.php:53
+#: classes/YARPP_Meta_Box_Display_Web.php:90
+#: classes/YARPP_Meta_Box_Display_Web.php:91
+#: classes/YARPP_Meta_Box_Display_Web.php:96
+msgid "For example:"
+msgstr "Par exemple:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:47
+#: classes/YARPP_Meta_Box_Display_Web.php:90
+msgid "Before / after related entries:"
+msgstr "Avant / Après la liste <br />des entrées similaires:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:57
+#: classes/YARPP_Meta_Box_Display_Web.php:100
+msgid "Default display if no results:"
+msgstr "Texte à afficher s’il n’y a pas d’entrée similaire:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:37
+#: classes/YARPP_Meta_Box_Display_Web.php:79
+msgid "Default image (URL):"
+msgstr "Image par défaut (URL):"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:36
+#: classes/YARPP_Meta_Box_Display_Web.php:78
+msgid "Heading:"
+msgstr "Titre:"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:10
+msgid "This option displays the related posts in the RSS description fields, not just the content. If your feeds are set up to only display excerpts, however, only the description field is used, so this option is required for any display at all."
+msgstr "Cette option affiche les entrées similaires après l’extrait d’entrée dans vos flux RSS. Si vos flux RSS sont configurés pour n’afficher que les extraits, vous devez activer cette option si vous souhaitez faire apparaître la liste des entrées similaires."
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:10
+msgid "Display related posts in the descriptions?"
+msgstr "Afficher les entrées similaires dans les descriptions?"
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:9
+msgid "This option displays related posts at the end of each item in your RSS and Atom feeds. No template changes are needed."
+msgstr "Cette option affiche les entrées similaires sous le texte de l’entrée dans vos flux RSS. Il n’est pas nécessaire de modifier un fichier-modèle."
+
+#: classes/YARPP_Meta_Box_Display_Feed.php:9
+msgid "Display related posts in feeds?"
+msgstr "Afficher les entrées similaires dans les flux RSS?"
+
+#: classes/YARPP_Meta_Box_Contact.php:28
+msgid "Review YARPP on WordPress.org"
+msgstr "Avis d’utilisateurs YARPP chez WordPress.org"
+
+#: classes/YARPP_Meta_Box_Contact.php:18
+msgid "YARPP on Twitter"
+msgstr "YARPP sur Twitter"
+
+#: classes/YARPP_Meta_Box_Contact.php:13
+msgid "YARPP Forum"
+msgstr "Forum YARPP"
+
+#: classes/YARPP_Meta_Box.php:113
+msgid "title (reverse alphabetical)"
+msgstr "par titre (en ordre contre-alphabétique)"
+
+#: classes/YARPP_Meta_Box.php:112
+msgid "title (alphabetical)"
+msgstr "par titre (en ordre alphabétique)"
+
+#: classes/YARPP_Meta_Box.php:111
+msgid "date (old to new)"
+msgstr "par date (de la plus ancienne à la plus récente)"
+
+#: classes/YARPP_Meta_Box.php:110
+msgid "date (new to old)"
+msgstr "par date (de la plus récente à la plus ancienne)"
+
+#: classes/YARPP_Meta_Box.php:109
+msgid "score (low relevance to high)"
+msgstr "par similarité (de la plus faible à la plus forte)"
+
+#: classes/YARPP_Meta_Box.php:108
+msgid "score (high relevance to low)"
+msgstr "par similarité (de la plus forte à la plus faible)"
+
+#: classes/YARPP_Meta_Box.php:104
+msgid "Order results:"
+msgstr "Classement des résultats:"
+
+#: classes/YARPP_Meta_Box.php:97
+msgid "consider with extra weight"
+msgstr "prendre en compte avec plus d’importance"
+
+#: classes/YARPP_Meta_Box.php:96
+msgid "consider"
+msgstr "prendre en compte"
+
+#: classes/YARPP_Meta_Box.php:95
+msgid "do not consider"
+msgstr "ne pas prendre en compte"
+
+#: classes/YARPP_Core.php:195 classes/YARPP_Core.php:205
+#: classes/YARPP_Core.php:828 classes/YARPP_Core.php:839
+#: includes/template_widget.php:13
+msgid "No related posts."
+msgstr "Il n’y a pas d’entrée similaire."
+
+#: classes/YARPP_Core.php:193 classes/YARPP_Core.php:203
+#: classes/YARPP_Core.php:233 classes/YARPP_Core.php:235
+#: classes/YARPP_Core.php:826 classes/YARPP_Core.php:837
+#: classes/YARPP_Core.php:1304
+msgid "Related posts:"
+msgstr "Publications similaires :"
+
+#: classes/YARPP_Cache_Demo_Bypass.php:147
+msgid "Example post "
+msgstr "Exemple d’entrée "
+
+#: classes/YARPP_Admin.php:578
+msgid "Settings"
+msgstr "Réglages"
+
+#: classes/YARPP_Admin.php:469
+msgid "Thank you for installing <span>Yet Another Related Posts Plugin</span>!"
+msgstr "Merci d’avoir installé l’extension <span>YARPP</span> !"
+
+#: classes/YARPP_Admin.php:465
+msgid "%1$s updated successfully."
+msgstr "%1$s a été mis à jour avec succès."
+
+#: classes/YARPP_Admin.php:382
+msgid "In addition, YARPP also loads an invisible pixel image with your YARPP results to know how often YARPP is being used."
+msgstr "En outre, YARPP chargera, avec vos résultats d’entrées similaires, une image d’un pixel, indécelable visuellement, afin d’établir la fréquence d’utilisation de l’extension."
+
+#: classes/YARPP_Admin.php:378
+msgid "The following information is sent back to YARPP:"
+msgstr "L'information suivante est envoyée à YARPP&nbsp;:"
+
+#: classes/YARPP_Admin.php:369
+msgid "Contributing this data will help make YARPP better for you and for other YARPP users."
+msgstr "Vous contribuerez ainsi à rendre YARPP plus utile et plus performant pour vous-même et pour tous les autres utilisateurs."
+
+#: classes/YARPP_Admin.php:361
+msgid ""
+"This information will be used to improve YARPP in the future and help decide future development\n"
+"                decisions for YARPP."
+msgstr "Cette information sera utilisée pour l’amélioration de YARPP et aidera à de futurs développements."
+
+#: classes/YARPP_Admin.php:350
+msgid ""
+"With your permission, YARPP will send information about YARPP's settings, usage, and environment\n"
+"                    back to a central server at "
+msgstr ""
+"Avec votre autorisation, YARPP enverra des informations sur les réglages de YARPP, son utilisation et son environnement\n"
+"                    vers un serveur central à"
+
+#: classes/YARPP_Admin.php:304
+msgid "Optional Data Collection"
+msgstr "Envoi de données (facultatif)"
+
+#: classes/YARPP_Admin.php:296 classes/YARPP_Admin.php:341
+msgid "Developing with YARPP"
+msgstr "Coder avec YARPP (en&nbsp;anglais)"
+
+#: classes/YARPP_Admin.php:288 classes/YARPP_Admin.php:325
+msgid "Frequently Asked Questions"
+msgstr "Foire aux questions"
+
+#: src/js/block.js:107
+msgid "related posts"
+msgstr "publications similaires"
