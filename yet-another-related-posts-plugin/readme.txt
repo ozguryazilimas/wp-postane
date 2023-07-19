@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 6.2
-Stable tag: 5.30.4
+Stable tag: 5.30.5
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -562,8 +562,13 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.30.5 (18-July-2023) =
+* [Bugfix](https://wordpress.org/support/topic/bug-report-title-anchor-tag-includes-extra-space-at-tail-end-of-title/): Fixes extra space at tail end of title anchor tag that was appearing for admins in the default template
+* Bugfix: Template preview will now work even if server configuration does not have `allow_url_fopen` on (Thank you Ken @ krdev)
+* [Bugfix](https://wpscan.com/vulnerability/b34976b3-54c3-45b7-86a0-387ee0a4b680): Improves how YARPP function attributes are sanitized to avoid possible security issues
+
 = 5.30.4 (17-July-2023) =
-* [Bugfix](https://www.cve.org/CVERecord?id=CVE-2023-2433): Improves how YARPP function attributes are sanitized to avoid possible security issues
+* [Bugfix](https://wpscan.com/vulnerability/2858b67e-17ac-4a2a-8a46-24367d248454): Improves how YARPP function attributes are sanitized to avoid possible security issues
 * [Bugfix](https://wordpress.org/support/topic/wordpress-bug-related-to-yarpp/): Fixes translation bug in fr_FR locale
 * [Bugfix](https://wordpress.org/support/topic/settings-page-does-not-work-3/): Fixes YARPP settings page compatibility with WordPress versions 4.8 and below
 
@@ -1485,5 +1490,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.30.4 =
+= 5.30.5 =
 We update YARPP regularly so we can keep making it better for you. Update to the latest version for the latest features and improvements. Thank you for using YARPP!

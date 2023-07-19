@@ -851,10 +851,10 @@ class YARPP_Admin {
 
 		$size = isset( $_POST['size'] ) ? sanitize_text_field( $_POST['size'] ) : 'thumbnail';
 
-		$load_styles = file_get_contents( plugins_url( '/style/related.css', YARPP_MAIN_FILE ) );
+		$load_styles = file_get_contents( plugin_dir_path(YARPP_MAIN_FILE) . '/style/related.css' );
 
 		if ( 'thumbnails' === $args['template'] ) {
-			$load_styles .= file_get_contents( plugins_url( '/style/styles_thumbnails.css', YARPP_MAIN_FILE ) );
+			$load_styles .= file_get_contents( plugin_dir_path(YARPP_MAIN_FILE) . '/style/styles_thumbnails.css' );
 		}
 		if ( ! in_array( $args['template'], array( 'builtin', 'list' ), true ) ) {
 			$load_styles .= yarpp_thumbnail_inline_css( yarpp_get_image_sizes( $size ) );

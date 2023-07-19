@@ -1602,11 +1602,17 @@ class YARPP {
 
 		// Add CSS class to identify template.
 		if ( isset( $template ) && $template ) {
+			
 			// Normalize "thumbnail" and "thumbnails" to reference the same inbuilt template
 			if ( $template === 'thumbnail' ) {
 				$template = 'thumbnails';
 			}
 			// Sanitize template name; remove file extension if exists
+			
+			// avoid any monkeying around where someone could try a custom template like a template name like
+			// "yarpp-template-;../../wp-config.php". YARPP custom templates are only supported in the theme's root folder.
+			$template = sanitize_file_name($template);
+			
 			if ( strpos( $template, '.php' ) ) {
 				$template_css_class_suffix = preg_replace( '/' . preg_quote( '.php', '/' ) . '$/', '', $template );
 			} else {
@@ -1626,9 +1632,6 @@ class YARPP {
 
 		$output .= "'>\n";
 
-		// avoid any monkeying around where someone could trya custom template like a template name like
-		// "yarpp-template-;../../wp-config.php". YARPP custom templates are only supported in the theme's root folder.
-		$template = str_replace( '/', '', $template );
 		if ( $domain === 'metabox' ) {
 			include YARPP_DIR . '/includes/template_metabox.php';
 		} elseif ( (bool) $template && $template === 'thumbnails' ) {

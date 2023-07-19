@@ -32,14 +32,13 @@ if ( have_posts() ) {
 		$title   = get_the_title();
 		$round   = round( (float)get_the_score(), 1 );
 		$score   = ( current_user_can( 'manage_options' ) && $domain !== 'rss' && ! is_admin() )
-					? '<abbr title="' . sprintf( __( '%f is the YARPP match score between the current entry and this related entry. You are seeing this value because you are logged in to WordPress as an administrator. It is not shown to regular visitors.', 'yet-another-related-posts-plugin' ), $round ) . '">(' . $round . ')</abbr>'
+					? ' (<abbr style="cursor: help;" title="' . sprintf( __( '%f is the YARPP match score between the current entry and this related entry. You are seeing this value because you are logged in to WordPress as an administrator. It is not shown to regular visitors.', 'yet-another-related-posts-plugin' ), $round ) . '">' . $round . '</abbr>)'
 					: null;
-
 		$output .=
 		$before_title .
 		'<a href="' . $link . '" rel="bookmark" title="' . $tooltip . '">' .
-			$title . ' ' . $score .
-		'</a>';
+			$title .
+		'</a>' . $score;
 
 		if ( $show_excerpt ) {
 			$excerpt = strip_tags( (string) get_the_excerpt() );
