@@ -2,6 +2,13 @@
 if ( !defined('AME_ROOT_DIR') ) {
 	define('AME_ROOT_DIR', dirname(dirname(__FILE__)));
 }
+if ( !defined('WS_AME_USE_BUNDLES') ) {
+	/**
+	 * If set to true, the plugin will use Webpack bundles when available. If set
+	 * to false, it will load individual JS files instead.
+	 */
+	define('WS_AME_USE_BUNDLES', true);
+}
 
 $thisDirectory = dirname(__FILE__);
 require_once $thisDirectory . '/shadow_plugin_framework.php';

@@ -11,7 +11,8 @@ class ModuleSettings extends AbstractSettingsDictionary {
 		$scope = ScopedOptionStorage::GLOBAL_SCOPE,
 		$defaults = array(),
 		$settingCreationCallback = null,
-		$jsonSerializationEnabled = false
+		$jsonSerializationEnabled = false,
+		$lastModifiedTimeEnabled = false
 	) {
 		$store = new ScopedOptionStorage($optionName, $scope);
 		$store->setJsonSerialization($jsonSerializationEnabled);
@@ -19,7 +20,7 @@ class ModuleSettings extends AbstractSettingsDictionary {
 		$this->defaults = $defaults;
 		$this->settingCreationCallback = $settingCreationCallback;
 
-		parent::__construct($store, $optionName . '--');
+		parent::__construct($store, $optionName . '--', $lastModifiedTimeEnabled);
 	}
 
 	protected function createDefaults() {

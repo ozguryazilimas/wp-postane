@@ -283,7 +283,7 @@ function ame_register_sort_buttons($toolbar) {
 
 			<input type="hidden" name="deep_nesting_enabled" id="ws_is_deep_nesting_enabled" value="">
 
-			<input type="button" id='ws_save_menu' class="button-primary ws_main_button" value="Save Changes" />
+			<button type="button" id='ws_save_menu' class="button button-primary ws_main_button">Save Changes</button>
 		</form>
 
 			<input type="button" id='ws_reset_menu' value="Undo changes" class="button ws_main_button" />

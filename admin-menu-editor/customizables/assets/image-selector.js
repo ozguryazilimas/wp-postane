@@ -139,10 +139,10 @@ var AmeImageSelectorApi;
             this.$removeImageButton.toggle(hasImage);
             //Handle some cases where the image exists but the preview URL is not specified.
             if (hasImage && !previewUrl) {
-                if (hasExternalUrl) {
+                if (hasExternalUrl && (typeof image.externalUrl !== 'undefined')) {
                     previewUrl = image.externalUrl;
                 }
-                else if (hasAttachment) {
+                else if (hasAttachment && (typeof image.attachmentId !== 'undefined')) {
                     previewUrl = wp.media.attachment(image.attachmentId).get('url');
                     //This may return undefined if the attachment hasn't been loaded yet.
                     //setPreviewImage() should handle that situation.

@@ -308,16 +308,6 @@ class Module extends amePersistentModule {
 		return $user;
 	}
 
-	public function registerScripts() {
-		parent::registerScripts();
-
-		wp_register_auto_versioned_script(
-			'ame-knockout-sortable',
-			plugins_url('knockout-sortable.js', __FILE__),
-			['ame-knockout', 'jquery', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable']
-		);
-	}
-
 	public function enqueueTabScripts() {
 		parent::enqueueTabScripts();
 

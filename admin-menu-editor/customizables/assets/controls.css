@@ -58,10 +58,10 @@
   min-height: 100px;
 }
 
-.ame-number-input-control select:invalid, .ame-number-input-control input:invalid {
+.ame-number-input-control select:invalid, .ame-number-input-control select.ame-has-validation-errors, .ame-number-input-control input:invalid, .ame-number-input-control input.ame-has-validation-errors {
   border-color: #d63638;
 }
-.ame-number-input-control select:invalid:focus, .ame-number-input-control input:invalid:focus {
+.ame-number-input-control select:invalid:focus, .ame-number-input-control select.ame-has-validation-errors:focus, .ame-number-input-control input:invalid:focus, .ame-number-input-control input.ame-has-validation-errors:focus {
   box-shadow: 0 0 0 1px #d63638;
 }
 
@@ -141,6 +141,13 @@
   box-shadow: 0 0 0 0.9px #ccd0d4;
   transform-origin: left bottom;
   transform: rotate(45deg);
+}
+.ame-popup-slider .ame-popup-slider-top-tip {
+  top: -12px;
+}
+.ame-popup-slider .ame-popup-slider-bottom-tip {
+  top: 100%;
+  transform: scaleY(-1);
 }
 
 .ame-radio-button-bar-control {

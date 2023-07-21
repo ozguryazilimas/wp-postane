@@ -115,19 +115,24 @@ class ControlGroup extends Container {
 		return 'control-group';
 	}
 
+	public function serializeForJs() {
+		$result = parent::serializeForJs();
+		$labelFor = $this->getLabelFor();
+		if ( $labelFor !== null ) {
+			$result['labelFor'] = $labelFor;
+		}
+		return $result;
+	}
+
+
 	protected function getKoComponentParams() {
 		$params = parent::getKoComponentParams();
 		$params['enabled'] = $this->serializeConditionForJs();
 
-		$labelFor = $this->getLabelFor();
-		if ( $labelFor !== null ) {
-			$params['labelFor'] = $labelFor;
-		}
-
 		//The "full width" flag is not directly relevant to group components because they
 		//are usually already full width, but it is sometimes used to disable the title
 		//(e.g. for groups that contain only a single checkbox).
-		if ($this->isFullWidth()) {
+		if ( $this->isFullWidth() ) {
 			$params['isFullWidth'] = true;
 			$params['titleDisabled'] = true;
 		}

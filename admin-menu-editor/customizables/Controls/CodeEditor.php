@@ -7,16 +7,20 @@ use YahnisElsts\AdminMenuEditor\Customizable\Rendering\Renderer;
 class CodeEditor extends ClassicControl {
 	protected $type = 'codeEditor';
 
+	protected $koComponentName = 'ame-code-editor';
+
 	/**
 	 * @var string MIME type for CodeMirror.
 	 */
 	protected $mimeType = 'text/html';
 
 	const SCRIPT_ACTION = 'admin_print_footer_scripts';
-	protected $editorSettings = array();
+	protected $editorSettings = [];
 	protected $editorId = null;
 
-	public function __construct($settings = array(), $params = array()) {
+	protected $triedToEnqueueEditor = false;
+
+	public function __construct($settings = [], $params = []) {
 		parent::__construct($settings, $params);
 		if ( isset($params['mimeType']) ) {
 			$this->mimeType = $params['mimeType'];
@@ -27,17 +31,22 @@ class CodeEditor extends ClassicControl {
 		$id = '_acm_' . $this->id;
 		$this->editorId = $id;
 
+		$stringValue = $this->getMainSettingValue('');
+		if ( $stringValue === null ) {
+			$stringValue = '';
+		}
+
 		echo '<div class="ame-code-editor-control-wrap">';
 		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- buildInputElement() is safe.
 		echo $this->buildInputElement(
-			array(
+			[
 				'id'    => $id,
 				'class' => 'large-text',
 				'cols'  => 100,
 				'rows'  => 5,
-			),
+			],
 			'textarea',
-			esc_textarea($this->getMainSettingValue(''))
+			esc_textarea($stringValue)
 		);
 		$this->outputSiblingDescription();
 		echo '</div>';
@@ -47,14 +56,32 @@ class CodeEditor extends ClassicControl {
 			if ( did_action(self::SCRIPT_ACTION) ) {
 				$this->outputInitScript();
 			} else {
-				add_action(self::SCRIPT_ACTION, array($this, 'outputInitScript'));
+				add_action(self::SCRIPT_ACTION, [$this, 'outputInitScript']);
 			}
 		}
 	}
 
 	protected function enqueueCodeEditor() {
+		//Don't enqueue the editor more than once.
+		if ( $this->triedToEnqueueEditor ) {
+			return !empty($this->editorSettings);
+		}
+		$this->triedToEnqueueEditor = true;
+
+		$additionalCodeMirrorOptions = [];
+		//Strangely, WordPress disables linting for CSS by default even though
+		//it is actually supported. Let's enable it explicitly. This needs to be
+		//done *before* calling wp_enqueue_code_editor() because that function
+		//uses the "lint" option to decide whether to enqueue the linter(s).
+		if ($this->mimeType === 'text/css') {
+			$additionalCodeMirrorOptions['lint'] = true;
+		}
+
 		//This can return false if, for example, the user has disabled syntax highlighting.
-		$this->editorSettings = wp_enqueue_code_editor(array('type' => $this->mimeType));
+		$this->editorSettings = wp_enqueue_code_editor([
+			'type' => $this->mimeType,
+			'codemirror' => $additionalCodeMirrorOptions,
+		]);
 		if ( empty($this->editorSettings) ) {
 			return false;
 		}
@@ -64,16 +91,16 @@ class CodeEditor extends ClassicControl {
 			isset($this->editorSettings['codemirror'])
 			&& in_array(
 				$this->mimeType,
-				array('text/css', 'text/javascript', 'application/javascript')
+				['text/css', 'text/javascript', 'application/javascript']
 			)
 		) {
 			$this->editorSettings['codemirror'] = array_merge(
 				$this->editorSettings['codemirror'],
-				array(
+				[
 					'lint'              => true,
 					'autoCloseBrackets' => true,
 					'matchBrackets'     => true,
-				)
+				]
 			);
 
 			if ( empty($this->editorSettings['codemirror']['gutters']) ) {
@@ -107,5 +134,22 @@ class CodeEditor extends ClassicControl {
 			});
 		</script>
 		<?php
+	}
+
+	public function enqueueKoComponentDependencies() {
+		parent::enqueueKoComponentDependencies();
+
+		$this->enqueueCodeEditor();
+	}
+
+	protected function getKoComponentParams() {
+		if ( !$this->triedToEnqueueEditor ) {
+			$this->enqueueCodeEditor();
+		}
+
+		$params = parent::getKoComponentParams();
+		$params['mimeType'] = $this->mimeType;
+		$params['editorSettings'] = $this->editorSettings;
+		return $params;
 	}
 }

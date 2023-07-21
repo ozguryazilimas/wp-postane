@@ -14,7 +14,7 @@ declare var wsAmeActorSelectorData: {
 };
 
 interface SelectedActorChangedCallback {
-	(newSelectedActor: string, oldSelectedActor: string): void
+	(newSelectedActor: string|null, oldSelectedActor: string|null): void
 }
 
 interface SaveVisibleActorAjaxParams {
@@ -26,7 +26,7 @@ interface SaveVisibleActorAjaxParams {
 class AmeActorSelector {
 	private static _ = wsAmeLodash;
 
-	public selectedActor: string = null;
+	public selectedActor: string|null = null;
 	public selectedDisplayName: string = 'All';
 
 	private visibleUsers: string[] = [];
@@ -37,9 +37,9 @@ class AmeActorSelector {
 	private ajaxParams: SaveVisibleActorAjaxParams;
 	private readonly allOptionEnabled: boolean = true;
 
-	private cachedVisibleActors: IAmeActor[] = null;
+	private cachedVisibleActors: IAmeActor[]|null = null;
 
-	private selectorNode;
+	private selectorNode: JQuery|null = null;
 	private isDomInitStarted: boolean = false;
 
 	constructor(
@@ -108,7 +108,7 @@ class AmeActorSelector {
 				visibleUsers: this.visibleUsers,
 				actorManager: this.actorManager,
 
-				save: (userDetails, selectedUsers) => {
+				save: (userDetails: IAmeUser[], selectedUsers: string[]) => {
 					this.actorManager.addUsers(userDetails);
 					this.visibleUsers = selectedUsers;
 					//The user list has changed, so clear the cache.
@@ -123,7 +123,7 @@ class AmeActorSelector {
 		});
 	}
 
-	setSelectedActor(actorId: string) {
+	setSelectedActor(actorId: string|null) {
 		if ((actorId !== null) && !this.actorManager.actorExists(actorId)) {
 			return;
 		}
@@ -133,7 +133,12 @@ class AmeActorSelector {
 		this.highlightSelectedActor();
 
 		if (actorId !== null) {
-			this.selectedDisplayName = this.actorManager.getActor(actorId).getDisplayName();
+			const actor = this.actorManager.getActor(actorId);
+			if (actor !== null) {
+				this.selectedDisplayName = actor.getDisplayName();
+			} else {
+				this.selectedDisplayName = '[' + actorId  + ']';
+			}
 		} else {
 			this.selectedDisplayName = 'All';
 		}
@@ -155,6 +160,9 @@ class AmeActorSelector {
 		if (!this.isDomInitStarted) {
 			this.initDOM();
 		}
+		if (this.selectorNode === null) {
+			return; //Should never happen since initDOM() should have set this.
+		}
 
 		//Deselect the previous item.
 		this.selectorNode.find('.current').removeClass('current');
@@ -170,6 +178,10 @@ class AmeActorSelector {
 	}
 
 	private populateActorSelector() {
+		if (this.selectorNode === null) {
+			return; //Not initialized yet.
+		}
+
 		const actorSelector = this.selectorNode,
 			$ = jQuery;
 		let isSelectedActorVisible = false;
@@ -238,7 +250,7 @@ class AmeActorSelector {
 		}
 
 		const _ = AmeActorSelector._;
-		let actors = [];
+		let actors: IAmeActor[] = [];
 
 		//Include all roles.
 		//Idea: Sort roles either alphabetically or by typical privilege level (admin, editor, author, ...).
@@ -246,11 +258,15 @@ class AmeActorSelector {
 			actors.push(role);
 		});
 		//Include the Super Admin (multisite only).
-		if (this.actorManager.getUser(this.currentUserLogin).isSuperAdmin) {
+		const user = this.actorManager.getUser(this.currentUserLogin);
+		if (user && user.isSuperAdmin) {
 			actors.push(this.actorManager.getSuperAdmin());
 		}
 		//Include the current user.
-		actors.push(this.actorManager.getUser(this.currentUserLogin));
+		const currentUser = this.actorManager.getUser(this.currentUserLogin);
+		if (currentUser) {
+			actors.push(currentUser);
+		}
 
 		//Include other visible users.
 		_(this.visibleUsers)
@@ -258,7 +274,9 @@ class AmeActorSelector {
 			.sortBy()
 			.forEach((login) => {
 				const user = this.actorManager.getUser(login);
-				actors.push(user);
+				if (user) {
+					actors.push(user);
+				}
 			})
 			.value();
 
@@ -277,7 +295,7 @@ class AmeActorSelector {
 		);
 	}
 
-	getCurrentUserActor(): IAmeUser {
+	getCurrentUserActor(): IAmeUser|null {
 		return this.actorManager.getUser(this.currentUserLogin);
 	}
 
@@ -298,9 +316,9 @@ class AmeActorSelector {
 	 * Wrap the selected actor ID in a computed observable so that it can be used with Knockout.
 	 * @param ko
 	 */
-	createKnockoutObservable(ko: KnockoutStatic): KnockoutComputed<string> {
+	createKnockoutObservable(ko: KnockoutStatic): KnockoutComputed<string|null> {
 		const internalObservable = ko.observable(this.selectedActor);
-		const publicObservable = ko.computed<string>({
+		const publicObservable = ko.computed({
 			read: function () {
 				return internalObservable();
 			},
@@ -308,7 +326,7 @@ class AmeActorSelector {
 				this.setSelectedActor(newActor);
 			}
 		});
-		this.onChange((newSelectedActor: string) => {
+		this.onChange((newSelectedActor: string|null) => {
 			internalObservable(newSelectedActor);
 		});
 		return publicObservable;
@@ -334,7 +352,7 @@ class AmeActorSelector {
 		});
 
 		const self = this;
-		this.onChange(function (newSelectedActor: string) {
+		this.onChange(function (newSelectedActor: string|null) {
 			if (newSelectedActor === null) {
 				internalObservable(null);
 			} else {

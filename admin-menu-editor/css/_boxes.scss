@@ -11,13 +11,15 @@ $amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 
 	margin-bottom: 20px;
 
+	border: 1px solid $borderColor;
+
 	.ws-ame-postbox-header {
 		position: relative;
 		font-size: 14px;
 		margin: 0;
 		line-height: 1.4;
 
-		border: 1px solid $borderColor;
+		border-bottom: 1px solid $borderColor;
 
 		h3 {
 			padding: 10px $horizontalPadding;
@@ -32,7 +34,7 @@ $amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 
 	.ws-ame-postbox-toggle {
 		color: #72777c;
-		background: $headerBackground;
+		background: transparent;
 
 		display: block;
 		font: normal 20px/1 dashicons;
@@ -72,17 +74,22 @@ $amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 	}
 
 	.ws-ame-postbox-content {
-		border: 1px solid $borderColor;
 		border-top: none;
 
 		padding: $horizontalPadding;
 	}
 
-	&.ws-ame-closed-postbox .ws-ame-postbox-content {
-		display: none;
-	}
+	&.ws-ame-closed-postbox  {
+		.ws-ame-postbox-content {
+			display: none;
+		}
 
-	&.ws-ame-closed-postbox .ws-ame-postbox-toggle:before {
-		content: '\f140'; //downward triangle
+		.ws-ame-postbox-toggle:before {
+			content: '\f140'; //downward triangle
+		}
+
+		.ws-ame-postbox-header {
+			border-bottom: none;
+		}
 	}
 }

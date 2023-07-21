@@ -26,10 +26,10 @@ namespace AmeRedirectorUi {
 	}
 
 	abstract class AbstractTriggerDictionary<ValueType> implements TriggerDictionary<ValueType> {
-		login: ValueType;
-		logout: ValueType;
-		registration: ValueType;
-		firstLogin: ValueType;
+		abstract login: ValueType;
+		abstract logout: ValueType;
+		abstract registration: ValueType;
+		abstract firstLogin: ValueType;
 	}
 
 	interface RedirectProperties {
@@ -65,6 +65,9 @@ namespace AmeRedirectorUi {
 		},
 		getId(): string {
 			return DefaultActorId;
+		},
+		isUser(): boolean {
+			return false;
 		}
 	}
 
@@ -87,13 +90,13 @@ namespace AmeRedirectorUi {
 
 		urlDropdownEnabled: KnockoutComputed<boolean>;
 
-		constructor(properties: RedirectProperties, actorProvider: ActorProvider = null) {
+		constructor(properties: RedirectProperties, actorProvider: ActorProvider|null = null) {
 			this.actorId = properties.actorId;
 			this.trigger = properties.trigger;
 			this.urlTemplate = ko.observable(properties.urlTemplate);
 
 			this.menuTemplateId = ko.observable(
-				properties.hasOwnProperty('menuTemplateId') ? properties.menuTemplateId : ''
+				(typeof properties.menuTemplateId === 'string') ? properties.menuTemplateId : ''
 			);
 
 			this.canToggleShortcodes = ko.pureComputed(() => {
@@ -125,7 +128,27 @@ namespace AmeRedirectorUi {
 				this.actor = defaultActor;
 			} else {
 				const provider: ActorProvider = actorProvider ? actorProvider : AmeActors;
-				this.actor = provider.getActor(this.actorId);
+				const actor = provider.getActor(this.actorId);
+				if (actor !== null) {
+					this.actor = actor;
+				} else {
+					if (console && console.warn) {
+						console.warn('Redirect constructor - Actor not found: ', this.actorId);
+					}
+
+					const missingActorId = this.actorId;
+					this.actor = {
+						getDisplayName(): string {
+							return 'Missing role or user';
+						},
+						getId(): string {
+							return missingActorId;
+						},
+						isUser(): boolean {
+							return false;
+						}
+					}
+				}
 			}
 
 			this.actorTypeNoun = ko.pureComputed(() => {
@@ -183,8 +206,8 @@ namespace AmeRedirectorUi {
 	}
 
 	class TriggerView {
-		users: KnockoutObservableArray<Redirect> = ko.observableArray([]);
-		roles: KnockoutObservableArray<Redirect> = ko.observableArray([]);
+		users: KnockoutObservableArray<Redirect> = ko.observableArray([] as Redirect[]);
+		roles: KnockoutObservableArray<Redirect> = ko.observableArray([] as Redirect[]);
 		defaultRedirect: KnockoutObservable<Redirect>;
 
 		supportsUserSettings: boolean = true;
@@ -193,8 +216,8 @@ namespace AmeRedirectorUi {
 
 		constructor(
 			trigger: RedirectTrigger,
-			supportsUserSettings: boolean = null,
-			supportsRoleSettings: boolean = null
+			supportsUserSettings: boolean|null = null,
+			supportsRoleSettings: boolean|null = null
 		) {
 			if (supportsUserSettings !== null) {
 				this.supportsUserSettings = supportsUserSettings;
@@ -280,6 +303,11 @@ namespace AmeRedirectorUi {
 	}
 
 	class RedirectsByTrigger extends AbstractTriggerDictionary<TriggerView> {
+		firstLogin: TriggerView;
+		login: TriggerView;
+		logout: TriggerView;
+		registration: TriggerView;
+
 		constructor() {
 			super();
 			this.login = new TriggerView('login');
@@ -306,7 +334,8 @@ namespace AmeRedirectorUi {
 		toArray(): Redirect[] {
 			let results: Redirect[] = [];
 
-			for (let key in AllKnownTriggers) {
+			let key: keyof typeof AllKnownTriggers;
+			for (key in AllKnownTriggers) {
 				if (this.hasOwnProperty(key)) {
 					const view = this[key] as TriggerView;
 					results.push(...view.toArray());
@@ -326,7 +355,7 @@ namespace AmeRedirectorUi {
 	export class RedirectUrlInputComponent {
 		redirect: Redirect;
 		displayValue: KnockoutComputed<string>;
-		isUrlReadonly: KnockoutComputed<boolean | null>;
+		isUrlReadonly: KnockoutComputed<true | null>;
 		menuItems: MenuCollection;
 
 		constructor(params: AmeDictionary<any>) {
@@ -362,7 +391,7 @@ namespace AmeRedirectorUi {
 	}
 
 	interface ActorProvider {
-		getActor(actorId): IAmeActor;
+		getActor(actorId: string): IAmeActor|null;
 	}
 
 	/**
@@ -377,7 +406,7 @@ namespace AmeRedirectorUi {
 			this.placeholders = {};
 		}
 
-		getActor(actorId): IAmeActor {
+		getActor(actorId: string): IAmeActor {
 			if (actorId === DefaultActorId) {
 				return defaultActor;
 			}
@@ -427,7 +456,7 @@ namespace AmeRedirectorUi {
 		protected actorId: string;
 		protected displayName: string;
 
-		constructor(id: string, displayName: string = null) {
+		constructor(id: string, displayName: string|null = null) {
 			this.actorId = id;
 			if (displayName !== null) {
 				this.displayName = displayName;
@@ -451,6 +480,10 @@ namespace AmeRedirectorUi {
 			}
 			return actorId.substring(delimiterPos + 1);
 		}
+
+		isUser(): this is IAmeUser {
+			return false;
+		}
 	}
 
 	class MissingRolePlaceholder extends MissingActorPlaceholder {
@@ -463,6 +496,14 @@ namespace AmeRedirectorUi {
 		constructor(actorId: string) {
 			super(actorId);
 			this.userLogin = this.idWithoutPrefix(actorId);
+		}
+
+		isUser(): this is IAmeUser {
+			return true;
+		}
+
+		getRoleIds(): string[] {
+			return [];
 		}
 	}
 
@@ -494,7 +535,7 @@ namespace AmeRedirectorUi {
 		};
 
 		private readonly menuDropdown: JQuery;
-		private ignoreNextDropdownClick: JQueryEventObject['target'] = null;
+		private ignoreNextDropdownClick: JQueryEventObject['target']|null = null;
 
 		addableRoles: KnockoutComputed<IAmeActor[]>;
 		selectedRoleToAdd: KnockoutObservable<IAmeActor | undefined>;
@@ -631,7 +672,7 @@ namespace AmeRedirectorUi {
 				return _.difference(allRoles, usedRoles);
 			});
 
-			this.selectedRoleToAdd = ko.observable(void 0);
+			this.selectedRoleToAdd = ko.observable<IAmeActor|undefined>(void 0);
 			this.roleSelectorHasFocus = ko.observable(false);
 
 			this.addableUsers = ko.pureComputed(() => {
@@ -644,7 +685,7 @@ namespace AmeRedirectorUi {
 				return _.difference(loadedUsers, usedUsers);
 			});
 
-			this.selectedUserToAdd = ko.observable(void 0);
+			this.selectedUserToAdd = ko.observable<IAmeUser|undefined>(void 0);
 			this.userSelectorHasFocus = ko.observable(false);
 
 			this.selectedRoleToAdd.subscribe((newSelection) => {
@@ -910,14 +951,14 @@ jQuery(function ($) {
 			let options = ko.unwrap(valueAccessor());
 
 			options = wsAmeLodash.defaults(options, {
-				filter: function (suggestions) {
+				filter: function (suggestions:AmeRedirectorUi.MinimalUserProperties[]) {
 					return suggestions;
 				}
 			});
 
 			jQuery(element).autocomplete({
 				minLength: 2,
-				source: function (request, response) {
+				source: function (request: any, response:(results: any[]) => void) {
 					const action = AjawV1.getAction('ws-ame-rui-search-users');
 					action.get(
 						{term: request.term},
@@ -954,7 +995,7 @@ jQuery(function ($) {
 		}
 	};
 
-	const $container = $('#ame-redirector-ui-root');
+	const $container = jQuery('#ame-redirector-ui-root');
 
 	const ameRedirectorApp = new AmeRedirectorUi.App(wsAmeRedirectorSettings);
 	ko.applyBindings(ameRedirectorApp, $container.get(0));
@@ -972,15 +1013,17 @@ jQuery(function ($) {
 	moved to the redirect input before the user could release the key.
 	*/
 	const redirectInputSelector = '.ame-rui-url-template input[type=text].ame-rui-has-url-dropdown';
-	let lastDownArrowTarget = null;
+	let lastDownArrowTarget: Element | null = null;
 	$container.on('focus', redirectInputSelector, function () {
 		lastDownArrowTarget = null;
 	});
 	$container.on('keydown', redirectInputSelector, function (event) {
 		//Ignore repeated "keydown" events. These will happen even if the key was originally
 		//pressed in a different element.
-		if ((typeof event.originalEvent['repeat'] !== 'undefined') && (event.originalEvent['repeat'] === true)) {
-			return;
+		if (event.originalEvent instanceof KeyboardEvent) {
+			if ((typeof event.originalEvent['repeat'] !== 'undefined') && event.originalEvent['repeat']) {
+				return;
+			}
 		}
 		if (event.which === 40) {
 			lastDownArrowTarget = event.target;

@@ -195,6 +195,20 @@ jQuery(function ($) {
 
 		$tip.css('left', Math.max(Math.min(desiredTipOffset, maxTipOffset), minTipOffset));
 
+		//If the popup is below the subject, show only the top tip.
+		//Otherwise, show only the bottom tip.
+		const popupTop = this.$popup.offset().top || 0;
+		const subjectTop = $subject.offset().top || 0;
+		const $topTip = $tip.filter('.ame-popup-slider-top-tip');
+		const $bottomTip = $tip.filter('.ame-popup-slider-bottom-tip');
+		if (popupTop > subjectTop) {
+			$topTip.show();
+			$bottomTip.hide();
+		} else {
+			$topTip.hide();
+			$bottomTip.show();
+		}
+
 		//Update slider range based on the selected unit.
 		const range = this.getCurrentRange($input, $unit);
 		this.$bar.slider('option', {
@@ -305,7 +319,8 @@ jQuery(function ($) {
 		if (!$popup || ($popup.length === 0)) {
 			$popup = $('<div class="ame-popup-slider" style="display: none"></div>');
 			$popup.append(`
-				<div class="ame-popup-slider-tip"></div>
+				<div class="ame-popup-slider-tip ame-popup-slider-bottom-tip"></div>
+				<div class="ame-popup-slider-tip ame-popup-slider-top-tip"></div>
 				<div class="ame-popup-slider-bar">
 					<div class="ame-popup-slider-groove"></div>
 					<div class="ui-slider-handle ame-popup-slider-handle"></div>

@@ -12,9 +12,19 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 	const SERIALIZE_INCLUDE_ID = 4;
 	const SERIALIZE_INCLUDE_GROUP_TITLE = 8;
 	const SERIALIZE_INCLUDE_POST_MESSAGE_SUPPORT = 16;
+	const SERIALIZE_INCLUDE_TAGS = 32;
+	const SERIALIZE_INCLUDE_VALIDATION = 64;
+
 	const SERIALIZE_INCLUDE_ALL = (self::SERIALIZE_INCLUDE_ID | self::SERIALIZE_INCLUDE_VALUE
 		| self::SERIALIZE_INCLUDE_DEFAULT | self::SERIALIZE_INCLUDE_GROUP_TITLE
-		| self::SERIALIZE_INCLUDE_POST_MESSAGE_SUPPORT);
+		| self::SERIALIZE_INCLUDE_POST_MESSAGE_SUPPORT
+		| self::SERIALIZE_INCLUDE_TAGS
+		| self::SERIALIZE_INCLUDE_VALIDATION
+	);
+
+	const SERIALIZE_LEAVES_ONLY = 128;
+
+	const TAG_ADMIN_THEME = 'admin_theme';
 
 	/**
 	 * The data type could be useful for automatically choosing an appropriate
@@ -63,6 +73,11 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 	 */
 	protected $supportsPostMessage = false;
 
+	/**
+	 * @var array<string> List of tags that can be used to group settings.
+	 */
+	protected $tags = [];
+
 	public function __construct($id, StorageInterface $store = null, $params = []) {
 		parent::__construct($id, $store, $params);
 
@@ -74,6 +89,9 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 		}
 		if ( isset($params['supportsPostMessage']) ) {
 			$this->supportsPostMessage = (bool)$params['supportsPostMessage'];
+		}
+		if ( isset($params['tags']) ) {
+			$this->tags = $params['tags'];
 		}
 	}
 
@@ -301,6 +319,42 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 
 	public function enablePostMessageSupport() {
 		$this->supportsPostMessage = true;
+		return $this;
+	}
+
+	//region Tags
+
+	/**
+	 * @return string[]
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+
+	/**
+	 * @param string[] $tags
+	 * @return $this
+	 */
+	public function addTags(...$tags) {
+		$this->tags = array_unique(array_merge($this->tags, $tags));
+		return $this;
+	}
+
+	/**
+	 * @param string $tag
+	 * @return bool
+	 */
+	public function hasTag($tag) {
+		return in_array($tag, $this->tags);
+	}
+
+	//endregion
+
+	/**
+	 * @return array|null
+	 */
+	public function serializeValidationRules() {
+		return null; //It's up to subclasses to implement this.
 	}
 
 	protected static function getNotificationQueue() {
@@ -363,11 +417,14 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 	 * the children of regular structs.
 	 *
 	 * @param iterable $settings
+	 * @param bool $leavesOnly           When encountering a struct setting, only return its
+	 *                                   children and not the struct itself. Does not apply
+	 *                                   to composite settings.
 	 * @param string|int|null $parentKey The key of the parent setting. Used to generate
 	 *                                   an iterator key for each setting.
 	 * @return \Generator
 	 */
-	public static function recursivelyIterateSettings($settings, $parentKey = null) {
+	public static function recursivelyIterateSettings($settings, $leavesOnly = false, $parentKey = null) {
 		foreach ($settings as $key => $setting) {
 			if ( $parentKey !== null ) {
 				$effectiveKey = ((string)$parentKey) . '.' . $key;
@@ -375,19 +432,17 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 				$effectiveKey = $key;
 			}
 
-			if ( $setting instanceof AbstractSetting ) {
+			//Descend into structs and arrays, except composite settings.
+			//WP 4.9.6+ includes a polyfill for is_iterable().
+			$isContainer = is_iterable($setting) && !($setting instanceof CompositeSetting);
+
+			if ( ($setting instanceof AbstractSetting) && (!$isContainer || !$leavesOnly) ) {
 				yield $effectiveKey => $setting;
 			}
 
-			//Do not recurse into composite settings.
-			if ( $setting instanceof CompositeSetting ) {
-				continue;
-			}
-			//Descend into structs and arrays.
-			//WP 4.9.6+ includes a polyfill for is_iterable().
-			if ( is_iterable($setting) ) {
+			if ( $isContainer ) {
 				/** @var iterable $setting */
-				yield from self::recursivelyIterateSettings($setting, $effectiveKey);
+				yield from self::recursivelyIterateSettings($setting, $leavesOnly, $effectiveKey);
 			}
 		}
 	}
@@ -422,8 +477,10 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 			$flags = self::SERIALIZE_INCLUDE_ALL;
 		}
 
+		$leavesOnly = (bool)($flags & self::SERIALIZE_LEAVES_ONLY);
+
 		$serialized = [];
-		foreach (self::recursivelyIterateSettings($settings) as $setting) {
+		foreach (self::recursivelyIterateSettings($settings, $leavesOnly) as $setting) {
 			$emptyArraysAsObjects = ($setting->getDataType() === 'map');
 
 			$data = [];
@@ -454,6 +511,20 @@ abstract class AbstractSetting extends Customizable implements UpdateNotificatio
 			if ( $flags & self::SERIALIZE_INCLUDE_POST_MESSAGE_SUPPORT ) {
 				if ( $setting->supportsPostMessage() ) {
 					$data['supportsPostMessage'] = true;
+				}
+			}
+
+			if ( $flags & self::SERIALIZE_INCLUDE_TAGS ) {
+				$tags = $setting->getTags();
+				if ( !empty($tags) ) {
+					$data['tags'] = $tags;
+				}
+			}
+
+			if ( $flags & self::SERIALIZE_INCLUDE_VALIDATION ) {
+				$validationRules = $setting->serializeValidationRules();
+				if ( !empty($validationRules) ) {
+					$data['validation'] = $validationRules;
 				}
 			}
 

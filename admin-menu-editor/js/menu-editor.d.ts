@@ -2,7 +2,7 @@ declare namespace AmeEditorApi {
 
 	const configDataAdapter: {
 		getPath<D>(path: string | string[], defaultValue?: D): D | null | any;
-		setPath(path: string | string[], value: any);
+		setPath(path: string | string[], value: any): void;
 		mapSettingIdToPath(settingId: string): string | string[] | null;
 		getKnownPrefixes(): string[];
 	};

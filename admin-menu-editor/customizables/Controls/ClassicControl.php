@@ -46,7 +46,9 @@ abstract class ClassicControl extends Control {
 
 		//Use the Pro version control stylesheet if it exists.
 		$proStylesheet = AME_ROOT_DIR . '/extras/pro-customizables/assets/controls.css';
-		if ( file_exists($proStylesheet) ) {
+		$proStylesheetExists = file_exists($proStylesheet);
+		$isProbablyPro = $proStylesheetExists;
+		if ( $proStylesheetExists ) {
 			$stylesheetUrl = plugins_url('controls.css', $proStylesheet);
 		} else {
 			$stylesheetUrl = plugins_url('assets/controls.css', AME_CUSTOMIZABLE_BASE_FILE);
@@ -58,10 +60,14 @@ abstract class ClassicControl extends Control {
 			['wp-color-picker']
 		);
 
+		$controlDependencies = ['jquery', 'wp-color-picker'];
+		if ( $isProbablyPro ) {
+			$controlDependencies[] = 'ame-ko-extensions';
+		}
 		wp_enqueue_auto_versioned_script(
 			'ame-combined-control-scripts',
 			plugins_url('assets/combined-controls.js', AME_CUSTOMIZABLE_BASE_FILE),
-			['jquery', 'ame-ko-extensions', 'wp-color-picker']
+			$controlDependencies
 		);
 
 		//Also enqueue the Pro version's combined controls if the file exists.
@@ -70,7 +76,7 @@ abstract class ClassicControl extends Control {
 			wp_enqueue_auto_versioned_script(
 				'ame-combined-pro-control-scripts',
 				plugins_url('combined-pro-controls.js', $proCombinedControls),
-				['jquery', 'ame-ko-extensions', 'wp-color-picker']
+				$controlDependencies
 			);
 		}
 	}

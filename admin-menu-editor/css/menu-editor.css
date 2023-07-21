@@ -1104,6 +1104,7 @@ select.ws_dropdown optgroup option {
   display: block;
   float: left;
   margin-top: 0;
+  min-width: 8em;
 }
 
 .ws_dialog_buttons .button {
@@ -1582,7 +1583,7 @@ select.ws_dropdown optgroup option {
   font-size: 18px;
 }
 
-.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons {
+.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons, .postbox .ws_tooltip_trigger .dashicons {
   font-size: 18px;
   height: 18px;
   vertical-align: bottom;
@@ -1782,6 +1783,22 @@ select.ws_dropdown optgroup option {
   display: inline-block;
   width: 14em;
   border-top: 0.3em solid #444;
+}
+
+.ws_ame_has_unsaved_changes #ws_save_menu {
+  position: relative;
+}
+.ws_ame_has_unsaved_changes #ws_save_menu:before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  --ame-me-calc-indicator-size: calc(9px + (var(--ame-ds-btn-radius-tr, 3px) - 3px) / 2);
+  width: var(--ame-me-calc-indicator-size, 9px);
+  height: var(--ame-me-calc-indicator-size, 9px);
+  background: #00e93c;
+  border-top-right-radius: calc(var(--ame-ds-btn-radius-tr, 3px) - 1px);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
 /*********************************************

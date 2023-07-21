@@ -80,10 +80,10 @@
 	}
 
 	//Note: Consider using SVG instead. This is too much work for a simple triangle with a border.
+	$tipSide: math.ceil(math.sqrt(2) * $tipHeight);
 	.ame-popup-slider-tip {
 		display: block;
 
-		$tipSide: math.ceil(math.sqrt(2) * $tipHeight);
 		width: $tipSide * 2;
 		height: $tipSide;
 
@@ -109,5 +109,15 @@
 			transform-origin: left bottom;
 			transform: rotate(45deg);
 		}
+	}
+
+	.ame-popup-slider-top-tip {
+		top: -1 * math.ceil($tipSide);
+	}
+
+	.ame-popup-slider-bottom-tip {
+		top: 100%;
+		//Flip it vertically.
+		transform: scaleY(-1);
 	}
 }

@@ -14,6 +14,11 @@ class ColorPicker extends ClassicControl {
 	 */
 	protected $mainSetting;
 
+	public function __construct($settings = [], $params = []) {
+		$this->hasPrimaryInput = true;
+		parent::__construct($settings, $params);
+	}
+
 	public function renderContent(Renderer $renderer) {
 		$value = $this->getMainSettingValue();
 		if ( !is_string($value) ) {

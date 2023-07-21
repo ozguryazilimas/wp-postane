@@ -16,7 +16,8 @@ class PopupSlider {
 		<div class="ame-popup-slider"
 		     data-ame-popup-slider-options="<?php echo esc_attr(wp_json_encode($this->options)); ?>"
 		     style="display: none">
-			<div class="ame-popup-slider-tip"></div>
+			<div class="ame-popup-slider-tip ame-popup-slider-bottom-tip"></div>
+			<div class="ame-popup-slider-tip ame-popup-slider-top-tip"></div>
 			<div class="ame-popup-slider-bar">
 				<div class="ame-popup-slider-groove"></div>
 				<div class="ui-slider-handle ame-popup-slider-handle"></div>

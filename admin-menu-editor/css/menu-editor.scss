@@ -1268,6 +1268,8 @@ $colorFieldRightMargin: 5px;
 	display: block;
 	float: left;
 	margin-top: 0;
+
+	min-width: 8em;
 }
 
 .ws_dialog_buttons .button {
@@ -1870,10 +1872,12 @@ $userSelectionPanelPadding: 10px;
 }
 
 //And in other boxes.
-.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons {
-	font-size: 18px;
-	height: 18px;
-	vertical-align: bottom;
+.ws_ame_custom_postbox, .postbox {
+	.ws_tooltip_trigger .dashicons {
+		font-size: 18px;
+		height: 18px;
+		vertical-align: bottom;
+	}
 }
 
 .ws_tooltip_trigger.ame-warning-tooltip {
@@ -2108,6 +2112,31 @@ $userSelectionPanelPadding: 10px;
 		border-top: 0.3em solid #444;
 	}
 }
+
+//region Unsaved changes indicator
+.ws_ame_has_unsaved_changes #ws_save_menu {
+	position: relative;
+
+	$indicatorSize: 9px;
+	$offset: 1px;
+
+	//Rounded triangle in the corner of the button.
+	&:before {
+		content: '';
+		position: absolute;
+		top: $offset;
+		right: $offset;
+
+		--ame-me-calc-indicator-size: calc(#{$indicatorSize} + (var(--ame-ds-btn-radius-tr, 3px) - 3px) / 2);
+
+		width: var(--ame-me-calc-indicator-size, $indicatorSize);
+		height: var(--ame-me-calc-indicator-size, $indicatorSize);
+		background: #00e93c;
+		border-top-right-radius: calc(var(--ame-ds-btn-radius-tr, 3px) - $offset);
+		clip-path: polygon(0 0, 100% 0, 100% 100%);
+	}
+}
+//endregion
 
 /*********************************************
       Miscellaneous

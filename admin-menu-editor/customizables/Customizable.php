@@ -29,7 +29,7 @@ abstract class Customizable {
 		$this->id = $id;
 		$this->store = $store;
 
-		$this->label = isset($params['label']) ? $params['label'] : $id;
+		$this->label = isset($params['label']) ? $params['label'] : (!empty($this->label) ? $this->label : $id);
 		if ( isset($params['description']) ) {
 			$this->description = $params['description'];
 		}

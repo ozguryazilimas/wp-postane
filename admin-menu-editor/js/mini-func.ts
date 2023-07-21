@@ -1,6 +1,8 @@
 'use strict';
 
 namespace AmeMiniFunc {
+
+	//region Option
 	interface OptionOps<T> {
 		isDefined(): this is Some<T>;
 
@@ -154,4 +156,119 @@ namespace AmeMiniFunc {
 			return none;
 		}
 	}
+
+	//endregion
+
+	//region Either
+	export abstract class Either<A, B> {
+		abstract isLeft(): this is Left<A, B> ;
+
+		abstract isRight(): this is Right<A, B> ;
+
+		abstract getOrElse(defaultValue: () => B): B;
+
+		map<R>(f: (value: B) => R): Either<A, R> {
+			if (this.isRight()) {
+				return new Right(f(this.value));
+			} else {
+				return (this as unknown as Either<A, R>); //Should be safe.
+			}
+		}
+
+		flatMap<R>(f: (value: B) => Either<A, R>): Either<A, R> {
+			if (this.isRight()) {
+				return f(this.value);
+			} else {
+				return (this as unknown as Either<A, R>);
+			}
+		}
+
+		toOption(): Option<B> {
+			if (this.isRight()) {
+				return some(this.value);
+			} else {
+				return none;
+			}
+		}
+
+		static left<A, B>(value: A): Left<A, B> {
+			return new Left(value);
+		}
+
+		static right<A, B>(value: B): Right<A, B> {
+			return new Right(value);
+		}
+	}
+
+	export class Left<A, B> extends Either<A, B> {
+		constructor(public readonly value: A) {
+			super();
+		}
+
+		isLeft(): this is Left<A, B> {
+			return true;
+		}
+
+		isRight(): this is Right<A, B> {
+			return false;
+		}
+
+		getOrElse(defaultValue: () => B): B {
+			return defaultValue();
+		}
+	}
+
+	export class Right<A, B> extends Either<A, B> {
+		constructor(public readonly value: B) {
+			super();
+		}
+
+		isLeft(): this is Left<A, B> {
+			return false;
+		}
+
+		isRight(): this is Right<A, B> {
+			return true;
+		}
+
+		getOrElse(defaultValue: () => B): B {
+			return this.value;
+		}
+	}
+
+	//endregion
+
+	//region Misc
+	export function sanitizeNumericString(str: string): string {
+		if (str === '') {
+			return ''
+		}
+
+		let sanitizedString: string = str
+			//Replace commas with periods.
+			.replace(/,/g, '.')
+			//Remove all non-numeric characters.
+			.replace(/[^0-9.-]/g, '')
+			//Remove all but the last period.
+			.replace(/\.(?=.*\.)/g, '');
+
+		//Keep a minus sign only if it's the first character. Remove all other occurrences.
+		const hasMinusSign = (sanitizedString.charAt(0) === '-');
+		sanitizedString = sanitizedString.replace(/-/g, '');
+		if (hasMinusSign) {
+			sanitizedString = '-' + sanitizedString;
+		}
+
+		return sanitizedString;
+	}
+
+	export function forEachObjectKey<T extends object>(collection: T, callback: (key: keyof T, value: T[keyof T]) => void) {
+		for (const k in collection) {
+			if (!collection.hasOwnProperty(k)) {
+				continue;
+			}
+			callback(k, collection[k]);
+		}
+	}
+	//endregion
 }

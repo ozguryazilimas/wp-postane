@@ -3946,8 +3946,44 @@ function ameOnDomReady() {
 		}
 	});
 
+	/*************************************************************************
+	                  Unsaved changes indicator
+	 *************************************************************************/
 
-	//region Toolbar buttons
+	/**
+	 * @param {JQuery} $rootNode
+	 * @constructor
+	 */
+	function AmeUnsavedChangesIndicator($rootNode) {
+		this.rootNode = $rootNode;
+		this.reportedUnsavedChanges = 0;
+
+		$(document)
+			.on('adminMenuEditor:menuConfigChanged', () => {
+				this.reportedUnsavedChanges++;
+				this.update();
+			})
+			.on('menuConfigurationLoaded.adminMenuEditor', () => {
+				this.reportedUnsavedChanges = 0;
+				this.update();
+			});
+	}
+
+	AmeUnsavedChangesIndicator.prototype.update = function() {
+		const hasUnsavedChanges = this.reportedUnsavedChanges > 0;
+		this.rootNode.toggleClass('ws_ame_has_unsaved_changes', hasUnsavedChanges);
+
+		const $saveButton = this.rootNode.find('#ws_save_menu');
+		if (hasUnsavedChanges) {
+			$saveButton.attr('title', 'Click to save pending changes');
+		} else {
+			$saveButton.attr('title', '');
+		}
+	};
+
+	new AmeUnsavedChangesIndicator(menuEditorNode);
+
+//region Toolbar buttons
 
     /*************************************************************************
 	                           Menu toolbar buttons
@@ -5232,6 +5268,10 @@ function ameOnDomReady() {
 	 ******************************************************************/
 
 
+	//Increase tooltip z-index to avoid a conflict with the Essential Grid plugin.
+	//That plugin sets the jQuery UI dialog z-index to 100102, making tooltips appear
+	//underneath the dialog.
+	$.fn.qtip.zindex = 100200;
 	//Set up tooltips
 	$('.ws_tooltip_trigger').qtip({
 		style: {

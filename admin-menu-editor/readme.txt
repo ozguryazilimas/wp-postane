@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.7
 Tested up to: 6.2
-Stable tag: 1.11
+Stable tag: 1.11.1
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -74,6 +74,15 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.11.1 =
+* Fixed a minor plugin conflict with "WPFunnels" and "Email Marketing Automation - Mail Mint" that caused hidden menu items created by those plugins to become visible when AME was activated.
+* Fixed a conflict with the "Fortress" plugin that could reportedly cause an infinite loop.
+* Fixed a conflict with "Da Reactions" 4.0.3 that triggered PHP warnings like "Warning: Array to string conversion in .../includes/menu-item.php on line 54".
+* Fixed a potential fatal error when removing the number that represents pending updates/comments/etc from a menu title.
+* Fixed a minor conflict with Essential Grid 3.0.17 that caused tooltips in AME dialogs to appear underneath the dialogs.
+* Fixed a few jQuery deprecation warnings in the knockout-sortable library.
+* Switched TypeScript to strict mode.
 
 = 1.11 =
 * Fixed a minor conflict with the WPForms plugin where the hidden menu item "Dashboard -> Welcome to WPForms" became visible when Admin Menu Editor was installed.

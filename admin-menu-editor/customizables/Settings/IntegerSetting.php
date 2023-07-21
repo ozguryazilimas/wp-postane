@@ -19,4 +19,13 @@ class IntegerSetting extends NumericSetting {
 
 		return intval($value);
 	}
+
+	public function serializeValidationRules() {
+		$result = parent::serializeValidationRules();
+		if ( !isset($result['parsers']) ) {
+			$result['parsers'] = [];
+		}
+		$result['parsers'][] = ['int'];
+		return $result;
+	}
 }

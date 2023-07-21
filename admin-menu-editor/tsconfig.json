@@ -2,7 +2,8 @@
 	"compilerOptions": {
 		"module": "none",
 		"target": "es5",
-		"sourceMap": true
+		"sourceMap": true,
+		"strict": true
 	},
 	"exclude": []
 }

@@ -4,11 +4,14 @@ namespace YahnisElsts\AdminMenuEditor\Customizable\Builders;
 
 use YahnisElsts\AdminMenuEditor\Customizable\Settings;
 use YahnisElsts\AdminMenuEditor\Customizable\Storage\StorageInterface;
+use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\Borders;
+use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\BorderStyle;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\BoxShadow;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\CssColorSetting;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\CssEnumSetting;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\CssLengthSetting;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\Font;
+use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\IndividualBorder;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Settings\Spacing;
 
 class SettingFactory {
@@ -27,6 +30,8 @@ class SettingFactory {
 	 * @var bool Whether to enable postMessage for all settings created by this factory.
 	 */
 	protected $enablePostMessageForAll = false;
+
+	protected $tagsToApply = array();
 
 	public function __construct(StorageInterface $store, array $defaults = array(), $idPrefix = '') {
 		$this->store = $store;
@@ -49,6 +54,9 @@ class SettingFactory {
 		}
 		if ( $this->enablePostMessageForAll ) {
 			$params['supportsPostMessage'] = true;
+		}
+		if ( !empty($this->tagsToApply) ) {
+			$params['tags'] = $this->tagsToApply;
 		}
 		return $params;
 	}
@@ -222,6 +230,31 @@ class SettingFactory {
 		);
 	}
 
+	public function cssBorders($path, $label = null, $params = array()) {
+		return new Borders(
+			$this->idFrom($path),
+			$this->slotFor($path),
+			$this->prepareParams($path, $label, $params)
+		);
+	}
+
+	public function cssIndividualBorder($path, $label = null, $params = array()) {
+		return new IndividualBorder(
+			$this->idFrom($path),
+			$this->slotFor($path),
+			$this->prepareParams($path, $label, $params)
+		);
+	}
+
+	public function cssBorderStyle($path, $cssProperty = 'border-style', $label = null, $params = array()) {
+		return new BorderStyle(
+			$this->idFrom($path),
+			$this->slotFor($path),
+			$cssProperty,
+			$this->prepareParams($path, $label, $params)
+		);
+	}
+
 	/**
 	 * @param string $path
 	 * @param string $dataType
@@ -272,6 +305,14 @@ class SettingFactory {
 		);
 	}
 
+	/**
+	 * @param class-string<\YahnisElsts\AdminMenuEditor\Customizable\Settings\AbstractSetting> $settingClass
+	 * @param string|array<string> $path
+	 * @param string|null $label
+	 * @param $params
+	 * @param ...$otherConstructorArgs
+	 * @return \YahnisElsts\AdminMenuEditor\Customizable\Settings\AbstractSetting
+	 */
 	public function create($settingClass, $path, $label = null, $params = array(), ...$otherConstructorArgs) {
 		//$params is always the last constructor argument.
 		$otherConstructorArgs[] = $this->prepareParams($path, $label, $params);
@@ -302,5 +343,15 @@ class SettingFactory {
 
 	public function disablePostMessage() {
 		$this->enablePostMessageForAll = false;
+	}
+
+	/**
+	 * Tell the factory to add the specified tags to all settings that it creates.
+	 *
+	 * @param string[] $tags
+	 * @return void
+	 */
+	public function setTags(...$tags) {
+		$this->tagsToApply = $tags;
 	}
 }

@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../../js/knockout.d.ts" />
 /// <reference path="../../js/jquery.d.ts" />
 /// <reference path="../../js/jqueryui.d.ts" />
@@ -23,6 +24,9 @@ var AmeRedirectorUi;
         },
         getId() {
             return DefaultActorId;
+        },
+        isUser() {
+            return false;
         }
     };
     class Redirect {
@@ -30,7 +34,7 @@ var AmeRedirectorUi;
             this.actorId = properties.actorId;
             this.trigger = properties.trigger;
             this.urlTemplate = ko.observable(properties.urlTemplate);
-            this.menuTemplateId = ko.observable(properties.hasOwnProperty('menuTemplateId') ? properties.menuTemplateId : '');
+            this.menuTemplateId = ko.observable((typeof properties.menuTemplateId === 'string') ? properties.menuTemplateId : '');
             this.canToggleShortcodes = ko.pureComputed(() => {
                 return (this.menuTemplateId().trim() === '');
             });
@@ -59,7 +63,27 @@ var AmeRedirectorUi;
             }
             else {
                 const provider = actorProvider ? actorProvider : AmeActors;
-                this.actor = provider.getActor(this.actorId);
+                const actor = provider.getActor(this.actorId);
+                if (actor !== null) {
+                    this.actor = actor;
+                }
+                else {
+                    if (console && console.warn) {
+                        console.warn('Redirect constructor - Actor not found: ', this.actorId);
+                    }
+                    const missingActorId = this.actorId;
+                    this.actor = {
+                        getDisplayName() {
+                            return 'Missing role or user';
+                        },
+                        getId() {
+                            return missingActorId;
+                        },
+                        isUser() {
+                            return false;
+                        }
+                    };
+                }
             }
             this.actorTypeNoun = ko.pureComputed(() => {
                 const prefix = this.actorId.substring(0, this.actorId.indexOf(':'));
@@ -214,7 +238,8 @@ var AmeRedirectorUi;
         }
         toArray() {
             let results = [];
-            for (let key in AllKnownTriggers) {
+            let key;
+            for (key in AllKnownTriggers) {
                 if (this.hasOwnProperty(key)) {
                     const view = this[key];
                     results.push(...view.toArray());
@@ -324,6 +349,9 @@ var AmeRedirectorUi;
             }
             return actorId.substring(delimiterPos + 1);
         }
+        isUser() {
+            return false;
+        }
     }
     class MissingRolePlaceholder extends MissingActorPlaceholder {
     }
@@ -332,6 +360,12 @@ var AmeRedirectorUi;
             super(actorId);
             this.isSuperAdmin = false;
             this.userLogin = this.idWithoutPrefix(actorId);
+        }
+        isUser() {
+            return true;
+        }
+        getRoleIds() {
+            return [];
         }
     }
     class App {
@@ -710,7 +744,7 @@ jQuery(function ($) {
             });
         }
     };
-    const $container = $('#ame-redirector-ui-root');
+    const $container = jQuery('#ame-redirector-ui-root');
     const ameRedirectorApp = new AmeRedirectorUi.App(wsAmeRedirectorSettings);
     ko.applyBindings(ameRedirectorApp, $container.get(0));
     //Open the menu dropdown when the user clicks the trigger icon or presses
@@ -732,8 +766,10 @@ jQuery(function ($) {
     $container.on('keydown', redirectInputSelector, function (event) {
         //Ignore repeated "keydown" events. These will happen even if the key was originally
         //pressed in a different element.
-        if ((typeof event.originalEvent['repeat'] !== 'undefined') && (event.originalEvent['repeat'] === true)) {
-            return;
+        if (event.originalEvent instanceof KeyboardEvent) {
+            if ((typeof event.originalEvent['repeat'] !== 'undefined') && event.originalEvent['repeat']) {
+                return;
+            }
         }
         if (event.which === 40) {
             lastDownArrowTarget = event.target;

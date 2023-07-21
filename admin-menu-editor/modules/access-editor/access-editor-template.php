@@ -201,7 +201,7 @@ if ( isset($GLOBALS['wp_version']) && version_compare($GLOBALS['wp_version'], '5
 	</div>
 
 	<div class="ws_dialog_buttons">
-		<input type="button" class="button-primary" value="Save Changes" id="ws_save_access_settings">
+		<input type="button" class="button-primary" value="OK" id="ws_save_access_settings">
 		<input type="button" class="button ws_close_dialog" value="Cancel">
 	</div>
 

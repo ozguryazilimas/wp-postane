@@ -95,5 +95,104 @@ var AmeMiniFunc;
         }
     }
     AmeMiniFunc.lift = lift;
+    //endregion
+    //region Either
+    class Either {
+        map(f) {
+            if (this.isRight()) {
+                return new Right(f(this.value));
+            }
+            else {
+                return this; //Should be safe.
+            }
+        }
+        flatMap(f) {
+            if (this.isRight()) {
+                return f(this.value);
+            }
+            else {
+                return this;
+            }
+        }
+        toOption() {
+            if (this.isRight()) {
+                return some(this.value);
+            }
+            else {
+                return AmeMiniFunc.none;
+            }
+        }
+        static left(value) {
+            return new Left(value);
+        }
+        static right(value) {
+            return new Right(value);
+        }
+    }
+    AmeMiniFunc.Either = Either;
+    class Left extends Either {
+        constructor(value) {
+            super();
+            this.value = value;
+        }
+        isLeft() {
+            return true;
+        }
+        isRight() {
+            return false;
+        }
+        getOrElse(defaultValue) {
+            return defaultValue();
+        }
+    }
+    AmeMiniFunc.Left = Left;
+    class Right extends Either {
+        constructor(value) {
+            super();
+            this.value = value;
+        }
+        isLeft() {
+            return false;
+        }
+        isRight() {
+            return true;
+        }
+        getOrElse(defaultValue) {
+            return this.value;
+        }
+    }
+    AmeMiniFunc.Right = Right;
+    //endregion
+    //region Misc
+    function sanitizeNumericString(str) {
+        if (str === '') {
+            return '';
+        }
+        let sanitizedString = str
+            //Replace commas with periods.
+            .replace(/,/g, '.')
+            //Remove all non-numeric characters.
+            .replace(/[^0-9.-]/g, '')
+            //Remove all but the last period.
+            .replace(/\.(?=.*\.)/g, '');
+        //Keep a minus sign only if it's the first character. Remove all other occurrences.
+        const hasMinusSign = (sanitizedString.charAt(0) === '-');
+        sanitizedString = sanitizedString.replace(/-/g, '');
+        if (hasMinusSign) {
+            sanitizedString = '-' + sanitizedString;
+        }
+        return sanitizedString;
+    }
+    AmeMiniFunc.sanitizeNumericString = sanitizeNumericString;
+    function forEachObjectKey(collection, callback) {
+        for (const k in collection) {
+            if (!collection.hasOwnProperty(k)) {
+                continue;
+            }
+            callback(k, collection[k]);
+        }
+    }
+    AmeMiniFunc.forEachObjectKey = forEachObjectKey;
+    //endregion
 })(AmeMiniFunc || (AmeMiniFunc = {}));
 //# sourceMappingURL=mini-func.js.map

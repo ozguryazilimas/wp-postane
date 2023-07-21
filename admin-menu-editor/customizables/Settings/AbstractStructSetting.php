@@ -206,6 +206,9 @@ abstract class AbstractStructSetting extends AbstractSetting implements \ArrayAc
 			$child->enablePostMessageSupport();
 		}
 
+		//Children inherit the parent's tags.
+		$child->addTags(...$this->tags);
+
 		$this->registerChild($childKey, $child);
 
 		return $child;

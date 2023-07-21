@@ -9,7 +9,7 @@ use YahnisElsts\AdminMenuEditor\Customizable\Settings\Setting;
 use YahnisElsts\AdminMenuEditor\Customizable\Storage\AbstractSettingsDictionary;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Controls\BackgroundPositionSelector;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Controls\BackgroundRepeat;
-use YahnisElsts\AdminMenuEditor\ProCustomizable\Controls\BoxSideSizes;
+use YahnisElsts\AdminMenuEditor\ProCustomizable\Controls\BoxDimensions;
 use YahnisElsts\AdminMenuEditor\ProCustomizable\Controls\FontStylePicker;
 
 class ElementBuilderFactory {
@@ -181,8 +181,8 @@ class ElementBuilderFactory {
 		return new NumberInputBuilder($this->findSettings($idOrSetting));
 	}
 
-	public function boxSides($idOrSetting = null) {
-		return $this->initControlBuilder(BoxSideSizes::class, $idOrSetting);
+	public function boxDimensions($idOrSetting = null) {
+		return $this->initControlBuilder(BoxDimensions::class, $idOrSetting);
 	}
 
 	/**
@@ -245,7 +245,7 @@ class ElementBuilderFactory {
 			$controls = $firstSetting->createControls($this);
 			return $this->section(
 				$title ?: $firstSetting->getLabel(),
-				$controls
+				...$controls
 			)->params(['preferredRole' => $role]);
 		}
 

@@ -13,7 +13,7 @@ $invalidColor: #d63638; //Matches the Theme Customizer.
 
 @mixin ame-invalid-input-styles {
 	select, input {
-		&:invalid {
+		&:invalid, &.ame-has-validation-errors {
 			border-color: $invalidColor;
 
 			//Override the box shadow that WordPress adds on focus.

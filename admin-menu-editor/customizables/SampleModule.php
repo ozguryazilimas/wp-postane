@@ -134,6 +134,7 @@ class SampleModule extends ameModule {
 				),
 
 			$b->auto('unused_item_position')
+				->asGroup()
 				->tooltip(
 					"This setting controls the position of menu items that are not present 
 					 in the last saved menu	configuration.
@@ -144,6 +145,7 @@ class SampleModule extends ameModule {
 				),
 
 			$b->auto('deep_nesting_enabled')
+				->asGroup()
 				->tooltip(
 					"Caution: Experimental feature.<br>
 					 This feature might not work as expected, and it could cause conflicts with other plugins or themes.",

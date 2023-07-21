@@ -106,7 +106,7 @@
             templateElement = document.getElementById(name);
             if (templateElement) {
                 templateSource = new ko.templateSources.domElement(templateElement);
-                templateSource.text($.trim(templateSource.text()));
+                templateSource.text(String(templateSource.text()).trim());
             }
         }
         else {
@@ -183,7 +183,7 @@
                         dataSet(el, INDEXKEY, ko.utils.arrayIndexOf(ui.item.parent().children(), el));
 
                         //make sure that fields have a chance to update model
-                        ui.item.find("input:focus").change();
+                        ui.item.find("input:focus").trigger('change');
                         if (startActual) {
                             startActual.apply(this, arguments);
                         }

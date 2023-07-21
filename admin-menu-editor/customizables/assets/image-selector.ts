@@ -6,7 +6,7 @@ namespace AmeImageSelectorApi {
 	const $ = jQuery;
 	const _ = wsAmeLodash;
 
-	let mediaFrame = null,
+	let mediaFrame: null|ReturnType<typeof wp.media> = null,
 		currentImageSelector: ImageSelector | null = null;
 
 	const imageChangeEvents = [
@@ -216,9 +216,9 @@ namespace AmeImageSelectorApi {
 
 			//Handle some cases where the image exists but the preview URL is not specified.
 			if (hasImage && !previewUrl) {
-				if (hasExternalUrl) {
+				if (hasExternalUrl && (typeof image.externalUrl !== 'undefined')) {
 					previewUrl = image.externalUrl;
-				} else if (hasAttachment) {
+				} else if (hasAttachment && (typeof image.attachmentId !== 'undefined')) {
 					previewUrl = wp.media.attachment(image.attachmentId).get('url');
 					//This may return undefined if the attachment hasn't been loaded yet.
 					//setPreviewImage() should handle that situation.
@@ -302,7 +302,7 @@ namespace AmeImageSelectorApi {
 
 				wp.media.attachment(attachmentId).fetch().then(
 					//Success.
-					(attachment) => onLoadingDone(attachment && attachment.url),
+					(attachment: any) => onLoadingDone(attachment && attachment.url),
 					//Error.
 					() => onLoadingDone(null)
 				);
@@ -364,7 +364,7 @@ namespace AmeImageSelectorApi {
 
 		private shortenLabels() {
 			this.$container.find('.ame-image-selector-actions [data-ac-label]')
-				.each(function () {
+				.each(function (this: HTMLElement) {
 					const $action = $(this);
 					const label = $action.data('ac-label');
 					if (label) {
@@ -407,7 +407,7 @@ namespace AmeImageSelectorApi {
 		}
 	}
 
-	function isPlausibleImageUrl(input) {
+	function isPlausibleImageUrl(input: string) {
 		if (typeof URL !== 'undefined') {
 			try {
 				const url = new URL(input);
@@ -427,9 +427,9 @@ namespace AmeImageSelectorApi {
 	}
 }
 
-jQuery(function ($) {
+jQuery(function ($: JQueryStatic) {
 	//Initialize image selectors.
-	$('.ame-image-selector-v2').each(function () {
+	$('.ame-image-selector-v2').each(function (this: HTMLElement) {
 		const $this = $(this);
 		if ($this.data('ameIsComponent')) {
 			return; //Let components handle their own initialization.
@@ -441,7 +441,7 @@ jQuery(function ($) {
 	//use the shorter labels because the sidebar is too narrow.
 	$('#ame-ac-admin-customizer')
 		.find('.ame-image-selector-v2 .ame-image-selector-actions [data-ac-label]')
-		.each(function () {
+		.each(function (this: HTMLElement) {
 			const $action = $(this);
 			const label = $action.data('ac-label');
 			if (label) {

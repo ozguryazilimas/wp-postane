@@ -20,6 +20,11 @@ class NumberInputBuilder extends ControlBuilder {
 		return $this;
 	}
 
+	public function step($step) {
+		$this->params['step'] = $step;
+		return $this;
+	}
+
 	public function unitSetting(Settings\Setting $unitSetting) {
 		$this->params['unit'] = $unitSetting;
 		return $this;

@@ -15,7 +15,7 @@ abstract class NumericSetting extends Setting {
 	 */
 	protected $maxValue = null;
 
-	public function __construct($id, StorageInterface $store = null, $params = array()) {
+	public function __construct($id, StorageInterface $store = null, $params = []) {
 		parent::__construct($id, $store, $params);
 
 		$this->minValue = isset($params['minValue']) ? $params['minValue'] : $this->minValue;
@@ -58,5 +58,24 @@ abstract class NumericSetting extends Setting {
 	 */
 	public function getMaxValue() {
 		return $this->maxValue;
+	}
+
+	public function serializeValidationRules() {
+		$result = [];
+		if ( $this->isNullable() ) {
+			$result['isNullable'] = true;
+			$result['convertEsToNull'] = true;
+		}
+
+		$parserConfig = [];
+		if ( $this->minValue !== null ) {
+			$parserConfig['min'] = $this->minValue;
+		}
+		if ( $this->maxValue !== null ) {
+			$parserConfig['max'] = $this->maxValue;
+		}
+		$result['parsers'] = [['numeric', $parserConfig]];
+
+		return $result;
 	}
 }

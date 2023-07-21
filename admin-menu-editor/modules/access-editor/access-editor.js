@@ -317,6 +317,8 @@ window.AmeItemAccessEditor = (function ($) {
 						grantedCapabilities   : unsavedCapabilities
 					}
 				);
+
+				$(document).trigger('adminMenuEditor:menuConfigChanged');
 			}
 
 			$editor.dialog('close');

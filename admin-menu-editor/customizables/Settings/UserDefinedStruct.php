@@ -12,6 +12,10 @@ class UserDefinedStruct extends AbstractStructSetting {
 
 		if ( isset($params['childGenerator']) && is_callable($params['childGenerator']) ) {
 			$childFactory = new Builders\StructChildSettingFactory($this);
+
+			//Children inherit the parent's tags.
+			$childFactory->setTags(...$this->tags);
+
 			$children = call_user_func($params['childGenerator'], $childFactory);
 			if ( is_array($children) ) {
 				$expectedIdPrefix = $this->getId() . '.';

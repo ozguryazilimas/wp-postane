@@ -1,9 +1,11 @@
+"use strict";
 /// <reference path="../../js/knockout.d.ts" />
 /// <reference path="../../js/jquery.d.ts" />
 /// <reference path="../../js/jqueryui.d.ts" />
 /// <reference path="../../js/lodash-3.10.d.ts" />
 /// <reference path="../../modules/actor-selector/actor-selector.ts" />
 /// <reference path="../../ajax-wrapper/ajax-action-wrapper.d.ts" />
+let amePluginVisibility;
 class AmePluginVisibilityModule {
     constructor(scriptData) {
         const _ = AmePluginVisibilityModule._;
@@ -36,14 +38,19 @@ class AmePluginVisibilityModule {
         this.plugins.sort(function (a, b) {
             return a.name().localeCompare(b.name());
         });
-        this.privilegedActors = [this.actorSelector.getCurrentUserActor()];
+        this.privilegedActors = [];
+        const currentUser = this.actorSelector.getCurrentUserActor();
+        if (currentUser) {
+            this.privilegedActors.push(currentUser);
+        }
         if (this.isMultisite) {
             this.privilegedActors.push(AmeActors.getSuperAdmin());
         }
         this.areNewPluginsVisible = ko.computed({
             read: () => {
-                if (this.selectedActor() !== null) {
-                    let canSeePluginsByDefault = this.getGrantAccessByDefault(this.selectedActor());
+                const selectedActor = this.selectedActor();
+                if (selectedActor !== null) {
+                    let canSeePluginsByDefault = this.getGrantAccessByDefault(selectedActor);
                     return canSeePluginsByDefault();
                 }
                 return _.every(this.actorSelector.getVisibleActors(), (actor) => {
@@ -56,8 +63,9 @@ class AmePluginVisibilityModule {
                 });
             },
             write: (isChecked) => {
-                if (this.selectedActor() !== null) {
-                    let canSeePluginsByDefault = this.getGrantAccessByDefault(this.selectedActor());
+                const selectedActor = this.selectedActor();
+                if (selectedActor !== null) {
+                    let canSeePluginsByDefault = this.getGrantAccessByDefault(selectedActor);
                     canSeePluginsByDefault(isChecked);
                     return;
                 }
@@ -145,7 +153,7 @@ class AmePluginVisibilityModule {
                     return false;
                 }
             });
-            return (result || AmeActors.hasCap(actor.id, 'activate_plugins'));
+            return (result || (!!AmeActors.hasCap(actor.id, 'activate_plugins')));
         }
         return false;
     }
@@ -170,10 +178,16 @@ class AmePluginVisibilityModule {
                 })
             };
             //Filter out grants that match the default settings.
-            result.plugins[plugin.fileName].grantAccess = _.pick(result.plugins[plugin.fileName].grantAccess, (allowed, actorId) => {
-                const defaultState = this.getGrantAccessByDefault(actorId)() && plugin.isVisibleByDefault();
-                return (allowed !== defaultState);
-            });
+            const grantAccess = result.plugins[plugin.fileName].grantAccess;
+            if (typeof grantAccess !== 'undefined') {
+                result.plugins[plugin.fileName].grantAccess = _.pick(grantAccess, (allowed, actorId) => {
+                    if (typeof actorId === 'undefined') {
+                        return false;
+                    }
+                    const defaultState = this.getGrantAccessByDefault(actorId)() && plugin.isVisibleByDefault();
+                    return (allowed !== defaultState);
+                });
+            }
             //Don't store the "grantAccess" map if it's empty.
             if (_.isEmpty(result.plugins[plugin.fileName].grantAccess)) {
                 delete result.plugins[plugin.fileName].grantAccess;
@@ -302,7 +316,7 @@ jQuery(function ($) {
     amePluginVisibility = new AmePluginVisibilityModule(wsPluginVisibilityData);
     ko.applyBindings(amePluginVisibility, document.getElementById('ame-plugin-visibility-editor'));
     //Permanently dismiss the usage hint via AJAX.
-    $('#ame-pv-usage-notice').on('click', '.notice-dismiss', function () {
+    jQuery('#ame-pv-usage-notice').on('click', '.notice-dismiss', function () {
         AjawV1.getAction('ws_ame_dismiss_pv_usage_notice').request();
     });
 });

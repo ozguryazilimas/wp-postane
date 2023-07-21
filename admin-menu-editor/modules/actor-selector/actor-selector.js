@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../../js/jquery.d.ts" />
 /// <reference path="../../js/actor-manager.ts" />
 class AmeActorSelector {
@@ -9,6 +10,7 @@ class AmeActorSelector {
         this.isProVersion = false;
         this.allOptionEnabled = true;
         this.cachedVisibleActors = null;
+        this.selectorNode = null;
         this.isDomInitStarted = false;
         this.actorManager = actorManager;
         if (typeof isProVersion !== 'undefined') {
@@ -80,7 +82,13 @@ class AmeActorSelector {
         this.selectedActor = actorId;
         this.highlightSelectedActor();
         if (actorId !== null) {
-            this.selectedDisplayName = this.actorManager.getActor(actorId).getDisplayName();
+            const actor = this.actorManager.getActor(actorId);
+            if (actor !== null) {
+                this.selectedDisplayName = actor.getDisplayName();
+            }
+            else {
+                this.selectedDisplayName = '[' + actorId + ']';
+            }
         }
         else {
             this.selectedDisplayName = 'All';
@@ -100,6 +108,9 @@ class AmeActorSelector {
         if (!this.isDomInitStarted) {
             this.initDOM();
         }
+        if (this.selectorNode === null) {
+            return; //Should never happen since initDOM() should have set this.
+        }
         //Deselect the previous item.
         this.selectorNode.find('.current').removeClass('current');
         //Select the new one or "All".
@@ -113,6 +124,9 @@ class AmeActorSelector {
         this.selectorNode.find(selector).addClass('current');
     }
     populateActorSelector() {
+        if (this.selectorNode === null) {
+            return; //Not initialized yet.
+        }
         const actorSelector = this.selectorNode, $ = jQuery;
         let isSelectedActorVisible = false;
         //Build the list of available actors.
@@ -169,18 +183,24 @@ class AmeActorSelector {
             actors.push(role);
         });
         //Include the Super Admin (multisite only).
-        if (this.actorManager.getUser(this.currentUserLogin).isSuperAdmin) {
+        const user = this.actorManager.getUser(this.currentUserLogin);
+        if (user && user.isSuperAdmin) {
             actors.push(this.actorManager.getSuperAdmin());
         }
         //Include the current user.
-        actors.push(this.actorManager.getUser(this.currentUserLogin));
+        const currentUser = this.actorManager.getUser(this.currentUserLogin);
+        if (currentUser) {
+            actors.push(currentUser);
+        }
         //Include other visible users.
         _(this.visibleUsers)
             .without(this.currentUserLogin)
             .sortBy()
             .forEach((login) => {
             const user = this.actorManager.getUser(login);
-            actors.push(user);
+            if (user) {
+                actors.push(user);
+            }
         })
             .value();
         this.cachedVisibleActors = actors;

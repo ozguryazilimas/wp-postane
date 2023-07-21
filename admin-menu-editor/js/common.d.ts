@@ -25,6 +25,8 @@ type AmeRecursiveObservablePropertiesOf<T> = {
 
 type Constructor<T> = new (...args: any[]) => T;
 
+type WithRequiredKey<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
+
 interface JQuery {
 	//My jQuery typings are out of date, and are missing this signature for the "off" method
 	//where the callback takes additional arguments.
@@ -37,7 +39,8 @@ interface JQuery {
  */
 declare const wp: {
 	codeEditor: {
-		initialize: (textarea: string, options: Partial<WpEditorInitSettings>) => any;
+		//See /wp-admin/js/code-editor.js for basic method documentation.
+		initialize: (textarea: string|JQuery|Element, options: object) => any;
 	};
 	media: {
 		(attributes: {
@@ -51,7 +54,7 @@ declare const wp: {
 	};
 	editor: {
 		remove: (id: string) => void;
-		initialize: (id: string, settings: object) => any;
+		initialize: (id: string, settings: Partial<WpEditorInitSettings>) => any;
 	};
 };
 

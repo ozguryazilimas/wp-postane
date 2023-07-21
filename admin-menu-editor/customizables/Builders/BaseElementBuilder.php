@@ -39,7 +39,10 @@ abstract class BaseElementBuilder implements ElementBuilder {
 			if ( $item instanceof ElementBuilder ) {
 				$item = $item->build();
 			} elseif ( !($item instanceof UiElement) ) {
-				throw new \InvalidArgumentException('Invalid item type.');
+				$typeString = is_object($item) ? get_class($item) : gettype($item);
+				throw new \InvalidArgumentException(
+					'Invalid item type for an element builder: ' . $typeString
+				);
 			}
 
 			if ( $preserveKeys ) {

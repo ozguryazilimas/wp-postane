@@ -296,6 +296,7 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background: #fff;
   margin-bottom: 20px;
+  border: 1px solid #ccd0d4;
   margin-bottom: 0;
   padding: 10px 8px;
   border: 1px solid #ccd0d4;
@@ -305,7 +306,7 @@
   font-size: 14px;
   margin: 0;
   line-height: 1.4;
-  border: 1px solid #ccd0d4;
+  border-bottom: 1px solid #ccd0d4;
 }
 #ame-rui-main-actions .ws-ame-postbox-header h3 {
   padding: 10px 12px;
@@ -318,7 +319,7 @@
 }
 #ame-rui-main-actions .ws-ame-postbox-toggle {
   color: #72777c;
-  background: #fff;
+  background: transparent;
   display: block;
   font: normal 20px/1 dashicons;
   text-align: center;
@@ -351,7 +352,6 @@
   height: 100%;
 }
 #ame-rui-main-actions .ws-ame-postbox-content {
-  border: 1px solid #ccd0d4;
   border-top: none;
   padding: 12px;
 }
@@ -360,6 +360,9 @@
 }
 #ame-rui-main-actions.ws-ame-closed-postbox .ws-ame-postbox-toggle:before {
   content: "\f140";
+}
+#ame-rui-main-actions.ws-ame-closed-postbox .ws-ame-postbox-header {
+  border-bottom: none;
 }
 #ame-rui-main-actions input.button {
   max-width: 150px;

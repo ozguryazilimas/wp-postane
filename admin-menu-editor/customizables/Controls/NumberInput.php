@@ -182,17 +182,21 @@ class NumberInput extends AbstractNumericControl {
 	protected function getKoComponentParams() {
 		$params = parent::getKoComponentParams();
 
+		$unitText = $this->getCurrentUnit();
+		$hasUnitDropdown = false;
+
 		if ( $this->unitSetting instanceof Settings\EnumSetting ) {
+			$hasUnitDropdown = true;
 			$params['hasUnitDropdown'] = true;
-			$params['unitElementId'] = $this->getUnitElementId();
 			$params['unitDropdownOptions'] = ChoiceControlOption::generateKoOptions(
 				$this->unitSetting->generateChoiceOptions()
 			);
-		} else {
-			$unitText = $this->getCurrentUnit();
-			if ( !empty($unitText) ) {
-				$params['unitText'] = $unitText;
-			}
+		} else if ( !empty($unitText) ) {
+			$params['unitText'] = $unitText;
+		}
+
+		if ( $hasUnitDropdown || !empty($unitText) ) {
+			$params['unitElementId'] = $this->getUnitElementId();
 		}
 
 		return $params;
