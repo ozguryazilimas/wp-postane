@@ -971,8 +971,25 @@ var ure_main = {
         } else {
             jQuery.notify( data.message, 'error');
         }
-    }
+    },
     
+
+    turn_caps_readable: function() {
+
+        jQuery('.ure-cap-cb').each(function () {   // switch by places cap label title and text
+            var label_id = '#' + this.id + '_label';
+            var label_title = jQuery(label_id).prop('title');
+            if (label_title !== this.id) {
+                jQuery(label_id).prop('title', this.id);
+                jQuery(label_id).text(label_title);
+            } else {
+                jQuery(label_id).prop('title', jQuery(label_id).text());
+                jQuery(label_id).text(label_title);
+            }
+        });
+
+    }
+
 
 };  // end of ure_main declaration
 //-------------------------------
@@ -1083,18 +1100,6 @@ jQuery(function ($) {
 
 });
 // end of jQuery(function() ...
-
-
-function ure_turn_caps_readable(user_id) {
-    var ure_obj = 'user';
-    if (user_id === 0) {
-        ure_obj = 'role';
-    }
-
-    jQuery.ure_postGo(ure_data.page_url, {action: 'caps-readable', object: ure_obj, user_id: user_id, ure_nonce: ure_data.wp_nonce});
-
-}
-// end of ure_turn_caps_readable()
 
 
 function ure_turn_deprecated_caps(user_id) {

@@ -150,7 +150,7 @@ class URE_User_View extends URE_View {
         }
 ?>  
 		<input type="checkbox" name="ure_caps_readable" id="ure_caps_readable" value="1" 
-      <?php echo $checked; ?> onclick="ure_turn_caps_readable(<?php echo $this->user_to_edit->ID; ?>);"  />
+      <?php echo $checked; ?> onclick="ure_main.turn_caps_readable();"  />
     <label for="ure_caps_readable"><?php esc_html_e('Show capabilities in human readable form', 'user-role-editor'); ?></label>&nbsp;&nbsp;&nbsp;
 <?php
     if ($show_deprecated_caps) {

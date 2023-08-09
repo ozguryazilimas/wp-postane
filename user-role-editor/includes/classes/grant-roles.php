@@ -359,7 +359,7 @@ class URE_Grant_Roles {
         $other_roles = array_values($user->roles);
         $primary_role = array_shift($other_roles);
         
-        $answer = array('result'=>'success', 'primary_role'=>$primary_role, 'other_roles'=>$other_roles);
+        $answer = array('result'=>'success', 'primary_role'=>$primary_role, 'other_roles'=>$other_roles, 'message'=>'User roles were sent');
         
         return $answer;
     }

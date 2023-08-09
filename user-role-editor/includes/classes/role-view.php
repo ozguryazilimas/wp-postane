@@ -349,7 +349,7 @@ if ($multisite && !is_network_admin()) {
         $caps_access_restrict_for_simple_admin = $this->lib->get_option('caps_access_restrict_for_simple_admin', 0);
         if ($this->lib->is_super_admin() || !$multisite || !$this->lib->is_pro() || !$caps_access_restrict_for_simple_admin) {
 ?>              
-            <input type="checkbox" name="ure_caps_readable" id="ure_caps_readable" value="1" <?php echo $checked; ?> onclick="ure_turn_caps_readable(0);"/>
+            <input type="checkbox" name="ure_caps_readable" id="ure_caps_readable" value="1" <?php echo $checked; ?> onclick="ure_main.turn_caps_readable();"/>
             <label for="ure_caps_readable"><?php esc_html_e('Show capabilities in human readable form', 'user-role-editor'); ?></label>&nbsp;&nbsp;
 <?php
             $show_deprecated_caps = $this->editor->get('show_deprecated_caps');

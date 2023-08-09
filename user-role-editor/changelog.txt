@@ -1,6 +1,10 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.64] 08.08.2023 =
+* Update: "Show capabilities in human readable form" checkbox switches between capability 2 text forms without full page reloading using JavaScript.
+* Fix: Missed 'message' parameter was added  to a response for AJAX request. It fixed the PHP Warning:  Undefined array key "message" in expressions like "strpos( $data['message'], ...
+
 = [4.63.3] 12.03.2023 =
 * Fix: PHP version 8.2 showed warning: Creation of dynamic property User_Role_Editor::$settings_page_hook is deprecated : wp-content/plugins/user-role-editor/includes/classes/user-role-editor.php:603
 * Fix: PHP Fatal error:  Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, int given in wp-content/plugins/user-role-editor/includes/classes/view.php:81
