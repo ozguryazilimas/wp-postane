@@ -5,8 +5,8 @@ Donate link: https://yarpp.com
 Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
-Tested up to: 6.2
-Stable tag: 5.30.5
+Tested up to: 6.3
+Stable tag: 5.30.6
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -562,9 +562,12 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+= 5.30.6 (09-August-2023) =
+* Tested on WordPress 6.3
+
 = 5.30.5 (18-July-2023) =
 * [Bugfix](https://wordpress.org/support/topic/bug-report-title-anchor-tag-includes-extra-space-at-tail-end-of-title/): Fixes extra space at tail end of title anchor tag that was appearing for admins in the default template
-* Bugfix: Template preview will now work even if server configuration does not have `allow_url_fopen` on (Thank you Ken @ krdev)
+* [Bugfix] Template preview will now work even if server configuration does not have `allow_url_fopen` on (Thank you Ken @ krdev)
 * [Bugfix](https://wpscan.com/vulnerability/b34976b3-54c3-45b7-86a0-387ee0a4b680): Improves how YARPP function attributes are sanitized to avoid possible security issues
 
 = 5.30.4 (17-July-2023) =
@@ -1490,5 +1493,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.30.5 =
+= 5.30.6 =
 We update YARPP regularly so we can keep making it better for you. Update to the latest version for the latest features and improvements. Thank you for using YARPP!
