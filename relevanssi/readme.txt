@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 4.21.0
+Stable tag: 4.21.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,13 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.21.1 =
+* Changed behaviour: The 'relevanssi_index_content' and 'relevanssi_index_titles' filter hooks now get the post object as a second parameter.
+* Minor fix: Relevanssi is now blocked in the reusable content block search.
+* Minor fix: Stop Relevanssi from blocking the feed searches.
+* Minor fix: Improve exact match boosts with accented letters.
+* Minor fix: Entering synonyms in Polylang all languages mode was possible; it shouldn't be.
+
 = 4.21.0 =
 * New feature: New filter hook `relevanssi_highlight_regex` makes it possible to adjust the regex used for highlighting.
 * New feature: New filter hook `relevanssi_excerpt_custom_fields` filters the list of custom fields used for creating the excerpt.
@@ -183,6 +190,12 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: Taxonomy query handling was improved. This should help in particular Polylang users who've had problems with Relevanssi ignoring Polylang language restrictions.
 
 == Upgrade notice ==
+= 4.21.1 =
+* Bug fixes: Polylang compatibility, feed searches, accented letters.
+
+= 4.21.0 =
+* New filter hooks, debugging tools and bug fixes.
+
 = 4.20.0 =
 * Better method for handling custom fields in excerpts, bug fixes.
 
