@@ -298,6 +298,10 @@ abstract class ameMenu {
 	public static function wp2tree($menu, $submenu, $blacklist = array()){
 		$tree = array();
 		foreach ($menu as $pos => $item){
+			//Sanity check: The item should be array-like.
+			if ( !is_array($item) && !($item instanceof ArrayAccess) ) {
+				continue;
+			}
 
 			$tree_item = ameMenuItem::blank_menu();
 			$tree_item['defaults'] = ameMenuItem::fromWpItem($item, $pos);
@@ -307,6 +311,11 @@ abstract class ameMenu {
 			$parent = $tree_item['defaults']['file'];
 			if ( isset($submenu[$parent]) ){
 				foreach($submenu[$parent] as $position => $subitem){
+					//Sanity check: Same as above.
+					if ( !is_array($subitem) && !($subitem instanceof ArrayAccess) ) {
+						continue;
+					}
+
 					$defaults = ameMenuItem::fromWpItem($subitem, $position, $parent);
 
 					//Skip blacklisted items.

@@ -53,6 +53,11 @@ class amePluginVisibility extends amePersistentModule {
 		//However, we can still block edits and *some* other actions that WP verifies with check_admin_referer().
 		add_action('check_admin_referer', array($this, 'authorizePluginAction'));
 
+		//Also block disallowed AJAX plugin edits by using the "editable_extensions" filter
+		//to remove all file extensions from the list for hidden plugins.
+		//See functions called by wp_ajax_edit_theme_plugin_file().
+		add_filter('editable_extensions', array($this, 'authorizePluginFileEdit'), 15, 2);
+
 		//Register the plugin visibility tab.
 		add_action('admin_menu_editor-header', array($this, 'handleFormSubmission'), 10, 2);
 
@@ -293,26 +298,7 @@ class amePluginVisibility extends amePersistentModule {
 		if ( preg_match('@^edit-plugin_(?P<file>.+)$@', $action, $matches) ) {
 
 			//The file that's being edited is part of a plugin. Find that plugin.
-			$fileName = wp_normalize_path($matches['file']);
-			$fileDirectory = ameUtils::getFirstDirectory($fileName);
-			$selectedPlugin = null;
-
-			$pluginFiles = array_keys(get_plugins());
-			foreach ($pluginFiles as $pluginFile) {
-				//Is the user editing the main plugin file?
-				if ( $pluginFile === $fileName ) {
-					$selectedPlugin = $pluginFile;
-					break;
-				}
-
-				//Is the file inside this plugin's directory?
-				$pluginDirectory = ameUtils::getFirstDirectory($pluginFile);
-				if ( ($pluginDirectory !== null) && ($pluginDirectory === $fileDirectory) ) {
-					$selectedPlugin = $pluginFile;
-					break;
-				}
-			}
-
+			$selectedPlugin = $this->identifyPluginFromFileName($matches['file']);
 			if ( $selectedPlugin !== null ) {
 				//Can the current user see the selected plugin?
 				$isVisible = $this->isPluginVisible($selectedPlugin);
@@ -348,6 +334,89 @@ class amePluginVisibility extends amePersistentModule {
 			}
 		}
 		//phpcs:enable
+	}
+
+	/**
+	 * Filter the list of file extensions that can be edited in the plugin editor.
+	 *
+	 * If the current user is not allowed to edit the specified plugin, this function removes
+	 * all extensions from the list, effectively disabling plugin editing.
+	 *
+	 * @param array $extensions
+	 * @param string $pluginFile Plugin file name relative to the plugin directory. Added in WP 4.9.0,
+	 *                           so should always be available in practice.
+	 * @return array
+	 */
+	public function authorizePluginFileEdit($extensions, $pluginFile = '') {
+		//Sanity check: $pluginFile should be provided.
+		if ( empty($pluginFile) ) {
+			return $extensions;
+		}
+		//$extensions should be an array.
+		if ( !is_array($extensions) ) {
+			return $extensions;
+		}
+
+		/*
+		 * Technically, we could use the "editable_extensions" filter to control plugin editing both
+		 * in AJAX requests and on the "Plugins -> Editor" page. However, when the user opens the plugin
+		 * editor, WordPress automatically selects the first plugin without checking permissions.
+		 * If the user can't edit that plugin, they would get an error message, and they wouldn't
+		 * be able to edit *any* plugins.
+		 *
+		 * To avoid this, we only filter the list of extensions on AJAX requests. Other hooks
+		 * are used to prevent the user from editing plugins via form submissions.
+		 */
+		if ( !wp_doing_ajax() ) {
+			return $extensions;
+		}
+
+		//Identify the plugin that's being edited.
+		$selectedPlugin = $this->identifyPluginFromFileName($pluginFile);
+		if ( $selectedPlugin !== null ) {
+			$isVisible = $this->isPluginVisible($selectedPlugin);
+			if ( !$isVisible ) {
+				//The user can't see the plugin, so they can't edit it.
+				//Remove all extensions from the list.
+				$extensions = array();
+			}
+		}
+
+		return $extensions;
+	}
+
+	/**
+	 * Given a file name, identify the plugin that it belongs to.
+	 *
+	 * @param string $inputFileName File name relative to the "plugins" directory.
+	 * @return string|null
+	 */
+	private function identifyPluginFromFileName($inputFileName) {
+		if ( empty($inputFileName) ) {
+			return null;
+		}
+
+		$fileName = wp_normalize_path($inputFileName);
+		$fileDirectory = ameUtils::getFirstDirectory($fileName);
+		$selectedPlugin = null;
+
+		$pluginFiles = array_keys(get_plugins());
+		foreach ($pluginFiles as $mainPluginFile) {
+			//Is this the main plugin file?
+			if ( $mainPluginFile === $fileName ) {
+				$selectedPlugin = $mainPluginFile;
+				break;
+			}
+
+			//Is the file inside this plugin's directory?
+			$pluginDirectory = ameUtils::getFirstDirectory($mainPluginFile);
+			if ( ($pluginDirectory !== null) && ($pluginDirectory === $fileDirectory) ) {
+				$selectedPlugin = $mainPluginFile;
+				break;
+			}
+		}
+
+		return $selectedPlugin;
 	}
 
 	public function addSettingsTab($tabs) {

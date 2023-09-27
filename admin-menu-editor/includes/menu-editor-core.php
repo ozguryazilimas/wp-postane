@@ -606,9 +606,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 				'ws-ame-primary-am-item'
 			);
 
-			//Make sure Lodash doesn't conflict with the copy of Underscore that's bundled with WordPress.
-			add_filter('script_loader_tag', array($this, 'lodash_noconflict'), 10, 2); //Filter exists since WP 4.1.
-
 			//Let modules do something when loading a specific tab but before output starts.
 			add_action('load-' . $page, array($this, 'trigger_tab_load_event'));
 
@@ -921,6 +918,9 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		//Lodash library
 		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash.min.js', $this->plugin_file));
+		//Make sure Lodash doesn't conflict with the copy of Underscore that's bundled with WordPress.
+		//Revert the "_" variable to its original value and store Lodash in "wsAmeLodash" instead.
+		wp_add_inline_script('ame-lodash', 'window.wsAmeLodash = _.noConflict();');
 
 		//Knockout
 		foreach(array('ame-knockout', 'knockout') as $koAlias) {
@@ -1340,20 +1340,6 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 
 		//Insert the scripts after core script(s).
 		array_splice($wp_scripts->queue, $last_core_key + 1, 0, $handles_to_move);
-	}
-
-	/**
-	 * Revert the "_" variable to its original value and store Lodash in "wsAmeLodash" instead.
-	 *
-	 * @param string $tag
-	 * @param string $script_handle
-	 * @return string
-	 */
-	public function lodash_noconflict($tag, $script_handle) {
-		if ($script_handle === 'ame-lodash') {
-			$tag .= '<script type="text/javascript">wsAmeLodash = _.noConflict();</script>';
-		}
-		return $tag;
 	}
 
 	/**
@@ -4068,7 +4054,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 					'ame-force-dashicons',
 					plugins_url('css/force-dashicons.css', $this->plugin_file),
 					array(),
-					'20210226'
+					'20230828-2'
 				);
 			}
 		}
@@ -5287,6 +5273,11 @@ class ameMenuTemplateBuilder {
 	 * @param string|null $parent
 	 */
 	private function addItem($wpItem, $position, $parent = null) {
+		//The item should always be array-like.
+		if ( !is_array($wpItem) && !($wpItem instanceof ArrayAccess) ) {
+			return;
+		}
+
 		$item = ameMenuItem::fromWpItem($wpItem, $position, $parent);
 
 		//Skip separators.

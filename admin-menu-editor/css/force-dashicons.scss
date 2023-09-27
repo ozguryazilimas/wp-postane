@@ -21,6 +21,9 @@
 		background-image: none !important;
 		position: static;
 	}
+	& > .wp-menu-image::before {
+		background-image: none !important;
+	}
 
 	@import '_dashicons';
 }

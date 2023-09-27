@@ -56,6 +56,14 @@ declare const wp: {
 		remove: (id: string) => void;
 		initialize: (id: string, settings: Partial<WpEditorInitSettings>) => any;
 	};
+	hooks: {
+		addFilter: (filterName: string, namespace: string, callback: (value: unknown, ...args: unknown[]) => unknown, priority?: number) => void;
+		addAction: (actionName: string, namespace: string, callback: (...args: unknown[]) => unknown, priority?: number) => void;
+		removeFilter: (filterName: string, namespace: string) => void;
+		removeAction: (actionName: string, namespace: string) => void;
+		applyFilters: (filterName: string, value: unknown, ...args: unknown[]) => unknown;
+		doAction: (actionName: string, ...args: unknown[]) => void;
+	};
 };
 
 /**
