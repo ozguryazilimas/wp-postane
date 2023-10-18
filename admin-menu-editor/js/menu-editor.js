@@ -3626,7 +3626,20 @@ function ameOnDomReady() {
 		var cssClass = getFieldValue(menuItem, 'css_class', '');
 		var iconUrl = getFieldValue(menuItem, 'icon_url', '', containerNode);
 
+		//Clear the search box and restore icons that were hidden by a previous search.
+		const $searchBoxes = iconSelector.find('.ws_icon_search_box');
+		$searchBoxes.each(function() {
+			const $this = $(this);
+			if ($this.val() !== '') {
+				$this.val('');
+				//Let's call the search handler directly instead of using $.trigger('keyup').
+				//The event handler is throttled and might not run until later.
+				searchMenuIcons('', $this.closest('.ws_tool_tab'));
+			}
+		});
+
 		var customImageOption = iconSelector.find('.ws_custom_image_icon').hide();
+		iconSelector.data('ame-item-has-custom-image', false);
 
 		//Highlight the currently selected icon.
 		iconSelector.find('.ws_selected_icon').removeClass('ws_selected_icon');
@@ -3644,6 +3657,7 @@ function ameOnDomReady() {
 				//Display and highlight the custom image.
 				customImageOption.find('img').prop('src', iconUrl);
 				customImageOption.addClass('ws_selected_icon').show().data('icon-url', iconUrl);
+				iconSelector.data('ame-item-has-custom-image', true);
 				selectedIcon = customImageOption;
 			}
 		} else if ( classMatches || iconFontMatches ) {
@@ -3661,7 +3675,16 @@ function ameOnDomReady() {
 			iconSelectorTabs.tabs('option', 'active', activeTabItem.index());
 		}
 
+		//Before showing the selector, clear the fixed height that was set when it was last visible.
+		iconSelector.css('height', '');
+
 		iconSelector.show();
+
+		//Set a fixed height while the selector is visible. This prevents the selector's
+		//height from changing when the user filters the icon list.
+		const initialHeight = iconSelector.height();
+		iconSelector.css('height', initialHeight);
+
 		iconSelector.position({ //Requires jQuery UI.
 			my: 'left top',
 			at: 'left bottom',
@@ -3754,6 +3777,41 @@ function ameOnDomReady() {
 		}
 	});
 
+	//Provide search-as-you-type functionality for the icon selector.
+	function searchMenuIcons(query, $currentTab) {
+		let $searchableItems = $currentTab.find('.ws_icon_option');
+		//If the current menu item doesn't have a custom image, exclude the custom image
+		//option from the search results.
+		if (!iconSelector.data('ame-item-has-custom-image')) {
+			$searchableItems = $searchableItems.not('.ws_custom_image_icon');
+		}
+
+		let foundAnything = false;
+
+		$searchableItems.each(function() {
+			const $icon = $(this);
+			const name = $icon.prop('title').toLowerCase();
+
+			if (name.includes(query)) {
+				$icon.show();
+				foundAnything = true;
+			} else {
+				$icon.hide();
+			}
+		});
+
+		$currentTab.find('.ws_no_matching_icons').toggle(!foundAnything);
+	}
+
+	iconSelectorTabs.find('.ws_icon_search_box').on('keyup', _.throttle(
+		function() {
+			const $inputField = $(this);
+			const $tab = $inputField.closest('.ws_tool_tab');
+
+			searchMenuIcons($inputField.val().toLowerCase().trim(), $tab);
+		},
+		250
+	));
 
 	/*************************************************************************
 	                        Embedded page selector

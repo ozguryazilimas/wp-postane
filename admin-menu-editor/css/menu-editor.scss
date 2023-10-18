@@ -768,11 +768,12 @@ select.ws_dropdown optgroup option {
  */
 
 $activeToolTabBackground: #FDFDFD;
+$toolTabLeftMargin: 6px;
 
 .ws_tool_tab_nav {
 	list-style: outside none none;
 	padding: 0;
-	margin: 0 0 0 6px;
+	margin: 0 0 0 $toolTabLeftMargin;
 
 	li {
 		display: inline-block;
@@ -913,6 +914,7 @@ $iconFontColor: #85888c;
     box-sizing: border-box;
     height: 25px;
 	min-height: 25px;
+	min-width: 26px;
 
 	.ame-is-wp53-plus & {
 		height: $basicInputWp53Height;
@@ -943,7 +945,7 @@ $iconFontColor: #85888c;
 }
 
 #ws_icon_selector {
-	$tabTopPadding: 4px;
+	$innerTopPadding: 4px;
 	$tabHorizontalPadding: 4px;
 
 	.ws_tool_tab_nav {
@@ -958,9 +960,23 @@ $iconFontColor: #85888c;
 	}
 
 	.ws_tool_tab {
-		padding: $tabTopPadding $tabHorizontalPadding 2px;
+		padding: 0 $tabHorizontalPadding 2px;
 		max-height: 324px;
 		overflow-y: auto;
+	}
+
+	//Search bar in the icon selector (per tab)
+	.ws_icon_search_bar {
+		margin: 0 0 0 ($toolTabLeftMargin - $tabHorizontalPadding);
+		position: sticky;
+		top: 0;
+		background-color: $activeToolTabBackground;
+		padding: $innerTopPadding 0;
+	}
+
+	.ws_no_matching_icons {
+		margin-left: ($toolTabLeftMargin - $tabHorizontalPadding);
+		padding: $innerTopPadding 0;
 	}
 }
 
@@ -2132,7 +2148,7 @@ $userSelectionPanelPadding: 10px;
 		width: var(--ame-me-calc-indicator-size, $indicatorSize);
 		height: var(--ame-me-calc-indicator-size, $indicatorSize);
 		background: #00e93c;
-		border-top-right-radius: calc(var(--ame-ds-btn-radius-tr, 3px) - $offset);
+		border-top-right-radius: calc(var(--ame-ds-btn-radius-tr, 3px) - #{$offset});
 		clip-path: polygon(0 0, 100% 0, 100% 100%);
 	}
 }
@@ -2152,6 +2168,16 @@ $userSelectionPanelPadding: 10px;
 	right: 20px;
 	bottom: 40px;
 	z-index: 100;
+
+	.dashicons {
+		font-size: 15px;
+		width: unset;
+		height: unset;
+	}
+
+	&.ame-tgc-sidebar-ad {
+		max-width: 280px;
+	}
 }
 
 .ws-ame-icon-radio-button-group > label {

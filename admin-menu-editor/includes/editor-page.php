@@ -435,37 +435,69 @@ function ame_register_sort_buttons($toolbar) {
 		$show_pro_benefits = !apply_filters('admin_menu_editor_is_pro', false) && (!isset($editor_data['show_hints'][$hint_id]) || $editor_data['show_hints'][$hint_id]);
 
 		if ( $show_pro_benefits ):
-			$benefit_variations = array(
-				'Hide dashboard widgets.',
-				'More menu icons.',
-				'Make menus open in a new tab or an iframe.',
-				'Prevent users from deleting a specific user.',
-			);
-			//Pseudo-randomly select one phrase based on the site URL.
-			$variation_index = hexdec( substr(md5(get_site_url() . 'ab'), -2) ) % count($benefit_variations);
-			$selected_variation = $benefit_variations[$variation_index];
+			//Decide whether to show the Pro version link, or a link to the free online tool
+			//that is based on the Pro version.
+			$hash_value = hexdec(substr(md5(get_site_url()), 0, 5)) % 100;
+			$pro_probability = 80;
 
-			$pro_version_link = 'http://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=sidebar_link_nv' . $variation_index . '&utm_campaign=Plugins';
-			?>
-			<div class="clear"></div>
+			if ($hash_value >= (100 - $pro_probability)):
+				$benefit_variations = array(
+					'Hide dashboard widgets.',
+					'More menu icons.',
+					'Make menus open in a new tab or an iframe.',
+					'Prevent users from deleting a specific user.',
+				);
+				//Pseudo-randomly select one phrase based on the site URL.
+				$variation_index = hexdec( substr(md5(get_site_url() . 'ab'), -2) ) % count($benefit_variations);
+				$selected_variation = $benefit_variations[$variation_index];
 
-			<div class="ws_hint" id="<?php echo esc_attr($hint_id); ?>">
-				<div class="ws_hint_close" title="Close">x</div>
-				<div class="ws_hint_content">
-					<strong>Upgrade to Pro:</strong>
-					<ul>
-						<li>Role-based menu permissions.</li>
-						<li>Hide items from specific users.</li>
-						<li>Menu import and export.</li>
-						<li>Change menu colors.</li>
-						<li><?php echo esc_html($selected_variation); ?></li>
-					</ul>
-					<a href="<?php echo esc_url($pro_version_link); ?>" target="_blank">Learn more</a>
-					|
-					<a href="https://amedemo.com/" target="_blank">Try online demo</a>
+				$pro_version_link = 'https://adminmenueditor.com/upgrade-to-pro/?utm_source=Admin%2BMenu%2BEditor%2Bfree&utm_medium=text_link&utm_content=sidebar_link_nv' . $variation_index . '&utm_campaign=Plugins';
+				?>
+				<div class="clear"></div>
+
+				<div class="ws_hint" id="<?php echo esc_attr($hint_id); ?>">
+					<div class="ws_hint_close" title="Close">x</div>
+					<div class="ws_hint_content">
+						<strong>Upgrade to Pro:</strong>
+						<ul>
+							<li>Role-based menu permissions.</li>
+							<li>Hide items from specific users.</li>
+							<li>Menu import and export.</li>
+							<li>Change menu colors.</li>
+							<li><?php echo esc_html($selected_variation); ?></li>
+						</ul>
+						<a href="<?php echo esc_url($pro_version_link); ?>" target="_blank">Learn more</a>
+						|
+						<a href="https://amedemo.com/" target="_blank">Try online demo</a>
+					</div>
 				</div>
-			</div>
-		<?php
+			<?php
+			else:
+				?>
+				<div class="clear"></div>
+
+				<div class="ws_hint ame-tgc-sidebar-ad" id="<?php echo esc_attr($hint_id); ?>">
+					<div class="ws_hint_close" title="Close">x</div>
+					<div class="ws_hint_content">
+						<strong>Discover AdminThemeGenerator.com</strong>
+						<ul>
+							<li>A free
+								<abbr title="An admin theme is a plugin that changes the appearance of the WordPress admin dashboard">
+									admin theme
+								</abbr>
+								generator based on the Pro version of Admin Menu Editor.
+							</li>
+							<li>Design your own admin color scheme.</li>
+							<li>Change admin menu and Toolbar size.</li>
+							<li>Customize button, widget, and table styles.</li>
+						</ul>
+						<a href="<?php echo esc_url('https://adminthemegenerator.com/'); ?>" target="_blank">
+							AdminThemeGenerator.com<span class="dashicons dashicons-external"></span>
+						</a>
+					</div>
+				</div>
+			<?php
+			endif;
 		endif;
 		?>
 
@@ -521,6 +553,7 @@ function ame_register_sort_buttons($toolbar) {
 			array('ws_core_icons_tab' => 'Dashicons')
 		);
 		foreach($iconSelectorTabs as $tabId => $caption) {
+			/** @noinspection HtmlUnknownAnchorTarget -- It's a printf placeholder. */
 			printf('<li><a href="#%s">%s</a></li>', esc_attr($tabId), esc_html($caption));
 		}
 		?>
@@ -541,6 +574,12 @@ function ame_register_sort_buttons($toolbar) {
 	?>
 
 	<div class="ws_tool_tab" id="ws_core_icons_tab">
+		<div class="ws_icon_search_bar">
+			<label>
+				<span class="screen-reader-text">Icon search box</span>
+				<input type="text" class="regular-text ws_icon_search_box" placeholder="Search icons">
+			</label>
+		</div>
 
 	<?php
 	//These dashicons are used in the default admin menu.
@@ -549,40 +588,335 @@ function ame_register_sort_buttons($toolbar) {
 		'admin-appearance', 'admin-plugins', 'admin-users', 'admin-tools', 'admin-settings', 'admin-network',
 	);
 
-	//The rest of Dashicons. Some icons were manually removed as they wouldn't look good as menu icons.
+	//The rest of Dashicons.
 	$dashicons = array(
-		'admin-site', 'admin-home',
-		'album', 'align-center', 'align-left', 'align-none', 'align-right',
-		'analytics', 'archive', 'art', 'awards', 'backup', 'book', 'book-alt',
-		'building', 'businessman', 'calendar', 'calendar-alt', 'camera', 'carrot',
-		'cart', 'category', 'chart-area', 'chart-bar', 'chart-line', 'chart-pie',
-		'clipboard', 'clock', 'cloud', 'desktop', 'dismiss', 'download', 'edit', 'editor-code', 'editor-contract', 'editor-customchar',
-		'editor-distractionfree', 'editor-help', 'editor-insertmore',
-		'editor-justify', 'editor-kitchensink', 'editor-ol', 'editor-paste-text',
-		'editor-paste-word', 'editor-quote', 'editor-removeformatting', 'editor-rtl', 'editor-spellcheck',
-		'editor-ul', 'editor-unlink', 'editor-video',
-		'email', 'email-alt', 'exerpt-view', 'external', 'facebook',
-		'facebook-alt', 'feedback', 'filter', 'flag', 'format-aside',
-		'format-audio', 'format-chat', 'format-gallery', 'format-image', 'format-quote', 'format-status',
-		'format-video', 'forms', 'googleplus', 'grid-view', 'groups',
-		'hammer', 'heart', 'hidden', 'id', 'id-alt', 'image-crop', 'image-filter',
-		'image-flip-horizontal', 'image-flip-vertical', 'image-rotate',
-		'image-rotate-left', 'image-rotate-right', 'images-alt',
-		'images-alt2', 'index-card', 'info', 'leftright', 'lightbulb', 'list-view',
-		'location', 'location-alt', 'lock', 'marker',
-		'media-archive', 'media-audio',	'media-code', 'media-default', 'media-video', 'megaphone',
-		'menu', 'microphone', 'migrate', 'minus', 'money', 'nametag', 'networking', 'no',
-		'no-alt', 'palmtree', 'performance', 'phone', 'playlist-audio',
-		'playlist-video', 'plus', 'plus-alt', 'portfolio', 'post-status', 'post-trash',
-		'pressthis', 'products', 'redo', 'rss', 'schedule',
-		'screenoptions', 'search', 'share', 'share-alt',
-		'share-alt2', 'share1', 'shield', 'shield-alt', 'slides', 'smartphone', 'smiley', 'sort', 'sos', 'star-empty',
-		'star-filled', 'star-half', 'sticky', 'store', 'tablet', 'tag',
-		'tagcloud', 'testimonial', 'text', 'thumbs-down', 'thumbs-up', 'translation', 'twitter', 'undo',
-		'universal-access',	'universal-access-alt', 'unlock',
-		'update', 'upload', 'vault', 'video-alt', 'video-alt2', 'video-alt3', 'visibility', 'warning', 'welcome-add-page',
-		'welcome-comments', 'welcome-learn-more', 'welcome-view-site', 'welcome-widgets-menus', 'welcome-write-blog',
-		'wordpress', 'wordpress-alt', 'yes'
+		'menu',
+		'admin-site',
+		'admin-home',
+		'admin-collapse',
+		'filter',
+		'admin-customizer',
+		'admin-multisite',
+		'format-image',
+		'format-gallery',
+		'format-audio',
+		'format-video',
+		'format-chat',
+		'format-status',
+		'format-aside',
+		'format-quote',
+		'welcome-write-blog',
+		'welcome-add-page',
+		'welcome-view-site',
+		'welcome-widgets-menus',
+		'welcome-comments',
+		'welcome-learn-more',
+		'image-crop',
+		'image-rotate',
+		'image-rotate-left',
+		'image-rotate-right',
+		'image-flip-vertical',
+		'image-flip-horizontal',
+		'image-filter',
+		'undo',
+		'redo',
+		'editor-bold',
+		'editor-italic',
+		'editor-ul',
+		'editor-ol',
+		'editor-quote',
+		'editor-alignleft',
+		'editor-aligncenter',
+		'editor-alignright',
+		'editor-insertmore',
+		'editor-spellcheck',
+		'editor-expand',
+		'editor-contract',
+		'editor-kitchensink',
+		'editor-underline',
+		'editor-justify',
+		'editor-textcolor',
+		'editor-paste-word',
+		'editor-paste-text',
+		'editor-removeformatting',
+		'editor-video',
+		'editor-customchar',
+		'editor-outdent',
+		'editor-indent',
+		'editor-help',
+		'editor-strikethrough',
+		'editor-unlink',
+		'editor-rtl',
+		'editor-break',
+		'editor-code',
+		'editor-paragraph',
+		'editor-table',
+		'align-left',
+		'align-right',
+		'align-center',
+		'align-none',
+		'lock',
+		'unlock',
+		'calendar',
+		'calendar-alt',
+		'visibility',
+		'hidden',
+		'post-status',
+		'edit',
+		'edit-large',
+		'sticky',
+		'external',
+		'arrow-up',
+		'arrow-down',
+		'arrow-left',
+		'arrow-right',
+		'arrow-up-alt',
+		'arrow-down-alt',
+		'arrow-left-alt',
+		'arrow-right-alt',
+		'arrow-up-alt2',
+		'arrow-down-alt2',
+		'arrow-left-alt2',
+		'arrow-right-alt2',
+		'leftright',
+		'sort',
+		'randomize',
+		'list-view',
+		'excerpt-view',
+		'grid-view',
+		'move',
+		'hammer',
+		'art',
+		'migrate',
+		'performance',
+		'universal-access',
+		'universal-access-alt',
+		'tickets',
+		'nametag',
+		'clipboard',
+		'heart',
+		'megaphone',
+		'schedule',
+		'wordpress',
+		'wordpress-alt',
+		'pressthis',
+		'update',
+		'screenoptions',
+		'cart',
+		'feedback',
+		'translation',
+		'tag',
+		'category',
+		'archive',
+		'tagcloud',
+		'text',
+		'media-archive',
+		'media-audio',
+		'media-code',
+		'media-default',
+		'media-document',
+		'media-interactive',
+		'media-spreadsheet',
+		'media-text',
+		'media-video',
+		'playlist-audio',
+		'playlist-video',
+		'controls-play',
+		'controls-pause',
+		'controls-forward',
+		'controls-skipforward',
+		'controls-back',
+		'controls-skipback',
+		'controls-repeat',
+		'controls-volumeon',
+		'controls-volumeoff',
+		'yes',
+		'no',
+		'no-alt',
+		'plus',
+		'plus-alt',
+		'plus-alt2',
+		'minus',
+		'dismiss',
+		'marker',
+		'star-filled',
+		'star-half',
+		'star-empty',
+		'flag',
+		'info',
+		'warning',
+		'share',
+		'share1',
+		'share-alt',
+		'share-alt2',
+		'twitter',
+		'rss',
+		'email',
+		'email-alt',
+		'facebook',
+		'facebook-alt',
+		'networking',
+		'googleplus',
+		'location',
+		'location-alt',
+		'camera',
+		'images-alt',
+		'images-alt2',
+		'video-alt',
+		'video-alt2',
+		'video-alt3',
+		'vault',
+		'shield',
+		'shield-alt',
+		'sos',
+		'search',
+		'slides',
+		'analytics',
+		'chart-pie',
+		'chart-bar',
+		'chart-line',
+		'chart-area',
+		'groups',
+		'businessman',
+		'id',
+		'id-alt',
+		'products',
+		'awards',
+		'forms',
+		'testimonial',
+		'portfolio',
+		'book',
+		'book-alt',
+		'download',
+		'upload',
+		'backup',
+		'clock',
+		'lightbulb',
+		'microphone',
+		'desktop',
+		'laptop',
+		'tablet',
+		'smartphone',
+		'phone',
+		'smiley',
+		'index-card',
+		'carrot',
+		'building',
+		'store',
+		'album',
+		'palmtree',
+		'tickets-alt',
+		'money',
+		'thumbs-up',
+		'thumbs-down',
+		'layout',
+		'paperclip',
+		'email-alt2',
+		'menu-alt',
+		'trash',
+		'heading',
+		'insert',
+		'align-full-width',
+		'button',
+		'align-wide',
+		'ellipsis',
+		'buddicons-activity',
+		'buddicons-buddypress-logo',
+		'buddicons-community',
+		'buddicons-forums',
+		'buddicons-friends',
+		'buddicons-groups',
+		'buddicons-pm',
+		'buddicons-replies',
+		'buddicons-topics',
+		'buddicons-tracking',
+		'admin-site-alt',
+		'admin-site-alt2',
+		'admin-site-alt3',
+		'rest-api',
+		'yes-alt',
+		'buddicons-bbpress-logo',
+		'tide',
+		'editor-ol-rtl',
+		'instagram',
+		'businessperson',
+		'businesswoman',
+		'color-picker',
+		'camera-alt',
+		'editor-ltr',
+		'cloud',
+		'twitter-alt',
+		'menu-alt2',
+		'menu-alt3',
+		'plugins-checked',
+		'text-page',
+		'update-alt',
+		'code-standards',
+		'align-pull-left',
+		'align-pull-right',
+		'block-default',
+		'cloud-saved',
+		'cloud-upload',
+		'columns',
+		'cover-image',
+		'embed-audio',
+		'embed-generic',
+		'embed-photo',
+		'embed-post',
+		'embed-video',
+		'exit',
+		'html',
+		'info-outline',
+		'insert-after',
+		'insert-before',
+		'remove',
+		'shortcode',
+		'table-col-after',
+		'table-col-before',
+		'table-col-delete',
+		'table-row-after',
+		'table-row-before',
+		'table-row-delete',
+		'saved',
+		'airplane',
+		'amazon',
+		'bank',
+		'beer',
+		'bell',
+		'calculator',
+		'coffee',
+		'database-add',
+		'database-export',
+		'database-import',
+		'database-remove',
+		'database-view',
+		'database',
+		'drumstick',
+		'edit-page',
+		'food',
+		'fullscreen-alt',
+		'fullscreen-exit-alt',
+		'games',
+		'google',
+		'hourglass',
+		'linkedin',
+		'money-alt',
+		'open-folder',
+		'pdf',
+		'pets',
+		'pinterest',
+		'printer',
+		'privacy',
+		'reddit',
+		'spotify',
+		'superhero-alt',
+		'superhero',
+		'twitch',
+		'whatsapp',
+		'youtube',
+		'car',
+		'podio',
+		'xing',
 	);
 
 	if ($editor_data['dashicons_available']) {
@@ -606,14 +940,15 @@ function ame_register_sort_buttons($toolbar) {
 	}
 
 	$defaultIconImages = array(
-		admin_url('images/generic.png'),
+		'Blue-grey cogwheel (generic menu icon used by old WP versions)' => admin_url('images/generic.png'),
 	);
-	foreach($defaultIconImages as $icon) {
+	foreach($defaultIconImages as $name => $icon) {
 		printf(
 			'<div class="ws_icon_option" data-icon-url="%1$s">
-				<img src="%1$s">
+				<img src="%1$s" alt="%2$s">
 			</div>',
-			esc_attr($icon)
+			esc_attr($icon),
+			esc_attr($name)
 		);
 	}
 
@@ -622,6 +957,7 @@ function ame_register_sort_buttons($toolbar) {
 		<img src="<?php echo esc_url(admin_url('images/loading.gif')); ?>" alt="Loading indicator">
 	</div>
 
+		<div class="ws_no_matching_icons" style="display: none">No results found</div>
 		<div class="clear"></div>
 	</div>
 
