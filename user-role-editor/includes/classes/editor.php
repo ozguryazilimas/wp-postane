@@ -163,11 +163,9 @@ class URE_Editor {
             set_site_transient( 'ure_show_deprecated_caps', $this->show_deprecated_caps, URE_Lib::TRANSIENT_EXPIRATION );
         }
 
-        $this->hide_pro_banner = $this->lib->get_option( 'ure_hide_pro_banner', 0 );
         $this->wp_default_role = get_option( 'default_role' );        
         $this->caps_columns_quant = $this->get_caps_columns_quant();
         
-
         return true;
     }
     // end of init0() 
@@ -983,7 +981,8 @@ class URE_Editor {
             $result['message'] = esc_html__('Error: Role ID is empty!', 'user-role-editor' );
             return $result;
         }        
-        $role_id = utf8_decode( $role_id );
+        // $role_id = utf8_decode( $role_id ); // DEPRECATED as of PHP 8.2.0.
+        $role_id = mb_convert_encoding( $role_id, 'ISO-8859-1', 'UTF-8');
         // sanitize user input for security
         $match = array();
         $valid_name = preg_match( '/[A-Za-z0-9_\-]*/', $role_id, $match );

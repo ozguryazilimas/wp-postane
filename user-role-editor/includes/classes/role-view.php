@@ -13,6 +13,8 @@ class URE_Role_View extends URE_View {
     private $role_to_copy_html = '';
     private $role_select_html = '';
     private $role_delete_html = '';
+    private $caps_to_remove = null;
+    
     
     
     public function __construct() {        

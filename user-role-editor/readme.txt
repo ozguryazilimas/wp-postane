@@ -2,8 +2,8 @@
 Contributors: shinephp
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.4
-Tested up to: 6.3
-Stable tag: 4.64
+Tested up to: 6.4
+Stable tag: 4.64.1
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -82,6 +82,12 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 == Changelog =
 
+= [4.64.1] 24.10.2023 =
+* Update: Marked as compatible with WordPress 6.4
+* Fix: Notice shown by PHP 8.3 is removed: PHP Deprecated: Creation of dynamic property URE_Editor::$hide_pro_banner is deprecated in /wp-content/plugins/user-role-editor/includes/classes/editor.php on line 166
+* Fix: Notice shown by PHP 8.3 is removed: PHP Deprecated: Creation of dynamic property URE_Role_View::$caps_to_remove is deprecated in /wp-content/plugins/user-role-editor/includes/classes/role-view.php on line 23
+* Fix: Notice shown by PHP 8.3 is removed: PHP Deprecated: Function utf8_decode() is deprecated in /wp-content/plugins/user-role-editor-pro/includes/classes/editor.php on line 984
+
 = [4.64] 08.08.2023 =
 * Update: "Show capabilities in human readable form" checkbox switches between capability 2 text forms without full page reloading using JavaScript.
 * Fix: Missed 'message' parameter was added  to a response for AJAX request. It fixed the PHP Warning:  Undefined array key "message" in expressions like "strpos( $data['message'], ...
@@ -97,6 +103,7 @@ I am ready to answer on your questions about plugin usage. Use [plugin page comm
 
 == Upgrade Notice ==
 
-= [4.64] 08.08.2023 =
-* Update: "Show capabilities in human readable form" checkbox switches between capability 2 text forms without full page reloading using JavaScript.
-* Fix: Missed 'message' parameter was added  to a response for AJAX request. It fixed the PHP Warning:  Undefined array key "message" in expressions like "strpos( $data['message'], ...
+= [4.64.1] 24.10.2023 =
+* Fix: Notice shown by PHP 8.3 is removed: PHP Deprecated: Creation of dynamic property URE_Editor::$hide_pro_banner is deprecated in /wp-content/plugins/user-role-editor/includes/classes/editor.php on line 166
+* Fix: Notice shown by PHP 8.3 is removed: PHP Deprecated: Creation of dynamic property URE_Role_View::$caps_to_remove is deprecated in /wp-content/plugins/user-role-editor/includes/classes/role-view.php on line 23
+* Fix: Notice shown by PHP 8.3 is removed: PHP Deprecated: Function utf8_decode() is deprecated in /wp-content/plugins/user-role-editor-pro/includes/classes/editor.php on line 984
