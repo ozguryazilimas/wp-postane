@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 2.6 =
+* Bug Fix: Fixed exit icon. Props to @tessawatkinsllc
+* Minor bug fixes
+
 = 2.5 =
 * Security Patch: Discontinuing the support for legacy import reported by @Animesh of Automattic
 

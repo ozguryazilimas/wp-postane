@@ -246,7 +246,10 @@ class WLCMS_Admin_Menus
             foreach ($submenu_item as $sm_info) {
                 $submenu_item = remove_query_arg('return', $sm_info[2]);
                 $submenu_key = sanitize_title($submenu_item);
-                $menu_name = preg_replace('#(<span.*?>).*?(</span>)#', '', $sm_info[0]);
+                $menu_name = '';
+                if(isset($sm_info[0]) && $sm_info[0]!= '' && !is_null($sm_info[0])){
+                    $menu_name = preg_replace('#(<span.*?>).*?(</span>)#', '', $sm_info[0]);
+                }
 
                 $slug = $mainmenu_key . $this->get_submenu_placeholder() . $submenu_key;
                 $output[$key]['submenus'][$submenu_key] = array(
