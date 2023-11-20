@@ -106,16 +106,16 @@ class YARPP_Meta_Box_Relatedness extends YARPP_Meta_Box {
 					<p>
 						<span class="dashicons <?php echo ( $yarpp->db_schema->content_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
 						<code>
-						   ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_content` (`post_content`);
+							ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_content` (`post_content`);
 						</code>
 						<br/>
 						<span class="dashicons <?php echo ( $yarpp->db_schema->title_column_has_index() === true ) ? 'dashicons-yes' : 'dashicons-clock'; ?>"></span>
 						<code>
-						   ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_title` (`post_title`);
+							ALTER TABLE <?php echo $wpdb->posts; ?> ADD FULLTEXT `yarpp_title` (`post_title`);
 						</code>
 					</p>
 				</div>
-		   </div>
+			</div>
 			<?php
 		}
 	}

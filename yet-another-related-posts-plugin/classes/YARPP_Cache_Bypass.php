@@ -6,6 +6,7 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 
 	private $related_postdata = array();
 	private $related_IDs      = array();
+	public 	$args			  = array();
 
 	/**
 	 * SETUP/STATUS
@@ -35,17 +36,17 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 	 */
 	public function where_filter( $arg ) {
 		global $wpdb;
-		
+
 		// modify the where clause to use the related ID list.
 		if ( ! count( $this->related_IDs ) ) {
 			$this->related_IDs = array( 0 );
 		}
 
 		$arg = preg_replace( "!{$wpdb->posts}.ID = \d+!", "{$wpdb->posts}.ID in (" . join( ',', $this->related_IDs ) . ')', $arg );
-		
+
 		// if we have recent set, add an additional condition.
 		if ( (bool) $this->args['recent'] ) {
-			$recent = $this->args['recent'];
+			$recent       = $this->args['recent'];
 			$recent_parts = explode( ' ', $recent );
 			if ( count( $recent_parts ) === 2 && isset( $recent_parts[0], $recent_parts[1] ) ) {
 				$recent_number = $recent_parts[0];
@@ -125,7 +126,7 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 			'recent',
 			'limit',
 			'include_sticky_posts',
-			'show_sticky_posts'
+			'show_sticky_posts',
 		);
 		$this->args       = $this->core->parse_args( $args, $options );
 

@@ -21,7 +21,7 @@ if ( have_posts() ) {
 	while ( have_posts() ) {
 		the_post();
 		$output .= "<li id='yarpp-related-" . get_the_ID() . "'><a class='row-title' href='post.php?action=edit&post=" . get_the_ID() . "'>" . get_the_title() . '</a>';
-		$output .= ' (' . round( (float)get_the_score(), 3 ) . ')';
+		$output .= ' (' . round( (float) get_the_score(), 3 ) . ')';
 		$output .= " <span class='yarpp-related-action' id=yarpp-related-" . get_the_ID() . "-action'><span class='edit'><a href='post.php?action=edit&post=" . get_the_ID() . "'>" . __( 'Edit', 'yet-another-related-posts-plugin' ) . "</a></span> | <span class='view'><a href='" . get_permalink() . "' target='_blank'>" . __( 'View', 'yet-another-related-posts-plugin' ) . '</a></span></span>';
 		$output .= '</li>';
 	}

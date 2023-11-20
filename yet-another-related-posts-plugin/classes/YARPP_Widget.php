@@ -5,9 +5,9 @@ class YARPP_Widget extends WP_Widget {
 	public function __construct() {
 		$widget_ops = array(
 			'description' => 'Related Posts and/or Sponsored Content',
-			'show_instance_in_rest' => true
+			'show_instance_in_rest' => true,
 		);
-		add_filter( 'widget_types_to_hide_from_legacy_widget_block', array($this,'hide_yarpp_widget_legacy_editor') );
+		add_filter( 'widget_types_to_hide_from_legacy_widget_block', array( $this, 'hide_yarpp_widget_legacy_editor' ) );
 		parent::__construct( false, 'Related Posts (YARPP)', $widget_ops );
 	}
 

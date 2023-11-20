@@ -73,6 +73,4 @@ function clean( array $opts, $wpdb ) {
 
 	/* Delete users yarpp related data */
 	$wpdb->query( 'DELETE FROM `' . $wpdb->prefix . 'usermeta` WHERE meta_key LIKE "%yarpp%"' );
-
 }//end clean()
-

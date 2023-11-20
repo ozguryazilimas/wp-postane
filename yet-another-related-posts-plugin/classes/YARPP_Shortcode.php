@@ -36,7 +36,7 @@ class YARPP_Shortcode {
 			),
 			'yarpp'
 		);
-		$atts = array_map(function( $item ) {
+		$atts = array_map(function ( $item ) {
 			// Sanitize user input.
 			$trimmed_value = trim( esc_attr ($item) );
 			// check for the strings "true" and "false" to mean boolean true and false
@@ -52,7 +52,7 @@ class YARPP_Shortcode {
 		},
 			$atts
 		);
-		
+
 		// Validate "limit" user input.
 		if ( isset( $atts['limit'] ) && $atts['limit'] ) {
 			// Use user input only if numeric value is passed.
@@ -67,7 +67,7 @@ class YARPP_Shortcode {
 		// Hardcoded the domain name because it should not be editable by the user.
 		$atts['domain'] = 'shortcode';
 
-		$post           = get_post( isset($atts['reference_id']) ? (int) $atts['reference_id'] : null );
+		$post = get_post( isset($atts['reference_id']) ? (int) $atts['reference_id'] : null );
 		unset($atts['reference_id']);
 		if ( $post instanceof WP_Post ) {
 			return $yarpp->display_related(
@@ -78,6 +78,5 @@ class YARPP_Shortcode {
 		} else {
 			return '<!-- YARPP shortcode called but no reference post found. It was probably called outside "the loop" or the reference_id provided was invalid.-->';
 		}
-
 	}
 }

@@ -151,7 +151,7 @@ class YARPP_Rest_Api extends WP_REST_Controller {
 
 		$args          = array_filter(
 			$query_params,
-			function( $key ) use ( $allowed_args ) {
+			function ( $key ) use ( $allowed_args ) {
 				return in_array( $key, $allowed_args );
 			},
 			ARRAY_FILTER_USE_KEY

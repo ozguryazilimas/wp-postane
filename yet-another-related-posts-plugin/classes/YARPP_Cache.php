@@ -200,7 +200,7 @@ abstract class YARPP_Cache {
 			'recent',
 			'limit',
 			'include_sticky_posts',
-			'show_sticky_posts'
+			'show_sticky_posts',
 		);
 		extract( $this->core->parse_args( $args, $options ) );
 
@@ -289,7 +289,7 @@ abstract class YARPP_Cache {
 
 		$post_types           = $this->core->get_query_post_types( $reference_post, $args );
 		$sanitized_post_types = (array) array_map(
-			function( $item ) {
+			function ( $item ) {
 				global $wpdb;
 				return $wpdb->prepare( '%s', $item );
 			},
@@ -487,7 +487,7 @@ abstract class YARPP_Cache {
 		$overusedwords = apply_filters( 'yarpp_keywords_overused_words', $overusedwords );
 		if ( is_array( $overusedwords ) ) {
 			foreach ( $overusedwords as $word ) {
-				 unset( $tokens[ $word ] );
+				unset( $tokens[ $word ] );
 			}
 		}
 		// Remove words which are only a letter

@@ -86,7 +86,7 @@ if ( isset( $_POST['update_yarpp'] ) && check_admin_referer( 'update_yarpp', 'up
 			$new_options[ $option ] = isset( $_POST[ $option ] );
 		}
 		if ( ( is_string( $default ) || is_int( $default ) ) &&
-			 isset( $_POST[ $option ] ) && is_string( $_POST[ $option ] ) ) {
+			isset( $_POST[ $option ] ) && is_string( $_POST[ $option ] ) ) {
 			$new_options[ $option ] = stripslashes( $_POST[ $option ] );
 		}
 	}

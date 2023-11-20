@@ -16,6 +16,16 @@ class YARPP {
 	public $debug                       = false;
 	public $yarppPro                    = null;
 	public $generate_missing_thumbnails = null;
+	
+	/**
+	 * @var bool
+	 */
+	public $is_custom_template;
+	/**
+	 * @var YARPP_DB_Options
+	 */
+	public $db_options;
+	
 	/**
 	 * @var YARPP_Cache_Bypass
 	 */

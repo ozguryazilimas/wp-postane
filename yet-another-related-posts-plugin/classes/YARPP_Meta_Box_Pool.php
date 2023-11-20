@@ -66,5 +66,4 @@ class YARPP_Meta_Box_Pool extends YARPP_Meta_Box {
 
 		include YARPP_DIR . '/includes/phtmls/yarpp_meta_box_pool.phtml';
 	}
-
 }

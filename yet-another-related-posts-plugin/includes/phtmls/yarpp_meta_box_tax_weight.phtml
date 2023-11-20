@@ -21,10 +21,10 @@
 				<?php _e( 'consider with extra weight', 'yet-another-related-posts-plugin' ); ?>
 			</option>
 			<option value="require_one" <?php echo ( ( $require == 1 ) ? 'selected' : null ); ?>>
-				<?php echo sprintf( __( 'require at least one %s in common', 'yet-another-related-posts-plugin' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
+				<?php printf( __( 'require at least one %s in common', 'yet-another-related-posts-plugin' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
 			</option>
 			<option value="require_more" <?php echo ( ( $require == 2 ) ? 'selected' : null ); ?>>
-				<?php echo sprintf( __( 'require more than one %s in common', 'yet-another-related-posts-plugin' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
+				<?php printf( __( 'require more than one %s in common', 'yet-another-related-posts-plugin' ), strtolower( $taxonomy->labels->singular_name ) ); ?>
 			</option>
 		</select>
 	</div>

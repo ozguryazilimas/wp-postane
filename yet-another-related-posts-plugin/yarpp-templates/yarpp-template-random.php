@@ -16,8 +16,8 @@ If you've ever had to tweak or build a WordPress theme before, you’ll immediat
 
 // Special template tags which only work within a YARPP Loop:
 
-1. the_score()		// this will print the YARPP match score of that particular related post
-2. get_the_score()		// or return the YARPP match score of that particular related post
+1. the_score()      // this will print the YARPP match score of that particular related post
+2. get_the_score()      // or return the YARPP match score of that particular related post
 
 Notes:
 1. If you would like Pinterest not to save an image, add `data-pin-nopin="true"` to the img tag.

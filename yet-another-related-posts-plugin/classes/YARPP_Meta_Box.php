@@ -36,7 +36,7 @@ class YARPP_Meta_Box {
 		$pre             = ( $rss ) ? 'rss_' : '';
 		$chosen_template = yarpp_get_option( $pre . 'template' );
 		$choice          = ( $chosen_template === false )
-						   ? 'builtin' : ( ( $chosen_template === 'thumbnails' ) ? 'thumbnails' : 'custom' );
+							? 'builtin' : ( ( $chosen_template === 'thumbnails' ) ? 'thumbnails' : 'custom' );
 
 		$builtIn = ( $choice === 'builtin' ) ? 'active' : null;
 
