@@ -6,7 +6,7 @@ class YARPP_Cache_Bypass extends YARPP_Cache {
 
 	private $related_postdata = array();
 	private $related_IDs      = array();
-	public 	$args			  = array();
+	public $args              = array();
 
 	/**
 	 * SETUP/STATUS

@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 6.4
-Stable tag: 5.30.7
+Stable tag: 5.30.9
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -164,6 +164,13 @@ To adjust the weights and taxonomy requirements, provide the value as JSON (usin
 [yarpp require_tax='{"category": 2, "post_tag": 0}'] - require at least one category in common
 `
 
+To order results:
+
+`
+[yarpp order="score DESC"] - high relevance score to low
+[yarpp order="rand"] - random
+`
+
 To add YARPP shortcode to your theme files (eg. single.php), use:
 
 `<?php echo do_shortcode('[yarpp]'); ?>`
@@ -299,6 +306,36 @@ if(! $related_posts){
     echo $post->post_title;
   }
 }
+</code>
+
+Show results ordered by score (high relevance to low):
+
+<code>
+yarpp_related(
+  array(
+    'order' => 'score DESC',
+  )
+);
+</code>
+
+Show results ordered by post publish date (new to old):
+
+<code>
+yarpp_related(
+  array(
+    'order' => 'post_date DESC',
+  )
+);
+</code>
+
+Show results ordered randomly:
+
+<code>
+yarpp_related(
+  array(
+    'order' => 'rand',
+  )
+);
 </code>
 
 = YARPP Filters =
@@ -562,6 +599,14 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 
 == Changelog ==
+
+= 5.30.9 (22-November-2023) =
+* Enhancement: Better input sanitization for a more predictable output
+* Enhancement: Misc performance improvements
+
+= 5.30.8 (21-November-2023) =
+* [Enhancement](https://wordpress.org/support/topic/yarpp-shows-me-the-same-related-posts/): Adds ability to set sort order to Random from the YARPP Admin UI
+
 = 5.30.7 (20-November-2023) =
 * Tested on WordPress 6.4
 * [Bugfix] Fixes PHP 8.2 warnings that were filling up server logs
@@ -1497,5 +1542,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.30.7 =
+= 5.30.9 =
 We update YARPP regularly so we can keep making it better for you. Update to the latest version for the latest features and improvements. Thank you for using YARPP!

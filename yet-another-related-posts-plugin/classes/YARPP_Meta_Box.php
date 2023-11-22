@@ -111,6 +111,7 @@ class YARPP_Meta_Box {
 				<option value="post_date ASC" <?php echo ( $order == 'post_date ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'date (old to new)', 'yet-another-related-posts-plugin' ); ?></option>
 				<option value="post_title ASC" <?php echo ( $order == 'post_title ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'title (alphabetical)', 'yet-another-related-posts-plugin' ); ?></option>
 				<option value="post_title DESC" <?php echo ( $order == 'post_title DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'title (reverse alphabetical)', 'yet-another-related-posts-plugin' ); ?></option>
+				<option value="rand" <?php echo ( $order == 'rand' ? ' selected="selected"' : '' ); ?>><?php _e( 'random', 'yet-another-related-posts-plugin' ); ?></option>
 				<?php
 				echo '</select></div></div>';
 	}

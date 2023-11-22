@@ -322,7 +322,7 @@ class YARPP_Admin {
 		} else {
 			echo(
 			'<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#faq">' .
-			  __( 'Frequently Asked Questions', 'yet-another-related-posts-plugin' ) .
+				__( 'Frequently Asked Questions', 'yet-another-related-posts-plugin' ) .
 			'</a>'
 			);
 		}
@@ -338,7 +338,7 @@ class YARPP_Admin {
 		} else {
 			echo(
 			'<a href="https://wordpress.org/plugins/yet-another-related-posts-plugin/#installation" target="_blank">' .
-			  __( 'Developing with YARPP', 'yet-another-related-posts-plugin' ) .
+				__( 'Developing with YARPP', 'yet-another-related-posts-plugin' ) .
 			'</a>'
 			);
 		}
@@ -473,10 +473,10 @@ class YARPP_Admin {
 		if ( $this->core->yarppPro['active'] ) {
 
 			$out .=
-			  '<p>' .
-				  'You currently have <strong>YARPP Basic</strong> and <strong>YARPP Pro</strong> enabled.<br/><br/>' .
-				  '<a href="options-general.php?page=yarpp" class="button">Take me to the settings page</a>' .
-			  '</p>';
+				'<p>' .
+					'You currently have <strong>YARPP Basic</strong> and <strong>YARPP Pro</strong> enabled.<br/><br/>' .
+					'<a href="options-general.php?page=yarpp" class="button">Take me to the settings page</a>' .
+				'</p>';
 
 		} else {
 
@@ -535,18 +535,18 @@ class YARPP_Admin {
 		$version = defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : YARPP_VERSION;
 		$screen  = get_current_screen();
 		if ( ! is_null( $screen ) && $screen->id === 'settings_page_yarpp' ) {
-			wp_enqueue_style( 'yarpp_switch_options', plugins_url( 'style/options_switch.css', dirname( __FILE__ ) ), array(), $version );
+			wp_enqueue_style( 'yarpp_switch_options', plugins_url( 'style/options_switch.css', __DIR__ ), array(), $version );
 			wp_enqueue_script( 'yarpp_switch_options', yarpp_get_file_url_for_environment( 'js/options_switch.min.js', 'src/js/options_switch.js' ), array( 'jquery' ), $version );
 
 			wp_enqueue_style( 'wp-pointer' );
-			wp_enqueue_style( 'yarpp_options', plugins_url( 'style/options_basic.css', dirname( __FILE__ ) ), array(), $version );
-			wp_enqueue_style( 'yarpp_remodal', plugins_url( 'lib/plugin-deactivation-survey/remodal.css', dirname( __FILE__ ) ), array(), $version );
-			wp_enqueue_style( 'yarpp_deactivate', plugins_url( 'lib/plugin-deactivation-survey/deactivate-feedback-form.css', dirname( __FILE__ ) ), array(), $version );
-			wp_enqueue_style( 'yarpp_default_theme', plugins_url( 'lib/plugin-deactivation-survey/remodal-default-theme.css', dirname( __FILE__ ) ), array(), $version );
+			wp_enqueue_style( 'yarpp_options', plugins_url( 'style/options_basic.css', __DIR__ ), array(), $version );
+			wp_enqueue_style( 'yarpp_remodal', plugins_url( 'lib/plugin-deactivation-survey/remodal.css', __DIR__ ), array(), $version );
+			wp_enqueue_style( 'yarpp_deactivate', plugins_url( 'lib/plugin-deactivation-survey/deactivate-feedback-form.css', __DIR__ ), array(), $version );
+			wp_enqueue_style( 'yarpp_default_theme', plugins_url( 'lib/plugin-deactivation-survey/remodal-default-theme.css', __DIR__ ), array(), $version );
 
 			wp_enqueue_script( 'postbox' );
 			wp_enqueue_script( 'wp-pointer' );
-			wp_enqueue_script( 'yarpp_remodal', plugins_url( 'lib/plugin-deactivation-survey/remodal.min.js', dirname( __FILE__ ) ), array(), $version );
+			wp_enqueue_script( 'yarpp_remodal', plugins_url( 'lib/plugin-deactivation-survey/remodal.min.js', __DIR__ ), array(), $version );
 			wp_enqueue_script( 'yarpp_options', yarpp_get_file_url_for_environment( 'js/options_basic.min.js', 'src/js/options_basic.js' ), array( 'jquery' ), $version );
 			// Localize the script with messages
 			$translation_strings = array(
@@ -559,7 +559,7 @@ class YARPP_Admin {
 				'nonce_fail'    => __( 'You left this page open for too long. Please refresh the page and try again!', 'yet-another-related-posts-plugin' ),
 				'error'         => __( 'There is some error. Please refresh the page and try again!', 'yet-another-related-posts-plugin' ),
 				'show_code'     => __( 'Show Code', 'yet-another-related-posts-plugin' ),
-				'hide_code'     => __( 'Hide Code', 'yet-another-related-posts-plugin' )
+				'hide_code'     => __( 'Hide Code', 'yet-another-related-posts-plugin' ),
 			);
 			wp_localize_script( 'yarpp_options', 'yarpp_messages', $translation_strings );
 
@@ -575,7 +575,7 @@ class YARPP_Admin {
 	}
 
 	public function settings_link( $links, $file ) {
-		$this_plugin = dirname( plugin_basename( dirname( __FILE__ ) ) ) . '/yarpp.php';
+		$this_plugin = dirname( plugin_basename( __DIR__ ) ) . '/yarpp.php';
 		if ( $file == $this_plugin ) {
 			$links[] = '<a href="options-general.php?page=yarpp">' . __( 'Settings' ) . '</a>';
 		}
@@ -603,7 +603,7 @@ class YARPP_Admin {
 		}
 		// Verify our nonce here.
 		if ( ! isset( $_POST['yarpp_display-nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['yarpp_display-nonce'] ), 'yarpp_display' ) ) {
-			  return;
+				return;
 		}
 		if ( isset( $_POST['yarpp_display_for_this_post'] ) ) {
 			$yarpp_meta['yarpp_display_for_this_post'] = 1;
@@ -625,20 +625,20 @@ class YARPP_Admin {
 		}
 		?>
 	<style>
-	  .yarpp-metabox-options {
+		.yarpp-metabox-options {
 		margin: 10px 0;
-	  }
-	   #yarpp-related-posts .spinner {
+		}
+		#yarpp-related-posts .spinner {
 		float: none; visibility: hidden; opacity: 1; margin: 5px 7px 0 7px;
-	  }
+		}
 	</style>
 		<?php if ( in_array( get_post_type(), $metabox_post_types ) ) { ?>
-	  <p>
+		<p>
 		<input type="checkbox" id="yarpp_display_for_this_post" name="yarpp_display_for_this_post" <?php checked( 1, $yarpp_disable_here, true ); ?> />
 		<label for="yarpp_display_for_this_post"><strong><?php esc_html_e( 'Automatically display related content on this post', 'yet-another-related-posts-plugin' ); ?></strong></label>
 		<br />
 		<em><?php esc_html_e( 'If this is unchecked, then YARPP will not automatically insert the related posts at the end of this post.', 'yet-another-related-posts-plugin' ); ?></em>
-	  </p>
+		</p>
 	<?php } ?>
 		<?php
 		if ( ! get_the_ID() ) {
@@ -805,7 +805,7 @@ class YARPP_Admin {
 
 		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array(
-				'message' => 'Not allowed'
+				'message' => 'Not allowed',
 			), 405 );
 		}
 

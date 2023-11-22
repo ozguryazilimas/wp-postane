@@ -58,7 +58,7 @@
 		<div id="yarpp-display-mode">
 			Automatically display related and/or sponsored content from <strong>YARPP Pro</strong> on: &nbsp;&nbsp;
 			<?php
-			$types_url  = plugins_url( '/', dirname( __FILE__ ) ) . 'yarpp_pro_set_display_types.php';
+			$types_url  = plugins_url( '/', __DIR__ ) . 'yarpp_pro_set_display_types.php';
 			$post_types = $yarpp->yarppPro['auto_display_post_types'];
 			foreach ( $yarpp->get_post_types( 'objects' ) as $post_type ) :
 				$checked = checked( in_array( $post_type->name, $post_types ), true, false );
