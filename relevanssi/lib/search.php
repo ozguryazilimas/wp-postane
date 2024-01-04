@@ -1058,27 +1058,27 @@ function relevanssi_compile_search_args( $query, $q ) {
 
 	$post_query = array();
 	if ( isset( $query->query_vars['p'] ) && $query->query_vars['p'] ) {
-		$post_query = array( 'in' => array( $query->query_vars['p'] ) );
+		$post_query['in'] = array( $query->query_vars['p'] );
 	}
 	if ( isset( $query->query_vars['page_id'] ) && $query->query_vars['page_id'] ) {
-		$post_query = array( 'in' => array( $query->query_vars['page_id'] ) );
+		$post_query['in'] = array( $query->query_vars['page_id'] );
 	}
 	if ( isset( $query->query_vars['post__in'] ) && is_array( $query->query_vars['post__in'] ) && ! empty( $query->query_vars['post__in'] ) ) {
-		$post_query = array( 'in' => $query->query_vars['post__in'] );
+		$post_query['in'] = $query->query_vars['post__in'];
 	}
 	if ( isset( $query->query_vars['post__not_in'] ) && is_array( $query->query_vars['post__not_in'] ) && ! empty( $query->query_vars['post__not_in'] ) ) {
-		$post_query = array( 'not in' => $query->query_vars['post__not_in'] );
+		$post_query['not in'] = $query->query_vars['post__not_in'];
 	}
 
 	$parent_query = array();
 	if ( isset( $query->query_vars['post_parent'] ) && '' !== $query->query_vars['post_parent'] ) {
-		$parent_query = array( 'parent in' => array( (int) $query->query_vars['post_parent'] ) );
+		$parent_query['parent in'] = array( (int) $query->query_vars['post_parent'] );
 	}
 	if ( isset( $query->query_vars['post_parent__in'] ) && is_array( $query->query_vars['post_parent__in'] ) && ! empty( $query->query_vars['post_parent__in'] ) ) {
-		$parent_query = array( 'parent in' => $query->query_vars['post_parent__in'] );
+		$parent_query['parent in'] = $query->query_vars['post_parent__in'];
 	}
 	if ( isset( $query->query_vars['post_parent__not_in'] ) && is_array( $query->query_vars['post_parent__not_in'] ) && ! empty( $query->query_vars['post_parent__not_in'] ) ) {
-		$parent_query = array( 'parent not in' => $query->query_vars['post_parent__not_in'] );
+		$parent_query['parent not in'] = $query->query_vars['post_parent__not_in'];
 	}
 
 	$expost = get_option( 'relevanssi_exclude_posts' );
@@ -1223,7 +1223,7 @@ function relevanssi_wp_date_query_from_query_vars( $query ) {
  * parameters can be parsed.
  */
 function relevanssi_meta_query_from_query_vars( $query ) {
-	$meta_query = false;
+	$meta_query = array();
 	if ( ! empty( $query->query_vars['meta_query'] ) ) {
 		$meta_query = $query->query_vars['meta_query'];
 	}
@@ -1275,6 +1275,9 @@ function relevanssi_meta_query_from_query_vars( $query ) {
 		}
 
 		$meta_query[] = $build_meta_query;
+	}
+	if ( empty( $meta_query ) ) {
+		$meta_query = false;
 	}
 	return $meta_query;
 }
@@ -1429,7 +1432,7 @@ function relevanssi_calculate_weight( $match_object, $idf, $post_type_weights, $
 		);
 
 		$post        = relevanssi_get_post( $match_object->doc );
-		$clean_query = str_replace( '"', '', $query );
+		$clean_query = relevanssi_remove_quotes( $query );
 		if ( ! is_wp_error( $post ) && relevanssi_mb_stristr( $post->post_title, $clean_query ) !== false ) {
 			$weight *= $exact_match_boost['title'];
 		}
@@ -1618,7 +1621,7 @@ function relevanssi_sort_results( &$hits, $orderby, $order, $meta_query ) {
 			 */
 			$order = apply_filters( 'relevanssi_order', $order );
 
-			if ( 'relevance' !== $orderby ) {
+			if ( 'relevance' !== $orderby || 'asc' === $order ) {
 				// Results are by default sorted by relevance, so no need to sort
 				// for that.
 				$orderby_array = array( $orderby => $order );

@@ -343,9 +343,9 @@ function relevanssi_build_index( $extend_offset = false, $verbose = null, $post_
 	do_action( 'relevanssi_pre_indexing_query' );
 
 	$content = $wpdb->get_results( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-	if ( defined( 'WP_CLI' ) && WP_CLI && function_exists( 'relevanssi_generate_progress_bar' ) ) {
+	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		// @codeCoverageIgnoreStart
-		$progress = relevanssi_generate_progress_bar( 'Indexing posts', count( $content ) );
+		$progress = WP_CLI\Utils\make_progress_bar( 'Indexing posts', count( $content ) );
 		// @codeCoverageIgnoreEnd
 	}
 
@@ -443,10 +443,6 @@ function relevanssi_index_doc( $index_post, $remove_first = false, $custom_field
 		$debug = true;
 	}
 
-	if ( $debug ) {
-		relevanssi_debug_echo( 'Indexing post ID ' . $index_post . '...' );
-	}
-
 	// Check if this is a Jetpack Contact Form entry.
 	if ( isset( $_REQUEST['contact-form-id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 		return -1;
@@ -471,6 +467,10 @@ function relevanssi_index_doc( $index_post, $remove_first = false, $custom_field
 			$post = $previous_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 		return -1;
+	}
+
+	if ( $debug ) {
+		relevanssi_debug_echo( 'Indexing post ID ' . $post->ID . '...' );
 	}
 
 	// Post exclusion feature from Relevanssi Premium.

@@ -1026,6 +1026,9 @@ function relevanssi_remove_nested_highlights( $str, $begin, $end ) {
 function relevanssi_extract_locations( $words, $fulltext ) {
 	$locations = array();
 	foreach ( $words as $word ) {
+		if ( ! $word ) {
+			continue;
+		}
 		$count_locations = 0;
 		$wordlen         = relevanssi_strlen( $word );
 		$loc             = relevanssi_stripos( $fulltext, $word, 0 );
@@ -1203,7 +1206,7 @@ function relevanssi_extract_relevant( $words, $fulltext, $excerpt_length = 300, 
 
 	$substr = function_exists( 'mb_substr' ) ? 'mb_substr' : 'substr';
 
-	$excerpt = call_user_func( $substr, $fulltext, $startpos, $excerpt_length );
+	$excerpt = call_user_func( $substr, $fulltext, intval( $startpos ), $excerpt_length );
 
 	$start = false;
 	if ( 0 === $startpos ) {
@@ -1494,6 +1497,8 @@ function relevanssi_get_custom_field_content( $post_id ): array {
 			if ( ! isset( $custom_field_content[ $field ] ) ) {
 				$custom_field_content[ $field ] = '';
 			}
+			$value = relevanssi_strip_tags( $value );
+
 			$custom_field_content[ $field ] .= ' ' . $value;
 			$custom_field_string            .= ' ' . $value;
 		}

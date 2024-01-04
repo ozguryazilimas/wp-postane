@@ -1095,6 +1095,15 @@ function relevanssi_return_off() {
 }
 
 /**
+ * Returns "OR".
+ *
+ * @return string A string with value "OR".
+ */
+function relevanssi_return_or() {
+	return 'OR';
+}
+
+/**
  * Gets a post object, returns ID, ID=>parent or the post object.
  *
  * @uses relevanssi_return_id_type()   Used to return ID=>type results.
@@ -1649,4 +1658,19 @@ function relevanssi_user_agent_is_bot(): bool {
 		}
 	}
 	return false;
+}
+
+/**
+ * Validates that the parameter is a valid taxonomy type.
+ *
+ * @parameter string $taxonomy The taxonomy to validate.
+ *
+ * @return string The validated taxonomy, empty string if invalid.
+ */
+function relevanssi_validate_taxonomy( $taxonomy ) {
+	$taxonomy = sanitize_text_field( $taxonomy );
+	if ( taxonomy_exists( $taxonomy ) ) {
+		return $taxonomy;
+	}
+	return '';
 }
