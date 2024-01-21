@@ -26,10 +26,6 @@ $hiddenItemBorder: #f1acb1;
   border: 1px solid #dfdfdf;
   padding: 7px 0 7px 7px;
 }
-.ws_container .ws_flag_container .ws_custom_actor_permissions_flag,
-.ws_container .ws_flag_container .ws_custom_flag {
-  display: none;
-}
 
 #ws_menu_editor.ws_is_actor_view input[type=checkbox].ws_actor_access_checkbox {
   margin-right: 5px;

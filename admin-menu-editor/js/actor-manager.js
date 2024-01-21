@@ -1,5 +1,5 @@
 "use strict";
-/// <reference path="lodash-3.10.d.ts" />
+/// <reference types="@types/lodash" />
 /// <reference path="knockout.d.ts" />
 /// <reference path="common.d.ts" />
 // noinspection ES6ConvertVarToLetConst -- Intentionally global variable
@@ -454,7 +454,7 @@ class AmeActorManager {
         deprecatedCaps.push('edit_files');
         let findDiscriminant = (caps, includeRoles, excludeRoles) => {
             let getEnabledCaps = (role) => {
-                return _.keys(_.pick(role.capabilities, _.identity));
+                return _.keys(_.pickBy(role.capabilities, _.identity));
             };
             //Find caps that all the includeRoles have and excludeRoles don't.
             let includeCaps = _.intersection(..._.map(includeRoles, getEnabledCaps)), excludeCaps = _.union(..._.map(excludeRoles, getEnabledCaps)), possibleCaps = _.without(includeCaps, ...excludeCaps, ...deprecatedCaps);

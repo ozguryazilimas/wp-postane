@@ -14,8 +14,10 @@ $amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 	border: 1px solid $borderColor;
 
 	.ws-ame-postbox-header {
+		$headerFontSize: 14px;
+
 		position: relative;
-		font-size: 14px;
+		font-size: $headerFontSize;
 		margin: 0;
 		line-height: 1.4;
 
@@ -29,6 +31,13 @@ $amePostboxShadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			overflow: hidden;
+		}
+
+		.ws_tooltip_trigger {
+			.dashicons {
+				height: $headerFontSize;
+				line-height: $headerFontSize;
+			}
 		}
 	}
 

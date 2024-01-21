@@ -608,6 +608,10 @@ to accommodate the drop-down button.
   box-sizing: border-box;
   width: 100%;
   padding: 6px 6px 0 6px;
+  position: sticky;
+  top: var(--wp-admin--admin-bar--height, 32px);
+  background-color: white;
+  z-index: 5;
 }
 
 .ws_button {
@@ -656,6 +660,11 @@ a.ws_button.ws_button_disabled:hover {
 
 #ws_toggle_toolbar, .ws_toggle_toolbar_button {
   margin-right: 0;
+}
+
+.ws_is_sticky_toolbar {
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /************************************
@@ -727,6 +736,7 @@ select.ws_dropdown optgroup option {
   width: 216px;
   padding: 4px 0 0 0;
   position: absolute;
+  z-index: 6;
 }
 
 #ws_icon_selector.ws_with_more_icons {
@@ -1595,7 +1605,7 @@ select.ws_dropdown optgroup option {
   font-size: 18px;
 }
 
-.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons, .postbox .ws_tooltip_trigger .dashicons {
+.ws_ame_custom_postbox .ws_tooltip_trigger .dashicons, .postbox .ws_tooltip_trigger .dashicons, .ws-ame-postbox .ws_tooltip_trigger .dashicons {
   font-size: 18px;
   height: 18px;
   vertical-align: bottom;
@@ -1848,7 +1858,8 @@ span.description {
 }
 
 .wrap :target {
-  background-color: rgba(255, 230, 81, 0.7);
+  background-color: rgba(255, 245, 100, 0.7);
+  outline: 3px solid rgba(250, 220, 75, 0.7);
 }
 
 .test-wrap {

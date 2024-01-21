@@ -1,4 +1,5 @@
-/// <reference path="lodash-3.10.d.ts" />
+/// <reference types="@types/lodash" />
+
 /// <reference path="knockout.d.ts" />
 /// <reference path="common.d.ts" />
 
@@ -660,7 +661,7 @@ class AmeActorManager implements AmeActorManagerInterface {
 
 		let findDiscriminant = (caps: string[], includeRoles: AmeRole[], excludeRoles: AmeRole[]): string => {
 			let getEnabledCaps = (role: AmeRole): string[] => {
-				return _.keys(_.pick(role.capabilities, _.identity));
+				return _.keys(_.pickBy(role.capabilities, _.identity));
 			};
 
 			//Find caps that all the includeRoles have and excludeRoles don't.

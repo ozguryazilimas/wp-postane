@@ -20,7 +20,9 @@
  * @property {boolean} wsEditorData.showExtraIcons
  * @property {boolean} wsEditorData.dashiconsAvailable
  * @property {string}  wsEditorData.submenuIconsEnabled
- * @property {Object}  wsEditorData.showHints
+ *
+ * @property {Object} wsEditorData.showHints
+ * @property {string} wsEditorData.hideHintNonce
  *
  * @property {string} wsEditorData.hideAdvancedSettingsNonce
  * @property {string} wsEditorData.getPagesNonce
@@ -4171,7 +4173,7 @@ function ameOnDomReady() {
 
 		function hideRecursively(containerNode, exceptActor) {
 			var otherActors = _(actorSelectorWidget.getVisibleActors())
-				.pluck('id')
+				.map('id')
 				.without(exceptActor)
 				.value();
 
@@ -5434,8 +5436,9 @@ function ameOnDomReady() {
 		$.post(
 			wsEditorData.adminAjaxUrl,
 			{
-				'action' : 'ws_ame_hide_hint',
-				'hint' : hint.attr('id')
+				'action': 'ws_ame_hide_hint',
+				'_ajax_nonce': wsEditorData.hideHintNonce,
+				'hint': hint.attr('id')
 			}
 		);
 	});
@@ -5675,6 +5678,48 @@ function ameOnDomReady() {
 
 	//... and make the UI visible now that it's fully rendered.
 	menuEditorNode.css('visibility', 'visible');
+
+	//Add an extra class to the editor toolbars when their "position: sticky" triggers.
+	//This is useful for adding a bottom border and other styles.
+	if (IntersectionObserver) {
+		/*
+		This assumes that the toolbars stick below the admin bar. If that changes,
+		this code will need to be updated.
+
+		How do we detect that?
+		- We could use IntersectionObserver to detect when the toolbar leaves the viewport,
+		  but since it's sticky, it usually won't.
+		- We can get around that by using negative root margins. Negative margins effectively shrink
+		  the bounding box of the viewport. If we set the top margin to "-1px", the effective top of
+		  the viewport will be 1px lower, so the observer will fire just *before* the toolbar would
+		  leave the viewport.
+		- The admin bar is always at the top of the viewport.
+		- So we can detect when the toolbar is right below the admin bar by using a negative top
+		  margin that is equal to the height of the admin bar + 1px.
+		*/
+		let observerRootMargin = '-33px'; //Default admin bar height is 32px.
+		const adminBarHeight = $('#wpadminbar').outerHeight();
+		if (adminBarHeight > 0) {
+			observerRootMargin = (-1 * adminBarHeight - 1) + 'px';
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					e.target.classList.toggle('ws_is_sticky_toolbar', e.intersectionRatio < 1);
+				}
+			},
+			{
+				threshold: [1],
+				rootMargin: observerRootMargin + ' 0px 0px 0px'
+			}
+		);
+
+		const editorToolbars = document.querySelectorAll('.ws_main_container .ws_toolbar');
+		for (const toolbar of editorToolbars) {
+			observer.observe(toolbar);
+		}
+	}
 }
 
 $(document).ready(ameOnDomReady);

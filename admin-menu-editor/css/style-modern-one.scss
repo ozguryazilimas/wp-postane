@@ -60,15 +60,6 @@ $mainContainerWidth: $itemWidth + $columnPadding * 2;
 		border: 1px solid $itemBorder;
 		padding: $headVerticalPadding 0 $headVerticalPadding $horizontalPadding;
 	}
-
-	.ws_flag_container {
-		//Hide low-importance flags. It's debatable (knowing which roles have custom permissions is useful
-		//when debugging configuration issues), but lets leave them hidden for now.
-		.ws_custom_actor_permissions_flag,
-		.ws_custom_flag {
-			display: none;
-		}
-	}
 }
 
 #ws_menu_editor.ws_is_actor_view input[type="checkbox"].ws_actor_access_checkbox {

@@ -1,9 +1,9 @@
 /// <reference path="../../js/knockout.d.ts" />
 /// <reference path="../../js/jquery.d.ts" />
 /// <reference path="../../js/jqueryui.d.ts" />
-/// <reference path="../../js/lodash-3.10.d.ts" />
+/// <reference types="@types/lodash" />
 /// <reference path="../../modules/actor-selector/actor-selector.ts" />
-/// <reference path="../../ajax-wrapper/ajax-action-wrapper.d.ts" />
+/// <reference path="../../vendor/yahnis-elsts/ajax-wrapper/ajax-action-wrapper.d.ts" />
 
 let amePluginVisibility: AmePluginVisibilityModule;
 declare const wsPluginVisibilityData: PluginVisibilityScriptData;
@@ -94,9 +94,9 @@ class AmePluginVisibilityModule {
 		this.isMultisite = scriptData.isMultisite;
 
 		this.grantAccessByDefault = {};
-		_.forEach(this.actorSelector.getVisibleActors(), (actor: AmeBaseActor) => {
-			this.grantAccessByDefault[actor.id] = ko.observable<boolean>(
-				_.get(scriptData.settings.grantAccessByDefault, actor.id, this.canManagePlugins(actor))
+		_.forEach(this.actorSelector.getVisibleActors(), (actor: IAmeActor) => {
+			this.grantAccessByDefault[actor.getId()] = ko.observable<boolean>(
+				_.get(scriptData.settings.grantAccessByDefault, actor.getId(), this.canManagePlugins(actor))
 			);
 		});
 
@@ -143,7 +143,7 @@ class AmePluginVisibilityModule {
 				}
 
 				//Update everyone except the current user and Super Admin.
-				_.forEach(this.actorSelector.getVisibleActors(), (actor: AmeBaseActor) => {
+				_.forEach(this.actorSelector.getVisibleActors(), (actor: IAmeActor) => {
 					let isAllowed = this.getGrantAccessByDefault(actor.getId());
 					if (!this.canManagePlugins(actor)) {
 						isAllowed(false);
@@ -193,8 +193,8 @@ class AmePluginVisibilityModule {
 			//Show/hide from everyone except the current user and Super Admin.
 			//However, don't enable plugins for roles that can't access the "Plugins" page in the first place.
 			const _ = AmePluginVisibilityModule._;
-			_.forEach(this.actorSelector.getVisibleActors(), (actor: AmeBaseActor) => {
-				let allowAccess = plugin.getGrantObservable(actor.id, isVisible);
+			_.forEach(this.actorSelector.getVisibleActors(), (actor: IAmeActor) => {
+				let allowAccess = plugin.getGrantObservable(actor.getId(), isVisible);
 				if (!this.canManagePlugins(actor)) {
 					allowAccess(false);
 				} else if (_.includes(this.privilegedActors, actor)) {
@@ -210,7 +210,7 @@ class AmePluginVisibilityModule {
 		}
 	}
 
-	private canManagePlugins(actor: AmeBaseActor|null): boolean {
+	private canManagePlugins(actor: IAmeActor|null): boolean {
 		const _ = AmePluginVisibilityModule._;
 		if ((actor instanceof AmeRole) && _.has(this.canRoleManagePlugins, actor.name)) {
 			return this.canRoleManagePlugins[actor.name];
@@ -260,7 +260,7 @@ class AmePluginVisibilityModule {
 			//Filter out grants that match the default settings.
 			const grantAccess = result.plugins[plugin.fileName].grantAccess;
 			if (typeof grantAccess !== 'undefined') {
-				result.plugins[plugin.fileName].grantAccess = _.pick(
+				result.plugins[plugin.fileName].grantAccess = _.pickBy(
 					grantAccess,
 					(allowed, actorId) => {
 						if (typeof actorId === 'undefined') {
@@ -302,15 +302,15 @@ class AmePluginVisibilityModule {
 
 		//Remove settings associated with roles and users that no longer exist or are not visible.
 		const _ = AmePluginVisibilityModule._,
-			visibleActorIds = _.pluck(this.actorSelector.getVisibleActors(), 'id');
+			visibleActorIds: string[] = _.invokeMap(this.actorSelector.getVisibleActors(), 'getId');
 		_.forEach(settings.plugins, (plugin) => {
 			if (plugin.grantAccess) {
-				plugin.grantAccess = _.pick<GrantAccessMap, GrantAccessMap>(plugin.grantAccess, visibleActorIds);
+				plugin.grantAccess = _.pick(plugin.grantAccess, visibleActorIds);
 			}
 		});
 
 		//Remove plugins that don't have any custom settings.
-		settings.plugins = _.pick(settings.plugins, (value) => {
+		settings.plugins = _.pickBy(settings.plugins, (value) => {
 			return !_.isEmpty(value);
 		});
 

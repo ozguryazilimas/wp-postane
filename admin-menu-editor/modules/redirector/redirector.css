@@ -317,6 +317,10 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+#ame-rui-main-actions .ws-ame-postbox-header .ws_tooltip_trigger .dashicons {
+  height: 14px;
+  line-height: 14px;
+}
 #ame-rui-main-actions .ws-ame-postbox-toggle {
   color: #72777c;
   background: transparent;

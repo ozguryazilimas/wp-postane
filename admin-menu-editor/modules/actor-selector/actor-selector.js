@@ -162,7 +162,13 @@ class AmeActorSelector {
             }
             else {
                 const availableActors = this.getVisibleActors();
-                this.setSelectedActor(AmeActorSelector._.first(availableActors).getId());
+                const firstActor = AmeActorSelector._.head(availableActors);
+                if (firstActor) {
+                    this.setSelectedActor(firstActor.getId());
+                }
+                else {
+                    this.setSelectedActor(null);
+                }
             }
         }
         this.highlightSelectedActor();
@@ -201,8 +207,7 @@ class AmeActorSelector {
             if (user) {
                 actors.push(user);
             }
-        })
-            .value();
+        });
         this.cachedVisibleActors = actors;
         return actors;
     }

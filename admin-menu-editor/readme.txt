@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.7
-Tested up to: 6.3.2
-Stable tag: 1.12
+Tested up to: 6.4
+Stable tag: 1.12.1
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -74,6 +74,13 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.12.1 =
+* Made menu editor toolbars "sticky". They will now stay below the admin bar when scrolling down, which can be useful when editing very long menus.
+* Restored the "custom item" indicator for the "Modern" editor color scheme. Previously, it was not visible in the menu editor when using that color scheme.
+* Fixed a missing nonce check when hiding the "Upgrade to Pro" panel.
+* Migrated to Lodash 4.
+* Tested with WP 6.5-alpha.
 
 = 1.12 =
 * Added a search box for menu icons.

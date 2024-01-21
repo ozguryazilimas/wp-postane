@@ -232,7 +232,12 @@ class AmeActorSelector {
 				this.setSelectedActor(null);
 			} else {
 				const availableActors = this.getVisibleActors();
-				this.setSelectedActor(AmeActorSelector._.first(availableActors).getId());
+				const firstActor = AmeActorSelector._.head(availableActors);
+				if (firstActor) {
+					this.setSelectedActor(firstActor.getId());
+				} else {
+					this.setSelectedActor(null);
+				}
 			}
 		}
 
@@ -254,7 +259,7 @@ class AmeActorSelector {
 
 		//Include all roles.
 		//Idea: Sort roles either alphabetically or by typical privilege level (admin, editor, author, ...).
-		_.forEach(this.actorManager.getRoles(), function (role) {
+		_.forEach(this.actorManager.getRoles(), function (role: IAmeActor) {
 			actors.push(role);
 		});
 		//Include the Super Admin (multisite only).
@@ -277,8 +282,7 @@ class AmeActorSelector {
 				if (user) {
 					actors.push(user);
 				}
-			})
-			.value();
+			});
 
 		this.cachedVisibleActors = actors;
 		return actors;

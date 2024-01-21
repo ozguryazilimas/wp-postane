@@ -917,7 +917,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$isDone = true;
 
 		//Lodash library
-		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash.min.js', $this->plugin_file));
+		wp_register_auto_versioned_script('ame-lodash', plugins_url('js/lodash4.min.js', $this->plugin_file));
 		//Make sure Lodash doesn't conflict with the copy of Underscore that's bundled with WordPress.
 		//Revert the "_" variable to its original value and store Lodash in "wsAmeLodash" instead.
 		wp_add_inline_script('ame-lodash', 'window.wsAmeLodash = _.noConflict();');
@@ -1260,6 +1260,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			'taxonomies' => $this->get_taxonomy_details(),
 
 			'showHints' => $this->get_hint_visibility(),
+			'hideHintNonce' => wp_create_nonce('ws_ame_hide_hint'),
 			'dashboardHidingConfirmationEnabled' => $this->options['dashboard_hiding_confirmation_enabled'],
 			'disableDashboardConfirmationNonce' => wp_create_nonce('ws_ame_disable_dashboard_hiding_confirmation'),
 
@@ -3149,7 +3150,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		foreach($this->tabs as $slug => $title) {
 			printf(
 				'<a href="%s" id="%s" class="nav-tab%s">%s</a>',
-				esc_attr(add_query_arg('sub_section', $slug, self_admin_url($this->settings_link))),
+				esc_attr($this->get_tab_url($slug)),
 				esc_attr('ws_ame_' . $slug . '_tab'),
 				$slug === $this->current_tab ? ' nav-tab-active' : '',
 				esc_html($title)
@@ -3227,6 +3228,21 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		return is_admin()
 			&& ($this->current_tab === $tab_slug)
 			&& isset($this->get['page']) && ($this->get['page'] == 'menu_editor');
+	}
+
+	public function is_tab_registered($tab_slug) {
+		return isset($this->tabs[$tab_slug]);
+	}
+
+	/**
+	 * @param string $tab_slug
+	 * @return string|null
+	 */
+	public function get_tab_url($tab_slug) {
+		if ( !$this->is_tab_registered($tab_slug) ) {
+			return null;
+		}
+		return add_query_arg('sub_section', $tab_slug, self_admin_url($this->settings_link));
 	}
 
 	/**
@@ -3410,12 +3426,18 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	}
 
 	public function ajax_hide_hint() {
-		if ( !isset($this->post['hint']) || !$this->current_user_can_edit_menu() ){
+		check_ajax_referer('ws_ame_hide_hint');
+
+		if (
+			!isset($this->post['hint'])
+			|| !is_string($this->post['hint'])
+			|| !$this->current_user_can_edit_menu()
+		){
 			die("You're not allowed to do that!");
 		}
 
 		$show_hints = $this->get_hint_visibility();
-		$show_hints[strval($this->post['hint'])] = false;
+		$show_hints[$this->post['hint']] = false;
 		$this->set_hint_visibility($show_hints);
 
 		die("OK");
