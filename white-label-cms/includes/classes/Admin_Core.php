@@ -6,6 +6,7 @@ class WLCMS_Admin_Core
     function __construct()
     {
         add_action('admin_menu', array($this, 'add_option_menu'));
+        add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
     }
 
     /**
@@ -50,6 +51,20 @@ class WLCMS_Admin_Core
         $this->store();
     }
 
+    public function admin_enqueue_scripts() 
+    {
+
+        $setting_js = 'js/admin.js';
+        
+        wp_register_script(
+            'wlcms-admin',
+            WLCMS_ASSETS_URL . $setting_js,
+            array('jquery'),
+            WLCMS_VERSION
+        );
+        wp_enqueue_script(['wlcms-admin']);
+    }
+    
     public function enqueue_scripts()
     {
 

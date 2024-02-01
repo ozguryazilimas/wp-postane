@@ -4,6 +4,27 @@ class Welcome_Messages_Page
     private $key;
     private $settings;
     private $template;
+    private $pages = [];
+    public function init($pages = [])
+    {
+        if (!count($pages)) {
+            return;
+        }
+
+        $this->pages = $pages;
+
+        add_action('wp', array($this, 'wp'));
+    }
+    public function wp()
+    {
+        $this->hide_admin_menu_bar();
+    }
+
+    private function hide_admin_menu_bar()
+    {
+        add_filter('show_admin_bar', '__return_false');
+    }
+
     public function process($settings, $key)
     {
         if( ! isset($settings['page_id_page']) ) return;

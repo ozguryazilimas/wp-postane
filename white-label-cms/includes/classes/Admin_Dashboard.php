@@ -13,8 +13,35 @@ class WLCMS_Admin_Dashboard extends WLCMS_Previewable
         add_action('wp_dashboard_setup', array($this, 'dashboard_setup'), 999);
         add_action("wp_ajax_hide_vum_dashboard", array($this, "hide_vum_dashboard"));
         add_action("admin_init", array($this, "reset_welcome_dashboard"));
+        add_action("init", array($this, "init"));
     }
+    public function init()
+    {
+        
+        $welcome_panels = wlcms_field_setting('welcome_panel');
 
+        if (!$welcome_panels || !is_array($welcome_panels)) {
+            return;
+        }
+
+        if (!count($welcome_panels) === 0) {
+            return;
+        }
+
+        $pages = [];
+        foreach($welcome_panels as $panel) {
+            if ($panel && is_array($panel) && isset($panel['template_type']) && $panel['template_type'] == 'page' && isset($panel['page_id_page'])) {
+                $pages[] = (int)  $panel['page_id_page'];  
+            }
+        }
+
+        if(count($pages) > 0) {
+            wlcms()->require_class("Welcome_Messages/Welcome_Messages_Page");
+            $template = new Welcome_Messages_Page();
+            $template->init($pages);
+        }
+    }
+    
     public function dashboard_setup()
     {
         $this->reset_dashboard_style();

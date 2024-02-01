@@ -50,21 +50,23 @@ $welcome_panel_is_active = wlcms_welcome_value(0, 'is_active');
         <div class="wlcms-input-group">
             <label><?php _e('Template Type', 'white-label-cms') ?></label>
             <div class="wlcms-input">
-            <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="html" id="template_type_basic" value="html" name="welcome_panel[0][template_type]" <?php checked($is_basic, true, true) ?> type="radio"/>
-            <label class="wlcms-toggle-btn" for="template_type_basic"></label><label class="toggle-label" for="template_type_basic"><?php _e('Basic HTML');?></label> 
+                <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="html" id="template_type_basic" value="html" name="welcome_panel[0][template_type]" <?php checked($is_basic, true, true) ?> type="radio"/>
+                <label class="wlcms-toggle-btn" for="template_type_basic"></label><label class="toggle-label" for="template_type_basic"><?php _e('Basic HTML');?></label> 
+                
+                <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="elementor"<?php echo !wlcms_is_elementor_active() ? ' disabled':''?> id="template_type_elementor" value="Elementor" name="welcome_panel[0][template_type]" <?php checked($checked_welcome_type, 'Elementor', true) ?> type="radio"/>
+                <label class="wlcms-toggle-btn<?php echo !wlcms_is_elementor_active() ? ' disabled':''?>" for="template_type_elementor"></label><label class="toggle-label<?php echo !wlcms_is_elementor_active() ? ' disabled':''?>" for="template_type_elementor"><?php _e('Elementor');?></label> 
+                <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="beaver"<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?> id="template_type_beaver" value="Beaver Builder" name="welcome_panel[0][template_type]" <?php checked($checked_welcome_type, 'Beaver Builder', true) ?> type="radio"/>
+                <label class="wlcms-toggle-btn<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?>" for="template_type_beaver"></label><label class="toggle-label<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?>" for="template_type_beaver"><?php _e('Beaver Builder Pro');?></label> 
             
-            <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="page" id="template_type_page" value="page" name="welcome_panel[0][template_type]" <?php checked($is_page, true, true) ?> type="radio"/>
-            <label class="wlcms-toggle-btn" for="template_type_page"></label><label class="toggle-label" for="template_type_page"><?php _e('Page');?></label> 
-            
-            <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="elementor"<?php echo !wlcms_is_elementor_active() ? ' disabled':''?> id="template_type_elementor" value="Elementor" name="welcome_panel[0][template_type]" <?php checked($checked_welcome_type, 'Elementor', true) ?> type="radio"/>
-            <label class="wlcms-toggle-btn<?php echo !wlcms_is_elementor_active() ? ' disabled':''?>" for="template_type_elementor"></label><label class="toggle-label<?php echo !wlcms_is_elementor_active() ? ' disabled':''?>" for="template_type_elementor"><?php _e('Elementor');?></label> 
-            <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="beaver"<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?> id="template_type_beaver" value="Beaver Builder" name="welcome_panel[0][template_type]" <?php checked($checked_welcome_type, 'Beaver Builder', true) ?> type="radio"/>
-            <label class="wlcms-toggle-btn<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?>" for="template_type_beaver"></label><label class="toggle-label<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?>" for="template_type_beaver"><?php _e('Beaver Builder Pro');?></label> 
+                <input class="wlcms-toggle wlcms-toggle-light template_type template_type1" data-template_type="1" data-page_type="page" id="template_type_page" value="page" name="welcome_panel[0][template_type]" <?php checked($is_page, true, true) ?> type="radio"/>
+                <label class="wlcms-toggle-btn" for="template_type_page"></label><label class="toggle-label" for="template_type_page"><?php _e('Page');?></label> 
+
             </div>
         </div>
 
         <div class="welcome-page1">
-            <label><?php _e('Template', 'white-label-cms') ?></label>
+            <label class="welcome-label-template"><?php _e('Template', 'white-label-cms') ?></label>
+            <label class="welcome-label-page"><?php _e('Page', 'white-label-cms') ?></label>
             <div class="wlcms-input">
                 <?php
                 echo wlcms_select_pages(array('name' => 'welcome_panel[0][page_id_elementor]', 'class' => 'wlcms_visible_to wlcms-select2 pages_select1 elementor_page1'), wlcms_welcome_value(0, 'page_id_elementor'), $elementor_args);
@@ -73,7 +75,7 @@ $welcome_panel_is_active = wlcms_welcome_value(0, 'is_active');
                 <select class="wlcms_visible_to wlcms-pageselect2 pages_select1 page_page1" data-model="<?php echo wlcms_welcome_value(0, 'page_id_page');?>" name="welcome_panel[0][page_id_page]"></select>
             </div>
             <div class="wlcms-help pages_select1 page_page1">
-                <?php _e('Only logged-in users have access to the selected page.', 'white-label-cms') ?>
+            <?php _e('This feature is primarily for people using other page builders. Please ensure your page does not use a header or footer, as it will be displayed in an iFrame on the dashboard. The links will be automatically modified to load correctly, so you don’t need to change the target.', 'white-label-cms') ?>
             </div>
         </div>
         <div class="welcome-basicHtml1">
@@ -159,19 +161,18 @@ $welcome_panel_is_active = wlcms_welcome_value(1, 'is_active');
             <div class="wlcms-input">
                 <input class="wlcms-toggle wlcms-toggle-light template_type template_type2" data-template_type="2" data-page_type="html" id="template_type_basic2" value="html" name="welcome_panel[1][template_type]" <?php checked($is_basic, true, true) ?> type="radio"/>
                 <label class="wlcms-toggle-btn" for="template_type_basic2"></label><label class="toggle-label" for="template_type_basic2"><?php _e('Basic HTML');?></label> 
-
-                <input class="wlcms-toggle wlcms-toggle-light template_type template_type2" data-template_type="2" data-page_type="page" id="template_type_page2" value="page" name="welcome_panel[1][template_type]" <?php checked($is_page, true, true) ?> type="radio"/>
-                <label class="wlcms-toggle-btn" for="template_type_page2"></label><label class="toggle-label" for="template_type_page2"><?php _e('Page');?></label> 
-                
                 <input class="wlcms-toggle wlcms-toggle-light template_type template_type2" data-template_type="2" data-page_type="elementor" id="template_type_elementor2"<?php echo !wlcms_is_elementor_active() ? ' disabled':''?> value="Elementor" name="welcome_panel[1][template_type]" <?php checked($checked_welcome_type, 'Elementor', true) ?> type="radio"/>
                 <label class="wlcms-toggle-btn<?php echo !wlcms_is_elementor_active() ? ' disabled':''?>" for="template_type_elementor2"></label><label class="toggle-label<?php echo !wlcms_is_elementor_active() ? ' disabled':''?>" for="template_type_elementor2"><?php _e('Elementor');?></label> 
                 <input class="wlcms-toggle wlcms-toggle-light template_type template_type2" data-template_type="2" data-page_type="beaver" id="template_type_beaver2"<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?> value="Beaver Builder" name="welcome_panel[1][template_type]" <?php checked($checked_welcome_type, 'Beaver Builder', true) ?> type="radio"/>
                 <label class="wlcms-toggle-btn<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?>" for="template_type_beaver2"></label><label class="toggle-label<?php echo !wlcms_is_beaver_builder_active() ? ' disabled':''?>" for="template_type_beaver2"><?php _e('Beaver Builder Pro');?></label> 
+                <input class="wlcms-toggle wlcms-toggle-light template_type template_type2" data-template_type="2" data-page_type="page" id="template_type_page2" value="page" name="welcome_panel[1][template_type]" <?php checked($is_page, true, true) ?> type="radio"/>
+                <label class="wlcms-toggle-btn" for="template_type_page2"></label><label class="toggle-label" for="template_type_page2"><?php _e('Page');?></label> 
             </div>
         </div>
         
         <div class="welcome-page2">
-            <label><?php _e('Page Template', 'white-label-cms') ?></label>
+            <label class="welcome-label-template"><?php _e('Template', 'white-label-cms') ?></label>
+            <label class="welcome-label-page"><?php _e('Page', 'white-label-cms') ?></label>
             <div class="wlcms-input">
                 <?php
                 echo wlcms_select_pages(array('name' => 'welcome_panel[1][page_id_elementor]', 'class' => 'wlcms_visible_to pages_select2 wlcms-select2 elementor_page2'), wlcms_welcome_value(1, 'page_id_elementor'), $elementor_args);
@@ -180,7 +181,7 @@ $welcome_panel_is_active = wlcms_welcome_value(1, 'is_active');
                 <select class="wlcms_visible_to wlcms-pageselect2 pages_select2 page_page2" data-model="<?php echo wlcms_welcome_value(1, 'page_id_page');?>" name="welcome_panel[1][page_id_page]"></select>
             </div>
             <div class="wlcms-help pages_select2 page_page2">
-                <?php _e('Only logged-in users have access to the selected page.', 'white-label-cms') ?>
+                <?php _e('This feature is primarily for people using other page builders. Please ensure your page does not use a header or footer, as it will be displayed in an iFrame on the dashboard. The links will be automatically modified to load correctly, so you don’t need to change the target.', 'white-label-cms') ?>
             </div>
         </div>
         <div class="welcome-basicHtml2">

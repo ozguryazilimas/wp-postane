@@ -10,6 +10,8 @@ class WLCMS_Admin_Settings
         add_filter('mce_css', array($this, 'custom_editor_stylesheet'));
         add_action('admin_init', array($this, 'admin_init'));
         add_action('init', array($this, 'remove_admin_bar'));
+        add_action("wp_ajax_wlcms_inital_search", [$this, "search_initial_pages"]);
+        add_action("wp_ajax_wlcms_search_pages", [$this, "search_pages"]);
     }
 
     public function admin_init()
@@ -137,5 +139,25 @@ class WLCMS_Admin_Settings
     public function wp_version_check()
     {
         remove_action('init', 'wp_version_check');
+    }
+    public function search_initial_pages() {
+
+        $ids = [ (int) $_GET['q']];
+        $data = wlcms_get_pages_by_ids($ids);
+        
+        wp_send_json([
+            'initials' => reset($data)
+        ]);
+        wp_die();
+    }
+
+    public function search_pages() 
+    {
+
+        wp_send_json([
+            'results' => wlcms_search_pages($_GET['q']),
+            'pagination' => ['more' => false]
+        ]);
+        wp_die();
     }
 }

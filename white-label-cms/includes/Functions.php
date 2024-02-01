@@ -305,3 +305,49 @@ if (isset($_GET['preview_section']) && $_GET['preview_section'] == 'login') {
         }
     }
 }
+
+
+if (!function_exists('wlcms_get_pages_by_ids')) {
+    function wlcms_get_pages_by_ids(array $ids)
+    {
+        $query = new \WP_Query([
+            'post__in' => $ids,
+            'post_type' => ['page'],
+            'posts_per_page' => -1
+        ]);
+        
+        $result = [];
+        if ($query->have_posts()) {
+
+            while ( $query->have_posts() ) : $query->the_post();
+            $result[] = ['id' => get_the_ID(), 'text' => get_the_title()];
+            endwhile;
+        }
+        
+        wp_reset_postdata();
+
+        return $result;
+    }
+}
+
+
+if (!function_exists('wlcms_search_pages')) {
+    function wlcms_search_pages($q)
+    {
+        $query = new \WP_Query([
+            's' => wlcms_sanitize_text_field($q),
+            'post_type' => ['page'],
+            'posts_per_page' => 50
+        ]);
+        $result = [];
+        if ($query->have_posts()) {
+            
+            while ( $query->have_posts() ) : $query->the_post();
+            $result[] = ['id' => get_the_ID(), 'text' => get_the_title()];
+            endwhile;
+        }
+        wp_reset_postdata();
+
+        return $result;
+    }
+}

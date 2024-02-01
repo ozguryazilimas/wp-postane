@@ -16,16 +16,19 @@ class Admin_Dashboard_Welcome_Message
         if ( !(isset($this->settings['template_type']) && $this->settings['template_type']) ) { 
             return;
         }
-        
+
         $type = $this->settings['template_type'];
         wlcms()->require_class("Welcome_Messages/Welcome_Messages_Elementor");
         wlcms()->require_class("Welcome_Messages/Welcome_Messages_Html");
         wlcms()->require_class("Welcome_Messages/Welcome_Messages_Beaver_Builder");
+        wlcms()->require_class("Welcome_Messages/Welcome_Messages_Page");
         
-        if ( $type == 'Elementor' ){
+        if( $type == 'Elementor' ){
             $template = new Welcome_Messages_Elementor();
-        }elseif ( $type == 'Beaver Builder' ){
+        }elseif( $type == 'Beaver Builder' ){
             $template = new Welcome_Messages_Beaver_Builder();
+        }elseif( $type == 'page' ){
+            $template = new Welcome_Messages_Page();
         }else {
             $template = new Welcome_Messages_Html();
         }
@@ -49,7 +52,7 @@ class Admin_Dashboard_Welcome_Message
                 url : '%s',
                 data : {action: 'hide_vum_dashboard', key : vum_panel.data('welcome_key'), nonce: '%s'},
                 success: function(response) {
-                    if (response.type == 'success') {
+                    if(response.type == 'success') {
                         vum_panel.hide();
                     }
                 }

@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 2.7 =
+* Fixed PHP compatibility issues
+* Minor bug fixes
+
 = 2.6 =
 * Bug Fix: Fixed exit icon. Props to @tessawatkinsllc
 * Minor bug fixes
