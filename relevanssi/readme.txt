@@ -5,7 +5,7 @@ Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
 Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 4.22.0
+Stable tag: 4.22.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,12 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.22.1 =
+* Security fix: Relevanssi had a vulnerability where anyone could access the search logs and click logs. The log export is now protected.
+* Minor fix: Relevanssi had problems with Polylang when a post or term didn't have language specified. Now Relevanssi handles those situations better.
+* Minor fix: Post date throttling had a MySQL error that made it replace JOINs instead of concatenating.
+* Minor fix: The log database table now has an index on session_id, as not having that index can slow down the search a lot.
+
 = 4.22.0 =
 * New feature: New filter hook `relevanssi_searchform_dropdown_args` filters the arguments for `wp_dropdown_categories()` in search forms.
 * Changed behaviour: Search form shortcode taxonomy dropdowns are now sorted alphabetically and not by term ID.
@@ -201,6 +207,12 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: Taxonomy query handling was improved. This should help in particular Polylang users who've had problems with Relevanssi ignoring Polylang language restrictions.
 
 == Upgrade notice ==
+= 4.22.1 =
+* Security hardening, better Polylang support.
+
+= 4.22.0 =
+* Improvements to search form shortcode.
+
 = 4.21.2 =
 * Bug fixes: meta query boolean to array conversion errors.
 
