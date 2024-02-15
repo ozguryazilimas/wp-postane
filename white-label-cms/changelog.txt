@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 2.7.2 =
+* Added a Page Template Type option for Custom Welcome Dashboard Panel
+
 = 2.7 =
 * Fixed PHP compatibility issues
 * Minor bug fixes

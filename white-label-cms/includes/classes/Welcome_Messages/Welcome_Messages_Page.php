@@ -22,6 +22,10 @@ class Welcome_Messages_Page
 
     private function hide_admin_menu_bar()
     {
+        if(!isset($_GET['wlcms-welcome-dashboard'])){
+            return;
+        }
+        
         add_filter('show_admin_bar', '__return_false');
     }
 
@@ -42,7 +46,10 @@ class Welcome_Messages_Page
         if(!$this->template || ($this->template && $this->template=='')) {
             return;
         }
+        
         $url = get_permalink($this->template);
+        $url = add_query_arg('wlcms-welcome-dashboard', 'true', $url);
+
         echo "<iframe class=\"responsive-iframe\" onLoad=\"wlcms_iframe_height(this)\" frameborder=\"0\" scrolling=\"no\" width=\"100%\" src=\"{$url}\"></iframe>";
     }
     
