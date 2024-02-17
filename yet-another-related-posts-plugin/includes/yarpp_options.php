@@ -87,7 +87,8 @@ if ( isset( $_POST['update_yarpp'] ) && check_admin_referer( 'update_yarpp', 'up
 		}
 		if ( ( is_string( $default ) || is_int( $default ) ) &&
 			isset( $_POST[ $option ] ) && is_string( $_POST[ $option ] ) ) {
-			$new_options[ $option ] = stripslashes( $_POST[ $option ] );
+			// Sanitize input
+			$new_options[ $option ] = stripslashes( wp_kses_post ($_POST[ $option ]) );
 		}
 	}
 
@@ -173,6 +174,7 @@ if ( isset( $_POST['update_yarpp'] ) && check_admin_referer( 'update_yarpp', 'up
 		( $_POST['rss_use_template'] == 'thumbnails' ? 'thumbnails' : false );
 
 	$new_options = apply_filters( 'yarpp_settings_save', $new_options );
+
 	yarpp_set_option( $new_options );
 
 	echo '<div class="updated fade"><p>' . __( 'Options saved!', 'yet-another-related-posts-plugin' ) . '</p></div>';

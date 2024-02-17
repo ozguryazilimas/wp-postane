@@ -6,7 +6,7 @@ Requires at least: 3.7
 Requires PHP: 5.3
 License: GPLv2 or later
 Tested up to: 6.4
-Stable tag: 5.30.9
+Stable tag: 5.30.10
 
 The best WordPress plugin for displaying related posts. Simple and flexible, with a powerful proven algorithm and inbuilt caching.
 
@@ -600,6 +600,9 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 == Changelog ==
 
+= 5.30.10 (17-February-2023) =
+* Bugfix: Resolves stored Cross-Site Scripting bug
+
 = 5.30.9 (22-November-2023) =
 * Enhancement: Better input sanitization for a more predictable output
 * Enhancement: Misc performance improvements
@@ -609,7 +612,7 @@ Beginning with version 4.0.7, YARPP includes clean uninstall functionality. If y
 
 = 5.30.7 (20-November-2023) =
 * Tested on WordPress 6.4
-* [Bugfix] Fixes PHP 8.2 warnings that were filling up server logs
+* Bugfix: Fixes PHP 8.2 warnings that were filling up server logs
 
 = 5.30.6 (09-August-2023) =
 * Tested on WordPress 6.3
@@ -1542,5 +1545,5 @@ After a break of many years, the plugin is 100% supported now that the baton has
 * Initial upload
 
 == Upgrade Notice ==
-= 5.30.9 =
+= 5.30.10 =
 We update YARPP regularly so we can keep making it better for you. Update to the latest version for the latest features and improvements. Thank you for using YARPP!

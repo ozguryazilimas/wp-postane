@@ -64,7 +64,7 @@ class YARPP_Shortcode {
 			}
 		}
 
-		// Hardcoded the domain name because it should not be editable by the user.
+		// We have hardcoded the "domain" as it should not be editable by users.
 		$atts['domain'] = 'shortcode';
 
 		$post = get_post( isset($atts['reference_id']) ? (int) $atts['reference_id'] : null );
@@ -76,7 +76,7 @@ class YARPP_Shortcode {
 				false
 			);
 		} else {
-			return '<!-- YARPP shortcode called but no reference post found. It was probably called outside "the loop" or the reference_id provided was invalid.-->';
+			return '<!-- YARPP shortcode called but no reference post found. Shortcode was likely called outside "the loop" or the reference_id provided is invalid. -->';
 		}
 	}
 }
