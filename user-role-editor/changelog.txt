@@ -1,6 +1,17 @@
 CHANGES LOG (full version).
 ===========================
 
+= [4.64.2] 19.02.2024 =
+* Update: Marked as compatible with WordPress 6.4.3
+* Update: URE_Advertisement: rand() is replaced with wp_rand().
+* Update: URE_Ajax_Proccessor: json_encode() is replaced with wp_json_encode().
+* Update: User_Role_Editor::load_translation(): load_plugin_textdomain() is called with the 2nd parameter value false, instead of deprecated ''.
+* Update: URE_Lib::is_right_admin_path(): parse_url() is replaced with wp_parse_url().
+* Update: URE_Lib::user_is_admin() does not call WP_User::has_cap() to enhance performance.
+* Update: Plugin version was added to CSS loaded to the "Users", "Users->User Role Editor", "Settings->User Role Editor" pages.
+* Update: All JavaScript files are loaded in footer now.
+* Fix: "Users->Add New Users". Unneeded extra '<table></table>' HTML tags was removed (thanks to Alejandro A. for this bug report). 
+
 = [4.64.1] 24.10.2023 =
 * Update: Marked as compatible with WordPress 6.4
 * Fix: Notice shown by PHP 8.3 is removed: PHP Deprecated: Creation of dynamic property URE_Editor::$hide_pro_banner is deprecated in /wp-content/plugins/user-role-editor/includes/classes/editor.php on line 166

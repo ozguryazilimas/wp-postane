@@ -32,10 +32,10 @@ class URE_Advertisement {
         if ( $max_ind<0 ) {
             $max_ind = 0;
         }
-        $index = rand( 0, $max_ind );
+        $index = wp_rand( 0, $max_ind );
         $iterations = 0;
         while ( in_array( $index, $used ) && $iterations<=$max_ind * 3 ) {
-            $index = rand( 0, $max_ind );
+            $index = wp_rand( 0, $max_ind );
             $iterations++;
         }
 

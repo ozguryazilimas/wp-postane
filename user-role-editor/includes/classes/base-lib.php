@@ -332,9 +332,8 @@ class URE_Base_Lib {
         }
         
         $placeholders = array_fill( 0, count( $list_values ), $placeholder );
-        $format_str = implode(',', $placeholders );
-        
-        $result = $wpdb->prepare( $format_str, $list_values );
+        $str = implode(',', $placeholders );        
+        $result = $wpdb->prepare( $str, $list_values );
         
         return $result;        
     }

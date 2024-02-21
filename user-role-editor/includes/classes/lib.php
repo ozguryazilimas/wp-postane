@@ -186,12 +186,17 @@ class URE_Lib extends URE_Base_Lib {
      * @return boolean true 
      */
     public function user_is_admin($user_id = false) {
-
-        $ure_key_capability = URE_Own_Capabilities::get_key_capability();
+        
         if (empty($user_id)) {                    
             $user_id = get_current_user_id();
         }
-        $result = user_can($user_id, $ure_key_capability);
+        if ( $this->is_super_admin( $user_id ) ) {
+            return true;
+        }
+        
+        $ure_key_capability = URE_Own_Capabilities::get_key_capability();
+        $user = get_userdata( $user_id );
+        $result = !empty( $user->allcaps[ $ure_key_capability ] );
         
         return $result;
     }
@@ -425,7 +430,7 @@ class URE_Lib extends URE_Base_Lib {
      * @param int $user_id
      * @return boolean
      */
-    public function is_super_admin($user_id = false) {
+    public function is_super_admin( $user_id = false ) {
                 
         if (empty($user_id)) {
             $user = wp_get_current_user();
@@ -521,12 +526,12 @@ class URE_Lib extends URE_Base_Lib {
      * @param string $path
      * @return boolean
      */
-    public function is_right_admin_path($path='') {
+    public function is_right_admin_path( $path='' ) {
         $result = true;
-        $admin_url = admin_url($path);   
-        $parsed = parse_url($admin_url);
+        $admin_url = admin_url( $path );   
+        $parsed = wp_parse_url( $admin_url );
         $full_path = $parsed['path'];
-        if ( stripos($_SERVER['REQUEST_URI'], $full_path)===false ) {
+        if ( stripos( $_SERVER['REQUEST_URI'], $full_path )===false ) {
             $result = false;
         }
         

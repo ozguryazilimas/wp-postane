@@ -86,7 +86,7 @@ class URE_Protect_Admin {
                     FROM {$wpdb->usermeta}
                     WHERE user_id=%d AND meta_key=%s AND meta_value LIKE %s", 
                 array($user_id, $meta_key, '%"administrator"%') );
-        $has_admin_role = $wpdb->get_var($query);
+        $has_admin_role = $wpdb->get_var( $query );
         if ($has_admin_role > 0) {
             $result = true;
         } else {
@@ -180,7 +180,7 @@ class URE_Protect_Admin {
                         FROM {$wpdb->usermeta}
                         WHERE user_id!=%d AND meta_key=%s AND meta_value like %s",
                       array($current_user_id, $meta_key, '%"administrator"%'));
-        $ids_arr = $wpdb->get_col($query);
+        $ids_arr = $wpdb->get_col( $query );
         if (is_array($ids_arr) && count($ids_arr) > 0) {
             $ids = implode(',', $ids_arr);
             $user_query->query_where .= " AND ( $wpdb->users.ID NOT IN ( $ids ) )";
